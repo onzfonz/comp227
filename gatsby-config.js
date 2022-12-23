@@ -41,8 +41,8 @@ const createSearchConfig = (indexName, language) => {
 };
 
 const plugins = [
-  createSearchConfig('finnish', 'fi'),
   createSearchConfig('english', 'en'),
+  createSearchConfig('finnish', 'fi'),
   createSearchConfig('chinese', 'zh'),
   {
     resolve: `gatsby-plugin-sitemap`,
@@ -50,8 +50,8 @@ const plugins = [
   {
     resolve: 'gatsby-plugin-i18n',
     options: {
-      langKeyDefault: 'fi',
-      langKeyForNull: 'fi',
+      langKeyDefault: 'en',
+      langKeyForNull: 'en',
       prefixDefault: false,
       useLangKeyLayout: false,
     },
@@ -119,27 +119,27 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {
-      trackingId: 'UA-135975842-1',
+      trackingId: 'G-SCES2E0BD7',
       head: false,
       respectDNT: true,
       exclude: [],
-      cookieDomain: 'fullstackopen.com',
+      cookieDomain: 'comp227.djosv.com',
     },
   },
   {
     resolve: `gatsby-plugin-canonical-urls`,
     options: {
-      siteUrl: `https://fullstackopen.com`,
+      siteUrl: `https://comp227.djosv.com`,
     },
   },
 ];
 
 module.exports = {
   siteMetadata: {
-    title: 'Full Stack open 2020',
+    title: 'COMP 277',
     description: '',
-    author: 'Houston Inc. Consulting oy',
-    siteUrl: 'https://fullstack-hy2020.github.io/',
+    author: 'Courtesy of Houston Inc. Consulting oy',
+    siteUrl: 'https://onzfonz.github.io/comp227',
   },
   plugins,
 };
