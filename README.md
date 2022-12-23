@@ -1,6 +1,6 @@
-# Full stack open 2022 and beyond
+# COMP 227
 
-Despite the repo name this IS the current course repository
+This repo is based off of the excellent work from the University of Helsinki course
 
 <https://fullstackopen.com/>
 
