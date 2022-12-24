@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - source
-      - reckless
+      - reckless**
 jobs:
   build:
     name: deploy
