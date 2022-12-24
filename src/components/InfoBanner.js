@@ -43,10 +43,11 @@ const InfoBanner = ({ visible, onHide }) => {
   return (
     <div style={style}>
       <div stule={textStyle}>
-        Doing the course exam soon? Test the new exam system, read more{' '}
+        {/* TODO: Have this part have a different byline */}
+        {/* Doing the course exam soon? Test the new exam system, read more{' '}
         <a href="/en/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
           <span style={linkStyle}>here</span>!
-        </a>
+        </a> */}
       </div>
       <div style={buttonDiv}>
         <button style={buttonStyle} onClick={onHide}>

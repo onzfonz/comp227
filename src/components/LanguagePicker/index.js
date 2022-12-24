@@ -7,7 +7,7 @@ import { TRANSLATION_LANGUAGE_OPTIONS } from '../../config';
 import styles from './LanguagePicker.module.scss';
 
 const LanguagePicker = ({
-  value = 'fi',
+  value = 'en',
   onChange,
   className: classNameProp,
 }) => {

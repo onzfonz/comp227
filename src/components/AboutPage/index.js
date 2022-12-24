@@ -26,8 +26,7 @@ const AboutPage = ({ title, lang }) => {
         description={seoDescription}
         keywords={[
           ...mainSEOtags,
-          'Avoin yliopisto',
-          'Full stack harjoitustyö',
+          'comp227',
         ]}
       />
 
