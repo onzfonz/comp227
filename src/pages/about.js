@@ -2,7 +2,7 @@ import React from 'react';
 import AboutPage from '../components/AboutPage';
 
 const About = () => {
-  return <AboutPage lang="fi" title="Kurssista | Full Stack open 2022" />;
+  return <AboutPage lang="en" title="COMP 227" />;
 };
 
 export default About;

@@ -86,7 +86,7 @@ function SEO({ description, lang, meta, keywords, title }) {
 }
 
 SEO.defaultProps = {
-  lang: 'fi',
+  lang: 'en',
   image: null,
   meta: [],
   keywords: [],
@@ -104,7 +104,7 @@ SEO.propTypes = {
 export default SEO;
 
 const detailsQuery = graphql`
-  query DefaultSEOQuery {
+  query DefaultSEOQuery(limit: 10) {
     site {
       siteMetadata {
         title
