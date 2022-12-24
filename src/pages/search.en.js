@@ -11,7 +11,7 @@ export default Search;
 
 export const pageQuery = graphql`
   query {
-    localSearchEnglish {
+    localSearchEnglish(limit:10) {
       store
       index
     }

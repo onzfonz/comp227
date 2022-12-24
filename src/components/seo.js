@@ -105,7 +105,7 @@ export default SEO;
 
 const detailsQuery = graphql`
   query DefaultSEOQuery {
-    site (limit:10) {
+    site {
       siteMetadata {
         title
         description
