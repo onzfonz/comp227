@@ -3,7 +3,8 @@ name: build and deploy
 on:
   push:
     branches:
-      - source, reckless
+      - source
+      - reckless
 jobs:
   build:
     name: deploy
