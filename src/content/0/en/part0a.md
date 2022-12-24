@@ -160,147 +160,6 @@ A system for detecting plagiarism is used to check exercises submitted to GitHub
 
 Many of the exercises build a larger application bit by bit. In these cases, submitting only the completed application is enough. You can make a commit after each exercise, but that is not compulsory.
 
-### The course exam
-
-For the official university credits you need to pass the course exam that covers parts 1-5 of the course
-- If you fail the exam, it can be done again after one week
-- You may continue with submissions after the exam
-
-The exam is done in the exercise submission system. Follow the instructions below to complete the exam.
-- Enroll in the course through Open University.
-- You will get the enrollment link through  [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen/submissions) once you have completed enough exercises.
-
-![](../../images/0/enroll1.png)
-
-After the course enrollment, save your University of Helsinki student number in the [submission system](https://studies.cs.helsinki.fi/stats/myinfo):
-
-![](../../images/0/28b.png)
-
-See [this](/en/part0/general_info#where-do-i-get-my-university-of-helsinki-student-number) for info how you find out your student number.
-
-After these steps, you can do the course exam in the submission system:
-
-![](../../images/0/enroll3.png)
-
-You will have 120 minutes to complete the exam. If all goes well, you should see the following confirmation:
-
-![](../../images/0/enroll4.png)
-
-If you fail, you must wait for one week for trying the exam again.
-
-If you passed the exam, and you are not going to complete more exercises, you can go back to my submission tab and ask for the credits:
-
-![](../../images/0/enroll5a.png)
-
-Remember to press the big blue button to ask for the credits to be registered. 
-
-Note that you have to press the button twice:
-
-![](../../images/0/button2.png)
-
-When pressed twice you should see the following text
-
-> <i>University credit registration in progress...</i>
-
-Note: if you have already done the course exam in Moodle contact matti.luukkainen@helsinki.fi or @mluukkai in Discord.
-
-### How to get your credits
-
-If you want to receive University of Helsinki credits, save your <b>University of Helsinki</b> student number to [the exercise submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen)
-
-![](../../images/0/28b.png)
-
-If you are not a student at the University of Helsinki, you can get a student number by registering for the course through [Open University](/en/part0/general_info#the-course-exam), see [this](/en/part0/general_info#where-do-i-get-my-university-of-helsinki-student-number) for more info.
-
-You will receive your credits after you have submitted enough exercises for a passing grade, passed the exam and let us know through the exercise submission system that you have completed the course:
-
-![](../../images/0/enroll5a.png)
-
-Remember to press the big blue button to ask for the credits to be registered. 
-
-Note that you have to press the button twice:
-
-![](../../images/0/button2.png)
-
-When pressed twice you should see the following text
-
-> <i>University credit registration in progress...</i>
-
-**Please note** that in order to get university credits you need a registration for each completed part, please see [more info about registration](/en/part0/general_info#parts-and-completion).
-
-You can view your grade in University of Helsinki Sisu and [Opintopolku](https://opintopolku.fi/oma-opintopolku/) approximately four weeks after notifying us.
-
-When the registration is done, the following text appears in the submission system
-
-> <i>University credits registered, see the course page how to get a transcript if you need one</i>
-
-### Where do I get my University of Helsinki Student number 
-
-When and if you enroll in a course for the first time through the Open University, a University of Helsinki student number will be automatically generated. Please make sure you have enrolled in the course before you try to find out what your student number is. 
-
-Note also that <strong>you do not need to enroll</strong> to Open University to get the course certificate!
-
-You can find out what your student number is through one of the options below: 
-
-#### A) Sisu 
-
-If you have a university of Helsinki user account, you can find your student number from your profile in the University of Helsinki’s study information system Sisu: 
- - Log in to Sisu with your University of Helsinki username and password.   
- - Select: My profile 
- - Select: Personal information 
-
-#### B) Enrollment confirmation email 
-
-After course enrollment, you will receive a confirmation email to an email address you have entered on the enrollment form. This message either directly has your student number on it or includes a link that takes you to a page displaying your University of Helsinki student number.  
-
-#### C) Contact Student Services 
-
-If you have trouble finding out your student number through the means listed above, you can send an email to University of Helsinki Student Services 
-
-In your email, include the following information 
-
-- name of the course you have enrolled in, 
-- your name, and 
-- your date of birth. 
-
-Student Services email address: avoin-student@helsinki.fi 
-
-### Course certificate
-
-Even if you do not register to Open University for the exam and the credits, you can still download the course certificate from the "My submissions" tab in the [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen) once you have completed enough exercises for a passing grade.
-
-There is one certificate for the base parts (0-7) of the course and after that a separate cert for the each course part.
-
-### Request a transcript of studies
-
-You can request a verified transcript of studies <i>after your university credits have been registered</i>. To request for an official transcript of studies, please contact avoin-student@helsinki.fi.
-
-- When requesting an official transcript, remember to mention
-  - the name of the course,
-  - your full name,
-  - your date of birth, and
-  - the language of the transcript.
-
-The transcript will be delivered to you electronically through email. Present this document at your institution to have the credits included in your degree. The decision to include the credits will be made by your home institution.
-
-### Continuing the course at year 2023
-
-The 2022 version of the course ends 1st March 2023. After that course has a two week maintainance break. During the break material stays online, and also exercises can be submitted. During the break the course content may change a bit, nothing too dramatic has been planned at the moment.
-
-All the exercises submitted for the 2022 version can be used in the 2023 edition so basically the course can be continued without bothering too much about the different versions. Also the policy for getting certs, university credits etc. remains the same in 2023. So in practice *nothing changes*, you can do the course without worrying anything reated to the year change.
-
-### Expanding on a previously completed course
-
-If you have already taken the course either as a MOOC or as a university course, you can now expand on your course.
-
-#### Expanding on Full stack open
-
-You can just pick up where you left off! If you wish to resubmit a whole part, please contact the course personnel via [email](mailto:matti.luukkainen@helsinki.fi) or Discord <i>mluukkai</i>, with your GitHub username and which parts you would like to have deleted from your submissions.
-
-#### Expanding on the University of Helsinki instance of this course
-
-That is also possible, just contact the course personnel via [email](mailto:matti.luukkainen@helsinki.fi) or Discord <i>mluukkai</i>.
-
 ### Full stack project
 
 A full stack project worth 5, 7 or 10 credits will be available through Open University.
@@ -312,14 +171,6 @@ The number of credits is based on hours of work done. One credit is approximatel
 It is possible to complete the project as a pair or a group.
 
 See [more information on the project](https://github.com/fullstack-hy2020/misc/blob/master/project.md).
-
-### Interview promise
-
-Our collaborators, [Houston Inc.](https://houston-inc.com/), [Terveystalo](https://www.terveystalo.com/en/) and [Smartly.io](https://www.smartly.io/), have given the <i>promise of a job interview</i> for everyone who completes the course and the project work with maximum credits (14 + 10).
-
-This means that the student can, if they so choose, sign up for a job interview with a collaborator who has given the promise. The teacher of the course, Matti Luukkainen, will send instructions to the student after the courses have been completed with maximum credits.
-
-You need to be a resident of Finland in order to participate in these interviews.
 
 ### Before you start
 
@@ -337,7 +188,7 @@ Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically 
 
 ### Typos in the material
 
-If you find a typo in the material, or something has been expressed unclearly, or is simply bad grammar, submit a <i>pull request</i> to the course material in the [repository](https://github.com/fullstack-hy2020/fullstack-hy2020.github.io). For example, the markdown source code of this page can be found in the repository at <https://github.com/fullstack-hy2020/fullstack-hy2020.github.io/edit/source/src/content/0/en/part0a.md>
+If you find a typo in the material, or something has been expressed unclearly, or is simply bad grammar, submit a <i>pull request</i> to the course material in the [repository](https://github.com/onzfonz/comp227). For example, the markdown source code of this page can be found in the repository at <https://github.com/onzfonz/comp227/edit/source/src/content/0/en/part0a.md>
 
 At the bottom of each part of the material is a link to <em>propose changes to material</em>. You can edit the source code of the page by clicking on the link.
 
