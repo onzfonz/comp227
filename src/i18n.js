@@ -1,12 +1,10 @@
 import i18n from 'i18next';
 
 import en from './locales/en';
-import fi from './locales/fi';
 import es from './locales/es';
 
 const resources = {
   en,
-  fi,
   es,
 };
 
