@@ -8,7 +8,7 @@ import { BodyText } from '../BodyText/BodyText';
 import Element from '../Element/Element';
 
 const GOOGLE_FORM_ACTION_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSeO9jt4-iUsiFaLT5Rpwt47sNceu25te2UO7WGQ2wcUNTbBiQ/formResponse';
+  'https://docs.google.com/forms/d/e/1dQP_32J0J_VHgZD3vduLPaL0ZqoF_4pFAgNM_tvLqy4/formResponse';
 const GOOGLE_FORM_NAME_ID = 'entry.1118152809';
 const GOOGLE_FORM_TITLE_ID = 'entry.2015280305';
 const GOOGLE_FORM_ORGANIZATION_ID = 'entry.578868795';

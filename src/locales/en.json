@@ -24,8 +24,8 @@
     "LanguagePickerSrLabel": "Select language"
   },
   "challengePage": {
-    "aboutTitle": "This is Full Stack -challenge",
-    "joinTitle": "Companies, Heed The Call!",
+    "aboutTitle": "This is COMP 227 -challenge",
+    "joinTitle": "Students, Heed The Call!",
     "registerButton": "Register your company to Full Stack challenge",
     "nameLabel": "Name",
     "namePlaceholder": "Jane Doe",
@@ -37,12 +37,12 @@
     "whereDidYouHearLabel": "Where did you hear from the challenge",
     "submitButton": "Submit",
     "submitSuccessMessage": "Thanks! We will contact you soon!",
-    "participantsTitle": "These companies have joined the Full Stack challenge",
+    "participantsTitle": "These companies have hired folks",
     "coOperationTitle": "In co-operation with",
     "infoButton": "More about challenge"
   },
   "companiesPage": {
-    "storiesTitle": "Developer stories from our partners"
+    "storiesTitle": "These are the stories of developers who have had an influence on the course"
   },
   "faqPage": {
     "faqTitle": "Frequently asked questions"
@@ -50,8 +50,8 @@
   "homePage": {
     "startCourseButton": "Start course",
     "announcementsTitle": "Announcements",
-    "authorsTitle": "Authors and License",
-    "courseNameTitle": "Full Stack open 2022"
+    "authorsTitle": "Acknowledgements & License",
+    "courseNameTitle": "COMP 227"
   },
   "notFoundPage": {
     "title": "Page not found"

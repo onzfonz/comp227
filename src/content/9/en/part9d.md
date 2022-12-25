@@ -1508,16 +1508,8 @@ Note that that if you need alter the shown form based on user selections, you ca
 
 Extend your solution so that it supports <i>all the entry types</i> and displays an error message if some required values are missing or formatted incorrectly. You do not need to care about the possible errors in the server's response.
 
-### Submitting exercises and getting the credits
+### Submitting exercises
 
-Exercises of this part are submitted via [the submissions system](https://studies.cs.helsinki.fi/stats/courses/fs-typescript) just like in the previous parts, but unlike previous parts, the submission goes to a different "course instance". Remember that you have to finish at least 24 exercises to pass this part!
-
-Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
-
-![Submissions](../../images/11/21.png)
-
-**Note** that you need a registration to the corresponding course part for getting the credits registered, see [here](/en/part0/general_info#parts-and-completion) for more information.
-
-You can download the certificate for completing this part by clicking one of the flag icons. The flag icon corresponds to the certificate's language. 
+Exercises of this part are submitted via GitHub just like in the previous parts, but unlike previous parts, the submission goes to a different repo. Remember to finish at least 24 exercises!
 
 </div>

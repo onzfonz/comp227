@@ -4,11 +4,11 @@
     "intro": [
       "This course serves as an introduction to modern web application development with JavaScript. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js. The course also contains a section on GraphQL, a modern alternative to REST APIs.",
       "The course covers testing, configuration and environment management, and the use of MongoDB for storing the application’s data.",
-      "The course is worth 5-13 credits, and the content is the same as in the  <a href='https://fullstack-hy2020.github.io/'>Full stack course</a> held at the <a href='https://www.helsinki.fi/en/computer-science'>Department of Computer Science</a> at the University of Helsinki in Spring 2020. There is also an associated <a href='/osa0/yleista#full-stack-harjoitustyo'>project</a> that is worth 1-10 credits.",
+      "The course is 3 units, and the content is originally based on the  <a href='https://fullstack-hy2020.github.io/'>Full stack course</a> held at the <a href='https://www.helsinki.fi/en/computer-science'>Department of Computer Science</a> at the University of Helsinki in Spring 2020.",
       "Partners and affiliates of the course include <a href='https://www.houston-inc.com/'>Houston Inc</a>, <a href='https://www.terveystalo.com/fi/Yritystietoa/Terveystalo-tyontantajana/Digital-Health/'>Terveystalo</a>, <a href='https://elisa.fi/'>Elisa</a>, <a href='https://www.kesko.fi/'>K-ryhmä</a>, <a href='https://www.instagram.com/unitytechnologies/?hl=en'>Unity Technologies</a> and <a href='https://careers.konecranes.com/Konecranes/'>Konecranes</a>. See <a href='https://www.youtube.com/watch?v=BZexOyQZMMc&list=PLumQiZ25uijis31zaRL7rhzLalSwLqUtm'>here for guest lectures</a> on course-related topics given by various experts from our partners and affiliates.",
       "Participants are expected to have good programming skills, basic knowledge of web programming and databases, and to know the basics of working with the Git version-control system. You are also expected to have perseverance and the ability for independent problem solving and information seeking.",
       "Part 0 of the course material goes through the content and conduct of the course in more detail. Make sure to read the material and instructions thoroughly.",
-      "You can discuss the course and related topics in our dedicated group on Discord <a target='_blank' href='https://study.cs.helsinki.fi/discord/join/fullstack'>https://study.cs.helsinki.fi/discord/join/fullstack</a> and on Telegram: <a target='_blank' href='https://t.me/fullstackcourse'>https://t.me/fullstackcourse</a>. Please join the conversation!"
+      "You can discuss the course and related topics in our dedicated group on <a target='_blank' href='https://discord.gg/VRUKRxCJ95'>Discord</a>."
     ],
     "info": [
       {
@@ -23,17 +23,14 @@
         "content": [
           "The course consists of eight parts, the first of which is zero for historical reasons.",
           "In the material, from part n to n + 1, advancement is not meaningful until sufficient knowledge of some of n's has been achieved.",
-          "It is assumed that you are doing at least some of the tasks that have not been marked with an asterisk. The tasks marked with an asterisk will also affect the review, but their failure to do so will not cause too many obstacles to doing the next section (unmarked).",
-          "The speed of the course on the course is free, tasks can be returned until 10.12020 until 23:59.",
-          "The time usage statistics for the returns already made in different parts of this course can be found on the task return page."
+          "It is assumed that you are doing at least some of the tasks that have not been marked with an asterisk. The tasks marked with an asterisk will also affect the review, but their failure to do so will not cause too many obstacles to doing the next section (unmarked)."
         ]
       },
       {
         "title": "Rating Criteria",
         "content": [
-          "The course can be completed in either 3 or 5-8 credits.",
           "The scope and grade are determined by all the tasks performed, so the tasks marked with an asterisk will also affect the grade.",
-          "If you want to complete the course, save your student number recovery application to my submissions."
+          "If you want to complete the course, make sure to complete all assignments that are posted on Canvas"
         ]
       },
       {

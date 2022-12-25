@@ -5,7 +5,7 @@ import CompaniesPage from '../components/CompaniesPage';
 const Companies = () => (
   <CompaniesPage
     lang="en"
-    title="Partner companies | Full Stack open 2022"
+    title="COMP 227"
     seoDescription="Full stack development in partner companies"
   />
 );

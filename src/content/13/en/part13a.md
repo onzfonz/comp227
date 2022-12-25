@@ -10,7 +10,7 @@ lang: en
 In this section we will explore node applications that use relational databases. During the section we will build a Node-backend using a relational database for a familiar note application from sections 3-5. To complete this part, you will need a reasonable knowledge of relational databases and SQL. There are many online courses on SQL databases, eg. [SQLbolt](https://sqlbolt.com/) and 
 [Intro to SQL by Khan Academy](https://www.khanacademy.org/computing/computer-programming/sql).
 
-There are 24 exercises in this part, and you need to complete each exercise for completing the course. Exercises are submitted via the [submissions system](https://studies.cs.helsinki.fi/stats/courses/fs-psql) just like in the previous parts, but unlike parts 0 to 7, the submission goes to a different "course instance".
+There are 24 exercises in this part, and you need to complete each exercise. Exercises are submitted via the GitHub just like in the previous parts, but unlike parts 0 to 7, the submission goes to a different repository.
 
 ### Advantages and disadvantages of document databases
 
