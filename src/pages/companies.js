@@ -6,7 +6,7 @@ const Companies = () => (
   <CompaniesPage
     lang="en"
     title="COMP 227"
-    seoDescription="Another Description"
+    seoDescription="Full stack development in partner companies"
   />
 );
 

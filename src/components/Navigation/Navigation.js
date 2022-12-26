@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { navigate } from '@reach/router';
+// import { navigate } from '@reach/router';
 
 import './Navigation.scss';
 
-import LanguagePicker from '../LanguagePicker';
+// import LanguagePicker from '../LanguagePicker';
 import { NavigationItem } from './Item';
 import SearchLink from './SearchLink';
 import ThemeSwitcher from './ThemeSwitcher';
 
 const getTranslationPath = (path, language) => {
-  return language === 'fi' ? path : `/${language}${path}`;
+  return language === 'en' ? path : `/${language}${path}`;
 };
 
 export const getNavigation = (language, t) => {
@@ -56,9 +56,9 @@ const Navigation = props => {
   const navigation = getNavigation(lang, t);
   const showSearchLink = searchIsEnabledForLang(lang);
 
-  const onLanguageChange = newLang => {
-    navigate(getTranslationPath('/', newLang));
-  };
+//   const onLanguageChange = newLang => {
+//     navigate(getTranslationPath('/', newLang));
+//   };
 
   return (
     <div className={`navigation__wrapper ${className}`}>
@@ -84,11 +84,11 @@ const Navigation = props => {
             <ThemeSwitcher />
           </div>
 
-          <LanguagePicker
+          {/* <LanguagePicker
             className="navigation__language-picker"
             onChange={onLanguageChange}
             value={lang}
-          />
+          /> */}
         </ul>
       </nav>
     </div>
