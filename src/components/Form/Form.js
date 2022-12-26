@@ -59,9 +59,6 @@ class Form extends Component {
       .then(() => {
         this.setState({
           name: '',
-          title: '',
-          organization: '',
-          phone: '',
           email: '',
           question: '',
           formIsSent: true,
@@ -79,9 +76,6 @@ class Form extends Component {
       showForm,
       formIsSent,
       name,
-      title,
-      organization,
-      phone,
       email,
       question,
     } = this.state;
@@ -106,47 +100,6 @@ class Form extends Component {
                   type="text"
                   name="name"
                   value={name}
-                  onChange={this.handleChange}
-                />
-                <p className="spacing--small">
-                  {t('challengePage:titleLabel')}
-                  <span aria-hidden="true">*</span>
-                </p>
-                <input
-                  required
-                  autoComplete="off"
-                  className="col-10"
-                  placeholder="CEO"
-                  type="text"
-                  name="title"
-                  value={title}
-                  onChange={this.handleChange}
-                />
-                <p className="spacing--small">
-                  {t('challengePage:companyLabel')}
-                  <span aria-hidden="true">*</span>
-                </p>
-                <input
-                  required
-                  autoComplete="off"
-                  className="col-10"
-                  placeholder={t('challengePage:companyPlaceholder')}
-                  type="text"
-                  name="organization"
-                  value={organization}
-                  onChange={this.handleChange}
-                />
-                <p className="spacing--small">
-                  {t('challengePage:phoneLabel')}
-                  <span aria-hidden="true">*</span>
-                </p>
-                <input
-                  autoComplete="off"
-                  className="col-10"
-                  placeholder="+358 40 234 5678"
-                  type="text"
-                  name="phone"
-                  value={phone}
                   onChange={this.handleChange}
                 />
                 <p className="spacing--small">
