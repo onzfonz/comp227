@@ -27,7 +27,7 @@ export const getNavigation = (language, t) => {
     { text: t('navigation:faq'), path: getTranslationPath('/faq', language) },
     {
       text: t('navigation:Acknowledgements'),
-      path: getTranslationPath('/companies', language),
+      path: getTranslationPath('/thanks', language),
     },
     {
       text: t('navigation:challenge'),

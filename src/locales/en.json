@@ -37,11 +37,16 @@
     "whereDidYouHearLabel": "Where did you hear from the challenge",
     "submitButton": "Submit",
     "submitSuccessMessage": "Thanks! We will contact you soon!",
-    "participantsTitle": "These companies have hired folks",
-    "coOperationTitle": "In co-operation with",
+    "participantsTitle": "Partner companies of the original course",
+    "coOperationTitle": "Primary Supporters of the original course",
     "infoButton": "More about challenge"
   },
   "companiesPage": {
+    "acknowledge": "Acknowledgements",
+    "special_thanks": "Special Thanks to:",
+    "thanks_to": "This course would not be possible without the original contribution and the extensive amount of work placed into the original full stack open course, done by Matti Luukkainen and many others, including the front-end design by the Houston Group.",
+    "helsinki": "The University of Helsinki is the oldest and largest science university in Finland, with an international scientific community of 40,000 people.",
+    "houston": "The Finnish Houston Inc. is an agile software company founded in 2003. They design and implement customized digital services for their business.",
     "storiesTitle": "These are the stories of developers who have had an influence on the course"
   },
   "faqPage": {
@@ -50,8 +55,8 @@
   "homePage": {
     "startCourseButton": "Start course",
     "announcementsTitle": "Announcements",
-    "authorsTitle": "Acknowledgements & License",
-    "courseNameTitle": "COMP 227"
+    "authorsTitle": "Credits & License",
+    "courseNameTitle": "A Deep Dive into Modern Web Development"
   },
   "notFoundPage": {
     "title": "Page not found"

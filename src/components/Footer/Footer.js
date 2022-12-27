@@ -18,14 +18,14 @@ const images = [
         href: 'https://www.helsinki.fi/',
     },
     {
-        src: houston,
-        alt: 'Houston inc. logo',
-        href: 'https://www.houston-inc.com/',
-    },
-    {
       src: pacific,
       alt: 'University of the Pacific',
       href: 'http://www.pacific.edu',
+    },
+    {
+        src: houston,
+        alt: 'Houston inc. logo',
+        href: 'https://www.houston-inc.com/',
     },
 ];
 
@@ -41,7 +41,7 @@ const Footer = () => {
       flex
     >
       <Element
-        className="col-5 push-right-3 col-10--mobile order-2--mobile order-2--tablet footer__links"
+        className="col-10 push-right-1 col-10--mobile order-2--mobile order-2--tablet footer__links"
         flex
         spaceBetween
       >
@@ -49,7 +49,7 @@ const Footer = () => {
           <a
             key={image.alt}
             href={image.href}
-            className="col-5 col-4--mobile spacing--mobile"
+            className="col-3 col-4--mobile spacing--mobile"
           >
             <Image
               contain
@@ -64,7 +64,7 @@ const Footer = () => {
 
       <Element
         flex
-        className="col-5 col-5--mobile order-1--mobile order-1--tablet footer__navigation"
+        className="col-5 col-5--mobile order-2--mobile order-2--tablet footer__navigation"
       >
         <div className="footer__navigation-link-container">
           {navigation.map(item => (
