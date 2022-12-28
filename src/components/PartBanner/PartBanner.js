@@ -19,8 +19,8 @@ const partNameTranslations = {
     'React Native',
     'CI/CD',
     'Containers',
-    'Using relational databases'
-  ]
+    'Using relational databases',
+  ],
 };
 
 export const PartBanner = ({ lang }) => {

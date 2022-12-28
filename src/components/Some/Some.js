@@ -4,8 +4,7 @@ import React from 'react';
 
 const urls = {
   github: 'https://github.com/onzfonz',
-  youtube:
-    'https://www.youtube.com/channel/UCqQWXa8a1oClAo8Kcc3Q2uA/',
+  youtube: 'https://www.youtube.com/channel/UCqQWXa8a1oClAo8Kcc3Q2uA/',
 };
 
 export const Some = ({ iconName }) => (

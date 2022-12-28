@@ -72,13 +72,7 @@ class Form extends Component {
   };
 
   render() {
-    const {
-      showForm,
-      formIsSent,
-      name,
-      email,
-      question,
-    } = this.state;
+    const { showForm, formIsSent, name, email, question } = this.state;
 
     const { t } = this.props;
 

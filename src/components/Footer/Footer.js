@@ -12,21 +12,21 @@ import yliopisto from '../../images/company_logos/uoh_centre.svg';
 import pacific from '../../images/company_logos/pacific.svg';
 
 const images = [
-    {
-        src: yliopisto,
-        alt: 'Helsingin yliopiston logo',
-        href: 'https://www.helsinki.fi/',
-    },
-    {
-      src: pacific,
-      alt: 'University of the Pacific',
-      href: 'http://www.pacific.edu',
-    },
-    {
-        src: houston,
-        alt: 'Houston inc. logo',
-        href: 'https://www.houston-inc.com/',
-    },
+  {
+    src: yliopisto,
+    alt: 'Helsingin yliopiston logo',
+    href: 'https://www.helsinki.fi/',
+  },
+  {
+    src: pacific,
+    alt: 'University of the Pacific',
+    href: 'http://www.pacific.edu',
+  },
+  {
+    src: houston,
+    alt: 'Houston inc. logo',
+    href: 'https://www.houston-inc.com/',
+  },
 ];
 
 const Footer = () => {

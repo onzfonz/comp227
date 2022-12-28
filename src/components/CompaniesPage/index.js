@@ -44,29 +44,29 @@ const CompaniesPage = ({ lang, title, seoDescription }) => {
 
       <Element className="container">
         <BodyText
-            className="col-10 spacing"
-            heading={{
-                title: t('companiesPage:acknowledge'),
-                level: 'h1'
-            }}
+          className="col-10 spacing"
+          heading={{
+            title: t('companiesPage:acknowledge'),
+            level: 'h1',
+          }}
         />
 
         {t('companiesPage:thanks_to')}
-        <Element className="spacing--after-small"></Element>
+        <Element className="spacing--after-small" />
         {t('companiesPage:helsinki')}
-        <Element className="spacing--after-small"></Element>
+        <Element className="spacing--after-small" />
         {t('companiesPage:houston')}
-        
+
         <BodyText
-            className="col-10 spacing"
-            heading={{
-                title: t('companiesPage:special_thanks'),
-                level: 'h1'
-            }}
+          className="col-10 spacing"
+          heading={{
+            title: t('companiesPage:special_thanks'),
+            level: 'h1',
+          }}
         />
-        
+
         <CompaniesBanner lang={lang} />
-        
+
         <BodyText
           className="col-10 spacing"
           heading={{

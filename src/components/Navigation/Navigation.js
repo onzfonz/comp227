@@ -56,9 +56,9 @@ const Navigation = props => {
   const navigation = getNavigation(lang, t);
   const showSearchLink = searchIsEnabledForLang(lang);
 
-//   const onLanguageChange = newLang => {
-//     navigate(getTranslationPath('/', newLang));
-//   };
+  //   const onLanguageChange = newLang => {
+  //     navigate(getTranslationPath('/', newLang));
+  //   };
 
   return (
     <div className={`navigation__wrapper ${className}`}>

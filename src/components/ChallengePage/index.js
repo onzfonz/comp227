@@ -27,9 +27,7 @@ const ChallengePage = ({
         lang={lang}
         title={title}
         description={seoDescription}
-        keywords={[
-          ...mainSEOtags,
-        ]}
+        keywords={[...mainSEOtags]}
       />
 
       <Banner style={{ paddingBottom: 0, overflow: 'hidden' }}>

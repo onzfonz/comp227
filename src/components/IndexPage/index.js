@@ -18,21 +18,14 @@ import licenceIcon from '../../images/cc-logo.svg';
 import mainSEOdescription from '../../content/seo/mainSEOdescription';
 import mainSEOtags from '../../content/seo/mainSEOtags';
 import news from '../../images/noun_news_1248039.svg';
-import pacific from '../../images/company_logos/pacific.svg'
+import pacific from '../../images/company_logos/pacific.svg';
 import getTranslationPath from '../../utils/getTranslationPath';
 
 const IndexPage = ({ lang, title = 'COMP 227' }) => {
   const { t } = useTranslation();
 
-  const {
-    mainTitle,
-    intro,
-    current,
-    licence,
-    university,
-    contacts,
-    licenced,
-  } = content[lang] || content.en;
+  const { mainTitle, intro, current, licence, university, contacts, licenced } =
+    content[lang] || content.en;
 
   const seoDescription = mainSEOdescription[lang];
 

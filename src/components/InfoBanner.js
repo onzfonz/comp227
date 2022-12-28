@@ -20,10 +20,10 @@ const InfoBanner = ({ visible, onHide }) => {
     zIndex: 2147483647,
   };
 
-//   const linkStyle = {
-//     color: 'grey',
-//     textDecoration: 'underline',
-//   };
+  //   const linkStyle = {
+  //     color: 'grey',
+  //     textDecoration: 'underline',
+  //   };
 
   const textStyle = {
     flex: 90,
