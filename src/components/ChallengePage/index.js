@@ -29,16 +29,6 @@ const ChallengePage = ({
         description={seoDescription}
         keywords={[
           ...mainSEOtags,
-          'fullstackhaaste',
-          'full stack haaste',
-          'elisa',
-          'terveystalo',
-          'sympa',
-          'konecranes',
-          'unity technologies',
-          'täydennyskoulutus',
-          'koodari',
-          'haaste',
         ]}
       />
 

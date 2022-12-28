@@ -1,6 +1,6 @@
 {
-  "name": "fullstackhy-2020",
-  "description": "Full stack websovelluskehitys 2020",
+  "name": "comp227",
+  "description": "COMP 227 at the University of the Pacific",
   "version": "1.0.0",
   "author": "Houston Inc. Consulting Oy",
   "dependencies": {
@@ -42,10 +42,10 @@
     "use-debounce": "^3.4.3"
   },
   "keywords": [
-    "fullstack",
+    "modernweb",
     "course",
     "university of the pacific",
-    "full stack",
+    "modern web",
     "comp227"
   ],
   "license": "Creative Commons BY-NC-SA 3.0",
@@ -57,7 +57,7 @@
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "deploy": "gatsby build && gh-pages -d public -b master",
-    "publish": "gh-pages -u 'Matti Luukkainen <mluukkai@iki.fi>' -d public -b master"
+    "publish": "gh-pages -u 'Osvaldo Jimenez <ojimenez@pacific.edu>' -d public -b master"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -71,6 +71,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fullstack-hy2020/fullstack-hy2020.github.io"
+    "url": "https://github.com/onzfonz/comp227"
   }
 }

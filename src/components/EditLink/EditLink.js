@@ -6,7 +6,7 @@ import Element from '../Element/Element';
 import './EditLink.scss';
 
 const BASE_URL =
-  'https://github.com/fullstack-hy2020/fullstack-hy2020.github.io';
+  'https://github.com/onzfonz/comp227';
 
 const EditLink = ({ part, letter }) => {
   const { t, i18n } = useTranslation();
