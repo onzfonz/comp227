@@ -101,9 +101,9 @@ Many of the exercises build a larger application bit by bit. You will be expecte
 
 For the project, an application is implemented in React and/or Node, though implementing a mobile application in React Native is also possible.
 
-You will be exptected to work on the project either as a pair or as a group.
+You will be expected to work on the project either as a pair or as a group.
 
-See [more information on the project](https://github.com/onzfonz/misc/blob/source/project.md).
+See [more information on the project](https://github.com/comp227/comp227/misc/blob/source/project.md).
 
 ### Before you start
 
@@ -121,7 +121,7 @@ Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically 
 
 ### Typos in the material
 
-If you find a typo in the material, or something has been expressed unclearly, or is simply bad grammar, submit a <i>pull request</i> to the course material in the [repository](https://github.com/onzfonz/comp227). For example, the markdown source code of this page can be found in the repository at <https://github.com/onzfonz/comp227/edit/source/src/content/0/en/part0a.md>
+If you find a typo in the material, or something has been expressed unclearly, or is simply bad grammar, submit a <i>pull request</i> to the course material in the [repository](https://github.com/comp227/comp227). For example, the markdown source code of this page can be found in the repository at <https://github.com/comp227/comp227/edit/source/src/content/0/en/part0a.md>
 
 At the bottom of each part of the material is a link to <em>propose changes to the material</em>. You can edit the source code of the page by clicking on the link.
 

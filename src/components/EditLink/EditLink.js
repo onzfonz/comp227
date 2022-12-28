@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Element from '../Element/Element';
 import './EditLink.scss';
 
-const BASE_URL = 'https://github.com/onzfonz/comp227';
+const BASE_URL = 'https://github.com/comp227/comp227';
 
 const EditLink = ({ part, letter }) => {
   const { t, i18n } = useTranslation();

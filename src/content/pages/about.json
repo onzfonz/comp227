@@ -38,7 +38,7 @@
         "title": "Types of material",
         "content": [
           "There is a lot of material in the course and it has been written very fast about the circumstances. Despite the beta testing and proofreading, the material has spelling mistakes.",
-          "Making pull request is easy. For example, if this page has typo, go to the \"source code\" page https://github.com/onzfonz/comp227/edit/source/src/content/pages/about.json click on the pen image to the right, make the changes and click a few times \"green\" according to the Danger course. "
+          "Making pull request is easy. For example, if this page has typo, go to the \"source code\" page https://github.com/comp227/comp227/edit/source/src/content/pages/about.json click on the pen image to the right, make the changes and click a few times \"green\" according to the Danger course. "
         ]
       }
     ]
