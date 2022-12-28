@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Banner } from '../Banner/Banner';
 import { BodyText } from '../BodyText/BodyText';
-import { CompaniesBanner } from '../CompaniesBanner/CompaniesBanner';
 import Element from '../Element/Element';
 import Form from '../Form/Form';
 import { Image } from '../Image/Image';
@@ -78,11 +77,9 @@ const ChallengePage = ({
         </Element>
       </Element>
 
-      <CompaniesBanner lang={lang} />
-
       <SubHeader
         className="col-10 spacing--after centered"
-        text="#fullstackchallenge"
+        text="Let's foster a community of learners"
         headingLevel="h3"
       />
     </Layout>

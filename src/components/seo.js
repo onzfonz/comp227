@@ -8,7 +8,7 @@ import englishVersionSeoImage from '../images/EYE_green_wide.jpg';
 import path from 'path';
 
 function SEO({ description, lang, meta, keywords, title }) {
-  const seoImage = lang === 'fi' ? defaultImage : englishVersionSeoImage;
+  const seoImage = lang === 'en' ? englishVersionSeoImage : defaultImage;
 
   return (
     <StaticQuery

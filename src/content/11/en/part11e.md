@@ -107,13 +107,13 @@ It is perhaps best to create a new repository for this exercise and simply copy 
 
 This is a long and perhaps quite a tough exercise, but this kind of situation where you have a "legacy code" and you need to build   proper deployment pipeline is quite common in real life!
 
-Obviously, this exercise is not done in the same repository as the previous exercises. Since you can return only one repository to the submission system, put a link of the <i>other</i> repository to the one you fill into the submission form.
+Obviously, this exercise is not done in the same repository as the previous exercises. Since you can return only one repository URL on Canvas, put a link of the <i>other</i> repository to the one you fill into the submission form.
 
 #### 11.21 Protect your main branch and ask for pull request
 
 Protect the main branch of the repository where you did the previous exercise. This time prevent also the administrators from merging the code without a review.
 
-Do a pull request and ask GitHub user [mluukkai](https://github.com/mluukkai) to review your code. Once the review is done, merge your code to the main branch. Note that the reviewer needs to be a collaborator in the repository. Ping us in Discord to get the review,  and to include the collaboration invite link to the message.
+Do a pull request and ask GitHub user [onzfonz](https://github.com/onzfonz) to review your code. Once the review is done, merge your code to the main branch. Note that the reviewer needs to be a collaborator in the repository. Ping us in Discord to get the review,  and to include the collaboration invite link to the message.
 
 **Please note** what was written above, include the link to _the collaboration invite_ in the ping, not the link to the pull request.
 
@@ -123,18 +123,10 @@ Then you are done!
 
 <div class="content">
 
-### Submitting exercises and getting the credits
+### Submitting exercises
 
-Exercises of this part are submitted via [the submissions system](https://studies.cs.helsinki.fi/stats/courses/fs-cicd) just like in the previous parts, but unlike parts 0 to 7, the submission goes to different "course instance". Remember that you have to finish <i>all the exercises</i> to pass this part!
+Exercises of this part are submitted via GitHub just like in the previous parts, but unlike parts 0 to 7, the submission goes to a different repo. Remember that you have to finish <i>all the exercises!</i>
 
-Your solutions are in two repositories (pokedex and your own project), and since you can return only one repository to the submission system, put a link of the <i>other</i> repository to the one you fill into the submission form!
-
-Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
-
-![Submissions](../../images/11/21.png)
-
-**Note** that you need a registration to the corresponding course part for getting the credits registered, see [here](/en/part0/general_info#parts-and-completion) for more information.
-
-You can download the certificate for completing this part by clicking one of the flag icons. The flag icon corresponds to the certificate's language. 
+Your solutions are in two repositories (pokedex and your own project), and since you can return only one repository URL on canvas, put a link of the <i>other</i> repository to the one you fill into the submission form!
 
 </div>

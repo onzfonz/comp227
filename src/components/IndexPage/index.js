@@ -3,7 +3,6 @@ import { Link } from 'gatsby';
 import { useTranslation } from 'react-i18next';
 
 import { BodyText } from '../BodyText/BodyText';
-import { CompaniesBanner } from '../CompaniesBanner/CompaniesBanner';
 import Element from '../Element/Element';
 import { Image } from './../Image/Image';
 import Layout from '../layout';
@@ -14,13 +13,12 @@ import { SubHeader } from '../SubHeader/SubHeader';
 import { TripleBorder } from '../TripleBorder/TripleBorder';
 import cc from '../../images/cc.svg';
 import content from '../../content/pages/main.json';
-import houstonLogo from '../../images/Houston_big.svg';
 import landingImage from '../../images/landing.svg';
 import licenceIcon from '../../images/cc-logo.svg';
 import mainSEOdescription from '../../content/seo/mainSEOdescription';
 import mainSEOtags from '../../content/seo/mainSEOtags';
 import news from '../../images/noun_news_1248039.svg';
-import yliopistoLogo from '../../images/company_logos/uoh_centre.svg';
+import pacific from '../../images/company_logos/pacific.svg'
 import getTranslationPath from '../../utils/getTranslationPath';
 
 const IndexPage = ({ lang, title = 'COMP 227' }) => {
@@ -32,7 +30,6 @@ const IndexPage = ({ lang, title = 'COMP 227' }) => {
     current,
     licence,
     university,
-    houston,
     contacts,
     licenced,
   } = content[lang] || content.en;
@@ -153,8 +150,6 @@ const IndexPage = ({ lang, title = 'COMP 227' }) => {
 
       <PartBanner lang={lang} />
 
-      <CompaniesBanner lang={lang} isFrontPage />
-
       <Element flex spaceBetween className="container col-10 spacing--after">
         <TripleBorder
           largeMargin
@@ -172,21 +167,21 @@ const IndexPage = ({ lang, title = 'COMP 227' }) => {
                 target="_BLANK"
                 rel="noopener noreferrer"
                 className="col-10 col-4--mobile"
-                href="https://www.helsinki.fi/fi"
+                href="https://www.pacific.edu"
               >
                 <Image
                   contain
                   darkThemeInvert
-                  src={yliopistoLogo}
-                  alt="Helsingin Yliopisto logo"
-                  className="col-5 col-4--mobile"
+                  src={pacific}
+                  alt="University of the Pacific logo"
+                  className="col-3 push-right-2 col-1--mobile"
                 />
               </a>
 
               <BodyText headingFont text={university} />
             </div>
 
-            <Element flex spaceBetween className="col-3 col-10--mobile">
+            {/* <Element flex spaceBetween className="col-3 col-10--mobile">
               <a
                 target="_BLANK"
                 rel="noopener noreferrer"
@@ -202,7 +197,7 @@ const IndexPage = ({ lang, title = 'COMP 227' }) => {
               </a>
 
               <BodyText headingFont className="link" text={houston} />
-            </Element>
+            </Element> */}
           </Element>
 
           <Element
@@ -220,7 +215,7 @@ const IndexPage = ({ lang, title = 'COMP 227' }) => {
                 text={contacts}
               />
 
-              {['github', 'twitter', 'facebook', 'youtube'].map(icon => (
+              {['github', 'youtube'].map(icon => (
                 <Some key={icon} iconName={icon} />
               ))}
             </div>

@@ -29,17 +29,9 @@ All the exercises in this part have to be submitted into <i>a single GitHub repo
 
 This part will heavily rely on concepts covered in the previous parts. Before starting this part you will need basic knowledge of JavaScript, React and GraphQL. Deep knowledge of server-side development is not required and all the server-side code is provided for you. However, we will be making network requests from your React Native applications, for example, using GraphQL queries. The recommended parts to complete before this part are [part 1](/en/part1), [part 2](/en/part2), [part 5](/en/part5), [part 7](/en/part7) and [part 8](/en/part8).
 
-### Submitting exercises and earning credits
+### Submitting exercises
 
-Exercises are submitted via the [submissions system](https://studies.cs.helsinki.fi/stats/courses/fs-react-native-2020) just like in the previous parts. Note that, exercises in this part are submitted <i>to a different course instance</i> than in parts 0-9. The parts 1-4 in the submission system refer to the sections a-d in this part. This means that you will be submitting exercises a single section at a time starting with this section, "Introduction to React Native", which is part 1 in the submission system.
-
-During this part you will earn credits based on the number of exercises you complete. Completing <i>at least 25 exercises</i> in this part will earn you <i>2 credits</i>. Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
-
-![Submitting exercises for credits](../../images/10/23.png)
-
-**Note** that you need a registration to the corresponding course part for getting the credits registered, see [here](/en/part0/general_info#parts-and-completion) for more information.
-
-You can download the certificate for completing this part by clicking one of the flag icons. The flag icon corresponds to the certificate's language. Note that you must have completed at least one credit worth of exercises before you can download the certificate.
+Exercises are submitted via GitHub just like in the previous parts. Note that, exercises in this part are submitted <i>to a different course instance</i> than in parts 0-9. This means that you will be submitting exercises a single section at a time starting with this section, "Introduction to React Native", which is part 1 on Canvas.
 
 ### Initializing the application
 
@@ -181,7 +173,7 @@ The provided ESLint configuration contains only the basis for the configuration.
 
 Set up ESLint in your project so that you can perform linter checks by running <em>npm run lint</em>. To get most of linting it is also recommended to integrate ESLint with your editor.
 
-This was the last exercise in this section. It's time to push your code to GitHub and mark all of your finished exercises to the [exercise submission system](https://studies.cs.helsinki.fi/stats/courses/fs-react-native-2020). Note that exercises in this section should be submitted to the part 1 in the exercise submission system.
+This was the last exercise in this section. It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 </div>
 
 <div class="content">

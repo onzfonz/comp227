@@ -2,12 +2,12 @@ import React from 'react';
 
 import CompaniesPage from '../components/CompaniesPage';
 
-const Companies = () => (
+const SpecialThanks = () => (
   <CompaniesPage
     lang="en"
     title="COMP 227"
-    seoDescription="Another Description"
+    seoDescription="Full stack development special thanks"
   />
 );
 
-export default Companies;
+export default SpecialThanks;

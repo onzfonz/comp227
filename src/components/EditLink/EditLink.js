@@ -11,7 +11,7 @@ const BASE_URL =
 const EditLink = ({ part, letter }) => {
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
-  const link = lang === 'fi' ? `osa${part}` : `part${part}`;
+  const link = `part${part}`;
 
   const url = `${BASE_URL}/edit/source/src/content/${part}/${lang}/${link}${letter}.md`;
 

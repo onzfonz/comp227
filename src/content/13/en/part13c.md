@@ -1506,14 +1506,8 @@ You may also choose to use some purpose-built npm library to handle sessions.
 
 Make the database changes required for this task using migrations.
 
-### Submitting exercises and getting the credits
+### Submitting exercises
 
-Exercises of this part are submitted just like in the previous parts, but unlike parts 0 to 7, the submission goes to an own [course instance](https://studies.cs.helsinki.fi/stats/courses/fs-psql). Remember that you have to finish all the exercises to pass this part!
-
-Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
-
-![Submissions](../../images/11/21.png)
-
-**Note** that you need a registration to the corresponding course part for getting the credits registered, see [here](/part0/general_info#parts-and-completion) for more information.
+Exercises of this part are submitted just like in the previous parts, but unlike parts 0 to 7, the submission goes to a separate repo. Remember to finish all the exercises!
 
 </div>

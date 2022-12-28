@@ -150,7 +150,7 @@ export const CompaniesBanner = ({ isFrontPage, lang }) => {
             />
             <Element
               flex
-              className="col-9 flex-fix-aligning space-between--mobile"
+              className="col-10 flex-fix-aligning space-between--mobile"
             >
               {inChallenge.map(company => (
                 <Image
@@ -160,7 +160,7 @@ export const CompaniesBanner = ({ isFrontPage, lang }) => {
                     company
                   )}.svg`)}
                   alt={company}
-                  className={`company__logo push-right-1 col-3--mobile col-3--tablet`}
+                  className={`company__logo col-3--mobile col-3--tablet`}
                   backdrop
                 />
               ))}

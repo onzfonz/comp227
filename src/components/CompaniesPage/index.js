@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import Layout from '../layout';
 import { BodyText } from '../BodyText/BodyText';
+import { CompaniesBanner } from '../CompaniesBanner/CompaniesBanner';
 import { DeveloperStory } from '../DeveloperStory/DeveloperStory';
 import Element from '../Element/Element';
 import SEO from '../seo';
@@ -42,6 +43,30 @@ const CompaniesPage = ({ lang, title, seoDescription }) => {
       />
 
       <Element className="container">
+        <BodyText
+            className="col-10 spacing"
+            heading={{
+                title: t('companiesPage:acknowledge'),
+                level: 'h1'
+            }}
+        />
+
+        {t('companiesPage:thanks_to')}
+        <Element className="spacing--after-small"></Element>
+        {t('companiesPage:helsinki')}
+        <Element className="spacing--after-small"></Element>
+        {t('companiesPage:houston')}
+        
+        <BodyText
+            className="col-10 spacing"
+            heading={{
+                title: t('companiesPage:special_thanks'),
+                level: 'h1'
+            }}
+        />
+        
+        <CompaniesBanner lang={lang} />
+        
         <BodyText
           className="col-10 spacing"
           heading={{

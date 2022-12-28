@@ -152,7 +152,7 @@ export default class ContentTemplate extends Component {
       <Layout isCoursePage={true}>
         <SEO
           lang={lang}
-          title={`Fullstack ${lang === 'fi' ? 'osa' : 'part'}${part} | ${
+          title={`Fullstack ${'part'}${part} | ${
             this.state.h1Title
           }`}
           description={mainSEOdescription[lang]}
@@ -196,11 +196,11 @@ export default class ContentTemplate extends Component {
                   {
                     backgroundColor: colorCode,
                     text: 'Fullstack',
-                    link: `/${lang === 'fi' ? '' : `${lang}/`}#course-contents`,
+                    link: `/${lang === 'en' ? '' : `${lang}/`}#course-contents`,
                   },
                   {
                     backgroundColor: colorCode,
-                    text: `${lang === 'fi' ? 'Osa' : 'Part'} ${part}`,
+                    text: `${'Part'} ${part}`,
                     link: getPartTranslationPath(lang, part),
                   },
                   {
