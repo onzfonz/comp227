@@ -14,12 +14,8 @@ const partNameTranslations = {
     'Testing React apps',
     'State management with Redux',
     'React router, custom hooks, styling app with CSS and webpack',
-    'GraphQL',
     'TypeScript',
     'React Native',
-    'CI/CD',
-    'Containers',
-    'Using relational databases',
   ],
 };
 

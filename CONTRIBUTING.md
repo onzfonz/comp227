@@ -1,4 +1,4 @@
-# Running Full stack open on your environment
+# Running COMP 227 on your environment
 
 1. Fork the repository
 2. Clone your fork

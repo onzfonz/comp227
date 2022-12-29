@@ -585,7 +585,7 @@ Should we always use redux? Probably not. Dan Abramov, the developer of redux, d
 
 Nowadays it is possible to implement redux-like state management without redux by using the React [context](https://reactjs.org/docs/context.html)-api and the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)-hook. 
 More about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/) and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/). We will also practice this in 
-[part 9](/en/part9).
+[part 8](/en/part8).
 
 </div>
 
