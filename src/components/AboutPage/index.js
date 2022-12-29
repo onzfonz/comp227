@@ -24,10 +24,7 @@ const AboutPage = ({ title, lang }) => {
         lang={lang}
         title={title}
         description={seoDescription}
-        keywords={[
-          ...mainSEOtags,
-          'comp227',
-        ]}
+        keywords={[...mainSEOtags, 'comp227']}
       />
 
       <Banner style={{ paddingBottom: 0, overflow: 'hidden' }}>

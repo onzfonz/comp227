@@ -7,880 +7,1003 @@ lang: en
 
 <div class="content">
 
-We will next implement a React app which uses the GraphQL server we created.
+After the brief introduction to the main principles of TypeScript, we are now ready to start our journey towards becoming FullStack TypeScript developers. 
+Rather than giving you a thorough introduction to all aspects of TypeScript, we will focus in this part on the most common issues that arise when developing express backends or React frontends with TypeScript. 
+In addition to language features, we will also have a strong emphasis on tooling.
 
-The current code of the server can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-backend/tree/part8-3), branch <i>part8-3</i>.
+### Setting things up
 
-In theory, we could use GraphQL with HTTP POST requests. The following shows an example of this with Postman:
+Install TypeScript support to your editor of choice. [Visual Studio Code](https://code.visualstudio.com/) works natively with TypeScript. 
 
-![](../../images/8/8x.png)
+As mentioned earlier, TypeScript code is not executable by itself. It has to be first compiled into executable JavaScript. 
+When TypeScript is compiled into JavaScript, the code becomes subject for type erasure. This means that type annotations, interfaces, type aliases, and other type system constructs are removed and the result is pure ready-to-run JavaScript. 
 
-The communication works by sending HTTP POST requests to http://localhost:4000/graphql. The query itself is a string sent as the value of the key <i>query</i>.
+In a production environment, the need for compilation often means that you have to set up a "build step." During the build step all TypeScript code is compiled into JavaScript in a separate folder, and the production environment then runs the code from that folder. In a development environment, it is often handier to make use of real-time compilation and auto-reloading in order to be able to see the resulting changes more quickly.
 
-We could take care of the communication between the React app and GraphQL by using Axios. However, most of the time, it is not very sensible to do so. It is a better idea to use a higher-order library capable of abstracting the unnecessary details of the communication. 
+Let's start writing our first TypeScript app. To keep things simple, let's start by using the npm package [ts-node](https://github.com/TypeStrong/ts-node). It compiles and executes the specified TypeScript file immediately, so that there is no need for a separate compilation step.
 
-At the moment, there are two good options: [Relay](https://facebook.github.io/relay/) by Facebook and [Apollo Client](https://www.apollographql.com/docs/react/), which is the client side of the same library we used in the previous section. Apollo is absolutely the most popular of the two, and we will use it in this section as well.
-
-### Apollo client
-
-Let us create a new React-app, and can continue installing dependencies required by [Apollo client](https://www.apollographql.com/docs/react/get-started/).
-
-```bash
-npm install @apollo/client graphql
+You can install both <i>ts-node</i> and the official <i>typescript</i> package globally by running:
+```
+npm install -g ts-node typescript
 ```
 
-We'll start with the following code for our application:
+If you can't or don't want to install global packages, you can create an npm project which has the required dependencies and run your scripts in it. 
+We will also take this approach. 
 
-```js
-import ReactDOM from 'react-dom/client'
-import App from './App'
+As we recall from [part 3](/en/part3), an npm project is set by running the command <i>npm init</i> in an empty directory. Then we can install the dependencies by running 
 
-import { ApolloClient, HttpLink, InMemoryCache, gql } from '@apollo/client'
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: 'http://localhost:4000',
-  })
-})
-
-const query = gql`
-  query {
-    allPersons  {
-      name,
-      phone,
-      address {
-        street,
-        city
-      }
-      id
-    }
-  }
-`
-
-client.query({ query })
-  .then((response) => {
-    console.log(response.data)
-  })
-
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+```
+npm install --save-dev ts-node typescript
 ```
 
-The beginning of the code creates a new [client](https://www.apollographql.com/docs/react/get-started/#create-a-client) object, which is then used to send a query to the server: 
+and set up <i>scripts</i> within the package.json: 
 
-```js
-client.query({ query })
-  .then((response) => {
-    console.log(response.data)
-  })
-```
-
-The server's response is printed to the console: 
-
-![](../../images/8/9a.png)
-
-The application can communicate with a GraphQL server using the _client_ object. The client can be made accessible for all components of the application by wrapping the <i>App</i> component with [ApolloProvider](https://www.apollographql.com/docs/react/get-started/#connect-your-client-to-react).
-
-```js
-import ReactDOM from 'react-dom/client'
-import App from './App'
-
-import {
-  ApolloClient,
-  ApolloProvider, // highlight-line
-  HttpLink,
-  InMemoryCache,
-} from '@apollo/client'
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
-    uri: 'http://localhost:4000',
-  }),
-})
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <ApolloProvider client={client}> // highlight-line
-    <App />
-  </ApolloProvider> // highlight-line
-)
-```
-
-### Making queries
-
-We are ready to implement the main view of the application, which shows a list of phone numbers. 
-
-Apollo Client offers a few alternatives for making [queries](https://www.apollographql.com/docs/react/data/queries/). 
-Currently, the use of the hook function [useQuery](https://www.apollographql.com/docs/react/api/react/hooks/#usequery) is the dominant practice.
-
-The query is made by the <i>App</i> component, the code of which is as follows:
-
-```js
-import { gql, useQuery } from '@apollo/client'
-
-const ALL_PERSONS = gql`
-query {
-  allPersons {
-    name
-    phone
-    id
-  }
-}
-`
-
-const App = () => {
-  const result = useQuery(ALL_PERSONS)
-
-  if (result.loading) {
-    return <div>loading...</div>
-  }
-
-  return (
-    <div>
-      {result.data.allPersons.map(p => p.name).join(', ')}
-    </div>
-  )
-}
-
-export default App
-```
-
-When called, _useQuery_ makes the query it receives as a parameter.
-It returns an object with multiple [fields](https://www.apollographql.com/docs/react/api/react/hooks/#result).
-The field <i>loading</i> is true if the query has not received a response yet. 
-Then the following code gets rendered:
-
-```js
-if (result.loading) {
-  return <div>loading...</div>
+```json
+{
+  // ..
+  "scripts": {
+    "ts-node": "ts-node" // highlight-line
+  },
+  // ..
 }
 ```
 
-When a response is received, the result of the <i>allPersons</i> query can be found from the <i>data</i> field, and we can render the list of names to the screen.
+You can now use <i>ts-node</i> within this directory by running <i>npm run ts-node</i>. Note that if you are using ts-node through package.json, all command-line arguments for the script need to be prefixed with <i>--</i>. So if you want to run file.ts with <i>ts-node</i>, the whole command is: 
 
-```js
-<div>
-  {result.data.allPersons.map(p => p.name).join(', ')}
-</div>
+```shell
+npm run ts-node -- file.ts
 ```
 
-Let's separate displaying the list of persons into its own component:
+It is worth mentioning that TypeScript also provides an online playground, where you can quickly try out TypeScript code and instantly see the resulting JavaScript and possible compilation errors. You can access TypeScript's official playground [here](https://www.typescriptlang.org/play/index.html).
+
+**NB:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment, which is why you might see different warnings there compared to your local environment. The playground's tsconfig is modifiable through the config dropdown menu.
+
+#### A note about the coding style
+
+JavaScript is a quite relaxed language in itself, and things can often be done in multiple different ways. For example, we have named vs anonymous functions, using const and let or var, and the use of <i>semicolons</i>. This part of the course differs from the rest by using semicolons. It is not a TypeScript-specific pattern but a general coding style decision taken when creating any kind of JavaScript project. Whether to use them or not is usually in the hands of the programmer, but since it is expected to adapt one's coding habits to the existing codebase, you are expected to use semicolons and to adjust to the coding style in the exercises for this part. This part has some other coding style differences compared to the rest of the course as well, e.g. in the directory naming conventions.
+
+Let us add a configuration file _tsconfig.json_ to the project with the following content:
 
 ```js
-const Persons = ({ persons }) => {
-  return (
-    <div>
-      <h2>Persons</h2>
-      {persons.map(p =>
-        <div key={p.name}>
-          {p.name} {p.phone}
-        </div>  
-      )}
-    </div>
-  )
-}
-```
-
-The _App_ component still makes the query, and passes the result to the new component to be rendered:
-
-```js
-const App = () => {
-  const result = useQuery(ALL_PERSONS)
-
-  if (result.loading)  {
-    return <div>loading...</div>
-  }
-
-  return (
-    <Persons persons={result.data.allPersons}/>
-  )
-}
-```
-
-### Named queries and variables
-
-Let's implement functionality for viewing the address details of a person. The <i>findPerson</i> query is well-suited for this. 
-
-The queries we did in the last chapter had the parameter hardcoded into the query:
-
-```js
-query {
-  findPerson(name: "Arto Hellas") {
-    phone 
-    city 
-    street
-    id
+{
+  "compilerOptions":{
+    "noImplicitAny": false
   }
 }
 ```
 
-When we do queries programmatically, we must be able to give them parameters dynamically. 
+The <i>tsconfig.json</i> file is used to define how the TypeScript compiler should interpret the code, how strictly the compiler should work, which files to watch or ignore, and [much more](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
+For now we will only use the compiler option [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny), that does not require to have types for all variables used.
 
-GraphQL [variables](https://graphql.org/learn/queries/#variables) are well-suited for this. To be able to use variables, we must also name our queries. 
-
-A good format for the query is this:
+Let's start by creating a simple Multiplier. It looks exactly as it would in JavaScript.
 
 ```js
-query findPersonByName($nameToSearch: String!) {
-  findPerson(name: $nameToSearch) {
-    name
-    phone 
-    address {
-      street
-      city
-    }
+const multiplicator = (a, b, printText) => {
+  console.log(printText,  a * b);
+}
+
+multiplicator(2, 4, 'Multiplied numbers 2 and 4, the result is:');
+```
+
+As you can see, this is still ordinary basic JavaScript with no additional TS features. It compiles and runs nicely with  <i>npm run ts-node -- multiplier.ts</i>, as it would with Node.
+  
+But what happens if we end up passing wrong <i>types</i> of arguments to the multiplicator function?
+
+Let's try it out!
+
+```js
+const multiplicator = (a, b, printText) => {
+  console.log(printText,  a * b);
+}
+
+multiplicator('how about a string?', 4, 'Multiplied a string and 4, the result is:');
+
+```
+
+Now when we run the code, the output is: <i>Multiplied a string and 4, the result is: NaN</i>.
+
+Wouldn't it be nice if the language itself could prevent us from ending up in situations like this? 
+This is where we see the first benefits of TypeScript.  Let's add types to the parameters and see where it takes us.
+
+TypeScript natively supports multiple types including <i>number</i>, <i>string</i> and  <i>Array</i>. See the comprehensive list [here](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html). More complex custom types can also be created.
+
+The first two parameters of our function are the number and the string [primitives](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean), respectively:
+
+```js
+const multiplicator = (a: number, b: number, printText: string) => {
+  console.log(printText,  a * b);
+}
+
+multiplicator('how about a string?', 4, 'Multiplied a string and 4, the result is:');
+```
+
+Now the code is no longer valid JavaScript, but in fact TypeScript. When we try to run the code, we notice that it does not compile:
+
+![](../../images/8/2a.png)
+
+
+One of the best things in TypeScript's editor support is that you don't necessarily need to even run the code to see the issues. 
+The VSCode plugin is so efficient, that it informs you immediately when you are trying to use an incorrect type:
+
+![](../../images/8/2.png)
+
+### Creating your first own types
+
+Let's expand our multiplicator into a slightly more versatile calculator that also supports addition and division. The calculator should accept three arguments: two numbers and the operation, either <i>multiply</i>, <i>add</i> or <i>divide</i>, which tells it what to do with the numbers.
+
+In JavaScript, the code would require additional validation to make sure the last argument is indeed a string. TypeScript offers a way to define specific types for inputs, which describe exactly what type of input is acceptable. On top of that, TypeScript can also show the info of the accepted values already at editor level. 
+
+We can create a <i>type</i> using the TypeScript native keyword <i>type</i>. Let's describe our type <i>Operation</i>:
+
+```js
+type Operation = 'multiply' | 'add' | 'divide';
+```
+
+Now the <i>Operation</i> type accepts only three kinds of input; exactly the three strings we wanted. 
+Using the OR operator _|_ we can define a variable to accept multiple values by creating a [union type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types).
+In this case, we used exact strings (that, in technical terms, are called [string literal types](http://www.typescriptlang.org/docs/handbook/advanced-types.html#string-literal-types)) but with unions, you could also make the compiler accept for example both string and number: _string | number_.
+
+The <i>type</i> keyword defines a new name for a type: [a type alias](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases). Since the defined type is a union of three possible values, it is handy to give it an alias that has a representative name.
+
+Let's look at our calculator now:
+
+```js
+type Operation = 'multiply' | 'add' | 'divide';
+
+const calculator = (a: number, b: number, op: Operation) => {
+  if (op === 'multiply') {
+    return a * b;
+  } else if (op === 'add') {
+    return a + b;
+  } else if (op === 'divide') {
+    if (b === 0) return 'can\'t divide by 0!';
+    return a / b;
   }
 }
 ```
 
-The name of the query is <i>findPersonByName</i>, and it is given a string <i>$nameToSearch</i> as a parameter. 
+Now, when we hover on top of the <i>Operation</i> type in the calculator function, we can immediately see suggestions on what to do with it:
 
-It is also possible to do queries with parameters with the Apollo Explorer. The parameters are given in <i>Variables</i>:
+![](../../images/8/3.png)
 
-![](../../images/8/10x.png)
+And if we try to use a value that is not within the <i>Operation</i> type, we get the familiar red warning signal and extra info from our editor:
 
-The _useQuery_ hook is well-suited for situations where the query is done when the component is rendered.  However, we now want to make the query only when a user wants to see the details of a specific person, so the query is done only [as required](https://www.apollographql.com/docs/react/data/queries/#executing-queries-manually).
+![](../../images/8/4x.png)
 
-One possibility for this kind of situations is the hook function [useLazyQuery](https://www.apollographql.com/docs/react/api/react/hooks/#uselazyquery) that would make it possible to define a query which is executed <i>when</i> the user wants to see the detailed information of a person.
- 
-However, in our case we can stick to _useQuery_ and use the option [skip](https://www.apollographql.com/docs/react/data/queries/#skip), which makes it possible to do the query only if a set condition is true.
-
-The solution is as follows:
+This is already pretty nice, but one thing we haven't touched yet is typing the return value of a function. Usually, you want to know what a function returns, and it would be nice to have a guarantee that it actually returns what it says it does. Let's add a return value <i>number</i> to the calculator function:
 
 ```js
-import { useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
+type Operation = 'multiply' | 'add' | 'divide';
 
-const FIND_PERSON = gql`
-  query findPersonByName($nameToSearch: String!) {
-    findPerson(name: $nameToSearch) {
-      name
-      phone
-      id
-      address {
-        street
-        city
-      }
-    }
-  }
-`
+const calculator = (a: number, b: number, op: Operation): number => { // highlight-line
 
-const Person = ({ person, onClose }) => {
-  return (
-    <div>
-      <h2>{person.name}</h2>
-      <div>
-        {person.address.street} {person.address.city}
-      </div>
-      <div>{person.phone}</div>
-      <button onClick={onClose}>close</button>
-    </div>
-  )
-}
-
-const Persons = ({ persons }) => {
-  // highlight-start
-  const [nameToSearch, setNameToSearch] = useState(null)
-  const result = useQuery(FIND_PERSON, {
-    variables: { nameToSearch },
-    skip: !nameToSearch,
-  })
-  // highlight-end
-
-  // highlight-start
-  if (nameToSearch && result.data) {
-    return (
-      <Person
-        person={result.data.findPerson}
-        onClose={() => setNameToSearch(null)}
-      />
-    )
-  }
-  // highlight-end
-
-  return (
-    <div>
-      <h2>Persons</h2>
-      {persons.map((p) => (
-        <div key={p.name}>
-          {p.name} {p.phone} 
-          <button onClick={() => setNameToSearch(p.name)}> // highlight-line
-            show address // highlight-line
-          </button> // highlight-line
-        </div>
-      ))}
-    </div>
-  )
-}
-
-export default Persons
-```
-
-The code has changed quite a lot, and all of the changes are not completely apparent. 
-
-When the button <i>show address</i> of a person is pressed, the name of the person is set to state <i>nameToSearch</i>:
-
-```js
-<button onClick={() => setNameToSearch(p.name)}>
-  show address
-</button>
-```
-
-This causes the component to re-render itself. On render the query <i>FIND_PERSON</i> that fetches the detailed information of a user is executed <i>if the variable nameToSearch</i> has a value:
-
-```js
-const result = useQuery(FIND_PERSON, {
-  variables: { nameToSearch },
-  skip: !nameToSearch, // highlight-line
-})
-```
-
-When user is not interested in seeing the detailed info of any person, the state variable <i>nameToSearch</i> is null and the query is not executed.
-
-If the state <i>nameToSearch</i> has a value and the query result is ready, the component <i>Person</i> renders the detailed info of a person:
-
-```js
-if (nameToSearch && result.data) {
-  return (
-    <Person
-      person={result.data.findPerson}
-      onClose={() => setNameToSearch(null)}
-    />
-  )
-}
-```
-
-A single person view looks like this:
-
-![](../../images/8/11.png)
-
-When a user wants to return to the persons list, the _nameToSearch_ state is set to _null_.
-
-The current code of the application can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-frontend/tree/part8-1) branch <i>part8-1</i>.
-
-### Cache
-
-When we do multiple queries, for example with the address details of Arto Hellas, we notice something interesting: the query to the backend is done only the first time around. After this, despite the same query being done again by the code, the query is not sent to the backend. 
-
-![](../../images/8/12.png)
-
-Apollo client saves the responses of queries to [cache](https://www.apollographql.com/docs/react/caching/overview/). To optimize performance if the response to a query is already in the cache, the query is not sent to the server at all. 
-
-
-![](../../images/8/13x.png)
-
-Cache shows the detailed info of Arto Hellas after the query <i>findPerson</i>:
-
-![](../../images/8/13z.png)
-
-### Doing mutations
-
-Let's implement functionality for adding new persons. 
-
- In the previous chapter, we hardcoded the parameters for mutations. Now, we need a version of the addPerson mutation which uses [variables](https://graphql.org/learn/queries/#variables):
-
-```js
-const CREATE_PERSON = gql`
-mutation createPerson($name: String!, $street: String!, $city: String!, $phone: String) {
-  addPerson(
-    name: $name,
-    street: $street,
-    city: $city,
-    phone: $phone
-  ) {
-    name
-    phone
-    id
-    address {
-      street
-      city
-    }
+  if (op === 'multiply') {
+    return a * b;
+  } else if (op === 'add') {
+    return a + b;
+  } else if (op === 'divide') {
+    if (b === 0) return 'this cannot be done';
+    return a / b;
   }
 }
-`
 ```
 
-The hook function [useMutation](https://www.apollographql.com/docs/react/api/react/hooks/#usemutation) provides the functionality for making mutations. 
-
-Let's create a new component for adding a new person to the directory:
+The compiler complains straight away because, in one case, the function returns a string. There are couple of ways to fix this. We could extend the return type to allow string values, like so:
 
 ```js
-import { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
-
-const CREATE_PERSON = gql`
-  // ...
-`
-
-const PersonForm = () => {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [street, setStreet] = useState('')
-  const [city, setCity] = useState('')
-
-  const [ createPerson ] = useMutation(CREATE_PERSON) // highlight-line
-
-  const submit = (event) => {
-    event.preventDefault()
-
-    // highlight-start
-    createPerson({  variables: { name, phone, street, city } })
-    // highlight-end
-
-    setName('')
-    setPhone('')
-    setStreet('')
-    setCity('')
-  }
-
-  return (
-    <div>
-      <h2>create new</h2>
-      <form onSubmit={submit}>
-        <div>
-          name <input value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div>
-        <div>
-          phone <input value={phone}
-            onChange={({ target }) => setPhone(target.value)}
-          />
-        </div>
-        <div>
-          street <input value={street}
-            onChange={({ target }) => setStreet(target.value)}
-          />
-        </div>
-        <div>
-          city <input value={city}
-            onChange={({ target }) => setCity(target.value)}
-          />
-        </div>
-        <button type='submit'>add!</button>
-      </form>
-    </div>
-  )
-}
-
-export default PersonForm
-```
-
-<!-- Lomakkeen koodi on suoraviivainen, mielenkiintoiset rivit on korostettu. Mutaation suorittava funktio saadaan luotua _useMutation_-hookin avulla. Hook palauttaa kyselyfunktion <i>taulukon</i> ensimmäisenä alkiona: -->
-The code of the form is straightforward and the interesting lines have been highlighted. 
-We can define mutation functions using the _useMutation_ hook.
-The hook returns an <i>array</i>, the first element of which contains the function to cause the mutation.
-
-```js
-const [ createPerson ] = useMutation(CREATE_PERSON)
-```
-
-<!-- Kyselyä tehtäessä määritellään kyselyn muuttujille arvot: -->
-The query variables receive values when the query is made:
-
-```js
-createPerson({  variables: { name, phone, street, city } })
-```
-
-New persons are added just fine, but the screen is not updated. This is because Apollo Client cannot automatically update the cache of an application, so it still contains the state from before the mutation. 
-We could update the screen by reloading the page, as the cache is emptied when the page is reloaded. However, there must be a better way to do this. 
-
-
-### Updating the cache
-
-There are a few different solutions for this. One way is to make the query for all persons [poll](https://www.apollographql.com/docs/react/data/queries/#polling) the server, or make the query repeatedly. 
-
-
-The change is small. Let's set the query to poll every two seconds: 
-
-```js
-const App = () => {
-  const result = useQuery(ALL_PERSONS, {
-    pollInterval: 2000 // highlight-line
-  })
-
-  if (result.loading)  {
-    return <div>loading...</div>
-  }
-
-  return (
-    <div>
-      <Persons persons = {result.data.allPersons}/>
-      <PersonForm />
-    </div>
-  )
-}
-
-export default App
-```
-
-The solution is simple, and every time a user adds a new person, it appears immediately on the screens of all users. 
-
-The bad side of the solution is all the pointless web traffic. 
-
-Another easy way to keep the cache in sync is to use the _useMutation_ hook's [refetchQueries](https://www.apollographql.com/docs/react/data/refetching/) parameter to define that the query fetching all persons is done again whenever a new person is created. 
-
-```js
-const ALL_PERSONS = gql`
-  query  {
-    allPersons  {
-      name
-      phone
-      id
-    }
-  }
-`
-
-const PersonForm = (props) => {
-  // ...
-
-  const [ createPerson ] = useMutation(CREATE_PERSON, {
-    refetchQueries: [ { query: ALL_PERSONS } ] // highlight-line
-  })
-```
-
-The pros and cons of this solution are almost opposite of the previous one's. There is no extra web traffic, because queries are not done just in case.  However, if one user now updates the state of the server, the changes do not show to other users immediately. 
-      
-If you want to do multiple queries, you can pass multiple objects inside refetchQueries. This will allow you to update different parts of your app at the same time. Here is an example:
-```js
-    const [ createPerson ] = useMutation(CREATE_PERSON, {
-    refetchQueries: [ { query: ALL_PERSONS }, { query: OTHER_QUERY }, { query: ... } ] // pass as many queries as you need
-  })
-```
-
-There are other ways to update the cache. More about those later in this part. 
-
-At the moment, queries and components are defined in the same place in our code. 
-Let's separate the query definitions into their own file <i>queries.js</i>:
-
-```js 
-import { gql } from '@apollo/client'
-
-export const ALL_PERSONS = gql`
-  query {
-    // ...
-  }
-`
-export const FIND_PERSON = gql`
-  query findPersonByName($nameToSearch: String!) {
-    // ...
-  }
-`
-
-export const CREATE_PERSON = gql`
-  mutation createPerson($name: String!, $street: String!, $city: String!, $phone: String) {
-    // ...
-  }
-`
-```
-
-Each component then imports the queries it needs:
-
-```js 
-import { ALL_PERSONS } from './queries'
-
-const App = () => {
-  const result = useQuery(ALL_PERSONS)
+const calculator = (a: number, b: number, op: Operation): number | string =>  { 
   // ...
 }
 ```
 
-The current code of the application can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-frontend/tree/part8-2) branch <i>part8-2</i>.
-
-### Handling mutation errors
-
-Trying to create a person with invalid data causes an error:
-
-![](../../images/8/14x.png)
-
-We should handle the exception. We can register an error handler function to the mutation using the _useMutation_ hook's _onError_ [option](https://www.apollographql.com/docs/react/api/react/hooks/#params-2).
-
-Let's register the mutation with an error handler which uses the _setError_
-function it receives as a parameter to set an error message:
+Or we could create a return type which includes both possible types, much like our Operation type:
 
 ```js
-const PersonForm = ({ setError }) => {
-  // ... 
+type Result = string | number;
 
-  const [ createPerson ] = useMutation(CREATE_PERSON, {
-    refetchQueries: [  {query: ALL_PERSONS } ],
-    // highlight-start
-    onError: (error) => {
-      setError(error.graphQLErrors[0].message)
-    }
-    // highlight-end
-  })
-
+const calculator = (a: number, b: number, op: Operation): Result =>  {
   // ...
 }
 ```
 
-<!-- Renderöidään mahdollinen virheilmoitus näytölle -->
-We can then render the error message on the screen as necessary:
+But now  the question is if it's <i>really</i> okay for the function to return a string?
+
+When your code can end up in a situation where something is divided by 0, something has probably gone terribly wrong and an error should be thrown and handled where the function was called.
+When you are deciding to return values you weren't originally expecting, the warnings you see from TypeScript prevent you from making rushed decisions and help you to keep your code working as expected.
+
+
+One more thing to consider is, that even though we have defined types for our parameters, the generated JavaScript used at runtime does not contain the type checks.
+So if, for example, the <i>operation</i> parameter's value comes from an external interface, there is no definite guarantee that it will be one of the allowed values. Therefore, it's still better to include error handling and be prepared for the unexpected to happen. 
+In this case, when there are multiple possible accepted values and all unexpected ones should result in an error, the [switch...case](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) statement suits better than if...else in our code.
+
+The code of our calculator should actually look something like this:
 
 ```js
-const App = () => {
-  const [errorMessage, setErrorMessage] = useState(null) // highlight-line
+type Operation = 'multiply' | 'add' | 'divide';
 
-  const result = useQuery(ALL_PERSONS)
+type Result = number;  // highlight-line
 
-  if (result.loading)  {
-    return <div>loading...</div>
+const calculator = (a: number, b: number, op: Operation) : Result => {  // highlight-line
+  switch(op) {
+    case 'multiply':
+      return a * b;
+    case 'divide':
+      if (b === 0) throw new Error('Can\'t divide by 0!');  // highlight-line
+      return a / b;
+    case 'add':
+      return a + b;
+    default:
+      throw new Error('Operation is not multiply, add or divide!');  // highlight-line
   }
-
-// highlight-start
-  const notify = (message) => {
-    setErrorMessage(message)
-    setTimeout(() => {
-      setErrorMessage(null)
-    }, 10000)
-  }
-  // highlight-end
-
-  return (
-    <div>
-      <Notify errorMessage={errorMessage} />  // highlight-line
-      <Persons persons = {result.data.allPersons} />
-      <PersonForm setError={notify} />  // highlight-line
-    </div>
-  )
 }
 
-// highlight-start
-const Notify = ({errorMessage}) => {
-  if ( !errorMessage ) {
-    return null
+try {
+  console.log(calculator(1, 5 , 'divide'));
+} catch (error: unknown) {
+  let errorMessage = 'Something went wrong.'
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
   }
-
-  return (
-    <div style={{color: 'red'}}>
-    {errorMessage}
-    </div>
-  )
+  console.log(errorMessage);
 }
-// highlight-end
 ```
-Now the user is informed about an error with a simple notification. 
 
-![](../../images/8/15.png)
+As of TypeScript 4.0, <i>catch</i> blocks allow you to specify the type of catch clause variables. Pre-4.4, all <i>catch</i> clause variables were of type <i>any</i>. However, with the release of 4.4, the default type is <i>unknown</i>. The [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) is a kind of top type that was introduced in TypeScript version 3 to be the type-safe counterpart of <i>any</i>. Anything is assignable to <i>unknown</i>, but <i>unknown</i> isn’t assignable to anything but itself and <i>any</i> without a type assertion or a control flow-based narrowing. Likewise, no operations are permitted on an <i>unknown</i> without first asserting or narrowing to a more specific type.
 
-The current code of the application can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-frontend/tree/part8-3) branch <i>part8-3</i>.
+The programs we have written are alright, but it sure would be better if we could use command-line arguments instead of always having to change the code to calculate different things.
 
-### Updating a phone number
+Let's try it out, as we would in a regular Node application, by accessing <i>process.argv</i>. If you are using a recent npm-version (7.0 or later), there are no problems but with an older setup something is not right:
 
-Let's add the possibility to change the phone numbers of persons to our application. The solution is almost identical to the one we used for adding new persons. 
+![](../../images/8/5.png)
 
-Again, the mutation requires parameters.
+So what is the problem in older setups?
+
+### @types/{npm_package}
+
+Let's return to the basic idea of TypeScript. TypeScript expects all globally-used code to be typed, as it does for your own code when your project has a reasonable configuration. The TypeScript library itself contains only typings for the code of the TypeScript package. It is possible to write your own typings for a library, but that is almost never needed - since the TypeScript community has done it for us!
+
+As with npm, the TypeScript world also celebrates open-source code. The community is active and continuously reacting to updates and changes in commonly-used npm packages. You can almost always find the typings for npm packages, so you don't have to create types for all of your thousands of dependencies alone.
+
+Usually, types for existing packages can be found from the <i>@types</i> organization within npm, and you can add the relevant types to your project by installing an npm package with the name of your package with a @types/ prefix. For example: <i>npm install --save-dev @types/react @types/express @types/lodash @types/jest @types/mongoose</i> and so on and so on. The <i>@types/*</i> are maintained by [Definitely typed](https://github.com/DefinitelyTyped/DefinitelyTyped), a community project with the goal of maintaining types of everything in one place.
+
+Sometimes, an npm package can also include its types within the code and, in that case, installing the corresponding <i>@types/*</i> is not necessary.
+
+> **NB:** Since the typings are only used before compilation, the typings are not needed in the production build and they should <i>always</i> be in the devDependencies of the package.json.
+
+Since the global variable <i>process</i> is defined by Node itself, we get its typings by from the package <i>@types/node</i>.
+
+Since version 10.0 <i>ts-node</i> has defined <i>@types/node</i> as a [peer dependency](https://docs.npmjs.com/cli/v8/configuring-npm/package-json#peerdependencies). If the version of npm is at least 7.0, the peer dependencies of a project automatically installed by then npm. If you have an older npm, the peer dependency must be installed explicitly:
+
+
+```shell
+npm install --save-dev @types/node
+```
+
+When the package @types/node is installed, the compiler does not complain about the variable <i>process</i>. Note that there is no need to require the types to the code, the installation of the package is enough!
+
+### Improving the project
+
+Next, let's add npm scripts to run our two programs <i>multiplier</i> and <i>calculator</i>:
+
+```json
+{
+  "name": "fs-open",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "ts-node": "ts-node",
+    "multiply": "ts-node multiplier.ts", // highlight-line
+    "calculate": "ts-node calculator.ts" // highlight-line
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}
+```
+
+We can get the multiplier to work with command-line parameters with the following changes:
 
 ```js
-export const EDIT_NUMBER = gql`
-  mutation editNumber($name: String!, $phone: String!) {
-    editNumber(name: $name, phone: $phone) {
-      name
-      phone
-      address {
-        street
-        city
-      }
-      id
+const multiplicator = (a: number, b: number, printText: string) => {
+  console.log(printText,  a * b);
+}
+
+const a: number = Number(process.argv[2])
+const b: number = Number(process.argv[3])
+multiplicator(a, b, `Multiplied ${a} and ${b}, the result is:`);
+```
+
+And we can run it with:
+
+```shell
+npm run multiply 5 2
+```
+
+If the program is run with parameters that are not of the right type, e.g.
+
+```shell
+npm run multiply 5 lol
+```
+
+it "works" but gives us the answer:
+
+```shell
+Multiplied 5 and NaN, the result is: NaN
+```
+
+The reason for this is, that <i>Number('lol')</i> returns <i>NaN</i>, 
+which is actually type <i>number</i>, so TypeScript has no power to rescue  us from this kind of situation.
+
+In order to prevent this kind of behaviour, we have to validate the data given to us from the command line.
+
+The improved version of the multiplicator looks like this:
+
+```js
+interface MultiplyValues {
+  value1: number;
+  value2: number;
+}
+
+const parseArguments = (args: Array<string>): MultiplyValues => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+  if (args.length > 4) throw new Error('Too many arguments');
+
+  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+    return {
+      value1: Number(args[2]),
+      value2: Number(args[3])
     }
+  } else {
+    throw new Error('Provided values were not numbers!');
   }
-`
-```
-
-The <i>PhoneForm</i> component responsible for the change is straightforward. The form has fields for the person's name and new phone number, and calls the _changeNumber_ function. The function is done using the _useMutation_ hook. 
-Interesting lines on the code have been highlighted.
-
-```js
-import { useState } from 'react'
-import { useMutation } from '@apollo/client'
-
-import { EDIT_NUMBER } from '../queries'
-
-const PhoneForm = () => {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-
-// highlight-start
-  const [ changeNumber ] = useMutation(EDIT_NUMBER)
-// highlight-end
-
-  const submit = (event) => {
-    event.preventDefault()
-
-// highlight-start
-    changeNumber({ variables: { name, phone } })
-    // highlight-end
-
-    setName('')
-    setPhone('')
-  }
-
-  return (
-    <div>
-      <h2>change number</h2>
-
-      <form onSubmit={submit}>
-        <div>
-          name <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div>
-        <div>
-          phone <input
-            value={phone}
-            onChange={({ target }) => setPhone(target.value)}
-          />
-        </div>
-        <button type='submit'>change number</button>
-      </form>
-    </div>
-  )
 }
 
-export default PhoneForm
+const multiplicator = (a: number, b: number, printText: string) => {
+  console.log(printText,  a * b);
+}
+
+try {
+  const { value1, value2 } = parseArguments(process.argv);
+  multiplicator(value1, value2, `Multiplied ${value1} and ${value2}, the result is:`);
+} catch (error: unknown) {
+  let errorMessage = 'Something bad happened.'
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
+  }
+  console.log(errorMessage);
+}
 ```
 
-It looks bleak, but it works: 
+When we now run the program:
 
-![](../../images/8/22a.png)
+```shell
+npm run multiply 1 lol
+```
 
-Surprisingly, when a person's number is changed, the new number automatically appears on the list of persons rendered by the <i>Persons</i> component. 
-This happens because each person has an identifying field of type <i>ID</i>, so the person's details saved to the cache update automatically when they are changed with the mutation. 
+we get a proper error message:
 
-The current code of the application can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-frontend/tree/part8-4) branch <i>part8-4</i>.
+```shell
+Something bad happened. Error: Provided values were not numbers!
+```
 
-Our application still has one small flaw. If we try to change the phone number for a name which does not exist, nothing seems to happen. 
-This happens because if a person with the given name cannot be found, 
-the mutation response is <i>null</i>:
+The definition of the function <i>parseArguments</i> has a couple of interesting things:
 
-![](../../images/8/23ea.png)
-
-For GraphQL, this is not an error, so registering an _onError_ error handler is not useful. 
-
-We can use the _result_ field returned by the _useMutation_ hook as its second parameter to generate an error message. 
-
-```js 
-const PhoneForm = ({ setError }) => {
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-
-  const [ changeNumber, result ] = useMutation(EDIT_NUMBER) // highlight-line
-
-  const submit = (event) => {
-    // ...
-  }
-
-  // highlight-start
-  useEffect(() => {
-    if (result.data && result.data.editNumber === null) {
-      setError('person not found')
-    }
-
-  }, [result.data])
-  // highlight-end
-
+```js
+const parseArguments = (args: Array<string>): MultiplyValues => {
   // ...
 }
 ```
 
-If a person cannot be found, or the _result.data.editNumber_ is _null_, the component uses the callback function it received as props to set a suitable error message. 
-We want to set the error message only when the result of the mutation 
-_result.data_ changes, so we use the useEffect hook to control setting the error message. 
-
-Using useEffect causes an ESLint warning:
-
-![](../../images/8/41x.png)
-
-The warning is pointless, and the easiest solution is to ignore the ESLint rule on the line:
+Firstly,  the parameter <i>args</i> is an [array](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays) of strings. The return value has the type <i>MultiplyValues</i>, which is defined as follows:
 
 ```js
-useEffect(() => {
-  if (result.data && !result.data.editNumber) {
-    setError('name not found')
-  }
-// highlight-start  
-}, [result.data])  // eslint-disable-line 
-// highlight-end
+interface MultiplyValues {
+  value1: number;
+  value2: number;
+}
 ```
 
-We could try to get rid of the warning by adding the _setError_ function to useEffect's second parameter array:
-
-```js
-useEffect(() => {
-  if (result.data && !result.data.editNumber) {
-    setError('name not found')
-  }
-// highlight-start  
-}, [result.data, setError])
-// highlight-end
-```
-
-However, this solution does not work if the _notify_ function is not wrapped to a [useCallback](https://reactjs.org/docs/hooks-reference.html#usecallback) function.  If it's not, this results in an endless loop. When the _App_ component is rerendered after a notification is removed, a <i>new version</i> of _notify_ gets created which causes the effect function to be executed, which causes a new notification, and so on, and so on...
-
-The current code of the application can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-frontend/tree/part8-5) branch <i>part8-5</i>.
-
-### Apollo Client and the applications state
-
-In our example, management of the applications state has mostly become the responsibility of Apollo Client. This is a quite typical solution for GraphQL applications. 
-Our example uses the state of the React components only to manage the state of a form and to show error notifications. As a result, it could be that there are no justifiable reasons to use Redux to manage application state when using GraphQL.
-
-When necessary, Apollo enables saving the application's local state to [Apollo cache](https://www.apollographql.com/docs/react/local-state/local-state-management/).
+The definition utilizes TypeScript's Interface [object type](https://www.typescriptlang.org/docs/handbook/2/objects.html) keyword, which is one way to define the "shape" an object should have. 
+In our case it is quite obvious that the return value should be an object with the two properties <i>value1</i> and <i>value2</i>, which should both be of type number. 
 
 </div>
 
 <div class="tasks">
 
-### Exercises 8.8.-8.12.
+### Exercises 8.1.-8.3.
 
-Through these exercises, we'll implement a frontend for the GraphQL library. 
+#### setup
 
-Take [this project](https://github.com/fullstack-hy2020/library-frontend) as a start for your application. 
+Exercises 8.1.-8.7. will all be made in the same node project. Create the project in an empty directory with <i>npm init</i> and install the ts-node and typescript packages. Also create the file <i>tsconfig.json</i> in the directory with the following content:
 
-You can implement your application either using the render prop components <i>Query</i> and <i>Mutation</i> of the Apollo Client, or using the hooks provided by Apollo client 3.0. 
+```json
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+  }
+}
+```
 
-#### 8.8: Authors view
+The compiler option [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny), that makes it mandatory to have types for all variables used, is actually currently a default, but let us still define it explicitly.
 
-Implement an Authors view to show the details of all authors on a page as follows: 
+#### 8.1 Body mass index
 
-![](../../images/8/16.png)
+Create the code of this exercise in file <i>bmiCalculator.ts</i>.
 
-#### 8.9: Books view
+Write a function <i>calculateBmi</i> that calculates a [BMI](https://en.wikipedia.org/wiki/Body_mass_index) based on a given height (in centimeters) and weight (in kilograms) and then returns a message that suits the results. 
 
-Implement a Books view to show on a page all other details of all books except their genres. 
+Call the function in the same file with hard-coded parameters and print out the result. The code
 
-![](../../images/8/17.png)
+```js
+console.log(calculateBmi(180, 74))
+```
 
-#### 8.10: Adding a book
+should print the following message:
 
-Implement a possibility to add new books to your application. The functionality can look like this: 
+```shell
+Normal (healthy weight)
+```
 
-![](../../images/8/18.png)
+Create a npm script for running the program with command <i>npm run calculateBmi</i>.
 
-Make sure that the Authors and Books views are kept up to date after a new book is added. 
+#### 8.2 Exercise calculator
 
-In case of problems when making queries or mutations, check from the developer console what the server response is:
+Create the code of this exercise in file <i>exerciseCalculator.ts</i>.
 
-![](../../images/8/42ea.png)
+Write a function <i>calculateExercises</i> that calculates the average time of <i>daily exercise hours</i> and compares it to the <i>target amount</i> of daily hours and returns an object that includes the following values:
 
-#### 8.11: Authors birth year
+  - the number of days
+  - the number of training days
+  - the original target value
+  - the calculated average time
+  - boolean value describing if the target was reached
+  - a rating between the numbers 1-3 that tells how well the hours are met. You can decide on the metric on your own.
+  - a text value explaining the rating
 
-Implement a possibility to set authors birth year. You can create a new view for setting the birth year, or place it on the Authors view: 
+The daily exercise hours are given to the function as an [array](https://www.typescriptlang.org/docs/handbook/basic-types.html#array) that contains the number of exercise hours for each day in the training period. Eg. a week with 3 hours of training on Monday, none on Tuesday, 2 hours on Wednesday, 4.5 hours on Thursday and so on would be represented by the following array:
 
-![](../../images/8/20.png)
+```js
+[3, 0, 2, 4.5, 0, 3, 1]
+```
 
-Make sure that the Authors view is kept up to date after setting a birth year. 
+For the Result object, you should create an [interface](https://www.typescriptlang.org/docs/handbook/interfaces.html).
 
-#### 8.12: Authors birth year advanced
+If you call the function with parameters <i>[3, 0, 2, 4.5, 0, 3, 1]</i> and <i>2</i>, it should return:
 
-Change the birth year form so that a birth year can be set only for an existing author. Use [select tag](https://reactjs.org/docs/forms.html#the-select-tag), [react select](https://github.com/JedWatson/react-select), or some other mechanism. 
+```js
+{ periodLength: 7,
+  trainingDays: 5,
+  success: false,
+  rating: 2,
+  ratingDescription: 'not too bad but could be better',
+  target: 2,
+  average: 1.9285714285714286 }
+```
 
+Create a npm script, <i>npm run calculateExercises</i>, to call the function with hard-coded values.
 
-A solution using the react select library looks as follows: 
+#### 8.3 Command line
 
-![](../../images/8/21.png)
+Change the previous exercises so that you can give the parameters of <i>bmiCalculator</i> and <i>exerciseCalculator</i> as command-line arguments.
+
+Your program could work eg. as follows:
+
+```shell
+$ npm run calculateBmi 180 91
+
+Overweight
+```
+
+and:
+
+```shell
+$ npm run calculateExercises 2 1 0 2 4.5 0 3 1 0 4
+
+{ periodLength: 9,
+  trainingDays: 6,
+  success: false,
+  rating: 2,
+  ratingDescription: 'not too bad but could be better',
+  target: 2,
+  average: 1.7222222222222223 }
+```
+
+In the example, the <i>first argument</i> is the target value.
+
+Handle exceptions and errors appropriately. The exerciseCalculator should accept inputs of varied lengths. Determine by yourself how you manage to collect all needed input.
 
 </div>
 
+<div class="content">
+
+### More about tsconfig
+
+We have so far used only one tsconfig rule [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny). It's a good place to start, but now it's time to look into the config file a little deeper.
+
+As mentioned, the [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file contains all your core configurations on how you want TypeScript to work in your project. 
+
+Let's specify the following configurations in our <i>tsconfig.json</i> file:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  }
+}
+```
+
+Do not worry too much about the <i>compilerOptions</i>; they will be under closer inspection later on.
+
+You can find explanations for each of the configurations from the TypeScript documentation, or from the really handy [tsconfig page](https://www.typescriptlang.org/tsconfig), or from the tsconfig [schema definition](http://json.schemastore.org/tsconfig), which unfortunately is formatted a little worse than the first two options. 
+
+### Adding Express to the mix
+
+Right now, we are in a pretty good place. Our project is set up and we have two executable calculators in it. 
+However, since our aim is to learn FullStack development, it is time to start working with some HTTP requests.
+
+Let us start by installing Express:
+
+```
+npm install express
+```
+
+and then add the <i>start</i> script to package.json:
+
+```json
+{
+  // ..
+  "scripts": {
+    "ts-node": "ts-node",
+    "multiply": "ts-node multiplier.ts",
+    "calculate": "ts-node calculator.ts",
+    "start": "ts-node index.ts" // highlight-line
+  },
+  // ..
+}
+```
+
+Now we can create the file <i>index.ts</i>, and write the HTTP GET <i>ping</i> endpoint to it:
+
+```js
+const express = require('express');
+const app = express();
+
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
+const PORT = 3003;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+Everything else seems to be working just fine but, as you'd expect, the <i>req</i> and  <i>res</i> parameters of <i>app.get</i> need typing. If you look carefully, VSCode is also complaining about something to about the importing of Express. You can see a short yellow line of dots under the <i>require</i>. Let's hover over the problem:
+
+![](../../images/8/6.png)
+
+The complaint is that the <i>'require' call may be converted to an import</i>. Let us follow the advice and write the import as follows:
+
+```js
+import express from 'express';
+```
+
+**NB**: VSCode offers you a possibility to fix the issues automatically by clicking the <i>Quick Fix...</i> button. Keep your eyes open for these helpers/quick fixes; listening to your editor usually makes your code better and easier to read. The automatic fixes for issues can be a major time saver as well. 
+
+Now we run into another problem, the compiler complains about the import statement. 
+Once again, the editor is our best friend when trying to find out what the issue is:
+
+![](../../images/8/7.png)
+
+We haven't installed types for <i>express</i>. 
+Let's do what the suggestion says and run:
+
+```
+npm install --save-dev @types/express
+```
+
+And no more errors! Let's take a look at what changed.
+
+When we hover over the <i>require</i> statement, we can see the compiler interprets everything express-related to be of type <i>any</i>.
+
+![](../../images/8/8a.png)
+
+Whereas when we use <i>import</i>, the editor knows the actual types:
+
+![](../../images/8/9x.png)
+
+Which import statement to use depends on the export method used in the imported package. 
+
+A good rule of thumb is to try importing a module using the <i>import</i> statement first. We will always use this method in the <i>frontend</i>. 
+If  <i>import</i> does not work, try a combined method: <i>import ... = require('...')</i>.
+
+We strongly suggest you read more about TypeScript modules [here](https://www.typescriptlang.org/docs/handbook/modules.html).
+
+There is one more problem with the code:
+
+![](../../images/8/9b.png)
+
+This is because we banned unused parameters in our <i>tsconfig.json</i>:
+
+```js
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true, // highlight-line
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true
+  }
+}
+```
+
+This configuration might create problems if you have library-wide predefined functions which require declaring a variable even if it's not used at all, as is the case here. 
+Fortunately, this issue has already been solved on configuration level. 
+Once again hovering over the issue gives us a solution. This time we can just click the quick fix button:
+
+![](../../images/8/14a.png)
+
+If it is absolutely impossible to get rid of an unused variable, you can prefix it with an underscore to inform the compiler you have thought about it and there is nothing you can do. 
+
+Let's rename the <i>req</i> variable to <i>_req</i>. Finally we are ready to start the application. It seems to work fine:
+
+![](../../images/8/11a.png)
+
+To simplify the development, we should enable <i>auto-reloading</i> to improve our workflow. In this course, you have already used <i>nodemon</i>, but ts-node has an alternative called <i>ts-node-dev</i>. It is meant to be used only with a development environment which takes care of recompilation on every change, so restarting the application won't be necessary.
+
+Let's install <i>ts-node-dev</i> to our development dependencies:
+
+```
+npm install --save-dev ts-node-dev
+```
+
+Add a script to <i>package.json</i>:
+
+```json
+{
+  // ...
+  "scripts": {
+      // ...
+      "dev": "ts-node-dev index.ts", // highlight-line
+  },
+  // ...
+}
+```
+
+And now, by running <i>npm run dev</i>, we have a working, auto-reloading development environment for our project!
+
+</div>
+
+<div class="tasks">
+
+### Exercises 8.4.-8.5.
+
+#### 8.4 Express
+
+Add Express to your dependencies and create an HTTP GET endpoint <i>hello</i> that answers 'Hello Full Stack!'
+
+The web app should be started with commands <i>npm start</i> in production mode and <i>npm run dev</i> in development mode. The latter should also use <i>ts-node-dev</i> to run the app.
+
+Replace also your existing <i>tsconfig.json</i> file with the  following content:
+
+```json
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "declaration": true,
+  }
+}
+```
+
+Make sure there aren't any errors!
+
+#### 8.5 WebBMI
+
+Add an endpoint for the BMI calculator that can be used by doing an HTTP GET request to endpoint <i>bmi</i> and specifying the input with [query string parameters](https://en.wikipedia.org/wiki/Query_string). For example, to get the BMI of a person having height 180 and weight 72, the url is http://localhost:3002/bmi?height=180&weight=72.
+
+The response is a json of the form:
+
+```js
+{
+  weight: 72,
+  height: 180,
+  bmi: "Normal (healthy weight)"
+}
+```
+
+See the [Express documentation](http://expressjs.com/en/5x/api.html#req.query) for info on how to access the query parameters.
+
+If the query parameters of the request are of the wrong type or missing, a response with proper status code and error message is given:
+
+```js
+{
+  error: "malformatted parameters"
+}
+```
+
+Do not copy the calculator code to file <i>index.ts</i>; instead, make it a [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules.html) that can be imported in <i>index.ts</i>.
+
+</div>
+
+<div class="content">
+
+### The horrors of <i>any</i>
+
+Now that we have our first endpoints completed, you might notice we have used barely any TypeScript in these small examples. When examining the code a bit closer, we can see a few dangers lurking there.
+
+Let's add the HTTP POST endpoint <i>calculate</i> to our app:
+
+```js
+import { calculator } from './calculator';
+
+// ...
+
+app.post('/calculate', (req, res) => {
+  const { value1, value2, op } = req.body;
+
+  const result = calculator(value1, value2, op);
+  res.send(result);
+});
+
+```
+
+When you hover over the <i>calculate</i> function, you can see the typing of the <i>calculator</i> even though the code itself does not contain any typings:
+
+![](../../images/8/12a21.png)
+
+But if you hover over the values parsed from the request, an issue arises:
+
+![](../../images/8/13a21.png)
+
+All of the variables have type <i>any</i>. It is not all that surprising, as no one has given them a type yet. There are a couple of ways to fix this, but first, we have to consider why this is accepted and where the type <i>any</i> came from.
+
+In TypeScript, every untyped variable whose type cannot be inferred implicitly becomes type [any](http://www.typescriptlang.org/docs/handbook/basic-types.html#any). Any is a kind of "wild card" type which literally stands for <i>whatever</i> type. 
+Things become implicitly any type quite often when one forgets to type functions. 
+
+We can also explicitly type things <i>any</i>. The only difference between implicit and explicit any type is how the code looks; the compiler does not care about the difference. 
+
+Programmers however see the code differently when <i>any</i> is explicitly enforced than when it is implicitly inferred. 
+Implicit <i>any</i> typings are usually considered problematic, since it is quite often due to the coder forgetting to assign types (or being too lazy to do it), and it also means that the full power of TypeScript is not properly exploited. 
+
+This is why the configuration rule [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny) exists on compiler level, and it is highly recommended to keep it on at all times. 
+In the rare occasions when you truly cannot know what the type of a variable is, you should explicitly state that in the code:
+
+```js
+const a : any = /* no clue what the type will be! */.
+```
+
+We already have <i>noImplicitAny</i> configured in our example, so why does the compiler not complain about the implicit <i>any</i> types?
+The reason is that the <i>query</i> field of an express [Request](https://expressjs.com/en/5x/api.html#req) object is explicitly typed <i>any</i>. The same is true for the <i>request.body</i> field we use to post data to an app. 
+
+
+What if we would like to prevent developers from using <i>any</i> type at all? Fortunately, we have other methods than <i>tsconfig.json</i> to enforce coding style. What we can do is  use <i>eslint</i> to manage
+our code. 
+Let's install eslint and its TypeScript extensions:
+
+```shell
+npm install --save-dev eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
+```
+
+We will configure eslint to [disallow explicit any]( https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md). Write the following rules to <i>.eslintrc</i>:
+
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 2 // highlight-line
+  }
+}
+```
+
+(Newer versions of eslint has this rule on by default, so you don't necessarily need to add it separately.)
+
+Let us also set up a <i>lint</i> npm script to inspect the files with <i>.ts</i> extension by modifying the <i>package.json</i> file: 
+
+```json
+{
+  // ...
+  "scripts": {
+      "start": "ts-node index.ts",
+      "dev": "ts-node-dev index.ts",
+      "lint": "eslint --ext .ts ." // highlight-line
+      //  ...
+  },
+  // ...
+}
+```
+
+Now lint will complain if we try to define a variable of type <i>any</i>:
+
+![](../../images/8/13b.png)
+
+
+[@typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) has a lot of TypeScript-specific eslint rules, but you can also use all basic eslint rules in TypeScript projects. 
+For now, we should probably go with the recommended settings, and we will modify the rules as we go along whenever we find something we want to change the behavior of.
+
+On top of the recommended settings, we should try to get familiar with the coding style required in this part and <i>set the semicolon at the end of each line of code to required</i>.
+
+So we will use the following <i>.eslintrc</i>
+
+```json
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "no-case-declarations": "off"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
+```
+
+There are quite a few semicolons missing, but those are easy to add. We also have to solve the ESlint issues concerning the _any_-type:
+
+![](../../images/8/50x.png)
+
+We could and probably should disable some ESlint rules to get the data from the request body.
+
+Disabling <i>@typescript-eslint/no-unsafe-assignment</i> for the destructuring assignment is nearly enough:
+
+```js
+app.post('/calculate', (req, res) => {
+  // highlight-start
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment 
+  // highlight-end
+  const { value1, value2, op } = req.body;
+
+  const result = calculator(Number(value1), Number(value2), op);
+  res.send(result);
+});
+```
+
+However this still leaves one problem to deal with, the last parameter in the function call is not safe:
+
+![](../../images/8/51x.png)
+
+We can just disable another ESlint rule to get rid of that:
+
+```js
+app.post('/calculate', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { value1, value2, op } = req.body;
+
+  // highlight-start
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  // highlight-end
+  const result = calculator(Number(value1), Number(value2), op);
+  res.send(result);
+});
+```
+
+We now got ESlint silenced but we are totally on mercy of the user. We most definitively should do some validation to the post data and give a proper error message if the data is invalid:
+
+```js
+app.post('/calculate', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { value1, value2, op } = req.body;
+
+// highlight-start
+  if ( !value1 || isNaN(Number(value1))) {
+    return res.status(400).send({ error: '...'});
+  }
+  // highlight-end
+
+  // more validations here...
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const result = calculator(Number(value1), Number(value2), op);
+  return res.send(result);
+});
+```
+
+</div>
+
+<div class="tasks">
+
+### Exercises 8.6.-8.7.
+
+#### 8.6 Eslint
+
+Configure your project to use the above eslint settings and fix all the warnings.
+
+#### 8.7 WebExercises
+
+Add an endpoint to your app for the exercise calculator. It should be used by doing an HTTP POST request to endpoint <i>exercises</i> with the input in the request body:
+
+```js
+{
+  "daily_exercises": [1, 0, 2, 0, 3, 0, 2.5],
+  "target": 2.5
+}
+```
+
+The response is a json of the following form:
+
+```js
+{
+    "periodLength": 7,
+    "trainingDays": 4,
+    "success": false,
+    "rating": 1,
+    "ratingDescription": "bad",
+    "target": 2.5,
+    "average": 1.2142857142857142
+}
+```
+
+If the body of the request is not of the right form, a response with proper status code and error message is given. The error message is either
+
+```js
+{
+  error: "parameters missing"
+}
+```
+
+or
+
+```js
+{
+  error: "malformatted parameters"
+}
+```
+
+depending on the error. The latter happens if the input values do not have the right type, i.e. they are not numbers or convertible to numbers.
+
+In this exercise, you might find it beneficial to use the <i>explicit any</i> type when handling the data in the request body. Our eslint configuration is preventing this but you may unset this rule for a particular line by inserting the following comment as the previous line:
+
+```js
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+```
+
+You might also get in trouble with rules <i>no-unsafe-member-access</i> and <i>no-unsafe-assignment </i>. These rules may be ignored in this exercise.
+
+Note that you need to have a correct setup in order to get hold of the request body; see [part 3](/en/part3/node_js_and_express#receiving-data).
+
+</div>

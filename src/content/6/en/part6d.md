@@ -585,7 +585,7 @@ Should we always use redux? Probably not. Dan Abramov, the developer of redux, d
 
 Nowadays it is possible to implement redux-like state management without redux by using the React [context](https://reactjs.org/docs/context.html)-api and the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)-hook. 
 More about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/) and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/). We will also practice this in 
-[part 9](/en/part9).
+[part 8](/en/part8).
 
 </div>
 
@@ -611,6 +611,6 @@ Fix the bug so that after multiple votes in a row, the notification for the last
 The fix can be done by canceling the previous notification when a new notification is displayed, whenever necessary. 
 The [documentation](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) for the setTimeout function might also be useful for this.
 
-This was the last exercise for this part of the course and it's time to push your code to GitHub and mark all of your completed exercises to the [exercise submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
+This was the last exercise for this part of the course and it's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 
 </div>

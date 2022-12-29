@@ -3,11 +3,8 @@ import './Some.scss';
 import React from 'react';
 
 const urls = {
-  github: 'https://github.com/fullstack-hy2020/fullstack-hy2020.github.io',
-  twitter: 'https://twitter.com/moocfi',
-  facebook: 'https://www.facebook.com/Moocfi',
-  youtube:
-    'https://www.youtube.com/watch?v=BZexOyQZMMc&list=PLumQiZ25uijis31zaRL7rhzLalSwLqUtm',
+  github: 'https://github.com/onzfonz',
+  youtube: 'https://www.youtube.com/channel/UCqQWXa8a1oClAo8Kcc3Q2uA/',
 };
 
 export const Some = ({ iconName }) => (

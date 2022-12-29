@@ -7,1003 +7,965 @@ lang: en
 
 <div class="content">
 
-After the brief introduction to the main principles of TypeScript, we are now ready to start our journey towards becoming FullStack TypeScript developers. 
-Rather than giving you a thorough introduction to all aspects of TypeScript, we will focus in this part on the most common issues that arise when developing express backends or React frontends with TypeScript. 
-In addition to language features, we will also have a strong emphasis on tooling.
+Now that we have set up our development environment we can get into React Native basics and get started with the development of our application. In this section, we will learn how to build user interfaces with React Native's core components, how to add style properties to these core components, how to transition between views, and how to manage form's state efficiently.
 
-### Setting things up
+### Core components
 
-Install TypeScript support to your editor of choice. [Visual Studio Code](https://code.visualstudio.com/) works natively with TypeScript. 
+In the previous parts, we have learned that we can use React to define components as functions which receive props as an argument and returns a tree of React elements. This tree is usually represented with JSX syntax. In the browser environment, we have used the [ReactDOM](https://reactjs.org/docs/react-dom.html) library to turn these components into a DOM tree that can be rendered by a browser. Here is a concrete example of a very simple component:
 
-As mentioned earlier, TypeScript code is not executable by itself. It has to be first compiled into executable JavaScript. 
-When TypeScript is compiled into JavaScript, the code becomes subject for type erasure. This means that type annotations, interfaces, type aliases, and other type system constructs are removed and the result is pure ready-to-run JavaScript. 
-
-In a production environment, the need for compilation often means that you have to set up a "build step." During the build step all TypeScript code is compiled into JavaScript in a separate folder, and the production environment then runs the code from that folder. In a development environment, it is often handier to make use of real-time compilation and auto-reloading in order to be able to see the resulting changes more quickly.
-
-Let's start writing our first TypeScript app. To keep things simple, let's start by using the npm package [ts-node](https://github.com/TypeStrong/ts-node). It compiles and executes the specified TypeScript file immediately, so that there is no need for a separate compilation step.
-
-You can install both <i>ts-node</i> and the official <i>typescript</i> package globally by running:
-```
-npm install -g ts-node typescript
+```javascript
+const HelloWorld = props => {
+  return <div>Hello world!</div>;
+};
 ```
 
-If you can't or don't want to install global packages, you can create an npm project which has the required dependencies and run your scripts in it. 
-We will also take this approach. 
+The <em>HelloWorld</em> component returns a single <i>div</i> element which is created using the JSX syntax. We might remember that this JSX syntax is compiled into <em>React.createElement</em> method calls, such as this:
 
-As we recall from [part 3](/en/part3), an npm project is set by running the command <i>npm init</i> in an empty directory. Then we can install the dependencies by running 
-
-```
-npm install --save-dev ts-node typescript
+```javascript
+React.createElement('div', null, 'Hello world!');
 ```
 
-and set up <i>scripts</i> within the package.json: 
+This line of code creates a <i>div</i> element without any props and with a single child element which is a string <i>"Hello world"</i>. When we render this component into a root DOM element using the <em>ReactDOM.render</em> method the <i>div</i> element will be rendered as the corresponding DOM element.
 
-```json
-{
-  // ..
-  "scripts": {
-    "ts-node": "ts-node" // highlight-line
+As we can see, React is not bound to a certain environment, such as the browser environment. Instead, there are libraries such as ReactDOM that can render <i>a set of predefined components</i>, such as DOM elements, in a specific environment. In React Native these predefined components are called <i>core components</i>.
+
+[Core components](https://reactnative.dev/docs/intro-react-native-components) are a set of components provided by React Native which behind the scenes utilize the platform's native components. Let's implement the previous example using React Native:
+
+```javascript
+import { Text } from 'react-native'; // highlight-line
+
+const HelloWorld = props => {
+  return <Text>Hello world!</Text>; // highlight-line
+};
+```
+
+So we import the [Text](https://reactnative.dev/docs/text) component from React Native and replace the <i>div</i> element with a <i>Text</i> element. Many familiar DOM elements have their React Native "counterparts". Here are some examples picked from the React Native's [Core Components documentation](https://reactnative.dev/docs/components-and-apis):
+
+- [Text](https://reactnative.dev/docs/text) component is <i>the only</i> React Native component that can have textual children. It is similar to for example the <em>&lt;strong&gt;</em> and the <em>&lt;h1&gt;</em> elements.
+- [View](https://reactnative.dev/docs/view) component is the basic user interface building block similar to the <em>&lt;div&gt;</em> element.
+- [TextInput](https://reactnative.dev/docs/textinput) component is a text field component similar to the <em>&lt;input&gt;</em> element.
+- [Pressable](https://reactnative.dev/docs/pressable) component is for capturing different press events. It is similar to for example the <em>&lt;button&gt;</em> element.
+
+There are a few notable differences between core components and DOM elements. The first difference is that the <em>Text</em> component is <i>the only</i> React Native component that can have textual children. This means that you can't, for example, replace the <em>Text</em> component with the <em>View</em> component in the previous example.
+
+The second notable difference is related to the event handlers. While working with the DOM elements we are used to adding event handlers such as <em>onClick</em> to basically any element such as <em>&lt;div&gt;</em> and <em>&lt;button&gt;</em>. In React Native we have to carefully read the [API documentation](https://reactnative.dev/docs/components-and-apis) to know what event handlers (as well as other props) a component accepts. For example, the [Pressable](https://reactnative.dev/docs/pressable) component provides props for listening to different kind of press events. We can for example use the component's [onPress](https://reactnative.dev/docs/pressable) prop for listening to press events:
+
+```javascript
+import { Text, Pressable, Alert } from 'react-native';
+
+const PressableText = props => {
+  return (
+    <Pressable
+      onPress={() => Alert.alert('You pressed the text!')}
+    >
+      <Text>You can press me</Text>
+    </Pressable>
+  );
+};
+```
+
+Now that we have a basic understanding of the core components, let's start to give our project some structure. Create a <i>src</i> directory in the root directory of your project and in the <i>src</i> directory create a <i>components</i> directory. In the <i>components</i> directory create a file <i>Main.jsx</i> with the following content:
+
+```javascript
+import Constants from 'expo-constants';
+import { Text, StyleSheet, View } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: Constants.statusBarHeight,
+    flexGrow: 1,
+    flexShrink: 1,
   },
-  // ..
-}
+});
+
+const Main = () => {
+  return (
+    <View style={styles.container}>
+      <Text>Rate Repository Application</Text>
+    </View>
+  );
+};
+
+export default Main;
 ```
 
-You can now use <i>ts-node</i> within this directory by running <i>npm run ts-node</i>. Note that if you are using ts-node through package.json, all command-line arguments for the script need to be prefixed with <i>--</i>. So if you want to run file.ts with <i>ts-node</i>, the whole command is: 
+Next, let's use the <em>Main</em> component in the <em>App</em> component in the <i>App.js</i> file which is located in our project's root directory. Replace the current content of the file with this:
 
-```shell
-npm run ts-node -- file.ts
+```javascript
+import Main from './src/components/Main';
+
+const App = () => {
+  return <Main />;
+};
+
+export default App;
 ```
 
-It is worth mentioning that TypeScript also provides an online playground, where you can quickly try out TypeScript code and instantly see the resulting JavaScript and possible compilation errors. You can access TypeScript's official playground [here](https://www.typescriptlang.org/play/index.html).
+### Manually reloading the application
 
-**NB:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment, which is why you might see different warnings there compared to your local environment. The playground's tsconfig is modifiable through the config dropdown menu.
+As we have seen, Expo will automatically reload the application when we make changes to the code. However, there might be times when automatic reload isn't working and the application has to be reloaded manually. This can be achieved through the in-app developer menu.
 
-#### A note about the coding style
+You can access the developer menu by shaking your device or by selecting "Shake Gesture" inside the Hardware menu in the iOS Simulator. You can also use the <em>⌘D</em> keyboard shortcut when your app is running in the iOS Simulator, or <em>⌘M</em> when running in an Android emulator on Mac OS and <em>Ctrl+M</em> on Windows and Linux.
 
-JavaScript is a quite relaxed language in itself, and things can often be done in multiple different ways. For example, we have named vs anonymous functions, using const and let or var, and the use of <i>semicolons</i>. This part of the course differs from the rest by using semicolons. It is not a TypeScript-specific pattern but a general coding style decision taken when creating any kind of JavaScript project. Whether to use them or not is usually in the hands of the programmer, but since it is expected to adapt one's coding habits to the existing codebase, you are expected to use semicolons and to adjust to the coding style in the exercises for this part. This part has some other coding style differences compared to the rest of the course as well, e.g. in the directory naming conventions.
+Once the developer menu is open, simply press "Reload" to reload the application. After the application has been reloaded, automatic reloads should work without the need for a manual reload.
 
-Let us add a configuration file _tsconfig.json_ to the project with the following content:
+</div>
 
-```js
-{
-  "compilerOptions":{
-    "noImplicitAny": false
-  }
-}
-```
+<div class="tasks">
 
-The <i>tsconfig.json</i> file is used to define how the TypeScript compiler should interpret the code, how strictly the compiler should work, which files to watch or ignore, and [much more](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
-For now we will only use the compiler option [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny), that does not require to have types for all variables used.
+### Exercise 9.3.
 
-Let's start by creating a simple Multiplier. It looks exactly as it would in JavaScript.
+#### Exercise 9.3: the reviewed repositories list
 
-```js
-const multiplicator = (a, b, printText) => {
-  console.log(printText,  a * b);
-}
+In this exercise, we will implement the first version of the reviewed repositories list. The list should contain the repository's full name, description, language, number of forks, number of stars, rating average and number of reviews. Luckily React Native provides a handy component for displaying a list of data, which is the [FlatList](https://reactnative.dev/docs/flatlist) component.
 
-multiplicator(2, 4, 'Multiplied numbers 2 and 4, the result is:');
-```
+Implement components <em>RepositoryList</em> and <em>RepositoryItem</em> in the <i>components</i> directory's files <i>RepositoryList.jsx</i> and <i>RepositoryItem.jsx</i>. The <em>RepositoryList</em> component should render the <em>FlatList</em> component and <em>RepositoryItem</em> a single item on the list (hint: use the <em>FlatList</em> component's [renderItem](https://reactnative.dev/docs/flatlist#required-renderitem) prop). Use this as the basis for the <i>RepositoryList.jsx</i> file:
 
-As you can see, this is still ordinary basic JavaScript with no additional TS features. It compiles and runs nicely with  <i>npm run ts-node -- multiplier.ts</i>, as it would with Node.
-  
-But what happens if we end up passing wrong <i>types</i> of arguments to the multiplicator function?
+```javascript
+import { FlatList, View, StyleSheet } from 'react-native';
 
-Let's try it out!
-
-```js
-const multiplicator = (a, b, printText) => {
-  console.log(printText,  a * b);
-}
-
-multiplicator('how about a string?', 4, 'Multiplied a string and 4, the result is:');
-
-```
-
-Now when we run the code, the output is: <i>Multiplied a string and 4, the result is: NaN</i>.
-
-Wouldn't it be nice if the language itself could prevent us from ending up in situations like this? 
-This is where we see the first benefits of TypeScript.  Let's add types to the parameters and see where it takes us.
-
-TypeScript natively supports multiple types including <i>number</i>, <i>string</i> and  <i>Array</i>. See the comprehensive list [here](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html). More complex custom types can also be created.
-
-The first two parameters of our function are the number and the string [primitives](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean), respectively:
-
-```js
-const multiplicator = (a: number, b: number, printText: string) => {
-  console.log(printText,  a * b);
-}
-
-multiplicator('how about a string?', 4, 'Multiplied a string and 4, the result is:');
-```
-
-Now the code is no longer valid JavaScript, but in fact TypeScript. When we try to run the code, we notice that it does not compile:
-
-![](../../images/9/2a.png)
-
-
-One of the best things in TypeScript's editor support is that you don't necessarily need to even run the code to see the issues. 
-The VSCode plugin is so efficient, that it informs you immediately when you are trying to use an incorrect type:
-
-![](../../images/9/2.png)
-
-### Creating your first own types
-
-Let's expand our multiplicator into a slightly more versatile calculator that also supports addition and division. The calculator should accept three arguments: two numbers and the operation, either <i>multiply</i>, <i>add</i> or <i>divide</i>, which tells it what to do with the numbers.
-
-In JavaScript, the code would require additional validation to make sure the last argument is indeed a string. TypeScript offers a way to define specific types for inputs, which describe exactly what type of input is acceptable. On top of that, TypeScript can also show the info of the accepted values already at editor level. 
-
-We can create a <i>type</i> using the TypeScript native keyword <i>type</i>. Let's describe our type <i>Operation</i>:
-
-```js
-type Operation = 'multiply' | 'add' | 'divide';
-```
-
-Now the <i>Operation</i> type accepts only three kinds of input; exactly the three strings we wanted. 
-Using the OR operator _|_ we can define a variable to accept multiple values by creating a [union type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types).
-In this case, we used exact strings (that, in technical terms, are called [string literal types](http://www.typescriptlang.org/docs/handbook/advanced-types.html#string-literal-types)) but with unions, you could also make the compiler accept for example both string and number: _string | number_.
-
-The <i>type</i> keyword defines a new name for a type: [a type alias](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases). Since the defined type is a union of three possible values, it is handy to give it an alias that has a representative name.
-
-Let's look at our calculator now:
-
-```js
-type Operation = 'multiply' | 'add' | 'divide';
-
-const calculator = (a: number, b: number, op: Operation) => {
-  if (op === 'multiply') {
-    return a * b;
-  } else if (op === 'add') {
-    return a + b;
-  } else if (op === 'divide') {
-    if (b === 0) return 'can\'t divide by 0!';
-    return a / b;
-  }
-}
-```
-
-Now, when we hover on top of the <i>Operation</i> type in the calculator function, we can immediately see suggestions on what to do with it:
-
-![](../../images/9/3.png)
-
-And if we try to use a value that is not within the <i>Operation</i> type, we get the familiar red warning signal and extra info from our editor:
-
-![](../../images/9/4x.png)
-
-This is already pretty nice, but one thing we haven't touched yet is typing the return value of a function. Usually, you want to know what a function returns, and it would be nice to have a guarantee that it actually returns what it says it does. Let's add a return value <i>number</i> to the calculator function:
-
-```js
-type Operation = 'multiply' | 'add' | 'divide';
-
-const calculator = (a: number, b: number, op: Operation): number => { // highlight-line
-
-  if (op === 'multiply') {
-    return a * b;
-  } else if (op === 'add') {
-    return a + b;
-  } else if (op === 'divide') {
-    if (b === 0) return 'this cannot be done';
-    return a / b;
-  }
-}
-```
-
-The compiler complains straight away because, in one case, the function returns a string. There are couple of ways to fix this. We could extend the return type to allow string values, like so:
-
-```js
-const calculator = (a: number, b: number, op: Operation): number | string =>  { 
-  // ...
-}
-```
-
-Or we could create a return type which includes both possible types, much like our Operation type:
-
-```js
-type Result = string | number;
-
-const calculator = (a: number, b: number, op: Operation): Result =>  {
-  // ...
-}
-```
-
-But now  the question is if it's <i>really</i> okay for the function to return a string?
-
-When your code can end up in a situation where something is divided by 0, something has probably gone terribly wrong and an error should be thrown and handled where the function was called.
-When you are deciding to return values you weren't originally expecting, the warnings you see from TypeScript prevent you from making rushed decisions and help you to keep your code working as expected.
-
-
-One more thing to consider is, that even though we have defined types for our parameters, the generated JavaScript used at runtime does not contain the type checks.
-So if, for example, the <i>operation</i> parameter's value comes from an external interface, there is no definite guarantee that it will be one of the allowed values. Therefore, it's still better to include error handling and be prepared for the unexpected to happen. 
-In this case, when there are multiple possible accepted values and all unexpected ones should result in an error, the [switch...case](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) statement suits better than if...else in our code.
-
-The code of our calculator should actually look something like this:
-
-```js
-type Operation = 'multiply' | 'add' | 'divide';
-
-type Result = number;  // highlight-line
-
-const calculator = (a: number, b: number, op: Operation) : Result => {  // highlight-line
-  switch(op) {
-    case 'multiply':
-      return a * b;
-    case 'divide':
-      if (b === 0) throw new Error('Can\'t divide by 0!');  // highlight-line
-      return a / b;
-    case 'add':
-      return a + b;
-    default:
-      throw new Error('Operation is not multiply, add or divide!');  // highlight-line
-  }
-}
-
-try {
-  console.log(calculator(1, 5 , 'divide'));
-} catch (error: unknown) {
-  let errorMessage = 'Something went wrong.'
-  if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message;
-  }
-  console.log(errorMessage);
-}
-```
-
-As of TypeScript 4.0, <i>catch</i> blocks allow you to specify the type of catch clause variables. Pre-4.4, all <i>catch</i> clause variables were of type <i>any</i>. However, with the release of 4.4, the default type is <i>unknown</i>. The [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) is a kind of top type that was introduced in TypeScript version 3 to be the type-safe counterpart of <i>any</i>. Anything is assignable to <i>unknown</i>, but <i>unknown</i> isn’t assignable to anything but itself and <i>any</i> without a type assertion or a control flow-based narrowing. Likewise, no operations are permitted on an <i>unknown</i> without first asserting or narrowing to a more specific type.
-
-The programs we have written are alright, but it sure would be better if we could use command-line arguments instead of always having to change the code to calculate different things.
-
-Let's try it out, as we would in a regular Node application, by accessing <i>process.argv</i>. If you are using a recent npm-version (7.0 or later), there are no problems but with an older setup something is not right:
-
-![](../../images/9/5.png)
-
-So what is the problem in older setups?
-
-### @types/{npm_package}
-
-Let's return to the basic idea of TypeScript. TypeScript expects all globally-used code to be typed, as it does for your own code when your project has a reasonable configuration. The TypeScript library itself contains only typings for the code of the TypeScript package. It is possible to write your own typings for a library, but that is almost never needed - since the TypeScript community has done it for us!
-
-As with npm, the TypeScript world also celebrates open-source code. The community is active and continuously reacting to updates and changes in commonly-used npm packages. You can almost always find the typings for npm packages, so you don't have to create types for all of your thousands of dependencies alone.
-
-Usually, types for existing packages can be found from the <i>@types</i> organization within npm, and you can add the relevant types to your project by installing an npm package with the name of your package with a @types/ prefix. For example: <i>npm install --save-dev @types/react @types/express @types/lodash @types/jest @types/mongoose</i> and so on and so on. The <i>@types/*</i> are maintained by [Definitely typed](https://github.com/DefinitelyTyped/DefinitelyTyped), a community project with the goal of maintaining types of everything in one place.
-
-Sometimes, an npm package can also include its types within the code and, in that case, installing the corresponding <i>@types/*</i> is not necessary.
-
-> **NB:** Since the typings are only used before compilation, the typings are not needed in the production build and they should <i>always</i> be in the devDependencies of the package.json.
-
-Since the global variable <i>process</i> is defined by Node itself, we get its typings by from the package <i>@types/node</i>.
-
-Since version 10.0 <i>ts-node</i> has defined <i>@types/node</i> as a [peer dependency](https://docs.npmjs.com/cli/v8/configuring-npm/package-json#peerdependencies). If the version of npm is at least 7.0, the peer dependencies of a project automatically installed by then npm. If you have an older npm, the peer dependency must be installed explicitly:
-
-
-```shell
-npm install --save-dev @types/node
-```
-
-When the package @types/node is installed, the compiler does not complain about the variable <i>process</i>. Note that there is no need to require the types to the code, the installation of the package is enough!
-
-### Improving the project
-
-Next, let's add npm scripts to run our two programs <i>multiplier</i> and <i>calculator</i>:
-
-```json
-{
-  "name": "fs-open",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.ts",
-  "scripts": {
-    "ts-node": "ts-node",
-    "multiply": "ts-node multiplier.ts", // highlight-line
-    "calculate": "ts-node calculator.ts" // highlight-line
+const styles = StyleSheet.create({
+  separator: {
+    height: 10,
   },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "ts-node": "^10.5.0",
-    "typescript": "^4.5.5"
-  }
-}
+});
+
+const repositories = [
+  {
+    id: 'jaredpalmer.formik',
+    fullName: 'jaredpalmer/formik',
+    description: 'Build forms in React, without the tears',
+    language: 'TypeScript',
+    forksCount: 1589,
+    stargazersCount: 21553,
+    ratingAverage: 88,
+    reviewCount: 4,
+    ownerAvatarUrl: 'https://avatars2.githubusercontent.com/u/4060187?v=4',
+  },
+  {
+    id: 'rails.rails',
+    fullName: 'rails/rails',
+    description: 'Ruby on Rails',
+    language: 'Ruby',
+    forksCount: 18349,
+    stargazersCount: 45377,
+    ratingAverage: 100,
+    reviewCount: 2,
+    ownerAvatarUrl: 'https://avatars1.githubusercontent.com/u/4223?v=4',
+  },
+  {
+    id: 'django.django',
+    fullName: 'django/django',
+    description: 'The Web framework for perfectionists with deadlines.',
+    language: 'Python',
+    forksCount: 21015,
+    stargazersCount: 48496,
+    ratingAverage: 73,
+    reviewCount: 5,
+    ownerAvatarUrl: 'https://avatars2.githubusercontent.com/u/27804?v=4',
+  },
+  {
+    id: 'reduxjs.redux',
+    fullName: 'reduxjs/redux',
+    description: 'Predictable state container for JavaScript apps',
+    language: 'TypeScript',
+    forksCount: 13902,
+    stargazersCount: 52869,
+    ratingAverage: 0,
+    reviewCount: 0,
+    ownerAvatarUrl: 'https://avatars3.githubusercontent.com/u/13142323?v=4',
+  },
+];
+
+const ItemSeparator = () => <View style={styles.separator} />;
+
+const RepositoryList = () => {
+  return (
+    <FlatList
+      data={repositories}
+      ItemSeparatorComponent={ItemSeparator}
+      // other props
+    />
+  );
+};
+
+export default RepositoryList;
 ```
 
-We can get the multiplier to work with command-line parameters with the following changes:
+<i>Do not</i> alter the contents of the <em>repositories</em> variable, it should contain everything you need to complete this exercise. Render the <em>RepositoryList</em> component in the <em>Main</em> component which we previously added to the <i>Main.jsx</i> file. The reviewed repository list should roughly look something like this:
 
-```js
-const multiplicator = (a: number, b: number, printText: string) => {
-  console.log(printText,  a * b);
-}
+![Application preview](../../images/9/5.jpg)
 
-const a: number = Number(process.argv[2])
-const b: number = Number(process.argv[3])
-multiplicator(a, b, `Multiplied ${a} and ${b}, the result is:`);
+</div>
+
+<div class="content">
+
+### Style
+
+Now that we have a basic understanding of how core components work and we can use them to build a simple user interface it is time to add some style. In [part 2](/en/part2/adding_styles_to_react_app) we learned that in the browser environment we can define React component's style properties using CSS. We had an option to either define these styles inline using the <em>style</em> prop or in a CSS file with a suitable selector.
+
+There are many similarities in the way style properties are attached to React Native's core components and the way they are attached to DOM elements. In React Native most of the core components accept a prop called <em>style</em>. The <em>style</em> prop accepts an object with style properties and their values. These style properties are in most cases the same as in CSS, however, property names are in <i>camelCase</i>. This means that CSS properties such as <em>padding-top</em> and <em>font-size</em> are written as <em>paddingTop</em> and <em>fontSize</em>. Here is a simple example of how to use the <em>style</em> prop:
+
+```javascript
+import { Text, View } from 'react-native';
+
+const BigBlueText = () => {
+  return (
+    <View style={{ padding: 20 }}>
+      <Text style={{ color: 'blue', fontSize: 24, fontWeight: '700' }}>
+        Big blue text
+      </Text>
+    </View>
+  );
+};
 ```
 
-And we can run it with:
+On top of the property names, you might have noticed another difference in the example. In CSS numerical property values commonly have a unit such as <i>px</i>, <i>%</i>, <i>em</i> or <i>rem</i>. In React Native all dimension related property values such as <em>width</em>, <em>height</em>, <em>padding</em>, and <em>margin</em> as well as font sizes are <i>unitless</i>. These unitless numeric values represent <i>density-independent pixels</i>. In case you are wondering what are the available style properties for certain core component, check the [React Native Styling Cheat Sheet](https://github.com/vhpoet/react-native-styling-cheat-sheet).
+
+In general, defining styles directly in the <em>style</em> prop is not considered such a great idea, because it makes components bloated and unclear. Instead, we should define styles outside the component's render function using the [StyleSheet.create](https://reactnative.dev/docs/stylesheet#create) method. The <em>StyleSheet.create</em> method accepts a single argument which is an object consisting of named style objects and it creates a StyleSheet style reference from the given object. Here is an example of how to refactor the previous example using the <em>StyleSheet.create</em> method:
+
+```javascript
+import { Text, View, StyleSheet } from 'react-native'; // highlight-line
+
+// highlight-start
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  text: {
+    color: 'blue',
+    fontSize: 24,
+    fontWeight: '700',
+  },
+});
+// highlight-end
+
+const BigBlueText = () => {
+  return (
+    <View style={styles.container}> // highlight-line
+      <Text style={styles.text}> // highlight-line
+        Big blue text
+      <Text>
+    </View>
+  );
+};
+```
+
+We create two named style objects, <em>styles.container</em> and <em>styles.text</em>. Inside the component, we can access specific style object the same way we would access any key in a plain object.
+
+In addition to an object, the <em>style</em> prop also accepts an array of objects. In the case of an array, the objects are merged from left to right so that latter style properties take precedence. This works recursively, so we can have for example an array containing an array of styles and so forth. If an array contains values that evaluate to false, such as <em>null</em> or <em>undefined</em>, these values are ignored. This makes it easy to define <i>conditional styles</i> for example, based on the value of a prop. Here is an example of conditional styles:
+
+```javascript
+import { Text, View, StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  text: {
+    color: 'grey',
+    fontSize: 14,
+  },
+  blueText: {
+    color: 'blue',
+  },
+  bigText: {
+    fontSize: 24,
+    fontWeight: '700',
+  },
+});
+
+const FancyText = ({ isBlue, isBig, children }) => {
+  const textStyles = [
+    styles.text,
+    isBlue && styles.blueText,
+    isBig && styles.bigText,
+  ];
+
+  return <Text style={textStyles}>{children}</Text>;
+};
+
+const Main = () => {
+  return (
+    <>
+      <FancyText>Simple text</FancyText>
+      <FancyText isBlue>Blue text</FancyText>
+      <FancyText isBig>Big text</FancyText>
+      <FancyText isBig isBlue>
+        Big blue text
+      </FancyText>
+    </>
+  );
+};
+```
+
+In the example we use the <em>&&</em> operator with statement <em>condition && exprIfTrue</em>. This statement yields <em>exprIfTrue</em> if the <em>condition</em> evaluates to true, otherwise it will yield <em>condition</em>, which in that case is a value that evaluates to false. This is an extremely widely used and handy shorthand. Another option would be to use for example the [conditional operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator), <em>condition ? exprIfTrue : exprIfFalse</em>.
+
+### Consistent user interface with theming
+
+Let's stick with the concept of styling but with a bit wider perspective. Most of us have used a multitude of different applications and might agree that one trait that makes a good user interface is <i>consistency</i>. This means that the appearance of user interface components such as their font size, font family and color follows a consistent pattern. To achieve this we have to somehow <i>parametrize</i> the values of different style properties. This method is commonly known as <i>theming</i>.
+
+Users of popular user interface libraries such as [Bootstrap](https://getbootstrap.com/docs/4.4/getting-started/theming/) and [Material UI](https://material-ui.com/customization/theming/) might already be quite familiar with theming. Even though the theming implementations differ, the main idea is always to use variables such as <em>colors.primary</em> instead of ["magic numbers"](<https://en.wikipedia.org/wiki/Magic_number_(programming)>) such as <em>#0366d6</em> when defining styles. This leads to increased consistency and flexibility.
+
+Let's see how theming could work in practice in our application. We will be using a lot of text with different variations, such as different font sizes and colors. Because React Native does not support global styles, we should create our own <em>Text</em> component to keep the textual content consistent. Let's get started by adding the following theme configuration object in a <i>theme.js</i> file in the <i>src</i> directory:
+
+```javascript
+const theme = {
+  colors: {
+    textPrimary: '#24292e',
+    textSecondary: '#586069',
+    primary: '#0366d6',
+  },
+  fontSizes: {
+    body: 14,
+    subheading: 16,
+  },
+  fonts: {
+    main: 'System',
+  },
+  fontWeights: {
+    normal: '400',
+    bold: '700',
+  },
+};
+
+export default theme;
+```
+
+Next, we should create the actual <em>Text</em> component which uses this theme configuration. Create a <i>Text.jsx</i> file in the <i>components</i> directory where we already have our other components. Add the following content to the <i>Text.jsx</i> file:
+
+```javascript
+import { Text as NativeText, StyleSheet } from 'react-native';
+
+import theme from '../theme';
+
+const styles = StyleSheet.create({
+  text: {
+    color: theme.colors.textPrimary,
+    fontSize: theme.fontSizes.body,
+    fontFamily: theme.fonts.main,
+    fontWeight: theme.fontWeights.normal,
+  },
+  colorTextSecondary: {
+    color: theme.colors.textSecondary,
+  },
+  colorPrimary: {
+    color: theme.colors.primary,
+  },
+  fontSizeSubheading: {
+    fontSize: theme.fontSizes.subheading,
+  },
+  fontWeightBold: {
+    fontWeight: theme.fontWeights.bold,
+  },
+});
+
+const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
+  const textStyle = [
+    styles.text,
+    color === 'textSecondary' && styles.colorTextSecondary,
+    color === 'primary' && styles.colorPrimary,
+    fontSize === 'subheading' && styles.fontSizeSubheading,
+    fontWeight === 'bold' && styles.fontWeightBold,
+    style,
+  ];
+
+  return <NativeText style={textStyle} {...props} />;
+};
+
+export default Text;
+```
+
+Now we have implemented our own text component with consistent color, font size and font weight variants which we can use anywhere in our application. We can get different text variations using different props like this:
+
+```javascript
+import Text from './Text';
+
+const Main = () => {
+  return (
+    <>
+      <Text>Simple text</Text>
+      <Text style={{ paddingBottom: 10 }}>Text with custom style</Text>
+      <Text fontWeight="bold" fontSize="subheading">
+        Bold subheading
+      </Text>
+      <Text color="textSecondary">Text with secondary color</Text>
+    </>
+  );
+};
+
+export default Main;
+```
+
+Feel free to extend or modify this component if you feel like it. It might also be a good idea to create reusable text components such as <em>Subheading</em> which use the <em>Text</em> component. Also, keep on extending and modifying the theme configuration as your application progresses.
+
+### Using flexbox for layout
+
+The last concept we will cover related to styling is implementing layouts with [flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox). Those who are more familiar with CSS know that flexbox is not related only to React Native, it has many use cases in web development as well. In fact, those who know how flexbox works in web development won't probably learn that much from this section. Nevertheless, let's learn or revise the basics of flexbox.
+
+Flexbox is a layout entity consisting of two separate components: a <i>flex container</i> and inside it a set of <i>flex items</i>. Flex container has a set of properties that control the flow of its items. To make a component a flex container it must have the style property <em>display</em> set as <em>flex</em> which is the default value for the <em>display</em> property. Here is an example of a flex container:
+
+```javascript
+import { View, StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  flexContainer: {
+    flexDirection: 'row',
+  },
+});
+
+const FlexboxExample = () => {
+  return <View style={styles.flexContainer}>{/* ... */}</View>;
+};
+```
+
+Perhaps the most important properties of a flex container are the following:
+
+- [flexDirection](https://css-tricks.com/almanac/properties/f/flex-direction/) property controls the direction in which the flex items are laid out within the container. Possible values for this property are <em>row</em>, <em>row-reverse</em>, <em>column</em> (default value) and <em>column-reverse</em>. Flex direction <em>row</em> will lay out the flex items from left to right, whereas <em>column</em> from top to bottom. <em>\*-reverse</em> directions will just reverse the order of the flex items.
+
+- [justifyContent](https://css-tricks.com/almanac/properties/j/justify-content/) property controls the alignment of flex items along the main axis (defined by the <em>flexDirection</em> property). Possible values for this property are <em>flex-start</em> (default value), <em>flex-end</em>, <em>center</em>, <em>space-between</em>, <em>space-around</em> and <em>space-evenly</em>.
+- [alignItems](https://css-tricks.com/almanac/properties/a/align-items/) property does the same as <em>justifyContent</em> but for the opposite axis. Possible values for this property are <em>flex-start</em>, <em>flex-end</em>, <em>center</em>, <em>baseline</em> and <em>stretch</em> (default value).
+
+Let's move on to flex items. As mentioned, a flex container can contain one or many flex items. Flex items have properties that control how they behave in respect of other flex items in the same flex container. To make a component a flex item all you have to do is to set it as an immediate child of a flex container:
+
+```javascript
+import { View, Text, StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  flexContainer: {
+    display: 'flex',
+  },
+  flexItemA: {
+    flexGrow: 0,
+    backgroundColor: 'green',
+  },
+  flexItemB: {
+    flexGrow: 1,
+    backgroundColor: 'blue',
+  },
+});
+
+const FlexboxExample = () => {
+  return (
+    <View style={styles.flexContainer}>
+      <View style={styles.flexItemA}>
+        <Text>Flex item A</Text>
+      </View>
+      <View style={styles.flexItemB}>
+        <Text>Flex item B</Text>
+      </View>
+    </View>
+  );
+};
+```
+
+One of the most commonly used properties of flex item is the [flexGrow](https://css-tricks.com/almanac/properties/f/flex-grow/) property. It accepts a unitless value which defines the ability for a flex item to grow if necessary. If all flex items have a <em>flexGrow</em> of <em>1</em>, they will share all the available space evenly. If a flex item has a <em>flexGrow</em> of <em>0</em>, it will only use the space its content requires and leave the rest of the space for other flex items.
+
+Here is a more interactive and concrete example of how to use flexbox to implement a simple card component with header, body and footer: [Flexbox example](https://snack.expo.io/@kalleilv/3d045d).
+
+Next, read the article [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) which has comprehensive visual examples of flexbox. It is also a good idea to play around with the flexbox properties in the [Flexbox Playground](https://flexbox.tech/) to see how different flexbox properties affect the layout. Remember that in React Native the property names are the same as the ones in CSS except for the <i>camelCase</i> naming. However, the <i>property values</i> such as <em>flex-start</em> and <em>space-between</em> are exactly the same.
+
+**NB:** React Native and CSS has some differences regarding the flexbox. The most important difference is that in React Native the default value for the <em>flexDirection</em> property is <em>column</em>. It is also worth noting that the <em>flex</em> shorthand doesn't accept multiple values in React Native. More on the React Native's flexbox implementation can be read in the [documentation](https://reactnative.dev/docs/flexbox).
+
+</div>
+
+<div class="tasks">
+
+### Exercises 9.4. - 9.5.
+
+#### Exercise 9.4: the app bar
+
+We will soon need to navigate between different views in our application. That is why we need an [app bar](https://material.io/components/app-bars-top/) to display tabs for switching between different views. Create a file <i>AppBar.jsx</i> in the <i>components</i> folder with the following content:
+
+```javascript
+import { View, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: Constants.statusBarHeight,
+    // ...
+  },
+  // ...
+});
+
+const AppBar = () => {
+  return <View style={styles.container}>{/* ... */}</View>;
+};
+
+export default AppBar;
+```
+
+Now that the <em>AppBar</em> component will prevent the status bar from overlapping the content, you can remove the <em>marginTop</em> style we added for the <em>Main</em> component earlier in the <i>Main.jsx</i> file. The <em>AppBar</em> component should currently contain a tab with text "Repositories". Make the tab pressable by using the [Pressable](https://reactnative.dev/docs/pressable) component but you don't have to handle the <em>onPress</em> event in any way. Add the <em>AppBar</em> component to the <em>Main</em> component so that it is the uppermost component in the screen. The <em>AppBar</em> component should look something like this:
+
+![Application preview](../../images/9/6.jpg)
+
+The background color of the app bar in the image is <em>#24292e</em> but you can use any other color as well. It might be a good idea to add the app bar's background color into the theme configuration so that it is easy to change it if needed. Another good idea might be to separate the app bar's tab into its own component such as <em>AppBarTab</em> so that it is easy to add new tabs in the future.
+
+#### Exercise 9.5: polished reviewed repositories list
+
+The current version of the reviewed repositories list looks quite grim. Modify the <i>RepositoryItem</i> component so that it also displays the repository author's avatar image. You can implement this by using the [Image](https://reactnative.dev/docs/image) component. Counts, such as number of stars and forks, larger than or equal to 1000 should be displayed in thousands with precision of one decimal and with a "k" suffix. This means that for example fork count of 8439 should be displayed as "8.4k". Also polish the overall look of the component so that the reviewed repositories list looks something like this:
+
+![Application preview](../../images/9/7.jpg)
+
+In the image, the <em>Main</em> component's background color is set to <em>#e1e4e8</em> whereas <em>RepositoryItem</em> component's background color is set to <em>white</em>. The language tag's background color is <em>#0366d6</em> which is the value of the <em>colors.primary</em> variable in the theme configuration. Remember to exploit the <em>Text</em> component we implemented earlier. Also when needed, split the <em>RepositoryItem</em> component into smaller components.
+
+</div>
+
+<div class="content">
+
+### Routing
+
+When we start to expand our application we will need a way to transition between different views such as the repositories view and the sign in view. In [part 7](/en/part7/react_router) we got familiar with [React router](https://reactrouter.com/) library and learned how to use it to implement routing in a web application.
+
+Routing in a React Native application is a bit different to routing in a web application. The main difference is that we can't reference pages with URLs, which we type in to the browser's address bar, and can't navigate back and forth through user's history using the browsers [history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API). However, this is just the matter of the router interface we are using.
+
+With React Native we can use the entire React router's core, including the hooks and components. The only difference to the browser environment is that we must replace the <em>BrowserRouter</em> with React Native compatible [NativeRouter](https://reactrouter.com/en/6.4.5/router-components/native-router), provided by the [react-router-native](https://www.npmjs.com/package/react-router-native) library. Let's get started by installing the <i>react-router-native</i> library:
 
 ```shell
-npm run multiply 5 2
+npm install react-router-native
 ```
 
-If the program is run with parameters that are not of the right type, e.g.
+Next, open the <i>App.js</i> file and add the <em>NativeRouter</em> component to the <em>App</em> component:
 
-```shell
-npm run multiply 5 lol
+```javascript
+import { StatusBar } from 'expo-status-bar';
+import { NativeRouter } from 'react-router-native'; // highlight-line
+
+import Main from './src/components/Main';
+
+const App = () => {
+  return (
+    // highlight-start
+    <>
+      <NativeRouter>
+        <Main />
+      </NativeRouter>
+      <StatusBar style="auto" />
+    </>
+    // highlight-end
+  );
+};
+
+export default App;
 ```
 
-it "works" but gives us the answer:
+Once the router is in place, let's add our first route to the <me>Main</em> component in the <i>Main.jsx</i> file:
 
-```shell
-Multiplied 5 and NaN, the result is: NaN
+```javascript
+import { StyleSheet, View } from 'react-native';
+import { Route, Routes, Navigate } from 'react-router-native'; // highlight-line
+
+import RepositoryList from './RepositoryList';
+import AppBar from './AppBar';
+import theme from '../theme';
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: theme.colors.mainBackground,
+    flexGrow: 1,
+    flexShrink: 1,
+  },
+});
+
+const Main = () => {
+  return (
+    <View style={styles.container}>
+      <AppBar />
+      // highlight-start
+      <Routes>
+        <Route path="/" element={<RepositoryList />} exact />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      // highlight-end
+    </View>
+  );
+};
+
+export default Main;
 ```
 
-The reason for this is, that <i>Number('lol')</i> returns <i>NaN</i>, 
-which is actually type <i>number</i>, so TypeScript has no power to rescue  us from this kind of situation.
+That's it! The last <em>Route</em> inside the <em>Routes</em> is for catching paths that don't match any previously defined path. In this case we want to navigate to the home view.
 
-In order to prevent this kind of behaviour, we have to validate the data given to us from the command line.
+</div>
 
-The improved version of the multiplicator looks like this:
+<div class="tasks">
 
-```js
-interface MultiplyValues {
-  value1: number;
-  value2: number;
-}
+### Exercises 9.6. - 9.7.
 
-const parseArguments = (args: Array<string>): MultiplyValues => {
-  if (args.length < 4) throw new Error('Not enough arguments');
-  if (args.length > 4) throw new Error('Too many arguments');
+#### Exercise 9.6: the sign in view
 
-  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
-    return {
-      value1: Number(args[2]),
-      value2: Number(args[3])
+We will soon implement a form, which a user can use to <i>sign in</i> to our application. Before that, we must implement a view that can be accessed from the app bar. Create a file <i>SignIn.jsx</i> in the <i>components</i> directory with the following content:
+
+```javascript
+import Text from './Text';
+
+const SignIn = () => {
+  return <Text>The sign in view</Text>;
+};
+
+export default SignIn;
+```
+
+Set up a route for this <em>SignIn</em> component in the <em>Main</em> component. Also add a tab with text "Sign in" in to the app bar next to the "Repositories" tab. Users should be able to navigate between the two views by pressing the tabs (hint: you can use the React router's [Link](https://reactrouter.com/en/6.4.5/components/link-native) component).
+
+#### Exercise 9.7: scrollable app bar
+
+As we are adding more tabs to our app bar, it is a good idea to allow horizontal scrolling once the tabs won't fit the screen. The [ScrollView](https://reactnative.dev/docs/scrollview) component is just the right component for the job.
+
+Wrap the tabs in the <em>AppBar</em> component's tabs with a <em>ScrollView</em> component:
+
+```javascript
+const AppBar = () => {
+  return (
+    <View style={styles.container}>
+      <ScrollView horizontal>{/* ... */}</ScrollView> // highlight-line
+    </View>
+  );
+};
+```
+
+Setting the [horizontal](https://reactnative.dev/docs/scrollview#horizontal) prop <em>true</em> will cause the <em>ScrollView</em> component to scroll horizontally once the content won't fit the screen. Note that, you will need to add suitable style properties to the <em>ScrollView</em> component so that the tabs will be laid in a <i>row</i> inside the flex container. You can make sure that the app bar can be scrolled horizontally by adding tabs until the last tab won't fit the screen. Just remember to remove the extra tabs once the app bar is working as intended.
+
+</div>
+
+<div class="content">
+
+### Form state management
+
+Now that we have a placeholder for the sign in view the next step would be to implement the sign in form. Before we get to that let's talk about forms in a more wider perspective.
+
+Implementation of forms relies heavily on the state management. Using the React's <em>useState</em> hook for the state management might get the job done for smaller forms. However, it will quickly make the state management quite tedious with more complex forms. Luckily there are many good libraries in the React ecosystem that ease the state management of forms. One of these libraries is [Formik](https://jaredpalmer.com/formik/).
+
+The main concepts of Formik are the <i>context</i> and a <i>field</i>. The Formik's context is provided by the [Formik](https://jaredpalmer.com/formik/docs/api/formik) component that contains the form's state. The state consists of information of form's fields. This information includes for example the value and validation errors of each field. State's fields can be referenced by their name using the [useField](https://jaredpalmer.com/formik/docs/api/useField) hook or the [Field](https://jaredpalmer.com/formik/docs/api/field) component.
+
+Let's see how this actually works by creating a form for calculating the [body mass index](https://en.wikipedia.org/wiki/Body_mass_index):
+
+```javascript
+import { Text, TextInput, Pressable, View } from 'react-native';
+import { Formik, useField } from 'formik';
+
+const initialValues = {
+  mass: '',
+  height: '',
+};
+
+const getBodyMassIndex = (mass, height) => {
+  return Math.round(mass / Math.pow(height, 2));
+};
+
+const BodyMassIndexForm = ({ onSubmit }) => {
+  const [massField, massMeta, massHelpers] = useField('mass');
+  const [heightField, heightMeta, heightHelpers] = useField('height');
+
+  return (
+    <View>
+      <TextInput
+        placeholder="Weight (kg)"
+        value={massField.value}
+        onChangeText={text => massHelpers.setValue(text)}
+      />
+      <TextInput
+        placeholder="Height (m)"
+        value={heightField.value}
+        onChangeText={text => heightHelpers.setValue(text)}
+      />
+      <Pressable onPress={onSubmit}>
+        <Text>Calculate</Text>
+      </Pressable>
+    </View>
+  );
+};
+
+const BodyMassIndexCalculator = () => {
+  const onSubmit = values => {
+    const mass = parseFloat(values.mass);
+    const height = parseFloat(values.height);
+
+    if (!isNaN(mass) && !isNaN(height) && height !== 0) {
+      console.log(`Your body mass index is: ${getBodyMassIndex(mass, height)}`);
     }
-  } else {
-    throw new Error('Provided values were not numbers!');
-  }
-}
+  };
 
-const multiplicator = (a: number, b: number, printText: string) => {
-  console.log(printText,  a * b);
-}
-
-try {
-  const { value1, value2 } = parseArguments(process.argv);
-  multiplicator(value1, value2, `Multiplied ${value1} and ${value2}, the result is:`);
-} catch (error: unknown) {
-  let errorMessage = 'Something bad happened.'
-  if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message;
-  }
-  console.log(errorMessage);
-}
+  return (
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {({ handleSubmit }) => <BodyMassIndexForm onSubmit={handleSubmit} />}
+    </Formik>
+  );
+};
 ```
 
-When we now run the program:
+This example is not part of our application, so you don't need to actually add this code to the application. You can however try it out for example in [Expo Snack](https://snack.expo.io/). Expo Snack is an online editor for React Native, similar to [JSFiddle](https://jsfiddle.net/) and [CodePen](https://codepen.io/). It is a useful platform for quickly trying out code. You can share Expo Snacks with others using a link or embedding them as a <i>Snack Player</i> in a web site. You might have bumped into Snack Players for example in this material and React Native documentation.
+
+In the example, we define the <em>Formik</em> context in the <em>BodyMassIndexCalculator</em> component and provide it with initial values and a submit callback. Initial values are provided through the [initialValues](https://jaredpalmer.com/formik/docs/api/formik#initialvalues-values) prop as an object with field names as keys and the corresponding initial values as values. The submit callback is provided through the [onSubmit](https://jaredpalmer.com/formik/docs/api/formik#onsubmit-values-values-formikbag-formikbag--void--promiseany) prop and it is called when the <em>handleSubmit</em> function is called, with the condition that there isn't any validation errors. Children of the <em>Formik</em> component is a function which is called with [props](https://jaredpalmer.com/formik/docs/api/formik#formik-render-methods-and-props) including state related information and actions such as the <em>handleSubmit</em> function.
+
+The <em>BodyMassIndexForm</em> component contains the state bindings between the context and text inputs. We use the [useField](https://jaredpalmer.com/formik/docs/api/useField) hook to get the value of a field and to change it. _useField_ hooks has one argument which is the name of the field and it returns an array with three values, <em>[field, meta, helpers]</em>. The [field object](https://jaredpalmer.com/formik/docs/api/useField#fieldinputpropsvalue) contains the value of the field, the [meta object](https://jaredpalmer.com/formik/docs/api/useField#fieldmetapropsvalue) contains field meta information such as a possible error message and the [helpers object](https://jaredpalmer.com/formik/docs/api/useField#fieldhelperprops) contains different actions for changing the state of field such as the <em>setValue</em> function. Note that the component that uses the <em>useField</em> hook has to be _within the Formik's context_. This means that the component has to be a descendant of the <em>Formik</em> component.
+
+Here is an interactive version of our previous example: [Formik example](https://snack.expo.io/@kalleilv/formik-example).
+
+In the previous example using the <em>useField</em> hook with the <em>TextInput</em> component causes repetitive code. Let's extract this repetitive code into a <em>FormikTextInput</em> component and create a custom <em>TextInput</em> component to make text inputs a bit more visually pleasing. First, let's install Formik:
 
 ```shell
-npm run multiply 1 lol
+npm install formik
 ```
 
-we get a proper error message:
+Next, create a file <i>TextInput.jsx</i> in the <i>components</i> directory with the following content:
 
-```shell
-Something bad happened. Error: Provided values were not numbers!
+```javascript
+import { TextInput as NativeTextInput, StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({});
+
+const TextInput = ({ style, error, ...props }) => {
+  const textInputStyle = [style];
+
+  return <NativeTextInput style={textInputStyle} {...props} />;
+};
+
+export default TextInput;
 ```
 
-The definition of the function <i>parseArguments</i> has a couple of interesting things:
+Let's move on to the <em>FormikTextInput</em> component that adds the Formik's state bindings to the <em>TextInput</em> component. Create a file <i>FormikTextInput.jsx</i> in the <i>components</i> directory with the following content:
 
-```js
-const parseArguments = (args: Array<string>): MultiplyValues => {
-  // ...
-}
+```javascript
+import { StyleSheet } from 'react-native';
+import { useField } from 'formik';
+
+import TextInput from './TextInput';
+import Text from './Text';
+
+const styles = StyleSheet.create({
+  errorText: {
+    marginTop: 5,
+  },
+});
+
+const FormikTextInput = ({ name, ...props }) => {
+  const [field, meta, helpers] = useField(name);
+  const showError = meta.touched && meta.error;
+
+  return (
+    <>
+      <TextInput
+        onChangeText={value => helpers.setValue(value)}
+        onBlur={() => helpers.setTouched(true)}
+        value={field.value}
+        error={showError}
+        {...props}
+      />
+      {showError && <Text style={styles.errorText}>{meta.error}</Text>}
+    </>
+  );
+};
+
+export default FormikTextInput;
 ```
 
-Firstly,  the parameter <i>args</i> is an [array](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays) of strings. The return value has the type <i>MultiplyValues</i>, which is defined as follows:
+By using the <em>FormikTextInput</em> component we could refactor the <em>BodyMassIndexForm</em> component in the previous example like this:
 
-```js
-interface MultiplyValues {
-  value1: number;
-  value2: number;
-}
+```javascript
+const BodyMassIndexForm = ({ onSubmit }) => {
+  return (
+    <View>
+      <FormikTextInput name="mass" placeholder="Weight (kg)" /> // highlight-line
+      <FormikTextInput name="height" placeholder="Height (m)" /> //highlight-line
+      <Pressable onPress={onSubmit}>
+        <Text>Calculate</Text>
+      </Pressable>
+    </View>
+  );
+};
 ```
 
-The definition utilizes TypeScript's Interface [object type](https://www.typescriptlang.org/docs/handbook/2/objects.html) keyword, which is one way to define the "shape" an object should have. 
-In our case it is quite obvious that the return value should be an object with the two properties <i>value1</i> and <i>value2</i>, which should both be of type number. 
+As we can see, implementing the <em>FormikTextInput</em> component that handles the <em>TextInput</em> component's Formik bindings saves a lot of code. If your Formik forms use other input components, it is a good idea to implement similar abstractions for them as well.
 
 </div>
 
 <div class="tasks">
 
-### Exercises 9.1.-9.3.
 
-#### setup
+### Exercise 9.8.
 
-Exercises 9.1.-9.7. will all be made in the same node project. Create the project in an empty directory with <i>npm init</i> and install the ts-node and typescript packages. Also create the file <i>tsconfig.json</i> in the directory with the following content:
+#### Exercise 9.8: the sign in form
 
-```json
-{
-  "compilerOptions": {
-    "noImplicitAny": true,
-  }
-}
+Implement a sign in form to the <em>SignIn</em> component we added earlier in the <i>SignIn.jsx</i> file. The sign in form should include two text fields, one for the username and one for the password. There should also be a button for submitting the form. You don't need to implement a <em>onSubmit</em> callback function, it is enough that the form values are logged using <em>console.log</em> when the form is submitted:
+
+```javascript
+const onSubmit = (values) => {
+  console.log(values);
+};
 ```
 
-The compiler option [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny), that makes it mandatory to have types for all variables used, is actually currently a default, but let us still define it explicitly.
+Remember to utilize the <em>FormikTextInput</em> component we implemented earlier. You can use the [secureTextEntry](https://reactnative.dev/docs/textinput#securetextentry) prop in the <em>TextInput</em> component to obscure the password input.
 
-#### 9.1 Body mass index
+The sign in form should look something like this:
 
-Create the code of this exercise in file <i>bmiCalculator.ts</i>.
-
-Write a function <i>calculateBmi</i> that calculates a [BMI](https://en.wikipedia.org/wiki/Body_mass_index) based on a given height (in centimeters) and weight (in kilograms) and then returns a message that suits the results. 
-
-Call the function in the same file with hard-coded parameters and print out the result. The code
-
-```js
-console.log(calculateBmi(180, 74))
-```
-
-should print the following message:
-
-```shell
-Normal (healthy weight)
-```
-
-Create a npm script for running the program with command <i>npm run calculateBmi</i>.
-
-#### 9.2 Exercise calculator
-
-Create the code of this exercise in file <i>exerciseCalculator.ts</i>.
-
-Write a function <i>calculateExercises</i> that calculates the average time of <i>daily exercise hours</i> and compares it to the <i>target amount</i> of daily hours and returns an object that includes the following values:
-
-  - the number of days
-  - the number of training days
-  - the original target value
-  - the calculated average time
-  - boolean value describing if the target was reached
-  - a rating between the numbers 1-3 that tells how well the hours are met. You can decide on the metric on your own.
-  - a text value explaining the rating
-
-The daily exercise hours are given to the function as an [array](https://www.typescriptlang.org/docs/handbook/basic-types.html#array) that contains the number of exercise hours for each day in the training period. Eg. a week with 3 hours of training on Monday, none on Tuesday, 2 hours on Wednesday, 4.5 hours on Thursday and so on would be represented by the following array:
-
-```js
-[3, 0, 2, 4.5, 0, 3, 1]
-```
-
-For the Result object, you should create an [interface](https://www.typescriptlang.org/docs/handbook/interfaces.html).
-
-If you call the function with parameters <i>[3, 0, 2, 4.5, 0, 3, 1]</i> and <i>2</i>, it should return:
-
-```js
-{ periodLength: 7,
-  trainingDays: 5,
-  success: false,
-  rating: 2,
-  ratingDescription: 'not too bad but could be better',
-  target: 2,
-  average: 1.9285714285714286 }
-```
-
-Create a npm script, <i>npm run calculateExercises</i>, to call the function with hard-coded values.
-
-#### 9.3 Command line
-
-Change the previous exercises so that you can give the parameters of <i>bmiCalculator</i> and <i>exerciseCalculator</i> as command-line arguments.
-
-Your program could work eg. as follows:
-
-```shell
-$ npm run calculateBmi 180 91
-
-Overweight
-```
-
-and:
-
-```shell
-$ npm run calculateExercises 2 1 0 2 4.5 0 3 1 0 4
-
-{ periodLength: 9,
-  trainingDays: 6,
-  success: false,
-  rating: 2,
-  ratingDescription: 'not too bad but could be better',
-  target: 2,
-  average: 1.7222222222222223 }
-```
-
-In the example, the <i>first argument</i> is the target value.
-
-Handle exceptions and errors appropriately. The exerciseCalculator should accept inputs of varied lengths. Determine by yourself how you manage to collect all needed input.
+![Application preview](../../images/9/19.jpg)
 
 </div>
 
 <div class="content">
 
-### More about tsconfig
+### Form validation
 
-We have so far used only one tsconfig rule [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny). It's a good place to start, but now it's time to look into the config file a little deeper.
+Formik offers two approaches to the form validation: a validation function or a validation schema. A validation function is a function provided for the <em>Formik</em> component as the value of the [validate](https://jaredpalmer.com/formik/docs/guides/validation#validate) prop. It receives the form's values as an argument and returns an object containing possible field specific error messages.
 
-As mentioned, the [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file contains all your core configurations on how you want TypeScript to work in your project. 
+The second approach is the validation schema which is provided for the <em>Formik</em> component as the value of the [validationSchema](https://jaredpalmer.com/formik/docs/guides/validation#validationschema) prop. This validation schema can be created with a validation library called [Yup](https://github.com/jquense/yup). Let's get started by installing Yup:
 
-Let's specify the following configurations in our <i>tsconfig.json</i> file:
-
-```json
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
-    "moduleResolution": "node"
-  }
-}
+```shell
+npm install yup
 ```
 
-Do not worry too much about the <i>compilerOptions</i>; they will be under closer inspection later on.
+Next, as an example, let's create validation schema for the body mass index form we implemented earlier. We want to validate that both <i>mass</i> and <i>height</i> fields are present and they are numeric. Also the value of <i>mass</i> should be greater or equal to 1 and the value of <i>height</i> should be greater or equal to 0.5. Here is how we define the schema:
 
-You can find explanations for each of the configurations from the TypeScript documentation, or from the really handy [tsconfig page](https://www.typescriptlang.org/tsconfig), or from the tsconfig [schema definition](http://json.schemastore.org/tsconfig), which unfortunately is formatted a little worse than the first two options. 
-
-### Adding Express to the mix
-
-Right now, we are in a pretty good place. Our project is set up and we have two executable calculators in it. 
-However, since our aim is to learn FullStack development, it is time to start working with some HTTP requests.
-
-Let us start by installing Express:
-
-```
-npm install express
-```
-
-and then add the <i>start</i> script to package.json:
-
-```json
-{
-  // ..
-  "scripts": {
-    "ts-node": "ts-node",
-    "multiply": "ts-node multiplier.ts",
-    "calculate": "ts-node calculator.ts",
-    "start": "ts-node index.ts" // highlight-line
-  },
-  // ..
-}
-```
-
-Now we can create the file <i>index.ts</i>, and write the HTTP GET <i>ping</i> endpoint to it:
-
-```js
-const express = require('express');
-const app = express();
-
-app.get('/ping', (req, res) => {
-  res.send('pong');
-});
-
-const PORT = 3003;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-```
-
-Everything else seems to be working just fine but, as you'd expect, the <i>req</i> and  <i>res</i> parameters of <i>app.get</i> need typing. If you look carefully, VSCode is also complaining about something to about the importing of Express. You can see a short yellow line of dots under the <i>require</i>. Let's hover over the problem:
-
-![](../../images/9/6.png)
-
-The complaint is that the <i>'require' call may be converted to an import</i>. Let us follow the advice and write the import as follows:
-
-```js
-import express from 'express';
-```
-
-**NB**: VSCode offers you a possibility to fix the issues automatically by clicking the <i>Quick Fix...</i> button. Keep your eyes open for these helpers/quick fixes; listening to your editor usually makes your code better and easier to read. The automatic fixes for issues can be a major time saver as well. 
-
-Now we run into another problem, the compiler complains about the import statement. 
-Once again, the editor is our best friend when trying to find out what the issue is:
-
-![](../../images/9/7.png)
-
-We haven't installed types for <i>express</i>. 
-Let's do what the suggestion says and run:
-
-```
-npm install --save-dev @types/express
-```
-
-And no more errors! Let's take a look at what changed.
-
-When we hover over the <i>require</i> statement, we can see the compiler interprets everything express-related to be of type <i>any</i>.
-
-![](../../images/9/8a.png)
-
-Whereas when we use <i>import</i>, the editor knows the actual types:
-
-![](../../images/9/9x.png)
-
-Which import statement to use depends on the export method used in the imported package. 
-
-A good rule of thumb is to try importing a module using the <i>import</i> statement first. We will always use this method in the <i>frontend</i>. 
-If  <i>import</i> does not work, try a combined method: <i>import ... = require('...')</i>.
-
-We strongly suggest you read more about TypeScript modules [here](https://www.typescriptlang.org/docs/handbook/modules.html).
-
-There is one more problem with the code:
-
-![](../../images/9/9b.png)
-
-This is because we banned unused parameters in our <i>tsconfig.json</i>:
-
-```js
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true, // highlight-line
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
-  }
-}
-```
-
-This configuration might create problems if you have library-wide predefined functions which require declaring a variable even if it's not used at all, as is the case here. 
-Fortunately, this issue has already been solved on configuration level. 
-Once again hovering over the issue gives us a solution. This time we can just click the quick fix button:
-
-![](../../images/9/14a.png)
-
-If it is absolutely impossible to get rid of an unused variable, you can prefix it with an underscore to inform the compiler you have thought about it and there is nothing you can do. 
-
-Let's rename the <i>req</i> variable to <i>_req</i>. Finally we are ready to start the application. It seems to work fine:
-
-![](../../images/9/11a.png)
-
-To simplify the development, we should enable <i>auto-reloading</i> to improve our workflow. In this course, you have already used <i>nodemon</i>, but ts-node has an alternative called <i>ts-node-dev</i>. It is meant to be used only with a development environment which takes care of recompilation on every change, so restarting the application won't be necessary.
-
-Let's install <i>ts-node-dev</i> to our development dependencies:
-
-```
-npm install --save-dev ts-node-dev
-```
-
-Add a script to <i>package.json</i>:
-
-```json
-{
-  // ...
-  "scripts": {
-      // ...
-      "dev": "ts-node-dev index.ts", // highlight-line
-  },
-  // ...
-}
-```
-
-And now, by running <i>npm run dev</i>, we have a working, auto-reloading development environment for our project!
-
-</div>
-
-<div class="tasks">
-
-### Exercises 9.4.-9.5.
-
-#### 9.4 Express
-
-Add Express to your dependencies and create an HTTP GET endpoint <i>hello</i> that answers 'Hello Full Stack!'
-
-The web app should be started with commands <i>npm start</i> in production mode and <i>npm run dev</i> in development mode. The latter should also use <i>ts-node-dev</i> to run the app.
-
-Replace also your existing <i>tsconfig.json</i> file with the  following content:
-
-```json
-{
-  "compilerOptions": {
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "strictBindCallApply": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "esModuleInterop": true,
-    "declaration": true,
-  }
-}
-```
-
-Make sure there aren't any errors!
-
-#### 9.5 WebBMI
-
-Add an endpoint for the BMI calculator that can be used by doing an HTTP GET request to endpoint <i>bmi</i> and specifying the input with [query string parameters](https://en.wikipedia.org/wiki/Query_string). For example, to get the BMI of a person having height 180 and weight 72, the url is http://localhost:3002/bmi?height=180&weight=72.
-
-The response is a json of the form:
-
-```js
-{
-  weight: 72,
-  height: 180,
-  bmi: "Normal (healthy weight)"
-}
-```
-
-See the [Express documentation](http://expressjs.com/en/5x/api.html#req.query) for info on how to access the query parameters.
-
-If the query parameters of the request are of the wrong type or missing, a response with proper status code and error message is given:
-
-```js
-{
-  error: "malformatted parameters"
-}
-```
-
-Do not copy the calculator code to file <i>index.ts</i>; instead, make it a [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules.html) that can be imported in <i>index.ts</i>.
-
-</div>
-
-<div class="content">
-
-### The horrors of <i>any</i>
-
-Now that we have our first endpoints completed, you might notice we have used barely any TypeScript in these small examples. When examining the code a bit closer, we can see a few dangers lurking there.
-
-Let's add the HTTP POST endpoint <i>calculate</i> to our app:
-
-```js
-import { calculator } from './calculator';
+```javascript
+import * as yup from 'yup'; // highlight-line
 
 // ...
 
-app.post('/calculate', (req, res) => {
-  const { value1, value2, op } = req.body;
-
-  const result = calculator(value1, value2, op);
-  res.send(result);
-});
-
-```
-
-When you hover over the <i>calculate</i> function, you can see the typing of the <i>calculator</i> even though the code itself does not contain any typings:
-
-![](../../images/9/12a21.png)
-
-But if you hover over the values parsed from the request, an issue arises:
-
-![](../../images/9/13a21.png)
-
-All of the variables have type <i>any</i>. It is not all that surprising, as no one has given them a type yet. There are a couple of ways to fix this, but first, we have to consider why this is accepted and where the type <i>any</i> came from.
-
-In TypeScript, every untyped variable whose type cannot be inferred implicitly becomes type [any](http://www.typescriptlang.org/docs/handbook/basic-types.html#any). Any is a kind of "wild card" type which literally stands for <i>whatever</i> type. 
-Things become implicitly any type quite often when one forgets to type functions. 
-
-We can also explicitly type things <i>any</i>. The only difference between implicit and explicit any type is how the code looks; the compiler does not care about the difference. 
-
-Programmers however see the code differently when <i>any</i> is explicitly enforced than when it is implicitly inferred. 
-Implicit <i>any</i> typings are usually considered problematic, since it is quite often due to the coder forgetting to assign types (or being too lazy to do it), and it also means that the full power of TypeScript is not properly exploited. 
-
-This is why the configuration rule [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny) exists on compiler level, and it is highly recommended to keep it on at all times. 
-In the rare occasions when you truly cannot know what the type of a variable is, you should explicitly state that in the code:
-
-```js
-const a : any = /* no clue what the type will be! */.
-```
-
-We already have <i>noImplicitAny</i> configured in our example, so why does the compiler not complain about the implicit <i>any</i> types?
-The reason is that the <i>query</i> field of an express [Request](https://expressjs.com/en/5x/api.html#req) object is explicitly typed <i>any</i>. The same is true for the <i>request.body</i> field we use to post data to an app. 
-
-
-What if we would like to prevent developers from using <i>any</i> type at all? Fortunately, we have other methods than <i>tsconfig.json</i> to enforce coding style. What we can do is  use <i>eslint</i> to manage
-our code. 
-Let's install eslint and its TypeScript extensions:
-
-```shell
-npm install --save-dev eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
-```
-
-We will configure eslint to [disallow explicit any]( https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md). Write the following rules to <i>.eslintrc</i>:
-
-```json
-{
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 11,
-    "sourceType": "module"
-  },
-  "plugins": ["@typescript-eslint"],
-  "rules": {
-    "@typescript-eslint/no-explicit-any": 2 // highlight-line
-  }
-}
-```
-
-(Newer versions of eslint has this rule on by default, so you don't necessarily need to add it separately.)
-
-Let us also set up a <i>lint</i> npm script to inspect the files with <i>.ts</i> extension by modifying the <i>package.json</i> file: 
-
-```json
-{
-  // ...
-  "scripts": {
-      "start": "ts-node index.ts",
-      "dev": "ts-node-dev index.ts",
-      "lint": "eslint --ext .ts ." // highlight-line
-      //  ...
-  },
-  // ...
-}
-```
-
-Now lint will complain if we try to define a variable of type <i>any</i>:
-
-![](../../images/9/13b.png)
-
-
-[@typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) has a lot of TypeScript-specific eslint rules, but you can also use all basic eslint rules in TypeScript projects. 
-For now, we should probably go with the recommended settings, and we will modify the rules as we go along whenever we find something we want to change the behavior of.
-
-On top of the recommended settings, we should try to get familiar with the coding style required in this part and <i>set the semicolon at the end of each line of code to required</i>.
-
-So we will use the following <i>.eslintrc</i>
-
-```json
-{
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  ],
-  "plugins": ["@typescript-eslint"],
-  "env": {
-    "node": true,
-    "es6": true
-  },
-  "rules": {
-    "@typescript-eslint/semi": ["error"],
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/restrict-template-expressions": "off",
-    "@typescript-eslint/restrict-plus-operands": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { "argsIgnorePattern": "^_" }
-    ],
-    "no-case-declarations": "off"
-  },
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  }
-}
-```
-
-There are quite a few semicolons missing, but those are easy to add. We also have to solve the ESlint issues concerning the _any_-type:
-
-![](../../images/9/50x.png)
-
-We could and probably should disable some ESlint rules to get the data from the request body.
-
-Disabling <i>@typescript-eslint/no-unsafe-assignment</i> for the destructuring assignment is nearly enough:
-
-```js
-app.post('/calculate', (req, res) => {
-  // highlight-start
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment 
-  // highlight-end
-  const { value1, value2, op } = req.body;
-
-  const result = calculator(Number(value1), Number(value2), op);
-  res.send(result);
-});
-```
-
-However this still leaves one problem to deal with, the last parameter in the function call is not safe:
-
-![](../../images/9/51x.png)
-
-We can just disable another ESlint rule to get rid of that:
-
-```js
-app.post('/calculate', (req, res) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { value1, value2, op } = req.body;
-
-  // highlight-start
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  // highlight-end
-  const result = calculator(Number(value1), Number(value2), op);
-  res.send(result);
-});
-```
-
-We now got ESlint silenced but we are totally on mercy of the user. We most definitively should do some validation to the post data and give a proper error message if the data is invalid:
-
-```js
-app.post('/calculate', (req, res) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { value1, value2, op } = req.body;
-
 // highlight-start
-  if ( !value1 || isNaN(Number(value1))) {
-    return res.status(400).send({ error: '...'});
-  }
-  // highlight-end
-
-  // more validations here...
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const result = calculator(Number(value1), Number(value2), op);
-  return res.send(result);
+const validationSchema = yup.object().shape({
+  mass: yup
+    .number()
+    .min(1, 'Weight must be greater or equal to 1')
+    .required('Weight is required'),
+  height: yup
+    .number()
+    .min(0.5, 'Height must be greater or equal to 0.5')
+    .required('Height is required'),
 });
+// highlight-end
+
+const BodyMassIndexCalculator = () => {
+  // ...
+
+  return (
+    <Formik
+      initialValues={initialValues}
+      onSubmit={onSubmit}
+      validationSchema={validationSchema} // highlight-line
+    >
+      {({ handleSubmit }) => <BodyMassIndexForm onSubmit={handleSubmit} />}
+    </Formik>
+  );
+};
+```
+
+The validation is performed by default every time a field's value changes and when the <em>handleSubmit</em> function is called. If the validation fails, the function provided for the <em>onSubmit</em> prop of the <em>Formik</em> component is not called.
+
+The <em>FormikTextInput</em> component we previously implemented displays field's error message if it is present and the field is "touched", meaning that the field has received and lost focus:
+
+```javascript
+const FormikTextInput = ({ name, ...props }) => {
+  const [field, meta, helpers] = useField(name);
+
+  // Check if the field is touched and the error message is present
+  const showError = meta.touched && meta.error;
+
+  return (
+    <>
+      <TextInput
+        onChangeText={(value) => helpers.setValue(value)}
+        onBlur={() => helpers.setTouched(true)}
+        value={field.value}
+        error={showError}
+        {...props}
+      />
+      {/* Show the error message if the value of showError variable is true  */}
+      {showError && <Text style={styles.errorText}>{meta.error}</Text>}
+    </>
+  );
+};
 ```
 
 </div>
 
 <div class="tasks">
 
-### Exercises 9.6.-9.7.
+### Exercise 9.9.
 
-#### 9.6 Eslint
+#### Exercise 9.9: validating the sign in form
 
-Configure your project to use the above eslint settings and fix all the warnings.
+Validate the sign in form so that both username and password fields are required. Note that the <em>onSubmit</em> callback implemented in the previous exercise, <i>should not be called</i> if the form validation fails.
 
-#### 9.7 WebExercises
+The current implementation of the <em>FormikTextInput</em> component should display an error message if a touched field has an error. Emphasize this error message by giving it a red color.
 
-Add an endpoint to your app for the exercise calculator. It should be used by doing an HTTP POST request to endpoint <i>exercises</i> with the input in the request body:
+On top of the red error message, give an invalid field a visual indication of an error by giving it a red border color. Remember that if a field has an error, the <em>FormikTextInput</em> component sets the <em>TextInput</em> component's <em>error</em> prop as <em>true</em>. You can use the value of the <em>error</em> prop to attach conditional styles to the <em>TextInput</em> component.
 
-```js
-{
-  "daily_exercises": [1, 0, 2, 0, 3, 0, 2.5],
-  "target": 2.5
-}
+Here's what the sign in form should roughly look like with an invalid field:
+
+![Application preview](../../images/9/8.jpg)
+
+The red color used in this implementation is <em>#d73a4a</em>.
+
+</div>
+
+<div class="content">
+
+### Platform specific code
+
+A big benefit of React Native is that we don't need to worry about whether the application is run on a Android or iOS device. However, there might be cases where we need to execute <i>platform specific code</i>. Such case could be for example using a different implementation of a component on a different platform.
+
+We can access the user's platform through the <em>Platform.OS</em> constant:
+
+```javascript
+import { React } from 'react';
+import { Platform, Text, StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  text: {
+    color: Platform.OS === 'android' ? 'green' : 'blue',
+  },
+});
+
+const WhatIsMyPlatform = () => {
+  return <Text style={styles.text}>Your platform is: {Platform.OS}</Text>;
+};
 ```
 
-The response is a json of the following form:
+Possible values for the <em>Platform.OS</em> constant are <em>android</em> and <em>ios</em>. Another useful way to define platform specific code branches is to use the <em>Platform.select</em> method. Given an object where keys are one of <em>ios</em>, <em>android</em>, <em>native</em> and <em>default</em>, the <em>Platform.select</em> method returns the most fitting value for the platform the user is currently running on. We can rewrite the <em>styles</em> variable in the previous example using the <em>Platform.select</em> method like this:
 
-```js
-{
-    "periodLength": 7,
-    "trainingDays": 4,
-    "success": false,
-    "rating": 1,
-    "ratingDescription": "bad",
-    "target": 2.5,
-    "average": 1.2142857142857142
-}
+```javascript
+const styles = StyleSheet.create({
+  text: {
+    color: Platform.select({
+      android: 'green',
+      ios: 'blue',
+      default: 'black',
+    }),
+  },
+});
 ```
 
-If the body of the request is not of the right form, a response with proper status code and error message is given. The error message is either
+We can even use the <em>Platform.select</em> method to require a platform specific component:
 
-```js
-{
-  error: "parameters missing"
-}
+```javascript
+const MyComponent = Platform.select({
+  ios: () => require('./MyIOSComponent'),
+  android: () => require('./MyAndroidComponent'),
+})();
+
+<MyComponent />;
 ```
 
-or
+However, a more sophisticated method for implementing and importing platform specific components (or any other piece of code) is to use the <i>.ios.jsx</i> and <i>.android.jsx</i> file extensions. Note that the <i>.jsx</i> extension can as well be any extensions recognized by the bundler, such as <i>.js</i>. We can for example have files <i>Button.ios.jsx</i> and <i>Button.android.jsx</i> which we can import like this:
 
-```js
-{
-  error: "malformatted parameters"
-}
+```javascript
+import Button from './Button';
+
+const PlatformSpecificButton = () => {
+  return <Button />;
+};
 ```
 
-depending on the error. The latter happens if the input values do not have the right type, i.e. they are not numbers or convertible to numbers.
+Now, the Android bundle of the application will have the component defined in the <i>Button.android.jsx</i> whereas the iOS bundle the one defined in the <i>Button.ios.jsx</i> file.
 
-In this exercise, you might find it beneficial to use the <i>explicit any</i> type when handling the data in the request body. Our eslint configuration is preventing this but you may unset this rule for a particular line by inserting the following comment as the previous line:
+</div>
 
-```js
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-```
+<div class="tasks">
 
-You might also get in trouble with rules <i>no-unsafe-member-access</i> and <i>no-unsafe-assignment </i>. These rules may be ignored in this exercise.
+### Exercise 9.10.
 
-Note that you need to have a correct setup in order to get hold of the request body; see [part 3](/en/part3/node_js_and_express#receiving-data).
+#### Exercise 9.10: a platform specific font
 
+Currently the font family of our application is set to <i>System</i> in the theme configuration located in the <i>theme.js</i> file. Instead of the <i>System</i> font, use a platform specific [Sans-serif](https://en.wikipedia.org/wiki/Sans-serif) font. In the Android platform use the <i>Roboto</i> font and in the iOS platform use the <i>Arial</i> font. The default font can be <i>System</i>.
+
+This was the last exercise in this section. It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 </div>

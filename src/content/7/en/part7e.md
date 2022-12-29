@@ -316,7 +316,7 @@ You can check how up to date your dependencies are using the command
 npm outdated --depth 0
 ```
 
-The one year old project that is used by the [part 9](/en/part9) of this course already have quite a few outdated dependencies:
+The one year old project that is used by the [part 8](/en/part8) of this course already have quite a few outdated dependencies:
 
 ![](../../images/7/33x.png)
 
@@ -427,7 +427,7 @@ Finally, let's take a look at some technology of tomorrow (or, actually, already
 
 Sometimes, the [dynamic typing](https://developer.mozilla.org/en-US/docs/Glossary/Dynamic_typing) of JavaScript variables creates annoying bugs. In part 5, we talked briefly about [PropTypes](/en/part5/props_children_and_proptypes#prop-types): a mechanism which enables one to enforce type checking for props passed to React components.
 
-Lately, there has been a notable uplift in the interest in [static type checking](https://en.wikipedia.org/wiki/Type_system#Static_type_checking). At the moment, the most popular typed version of Javascript is [Typescript](https://www.typescriptlang.org/) which has been developed by Microsoft. Typescript is covered in [part 9](/en/part9).
+Lately, there has been a notable uplift in the interest in [static type checking](https://en.wikipedia.org/wiki/Type_system#Static_type_checking). At the moment, the most popular typed version of Javascript is [Typescript](https://www.typescriptlang.org/) which has been developed by Microsoft. Typescript is covered in [part 8](/en/part8).
 
 #### Server-side rendering, isomorphic applications and universal code
 
@@ -526,7 +526,7 @@ The [immutable.js](https://github.com/facebook/immutable-js/) library maintained
 
 For single-page applications, the gathering of analytics data on the interaction between the users and the page is [more challenging](https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications) than for traditional web applications where the entire page is loaded. The [React Google Analytics](https://github.com/react-ga/react-ga) library offers a solution.
 
-You can take advantage of your React know-how when developing mobile applications using Facebook's extremely popular [React Native](https://facebook.github.io/react-native/) library, which is the topic of [part 10](/en/part10) of the course.
+You can take advantage of your React know-how when developing mobile applications using Facebook's extremely popular [React Native](https://facebook.github.io/react-native/) library, which is the topic of [part 9](/en/part9) of the course.
 
 When it comes to the tools used for the management and bundling of JavaScript projects, the community has been very fickle. Best practices have changed rapidly (the years are approximations, nobody remembers that far back in the past):
 

@@ -8,7 +8,7 @@ import { BodyText } from '../BodyText/BodyText';
 import Element from '../Element/Element';
 
 const GOOGLE_FORM_ACTION_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSeO9jt4-iUsiFaLT5Rpwt47sNceu25te2UO7WGQ2wcUNTbBiQ/formResponse';
+  'https://docs.google.com/forms/d/e/1dQP_32J0J_VHgZD3vduLPaL0ZqoF_4pFAgNM_tvLqy4/formResponse';
 const GOOGLE_FORM_NAME_ID = 'entry.1118152809';
 const GOOGLE_FORM_TITLE_ID = 'entry.2015280305';
 const GOOGLE_FORM_ORGANIZATION_ID = 'entry.578868795';
@@ -59,9 +59,6 @@ class Form extends Component {
       .then(() => {
         this.setState({
           name: '',
-          title: '',
-          organization: '',
-          phone: '',
           email: '',
           question: '',
           formIsSent: true,
@@ -75,16 +72,7 @@ class Form extends Component {
   };
 
   render() {
-    const {
-      showForm,
-      formIsSent,
-      name,
-      title,
-      organization,
-      phone,
-      email,
-      question,
-    } = this.state;
+    const { showForm, formIsSent, name, email, question } = this.state;
 
     const { t } = this.props;
 
@@ -106,47 +94,6 @@ class Form extends Component {
                   type="text"
                   name="name"
                   value={name}
-                  onChange={this.handleChange}
-                />
-                <p className="spacing--small">
-                  {t('challengePage:titleLabel')}
-                  <span aria-hidden="true">*</span>
-                </p>
-                <input
-                  required
-                  autoComplete="off"
-                  className="col-10"
-                  placeholder="CEO"
-                  type="text"
-                  name="title"
-                  value={title}
-                  onChange={this.handleChange}
-                />
-                <p className="spacing--small">
-                  {t('challengePage:companyLabel')}
-                  <span aria-hidden="true">*</span>
-                </p>
-                <input
-                  required
-                  autoComplete="off"
-                  className="col-10"
-                  placeholder={t('challengePage:companyPlaceholder')}
-                  type="text"
-                  name="organization"
-                  value={organization}
-                  onChange={this.handleChange}
-                />
-                <p className="spacing--small">
-                  {t('challengePage:phoneLabel')}
-                  <span aria-hidden="true">*</span>
-                </p>
-                <input
-                  autoComplete="off"
-                  className="col-10"
-                  placeholder="+358 40 234 5678"
-                  type="text"
-                  name="phone"
-                  value={phone}
                   onChange={this.handleChange}
                 />
                 <p className="spacing--small">

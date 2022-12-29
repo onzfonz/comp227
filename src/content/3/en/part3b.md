@@ -82,7 +82,7 @@ For a decade already, [Heroku](http://heroku.com) has been dominating the PaaS s
 
 One of the most promising replacements for Heroku is [Fly.io](https://fly.io/) which has a free plan, so we have selected Fly.io as the second "official" hosting platform of this course. You are of course allowed to use another service if you wish.
 
-There are also some other free options for Heroku replacements besides Fly.io, eg. [Render](https://render.com/) that works well for the purposes of this course, at least for all parts other than the part 11 (CI/CD) that might have one tricky exercise for other platforms.
+There are also some other free options for Heroku replacements besides Fly.io, eg. [Render](https://render.com/) that works well for the purposes of this course.
 
 Some course participants have also used the following
 
@@ -444,7 +444,7 @@ After a restart, the React development environment will work as a [proxy](https:
 
 Now the frontend is also fine, working with the server both in development- and production mode. 
 
-A negative aspect of our approach is how complicated it is to deploy the frontend. Deploying a new version requires generating new production build of the frontend and copying it to the backend repository. This makes creating an automated [deployment pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) more difficult. Deployment pipeline means an automated and controlled way to move the code from the computer of the developer through different tests and quality checks to the production environment. Building a deployment pipeline is the topic of [part 11](https://fullstackopen.com/en/part11) of this course.
+A negative aspect of our approach is how complicated it is to deploy the frontend. Deploying a new version requires generating new production build of the frontend and copying it to the backend repository. This makes creating an automated [deployment pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) more difficult. Deployment pipeline means an automated and controlled way to move the code from the computer of the developer through different tests and quality checks to the production environment. Building a deployment pipeline is the topic of the optional [part 11](https://comp227.djosv.com/part11) of this course.
 
 There are multiple ways to achieve this (for example placing both backend and frontend code [to the same repository](https://github.com/mars/heroku-cra-node) ) but we will not go into those now. 
 
