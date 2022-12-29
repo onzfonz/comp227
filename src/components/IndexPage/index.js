@@ -14,7 +14,7 @@ import { TripleBorder } from '../TripleBorder/TripleBorder';
 import cc from '../../images/cc.svg';
 import content from '../../content/pages/main.json';
 import landingImage from '../../images/landing.svg';
-import licenceIcon from '../../images/cc-logo.svg';
+import licenceIcon from '../../images/cc-logo.png';
 import mainSEOdescription from '../../content/seo/mainSEOdescription';
 import mainSEOtags from '../../content/seo/mainSEOtags';
 import news from '../../images/noun_news_1248039.svg';
