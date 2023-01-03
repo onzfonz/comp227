@@ -62,11 +62,12 @@
     color: $white;
   }
 
-  em {
-    font-family: Courier;
-    font-style: normal;
+  code.language-text {
     background-color: rgba(var(--color-main), 0.6);
-    padding: 1px 5px 2px;
+    color: rgba(var(--color-main), 0.6);
+    font-family: Courier;
+    font-weight: bold;
+    padding: 2px 0px 0px 5px;
   }
 
   img {
