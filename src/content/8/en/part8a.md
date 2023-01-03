@@ -1,1234 +1,224 @@
 ---
-mainImage: ../../../images/part-8.svg
-part: 8
+mainImage: ../../../images/part-9.svg
+part: 9
 letter: a
 lang: en
 ---
 
 <div class="content">
 
-REST, familiar to us from the previous parts of the course, has long been the most prevalent way to implement the interfaces servers offer for browsers, and in general the integration between different applications on the web. 
+TypeScript is a programming language designed for large-scale JavaScript development created by Microsoft.
+For example, Microsoft's <i>Azure Management Portal</i> (1,2 million lines of code) and <i>Visual Studio Code</i> (300 000 lines of code) have both been written in TypeScript.
+To support building large-scale JavaScript applications, TypeScript offers features such as better development-time tooling, static code analysis, compile-time type checking and code-level documentation.
 
-In recent years, [GraphQL](http://graphql.org/), developed by Facebook, has become popular for communication between web applications and servers. 
+### Main principle
 
-The GraphQL philosophy is very different from REST. REST is <i>resource-based</i>. Every resource, for example a <i>user</i>, has its own address which identifies it, for example <i>/users/10</i>. All operations done to the resource are done with HTTP requests to its URL. The action depends on the HTTP method used. 
+TypeScript is a typed superset of JavaScript, and eventually, it's compiled into plain JavaScript code.
+The programmer is even able to decide the version of the generated code, as long as it's ECMAScript 3 or newer.
+TypeScript being a superset of JavaScript means that it includes all the features of JavaScript and
+its additional features as well.
+In other words, all existing JavaScript code is valid TypeScript.
 
-The resource-basedness of REST works well in most situations. However, it can be a bit awkward sometimes. 
+TypeScript consists of three separate, but mutually fulfilling parts:
 
-Let's consider the following example: our bloglist application contains some kind of social media functionality, and we would like to show a list of all the blogs that were added by users who have commented on any of the blogs we follow. 
+- The language
+- The compiler
+- The language service
 
-If the server implemented a REST API, we would probably have to do multiple HTTP requests from the browser before we had all the data we wanted. The requests would also return a lot of unnecessary data, and the code on the browser would probably be quite complicated. 
+![diagram of typescript components](../../images/9/1.png)
 
-If this was an often-used functionality, there could be a REST endpoint for it. If there were a lot of these kinds of scenarios however, it would become very laborious to implement REST endpoints for all of them. 
+The <i>language</i> consists of syntax, keywords and type annotations.
+The syntax is similar to but not the same as JavaScript syntax.
+From the three parts of TypeScript, programmers have the most direct contact with the language.
 
-A GraphQL server is well-suited for these kinds of situations. 
+The <i>compiler</i> is responsible for type information erasure (i.e. removing the typing information) and for code transformations.
+The code transformations enable TypeScript code to be transpiled into executable JavaScript.
+Everything related to the types is removed at compile-time, so TypeScript isn't genuine statically-typed code.
 
-The main principle of GraphQL is that the code on the browser forms a <i>query</i> describing the data wanted, and sends it to the API with an HTTP POST request. Unlike REST, all GraphQL queries are sent to the same address, and their type is POST.
+Traditionally,  <i>compiling</i> means that code is transformed from a human-readable format to a machine-readable format.
+In TypeScript, human-readable source code is transformed into another human-readable source code, so the correct term would be <i>transpiling</i>.
+However, compiling has been the most commonly-used term in this context, so we will continue to use it.
 
-The data described in the above scenario could be fetched with (roughly) the following query: 
+The compiler also performs a static code analysis.
+It can emit warnings or errors if it finds a reason to do so, and it can be set to perform additional tasks such as combining the generated code into a single file.
 
-```bash
-query FetchBlogsQuery {
-  user(username: "mluukkai") {
-    followedUsers {
-      blogs {
-        comments {
-          user {
-            blogs {
-              title
-            }
-          }
-        }
-      }
-    }
-  }
+The <i>language service</i> collects type information from the source code.
+Development tools can use the type information for providing IntelliSense, type hints and possible refactoring alternatives.
+
+### TypeScript key language features
+
+In this section, we will describe some of the key features of the TypeScript language.
+The intent is to provide you with a basic understanding of TypeScript's
+key features to help you understand more of what is to come during this course.
+
+#### Type annotations
+
+Type annotations in TypeScript are a lightweight way to record the intended <i>contract</i> of a function or a variable.
+In the example below, we have defined a *birthdayGreeter* function that accepts two arguments: one of type string and one of type number.
+The function will return a string.
+
+```js
+const birthdayGreeter = (name: string, age: number): string => {
+  return `Happy birthday ${name}, you are now ${age} years old!`;
+};
+
+const birthdayHero = "Jane User";
+const age = 22;
+
+console.log(birthdayGreeter(birthdayHero, age));
+```
+
+#### Structural typing
+
+TypeScript is a structurally-typed language.
+In structural typing, two elements are considered to be compatible with one another if, for each feature within the type of the first element, a corresponding and identical feature exists within the type of the second element.
+Two types are considered to be identical if they are compatible with each other.
+
+#### Type inference
+
+The TypeScript compiler can attempt to infer the type information if no type has been specified.
+Variables' type can be inferred based on their assigned value and their usage.
+The type inference takes place when initializing variables and members, setting parameter default values, and determining function return types.
+
+For example, consider the function *add*:
+
+```js
+const add = (a: number, b: number) => {
+  /* The return value is used to determine
+     the return type of the function */
+  return a + b;
 }
 ```
 
-The content of the `FetchBlogsQuery` can be roughly interpreted as: find a user named `"mluukkai"` and for each of his `followedUsers`, find all their `blogs`, and for each blog, all its `comments`, and for each `user` who wrote each comment, find their `blogs`, and return the `title` of each of them. 
+The type of the function's return value is inferred by retracing the code back to the return expression.
+The return expression performs an addition of the parameters a and b.
+We can see that a and b are numbers based on their types.
+Thus, we can infer the return value to be of type *number*.
 
-The server's response would be about the following JSON object: 
+As a more complex example, let's consider the code below.
+If you have not used TypeScript before, this example might be a bit complex.
+But do not worry, you can safely skip it for now.
 
-```bash
-{
-  "data": {
-    "followedUsers": [
-      {
-        "blogs": [
-          {
-            "comments": [
-              {
-                "user": {
-                  "blogs": [
-                    {
-                      "title": "Goto considered harmful"
-                    },
-                    {
-                      "title": "End to End Testing with Cypress is most enjoyable"
-                    },
-                    {
-                      "title": "Navigating your transition to GraphQL"
-                    },
-                    {
-                      "title": "From REST to GraphQL"
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+```js
+type CallsFunction = (callback: (result: string) => any) => void;
+
+const func: CallsFunction = (cb) => {
+  cb('done');
+  cb(1);
+}
+
+func((result) => {
+  return result;
+});
+```
+
+First, we have a declaration of a [type alias](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) called <i>CallsFunction</i>.
+*CallsFunction* is a function type with one parameter: *callback*.
+The parameter *callback* is of type function which takes a string parameter and returns [any](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any) value.
+ As we will learn later in this part, *any* is a kind of "wildcard" type that can represent any type.
+Also, CallsFunction returns [void](https://www.typescriptlang.org/docs/handbook/2/functions.html#void) type.
+
+Next, we define the function *func* of type *CallsFunction*.
+From the function's type, we can infer that its parameter function *cb* will only accept a string argument.
+To demonstrate this, there is also an example where the parameter function is called with a numeric value, which will cause an error in TypeScript.
+
+Lastly, we call *func* giving it the following function as a parameter:
+
+```js
+(result) => {
+  return result;
 }
 ```
 
+<!-- So despite not defining types for the parameter function, it is inferred from the calling context that the argument <i>result</i> is of the type string. -->
+Despite the types of the parameter function not being defined, we can infer from the calling context that the argument *result* is of type string.
 
-The application logic stays simple, and the code on the browser gets exactly the data it needs with a single query. 
+#### Type erasure
 
-### Schemas and queries
+TypeScript removes all type system constructs during compilation.
 
-We will get to know the basics of GraphQL by implementing a GraphQL version of the phonebook application from parts 2 and 3. 
-
-In the heart of all GraphQL applications is a [schema](https://graphql.org/learn/schema/), which describes the data sent between the client and the server. The initial schema for our phonebook is as follows: 
-
-```js
-type Person {
-  name: String!
-  phone: String
-  street: String!
-  city: String!
-  id: ID! 
-}
-
-type Query {
-  personCount: Int!
-  allPersons: [Person!]!
-  findPerson(name: String!): Person
-}
-```
-
-The schema describes two [types](https://graphql.org/learn/schema/#type-system). The first type, <i>Person</i>, determines that persons have five fields. Four of the fields are type  <i>String</i>, which is one of the [scalar types](https://graphql.org/learn/schema/#scalar-types) of GraphQL. 
-All of the String fields, except <i>phone</i>, must be given a value. This is marked by the exclamation mark on the schema. The type of the field <i>id</i> is <i>ID</i>. <i>ID</i> fields are strings, but GraphQL ensures they are unique.  
-
-The second type is a [Query](https://graphql.org/learn/schema/#the-query-and-mutation-types). Practically every GraphQL schema describes a Query, which tells what kind of queries can be made to the API. 
-
-The phonebook describes three different queries. _personCount_ returns an integer, _allPersons_ returns a list of <i>Person</i> objects and <i>findPerson</i> is given a string parameter and it returns a <i>Person</i> object. 
-
-Again, exclamation marks are used to mark which return values and parameters are <i>Non-Null</i>. _personCount_ will, for sure, return an integer. The query _findPerson_ must be given a string as a parameter. The query returns a <i>Person</i>-object or <i>null</i>. _allPersons_ returns a list of <i>Person</i> objects, and the list does not contain any <i>null</i> values. 
-
-So the schema describes what queries the client can send to the server, what kind of parameters the queries can have, and what kind of data the queries return. 
-
-
-The simplest of the queries, _personCount_, looks as follows: 
+Input:
 
 ```js
-query {
-  personCount
-}
+let x: SomeType;
 ```
 
-Assuming our application has saved the information of three people, the response would look like this: 
+Output:
 
 ```js
-{
-  "data": {
-    "personCount": 3
-  }
-}
+let x;
 ```
 
-The query fetching the information of all of the people, _allPersons_, is a bit more complicated. Because the query returns a list of <i>Person</i> objects, the query must describe 
-<i>which [fields](https://graphql.org/learn/queries/#fields)</i> of the objects the query returns:
-```js
-query {
-  allPersons {
-    name
-    phone
-  }
-}
-```
-
-The response could look like this: 
-
-```js
-{
-  "data": {
-    "allPersons": [
-      {
-        "name": "Arto Hellas",
-        "phone": "040-123543"
-      },
-      {
-        "name": "Matti Luukkainen",
-        "phone": "040-432342"
-      },
-      {
-        "name": "Venla Ruuska",
-        "phone": null
-      }
-    ]
-  }
-}
-```
-
-A query can be made to return any field described in the schema. For example, the following would also be possible: 
-
-```js
-query {
-  allPersons{
-    name
-    city
-    street
-  }
-}
-```
-
-The last example shows a query which requires a parameter, and returns the details of one person. 
-
-```js
-query {
-  findPerson(name: "Arto Hellas") {
-    phone 
-    city 
-    street
-    id
-  }
-}
-```
-
-So, first, the parameter is described in round brackets, and then the fields of the return value object are listed in curly brackets. 
-
-The response is like this: 
-
-```js
-{
-  "data": {
-    "findPerson": {
-      "phone": "040-123543",
-      "city": "Espoo",
-      "street": "Tapiolankatu 5 A"
-      "id": "3d594650-3436-11e9-bc57-8b80ba54c431"
-    }
-  }
-}
-```
-
-The return value was marked as nullable, so if we search for the details of an unknown
-
-```js
-query {
-  findPerson(name: "Joe Biden") {
-    phone 
-  }
-}
-```
-
-the return value is <i>null</i>.
-
-```js
-{
-  "data": {
-    "findPerson": null
-  }
-}
-```
-
-As you can see, there is a direct link between a GraphQL query and  the returned JSON object. One can think that the query describes what kind of data it wants as a response. 
-The difference to REST queries is stark. With REST, the URL and the type of the request have nothing to do with the form of the returned data. 
-
-GraphQL query describes only the data moving between a server and the client. On the server, the data can be organized and saved any way we like. 
-
-Despite its name, GraphQL does not actually have anything to do with databases. It does not care how the data is saved. 
-The data a GraphQL API uses can be saved into a relational database, document database, or to other servers which a GraphQL server can access with for example REST.
-
-### Apollo Server
-
-Let's implement a GraphQL server with today's leading library: [Apollo Server](https://www.apollographql.com/docs/apollo-server/).
-
-Create a new npm project with _npm init_ and install the required dependencies.
-
-```bash
-npm install apollo-server@3.10.1 graphql
-```
-
-**Note** at the time of writing (10th Dec 2022) the code used in this part is not fully compatible with the new version of the Apollo Server, and because of this, if you want everything to work smoothly you should install the version _3.10.1_. Material shall be updated to use the most recent Apollo Server in early 2023.
-
-Also create a `index.js` file in your project's root directory.
-
-The initial code is as follows: 
-
-```js
-const { ApolloServer, gql } = require('@apollo/server')
-
-let persons = [
-  {
-    name: "Arto Hellas",
-    phone: "040-123543",
-    street: "Tapiolankatu 5 A",
-    city: "Espoo",
-    id: "3d594650-3436-11e9-bc57-8b80ba54c431"
-  },
-  {
-    name: "Matti Luukkainen",
-    phone: "040-432342",
-    street: "Malminkaari 10 A",
-    city: "Helsinki",
-    id: '3d599470-3436-11e9-bc57-8b80ba54c431'
-  },
-  {
-    name: "Venla Ruuska",
-    street: "Nallemäentie 22 C",
-    city: "Helsinki",
-    id: '3d599471-3436-11e9-bc57-8b80ba54c431'
-  },
-]
-
-const typeDefs = gql`
-  type Person {
-    name: String!
-    phone: String
-    street: String!
-    city: String! 
-    id: ID!
-  }
-
-  type Query {
-    personCount: Int!
-    allPersons: [Person!]!
-    findPerson(name: String!): Person
-  }
-`
-
-const resolvers = {
-  Query: {
-    personCount: () => persons.length,
-    allPersons: () => persons,
-    findPerson: (root, args) =>
-      persons.find(p => p.name === args.name)
-  }
-}
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-})
-
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`)
-})
-```
-
-The heart of the code is an _ApolloServer_, which is given two parameters:
-
-```js
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-})
-```
-
-The first parameter, _typeDefs_, contains the GraphQL schema. 
-
-The second parameter is an object, which contains the [resolvers](https://www.apollographql.com/docs/tutorial/resolvers/) of the server. These are the code, which defines <i>how</i> GraphQL queries are responded to. 
-
-The code of the resolvers is the following: 
-
-```js
-const resolvers = {
-  Query: {
-    personCount: () => persons.length,
-    allPersons: () => persons,
-    findPerson: (root, args) =>
-      persons.find(p => p.name === args.name)
-  }
-}
-```
-
-As you can see, the resolvers correspond to the queries described in the schema. 
-
-```js
-type Query {
-  personCount: Int!
-  allPersons: [Person!]!
-  findPerson(name: String!): Person
-}
-```
-
-So there is a field under <i>Query</i> for every query described in the schema. 
-
-The query 
-
-```js
-query {
-  personCount
-}
-```
-
-Has the resolver
-
-```js
-() => persons.length
-```
-
-So the response to the query is the length of the array _persons_.
-
-The query which fetches all persons
-
-```js
-query {
-  allPersons {
-    name
-  }
-}
-```
-
-has a resolver which returns <i>all</i> objects from the _persons_ array. 
-
-```js
-() => persons
-```
-  
-Start the server by running `node index.js` in the terminal.
-
-### Apollo Studio Explorer
-
-When Apollo server is run in development mode the page [http://localhost:4000](http://localhost:4000) has a button <i>Query your server</i> that takes us to [Apollo Studio Explorer](https://www.apollographql.com/docs/studio/explorer/explorer/).  This is very useful for a developer, and can be used to make queries to the server. 
-
-Let's try it out:
-
-![](../../images/8/1x.png)
-
-At the left side Explorer shows the API-documentation that it has automatically generated based on the schema.
-
-### Parameters of a resolver
-
-The query fetching a single person
-
-```js
-query {
-  findPerson(name: "Arto Hellas") {
-    phone 
-    city 
-    street
-  }
-}
-```
-
-has a resolver which differs from the previous ones because it is given <i>two parameters</i>:
-
-```js
-(root, args) => persons.find(p => p.name === args.name)
-```
-
-The second parameter, _args_, contains the parameters of the query. 
-The resolver then returns from the array _persons_ the person whose name is the same as the value of <i>args.name</i>. 
-The resolver does not need the first parameter _root_.
- 
-
- 
- In fact, all resolver functions are given [four parameters](https://www.graphql-tools.com/docs/resolvers#resolver-function-signature). With JavaScript, the parameters don't have to be defined if they are not needed. We will be using the first and the third parameter of a resolver later in this part. 
-
-### The default resolver
-
-
-When we do a query, for example
-
-```js
-query {
-  findPerson(name: "Arto Hellas") {
-    phone 
-    city 
-    street
-  }
-}
-```
-
-the server knows to send back exactly the fields required by the query. How does that happen?
-
-A GraphQL server must define resolvers for <i>each</i> field of each  type in the schema. 
-We have so far only defined resolvers for fields of the type <i>Query</i>, so for each query of the application. 
-
-Because we did not define resolvers for the fields of the type <i>Person</i>, Apollo has defined [default resolvers](https://www.graphql-tools.com/docs/resolvers/#default-resolver) for them. 
-They work like the one shown below: 
-
-
-```js
-const resolvers = {
-  Query: {
-    personCount: () => persons.length,
-    allPersons: () => persons,
-    findPerson: (root, args) => persons.find(p => p.name === args.name)
-  },
-  // highlight-start
-  Person: {
-    name: (root) => root.name,
-    phone: (root) => root.phone,
-    street: (root) => root.street,
-    city: (root) => root.city,
-    id: (root) => root.id
-  }
-  // highlight-end
-}
-```
-
-
-The default resolver returns the value of the corresponding field of the object. The object itself can be accessed through the first parameter of the resolver, _root_.
-
-
-If the functionality of the default resolver is enough, you don't need to define your own. It is also possible to define resolvers for only some fields of a type, and let the default resolvers handle the rest. 
-
-
-We could for example define that the address of all persons is 
-<i>Manhattan New York</i> by hard-coding the following to the resolvers of the street and city fields of the type <i>Person</i>:
-
-```js
-Person: {
-  street: (root) => "Manhattan",
-  city: (root) => "New York"
-}
-```
-
-### Object within an object
-
-Let's modify the schema a bit
-
-```js
-  // highlight-start
-type Address {
-  street: String!
-  city: String! 
-}
-  // highlight-end
-
-type Person {
-  name: String!
-  phone: String
-  address: Address!   // highlight-line
-  id: ID!
-}
-
-type Query {
-  personCount: Int!
-  allPersons: [Person!]!
-  findPerson(name: String!): Person
-}
-```
-
-
-so a person now has a field with the type <i>Address</i>, which contains the street and the city. 
-
-
-The queries requiring the address change into
-
-```js
-query {
-  findPerson(name: "Arto Hellas") {
-    phone 
-    address {
-      city 
-      street
-    }
-  }
-}
-```
-
-and the response is now a person object, which <i>contains</i> an address object. 
-
-```js
-{
-  "data": {
-    "findPerson": {
-      "phone": "040-123543",
-      "address":  {
-        "city": "Espoo",
-        "street": "Tapiolankatu 5 A"
-      }
-    }
-  }
-}
-```
-
-We still save the persons in the server the same way we did before. 
-
-```js
-let persons = [
-  {
-    name: "Arto Hellas",
-    phone: "040-123543",
-    street: "Tapiolankatu 5 A",
-    city: "Espoo",
-    id: "3d594650-3436-11e9-bc57-8b80ba54c431"
-  },
-  // ...
-]
-```
-
-
-The person-objects saved in the server are not exactly the same as the GraphQL type <i>Person</i> objects described in the schema. 
-
-Contrary to the <i>Person</i> type, the <i>Address</i> type does not have an <i>id</i> field, because they are not saved into their own separate data structure in the server. 
-
-Because the objects saved in the array do not have an <i>address</i> field, the default resolver is not sufficient. 
-Let's add a resolver for the <i>address</i> field  of <i>Person</i> type : 
-
-```js
-const resolvers = {
-  Query: {
-    personCount: () => persons.length,
-    allPersons: () => persons,
-    findPerson: (root, args) =>
-      persons.find(p => p.name === args.name)
-  },
-  // highlight-start
-  Person: {
-    address: (root) => {
-      return { 
-        street: root.street,
-        city: root.city
-      }
-    }
-  }
-  // highlight-end
-}
-```
-
-So every time a <i>Person</i> object is returned, the fields <i>name</i>, <i>phone</i> and <i>id</i> are returned using their default resolvers, but the field <i>address</i> is formed by using a self-defined resolver. The parameter _root_ of the resolver function is the person-object, so the street and the city of the address can be taken from its fields. 
-
-The current code of the application can be found on [ Github](https://github.com/fullstack-hy2020/graphql-phonebook-backend/tree/part8-1), branch <i>part8-1</i>.
-
-### Mutations
-
-Let's add a functionality for adding new persons to the phonebook. In GraphQL, all operations which cause a change are done with [mutations](https://graphql.org/learn/queries/#mutations). Mutations are described in the schema as the keys of type <i>Mutation</i>.
-
-The schema for a mutation for adding a new person looks as follows: 
-
-```js
-type Mutation {
-  addPerson(
-    name: String!
-    phone: String
-    street: String!
-    city: String!
-  ): Person
-}
-```
-
-
-The Mutation is given the details of the person as parameters. The parameter <i>phone</i> is the only one which is nullable. The Mutation also has a return value. The return value is type <i>Person</i>, the idea being that the details of the added person are returned if the operation is successful and if not, null. Value for the field <i>id</i> is not given as a parameter. Generating an id is better left for the server. 
-
-
-Mutations also require a resolver: 
-
-```js
-const { v1: uuid } = require('uuid')
-
-// ...
-
-const resolvers = {
-  // ...
-  Mutation: {
-    addPerson: (root, args) => {
-      const person = { ...args, id: uuid() }
-      persons = persons.concat(person)
-      return person
-    }
-  }
-}
-```
-
-
-The mutation adds the object given to it as a parameter _args_ to the array _persons_, and returns the object it added to the array. 
-
-
-The <i>id</i> field is given a unique value using the [uuid](https://github.com/kelektiv/node-uuid#readme) library. 
-
-
-A new person can be added with the following mutation
-
-```js
-mutation {
-  addPerson(
-    name: "Pekka Mikkola"
-    phone: "045-2374321"
-    street: "Vilppulantie 25"
-    city: "Helsinki"
-  ) {
-    name
-    phone
-    address{
-      city
-      street
-    }
-    id
-  }
-}
-```
-
-
-Note that the person is saved to the _persons_ array as 
-
-```js
-{
-  name: "Pekka Mikkola",
-  phone: "045-2374321",
-  street: "Vilppulantie 25",
-  city: "Helsinki",
-  id: "2b24e0b0-343c-11e9-8c2a-cb57c2bf804f"
-}
-```
-
-
-But the response to the mutation is 
-
-```js
-{
-  "data": {
-    "addPerson": {
-      "name": "Pekka Mikkola",
-      "phone": "045-2374321",
-      "address": {
-        "city": "Helsinki",
-        "street": "Vilppulantie 25"
-      },
-      "id": "2b24e0b0-343c-11e9-8c2a-cb57c2bf804f"
-    }
-  }
-}
-```
-
-So the resolver of the <i>address</i> field of the <i>Person</i> type formats the response object to the right form. 
-### Error handling
-
-If we try to create a new person, but the parameters do not correspond with the schema description, the server gives an error message: 
-
-![](../../images/8/5x.png)
-
-So some of the error handling can be automatically done with GraphQL [validation](https://graphql.org/learn/validation/).
-
-However, GraphQL cannot handle everything automatically. For example, stricter rules for data sent to a Mutation have to be added manually.
-The errors from those rules are handled by [the error handling mechanism of Apollo Server](https://www.apollographql.com/docs/apollo-server/data/errors).
-
-
-Let's block adding the same name to the phonebook multiple times: 
-
-```js
-const { ApolloServer, UserInputError, gql } = require('@apollo/server') // highlight-line
-
-// ...
-
-const resolvers = {
-  // ..
-  Mutation: {
-    addPerson: (root, args) => {
-      // highlight-start
-      if (persons.find(p => p.name === args.name)) {
-        throw new UserInputError('Name must be unique', {
-          invalidArgs: args.name,
-        })
-      }
-      // highlight-end
-
-      const person = { ...args, id: uuid() }
-      persons = persons.concat(person)
-      return person
-    }
-  }
-}
-```
-
-
-So if the name to be added already exists in the phonebook, throw _UserInputError_ error. 
-
-![](../../images/8/6x.png)
-
-The current code of the application can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-backend/tree/part8-2), branch <i>part8-2</i>.
-
-### Enum
-
-Let's add a possibility to filter the query returning all persons with the parameter <i>phone</i> so that it returns only persons with a phone number
-
-```js
-query {
-  allPersons(phone: YES) {
-    name
-    phone 
-  }
-}
-```
-
-or persons without a phone number 
-
-```js
-query {
-  allPersons(phone: NO) {
-    name
-  }
-}
-```
-
-The schema changes like so: 
-
-```js
-// highlight-start
-enum YesNo {
-  YES
-  NO
-}
-// highlight-end
-
-type Query {
-  personCount: Int!
-  allPersons(phone: YesNo): [Person!]! // highlight-line
-  findPerson(name: String!): Person
-}
-```
-
-The type <i>YesNo</i> is a GraphQL [enum](https://graphql.org/learn/schema/#enumeration-types), or an enumerable, with two possible values: <i>YES</i> or <i>NO</i>. In the query _allPersons_, the parameter _phone_  has the type <i>YesNo</i>, but is nullable. 
-
-The resolver changes like so:
-
-```js
-Query: {
-  personCount: () => persons.length,
-  // highlight-start
-  allPersons: (root, args) => {
-    if (!args.phone) {
-      return persons
-    }
-
-    const byPhone = (person) =>
-      args.phone === 'YES' ? person.phone : !person.phone
-
-    return persons.filter(byPhone)
-  },
-  // highlight-end
-  findPerson: (root, args) =>
-    persons.find(p => p.name === args.name)
-},
-```
-
-### Changing a phone number
-
-Let's add a mutation for changing the phone number of a person. The schema of this mutation looks as follows:
-
-```js
-type Mutation {
-  addPerson(
-    name: String!
-    phone: String
-    street: String!
-    city: String!
-  ): Person
-  // highlight-start
-  editNumber(
-    name: String!
-    phone: String!
-  ): Person
-  // highlight-end
-}
-```
-
-and is done by a resolver:
-
-```js
-Mutation: {
-  // ...
-  editNumber: (root, args) => {
-    const person = persons.find(p => p.name === args.name)
-    if (!person) {
-      return null
-    }
-
-    const updatedPerson = { ...person, phone: args.phone }
-    persons = persons.map(p => p.name === args.name ? updatedPerson : p)
-    return updatedPerson
-  }   
-}
-```
-
-The mutation finds the person to be updated by the field <i>name</i>.
-
-The current code of the application can be found on [Github](https://github.com/fullstack-hy2020/graphql-phonebook-backend/tree/part8-3), branch <i>part8-3</i>.
-
-### More on queries
-
-With GraphQL, it is possible to combine multiple fields of type <i>Query</i>, or "separate queries" into one query. For example, the following query returns both the amount of persons in the phonebook and their names: 
-
-```js
-query {
-  personCount
-  allPersons {
-    name
-  }
-}
-```
-
-The response looks as follows:
-
-```js
-{
-  "data": {
-    "personCount": 3,
-    "allPersons": [
-      {
-        "name": "Arto Hellas"
-      },
-      {
-        "name": "Matti Luukkainen"
-      },
-      {
-        "name": "Venla Ruuska"
-      }
-    ]
-  }
-}
-```
-
-Combined query can also use the same query multiple times. You must however give the queries alternative names like so:
-
-```js
-query {
-  havePhone: allPersons(phone: YES){
-    name
-  }
-  phoneless: allPersons(phone: NO){
-    name
-  }
-}
-```
-
-The response looks like:
-
-```js
-{
-  "data": {
-    "havePhone": [
-      {
-        "name": "Arto Hellas"
-      },
-      {
-        "name": "Matti Luukkainen"
-      }
-    ],
-    "phoneless": [
-      {
-        "name": "Venla Ruuska"
-      }
-    ]
-  }
-}
-```
-
-In some cases, it might be beneficial to name the queries. This is the case especially when the queries or mutations have [parameters](https://graphql.org/learn/queries/#variables). We will get into parameters soon. 
+<!-- This means that at runtime, there is no information present that says that some variable x was declared as being of type SomeInterface. -->
+This means that no type information remains at runtime - nothing says that some variable x was declared as being of type *SomeType*.
+
+The lack of runtime type information can be surprising for programmers who are used to extensively using reflection or other metadata systems.
+
+### Why should one use TypeScript?
+
+On different forums, you may stumble upon a lot of different arguments either for or against TypeScript.
+The truth is probably as vague as: it depends on your needs and use of the functions that TypeScript offers.
+Anyway, here are some of our reasons behind why we think that the use of TypeScript may have some advantages.
+
+<!-- First of all, probably the most noticeable feature with TypeScript is that it offers **type checking and static code analysis**. The ability to require values to be of a certain type and to have the compiler warn about wrongful usage can help reduce runtime errors and you might even be able to reduce the amount of required unit tests in a project, at least concerning pure type tests. The static code analysis doesn't only warn about wrongful type usage, but also if you for instance misspell a variable or function name or try to use a value beyond it's scope etc. With the help of a sufficient linter settings, it's hard to even think of runtime errors that you may be able to produce. -->
+First of all, TypeScript offers <i>type checking and static code analysis</i>.
+We can require values to be of a certain type, and have the compiler warn about using them incorrectly.
+This can reduce runtime errors, and you might even be able to reduce the number of required unit tests in a project, at least concerning pure-type tests.
+The static code analysis doesn't only warn about wrongful type usage, but also other mistakes such as misspelling a variable or function name or trying to use a variable beyond its scope.
+
+<!-- A second advantage with TypeScript is that the type annotations in the code can function as a type of **code level documentation**. It's easy to check from a function signature what kind of arguments the function can receive and what type of data it will return. This type of type annotation bound documentation will always be up to date and it makes it easier for new programmers to start working on an existing project. It is also helpful when returning to an old project. Types may also be re-used all around the code base, so a change to one type automatically reflects as a change to all the locations where the type is used. One might argue that you can achieve similar code level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html), but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily and is also more verbose. -->
+The second advantage of TypeScript is that the type annotations in the code can function as a type of <i>code-level documentation</i>.
+It's easy to check from a function signature what kind of arguments the function can consume and what type of data it will return.
+This form of type annotation-bound documentation will always be up to date and it makes it easier for new programmers to start working on an existing project.
+It is also helpful when returning to an old project.
+
+Types can be reused all around the code base, and a change to a type definition will automatically be reflected everywhere the type is used.
+One might argue that you can achieve similar code-level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html), but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily, and is also more verbose.
+
+<!-- A third advantage with TypeScript is the more **specific and smarter intellisense**  that the IDE's can provide when they know exactly what types of data you are processing. -->
+The third advantage of TypeScript is that IDEs can provide more <i>specific and smarter IntelliSense</i> when they know exactly what types of data you are processing.
+
+<!-- All the features mentioned above are together extremely helpful when you need to refactor your code. The static code analysis emits warnings if you have any errors in your code, and the intellisense can give you hints about available properties and even possible refactoring options. The code level documentation helps you understand the existing code, and with the help of TypeScript it is also very easy to start using the newest JavaScript language features at an early stage just by altering the configuration. -->
+All of these features are extremely helpful when you need to refactor your code.
+The static code analysis warns you about any errors in your code, and IntelliSense can give you hints about available properties and even possible refactoring options.
+The code-level documentation helps you understand the existing code.
+With the help of TypeScript, it is also very easy to start using the newest JavaScript language features at an early stage just by altering its configuration.
+
+### What does TypeScript not fix?
+
+<!-- As mentioned above, TypeScript type annotations and type checking exist only at compile time and no longer at runtime, so even if the compiler does not give any errors, runtime errors are still possible. Especially when handling external input or if you use the dynamic type `any` in your code. -->
+As mentioned above, TypeScript type annotations and type checking exist only at compile time and no longer at runtime.
+Even if the compiler does not throw any errors, runtime errors are still possible.
+These runtime errors are especially common when handling external input, such as data received from a network request.
+
+<!-- Lastly, here are a few examples of what many regard as downsides with TypeScript, which might be good to be aware of: -->
+Lastly, below, we list some issues many have with TypeScript, which might be good to be aware of:
+
+#### Incomplete, invalid or missing types in external libraries
+
+<!-- When using external libraries you may find that some libraries have either missing or in some way invalid type declarations. The reason behind this is most often that the library has not been made with TypeScript. Then the types need to be declared manually, or if someone has already done that they might not have done such a good job with it. These are occasions when you may need to define type declarations yourself. However, you should first check out [DefinitelyTyped](https://definitelytyped.org/) or [their GitHub pages](https://github.com/DefinitelyTyped/DefinitelyTyped), which are probably the most used sources for type declaration files and there is a good chance someone has already added typings for the package you are using. Otherwise you might want to start off by getting acquainted with TypeScript's own [documentation](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) regarding type declarations. -->
+When using external libraries, you may find that some libraries have either missing or in some way invalid type declarations.
+Most often, this is due to the library not being written in TypeScript, and the person adding the type declarations manually not doing such a good job with it.
+In these cases, you might need to define the type declarations yourself.
+However, there is a good chance someone has already added typings for the package you are using.
+Always check the DefinitelyTyped [GitHub page](https://github.com/DefinitelyTyped/DefinitelyTyped) first.
+They are probably the most popular sources for type declaration files.
+Otherwise, you might want to start by getting acquainted with TypeScript's [documentation](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) regarding type declarations.
+
+#### Sometimes, type inference needs assistance
+
+<!-- The type inference in TypeScript is pretty good but not quite perfect. Sometimes you may feel like you have declared your types perfectly, but the compiler still tells you that the property does not exist or that this kind of usage is not allowed. These are occasions when you might need to help the compiler with doing e.g. an "extra" type check or something like that. But be careful with type casting and type guards. Using them you are basically giving your word to the compiler that the value really is of the type that you declare. You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html). -->
+The type inference in TypeScript is pretty good but not quite perfect.
+Sometimes, you may feel like you have declared your types perfectly, but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
+In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting and type guards.
+Using type casting or type guards, you are giving your word to the compiler that the value <i>is</i> of the type that you declare.
+You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+
+#### Mysterious type errors
+
+<!-- The errors given by the type system may sometimes be quite hard to understand, especially if you use complex types. As a general guideline it is helpful to keep in mind that TypeScript error messages usually contain the most useful content at the end of the message.  When running into long confusing messages, start reading them from the end. -->
+The errors given by the type system may sometimes be quite hard to understand, especially if you use complex types.
+As a rule of thumb, the TypeScript error messages have the most useful information at the end of the message.
+When running into long confusing messages, start reading them from the end.
 
 </div>
-
-<div class="tasks">
-
-### Exercises 8.1.-8.7.
-
-
-Through the exercises, we will implement a GraphQL backend for a small library. 
-Start with [this file](https://github.com/fullstack-hy2020/misc/blob/master/library-backend.js). Remember to _npm init_ and to install dependencies!
-
-**Note** at the time of writing (10th Dec 2022) the code used in this part is not fully compatible with the new version of the Apollo Server, and because of this, if you want everything to work smoothly you should install the version _3.10.1_:
-
-```bash
-npm install apollo-server@3.10.1 graphql
-```
-
-Note also that the code does not initially work since the schema definition is not complete.
-
-#### 8.1: The number of books and authors
-
-
-Implement queries _bookCount_ and _authorCount_ which return the number of books and the number of authors. 
-
-The query 
-
-```js
-query {
-  bookCount
-  authorCount
-}
-```
-
-
-should return
-
-```js
-{
-  "data": {
-    "bookCount": 7,
-    "authorCount": 5
-  }
-}
-```
-
-#### 8.2: All books 
-
-
-Implement query _allBooks_, which returns the details of all books. 
-
-
-In the end, the user should be able to do the following query:
-
-```js
-query {
-  allBooks { 
-    title 
-    author
-    published 
-    genres
-  }
-}
-```
-
-#### 8.3: All authors
-
-
-Implement query _allAuthors_, which returns the details of all authors. The response should include a field _bookCount_ containing the number of books the author has written. 
-
-
-For example the query
-
-```js
-query {
-  allAuthors {
-    name
-    bookCount
-  }
-}
-```
-
-
-should return
-
-```js
-{
-  "data": {
-    "allAuthors": [
-      {
-        "name": "Robert Martin",
-        "bookCount": 2
-      },
-      {
-        "name": "Martin Fowler",
-        "bookCount": 1
-      },
-      {
-        "name": "Fyodor Dostoevsky",
-        "bookCount": 2
-      },
-      {
-        "name": "Joshua Kerievsky",
-        "bookCount": 1
-      },
-      {
-        "name": "Sandi Metz",
-        "bookCount": 1
-      }
-    ]
-  }
-}
-```
-
-#### 8.4: Books of an author
-
-
-Modify the _allBooks_ query so that a user can give an optional parameter <i>author</i>. The response should include only books written by that author. 
-
-For example query
-
-```js
-query {
-  allBooks(author: "Robert Martin") {
-    title
-  }
-}
-```
-
-
-should return
-
-```js
-{
-  "data": {
-    "allBooks": [
-      {
-        "title": "Clean Code"
-      },
-      {
-        "title": "Agile software development"
-      }
-    ]
-  }
-}
-```
-
-#### 8.5: Books by genre
-
-Modify the query _allBooks_ so that a user can give an optional parameter <i>genre</i>. The response should include only books of that genre. 
-
-
-For example query
-
-```js
-query {
-  allBooks(genre: "refactoring") {
-    title
-    author
-  }
-}
-```
-
-should return
-
-```js
-{
-  "data": {
-    "allBooks": [
-      {
-        "title": "Clean Code",
-        "author": "Robert Martin"
-      },
-      {
-        "title": "Refactoring, edition 2",
-        "author": "Martin Fowler"
-      },
-      {
-        "title": "Refactoring to patterns",
-        "author": "Joshua Kerievsky"
-      },
-      {
-        "title": "Practical Object-Oriented Design, An Agile Primer Using Ruby",
-        "author": "Sandi Metz"
-      }
-    ]
-  }
-}
-```
-
-
-The query must work when both optional parameters are given: 
-
-```js
-query {
-  allBooks(author: "Robert Martin", genre: "refactoring") {
-    title
-    author
-  }
-}
-```
-
-#### 8.6: Adding a book
-
-
-Implement mutation _addBook_, which can be used like this:
-
-```js
-mutation {
-  addBook(
-    title: "NoSQL Distilled",
-    author: "Martin Fowler",
-    published: 2012,
-    genres: ["database", "nosql"]
-  ) {
-    title,
-    author
-  }
-}
-```
-
-
-The mutation works even if the author is not already saved to the server:
-
-```js
-mutation {
-  addBook(
-    title: "Pimeyden tango",
-    author: "Reijo Mäki",
-    published: 1997,
-    genres: ["crime"]
-  ) {
-    title,
-    author
-  }
-}
-```
-
-
-If the author is not yet saved to the server, a new author is added to the system. The birth years of authors are not saved to the server yet, so the query
-
-```js
-query {
-  allAuthors {
-    name
-    born
-    bookCount
-  }
-}
-```
-
-
-returns
-
-```js
-{
-  "data": {
-    "allAuthors": [
-      // ...
-      {
-        "name": "Reijo Mäki",
-        "born": null,
-        "bookCount": 1
-      }
-    ]
-  }
-}
-```
-
-#### 8.7: Updating the birth year of an author
-
-
-Implement mutation _editAuthor_, which can be used to set a birth year for an author. The mutation is used like so:
-
-```js
-mutation {
-  editAuthor(name: "Reijo Mäki", setBornTo: 1958) {
-    name
-    born
-  }
-}
-```
-
-
-If the correct author is found, the operation returns the edited author:
-
-```js
-{
-  "data": {
-    "editAuthor": {
-      "name": "Reijo Mäki",
-      "born": 1958
-    }
-  }
-}
-```
-
-
-If the author is not in the system, <i>null</i> is returned: 
-
-```js
-{
-  "data": {
-    "editAuthor": null
-  }
-}
-```
-
-</div>
-
-
