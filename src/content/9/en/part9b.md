@@ -1,6 +1,6 @@
 ---
-mainImage: ../../../images/part-10.svg
-part: 10
+mainImage: ../../../images/part-9.svg
+part: 9
 letter: b
 lang: en
 ---
