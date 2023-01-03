@@ -962,7 +962,7 @@ The response should look as follows:
 
 ![browser showing entries blank array when accessing patient](../../images/8/38a.png)
 
-#### 8.17: patientor, step2
+#### 8.17: Patientor, step2
 
 Create a page for showing a patient's full information in the frontend.
 
