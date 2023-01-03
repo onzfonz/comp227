@@ -33,8 +33,6 @@ This part will heavily rely on concepts covered in the previous parts. Before st
 
 Exercises are submitted via GitHub just like in the previous parts. Note that, exercises in this part are submitted <i>to a different course repo</i> than in parts 0-7. This means that you will be submitting exercises a single section at a time starting with this section, "Introduction to React Native", which is part 1 on Canvas.
 
-![Submitting exercises for credits](../../images/9/23.png)
-
 ### Initializing the application
 
 To get started with our application we need to set up our development environment. We have learned from previous parts that there are useful tools for setting up React applications quickly such as Create React App. Luckily React Native has these kinds of tools as well.
