@@ -14,13 +14,13 @@ Before we move to the next part, let's take a look at how we can add styles to a
 There are several different ways of doing this and we will take a look at the other methods later on.
 First, we will add CSS to our application the old-school way; in a single file without using a [CSS preprocessor](https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor) (although this is not entirely true as we will learn later on).
 
-Let's add a new <i>index.css</i> file under the <i>src</i> directory and then add it to the application by importing it in the <i>index.js</i> file:
+Let's add a new *index.css* file under the *src* directory and then add it to the application by importing it in the *index.js* file:
 
 ```js
 import './index.css'
 ```
 
-Let's add the following CSS rule to the <i>index.css</i> file:
+Let's add the following CSS rule to the *index.css* file:
 
 ```css
 h1 {
@@ -28,16 +28,16 @@ h1 {
 }
 ```
 
-**Note:** when the content of the file <i>index.css</i> changes, React might not notice that automatically, so you may need to refresh the browser to see your changes!
+**Note:** when the content of the file *index.css* changes, React might not notice that automatically, so you may need to refresh the browser to see your changes!
 
-CSS rules comprise of <i>selectors</i> and <i>declarations</i>.
+CSS rules comprise of **selectors** and **declarations**.
 The selector defines which elements the rule should be applied to.
-The selector above is <i>h1</i>, which will match all of the <i>h1</i> header tags in our application.
+The selector above is `h1`, which will match all of the `h1` header tags in our application.
 
-The declaration sets the *color* property to the value <i>green</i>.
+The declaration sets the `color` property to the value `green`.
 
 One CSS rule can contain an arbitrary number of properties.
-Let's modify the previous rule to make the text cursive, by defining the font style as <i>italic</i>:
+Let's modify the previous rule to make the text cursive, by defining the font style as `italic`:
 
 ```css
 h1 {
@@ -48,7 +48,7 @@ h1 {
 
 There are many ways of matching elements by using [different types of CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
 
-If we wanted to target, let's say, each one of the notes with our styles, we could use the selector <i>li</i>, as all of the notes are wrapped inside <i>li</i> tags:
+If we wanted to target, let's say, each one of the notes with our styles, we could use the selector `li`, as all of the notes are wrapped inside `li` tags:
 
 ```js
 const Note = ({ note, toggleImportance }) => {
@@ -76,18 +76,18 @@ li {
 ```
 
 Using element types for defining CSS rules is slightly problematic.
-If our application contained other <i>li</i> tags, the same style rule would also be applied to them.
+If our application contained other `li` tags, the same style rule would also be applied to them.
 
 If we want to apply our style specifically to notes, then it is better to use [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
-In regular HTML, classes are defined as the value of the <i>class</i> attribute:
+In regular HTML, classes are defined as the value of the `class` attribute:
 
 ```html
 <li class="note">some text...</li>
 ```
 
 In React we have to use the [className](https://reactjs.org/docs/dom-elements.html#classname) attribute instead of the class attribute.
-With this in mind, let's make the following changes to our <i>Note</i> component:
+With this in mind, let's make the following changes to our `Note` component:
 
 ```js
 const Note = ({ note, toggleImportance }) => {
@@ -104,7 +104,7 @@ const Note = ({ note, toggleImportance }) => {
 }
 ```
 
-Class selectors are defined with the *.classname* syntax:
+Class selectors are defined with the `.classname` syntax:
 
 ```css
 .note {
@@ -114,11 +114,11 @@ Class selectors are defined with the *.classname* syntax:
 }
 ```
 
-If you now add other <i>li</i> elements to the application, they will not be affected by the style rule above.
+If you now add other `li` elements to the application, they will not be affected by the style rule above.
 
 ### Improved error message
 
-We previously implemented the error message that was displayed when the user tried to toggle the importance of a deleted note with the <em>alert</em> method.
+We previously implemented the error message that was displayed when the user tried to toggle the importance of a deleted note with the `alert` method.
 Let's implement the error message as its own React component.
 
 The component is quite simple:
@@ -137,9 +137,9 @@ const Notification = ({ message }) => {
 }
 ```
 
-If the value of the <em>message</em> prop is <em>null</em>, then nothing is rendered to the screen, and in other cases, the message gets rendered inside of a div element.
+If the value of the `message` prop is `null`, then nothing is rendered to the screen, and in other cases, the message gets rendered inside of a div element.
 
-Let's add a new piece of state called <i>errorMessage</i> to the <i>App</i> component.
+Let's add a new piece of state called `errorMessage` to the `App` component.
 Let's initialize it with some error message so that we can immediately test our component:
 
 ```js
@@ -181,7 +181,7 @@ Then let's add a style rule that suits an error message:
 ```
 
 Now we are ready to add the logic for displaying the error message.
-Let's change the <em>toggleImportanceOf</em> function in the following way:
+Let's change the `toggleImportanceOf` function in the following way:
 
 ```js
   const toggleImportanceOf = id => {
@@ -206,14 +206,14 @@ Let's change the <em>toggleImportanceOf</em> function in the following way:
   }
 ```
 
-When the error occurs we add a descriptive error message to the <em>errorMessage</em> state.
-At the same time, we start a timer, that will set the <em>errorMessage</em> state to <em>null</em> after five seconds.
+When the error occurs we add a descriptive error message to the `errorMessage` state.
+At the same time, we start a timer, that will set the `errorMessage` state to `null` after five seconds.
 
 The result looks like this:
 
 ![error removed from server screenshot from app](../../images/2/26e.png)
 
-The code for the current state of our application can be found in the  <i>part2-7</i> branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-7).
+The code for the current state of our application can be found in the  *part2-7* branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-7).
 
 ### Inline styles
 
@@ -248,7 +248,7 @@ Every CSS property is defined as a separate property of the JavaScript object.
 Numeric values for pixels can be simply defined as integers.
 One of the major differences compared to regular CSS, is that hyphenated (kebab case) CSS properties are written in camelCase.
 
-Next, we could add a "bottom block" to our application by creating a <i>Footer</i> component and defining the following inline styles for it:
+Next, we could add a "bottom block" to our application by creating a `Footer` component and defining the following inline styles for it:
 
 ```js
 // highlight-start
@@ -299,24 +299,24 @@ The structural units that make up the application's functional entities are Reac
 A React component defines the HTML for structuring the content, the JavaScript functions for determining functionality, and also the component's styling; all in one place.
 This is to create individual components that are as independent and reusable as possible.
 
-The code of the final version of our application can be found in the  <i>part2-8</i> branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-8).
+The code of the final version of our application can be found in the *part2-8* branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-8).
 
 </div>
 
 <div class="tasks">
 
-<h3>Exercises 2.19.-2.20.</h3>
+### Exercises 2.19-2.20
 
-<h4>2.19: Phonebook step11</h4>
+#### 2.19: Phonebook step11
 
 Use the [improved error message](/en/part2/adding_styles_to_react_app#improved-error-message) example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a person is added or a number is changed):
 
 ![successful green added screenshot](../../images/2/27e.png)
 
-<h4>2.20*: Phonebook step12</h4>
+#### 2.20*: Phonebook step12
 
 Open your application in two browsers.
-**If you delete a person in browser 1** a short while before attempting to <i>change the person's phone number</i> in browser 2, you will get the following error message:
+**If you delete a person in browser 1** a short while before attempting to ***change the person's phone number*** in browser 2, you will get the following error message:
 
 ![error message 404 not found when changing multiple browsers](../../images/2/29b.png)
 
