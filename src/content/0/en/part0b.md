@@ -9,8 +9,8 @@ lang: en
 
 Before we start programming, we will go through some principles of web development by examining an example application at <https://studies.cs.helsinki.fi/exampleapp>.
 
-The application exists only to demonstrate some basic concepts of the course, and is, by no means, an example of <i>how</i> a modern web application should be made.
-On the contrary, it demonstrates some old techniques of web development, which could even be considered <i>bad practices</i> nowadays.
+The application exists only to demonstrate some basic concepts of the course, and is, by no means, an example of *how* a modern web application should be made.
+On the contrary, it demonstrates some old techniques of web development, which could even be considered *bad practices* nowadays.
 
 Code will conform to contemporary best practices from [part 1](/en/part1) onwards.
 
@@ -18,31 +18,31 @@ Open the [example application](https://studies.cs.helsinki.fi/exampleapp) in you
 Sometimes this takes a while.
 
 **The 1st rule of web development**: Always keep the Developer Console open on your web browser.
-On macOS, open the console by pressing *F12* or *option-cmd-i* simultaneously.
-On Windows or Linux, open the console by pressing *F12* or *ctrl-shift-i* simultaneously.
+On macOS, open the console by pressing ***F12*** or ***option(⌥)-cmd(⌘)-I*** simultaneously.
+On Windows or Linux, open the console by pressing ***F12*** or ***Ctrl-Shift-I***.
 The console can also be opened via the [context menu](https://en.wikipedia.org/wiki/Menu_key).
 
-Remember to <i>always</i> keep the Developer Console open when developing web applications.
+Remember to ***always*** keep the Developer Console open when developing web applications.
 
 The console looks like this:
 
 ![A screenshot of the developer tools open in a browser](../../images/0/1e.png)
 
-Make sure that the <i>Network</i> tab is open, and check the <i>Disable cache</i> option as shown.
-<i>Preserve log</i> can also be useful: it saves the logs printed by the application when the page is reloaded.
+Make sure that the ***Network*** tab is open, and check the ***Disable cache*** option as shown.
+*Preserve log* can also be useful: it saves the logs printed by the application when the page is reloaded.
 
-**NB:** The most important tab is the <i>Console</i> tab.
-However, in this introduction, we will be using the <i>Network</i> tab quite a bit.
+**NB:** The most important tab is the ***Console*** tab.
+However, in this introduction, we will be using the ***Network*** tab quite a bit.
 
 ### HTTP GET
 
 The server and the web browser communicate with each other using the [HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) protocol.
-The <i>Network</i> tab shows how the browser and the server communicate.
+The *Network* tab shows how the browser and the server communicate.
 
-When you reload the page (press the F5 key or the &#8635; symbol on your browser), the console will show that two events have happened:
+When you reload the page (press the ***F5*** key or the &#8635; symbol on your browser), the console will show that two events have happened:
 
-- The browser has fetched the contents of the page <i>studies.cs.helsinki.fi/exampleapp</i> from the server
-- And has downloaded the image <i>kuva.png</i>
+- The browser has fetched the contents of the page *studies.cs.helsinki.fi/exampleapp* from the server
+- And has downloaded the image *kuva.png*
 
 ![Screenshot of the developer console showing these two events](../../images/0/2e.png)
 
@@ -52,30 +52,34 @@ Clicking the first event reveals more information on what's happening:
 
 ![Detailed view of a single event](../../images/0/3e.png)
 
-The upper part, <i>General</i>, shows that the browser requested the address <i><https://studies.cs.helsinki.fi/exampleapp></i> (though the address has changed slightly since this picture was taken) using the [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method, and that the request was successful, because the server response had the [Status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) 200.
+The upper part, ***General***, shows that the browser requested the address *<https://studies.cs.helsinki.fi/exampleapp>*
+(though the address has changed slightly since this picture was taken)
+using the [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method,
+and that the request was successful,
+because the server response had the [Status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) 200.
 
 The request and the server response have several [headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields):
 
 ![Screenshot of response headers](../../images/0/4e.png)
 
-The <i>Response headers</i> on top tell us e.g. the size of the response in bytes and the exact time of the response.
+The **Response headers** on top tell us e.g. the size of the response in bytes and the exact time of the response.
 An important header [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) tells us that the response is a text file in [utf-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
 This way the browser knows the response to be a regular [HTML](https://en.wikipedia.org/wiki/HTML) page and to render it to the browser 'like a web page'.
 
-The <i>Response</i> tab shows the response data, a regular HTML page.
-The <i>body</i> section determines the structure of the page rendered to the screen:
+The **Response** tab shows the response data, a regular HTML page.
+The **body** section determines the structure of the page rendered to the screen:
 
 ![Screenshot of the response tab](../../images/0/5e.png)
 
-The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element, which in turn contains a heading, a link to the page <i>notes</i>, and an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag, and displays the number of notes created.
+The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element, which in turn contains a heading, a link to the page ***notes***, and an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag, and displays the number of notes created.
 
-Because of the img tag, the browser does a second <i>HTTP request</i> to fetch the image <i>kuva.png</i> from the server.
+Because of the `img` tag, the browser does a second *HTTP request* to fetch the image *kuva.png* from the server.
 The details of the request are as follows:
 
 ![Detailed view of the second event](../../images/0/6e.png)
 
-The request was made to the address <https://studies.cs.helsinki.fi/exampleapp/kuva.png> and its type is HTTP GET.
-The response headers tell us that the response size is 89350 bytes, and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is <i>image/png</i>, so it is a png image.
+The request was made to the address <https://studies.cs.helsinki.fi/exampleapp/kuva.png> and its type is *HTTP GET*.
+The response headers tell us that the response size is 89350 bytes, and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is *image/png*, so it is a png image.
 The browser uses this information to render the image correctly to the screen.
 
 The chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp> on a browser form the following [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/):
@@ -83,19 +87,19 @@ The chain of events caused by opening the page <https://studies.cs.helsinki.fi/e
 ![Sequence diagram of the flow covered above](../../images/0/7e.png)
 
 First, the browser sends an HTTP GET request to the server to fetch the HTML code of the page.
-The <i>img</i> tag in the HTML prompts the browser to fetch the image <i>kuva.png</i>.
+The ***img*** tag in the HTML prompts the browser to fetch the image *kuva.png*.
 The browser renders the HTML page and the image to the screen.
 
 Even though it is difficult to notice, the HTML page begins to render before the image has been fetched from the server.
 
 ### Traditional web applications
 
-The homepage of the example application works like a <i>traditional web application</i>.
+The homepage of the example application works like a **traditional web application**.
 When entering the page, the browser fetches the HTML document detailing the structure and the textual content of the page from the server.
 
 The server has formed this document somehow.
-The document can be a <i>static</i> text file saved into the server's directory.
-The server can also form the HTML documents <i>dynamically</i> according to the application code, using, for example, data from a database.
+The document can be a *static* text file saved into the server's directory.
+The server can also form the HTML documents *dynamically* according to the application code, using, for example, data from a database.
 The HTML code of the example application has been formed dynamically because it contains information on the number of created notes.
 
 The HTML code of the homepage is as follows:
@@ -128,7 +132,7 @@ app.get('/', (req, res) => {
 You don't have to understand the code just yet.
 
 The content of the HTML page has been saved as a template string or a string that allows for evaluating, for example, variables in the midst of it.
-The dynamically changing part of the homepage, the number of saved notes (in the code <em>noteCount</em>), is replaced by the current number of notes (in the code <em>notes.length</em>) in the template string.
+The dynamically changing part of the homepage, the number of saved notes (in the code `noteCount`), is replaced by the current number of notes (in the code `notes.length`) in the template string.
 
 Writing HTML amid the code is of course not smart, but for old-school PHP programmers, it was a normal practice.
 
@@ -136,25 +140,25 @@ In traditional web applications, the browser is "dumb".
 It only fetches HTML data from the server, and all application logic is on the server.
 A server can be created using Java Spring (like in the University of Helsinki course [Web-palvelinohjelmointi](https://courses.helsinki.fi/fi/tkt21007/119558639)), Python Flask (like the courses [database applications](https://materiaalit.github.io/tsoha-18/)) or [Ruby on Rails](http://rubyonrails.org/) to name just a few examples.
 
-The example uses [Express](https://expressjs.com/) library with the Node.js.
+The example uses [Express](https://expressjs.com/) library with Node.js.
 This course will use Node.js and Express to create web servers.
 
 ### Running application logic in the browser
 
 Keep the Developer Console open.
-Empty the console by clicking the 🚫 symbol, or by typing clear() in the console.
+Empty the console by clicking the 🚫 symbol, or by typing `clear()` in the console.
 Now when you go to the [notes](https://studies.cs.helsinki.fi/exampleapp/notes) page, the browser does 4 HTTP requests:
 
 ![Screenshot of the developer console with the 4 requests visible](../../images/0/8e.png)
 
-All of the requests have <i>different</i> types.
-The first request's type is <i>document</i>.
+All of the requests have *different* types.
+The first request's type is **document**.
 It is the HTML code of the page, and it looks as follows:
 
 ![Detailed view of the first request](../../images/0/9e.png)
 
 When we compare the page shown on the browser and the HTML code returned by the server, we notice that the code does not contain the list of notes.
-The [head](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) section of the HTML contains a [script](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag, which causes the browser to fetch a JavaScript file called <i>main.js</i>.
+The [`head`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) section of the HTML contains a [`script`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag, which causes the browser to fetch a JavaScript file called *main.js*.
 
 The JavaScript code looks as follows:
 
@@ -188,13 +192,13 @@ The details of the code are not important right now, but some code has been incl
 We will properly start coding in [part 1](/en/part1).
 The sample code in this part is actually not relevant at all to the coding techniques of this course.
 
-> Some might wonder why xhttp-object is used instead of the modern fetch.
-This is due to not wanting to go into promises at all yet, and the code having a secondary role in this part.
-We will return to modern ways to make requests to the server in part 2.
+> Some might wonder why `xhttp` object is used instead of the modern `fetch`.
+  This is due to not wanting to go into promises at all yet, and the code having a secondary role in this part.
+  We will return to modern ways to make requests to the server in part 2.
 
-Immediately after fetching the <i>script</i> tag, the browser begins to execute the code.
+Immediately after fetching the `script` tag, the browser begins to execute the code.
 
-The last two lines instruct the browser to do an HTTP GET request to the server's address <i>/data.json</i>:
+The last two lines instruct the browser to do an HTTP GET request to the server's address */data.json*:
 
 ```js
 xhttp.open('GET', '/data.json', true)
@@ -244,7 +248,7 @@ ul.setAttribute('class', 'notes')
 ```
 
 ...and then adds one [li](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li)-tag for each note.
-Only the <i>content</i> field of each note becomes the contents of the li-tag.
+Only the `content` field of each note becomes the contents of the `li` tag.
 The timestamps found in the raw data are not used for anything here.
 
 ```js
@@ -256,7 +260,7 @@ data.forEach(function(note) {
 })
 ```
 
-Now open the <i>Console</i> tab on your Developer Console:
+Now open the ***Console*** tab on your Developer Console:
 
 ![Screenshot of the console tab on the developer console](../../images/0/12e.png)
 
@@ -264,7 +268,7 @@ By clicking the little triangle at the beginning of the line, you can expand the
 
 ![Screenshot of one of the previously collapsed entries expanded](../../images/0/13e.png)
 
-This output on the console is caused by the <em>console.log</em> command in the code:
+This output on the console is caused by the `console.log` command in the code:
 
 ```js
 const data = JSON.parse(this.responseText)
@@ -273,7 +277,7 @@ console.log(data)
 
 So, after receiving data from the server, the code prints it to the console.
 
-The <i>Console</i> tab and the <em>console.log</em> command will become very familiar to you during the course.
+The ***Console*** tab and the `console.log` command will become very familiar to you during the course.
 
 ### Event handlers and Callback functions
 
@@ -297,9 +301,9 @@ What's going on?
 xhttp.onreadystatechange = function () {
 ```
 
-On this line, an <i>event handler</i> for the event <i>onreadystatechange</i> is defined for the <em>xhttp</em> object doing the request.
+On this line, an **event handler** for the event `onreadystatechange` is defined for the `xhttp` object doing the request.
 When the state of the object changes, the browser calls the event handler function.
-The function code checks that the [readyState](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState) equals 4 (which depicts the situation <i>The operation is complete</i>) and that the HTTP status code of the response is 200.
+The function code checks that the [readyState](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState) equals 4 (which depicts the situation *The operation is complete*) and that the HTTP status code of the response is 200.
 
 ```js
 xhttp.onreadystatechange = function() {
@@ -311,13 +315,13 @@ xhttp.onreadystatechange = function() {
 
 The mechanism of invoking event handlers is very common in JavaScript.
 Event handler functions are called [callback](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function) functions.
-The application code does not invoke the functions itself, but the runtime environment - the browser, invokes the function at an appropriate time when the <i>event</i> has occurred.
+The application code does not invoke the functions itself, but the runtime environment - the browser, invokes the function at an appropriate time when the **event** has occurred.
 
 ### Document Object Model or DOM
 
 We can think of HTML pages as implicit tree structures.
 
-<pre>
+```text
 html
   head
     link
@@ -333,19 +337,19 @@ html
       form
         input
         input
-</pre>
+```
 
-The same treelike structure can be seen on the console tab <i>Elements</i>.
+The same treelike structure can be seen on the console tab ***Elements***.
 
 ![A screenshot of the Elements tab of the developer console](../../images/0/14e.png)
 
 The functioning of the browser is based on the idea of depicting HTML elements as a tree.
 
-Document Object Model, or [DOM](https://en.wikipedia.org/wiki/Document_Object_Model), is an Application Programming Interface (<i>API</i>) that enables programmatic modification of the <i>element trees</i> corresponding to web pages.
+Document Object Model, or [DOM](https://en.wikipedia.org/wiki/Document_Object_Model), is an Application Programming Interface (**API**) that enables programmatic modification of the **element trees** corresponding to web pages.
 
 The JavaScript code introduced in the previous chapter used the DOM-API to add a list of notes to the page.
 
-The following code creates a new node to the variable <em>ul</em>, and adds some child nodes to it:
+The following code creates a new node to the variable `ul`, and adds some child nodes to it:
 
 ```js
 var ul = document.createElement('ul')
@@ -358,7 +362,7 @@ data.forEach(function(note) {
 })
 ```
 
-Finally, the tree branch of the <em>ul</em> variable is connected to its proper place in the HTML tree of the whole page:
+Finally, the tree branch of the `ul` variable is connected to its proper place in the HTML tree of the whole page:
 
 ```js
 document.getElementsByClassName('notes').appendChild(ul)
@@ -366,29 +370,29 @@ document.getElementsByClassName('notes').appendChild(ul)
 
 ### Manipulating the document object from console
 
-The topmost node of the DOM tree of an HTML document is called the <em>document</em> object.
+The topmost node of the DOM tree of an HTML document is called the `document` object.
 We can perform various operations on a webpage using the DOM-API.
-You can access the <em>document</em> object by typing <em>document</em> into the Console tab:
+You can access the `document` object by typing `document` into the Console tab:
 
 ![document in console tab of developer tools](../../images/0/15e.png)
 
 Let's add a new note to the page from the console.
 
 First, we'll get the list of notes from the page.
-The list is in the first ul-element of the page:
+The list is in the first `ul` element of the page:
 
 ```js
 list = document.getElementsByTagName('ul')[0]
 ```
 
-Then create a new li-element and add some text content to it:
+Then create a new `li` element and add some text content to it:
 
 ```js
 newElement = document.createElement('li')
 newElement.textContent = 'Page manipulation from console is easy'
 ```
 
-And add the new li-element to the list:
+And add the new `li` element to the list:
 
 ```js
 list.appendChild(newElement)
@@ -402,7 +406,7 @@ The JavaScript code the browser fetches will always create the list of notes bas
 
 ### CSS
 
-The <i>head</i> element of the HTML code of the Notes page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag, which determines that the browser must fetch a [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) style sheet from the address [main.css](https://studies.cs.helsinki.fi/exampleapp/main.css).
+The `head` element of the HTML code of the Notes page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag, which determines that the browser must fetch a [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) style sheet from the address [main.css](https://studies.cs.helsinki.fi/exampleapp/main.css).
 
 Cascading Style Sheets, or CSS, is a style sheet language used to determine the appearance of web pages.
 
@@ -426,24 +430,24 @@ A class selector definition always starts with a period and contains the name of
 
 The classes are [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class), which can be added to HTML elements.
 
-CSS attributes can be examined on the <i>elements</i> tab of the console:  
+CSS attributes can be examined on the ***elements*** tab of the console:  
 
 ![Screenshot of the Elements tab on the developer console](../../images/0/17e.png)
 
-The outermost <i>div</i> element has the class <i>container</i>.
-The <i>ul</i> element containing the list of notes has the class <i>notes</i>.
+The outermost `div` element has the class `container`.
+The `ul` element containing the list of notes has the class `notes`.
 
-The CSS rule defines that elements with the <i>container</i> class will be outlined with a one-pixel wide [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border).
+The CSS rule defines that elements with the `container` class will be outlined with a one-pixel wide [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border).
 It also sets 10-pixel [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding) on the element.
 This adds some empty space between the element's content and the border.
 
 The second CSS rule sets the text color of the notes as blue.
 
 HTML elements can also have other attributes apart from classes.
-The <i>div</i> element containing the notes has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
+The `div` element containing the notes has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
 JavaScript code uses the id to find the element.
 
-The <i>Elements</i> tab of the console can be used to change the styles of the elements.
+The ***Elements*** tab of the console can be used to change the styles of the elements.
 
 ![developer tools elements tab](../../images/0/18e.png)
 
@@ -457,12 +461,12 @@ Let's review what happens when the page <https://studies.cs.helsinki.fi/examplea
 ![sequence diagram of browser/server interaction](../../images/0/19e.png)
 
 - The browser fetches the HTML code defining the content and the structure of the page from the server using an HTTP GET request.
-- Links in the HTML code cause the browser to also fetch the CSS style sheet <i>main.css</i>...
-- ...and a JavaScript code file <i>main.js</i>
+- Links in the HTML code cause the browser to also fetch the CSS style sheet *main.css*...
+- ...and a JavaScript code file *main.js*
 - The browser executes the JavaScript code.
   The code makes an HTTP GET request to the address <https://studies.cs.helsinki.fi/exampleapp/data.json>, which
   returns the notes as JSON  data.
-- When the data has been fetched, the browser executes an <i>event handler</i>, which renders the notes to the page using the DOM-API.
+- When the data has been fetched, the browser executes an *event handler*, which renders the notes to the page using the DOM-API.
 
 ### Forms and HTTP POST
 
@@ -473,19 +477,19 @@ The Notes page contains a [form element](https://developer.mozilla.org/en-US/doc
 ![form element highlight in webpage and developer tools](../../images/0/20e.png)
 
 When the button on the form is clicked, the browser will send the user input to the server.
-Let's open the <i>Network</i> tab and see what submitting the form looks like:
+Let's open the ***Network*** tab and see what submitting the form looks like:
 
 ![Screenshot of the Network tab where the events for submitting the form are shown](../../images/0/21e.png)
 
-Surprisingly, submitting the form causes no less than <i>five</i> HTTP requests.
+Surprisingly, submitting the form causes no less than **five** HTTP requests.
 The first one is the form submit event.
 Let's zoom into it:
 
 ![Detailed view of the first request](../../images/0/22e.png)
 
-It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address <i>new\_note</i>.
+It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address ***new_note***.
 The server responds with HTTP status code 302.
-This is a [URL redirect](https://en.wikipedia.org/wiki/URL_redirection), with which the server asks the browser to do a new HTTP GET request to the address defined in the header's <i>Location</i> - the address <i>notes</i>.
+This is a [URL redirect](https://en.wikipedia.org/wiki/URL_redirection), with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `notes`.
 
 So, the browser reloads the Notes page.
 The reload causes three more HTTP requests: fetching the style sheet (main.css), the JavaScript code (main.js), and the raw data of the notes (data.json).
@@ -496,7 +500,7 @@ NB: On newer Chrome, the Form Data dropdown is within the new Payload tab, locat
 
 ![form data dropdown in developer tools](../../images/0/23e.png)
 
-The Form tag has attributes <i>action</i> and <i>method</i>, which define that submitting the form is done as an HTTP POST request to the address <i>new_note</i>.
+The Form tag has attributes `action` and `method`, which define that submitting the form is done as an HTTP POST request to the address ***new_note***.
 
 ![action and method highlight](../../images/0/24e.png)
 
@@ -515,9 +519,9 @@ app.post('/new_note', (req, res) => {
 
 Data is sent as the [body](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) of the POST request.
 
-The server can access the data by accessing the <em>req.body</em> field of the request object <em>req</em>.
+The server can access the data by accessing the `req.body` field of the request object `req`.
 
-The server creates a new note object, and adds it to an array called <em>notes</em>.
+The server creates a new note object, and adds it to an array called `notes`.
 
 ```js
 notes.push({
@@ -526,7 +530,7 @@ notes.push({
 })
 ```
 
-The Note objects have two fields: <i>content</i> containing the actual content of the note, and <i>date</i> containing the date and time the note was created.
+The Note objects have two fields: `content` containing the actual content of the note, and `date` containing the date and time the note was created.
 
 The server does not save new notes to a database, so new notes disappear when the server is restarted.
 
@@ -535,7 +539,7 @@ The server does not save new notes to a database, so new notes disappear when th
 The Notes page of the application follows an early-nineties style of web development and uses "Ajax".
 As such, it's on the crest of the wave of early 2000s web technology.
 
-[AJAX](<https://en.wikipedia.org/wiki/Ajax_(programming)>) (Asynchronous JavaScript and XML) is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach that enabled the fetching of content to web pages using JavaScript included within the HTML, without the need to rerender the page.
+[AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML) is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach that enabled the fetching of content to web pages using JavaScript included within the HTML, without the need to rerender the page.
 
 Before the AJAX era, all web pages worked like the [traditional web application](/en/part0/fundamentals_of_web_apps#traditional-web-applications) we saw earlier in this chapter.
 All of the data shown on the page was fetched with the HTML code generated by the server.
@@ -563,22 +567,22 @@ SPA-style websites don't fetch all of their pages separately from the server lik
 
 The Notes page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
 Even though the logic for rendering the notes is run on the browser, the page still uses the traditional way of adding new notes.
-The data is sent to the server via the form's submit, and the server instructs the browser to reload the Notes page with a <i>redirect</i>.
+The data is sent to the server via the form's submit, and the server instructs the browser to reload the Notes page with a *redirect*.
 
 A single-page app version of our example application can be found at <https://studies.cs.helsinki.fi/exampleapp/spa>.
 At first glance, the application looks exactly the same as the previous one.
-The HTML code is almost identical, but the JavaScript file is different (<i>spa.js</i>) and there is a small change in how the form-tag is defined:
+The HTML code is almost identical, but the JavaScript file is different (*spa.js*) and there is a small change in how the form-tag is defined:
 
 ![form with missing action and method](../../images/0/25e.png)
 
-The form has no <i>action</i> or <i>method</i> attributes to define how and where to send the input data.
+The form has no `action` or `method` attributes to define how and where to send the input data.
 
-Open the <i>Network</i> tab and empty it.
+Open the ***Network*** tab and empty it.
 When you now create a new note, you'll notice that the browser sends only one request to the server.
 
 ![Network tab in developer tools](../../images/0/26e.png)
 
-The POST request to the address <i>new\_note\_spa</i> contains the new note as JSON data containing both the content of the note (<i>content</i>) and the timestamp (<i>date</i>):
+The POST request to the address *new\_note\_spa* contains the new note as JSON data containing both the content of the note (`content`) and the timestamp (`date`):
 
 ```js
 {
@@ -587,7 +591,7 @@ The POST request to the address <i>new\_note\_spa</i> contains the new note as J
 }
 ```
 
-The <i>Content-Type</i> header of the request tells the server that the included data is represented in JSON format.
+The **Content-Type** header of the request tells the server that the included data is represented in JSON format.
 
 ![Content-type header in developer tools](../../images/0/27e.png)
 
@@ -616,11 +620,11 @@ form.onsubmit = function(e) {
 }
 ```
 
-The command <em>document.getElementById('notes\_form')</em> instructs the code to fetch the form element from the page and to register an <i>event handler</i> to handle the form's submit event.
-The event handler immediately calls the method <em>e.preventDefault()</em> to prevent the default handling of form's submit.
+The command `document.getElementById('notes_form')` instructs the code to fetch the form element from the page and to register an *event handler* to handle the form's submit event.
+The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of form's submit.
 The default method would send the data to the server and cause a new GET request, which we don't want to happen.
 
-Then the event handler creates a new note, adds it to the notes list with the command <em>notes.push(note)</em>, rerenders the note list on the page and sends the new note to the server.
+Then the event handler creates a new note, adds it to the notes list with the command `notes.push(note)`, rerenders the note list on the page and sends the new note to the server.
 
 The code for sending the note to the server is as follows:
 
@@ -638,16 +642,16 @@ var sendToServer = function(note) {
 ```
 
 The code determines that the data is to be sent with an HTTP POST request and the data type is to be JSON.
-The data type is determined with a <i>Content-type</i> header.
+The data type is determined with a *Content-type* header.
 Then the data is sent as JSON string.
 
 The application code is available at <https://github.com/mluukkai/example_app>.
 It's worth remembering that the application is only meant to demonstrate the concepts of the course.
 The code follows a poor style of development in some measures, and should not be used as an example when creating your applications.
 The same is true for the URLs used.
-The URL <i>new\_note\_spa</i> that new notes are sent to, does not adhere to current best practices.
+The URL *new\_note\_spa* that new notes are sent to, does not adhere to current best practices.
 
-### JavaScript-libraries
+### JavaScript libraries
 
 The sample app is done with so-called [vanilla JavaScript](https://www.freecodecamp.org/news/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34/), using only the DOM-API and JavaScript to manipulate the structure of the pages.
 
@@ -674,12 +678,12 @@ For example, recently a newcomer - [VueJS](https://vuejs.org/) - has been captur
 
 ### Full-stack web development
 
-What does the name of the course, <i>Full stack web development</i>, mean? Full stack is a buzzword that everyone talks about, but no one knows what it means.
+What does the name of the course, *Full-stack web development*, mean? Full stack is a buzzword that everyone talks about, but no one knows what it means.
 Or at least, there is no agreed-upon definition for the term.
 
 Practically all web applications have (at least) two "layers": the browser, being closer to the end-user, is the top layer, and the server the bottom one.
 There is often also a database layer below the server.
-We can therefore think of the <i>architecture</i> of a web application as a kind of <i>stack</i> of layers.
+We can therefore think of the **architecture** of a web application as a kind of **stack** of layers.
 
 Often, we also talk about the [frontend and the backend](https://en.wikipedia.org/wiki/Front_and_back_ends).
 The browser is the frontend, and JavaScript that runs on the browser is frontend code.
@@ -708,7 +712,7 @@ It would also be good to know enough CSS to make applications at least somewhat 
 
 The world of JavaScript develops fast, which brings its own set of challenges.
 Tools, libraries and the language itself are under constant development.
-Some are starting to get tired of the constant change, and have coined a term for it: <em>JavaScript fatigue</em>.
+Some are starting to get tired of the constant change, and have coined a term for it: **JavaScript fatigue**.
 See [How to Manage JavaScript Fatigue on auth0](https://auth0.com/blog/how-to-manage-javascript-fatigue/) or [JavaScript fatigue on Medium](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4).
 
 You will suffer from JavaScript fatigue yourself during this course.
@@ -718,13 +722,14 @@ We can't avoid configuration completely, but we can merrily push ahead in the ne
 </div>
 
 <div class="tasks">
-  <h3>Exercises 0.1.-0.6.</h3>
+
+### Exercises 0.1-0.6
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
 You will submit all of the exercises into the repository that you were given in GitHub.
 
-Name the directories in your submission repository as follows: 
+Name the directories in your submission repository as follows:
 
 ```text
 part0
@@ -743,25 +748,25 @@ So, each part has its own directory, which contains a directory for each exercis
 The exercises are submitted **one part at a time**.
 When you have submitted the exercises for a part, you can no longer submit any missed exercises for that part.
 
-  <h4>0.1: HTML</h4>
+#### 0.1: HTML
 
 Review the basics of HTML by reading this tutorial from Mozilla: [HTML tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics).
 
-<i>This exercise is not submitted to GitHub, it's enough to just read the tutorial</i>
+This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-  <h4>0.2: CSS</h4>
+#### 0.2: CSS
 
 Review the basics of CSS by reading this tutorial from Mozilla: [CSS tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics).
 
-<i>This exercise is not submitted to GitHub, it's enough to just read the tutorial</i>
+This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-  <h4>0.3: HTML forms</h4>
+#### 0.3: HTML forms
 
 Learn about the basics of HTML forms by reading Mozilla's tutorial [Your first form](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
 
-<i>This exercise is not submitted to GitHub, it's enough to just read the tutorial</i>
+This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-  <h4>0.4: New note diagram</h4>
+#### 0.4: New note diagram
 
 In the section [Loading a page containing JavaScript - review](/en/part0/fundamentals_of_web_apps#loading-a-page-containing-java-script-review), the chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp/notes> is depicted as a [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/)
 
@@ -789,7 +794,7 @@ that renders notes to display
 end note
 ```
 
-**Create a similar diagram** depicting the situation where the user creates a new note on page <https://studies.cs.helsinki.fi/exampleapp/notes> when writing something into the text field and clicking the <i>submit</i> button.
+**Create a similar diagram** depicting the situation where the user creates a new note on page <https://studies.cs.helsinki.fi/exampleapp/notes> when writing something into the text field and clicking the ***submit*** button.
 
 If necessary, show operations on the browser or on the server as comments on the diagram.
 
@@ -802,11 +807,11 @@ Reading the application [code](https://github.com/mluukkai/example_app) is not n
 
 **Note** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor) syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/) markdown pages!
 
-  <h4>0.5: Single page app diagram</h4>
+#### 0.5: Single-page app diagram
 
 Create a diagram depicting the situation where the user goes to the [single-page app](/en/part0/fundamentals_of_web_apps#single-page-app) version of the notes app at <https://studies.cs.helsinki.fi/exampleapp/spa>.
 
-  <h4>0.6: New note in Single page app diagram</h4>
+#### 0.6: New note in Single-page app diagram
 
 Create a diagram depicting the situation where the user creates a new note using the single-page version of the app.
 

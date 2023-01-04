@@ -39,18 +39,18 @@ The code of the example applications for each step of each part can be found on 
 The course contains fourteen parts, the first of which is numbered 0 for consistency with past iterations.
 One part corresponds loosely to one week (averaging 15-20 hours) of studying, but the speed of completing the course is flexible.
 
-Proceeding from part <i>n</i> to part <i>n+1</i> is not sensible before enough know-how of the topics in part <i>n</i>  has been achieved.
+Proceeding from part *n* to part *n+1* is not sensible before enough know-how of the topics in part *n*  has been achieved.
 In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning), and you are only intended to proceed to the next part after doing enough of the exercises of the previous part.
 
-In parts 1-4 you are expected to do <i>at least</i> all of the exercises that are not marked with an asterisk(*).
+In parts 1-4 you are expected to do *at least* all of the exercises that are not marked with an asterisk(*).
 Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts.
-Parts 5- do not have asterisk marked exercises since there is no similar dependency on previous parts.
+Other parts do not have asterisk-marked exercises since there is no similar dependency on previous parts.
 
 You will need to complete the course as specified on Canvas and based on those due dates
 
 ### Course channel in Discord
 
-You can discuss the course and related topics in our <a target='_blank' href='https://discord.gg/VRUKRxCJ95'>Discord</a>.
+You can discuss the course and related topics in our [Discord](https://discord.gg/VRUKRxCJ95).
 Discord will have different channels for both your learning partners as well as course-related conversations.
 You will be expected to be active on Discord!
 
@@ -89,12 +89,8 @@ For the other modules, here's the number of exercises that you should submit.
 
 | Additional Modules | Module name | Minimum Exercises to submit | work needed |
 | --- | --- | --- | --- |
-| 8  | GraphQL | 22 | 1 |
-| 9  | TypeScript | 24 | 1 |
-| 10 | React Native | 25 | 2 |
-| 11 | CI/CD | all | 1 |
-| 12 | Containers | all | 1 |
-| 13 | Relational Databases | all | 1 |
+| 8  | TypeScript | 24 | 1 |
+| 9 | React Native | 10 | 1 |
 
 ### Studying the course in a nutshell
 
@@ -149,10 +145,10 @@ Node also comes with [npx](https://www.npmjs.com/package/npx), which we'll need 
 
 ### Typos in the material
 
-If you find a typo in the material, or something has been expressed unclearly or is simply bad grammar, submit a <i>pull request</i> to the course material in the [repository](https://github.com/comp227/comp227).
+If you find a typo in the material, or something has been expressed unclearly or is simply bad grammar, submit a *pull request* to the course material in the [repository](https://github.com/comp227/comp227).
 For example, the markdown source code of this page can be found in the repository at <https://github.com/comp227/comp227/edit/source/src/content/0/en/part0a.md>
 
-At the bottom of each part of the material is a link to <em>propose changes to the material</em>.
+At the bottom of each part of the material is a link to **propose changes to the material**.
 You can edit the source code of the page by clicking on the link.
 
 There are also lots of links in the material for many kinds of background material.
