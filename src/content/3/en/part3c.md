@@ -284,7 +284,7 @@ note.save().then(result => {
 ```
 
 When the object is saved to the database, the event handler provided to *then*  gets called.
-The event handler closes the database connection with the command <code>mongoose.connection.close()</code>.
+The event handler closes the database connection with the command `mongoose.connection.close()`.
 If the connection is not closed, the program will never finish its execution.
 
 The result of the save operation is in the *result* parameter of the event handler.
@@ -315,7 +315,7 @@ When the code is executed, the program prints all the notes stored in the databa
 
 The objects are retrieved from the database with the [find](https://mongoosejs.com/docs/api/model.html#model_Model-find) method of the *Note* model.
 The parameter of the method is an object expressing search conditions.
-Since the parameter is an empty object<code>{}</code>, we get all of the notes stored in the  *notes* collection.
+Since the parameter is an empty object`{}`, we get all of the notes stored in the  *notes* collection.
 
 The search conditions adhere to the Mongo search query [syntax](https://docs.mongodb.com/manual/reference/operator/).
 
@@ -369,12 +369,12 @@ node mongo.js yourpassword
 
 Then the program should display all of the entries in the phonebook:
 
-<pre>
+```shell
 phonebook:
 Anna 040-1234556
 Arto Vihavainen 045-1232456
 Ada Lovelace 040-1231236
-</pre>
+```
 
 You can get the command-line parameters from the [process.argv](https://nodejs.org/docs/latest-v8.x/api/process.html#process_process_argv) variable.
 
@@ -770,7 +770,7 @@ In this situation, we are trying to fetch a note with the wrong kind of *id*, me
 
 If we make the following request, we will get the error message shown below:
 
-<pre>
+```shell
 Method: GET
 Path:   /api/notes/someInvalidId
 Body:   {}
@@ -779,7 +779,7 @@ Body:   {}
     at CastError (/Users/mluukkai/opetus/_fullstack/osa3-muisiinpanot/node_modules/mongoose/lib/error/cast.js:27:11)
     at ObjectId.cast (/Users/mluukkai/opetus/_fullstack/osa3-muisiinpanot/node_modules/mongoose/lib/schema/objectid.js:158:13)
     ...
-</pre>
+```
 
 Given a malformed id as an argument, the <em>findById</em> method will throw an error causing the returned promise to be rejected.
 This will cause the callback function defined in the <em>catch</em> block to be called.
@@ -1002,7 +1002,7 @@ Notice that the <em>findByIdAndUpdate</em> method receives a regular JavaScript 
 
 There is one important detail regarding the use of the <em>findByIdAndUpdate</em> method.
 By default, the <em>updatedNote</em> parameter of the event handler receives the original document [without the modifications](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate).
-We added the optional <code>{ new: true }</code> parameter, which will cause our event handler to be called with the new modified document instead of the original.
+We added the optional `{ new: true }` parameter, which will cause our event handler to be called with the new modified document instead of the original.
 
 After testing the backend directly with Postman and the VS Code REST client, we can verify that it seems to work.
 The frontend also appears to work with the backend using the database.

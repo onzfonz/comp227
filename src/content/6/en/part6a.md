@@ -146,11 +146,11 @@ console.log(store.getState())
 
 would print the following to the console
 
-<pre>
+```shell
 0
 3
 -1
-</pre>
+```
 
 because at first, the state of the store is 0.
 After three <i>INCREMENT</i>-actions the state is 3.
@@ -186,13 +186,13 @@ store.dispatch({ type: 'DECREMENT' })
 
 would cause the following to be printed
 
-<pre>
+```shell
 1
 2
 3
 0
 -1
-</pre>
+```
 
 The code of our counter application is the following.
 All of the code has been written in the same file (*index.js*), so <i>store</i> is straight available for the React code.
@@ -551,7 +551,7 @@ If we declare
 const numbers = [1, 2, 3]
 ```
 
-<code>...numbers</code> breaks the array up into individual elements, which can be placed in another array.
+`...numbers` breaks the array up into individual elements, which can be placed in another array.
 
 ```js
 [...numbers, 4, 5]

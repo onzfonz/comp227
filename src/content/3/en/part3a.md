@@ -354,7 +354,7 @@ The event handler function accepts two parameters.
 The first [request](http://expressjs.com/en/4x/api.html#req) parameter contains all of the information of the HTTP request, and the second [response](http://expressjs.com/en/4x/api.html#res) parameter is used to define how the request is responded to.
 
 In our code, the request is answered by using the [send](http://expressjs.com/en/4x/api.html#res.send) method of the *response* object.
-Calling the method makes the server respond to the HTTP request by sending a response containing the string <code>\<h1>Hello World!\</h1></code> that was passed to the *send* method.
+Calling the method makes the server respond to the HTTP request by sending a response containing the string `<h1>Hello World!</h1>` that was passed to the *send* method.
 Since the parameter is a string, express automatically sets the value of the <i>Content-Type</i> header to be <i>text/html</i>.
 The status code of the response defaults to 200.
 
@@ -528,7 +528,7 @@ app.get('/api/notes/:id', (request, response) => {
 })
 ```
 
-Now <code>app.get('/api/notes/:id', ...)</code> will handle all HTTP GET requests that are of the form <i>/api/notes/SOMETHING</i>, where <i>SOMETHING</i> is an arbitrary string.
+Now `app.get('/api/notes/:id', ...)` will handle all HTTP GET requests that are of the form <i>/api/notes/SOMETHING</i>, where <i>SOMETHING</i> is an arbitrary string.
 
 The <i>id</i> parameter in the route of a request can be accessed through the [request](http://expressjs.com/en/api.html#req) object:
 
@@ -578,11 +578,11 @@ app.get('/api/notes/:id', (request, response) => {
 When we visit the URL again in the browser, each call to the comparison function prints a few different things to the console.
 The console output is the following:
 
-<pre>
+```shell
 1 'number' '1' 'string' false
 2 'number' '1' 'string' false
 3 'number' '1' 'string' false
-</pre>
+```
 
 The cause of the bug becomes clear.
 The *id* variable contains a string '1', whereas the ids of notes are integers.

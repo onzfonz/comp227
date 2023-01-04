@@ -385,7 +385,7 @@ test('a specific note is within the returned notes', async () => {
 ```
 
 Pay special attention to the expect in the latter test.
-The <code>response.body.map(r => r.content)</code> command is used to create an array containing the content of every note returned by the API.
+The `response.body.map(r => r.content)` command is used to create an array containing the content of every note returned by the API.
 The [toContain](https://jestjs.io/docs/expect#tocontainitem) method is used for checking that the note given to it as a parameter is in the list of notes returned by the API.
 
 ### Running tests one by one
@@ -508,7 +508,7 @@ main() // highlight-line
 ```
 
 The code declares that the function assigned to *main* is asynchronous.
-After this, the code calls the function with <code>main()</code>.
+After this, the code calls the function with `main()`.
 
 ### async/await in the backend
 
@@ -1019,13 +1019,13 @@ The tests don't quite seem to work however, so we have added some console logs t
 
 The console displays the following output:
 
-<pre>
+```shell
 cleared
 done
 entered test
 saved
 saved
-</pre>
+```
 
 Despite our use of the async/await syntax, our solution does not work as we expected it to.
 The test execution begins before the database is initialized!

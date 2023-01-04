@@ -22,7 +22,7 @@ For this reason, code that is divided into modules must be <i>bundled</i> for br
 When we deployed our React frontend to production in [part 3](/en/part3/deploying_app_to_internet), we performed the bundling of our application with the *npm run build* command.
 Under the hood, the npm script bundles the source code using webpack, which produces the following collection of files in the <i>build</i> directory:
 
-<pre>
+```shell
 .
 ├── asset-manifest.json
 ├── favicon.ico
@@ -39,7 +39,7 @@ Under the hood, the npm script bundles the source code using webpack, which prod
         ├── main.88d3369d.js
         ├── main.88d3369d.js.LICENSE.txt
         └── main.88d3369d.js.map
-</pre>
+```
 
 The <i>index.html</i> file located at the root of the build directory is the "main file" of the application which loads the bundled JavaScript file with a <i>script</i> tag:
 
@@ -72,13 +72,13 @@ Next, we will create a suitable webpack configuration for a React application by
 
 Let's create a new directory for the project with the following subdirectories (<i>build</i> and <i>src</i>) and files:
 
-<pre>
+```shell
 ├── build
 ├── package.json
 ├── src
 │   └── index.js
 └── webpack.config.js
-</pre>
+```
 
 The contents of the <i>package.json</i> file can e.g. be the following:
 
@@ -595,10 +595,10 @@ The application no longer works and the console will display the following error
 
 We know that the error is in the onClick method, but if the application was any larger the error message would be quite difficult to track down:
 
-<pre>
+```shell
 App.js:27 Uncaught TypeError: Cannot read property 'concat' of undefined
     at handleClick (App.js:27)
-</pre>
+```
 
 The location of the error indicated in the message does not match the actual location of the error in our source code.
 If we click the error message, we notice that the displayed source code does not resemble our application code:

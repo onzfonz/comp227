@@ -402,7 +402,7 @@ Its value can be changed with a function *setToken*, which is exported by the mo
 *create*, now with async/await syntax, sets the token to the <i>Authorization</i> header.
 The header is given to axios as the third parameter of the <i>post</i> method.
 
-The event handler responsible for login must be changed to call the method <code>noteService.setToken(user.token)</code> with a successful login:
+The event handler responsible for login must be changed to call the method `noteService.setToken(user.token)` with a successful login:
 
 ```js
 const handleLogin = async (event) => {

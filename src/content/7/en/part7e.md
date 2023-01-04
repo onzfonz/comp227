@@ -319,11 +319,11 @@ let query = "SELECT * FROM Users WHERE name = '" + userName + "';"
 
 Now let's assume that a malicious user <i>Arto Hellas</i> would define their name as
 
-<pre>
+```shell
 Arto Hell-as'; DROP TABLE Users; --
-</pre>
+```
 
-so that the name would contain a single quote <code>'</code>, which is the beginning and end character of a SQL string.
+so that the name would contain a single quote `'`, which is the beginning and end character of a SQL string.
 As a result of this, two SQL operations would be executed, the second of which would  destroy the database table <i>Users</i>:
 
 ```sql
@@ -331,7 +331,7 @@ SELECT * FROM Users WHERE name = 'Arto Hell-as'; DROP TABLE Users; --'
 ```
 
 SQL injections are prevented using [parameterized queries](https://security.stackexchange.com/questions/230211/why-are-stored-procedures-and-prepared-statements-the-preferred-modern-methods-f).
-With them, user input isn't mixed with the SQL query, but the database itself inserts the input values at placeholders in the query (usually <code>?</code>).
+With them, user input isn't mixed with the SQL query, but the database itself inserts the input values at placeholders in the query (usually `?`).
 
 ```js
 execute("SELECT * FROM Users WHERE name = ?", [userName])
@@ -382,7 +382,7 @@ npm install -g npm-check-updates
 
 Using this tool, the up-to-dateness of dependencies is checked in the following way:
 
-```console
+```shell
 $ npm-check-updates
 Checking ...\ultimate-hooks\package.json
 [====================] 9/9 100%
@@ -396,7 +396,7 @@ Run ncu -u to upgrade package.json
 
 The file <i>package.json</i> is brought up to date by running the command *ncu -u*.
 
-```console
+```shell
 $ ncu -u
 Upgrading ...\ultimate-hooks\package.json
 [====================] 9/9 100%

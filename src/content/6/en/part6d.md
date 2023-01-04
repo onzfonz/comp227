@@ -428,7 +428,7 @@ export default connect(
 )(NewNote)
 ```
 
-The connect expression above enables the component to dispatch actions for creating new notes with the <code>props.createNote('a new note')</code> command.
+The connect expression above enables the component to dispatch actions for creating new notes with the `props.createNote('a new note')` command.
 
 The functions passed in <i>mapDispatchToProps</i> must be <i>action creators</i>, that is, functions that return Redux actions.
 
