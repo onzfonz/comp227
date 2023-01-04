@@ -312,7 +312,7 @@ const App = () => {
 }
 ```
 
-So far the application does not have the functionality for adding new notes, although it is possible to do so by dispatching <i>NEW\_NOTE</i> actions.
+So far the application does not have the functionality for adding new notes, although it is possible to do so by dispatching <i>NEW_NOTE</i> actions.
 
 Now the actions have a type and a field <i>data</i>, which contains the note to be added:
 
@@ -343,7 +343,7 @@ const noteReducer = (state = [], action) => {
 ```
 
 The state is now an Array.
-<i>NEW\_NOTE</i>-type actions cause a new note to be added to the state with the [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
+<i>NEW_NOTE</i>-type actions cause a new note to be added to the state with the [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
 
 The application seems to be working, but the reducer we have declared is bad.
 It breaks the [basic assumption](https://redux.js.org/tutorials/essentials/part-1-overview-concepts#reducers) of Redux reducer that reducers must be [pure functions](https://en.wikipedia.org/wiki/Pure_function).
@@ -380,7 +380,7 @@ Let's expand our reducer so that it can handle the change of a note's importance
 ```
 
 Since we do not have any code which uses this functionality yet, we are expanding the reducer in the 'test-driven' way.
-Let's start by creating a test for handling the action <i>NEW\_NOTE</i>.
+Let's start by creating a test for handling the action <i>NEW_NOTE</i>.
 
 To make testing easier, we'll first move the reducer's code to its own module to file <i>src/reducers/noteReducer.js</i>.
 We'll also add the library [deep-freeze](https://www.npmjs.com/package/deep-freeze), which can be used to ensure that the reducer has been correctly defined as an immutable function.
@@ -422,7 +422,7 @@ If the reducer uses the *push* command to manipulate the state, the test will no
 
 ![terminal showing test failure and error about not using array.push](../../images/6/2.png)
 
-Now we'll create a test for the <i>TOGGLE\_IMPORTANCE</i> action:
+Now we'll create a test for the <i>TOGGLE_IMPORTANCE</i> action:
 
 ```js
 test('returns new state with action TOGGLE_IMPORTANCE', () => {

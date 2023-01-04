@@ -64,7 +64,7 @@ Unlike the frontend's unit tests, Cypress tests can be in the frontend or the ba
 The tests require the tested system to be running.
 Unlike our backend integration tests, Cypress tests <i>do not start</i> the system when they are run.
 
-Let's add an npm script to <i>the backend</i> which starts it in test mode, or so that <i>NODE\_ENV</i> is <i>test</i>.
+Let's add an npm script to <i>the backend</i> which starts it in test mode, or so that <i>NODE_ENV</i> is <i>test</i>.
 
 ```js
 {
@@ -97,7 +97,7 @@ npm run cypress:open
 When we first run Cypress, it creates a <i>cypress</i> directory.
 It contains an <i>e2e</i> subdirectory, where we will place our tests.
 Cypress creates a bunch of example tests for us in two subdirectories: the <i>e2e/1-getting-started</i> and the <i>e2e/2-advanced-examples</i> directory.
-We can delete both directories and make our test in the file <i>note\_app.cy.js</i>:
+We can delete both directories and make our test in the file <i>note_app.cy.js</i>:
 
 ```js
 describe('Note app', function() {

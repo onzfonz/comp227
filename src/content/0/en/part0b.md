@@ -582,7 +582,7 @@ When you now create a new note, you'll notice that the browser sends only one re
 
 ![Network tab in developer tools](../../images/0/26e.png)
 
-The POST request to the address *new\_note\_spa* contains the new note as JSON data containing both the content of the note (`content`) and the timestamp (`date`):
+The POST request to the address `new_note_spa` contains the new note as JSON data containing both the content of the note (`content`) and the timestamp (`date`):
 
 ```js
 {
@@ -649,7 +649,7 @@ The application code is available at <https://github.com/mluukkai/example_app>.
 It's worth remembering that the application is only meant to demonstrate the concepts of the course.
 The code follows a poor style of development in some measures, and should not be used as an example when creating your applications.
 The same is true for the URLs used.
-The URL *new\_note\_spa* that new notes are sent to, does not adhere to current best practices.
+The URL `new_note_spa` that new notes are sent to, does not adhere to current best practices.
 
 ### JavaScript libraries
 

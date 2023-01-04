@@ -198,7 +198,7 @@ The [entry](https://webpack.js.org/concepts/#entry) property of the configuratio
 
 The [output](https://webpack.js.org/concepts/#output) property defines the location where the bundled code will be stored.
 The target directory must be defined as an <i>absolute path</i>, which is easy to create with the [path.resolve](https://nodejs.org/docs/latest-v8.x/api/path.html#path_path_resolve_paths) method.
-We also use [\_\_dirname](https://nodejs.org/docs/latest/api/globals.html#globals_dirname) which is a global variable in Node that stores the path to the current directory.
+We also use [`__dirname`](https://nodejs.org/docs/latest/api/globals.html#globals_dirname) which is a global variable in Node that stores the path to the current directory.
 
 ### Bundling React
 
@@ -805,7 +805,7 @@ The definition remains almost the same, except for the fact that the configurati
 The function receives the two parameters, <i>env</i> and <i>argv</i>, the second of which can be used for accessing the <i>mode</i> that is defined in the npm script.
 
 We can also use webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/) for defining <i>global default constants</i> that can be used in the bundled code.
-Let's define a new global constant <i>BACKEND\_URL</i> that gets a different value depending on the environment that the code is being bundled for:
+Let's define a new global constant <i>BACKEND_URL</i> that gets a different value depending on the environment that the code is being bundled for:
 
 ```js
 const path = require('path')

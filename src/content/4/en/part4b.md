@@ -21,12 +21,12 @@ This kind of testing where multiple components of the system are being tested as
 
 In one of the previous chapters of the course material, we mentioned that when your backend server is running in Heroku, it is in <i>production</i> mode.
 
-The convention in Node is to define the execution mode of the application with the <i>NODE\_ENV</i> environment variable.
+The convention in Node is to define the execution mode of the application with the <i>NODE_ENV</i> environment variable.
 In our current application, we only load the environment variables defined in the <i>.env</i> file if the application is <i>not</i> in production mode.
 
 It is common practice to define separate modes for development and testing.
 
-Next, let's change the scripts in our <i>package.json</i> so that when tests are run, <i>NODE\_ENV</i> gets the value <i>test</i>:
+Next, let's change the scripts in our <i>package.json</i> so that when tests are run, <i>NODE_ENV</i> gets the value <i>test</i>:
 
 ```json
 {
