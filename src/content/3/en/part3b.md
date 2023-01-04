@@ -11,7 +11,7 @@ Next, let's connect the frontend we made in [part 2](/en/part2) to our own backe
 
 In the previous part, the frontend could ask for the list of notes from the json-server we had as a backend, from the address <http://localhost:3001/notes>.
 Our backend has a slightly different URL structure now, as the notes can be found at <http://localhost:3001/api/notes>.
-Let's change the attribute **baseUrl** in the <i>src/services/notes.js</i> like so:
+Let's change the attribute `baseUrl` in the *src/services/notes.js* like so:
 
 ```js
 import axios from 'axios'
@@ -41,9 +41,9 @@ The issue lies with a thing called CORS, or Cross-Origin Resource Sharing.
 
 According to [Wikipedia](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing):
 
-> <i>Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) on a web page to be requested from another domain outside the domain from which the first resource was served.
-A web page may freely embed cross-origin images, stylesheets, scripts, iframes, and videos.
-Certain "cross-domain" requests, notably Ajax requests, are forbidden by default by the same-origin security policy.</i>
+> *Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) on a web page to be requested from another domain outside the domain from which the first resource was served.
+  A web page may freely embed cross-origin images, stylesheets, scripts, iframes, and videos.
+  Certain "cross-domain" requests, notably Ajax requests, are forbidden by default by the same-origin security policy.*
 
 The problem is that, by default, the JavaScript code of an application that runs in a browser can only communicate with a server in the same [origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
 Because our server is in localhost port 3001, while our frontend is in localhost port 3000, they do not have the same origin.
@@ -51,9 +51,9 @@ Because our server is in localhost port 3001, while our frontend is in localhost
 Keep in mind, that [same origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) and CORS are not specific to React or Node.
 They are universal principles of the operation of web applications.
 
-We can allow requests from other <i>origins</i> by using Node's [cors](https://github.com/expressjs/cors) middleware.
+We can allow requests from other **origins** by using Node's [cors](https://github.com/expressjs/cors) middleware.
 
-In your backend repository, install <i>cors</i> with the command
+In your backend repository, install **cors** with the command
 
 ```bash
 npm install cors
@@ -75,7 +75,7 @@ The setup of our app looks now as follows:
 
 ![diagram of react app and browser](../../images/3/100.png)
 
-The react app running in the browser now fetches the data from node/express-server that runs in localhost:3001.
+The react app running in the browser now fetches the data from node/express-server that runs in [localhost:3001](http://localhost:3001).
 
 ### Application to the Internet
 
@@ -102,7 +102,7 @@ Some course participants have also used the following
 
 If you know some other good and easy-to-use services for hosting NodeJS, please let us know!
 
-For both Fly.io and Heroku, we need to change the definition of the port our application uses at the bottom of the <i>index.js</i> file like so:
+For both Fly.io and Heroku, we need to change the definition of the port our application uses at the bottom of the *index.js* file like so:
 
 ```js
 const PORT = process.env.PORT || 3001  // highlight-line
@@ -111,7 +111,7 @@ app.listen(PORT, () => {
 })
 ```
 
-Now we are using the port defined in the [environment variable](https://en.wikipedia.org/wiki/Environment_variable) *PORT* or port 3001 if the environment variable *PORT* is undefined.
+Now we are using the port defined in the [environment variable](https://en.wikipedia.org/wiki/Environment_variable) `PORT` or port 3001 if the environment variable `PORT` is undefined.
 Fly.io and Heroku configure the application port based on that environment variable.
 
 #### Fly.io
@@ -122,7 +122,7 @@ After that, you should [create a Fly.io account](https://fly.io/docs/hands-on/si
 By default, everyone gets two free virtual machines that can be used for running two apps at the same time.
 
 Note that the Fly.io instructions have only been added to this course on the 28th of August 2022.
-If you run into problems, please ask for help on Discord! If your build keeps failing due to unhealthy checks, make sure that you have changed the bottom of the <i>index.js</i> file like so:
+If you run into problems, please ask for help on Discord! If your build keeps failing due to unhealthy checks, make sure that you have changed the bottom of the *index.js* file like so:
 
 ```js
 const PORT = process.env.PORT || 3001  // highlight-line
@@ -131,7 +131,7 @@ app.listen(PORT, () => {
 })
 ```
 
-Don't forget to add your *cors* package to *dependencies* in *package.json* and you might need to remove the *morgan* code from the server application.
+Don't forget to add your *cors* package to `dependencies` in *package.json* and you might need to remove the `morgan` code from the server application.
 
 Start by [authenticating](https://fly.io/docs/hands-on/sign-in/) via the command line with the command
 
@@ -139,7 +139,7 @@ Start by [authenticating](https://fly.io/docs/hands-on/sign-in/) via the command
 fly auth login
 ```
 
-*Note* if the command *fly* does not work on your machine, you can try the longer version *flyctl*.
+*Note* if the command `fly` does not work on your machine, you can try the longer version `flyctl`.
 E.g. on MacOS, both forms of the command work.
 
 Initializing an app happens by running the following command in the root directory of the app
@@ -167,11 +167,11 @@ After the initial setup, when the app code has been updated, it can be deployed 
 fly deploy
 ```
 
-A particularly important command is *fly logs*.
+A particularly important command is `fly logs`.
 This command can be used to view server logs.
 It is best to keep logs always visible!
 
-Fly.io creates a file <i>fly.toml</i> in the root of your app.
+Fly.io creates a file *fly.toml* in the root of your app.
 The file contains all the configuration of your server.
 In this course we can mostly ignore the contents of the file.
 
@@ -203,53 +203,53 @@ Let us also look at how we would use the good old [Heroku](https://www.heroku.co
 
 >If you have never used Heroku before, you can find instructions from [Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-nodejs) or by Googling.
 
-Add a file called  <i>Procfile</i> to the backend project's root to tell Heroku how to start the application.
+Add a file called  *Procfile* to the backend project's root to tell Heroku how to start the application.
 
 ```bash
 web: node index.js
 ```
 
-Create a Git repository in the project directory, and add <i>.gitignore</i> with the following contents
+Create a Git repository in the project directory, and add *.gitignore* with the following contents
 
 ```bash
 node_modules
 ```
 
 Create a Heroku account at <https://devcenter.heroku.com/>.
-Install the Heroku package using the command: npm install -g heroku.
-Create a Heroku application with the command <i>heroku create</i>, commit your code to the repository and move it to Heroku with the command <i>git push heroku main</i>.
+Install the Heroku package using the command: `npm install -g heroku`.
+Create a Heroku application with the command `heroku create`, commit your code to the repository and move it to Heroku with the command `git push heroku main`.
 
 If everything went well, the application works:
 
 ![live site screenshot of api/notes showing JSON](../../images/3/25ea.png)
 
-If not, the issue can be found by reading the heroku logs with the command <i>heroku logs</i>.
+If not, the issue can be found by reading the heroku logs with the command `heroku logs`.
 
 >**NB** At least in the beginning it's good to keep an eye on the heroku logs at all times.
-The best way to do this is with command <i>heroku logs -t</i> which prints the logs to console whenever something happens on the server.
+The best way to do this is with command `heroku logs -t` which prints the logs to console whenever something happens on the server.
 >
->**NB** If you are deploying from a git repository where your code is not on the main branch (i.e. if you are altering the [notes repo](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-2) from the last lesson) you will need to run *git push heroku HEAD:master*.
-If you have already done a push to heroku, you may need to run *git push heroku HEAD:main --force*.
+>**NB** If you are deploying from a git repository where your code is not on the main branch (i.e. if you are altering the [notes repo](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-2) from the last lesson) you will need to run `git push heroku HEAD:master`.
+If you have already done a push to heroku, you may need to run `git push heroku HEAD:main --force`.
 
 The frontend also works with the backend on Fly.io or Heroku.
-You can check this by changing the backend's address on the frontend to be the backend's address in Fly.io/Heroku instead of <i><http://localhost:3001></i>.
+You can check this by changing the backend's address on the frontend to be the backend's address in Fly.io/Heroku instead of [localhost:3001](http://localhost:3001).
 
 The next question is, how do we deploy the frontend to the Internet? We have multiple options.
 Let's go through one of them next.
 
 ### Frontend production build
 
-So far we have been running React code in <i>development mode</i>.
+So far we have been running React code in **development mode**.
 In development mode the application is configured to give clear error messages, immediately render code changes to the browser, and so on.
 
 When the application is deployed, we must create a [production build](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build) or a version of the application which is optimized for production.
 
-A production build of applications created with <i>create-react-app</i> can be created with the command [npm run build](https://github.com/facebookincubator/create-react-app#npm-run-build-or-yarn-build).
+A production build of applications created with *create-react-app* can be created with the command [npm run build](https://github.com/facebookincubator/create-react-app#npm-run-build-or-yarn-build).
 
-**NOTE:** at the time of writing (20th January 2022) create-react-app had a bug that causes the following error *TypeError: MiniCssExtractPlugin is not a constructor*
+**NOTE:** at the time of writing (20th January 2022) create-react-app had a bug that causes the following error `TypeError: MiniCssExtractPlugin is not a constructor`
 
 A possible fix is found [here](https://github.com/facebook/create-react-app/issues/11930).
-Add the following to the file <i>package.json</i>
+Add the following to the file *package.json*
 
 ```json
 {
@@ -269,12 +269,12 @@ npm cache clean --force
 npm install
 ```
 
-After these *npm run build* should work.
+After these `npm run build` should work.
 
-Let's run this command from the <i>root of the frontend project</i>.
+Let's run this command from the ***root of the frontend project***.
 
-This creates a directory called <i>build</i> (which contains the only HTML file of our application, <i>index.html</i> ) which contains the directory <i>static</i>.
-[Minified](<https://en.wikipedia.org/wiki/Minification_(programming)>) version of our application's JavaScript code will be generated in the <i>static</i> directory.
+This creates a directory called *build* (which contains the only HTML file of our application, *index.html* ) which contains the directory *static*.
+[Minified](<https://en.wikipedia.org/wiki/Minification_(programming)>) version of our application's JavaScript code will be generated in the *static* directory.
 Even though the application code is in multiple files, all of the JavaScript will be minified into one file.
 All of the code from all of the application's dependencies will also be minified into this single file.
 
@@ -287,7 +287,7 @@ The beginning of the code looks like this:
 
 ### Serving static files from the backend
 
-One option for deploying the frontend is to copy the production build (the <i>build</i> directory) to the root of the backend repository and configure the backend to show the frontend's <i>main page</i> (the file <i>build/index.html</i>) as its main page.
+One option for deploying the frontend is to copy the production build (the *build* directory) to the root of the backend repository and configure the backend to show the frontend's ***main page*** (the file *build/index.html*) as its main page.
 
 We begin by copying the production build of the frontend to the root of the backend.
 With a Mac or Linux computer, the copying can be done from the frontend directory with the command
@@ -303,7 +303,7 @@ The backend directory should now look as follows:
 
 ![bash screenshot of ls showing build directory](../../images/3/27ea.png)
 
-To make express show <i>static content</i>, the page <i>index.html</i> and the JavaScript, etc., it fetches, we need a built-in middleware from express called [static](http://expressjs.com/en/starter/static-files.html).
+To make express show **static content**, the page *index.html* and the JavaScript, etc., it fetches, we need a built-in middleware from express called [static](http://expressjs.com/en/starter/static-files.html).
 
 When we add the following amidst the declarations of middlewares
 
@@ -311,13 +311,13 @@ When we add the following amidst the declarations of middlewares
 app.use(express.static('build'))
 ```
 
-whenever express gets an HTTP GET request it will first check if the <i>build</i> directory contains a file corresponding to the request's address.
+whenever express gets an HTTP GET request it will first check if the *build* directory contains a file corresponding to the request's address.
 If a correct file is found, express will return it.
 
-Now HTTP GET requests to the address <i>www.serversaddress.com/index.html</i> or <i>www.serversaddress.com</i> will show the React frontend.
-GET requests to the address <i>www.serversaddress.com/api/notes</i> will be handled by the backend's code.
+Now HTTP GET requests to the address ***www.serversaddress.com/index.html*** or ***www.serversaddress.com*** will show the React frontend.
+GET requests to the address ***www.serversaddress.com/api/notes*** will be handled by the backend's code.
 
-Because of our situation, both the frontend and the backend are at the same address, we can declare *baseUrl* as a [relative](https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2) URL.
+Because of our situation, both the frontend and the backend are at the same address, we can declare `baseUrl` as a [relative](https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2) URL.
 This means we can leave out the part declaring the server.
 
 ```js
@@ -334,13 +334,13 @@ const getAll = () => {
 
 After the change, we have to create a new production build and copy it to the root of the backend repository.
 
-The application can now be used from the <i>backend</i> address <http://localhost:3001>:
+The application can now be used from the *backend* address <http://localhost:3001>:
 
 ![Notes application screenshot](../../images/3/28e.png)
 
 Our application now works exactly like the [single-page app](/en/part0/fundamentals_of_web_apps#single-page-app) example application we studied in part 0.
 
-When we use a browser to go to the address <http://localhost:3001>, the server returns the <i>index.html</i> file from the <i>build</i> repository.
+When we use a browser to go to the address <http://localhost:3001>, the server returns the *index.html* file from the *build* repository.
 The summarized contents of the file are as follows:
 
 ```html
@@ -357,10 +357,10 @@ The summarized contents of the file are as follows:
 </html>
 ```
 
-The file contains instructions to fetch a CSS stylesheet defining the styles of the application, and two <i>script</i> tags that instruct the browser to fetch the JavaScript code of the application - the actual React application.
+The file contains instructions to fetch a CSS stylesheet defining the styles of the application, and two `script` tags that instruct the browser to fetch the JavaScript code of the application - the actual React application.
 
 The React code fetches notes from the server address <http://localhost:3001/api/notes> and renders them to the screen.
-The communications between the server and the browser can be seen in the <i>Network</i> tab of the developer console:
+The communications between the server and the browser can be seen in the ***Network*** tab of the developer console:
 
 ![Network tab of notes application on backend](../../images/3/29ea.png)
 
@@ -368,10 +368,10 @@ The setup that is ready for a product deployment looks as follows:
 
 ![diagram of deployment ready react app](../../images/3/101.png)
 
-Unlike when running the app in a development environment, everything is now in the same node/express-backend that runs in localhost:3001.
-When the browser goes to the page, the file <i>index.html</i> is rendered.
+Unlike when running the app in a development environment, everything is now in the same node/express-backend that runs in [localhost:3001](http://localhost:3001).
+When the browser goes to the page, the file *index.html* is rendered.
 That causes the browser to fetch the product version of the React app.
-Once it starts to run, it fetches the json-data from the address localhost:3001/api/notes.
+Once it starts to run, it fetches the json-data from the address [localhost:3001/api/notes](http://localhost:3001/api/notes).
 
 ### The whole app to the internet
 
@@ -401,7 +401,7 @@ When the root address that is of the form <https://glacial-ravine-74819.herokuap
 
 ### Streamlining deploying of the frontend
 
-To create a new production build of the frontend without extra manual work, let's add some npm-scripts to the <i>package.json</i> of the backend repository.
+To create a new production build of the frontend without extra manual work, let's add some npm-scripts to the *package.json* of the backend repository.
 
 #### Fly.io script
 
@@ -419,14 +419,14 @@ The script looks like this
 }
 ```
 
-The script *npm run build:ui* builds the frontend and copies the production version under the backend repository.
-*npm run deploy* releases the current backend to Fly.io.
+The script `npm run build:ui` builds the frontend and copies the production version under the backend repository.
+`npm run deploy` releases the current backend to Fly.io.
 
-*npm run deploy:full* combines these two scripts.
+`npm run deploy:full` combines these two scripts.
 
-There is also a script *npm run logs:prod* to show the Fly.io logs.
+There is also a script `npm run logs:prod` to show the Fly.io logs.
 
-Note that the directory paths in the script <i>build:ui</i> depend on the location of repositories in the file system.
+Note that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
 
 #### Heroku script
 
@@ -445,14 +445,14 @@ In case of Heroku, the script looks like the following
 }
 ```
 
-The script *npm run build:ui* builds the frontend and copies the production version under the backend repository.
-*npm run deploy* releases the current backend to Heroku.
+The script `npm run build:ui` builds the frontend and copies the production version under the backend repository.
+`npm run deploy` releases the current backend to Heroku.
 
-*npm run deploy:full* combines these two and contains the necessary <i>git</i> commands to update the backend repository.
+`npm run deploy:full` combines these two and contains the necessary *git* commands to update the backend repository.
 
-There is also a script *npm run logs:prod* to show the Heroku logs.
+There is also a script `npm run logs:prod` to show the Heroku logs.
 
-Note that the directory paths in the script <i>build:ui</i> depend on the location of repositories in the file system.
+Note that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
 
 >**NB**  On Windows, npm scripts are executed in cmd.exe as the default shell which does not support bash commands.
 For the above bash commands to work, you can change the default shell to Bash (in the default Git for Windows installation) as follows:
@@ -465,7 +465,7 @@ Another option is the use of [shx](https://www.npmjs.com/package/shx).
 
 ### Proxy
 
-Changes on the frontend have caused it to no longer work in development mode (when started with command *npm start*), as the connection to the backend does not work.
+Changes on the frontend have caused it to no longer work in development mode (when started with command `npm start`), as the connection to the backend does not work.
 
 ![Network dev tools showing a 404 on getting notes](../../images/3/32ea.png)
 
@@ -475,11 +475,11 @@ This is due to changing the backend address to a relative URL:
 const baseUrl = '/api/notes'
 ```
 
-Because in development mode the frontend is at the address <i>localhost:3000</i>, the requests to the backend go to the wrong address <i>localhost:3000/api/notes</i>.
-The backend is at <i>localhost:3001</i>.
+Because in development mode the frontend is at the address [localhost:3000](http://localhost:3000), the requests to the backend go to the wrong address [localhost:3000/api/notes](http://localhost:3000/api/notes).
+The backend is at [localhost:3001](http://localhost:3001).
 
 If the project was created with create-react-app, this problem is easy to solve.
-It is enough to add the following declaration to the <i>package.json</i> file of the frontend repository.
+It is enough to add the following declaration to the *package.json* file of the frontend repository.
 
 ```bash
 {
@@ -494,7 +494,7 @@ It is enough to add the following declaration to the <i>package.json</i> file of
 ```
 
 After a restart, the React development environment will work as a [proxy](https://create-react-app.dev/docs/proxying-api-requests-in-development/).
-If the React code does an HTTP request to a server address at <i><http://localhost:3000></i> not managed by the React application itself (i.e. when requests are not about fetching the CSS or JavaScript of the application), the request will be redirected to the server at <i><http://localhost:3001></i>.
+If the React code does an HTTP request to a server address at *<http://localhost:3000>* not managed by the React application itself (i.e. when requests are not about fetching the CSS or JavaScript of the application), the request will be redirected to the server at *<http://localhost:3001>*.
 
 Now the frontend is also fine, working with the server both in development- and production mode.
 
@@ -508,8 +508,8 @@ There are multiple ways to achieve this (for example placing both backend and fr
 In some situations, it may be sensible to deploy the frontend code as its own application.
 With apps created with create-react-app it is [straightforward](https://github.com/mars/create-react-app-buildpack).
 
-The current backend code can be found on [Github](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-3), in the branch <i>part3-3</i>.
-The changes in frontend code are in <i>part3-1</i> branch of the [frontend repository](https://github.com/fullstack-hy2020/part2-notes/tree/part3-1).
+The current backend code can be found on [Github](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-3), in the branch *part3-3*.
+The changes in frontend code are in *part3-1* branch of the [frontend repository](https://github.com/fullstack-hy2020/part2-notes/tree/part3-1).
 
 </div>
 
@@ -527,29 +527,29 @@ Do not implement the functionality for making changes to the phone numbers yet, 
 
 You will probably have to do some small changes to the frontend, at least to the URLs for the backend.
 Remember to keep the developer console open in your browser.
-If some HTTP requests fail, you should check from the <i>Network</i>-tab what is going on.
+If some HTTP requests fail, you should check from the ***Network*** tab what is going on.
 Keep an eye on the backend's console as well.
-If you did not do the previous exercise, it is worth it to print the request data or <i>request.body</i> to the console in the event handler responsible for POST requests.
+If you did not do the previous exercise, it is worth it to print the request data or `request.body` to the console in the event handler responsible for POST requests.
 
 #### 3.10 phonebook backend step10
 
 Deploy the backend to the internet, for example to Heroku.
 
-**NB** the command *heroku* works on the department's computers and the freshman laptops.
+**NB** the command `heroku` works on the department's computers and the freshman laptops.
 If for some reason you cannot [install](https://devcenter.heroku.com/articles/heroku-cli) Heroku on your computer, you can use the command [npx heroku](https://www.npmjs.com/package/heroku).
 
 Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
 
-**PRO TIP:** When you deploy your application to Heroku, it is worth it to at least in the beginning keep an eye on the logs of the heroku application **AT ALL TIMES** with the command <em>heroku logs -t</em>.
+**PRO TIP:** When you deploy your application to Heroku, it is worth it to at least in the beginning keep an eye on the logs of the heroku application **AT ALL TIMES** with the command `heroku logs -t`.
 
 The following is a log of one typical problem.
-Heroku cannot find application dependency <i>express</i>:
+Heroku cannot find application dependency *express*:
 
 ![terminal screenshot of heroku with error on finding express module](../../images/3/33.png)
 
-The reason is that the <i>express</i> package has not been installed with the <em>npm install express</em> command, so information about the dependency was not saved to the file <i>package.json</i>.
+The reason is that the *express* package has not been installed with the `npm install express` command, so information about the dependency was not saved to the file *package.json*.
 
-Another typical problem is that the application is not configured to use the port set to the environment variable <em>PORT</em>:
+Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`:
 
 ![terminal showing error about failing to bind to port](../../images/3/34.png)
 
@@ -559,9 +559,9 @@ Create a README.md at the root of your repository, and add a link to your online
 
 Generate a production build of your frontend, and add it to the internet application using the method introduced in this part.
 
-**NB** If you use Heroku, make sure the directory <i>build</i> is not gitignored
+**NB** If you use Heroku, make sure the directory *build* is not gitignored
 
-Also, make sure that the frontend still works locally (in development mode when started with command *npm start*).
+Also, make sure that the frontend still works locally (in development mode when started with command `npm start`).
 
 If you have problems getting the app working make sure that your directory structure matches [the example app](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-3).
 

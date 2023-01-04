@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 There are usually constraints that we want to apply to the data that is stored in our application's database.
-Our application shouldn't accept notes that have a missing or empty <i>content</i> property.
+Our application shouldn't accept notes that have a missing or empty `content` property.
 The validity of the note is checked in the route handler:
 
 ```js
@@ -24,7 +24,7 @@ app.post('/api/notes', (request, response) => {
 })
 ```
 
-If the note does not have the <i>content</i> property, we respond to the request with the status code <i>400 bad request</i>.
+If the note does not have the `content` property, we respond to the request with the status code **400 bad request**.
 
 One smarter way of validating the format of the data before it is stored in the database is to use the [validation](https://mongoosejs.com/docs/validation.html) functionality available in Mongoose.
 
@@ -47,12 +47,12 @@ const noteSchema = new mongoose.Schema({
 })
 ```
 
-The <i>content</i> field is now required to be at least five characters long.
-The <i>date</i> field is set as required, meaning that it can not be missing.
-The same constraint is also applied to the <i>content</i> field since the minimum length constraint allows the field to be missing.
-We have not added any constraints to the <i>important</i> field, so its definition in the schema has not changed.
+The `content` field is now required to be at least five characters long.
+The `date` field is set as required, meaning that it can not be missing.
+The same constraint is also applied to the `content` field since the minimum length constraint allows the field to be missing.
+We have not added any constraints to the `important` field, so its definition in the schema has not changed.
 
-The <i>minLength</i> and <i>required</i> validators are [built-in](https://mongoosejs.com/docs/validation.html#built-in-validators) and provided by Mongoose.
+The `minLength` and `required` validators are [built-in](https://mongoosejs.com/docs/validation.html#built-in-validators) and provided by Mongoose.
 The Mongoose [custom validator](https://mongoosejs.com/docs/validation.html#custom-validators) functionality allows us to create new validators if none of the built-in ones cover our needs.
 
 If we try to store an object in the database that breaks one of the constraints, the operation will throw an exception.
@@ -97,7 +97,7 @@ When validating an object fails, we return the following default error message f
 ![postman showing error message](../../images/3/50.png)
 
 We notice that the backend has now a problem: validations are not done when editing a note.
-The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem, validations are not run by default when <i>findOneAndUpdate</i> is executed.
+The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem, validations are not run by default when `findOneAndUpdate` is executed.
 
 The fix is easy.
 Let us also reformulate the route code a bit:
@@ -123,17 +123,17 @@ app.put('/api/notes/:id', (request, response, next) => {
 The application should work almost as-is in Fly.io/Heroku.
 We do have to generate a new production build of the frontend since changes thus far were only on our backend.
 
-The environment variables defined in dotenv will only be used when the backend is not in <i>production mode</i>, i.e. Fly.io or Heroku.
+The environment variables defined in dotenv will only be used when the backend is not in **production mode**, i.e. Fly.io or Heroku.
 
 For production, we have to set the database URL in the service that is hosting our app.
 
-In Fly.io that is done *fly secrets set*:
+In Fly.io that is done via `fly secrets set`:
 
 ```bash
 fly secrets set MONGODB_URI='mongodb+srv://fullstack:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
 ```
 
-For Heroku, the same is done with the *heroku config:set* command.
+For Heroku, the same is done with the `heroku config:set` command.
 
 ```bash
 heroku config:set MONGODB_URI=mongodb+srv://fullstack:secretpasswordhere@cluster0-ostce.mongodb.net/note-app?retryWrites=true
@@ -147,16 +147,16 @@ heroku config:set MONGODB_URI='mongodb+srv://fullstack:secretpasswordhere@cluste
 
 The application should now work.
 Sometimes things don't go according to plan.
-If there are problems, <i>fly logs</i> or <i>heroku logs</i> will be there to help.
+If there are problems, `fly logs` or `heroku logs` will be there to help.
 My own application did not work after making the changes.
 The logs showed the following:
 
 ![node output showing connecting to undefined](../../images/3/51a.png)
 
 For some reason the URL of the database was undefined.
-The <i>heroku config</i> command revealed that I had accidentally defined the URL to the <em>MONGO\_URL</em> environment variable when the code expected it to be in <em>MONGODB\_URI</em>.
+The `heroku config` command revealed that I had accidentally defined the URL to the `MONGO_URL` environment variable when the code expected it to be in `MONGODB_URI`.
 
-You can find the code for our current application in its entirety in the <i>part3-5</i> branch of [this GitHub repository](https://github.com/fullstack-hy2019/part3-notes-backend/tree/part3-5).
+You can find the code for our current application in its entirety in the *part3-5* branch of [this GitHub repository](https://github.com/fullstack-hy2019/part3-notes-backend/tree/part3-5).
 
 </div>
 
@@ -169,7 +169,7 @@ You can find the code for our current application in its entirety in the <i>part
 Expand the validation so that the name stored in the database has to be at least three characters long.
 
 Expand the frontend so that it displays some form of error message when a validation error occurs.
-Error handling can be implemented by adding a <em>catch</em> block as shown below:
+Error handling can be implemented by adding a `catch` block as shown below:
 
 ```js
 personService
@@ -221,9 +221,9 @@ Push the latest version to Heroku and verify that everything works there as well
 Before we move on to the next part, we will take a look at an important tool called [lint](<https://en.wikipedia.org/wiki/Lint_(software)>).
 Wikipedia says the following about lint:
 
-> <i>Generically, lint or a linter is any tool that detects and flags errors in programming languages, including stylistic errors.
-The term lint-like behavior is sometimes applied to the process of flagging suspicious language usage.
-Lint-like tools generally perform static analysis of source code.</i>
+> *Generically, lint or a linter is any tool that detects and flags errors in programming languages, including stylistic errors.
+  The term lint-like behavior is sometimes applied to the process of flagging suspicious language usage.
+  Lint-like tools generally perform static analysis of source code.*
 
 In compiled statically typed languages like Java, IDEs like NetBeans can point out errors in the code, even ones that are more than just compile errors.
 Additional tools for performing [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) like [checkstyle](https://checkstyle.sourceforge.io), can be used for expanding the capabilities of the IDE to also point out problems related to style, like indentation.
@@ -296,7 +296,7 @@ Inspecting and validating a file like *index.js* can be done with the following 
 npx eslint index.js
 ```
 
-It is recommended to create a separate *npm script* for linting:
+It is recommended to create a separate `npm script` for linting:
 
 ```json
 {
@@ -311,16 +311,16 @@ It is recommended to create a separate *npm script* for linting:
 }
 ```
 
-Now the *npm run lint* command will check every file in the project.
+Now the `npm run lint` command will check every file in the project.
 
-Also, the files in the <em>build</em> directory get checked when the command is run.
-We do not want this to happen, and we can accomplish this by creating an [.eslintignore](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories) file in the project's root with the following contents:
+Also, the files in the *build* directory get checked when the command is run.
+We do not want this to happen, and we can accomplish this by creating a [.eslintignore](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories) file in the project's root with the following contents:
 
 ```bash
 build
 ```
 
-This causes the entire <em>build</em> directory to not be checked by ESlint.
+This causes the entire *build* directory to not be checked by ESlint.
 
 Lint has quite a lot to say about our code:
 
@@ -328,7 +328,7 @@ Lint has quite a lot to say about our code:
 
 Let's not fix these issues just yet.
 
-A better alternative to executing the linter from the command line is to configure a <i>eslint-plugin</i> to the editor, that runs the linter continuously.
+A better alternative to executing the linter from the command line is to configure an ***eslint-plugin*** to the editor, that runs the linter continuously.
 By using the plugin you will see errors in your code immediately.
 You can find more information about the Visual Studio ESLint plugin [here](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
 
@@ -338,10 +338,10 @@ The VS Code ESlint plugin will underline style violations with a red line:
 
 This makes errors easy to spot and fix right away.
 
-ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the <i>.eslintrc.js</i> file.
+ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the *.eslintrc.js* file.
 
 Let's add the [eqeqeq](https://eslint.org/docs/rules/eqeqeq) rule that warns us, if equality is checked with anything but the triple equals operator.
-The rule is added under the <i>rules</i> field in the configuration file.
+The rule is added under the `rules` field in the configuration file.
 
 ```js
 {
@@ -374,7 +374,7 @@ Let's prevent unnecessary [trailing spaces](https://eslint.org/docs/rules/no-tra
 }
 ```
 
-Our default configuration takes a bunch of predetermined rules into use from <i>eslint:recommended</i>:
+Our default configuration takes a bunch of predetermined rules into use from `eslint:recommended`:
 
 ```bash
 'extends': 'eslint:recommended',
@@ -382,7 +382,7 @@ Our default configuration takes a bunch of predetermined rules into use from <i>
 
 This includes a rule that warns about *console.log* commands.
 [Disabling](https://eslint.org/docs/user-guide/configuring#configuring-rules) a rule can be accomplished by defining its "value" as 0 in the configuration file.
-Let's do this for the <i>no-console</i> rule in the meantime.
+Let's do this for the `no-console` rule in the meantime.
 
 ```js
 {
@@ -402,7 +402,7 @@ Let's do this for the <i>no-console</i> rule in the meantime.
 }
 ```
 
-**NB** when you make changes to the <i>.eslintrc.js</i> file, it is recommended to run the linter from the command line.
+**NB** when you make changes to the *.eslintrc.js* file, it is recommended to run the linter from the command line.
 This will verify that the configuration file is correctly formatted:
 
 ![terminal output from npm run lint](../../images/3/55.png)
@@ -413,7 +413,7 @@ Many companies define coding standards that are enforced throughout the organiza
 It is not recommended to keep reinventing the wheel over and over again, and it can be a good idea to adopt a ready-made configuration from someone else's project into yours.
 Recently many projects have adopted the Airbnb [Javascript style guide](https://github.com/airbnb/javascript) by taking Airbnb's [ESlint](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) configuration into use.
 
-You can find the code for our current application in its entirety in the <i>part3-7</i> branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-7).
+You can find the code for our current application in its entirety in the *part3-7* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-7).
 </div>
 
 <div class="tasks">
