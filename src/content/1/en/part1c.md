@@ -146,7 +146,7 @@ props = {
 }
 ```
 
-the expression <em>const { name, age } = props</em> assigns the values `'Arto Hellas'` to `name` and `35` to `age`.
+the expression `const { name, age } = props` assigns the values `'Arto Hellas'` to `name` and `35` to `age`.
 
 We can take destructuring a step further:
 

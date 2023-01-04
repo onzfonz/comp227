@@ -279,7 +279,7 @@ notes.map(note => note.id !== id ? note : response.data)
 ```
 
 The map method creates a new array by mapping every item from the old array into an item in the new array.
-In our example, the new array is created conditionally so that if <em>note.id !== id</em> is true; we simply copy the item from the old array into the new array.
+In our example, the new array is created conditionally so that if `note.id !== id` is true; we simply copy the item from the old array into the new array.
 If the condition is false, then the note object returned by the server is added to the array instead.
 
 This `map` trick may seem a bit strange at first, but it's worth spending some time wrapping your head around it.

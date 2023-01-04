@@ -350,7 +350,7 @@ The comparison operator is redundant, since the value of `note.important` is eit
 notes.filter(note => note.important)
 ```
 
-The reason we showed the comparison operator first was to emphasize an important detail: in JavaScript <em>val1 == val2</em> does not work as expected in all situations and it's safer to use <em>val1 === val2</em> exclusively in comparisons.
+The reason we showed the comparison operator first was to emphasize an important detail: in JavaScript `val1 == val2` does not work as expected in all situations and it's safer to use `val1 === val2` exclusively in comparisons.
 You can read more about the topic [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness).
 
 You can test out the filtering functionality by changing the initial value of the `showAll` state.
