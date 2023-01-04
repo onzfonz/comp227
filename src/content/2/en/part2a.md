@@ -291,7 +291,7 @@ const result = notes.map(note => note.id)
 console.log(result)
 ```
 
-<i>[1, 2, 3]</i>  will be printed to the console.
+`[1, 2, 3]`  will be printed to the console.
  `map` always creates a new array, the elements of which have been created from the elements of the original array by ***mapping***: using the function given as a parameter to the `map` method.
 
 The function is

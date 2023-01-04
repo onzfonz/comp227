@@ -579,8 +579,8 @@ Let's first implement a `Display` component that's responsible for displaying th
 One best practice in React is to [lift the state up](https://reactjs.org/docs/lifting-state-up.html) in the component hierarchy.
 The documentation says:
 
-> <i>Often, several components need to reflect the same changing data.
-We recommend lifting the shared state up to their closest common ancestor.</i>
+> *Often, several components need to reflect the same changing data.
+  We recommend lifting the shared state up to their closest common ancestor.*
 
 So let's place the application's state in the `App` component and pass it down to the `Display` component through `props`:
 

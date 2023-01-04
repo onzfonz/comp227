@@ -1087,9 +1087,9 @@ Submit your solutions to the exercises by first pushing your code to GitHub and 
 Remember, submit **all** the exercises of one part **in a single submission**.
 Once you have submitted your solutions for one part, **you cannot submit more exercises to that part anymore**.
 
-<i>Some of the exercises work on the same application.
+*Some of the exercises work on the same application.
 In these cases, it is sufficient to submit just the final version of the application.
-If you wish, you can make a commit after every finished exercise, but it is not mandatory.</i>
+If you wish, you can make a commit after every finished exercise, but it is not mandatory.*
 
 **WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
 **Most likely you do not want each of your projects to be a separate repository**, so simply run the `rm -rf .git` command at the root of your application.
@@ -1229,9 +1229,9 @@ If you see this warning in your console:
 Then perform the necessary actions to make the warning disappear.
 Try pasting the error message into a search engine if you get stuck.
 
-<i>Typical source of an error `Unchecked runtime.lastError: Could not establish connection.
+*Typical source of an error `Unchecked runtime.lastError: Could not establish connection.
 Receiving end does not exist.` is Chrome extension.
-Try going to `chrome://extensions/` and try disabling them one by one and refreshing React app page; the error should eventually disappear.</i>
+Try going to `chrome://extensions/` and try disabling them one by one and refreshing React app page; the error should eventually disappear.*
 
 **Make sure that from now on you don't see any warnings in your console!**
 

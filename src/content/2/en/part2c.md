@@ -291,8 +291,8 @@ We will get more familiar with the *npm* tool in the [third part of the course](
 
 The red print in the error message informs us about the issue:
 
-<i>Cannot bind to port 3001.
-Please specify another port number either through --port argument or through the json-server.json configuration file</i>
+*Cannot bind to port 3001.
+Please specify another port number either through --port argument or through the json-server.json configuration file*
 
 As we can see, the application is not able to bind itself to the [port](https://en.wikipedia.org/wiki/Port_(computer_networking)).
 The reason being that port 3001 is already occupied by the previously started json-server.
