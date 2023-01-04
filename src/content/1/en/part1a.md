@@ -11,9 +11,9 @@ We will now start getting familiar with probably the most important topic of thi
 Let's start by making a simple React application as well as getting to know the core concepts of React.
 
 The easiest way to get started by far is by using a tool called [create-react-app](https://github.com/facebook/create-react-app).
-It is possible (but not necessary) to install <i>create-react-app</i> on your machine if the <i>npm</i> tool that was installed along with Node has a version number of at least <i>5.3</i>.
+It is possible (but not necessary) to install *create-react-app* on your machine if the *npm* tool that was installed along with Node has a version number of at least *5.3*.
 
-Let's create an application called <i>part1</i> and navigate to its directory.
+Let's create an application called `part1` and navigate to its directory.
 
 ```bash
 npx create-react-app part1
@@ -34,7 +34,7 @@ Also, open a text editor so that you can view the code as well as the webpage at
 
 ![code and browser side by side](../../images/1/1e.png)
 
-The code of the application resides in the <i>src</i> folder.
+The code of the application resides in the *src* folder.
 Let's simplify the default code such that the contents of the file index.js looks like this:
 
 ```js
@@ -46,7 +46,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-and file <i>App.js</i> looks like this
+and file *App.js* looks like this
 
 ```js
 const App = () => (
@@ -58,7 +58,16 @@ const App = () => (
 export default App
 ```
 
-The files <i>App.css</i>, <i>App.test.js</i>, <i>index.css</i>, <i>logo.svg</i>, <i>setupTests.js</i> and <i>reportWebVitals.js</i> may be deleted as they are not needed in our application right now.
+You may delete the files:
+
+- *App.css*
+- *App.test.js*
+- *index.css*
+- *logo.svg*
+- *setupTests.js* 
+- *reportWebVitals.js*
+
+as they are not needed in our application right now.
 
 If you end up with the following error:
 
@@ -66,7 +75,7 @@ If you end up with the following error:
 
 Then, for some reason, you are using a React version older than the current version 18.
 
-The fix is to change <i>index.js</i> as follows:
+The fix is to change *index.js* as follows:
 
 ```js
 import ReactDOM from 'react-dom'
@@ -81,16 +90,16 @@ See [this](/en/part1/a_more_complex_state_debugging_react_apps/#a-note-on-react-
 
 ### Component
 
-The file <i>App.js</i> now defines a [React component](https://reactjs.org/docs/components-and-props.html) with the name <i>App</i>.
-The command on the final line of file <i>index.js</i>
+The file *App.js* now defines a [React component](https://reactjs.org/docs/components-and-props.html) with the name `App`.
+The command on the final line of file *index.js*, namely:
 
 ```js
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-renders its contents into the <i>div</i>-element, defined in the file <i>public/index.html</i>, having the <i>id</i> value 'root'.
+renders its contents into the file *public/index.html*, inside a `div` element that has the `id` value 'root'.
 
-By default, the file <i>public/index.html</i> doesn't contain any HTML markup that is visible to us in the browser.
+By default, the file *public/index.html* doesn't contain any HTML markup that is visible to us in the browser.
 You can try adding some HTML to the file.
 However, when using React, all content that needs to be rendered is usually defined as React components.
 
@@ -104,7 +113,7 @@ const App = () => (
 )
 ```
 
-As you probably guessed, the component will be rendered as a <i>div</i>-tag, which wraps a <i>p</i>-tag containing the text <i>Hello world</i>.
+As you probably guessed, the component will be rendered as a `div` tag, which wraps a `p` tag containing the text `Hello world`.
 
 Technically the component is defined as a JavaScript function.
 The following is a function (which does not receive any parameters):
@@ -117,7 +126,7 @@ The following is a function (which does not receive any parameters):
 )
 ```
 
-The function is then assigned to a constant variable <i>App</i>:
+The function is then assigned to a constant variable `App`:
 
 ```js
 const App = ...
@@ -230,7 +239,7 @@ but when writing JSX, the tag needs to be closed:
 
 ### Multiple components
 
-Let's modify the file <i>App.js</i> as follows (NB: export at the bottom is left out in these <i>examples</i>, now and in the future.
+Let's modify the file *App.js* as follows (NB: `export` at the bottom is left out in these *examples*, now and in the future.
 It is still needed for the code to work):
 
 ```js
@@ -254,7 +263,7 @@ const App = () => {
 }
 ```
 
-We have defined a new component <i>Hello</i> and used it inside the component <i>App</i>.
+We have defined a new component `Hello` and used it inside the component `App`.
 Naturally, a component can be used multiple times:
 
 ```js
@@ -275,14 +284,14 @@ const App = () => {
 Writing components with React is easy, and by combining components, even a more complex application can be kept fairly maintainable.
 Indeed, a core philosophy of React is composing applications from many specialized reusable components.
 
-Another strong convention is the idea of a <i>root component</i> called <i>App</i> at the top of the component tree of the application.
-Nevertheless, as we will learn in [part 6](/en/part6), there are situations where the component <i>App</i> is not exactly the root, but is wrapped within an appropriate utility component.
+Another strong convention is the idea of a **root component** called `App` at the top of the component tree of the application.
+Nevertheless, as we will learn in [part 6](/en/part6), there are situations where the component `App` is not exactly the root, but is wrapped within an appropriate utility component.
 
 ### props: passing data to components
 
 It is possible to pass data to components using so-called [props](https://reactjs.org/docs/components-and-props.html).
 
-Let's modify the component <i>Hello</i> as follows:
+Let's modify the component `Hello` as follows:
 
 ```js
 const Hello = (props) => { // highlight-line
@@ -294,7 +303,7 @@ const Hello = (props) => { // highlight-line
 }
 ```
 
-Now the function defining the component has a parameter props.
+Now the function defining the component has a parameter **props**.
 As an argument, the parameter receives an object, which has fields corresponding to all the "props" the user of the component defines.
 
 The props are defined as follows:
@@ -314,7 +323,7 @@ const App = () => {
 There can be an arbitrary number of props and their values can be "hard-coded" strings or the results of JavaScript expressions.
 If the value of the prop is achieved using JavaScript it must be wrapped with curly braces.
 
-Let's modify the code so that the component <i>Hello</i> uses two props:
+Let's modify the code so that the component `Hello` uses two props:
 
 ```js
 const Hello = (props) => {
@@ -341,7 +350,7 @@ const App = () => {
 }
 ```
 
-The props sent by the component <i>App</i> are the values of the variables, the result of the evaluation of the sum expression and a regular string.
+The props sent by the component `App` are the values of the variables, the result of the evaluation of the sum expression and a regular string.
 
 ### Some notes
 
@@ -354,7 +363,7 @@ You should instead try to understand the cause of the error and, for example, go
 
 ![screenshot of undefined prop error](../../images/1/2a.png)
 
-It is good to remember that in React it is possible and worthwhile to write <em>console.log()</em> commands (which print to the console) within your code.
+It is good to remember that in React it is possible and worthwhile to write `console.log()` commands (which print to the console) within your code.
 
 Also, keep in mind that **React component names must be capitalized**.
 If you try defining a component as follows:
@@ -384,10 +393,10 @@ const App = () => {
 ```
 
 the page is not going to display the content defined within the Footer component, and instead React only creates an empty [footer](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer) element, i.e. the built-in HTML element instead of the custom React element of the same name.
-If you change the first letter of the component name to a capital letter, then React creates a <i>div</i>-element defined in the Footer component, which is rendered on the page.
+If you change the first letter of the component name to a capital letter, then React creates a `div` element defined in the `Footer` component, which is rendered on the page.
 
 Note that the content of a React component (usually) needs to contain **one root element**.
-If we, for example, try to define the component <i>App</i> without the outermost <i>div</i>-element:
+If we, for example, try to define the component `App` without the outermost `div` element:
 
 ```js
 const App = () => {
@@ -404,7 +413,7 @@ the result is an error message.
 ![multiple root elements error screenshot](../../images/1/3c.png)
 
 Using a root element is not the only working option.
-An <i>array</i> of components is also a valid solution:
+An *array* of components is also a valid solution:
 
 ```js
 const App = () => {
@@ -442,7 +451,8 @@ It now compiles successfully, and the DOM generated by React no longer contains 
 </div>
 
 <div class="tasks">
-  <h3>Exercises 1.1.-1.2.</h3>
+
+### Exercises 1.1-1.2
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
@@ -466,22 +476,21 @@ See this [example submission repository](https://github.com/fullstack-hy2020/exa
 
 For each part of the course, there is a directory, which further branches into directories containing a series of exercises, like "unicafe" for part 1.
 
-For each web application for a series of exercises, it is recommended to submit all files relating to that application, except for the directory <i>node\_modules</i>.
+For each web application for a series of exercises, it is recommended to submit all files relating to that application, except for the directory *node_modules*.
 
 The exercises are submitted **one part at a time**.
 When you have submitted the exercises for a part of the course you can no longer submit undone exercises for the same part.
 
 Note that in this part, there are more exercises besides those found below.
-<i>Do not submit your work</i> until you have completed all of the exercises you want to submit for the part.
+*Do not submit your work* until you have completed all of the exercises you want to submit for the part.
   
-  <h4>1.1: course information, step1</h4>
+#### 1.1: course information, step1
 
-<i>The application that we will start working on in this exercise will be further developed in a few of the following exercises.
-In this and other upcoming exercise sets in this course, it is enough to only submit the final state of the application.
-If desired, you may also create a commit for each exercise of the series, but this is entirely optional.</i>
+The application that we will start working on in this exercise will be further developed in a few of the following exercises.
+In this and other upcoming exercise sets in this course, you must create a commit for each exercise of the series, but this is entirely optional.
 
-Use create-react-app to initialize a new application.
-Modify <i>index.js</i> to match the following
+Use *create-react-app* to initialize a new application.
+Modify *index.js* to match the following
 
 ```js
 import React from 'react'
@@ -492,7 +501,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-and <i>App.js</i> to match the following
+and *App.js* to match the following
 
 ```js
 const App = () => {
@@ -524,16 +533,16 @@ const App = () => {
 export default App
 ```
 
-and remove extra files (App.css, App.test.js, index.css, logo.svg, setupTests.js, reportWebVitals.js)).
+and remove extra files (*App.css*, *App.test.js*, *index.css*, *logo.svg*, *setupTests.js*, *reportWebVitals.js*)).
 
 Unfortunately, the entire application is in the same component.
-Refactor the code so that it consists of three new components: <i>Header</i>, <i>Content</i>, and <i>Total</i>.
-All data still resides in the <i>App</i> component, which passes the necessary data to each component using <i>props</i>.
-<i>Header</i> takes care of rendering the name of the course, <i>Content</i> renders the parts and their number of exercises and <i>Total</i> renders the total number of exercises.
+Refactor the code so that it consists of three new components: `Header`, `Content`, and `Total`.
+All data still resides in the `App` component, which passes the necessary data to each component using `props`.
+`Header` takes care of rendering the name of the course, `Content` renders the parts and their number of exercises and `Total` renders the total number of exercises.
 
-Define the new components in the file <i>App.js</i>.
+Define the new components in the file *App.js*.
 
-The <i>App</i> component's body will approximately be as follows:
+The `App` component's body will approximately be as follows:
 
 ```js
 const App = () => {
@@ -552,10 +561,10 @@ const App = () => {
 **WARNING** create-react-app automatically makes the project a git repository unless the application is created within an already existing repository.
 Most likely you **do not want** the project to become a repository, so run the command *rm -rf .git* in the root of the project.
 
-<h4>1.2: course information, step2</h4>
+#### 1.2: course information, step2
 
-Refactor the <i>Content</i> component so that it does not render any names of parts or their number of exercises by itself.
-Instead, it only renders three <i>Part</i> components of which each renders the name and number of exercises of one part.
+Refactor the `Content` component so that it does not render any names of parts or their number of exercises by itself.
+Instead, it only renders three `Part` components of which each renders the name and number of exercises of one part.
 
 ```js
 const Content = ... {
