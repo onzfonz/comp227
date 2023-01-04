@@ -43,12 +43,14 @@ Also, if you need to replace html tags with their corresponding markdown, you ca
 For example, here is one such regular expression that you can use
 
 ```text
-<i>([A-Za-z0-9 .,':\-\\_\(\)]+)<i>
+<i>([A-Za-z0-9 .,'":;!?=>|&/\-\\_\(\)\+\{\}\[\]]+)</i>
 
 and then replace it with
 
 `$1`
 ```
+
+You can also use `\*` for stars instead there
 
 ## Setting up the PR
 
