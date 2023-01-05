@@ -1038,8 +1038,8 @@ Respond to requests like these with the appropriate status code, and also send b
 
 The HTTP GET request should be **safe**:
 
-> <i>In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval.
-These methods ought to be considered "safe".</i>
+> *In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval.
+  These methods ought to be considered "safe".*
 
 Safety means that the executing request must not cause any *side effects* on the server.
 By side effects, we mean that the state of the database must not change as a result of the request, and the response must only return data that already exists on the server.
@@ -1053,8 +1053,8 @@ The response body will not be returned when you make a HEAD request.
 
 All HTTP requests except POST should be **idempotent**:
 
-> <i>Methods can also have the property of "idempotence" in that (aside from error or expiration issues) the side-effects of N > 0 identical requests is the same as for a single request.
-The methods GET, HEAD, PUT and DELETE share this property</i>
+> *Methods can also have the property of "idempotence" in that (aside from error or expiration issues) the side-effects of N > 0 identical requests is the same as for a single request.
+  The methods `GET`, `HEAD`, `PUT` and `DELETE` share this property*
 
 This means that if a request does not generate side effects, then the result should be the same regardless of how many times the request is sent.
 
