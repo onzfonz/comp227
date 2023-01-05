@@ -22,7 +22,14 @@
         },
         {
             "pattern": "herokuapp.com"
+        },
+        {
+            "pattern": "You-Dont-Know-JS/blob"
+        },
+        {
+            "pattern": "https://studies.cs.helsinki.fi/exampleapp/new_note"
         }
+
     ],
     "retryOn429": true,
     "aliveStatusCodes": [
