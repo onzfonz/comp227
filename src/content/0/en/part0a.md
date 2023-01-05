@@ -118,7 +118,7 @@ For the project, an application is implemented in React and/or Node, though impl
 
 You will be expected to work on the project either as a pair or as a group.
 
-See [more information on the project](https://github.com/comp227/comp227/misc/blob/source/project.md).
+More information about the project will be released via Canvas
 
 ### Before you start
 
@@ -146,7 +146,7 @@ Node also comes with [npx](https://www.npmjs.com/package/npx), which we'll need 
 ### Typos in the material
 
 If you find a typo in the material, or something has been expressed unclearly or is simply bad grammar, submit a *pull request* to the course material in the [repository](https://github.com/comp227/comp227).
-For example, the markdown source code of this page can be found in the repository at <https://github.com/comp227/comp227/edit/source/src/content/0/part0a.md>
+For example, the markdown source code of this page can be found in the repository at <https://github.com/comp227/comp227/edit/source/src/content/0/en/part0a.md>
 
 At the bottom of each part of the material is a link to **propose changes to the material**.
 You can edit the source code of the page by clicking on the link.

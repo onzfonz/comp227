@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-In addition to the eight exercises in the [React router](/part7/react_router) and [custom hooks](part7/custom_hooks) sections of this seventh part of the course material, 13 exercises continue our work on the Bloglist application that we worked on in parts four and five of the course material.
+In addition to the eight exercises in the [React router](/part7/react_router) and [custom hooks](/part7/custom_hooks) sections of this seventh part of the course material, 13 exercises continue our work on the Bloglist application that we worked on in parts four and five of the course material.
 Some of the following exercises are "features" that are independent of one another, meaning that there is no need to finish the exercises in any particular order.
 You are free to skip over a part of the exercises if you wish to do so.
 

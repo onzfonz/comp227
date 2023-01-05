@@ -1,5 +1,13 @@
 {
-    "ignorePatterns": [
+    "httpHeaders": [
+        {
+          "urls": ["https://github.com/", "https://guides.github.com/", "https://help.github.com/", "https://docs.github.com/"],
+          "headers": {
+            "Accept-Encoding": "zstd, br, gzip, deflate"
+          }
+        }
+      ],
+      "ignorePatterns": [
         {
             "pattern": "//localhost"
         },
@@ -8,13 +16,21 @@
         },
         {
             "pattern": "^/part[0-9]+"
+        },
+        {
+            "pattern": "serversaddress.com"
+        },
+        {
+            "pattern": "herokuapp.com"
         }
     ],
     "retryOn429": true,
     "aliveStatusCodes": [
         200,
         403,
-        999,
-        429
+        429,
+        503,
+        520,
+        999
     ]
 }
