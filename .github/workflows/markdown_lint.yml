@@ -17,6 +17,6 @@ jobs:
       - name: Markdown Linting Action
         uses: avto-dev/markdown-lint@v1.5.0
         with: 
-          config: '.github/workflows/markdown_lint_config.json'
+          config: '.github/workflows/.markdown_lint_config.json'
           args: '**/*.md'
           ignore: './README.md ./CONTRIBUTING.md'
