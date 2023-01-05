@@ -14,16 +14,16 @@ We will be building our backend on top of [NodeJS](https://nodejs.org/en/), whic
 This course material was written with version *16.13.2* of Node.js.
 Please make sure that your version of Node is at least as new as the version used in the material (you can check the version by running `node -v` in the command line).
 
-As mentioned in [part 1](/en/part1/java_script), browsers don't yet support the newest features of JavaScript, and that is why the code running in the browser must be *transpiled* with e.g. [babel](https://babeljs.io/).
+As mentioned in [part 1](/part1/java_script), browsers don't yet support the newest features of JavaScript, and that is why the code running in the browser must be *transpiled* with e.g. [babel](https://babeljs.io/).
 The situation with JavaScript running in the backend is different.
 The newest version of Node supports a large majority of the latest features of JavaScript, so we can use the latest features without having to transpile our code.
 
-Our goal is to implement a backend that will work with the notes application from [part 2](/en/part2/).
+Our goal is to implement a backend that will work with the notes application from [part 2](/part2/).
 However, let's start with the basics by implementing a classic "hello world" application.
 
 **Notice** that the applications and exercises in this part are not all React applications, and we will not use the *create-react-app* utility for initializing the project for this application.
 
-We had already mentioned [npm](/en/part2/getting_data_from_server#npm) back in part 2, which is a tool used for managing JavaScript packages.
+We had already mentioned [npm](/part2/getting_data_from_server#npm) back in part 2, which is a tool used for managing JavaScript packages.
 In fact, npm originates from the Node ecosystem.
 
 Let's navigate to an appropriate directory, and create a new template for our application with the `npm init` command.
@@ -237,7 +237,7 @@ Let's restart the server (you can shut the server down by pressing *Ctrl+C* in t
 The `application/json` value in the `Content-Type` header informs the receiver that the data is in the JSON format.
 The `notes` array gets transformed into JSON with the `JSON.stringify(notes)` method.
 
-When we open the browser, the displayed format is exactly the same as in [part 2](/en/part2/getting_data_from_server/) where we used [json-server](https://github.com/typicode/json-server) to serve the list of notes:
+When we open the browser, the displayed format is exactly the same as in [part 2](/part2/getting_data_from_server/) where we used [json-server](https://github.com/typicode/json-server) to serve the list of notes:
 
 ![formatted JSON notes data](../../images/3/2e.png)
 
@@ -478,7 +478,7 @@ We are not going to dig into Fielding's definition of REST or spend time ponderi
 Instead, we take a more [narrow view](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) by only concerning ourselves with how RESTful APIs are typically understood in web applications.
 The original definition of REST is not even limited to web applications.
 
-We mentioned in the [previous part](/en/part2/altering_data_in_server#rest) that singular things, like notes in the case of our application, are called **resources** in RESTful thinking.
+We mentioned in the [previous part](/part2/altering_data_in_server#rest) that singular things, like notes in the case of our application, are called **resources** in RESTful thinking.
 Every resource has an associated URL which is the resource's unique address.
 
 One convention for creating unique addresses is to combine the name of the resource type with the resource's unique identifier.

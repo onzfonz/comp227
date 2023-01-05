@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 The exercises in this seventh part of the course differ a bit from the ones before.
-In this and the next chapter, as usual, there are [exercises related to the theory in the chapter](/en/part7/react_router#exercises-7-1-7-3).
+In this and the next chapter, as usual, there are [exercises related to the theory in the chapter](/part7/react_router#exercises-7-1-7-3).
 
 In addition to the exercises in this and the next chapter, there are a series of exercises in which we'll be revising what we've learned during the whole course by expanding the Bloglist application which we worked on during parts 4 and 5.
 
@@ -26,7 +26,7 @@ and separate pages for showing information on notes and users:
 
 ![browser showing notes app with notes nav link](../../images/7/2ea.png)
 
-In an [old school web app](/en/part0/fundamentals_of_web_apps#traditional-web-applications), changing the page shown by the application would be accomplished by the browser making an HTTP GET request to the server and rendering the HTML representing the view that was returned.
+In an [old school web app](/part0/fundamentals_of_web_apps#traditional-web-applications), changing the page shown by the application would be accomplished by the browser making an HTTP GET request to the server and rendering the HTML representing the view that was returned.
 
 In single-page apps, we are, in reality, always on the same page.
 The Javascript code run by the browser creates an illusion of different "pages".
@@ -348,7 +348,7 @@ With this function, the browser's URL can be changed programmatically.
 With user login, we call `navigate('/')` which causes the browser's URL to change to `/` and the application renders the corresponding component `Home`.
 
 Both [useParams](https://reactrouter.com/en/main/hooks/use-params) and [useNavigate](https://reactrouter.com/en/main/hooks/use-navigate) are hook functions, just like useState and useEffect which we have used many times now.
-As you remember from part 1, there are some [rules](/en/part1/a_more_complex_state_debugging_react_apps/#rules-of-hooks) to using hook functions.
+As you remember from part 1, there are some [rules](/part1/a_more_complex_state_debugging_react_apps/#rules-of-hooks) to using hook functions.
 Create-react-app has been configured to warn you if you break these rules, for example, by calling a hook function from a conditional statement.
 
 ### redirect

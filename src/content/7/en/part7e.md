@@ -221,7 +221,7 @@ The article [The 100% correct way to structure a React app (or why there’s no 
 
 During the course, we have created the frontend and backend into separate repositories.
 This is a very typical approach.
-However, we did the deployment by [copying](/en/part3/deploying_app_to_internet#serving-static-files-from-the-backend) the bundled frontend code into the backend repository.
+However, we did the deployment by [copying](/part3/deploying_app_to_internet#serving-static-files-from-the-backend) the bundled frontend code into the backend repository.
 A possibly better approach would have been to deploy the frontend code separately.
 Especially with applications created using Create React App, it is very straightforward thanks to the included [buildpack](https://github.com/mars/create-react-app-buildpack).
 
@@ -247,12 +247,12 @@ WebSockets is an API provided by the browser, which is not yet fully supported o
 
 Instead of directly using the WebSocket API, it is advisable to use the [Socket.io](https://socket.io/) library, which provides various **fallback** options in case the browser does not have full support for WebSockets.
 
-In [part 8](/en/part8), our topic is GraphQL, which provides a nice mechanism for notifying clients when there are changes in the backend data.
+In [part 8](/part8), our topic is GraphQL, which provides a nice mechanism for notifying clients when there are changes in the backend data.
 
 ### Virtual DOM
 
 The concept of the Virtual DOM often comes up when discussing React.
-What is it all about? As mentioned in [part 0](/en/part0/fundamentals_of_web_apps#document-object-model-or-dom), browsers provide a [DOM API](https://developer.mozilla.org/fi/docs/DOM) through which the JavaScript running in the browser can modify the elements defining the appearance of the page.
+What is it all about? As mentioned in [part 0](/part0/fundamentals_of_web_apps#document-object-model-or-dom), browsers provide a [DOM API](https://developer.mozilla.org/fi/docs/DOM) through which the JavaScript running in the browser can modify the elements defining the appearance of the page.
 
 When a software developer uses React, they rarely or never directly manipulate the DOM.
 The function defining the React component returns a set of [React elements](https://reactjs.org/docs/glossary.html#elements).
@@ -289,12 +289,12 @@ In small applications, data handled by the application is stored in the state of
 However, MVC architecture is not usually mentioned when talking about React applications.
 Furthermore, if we are using Redux, then the applications follow the [Flux](https://facebook.github.io/flux/docs/in-depth-overview) architecture and the role of React is even more focused on creating the views.
 The business logic of the application is handled using the Redux state and action creators.
-If we're using [Redux Thunk](/en/part6/communicating_with_server_in_a_redux_application#asynchronous-actions-and-redux-thunk) familiar from part 6, then the business logic can be almost completely separated from the React code.
+If we're using [Redux Thunk](/part6/communicating_with_server_in_a_redux_application#asynchronous-actions-and-redux-thunk) familiar from part 6, then the business logic can be almost completely separated from the React code.
 
 Because both React and [Flux](https://facebook.github.io/flux/docs/in-depth-overview) were created at Facebook, one could say that using React only as a UI library is the intended use case.
 Following the Flux architecture adds some overhead to the application, and if we're talking about a small application or prototype, it might be a good idea to use React "wrong", since [over-engineering](https://en.wikipedia.org/wiki/Overengineering) rarely yields an optimal result.
 
-As I mentioned at the end of [part 6](/en/part6/connect#redux-and-the-component-state), the React [Context API](https://reactjs.org/docs/context.html) offers one alternative solution for centralized state management without the need for third-party libraries such as redux.
+As I mentioned at the end of [part 6](/part6/connect#redux-and-the-component-state), the React [Context API](https://reactjs.org/docs/context.html) offers one alternative solution for centralized state management without the need for third-party libraries such as redux.
 You can read more about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/) and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/).
 
 ### React/node-application security
@@ -368,7 +368,7 @@ You can check how up-to-date your dependencies are using the command
 npm outdated --depth 0
 ```
 
-The one-year-old project that is used in [part 8](/en/part8) of this course already has quite a few outdated dependencies:
+The one-year-old project that is used in [part 8](/part8) of this course already has quite a few outdated dependencies:
 
 ![npm outdated output of patientor](../../images/7/33x.png)
 
@@ -497,11 +497,11 @@ Finally, let's take a look at some technology of tomorrow (or, actually, already
 #### Typed versions of JavaScript
 
 Sometimes, the [dynamic typing](https://developer.mozilla.org/en-US/docs/Glossary/Dynamic_typing) of JavaScript variables creates annoying bugs.
-In part 5, we talked briefly about [PropTypes](/en/part5/props_children_and_proptypes#prop-types): a mechanism which enables one to enforce type-checking for props passed to React components.
+In part 5, we talked briefly about [PropTypes](/part5/props_children_and_proptypes#prop-types): a mechanism which enables one to enforce type-checking for props passed to React components.
 
 Lately, there has been a notable uplift in the interest in [static type checking](https://en.wikipedia.org/wiki/Type_system#Static_type_checking).
 At the moment, the most popular typed version of Javascript is [Typescript](https://www.typescriptlang.org/) which has been developed by Microsoft.
-Typescript is covered in [part 8](/en/part8).
+Typescript is covered in [part 8](/part8).
 
 #### Server-side rendering, isomorphic applications and universal code
 
@@ -621,7 +621,7 @@ The JavaScript developer community has produced a large variety of useful librar
 If you are developing anything more substantial, it is worth it to check if existing solutions are already available.
 Below are listed some libraries recommended by trustworthy parties.
 
-If your application has to handle complicated data, [lodash](https://www.npmjs.com/package/lodash), which we recommended in [part 4](/en/part4/structure_of_backend_application_introduction_to_testing#exercises-4-3-4-7), is a good library to use.
+If your application has to handle complicated data, [lodash](https://www.npmjs.com/package/lodash), which we recommended in [part 4](/part4/structure_of_backend_application_introduction_to_testing#exercises-4-3-4-7), is a good library to use.
 If you prefer the functional programming style, you might consider using [ramda](https://ramdajs.com/).
 
 If you are handling times and dates, [date-fns](https://github.com/date-fns/date-fns) offers good tools for that.
@@ -631,17 +631,17 @@ If your application displays graphs, there are multiple options to choose from.
 Both [recharts](http://recharts.org/en-US/) and [highcharts](https://github.com/highcharts/highcharts-react) are well-recommended.
 
 The [immutable.js](https://github.com/facebook/immutable-js/) library maintained by Facebook provides, as the name suggests, immutable implementations of some data structures.
-The library could be of use when using Redux, since as we [remember](/en/part6/flux_architecture_and_redux#pure-functions-immutable) in part 6, reducers must be pure functions, meaning they must not modify the store's state but instead have to replace it with a new one when a change occurs.
+The library could be of use when using Redux, since as we [remember](/part6/flux_architecture_and_redux#pure-functions-immutable) in part 6, reducers must be pure functions, meaning they must not modify the store's state but instead have to replace it with a new one when a change occurs.
 Over the past year, some of the popularity of Immutable.js has been taken over by [Immer](https://github.com/mweststrate/immer), which provides similar functionality but in a somewhat easier package.
 
-[Redux-saga](https://redux-saga.js.org/) provides an alternative way to make asynchronous actions for [Redux Thunk](/en/part6/communicating_with_server_in_a_redux_application#asynchronous-actions-and-redux-thunk) familiar from part 6.
+[Redux-saga](https://redux-saga.js.org/) provides an alternative way to make asynchronous actions for [Redux Thunk](/part6/communicating_with_server_in_a_redux_application#asynchronous-actions-and-redux-thunk) familiar from part 6.
 Some embrace the hype and like it.
 I don't.
 
 For single-page applications, the gathering of analytics data on the interaction between the users and the page is [more challenging](https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications) than for traditional web applications where the entire page is loaded.
 The [React Google Analytics](https://github.com/react-ga/react-ga) library offers a solution.
 
-You can take advantage of your React know-how when developing mobile applications using Facebook's extremely popular [React Native](https://facebook.github.io/react-native/) library, which is the topic of [part 9](/en/part9) of the course.
+You can take advantage of your React know-how when developing mobile applications using Facebook's extremely popular [React Native](https://facebook.github.io/react-native/) library, which is the topic of [part 9](/part9) of the course.
 
 When it comes to the tools used for the management and bundling of JavaScript projects, the community has been very fickle.
 Best practices have changed rapidly (the years are approximations, nobody remembers that far back in the past):

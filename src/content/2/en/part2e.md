@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 The appearance of our current application is quite modest.
-In [exercise 0.2](/en/part0/fundamentals_of_web_apps#exercises-0-1-0-6), the assignment was to go through Mozilla's [CSS tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics).
+In [exercise 0.2](/part0/fundamentals_of_web_apps#exercises-0-1-0-6), the assignment was to go through Mozilla's [CSS tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics).
 
 Before we move to the next part, let's take a look at how we can add styles to a React application.
 There are several different ways of doing this and we will take a look at the other methods later on.
@@ -309,7 +309,7 @@ The code of the final version of our application can be found in the *part2-8* b
 
 #### 2.19: Phonebook step11
 
-Use the [improved error message](/en/part2/adding_styles_to_react_app#improved-error-message) example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a person is added or a number is changed):
+Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message) example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a person is added or a number is changed):
 
 ![successful green added screenshot](../../images/2/27e.png)
 
@@ -320,7 +320,7 @@ Open your application in two browsers.
 
 ![error message 404 not found when changing multiple browsers](../../images/2/29b.png)
 
-Fix the issue according to the example shown in [promise and errors](/en/part2/altering_data_in_server#promises-and-errors) in part 2.
+Fix the issue according to the example shown in [promise and errors](/part2/altering_data_in_server#promises-and-errors) in part 2.
 Modify the example so that the user is shown a message when the operation does not succeed.
 The messages shown for successful and unsuccessful events should look different:
 

@@ -255,7 +255,7 @@ props.toggleImportanceOf(note.id)
 
 There is no need to call the `dispatch` function separately since `connect` has already modified the `toggleImportanceOf` action creator into a form that contains the dispatch.
 
-It can take some time to wrap your head around how `mapDispatchToProps` works, especially once we take a look at an [alternative way of using it](/en/part6/connect#alternative-way-of-using-map-dispatch-to-props).
+It can take some time to wrap your head around how `mapDispatchToProps` works, especially once we take a look at an [alternative way of using it](/part6/connect#alternative-way-of-using-map-dispatch-to-props).
 
 The resulting situation from using `connect` can be visualized like this:
 
@@ -607,7 +607,7 @@ Dan Abramov, the developer of Redux, discusses this in his article [You Might No
 
 Nowadays it is possible to implement Redux-like state management without Redux by using the React [context](https://reactjs.org/docs/context.html) API and the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook.
 More about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/) and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/).
-We will also practice this in [part 8](/en/part8).
+We will also practice this in [part 8](/part8).
 
 </div>
 

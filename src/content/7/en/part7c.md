@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-In part 2, we examined two different ways of adding styles to our application: the old-school [single CSS](/en/part2/adding_styles_to_react_app) file and [inline styles](/en/part2/adding_styles_to_react_app#inline_styles).
+In part 2, we examined two different ways of adding styles to our application: the old-school [single CSS](/part2/adding_styles_to_react_app) file and [inline styles](/part2/adding_styles_to_react_app#inline_styles).
 In this part, we will take a look at a few other ways.
 
 ### Ready-made UI libraries
@@ -26,7 +26,7 @@ Many UI frameworks have React-friendly versions where the framework's "component
 There are a few different React versions of Bootstrap like [reactstrap](http://reactstrap.github.io/) and [react-bootstrap](https://react-bootstrap.github.io/).
 
 Next, we will take a closer look at two UI frameworks, Bootstrap and [MaterialUI](https://mui.com/).
-We will use both frameworks to add similar styles to the application we made in the [React-router](/en/part7/react_router) section of the course material.
+We will use both frameworks to add similar styles to the application we made in the [React-router](/part7/react_router) section of the course material.
 
 ### React Bootstrap
 
@@ -663,6 +663,6 @@ Styled components have seen consistent growth in popularity in recent times, and
 
 ### Exercises
 
-The exercises related to the topics presented here can be found at the end of this course material section in the exercise set [for extending the blog list application](/en/part7/exercises_extending_the_bloglist).
+The exercises related to the topics presented here can be found at the end of this course material section in the exercise set [for extending the blog list application](/part7/exercises_extending_the_bloglist).
 
 </div>

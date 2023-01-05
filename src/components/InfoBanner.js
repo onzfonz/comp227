@@ -45,7 +45,7 @@ const InfoBanner = ({ visible, onHide }) => {
       <div stule={textStyle}>
         {/* TODO: Have this part have a different byline */}
         {/* Doing the course exam soon? Test the new exam system, read more{' '}
-        <a href="/en/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
+        <a href="/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
           <span style={linkStyle}>here</span>!
         </a> */}
       </div>

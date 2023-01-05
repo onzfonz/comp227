@@ -388,7 +388,7 @@ It's easy to follow and track the calls made to the `App` component's render fun
 
 ### Event handling
 
-We have already mentioned **event handlers** that are registered to be called when specific events occur a few times in [part 0](/en/part0).
+We have already mentioned **event handlers** that are registered to be called when specific events occur a few times in [part 0](/part0).
 A user's interaction with the different elements of a web page can cause a collection of various kinds of events to be triggered.
 
 Let's change the application so that increasing the counter happens when a user clicks a button, which is implemented with the [button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) element.
@@ -692,7 +692,7 @@ const Display = (props) => {
 ```
 
 The component only uses the `counter` field of its `props`.
-This means we can simplify the component by using [destructuring](/en/part1/component_state_event_handlers#destructuring), like so:
+This means we can simplify the component by using [destructuring](/part1/component_state_event_handlers#destructuring), like so:
 
 ```js
 const Display = ({ counter }) => {

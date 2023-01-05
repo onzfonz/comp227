@@ -91,7 +91,7 @@ const App = (props) => {
 
 We have added the `addNote` function as an event handler to the form element that will be called when the form is submitted, by clicking the submit button.
 
-We use the method discussed in [part 1](/en/part1/component_state_event_handlers#event-handling) for defining our event handler:
+We use the method discussed in [part 1](/part1/component_state_event_handlers#event-handling) for defining our event handler:
 
 ```js
 const addNote = (event) => {
@@ -250,7 +250,7 @@ The unique identifier `id` is generated based on the total number of notes.
 This method works for our application since notes are never deleted.
 With the help of the `Math.random()` function, our note has a 50% chance of being marked as important.
 
-The new note is added to the list of notes using the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) array method, introduced in [part 1](/en/part1/java_script#arrays):
+The new note is added to the list of notes using the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) array method, introduced in [part 1](/part1/java_script#arrays):
 
 ```js
 setNotes(notes.concat(noteObject))
@@ -465,7 +465,7 @@ You can temporarily add the following element to the rendered component:
 <div>debug: {newName}</div>
 ```
 
-It's also important to put what we learned in the [debugging React applications](/en/part1/a_more_complex_state_debugging_react_apps) chapter of part one into good use.
+It's also important to put what we learned in the [debugging React applications](/part1/a_more_complex_state_debugging_react_apps) chapter of part one into good use.
 The [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) extension is ***incredibly*** useful for tracking changes that occur in the application's state.
 
 After finishing this exercise your application should look something like this:
@@ -590,7 +590,7 @@ const App = () => {
 
 **NB**: You might run into problems in this exercise if you define your components "in the wrong place".
 Now would be a good time to rehearse
-the chapter [do not define a component in another component](/en/part1/a_more_complex_state_debugging_react_apps#do-not-define-components-within-components)
+the chapter [do not define a component in another component](/part1/a_more_complex_state_debugging_react_apps#do-not-define-components-within-components)
 from the last part.
 
 </div>

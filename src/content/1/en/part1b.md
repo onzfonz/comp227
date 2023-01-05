@@ -18,7 +18,7 @@ Due to this fact, a lot of code run in browsers has been *transpiled* from a new
 
 Today, the most popular way to do transpiling is by using [Babel](https://babeljs.io/).
 Transpilation is automatically configured in React applications created with create-react-app.
-We will take a closer look at the configuration of the transpilation in [part 7](/en/part7) of this course.
+We will take a closer look at the configuration of the transpilation in [part 7](/part7) of this course.
 
 [Node.js](https://nodejs.org/en/) is a JavaScript runtime environment based on Google's [Chrome V8](https://developers.google.com/v8/) JavaScript engine and works practically anywhere - from servers to mobile phones.
 Let's practice writing some JavaScript using Node.
@@ -138,7 +138,7 @@ console.log(m2)
 ```
 
 Here an array filled with integer values is transformed into an array containing strings of HTML using the map method.
-In [part 2](/en/part2) of this course, we will see that map is used quite frequently in React.
+In [part 2](/part2) of this course, we will see that map is used quite frequently in React.
 
 Individual items of an array are easy to assign to variables with the help of the [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
 

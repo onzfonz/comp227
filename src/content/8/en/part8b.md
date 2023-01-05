@@ -37,7 +37,7 @@ npm install -g ts-node typescript
 If you can't or don't want to install global packages, you can create an npm project which has the required dependencies and run your scripts in it.
 We will also take this approach.
 
-As we recall from [part 3](/en/part3), an npm project is set by running the command `npm init` in an empty directory.
+As we recall from [part 3](/part3), an npm project is set by running the command `npm init` in an empty directory.
 Then we can install the dependencies by running
 
 ```bash
@@ -1088,6 +1088,6 @@ Our ESlint configuration is preventing this but you may unset this rule for a pa
 You might also get in trouble with rules ***no-unsafe-member-access*** and ***no-unsafe-assignment***.
 These rules may be ignored in this exercise.
 
-Note that you need to have a correct setup to get the request body; see [part 3](/en/part3/node_js_and_express#receiving-data).
+Note that you need to have a correct setup to get the request body; see [part 3](/part3/node_js_and_express#receiving-data).
 
 </div>

@@ -235,7 +235,7 @@ The reviewed repository list should roughly look something like this:
 ### Style
 
 Now that we have a basic understanding of how core components work and we can use them to build a simple user interface it is time to add some style.
-In [part 2](/en/part2/adding_styles_to_react_app) we learned that in the browser environment we can define React component's style properties using CSS.
+In [part 2](/part2/adding_styles_to_react_app) we learned that in the browser environment we can define React component's style properties using CSS.
 We had the option to either define these styles inline using the `style` prop or in a CSS file with a suitable selector.
 
 There are many similarities in the way style properties are attached to React Native's core components and the way they are attached to DOM elements.
@@ -628,7 +628,7 @@ Also when needed, split the `RepositoryItem` component into smaller components.
 ### Routing
 
 When we start to expand our application we will need a way to transition between different views such as the repositories view and the sign-in view.
-In [part 7](/en/part7/react_router) we got familiar with [React router](https://reactrouter.com/) library and learned how to use it to implement routing in a web application.
+In [part 7](/part7/react_router) we got familiar with [React router](https://reactrouter.com/) library and learned how to use it to implement routing in a web application.
 
 Routing in a React Native application is a bit different from routing in a web application.
 The main difference is that we can't reference pages with URLs, which we type into the browser's address bar, and can't navigate back and forth through the user's history using the browser's [history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).

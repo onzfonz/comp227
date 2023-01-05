@@ -39,7 +39,7 @@ props value is [object Object]
 ```
 
 On the contrary, when you pass objects as distinct arguments separated by commas to `console.log`, like in our second example above, the content of the object is printed to the developer console as strings that are insightful.
-If necessary, read more about [debugging React applications](/en/part1/a_more_complex_state_debugging_react_apps#debugging-react-applications).
+If necessary, read more about [debugging React applications](/part1/a_more_complex_state_debugging_react_apps#debugging-react-applications).
 
 ### Protip: Visual Studio Code snippets
 
@@ -83,14 +83,14 @@ If functional programming with arrays feels foreign to you, it is worth watching
 
 Based on last year's course, event handling has proved to be difficult.
 
-It's worth reading the revision chapter at the end of the previous part - [event handlers revisited](/en/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited) - if it feels like your own knowledge on the topic needs some brushing up.
+It's worth reading the revision chapter at the end of the previous part - [event handlers revisited](/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited) - if it feels like your own knowledge on the topic needs some brushing up.
 
 Passing event handlers to the child components of the `App` component has raised some questions.
-A small revision on the topic can be found [here](/en/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
+A small revision on the topic can be found [here](/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
 
 ### Rendering Collections
 
-We will now do the 'frontend', or the browser-side application logic, in React for an application that's similar to the example application from [part 0](/en/part0)
+We will now do the 'frontend', or the browser-side application logic, in React for an application that's similar to the example application from [part 0](/part0)
 
 Let's start with the following (the file *App.js*):
 
@@ -389,7 +389,7 @@ const App = ({ notes }) => { //highlight-line
 }
 ```
 
-If you have forgotten what destructuring means and how it works, please review the [section on destructuring](/en/part1/component_state_event_handlers#destructuring).
+If you have forgotten what destructuring means and how it works, please review the [section on destructuring](/part1/component_state_event_handlers#destructuring).
 
 We'll separate displaying a single note into its own component `Note`:
 

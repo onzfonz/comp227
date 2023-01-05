@@ -86,7 +86,7 @@ ReactDOM.render(<App />, document.getElementById('root'))
 
 You quite likely need to do the same for your other projects.
 
-See [this](/en/part1/a_more_complex_state_debugging_react_apps/#a-note-on-react-version) for more about the version differences.
+See [this](/part1/a_more_complex_state_debugging_react_apps/#a-note-on-react-version) for more about the version differences.
 
 ### Component
 
@@ -216,7 +216,7 @@ const App = () => {
 
 The compilation is handled by [Babel](https://babeljs.io/repl/).
 Projects created with *create-react-app* are configured to compile automatically.
-We will learn more about this topic in [part 7](/en/part7) of this course.
+We will learn more about this topic in [part 7](/part7) of this course.
 
 It is also possible to write React as "pure JavaScript" without using JSX.
 Although, nobody with a sound mind would do so.
@@ -285,7 +285,7 @@ Writing components with React is easy, and by combining components, even a more 
 Indeed, a core philosophy of React is composing applications from many specialized reusable components.
 
 Another strong convention is the idea of a **root component** called `App` at the top of the component tree of the application.
-Nevertheless, as we will learn in [part 6](/en/part6), there are situations where the component `App` is not exactly the root, but is wrapped within an appropriate utility component.
+Nevertheless, as we will learn in [part 6](/part6), there are situations where the component `App` is not exactly the root, but is wrapped within an appropriate utility component.
 
 ### props: passing data to components
 

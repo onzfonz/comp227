@@ -14,7 +14,7 @@ The [json-server](https://github.com/typicode/json-server) package claims to be 
 
 The json-server does not exactly match the description provided by the textbook [definition](https://en.wikipedia.org/wiki/Representational_state_transfer) of a REST API, but neither do most other APIs claiming to be RESTful.
 
-We will take a closer look at REST in the [next part](/en/part3) of the course.
+We will take a closer look at REST in the [next part](/part3) of the course.
 But it's important to familiarize ourselves at this point with some of the [conventions](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) used by json-server and REST APIs in general.
 In particular, we will be taking a look at the conventional use of [routes](https://github.com/typicode/json-server#routes), aka URLs and HTTP request types, in REST.
 
@@ -69,7 +69,7 @@ When we try to create a new note, the following output pops up in the console:
 
 The newly created note resource is stored in the value of the `data` property of the `response` object.
 
-Sometimes it can be useful to inspect HTTP requests in the ***Network*** tab of Chrome developer tools, which was used heavily at the beginning of [part 0](/en/part0/fundamentals_of_web_apps#http-get):
+Sometimes it can be useful to inspect HTTP requests in the ***Network*** tab of Chrome developer tools, which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_apps#http-get):
 
 ![content-type and request payload data in dev tools](../../images/2/21e.png)
 
@@ -102,7 +102,7 @@ addNote = event => {
 ```
 
 The new note returned by the backend server is added to the list of notes in our application's state in the customary way of using the `setNotes` function and then resetting the note creation form.
-An [important detail](/en/part1/a_more_complex_state_debugging_react_apps#handling-arrays) to remember is that the `concat` method does not change the component's original state, but instead creates a new copy of the list.
+An [important detail](/part1/a_more_complex_state_debugging_react_apps#handling-arrays) to remember is that the `concat` method does not change the component's original state, but instead creates a new copy of the list.
 
 Once the data returned by the server starts to have an effect on the behavior of our web applications, we are immediately faced with a whole new set of challenges arising from, for instance, the asynchronicity of communication.
 This necessitates new debugging strategies, console logging and other means of debugging become increasingly more important.
@@ -288,7 +288,7 @@ We will be using this method many times throughout the course.
 ### Extracting Communication with the Backend into a Separate Module
 
 The `App` component has become somewhat bloated after adding the code for communicating with the backend server.
-In the spirit of the [single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle), we deem it wise to extract this communication into its own [module](/en/part2/rendering_a_collection_modules#refactoring-modules).
+In the spirit of the [single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle), we deem it wise to extract this communication into its own [module](/part2/rendering_a_collection_modules#refactoring-modules).
 
 Let's create a *src/services* directory and add a file there called *notes.js*:
 
@@ -651,7 +651,7 @@ The application should be able to handle these types of error situations gracefu
 Users won't be able to tell that an error has occurred unless they happen to have their console open.
 The only way the error can be seen in the application is that clicking the button does not affect the note's importance.
 
-We had [previously](/en/part2/getting_data_from_server#axios-and-promises) mentioned that a promise can be in one of three different states.
+We had [previously](/part2/getting_data_from_server#axios-and-promises) mentioned that a promise can be in one of three different states.
 When an HTTP request fails, the associated promise is ***rejected***.
 Our current code does not handle this rejection in any way.
 

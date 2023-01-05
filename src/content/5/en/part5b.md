@@ -132,7 +132,7 @@ Both buttons have their event handlers defined directly in the component:
 <button onClick={() => setLoginVisible(false)}>cancel</button>
 ```
 
-The visibility of the component is defined by giving the component an [inline](/en/part2/adding_styles_to_react_app#inline-styles) style rule, where the value of the [display](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property is `none` if we do not want the component to be displayed:
+The visibility of the component is defined by giving the component an [inline](/part2/adding_styles_to_react_app#inline-styles) style rule, where the value of the [display](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property is `none` if we do not want the component to be displayed:
 
 ```js
 const hideWhenVisible = { display: loginVisible ? 'none' : '' }
@@ -514,7 +514,7 @@ The `ref` attribute is used for assigning a reference to each of the components 
 #### 5.5 Blog list frontend, step5
 
 Change the form for creating blog posts so that it is only displayed when appropriate.
-Use functionality similar to what was shown [earlier in this part of the course material](/en/part5/props_children_and_proptypes#displaying-the-login-form-only-when-appropriate).
+Use functionality similar to what was shown [earlier in this part of the course material](/part5/props_children_and_proptypes#displaying-the-login-form-only-when-appropriate).
 If you wish to do so, you can use the `Togglable` component defined in part 5.
 
 By default the form is not visible
@@ -531,7 +531,7 @@ The form closes when a new blog is created.
 
 Separate the form for creating a new blog into its own component (if you have not already done so), and move all the states required for creating a new blog to this component.
 
-The component must work like the `NoteForm` component from the [material](/en/part5/props_children_and_proptypes) of this part.
+The component must work like the `NoteForm` component from the [material](/part5/props_children_and_proptypes) of this part.
 
 #### 5.7* Blog list frontend, step7
 
@@ -547,7 +547,7 @@ At this point, the ***like*** button does not need to do anything.
 
 The application shown in the picture has a bit of additional CSS to improve its appearance.
 
-It is easy to add styles to the application as shown in part 2 using [inline](/en/part2/adding_styles_to_react_app#inline-styles) styles:
+It is easy to add styles to the application as shown in part 2 using [inline](/part2/adding_styles_to_react_app#inline-styles) styles:
 
 ```js
 const Blog = ({ blog }) => {
@@ -705,7 +705,7 @@ If the type of a passed prop is wrong, e.g. if we try to define the `handleSubmi
 
 ### ESlint
 
-In part 3 we configured the [ESlint](/en/part3/validation_and_es_lint#lint) code style tool to the backend.
+In part 3 we configured the [ESlint](/part3/validation_and_es_lint#lint) code style tool to the backend.
 Let's take ESlint to use in the frontend as well.
 
 Create-react-app has installed ESlint to the project by default, so all that's left for us to do is define our desired configuration in the *.eslintrc.js* file.

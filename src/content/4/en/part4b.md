@@ -168,7 +168,7 @@ Our test makes an HTTP GET request to the ***api/notes*** URL and verifies that 
 The test also verifies that the `Content-Type` header is set to `application/json`, indicating that the data is in the desired format.
 (If you're not familiar with the RegEx syntax of `/application\/json/`, you can learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).)
 
-The test contains some details that we will explore [a bit later on](/en/part4/testing_the_backend#async-await).
+The test contains some details that we will explore [a bit later on](/part4/testing_the_backend#async-await).
 The arrow function that defines the test is preceded by the `async` keyword and the method call for the `api` object is preceded by the `await` keyword.
 We will write a few tests and then take a closer look at this async/await magic.
 Do not concern yourself with them for now, just be assured that the example tests work correctly.
@@ -222,7 +222,7 @@ This third parameter sets the timeout to 100000 ms.
 A long timeout ensures that our test won't fail due to the time it takes to run.
 (A long timeout may not be what you want for tests based on performance or speed, but this is fine for our example tests).
 
-One tiny but important detail: at the [beginning](/en/part4/structure_of_backend_application_introduction_to_testing#project-structure) of this part we extracted the Express application into the *app.js* file, and the role of the *index.js* file was changed to launch the application at the specified port with Node's built-in `http` object:
+One tiny but important detail: at the [beginning](/part4/structure_of_backend_application_introduction_to_testing#project-structure) of this part we extracted the Express application into the *app.js* file, and the role of the *index.js* file was changed to launch the application at the specified port with Node's built-in `http` object:
 
 ```js
 const app = require('./app') // the actual Express app
@@ -1090,7 +1090,7 @@ Verify that the blog list application returns the correct amount of blog posts i
 
 Once the test is finished, refactor the route handler to use the async/await syntax instead of promises.
 
-Notice that you will have to make similar changes to the code that were made [in the material](/en/part4/testing_the_backend#test-environment), like defining the test environment so that you can write tests that use separate databases.
+Notice that you will have to make similar changes to the code that were made [in the material](/part4/testing_the_backend#test-environment), like defining the test environment so that you can write tests that use separate databases.
 
 **NB:** When running the tests, you may run into the following warning:
 
@@ -1115,7 +1115,7 @@ One way to get rid of this is to run tests with option `--forceExit`:
 ```
 
 **NB:** when you are writing your tests ***it is better to not execute all of your tests***, only execute the ones you are working on.
-Read more about this [here](/en/part4/testing_the_backend#running-tests-one-by-one).
+Read more about this [here](/part4/testing_the_backend#running-tests-one-by-one).
 
 #### 4.9*: Blog list tests, step2
 
@@ -1123,7 +1123,7 @@ Write a test that verifies that the unique identifier property of the blog posts
 Verifying the existence of a property is easily done with Jest's [toBeDefined](https://jestjs.io/docs/en/expect#tobedefined) matcher.
 
 Make the required changes to the code so that it passes the test.
-The [toJSON](/en/part3/saving_data_to_mongo_db#backend-connected-to-a-database) method discussed in part 3 is an appropriate place for defining the `id` parameter.
+The [toJSON](/part3/saving_data_to_mongo_db#backend-connected-to-a-database) method discussed in part 3 is an appropriate place for defining the `id` parameter.
 
 #### 4.10: Blog list tests, step3
 
@@ -1319,7 +1319,7 @@ You can find the code for our current application in its entirety in the *part4-
 Implement functionality for deleting a single blog post resource.
 
 Use the async/await syntax.
-Follow [RESTful](/en/part3/node_js_and_express#rest) conventions when defining the HTTP API.
+Follow [RESTful](/part3/node_js_and_express#rest) conventions when defining the HTTP API.
 
 Implement tests for the functionality.
 
@@ -1330,7 +1330,7 @@ Implement functionality for updating the information of an individual blog post.
 Use `async`/`await`.
 
 The application mostly needs to update the number of ***likes*** for a blog post.
-You can implement this functionality the same way that we implemented updating notes in [part 3](/en/part3/saving_data_to_mongo_db#other-operations).
+You can implement this functionality the same way that we implemented updating notes in [part 3](/part3/saving_data_to_mongo_db#other-operations).
 
 Implement tests for the functionality.
 

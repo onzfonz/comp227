@@ -625,7 +625,7 @@ test('<NoteForm /> updates parent state and calls onSubmit', () => {
 })
 ```
 
-The most flexible way of finding elements in tests is the method `querySelector` of the `container` object, which is returned by `render`, as was mentioned [earlier in this part](/en/part5/testing_react_apps#searching-for-content-in-a-component).
+The most flexible way of finding elements in tests is the method `querySelector` of the `container` object, which is returned by `render`, as was mentioned [earlier in this part](/part5/testing_react_apps#searching-for-content-in-a-component).
 Any CSS selector can be used with this method for searching elements in tests.
 
 Consider e.g. that we would define a unique `id` to the input field:

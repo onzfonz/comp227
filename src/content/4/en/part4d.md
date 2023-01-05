@@ -16,7 +16,7 @@ The principles of token-based authentication are depicted in the following seque
 ![sequence diagram of token-based authentication](../../images/4/16e.png)
 
 - User starts by logging in using a login form implemented with React
-    - We will add the login form to the frontend in [part 5](/en/part5)
+    - We will add the login form to the frontend in [part 5](/part5)
 - This causes the React code to send the username and the password to the server address ***/api/login*** as a HTTP POST request.
 - If the username and the password are correct, the server generates a **token** that somehow identifies the logged-in user.
     - The token is signed digitally, making it impossible to falsify (with cryptographic means)
@@ -378,7 +378,7 @@ Usernames, passwords and applications using token authentication must always be 
 We could use a Node [HTTPS](https://nodejs.org/api/https.html) server in our application instead of the [HTTP](https://nodejs.org/docs/latest-v8.x/api/http.html) server (it requires more configuration).
 On the other hand, the production version of our application is in Heroku, so our application stays secure: Heroku routes all traffic between a browser and the Heroku server over HTTPS.
 
-We will implement login to the frontend in the [next part](/en/part5).
+We will implement login to the frontend in the [next part](/part5).
 
 </div>
 
@@ -387,7 +387,7 @@ We will implement login to the frontend in the [next part](/en/part5).
 ### Exercises 4.15-4.23
 
 In the next exercises, the basics of user management will be implemented for the Bloglist application.
-The safest way is to follow the story from part 4 chapter [User administration](/en/part4/user_administration) to the chapter [Token-based authentication](/en/part4/token_authentication).
+The safest way is to follow the story from part 4 chapter [User administration](/part4/user_administration) to the chapter [Token-based authentication](/part4/token_authentication).
 You can of course also use your creativity.
 
 **One more warning:** If you notice you are mixing `async`/`await` and `then` calls, it is 99% certain you are doing something wrong.
@@ -398,7 +398,7 @@ Use either or, never both.
 Implement a way to create new users by doing an HTTP POST request to address ***api/users***.
 Users have a *username, password and name*.
 
-Do not save passwords to the database as clear text, but use the ***bcrypt*** library like we did in part 4 chapter [Creating new users](/en/part4/user_administration#creating-users).
+Do not save passwords to the database as clear text, but use the ***bcrypt*** library like we did in part 4 chapter [Creating new users](/part4/user_administration#creating-users).
 
 **NB** Some Windows users have had problems with ***bcrypt***.
 If you run into problems, remove the library with command
@@ -425,7 +425,7 @@ The operation must respond with a suitable status code and some kind of an error
 
 **NB** Do not test password restrictions with Mongoose validations.
 It is not a good idea because the password received by the backend and the password hash saved to the database are not the same thing.
-The password length should be validated in the controller as we did in [part 3](/en/part3/node_js_and_express) before using Mongoose validation.
+The password length should be validated in the controller as we did in [part 3](/part3/node_js_and_express) before using Mongoose validation.
 
 Also, implement tests that ensure invalid users are not created and that an invalid add user operation returns a suitable status code and error message.
 
@@ -434,7 +434,7 @@ Also, implement tests that ensure invalid users are not created and that an inva
 Expand blogs so that each blog contains information on the creator of the blog.
 
 Modify adding new blogs so that when a new blog is created, ***any*** user from the database is designated as its creator (for example the one found first).
-Implement this according to part 4 chapter [populate](/en/part4/user_administration#populate).
+Implement this according to part 4 chapter [populate](/part4/user_administration#populate).
 Which user is designated as the creator does not matter just yet.
 The functionality is finished in exercise 4.19.
 
@@ -448,7 +448,7 @@ and listing all users also displays the blogs created by each user:
 
 #### 4.18: bloglist expansion, step6
 
-Implement token-based authentication according to part 4 chapter [Token authentication](/en/part4/token_authentication).
+Implement token-based authentication according to part 4 chapter [Token authentication](/part4/token_authentication).
 
 #### 4.19: bloglist expansion, step7
 
@@ -457,9 +457,9 @@ The user identified by the token is designated as the creator of the blog.
 
 #### 4.20*: bloglist expansion, step8
 
-[This example](/en/part4/token_authentication) from part 4 shows taking the token from the header with the `getTokenFrom` helper function.
+[This example](/part4/token_authentication) from part 4 shows taking the token from the header with the `getTokenFrom` helper function.
 
-If you used the same solution, refactor taking the token to a [middleware](/en/part3/node_js_and_express#middleware).
+If you used the same solution, refactor taking the token to a [middleware](/part3/node_js_and_express#middleware).
 The middleware should take the token from the ***Authorization*** header and place it into the `token` field of the `request` object.
 
 In other words, if you register this middleware in the *app.js* file before all routes
@@ -478,7 +478,7 @@ blogsRouter.post('/', async (request, response) => {
 })
 ```
 
-Remember that a normal [middleware function](/en/part3/node_js_and_express#middleware) is a function with three parameters, that at the end calls the last parameter `next` to move the control to the next middleware:
+Remember that a normal [middleware function](/part3/node_js_and_express#middleware) is a function with three parameters, that at the end calls the last parameter `next` to move the control to the next middleware:
 
 ```js
 const tokenExtractor = (request, response, next) => {

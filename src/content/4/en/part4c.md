@@ -224,7 +224,7 @@ Let's install the [bcrypt](https://github.com/kelektiv/node.bcrypt.js) package f
 npm install bcrypt
 ```
 
-Creating new users happens in compliance with the RESTful conventions discussed in [part 3](/en/part3/node_js_and_express#rest), by making an HTTP POST request to the ***users*** path.
+Creating new users happens in compliance with the RESTful conventions discussed in [part 3](/part3/node_js_and_express#rest), by making an HTTP POST request to the ***users*** path.
 
 Let's define a separate ***router*** for dealing with users in a new *controllers/users.js* file.
 Let's take the router into use in our application in the *app.js* file, so that it handles requests made to the ***/api/users*** URL:

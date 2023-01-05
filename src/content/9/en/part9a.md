@@ -21,7 +21,7 @@ That is why these applications can not achieve the performance nor the look-and-
 [React Native](https://reactnative.dev/) is a framework for developing native Android and iOS applications using JavaScript and React.
 It provides a set of cross-platform components that behind the scenes utilize the platform's native components.
 Using React Native allows us to bring all the familiar features of React such as JSX, components, props, state, and hooks into native application development.
-On top of that, we can utilize many familiar libraries in the React ecosystem such as [react-redux](https://react-redux.js.org/), [react-apollo](https://github.com/apollographql/react-apollo), [react-router](https://reacttraining.com/react-router/core/guides/quick-start) and many more.
+On top of that, we can utilize many familiar libraries in the React ecosystem such as [react-redux](https://react-redux.js.org/), [react-apollo](https://github.com/apollographql/react-apollo), [react-router](https://reactrouter.com/en/6.4.5/start/tutorial) and many more.
 
 The speed of development and gentle learning curve for developers familiar with React is one of the most important benefits of React Native.
 Here's a motivational quote from Coinbase's article [Onboarding thousands of users with React Native](https://benbronsteiny.wordpress.com/2020/02/27/onboarding-thousands-of-users-with-react-native/) on the benefits of React Native:
@@ -50,7 +50,7 @@ Instead, develop your application at the same pace as the material progresses.
 This part will heavily rely on concepts covered in the previous parts.
 Before starting this part you will need basic knowledge of JavaScript and React.
 Deep knowledge of server-side development is not required and all the server-side code is provided for you.
-The recommended parts to complete before this part are [part 1](/en/part1), [part 2](/en/part2), [part 5](/en/part5), and [part 7](/en/part7).
+The recommended parts to complete before this part are [part 1](/part1), [part 2](/part2), [part 5](/part5), and [part 7](/part7).
 
 ### Submitting exercises
 

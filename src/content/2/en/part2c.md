@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 For a while now we have only been working on "frontend", i.e. client-side (browser) functionality.
-We will begin working on "backend", i.e. server-side functionality in the [third part](/en/part3) of this course.
+We will begin working on "backend", i.e. server-side functionality in the [third part](/part3) of this course.
 Nonetheless, we will now take a step in that direction by familiarizing ourselves with how the code executing in the browser communicates with the backend.
 
 Let's use a tool meant to be used during software development called [JSON Server](https://github.com/typicode/json-server) to act as our server.
@@ -73,13 +73,13 @@ json-server stores all the data in the *db.json* file, which resides on the serv
 In the real world, data would be stored in some kind of database.
 However, json-server is a handy tool that enables the use of server-side functionality in the development phase without the need to program any of it.
 
-We will get familiar with the principles of implementing server-side functionality in more detail in [part 3](/en/part3) of this course.
+We will get familiar with the principles of implementing server-side functionality in more detail in [part 3](/part3) of this course.
 
 ### The browser as a runtime environment
 
 Our first task is fetching the already existing notes to our React application from the address <http://localhost:3001/notes>.
 
-In the part0 [example project](/en/part0/fundamentals_of_web_apps#running-application-logic-on-the-browser), we already learned a way to fetch data from a server using JavaScript.
+In the part0 [example project](/part0/fundamentals_of_web_apps#running-application-logic-on-the-browser), we already learned a way to fetch data from a server using JavaScript.
 The code in the example was fetching the data using [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), otherwise known as an HTTP request made using an XHR object.
 This is a technique introduced in 1999, which every browser has supported for a good while now.
 
@@ -283,7 +283,7 @@ We can now conveniently, without parameter definitions, start the json-server fr
 npm run server
 ```
 
-We will get more familiar with the *npm* tool in the [third part of the course](/en/part3).
+We will get more familiar with the *npm* tool in the [third part of the course](/part3).
 
 **NB** The previously started json-server must be terminated before starting a new one; otherwise, there will be trouble:
 

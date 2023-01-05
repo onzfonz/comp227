@@ -1105,7 +1105,7 @@ describe('Blog app', function() {
 })
 ```
 
-The `beforeEach` formatting blog must empty the database using for example the method we used in the [material](/en/part5/end_to_end_testing#controlling-the-state-of-the-database).
+The `beforeEach` formatting blog must empty the database using for example the method we used in the [material](/part5/end_to_end_testing#controlling-the-state-of-the-database).
 
 #### 5.18: bloglist end to end testing, step2
 

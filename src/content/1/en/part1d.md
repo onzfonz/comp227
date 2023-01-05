@@ -319,7 +319,7 @@ The `History` component renders completely different React elements depending on
 This is called **conditional rendering**.
 
 React also offers many other ways of doing [conditional rendering](https://reactjs.org/docs/conditional-rendering.html).
-We will take a closer look at this in [part 2](/en/part2).
+We will take a closer look at this in [part 2](/part2).
 
 Let's make one last modification to our application by refactoring it to use the `Button` component that we defined earlier on:
 

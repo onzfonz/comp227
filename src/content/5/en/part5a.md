@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 In the last two parts, we have mainly concentrated on the backend.
-The frontend that we developed in [part 2](/en/part2) does not yet support the user management we implemented to the backend in part 4.
+The frontend that we developed in [part 2](/part2) does not yet support the user management we implemented to the backend in part 4.
 
 At the moment the frontend shows existing notes and lets users change the state of a note from important to not important and vice versa.
 New notes cannot be added anymore because of the changes made to the backend in part 4: the backend now expects that a token verifying a user's identity is sent with the new note.
@@ -102,7 +102,7 @@ While that is active, in a separate terminal window you can start the frontend w
 Keep this in mind from now on.
 
 The login form is handled the same way we handled forms in
-[part 2](/en/part2/forms).
+[part 2](/part2/forms).
 The app state has fields for `username` and `password` to store the data from the form.
 The form fields have event handlers, which synchronize changes in the field to the state of the `App` component.
 The event handlers are simple: An object is given to them as a parameter, and they destructure the field `target` from the object and save its value to the state.
@@ -496,7 +496,7 @@ On Firefox go to the ***Storage*** tab and select ***Local Storage*** (details [
 We still have to modify our application so that when we enter the page, the application checks if user details of a logged-in user can already be found on the local storage.
 If they can, the details are saved to the state of the application and to ***noteService***.
 
-The right way to do this is with an [effect hook](https://reactjs.org/docs/hooks-effect.html): a mechanism we first encountered in [part 2](/en/part2/getting_data_from_server#effect-hooks), and used to fetch notes from the server.
+The right way to do this is with an [effect hook](https://reactjs.org/docs/hooks-effect.html): a mechanism we first encountered in [part 2](/part2/getting_data_from_server#effect-hooks), and used to fetch notes from the server.
 
 We can have multiple effect hooks, so let's create a second one to handle the first loading of the page:
 
@@ -670,7 +670,7 @@ It is not compulsory to add colors.
 
 ### A note on using local storage
 
-At the [end](/en/part4/token_authentication#problems-of-token-based-authentication) of the last part, we mentioned that the challenge of token-based authentication is how to cope with the situation when the API access of the token holder to the API needs to be revoked.
+At the [end](/part4/token_authentication#problems-of-token-based-authentication) of the last part, we mentioned that the challenge of token-based authentication is how to cope with the situation when the API access of the token holder to the API needs to be revoked.
 
 There are two solutions to the problem.
 The first one is to limit the validity period of a token.

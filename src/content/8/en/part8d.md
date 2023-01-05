@@ -152,7 +152,7 @@ ReactDOM.render(element, document.getElementById("root"));
 
 In this example, we have a component called `Welcome` to which we pass a `name` as a prop.
 It then renders the name to the screen.
-We know that the `name` should be a string, and we use the [prop-types](https://www.npmjs.com/package/prop-types) package introduced in [part 5](/en/part5/props_children_and_proptypes#prop-types) to receive hints about the desired types of a component's props and warnings about invalid prop types.
+We know that the `name` should be a string, and we use the [prop-types](https://www.npmjs.com/package/prop-types) package introduced in [part 5](/part5/props_children_and_proptypes#prop-types) to receive hints about the desired types of a component's props and warnings about invalid prop types.
 
 With TypeScript, we don't need the ***prop-types*** package anymore.
 We can define the types with the help of TypeScript just like we define types for a regular function as react components are nothing but mere functions.
@@ -232,7 +232,7 @@ Now our editor knows that the `name` prop is a string.
 
 Create a new Create React App with TypeScript, and set up ESlint for the project similarly to how we just did.
 
-This exercise is similar to the one you have already done in [Part 1](/en/part1/java_script#exercises-1-3-1-5) of the course, but with TypeScript and some extra tweaks.
+This exercise is similar to the one you have already done in [Part 1](/part1/java_script#exercises-1-3-1-5) of the course, but with TypeScript and some extra tweaks.
 Start off by modifying the contents of *index.tsx* to the following:
 
 ```jsx
@@ -644,7 +644,7 @@ You will most likely read far more code than you are going to produce throughout
 
 ### Patientor frontend
 
-It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/en/part8/typing_the_express_app).
+It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/part8/typing_the_express_app).
 
 Before diving into the code, let us start both the frontend and the backend.
 
@@ -683,8 +683,8 @@ The approach taken in this app uses the React [context](https://reactjs.org/docs
 > *... is designed to share data that can be considered "global" for a tree of React components, such as the current authenticated user, theme, or preferred language.*
 
 In our case, the "global", shared data is the application state **and** the dispatch function that is used to make changes to data.
-In many ways, our code works much like the Redux-based state management we used in [part 6](/en/part6), but is more lightweight since it does not require the use of any external libraries.
-This part assumes that you are at least familiar with the way Redux works, e.g. you should have covered at least [the first section](/en/part6/flux_architecture_and_redux) of part 6.
+In many ways, our code works much like the Redux-based state management we used in [part 6](/part6), but is more lightweight since it does not require the use of any external libraries.
+This part assumes that you are at least familiar with the way Redux works, e.g. you should have covered at least [the first section](/part6/flux_architecture_and_redux) of part 6.
 
 The [context](https://reactjs.org/docs/context.html) of our application has a tuple containing the app state and the dispatcher for changing the state.
 The application state is typed as follows:
@@ -754,7 +754,7 @@ export type Action =
     };
 ```
 
-The reducer looks quite similar to the ones we wrote in [part 6](/en/part6/many_reducers#combined-reducers) before we started to use the Redux Toolkit.
+The reducer looks quite similar to the ones we wrote in [part 6](/part6/many_reducers#combined-reducers) before we started to use the Redux Toolkit.
 It changes the state for each type of action:
 
 ```js
@@ -785,7 +785,7 @@ export const reducer = (state: State, action: Action): State => {
 };
 ```
 
-The main difference is that the state is now a dictionary (or an object), instead of the array that we used in [part 6](/en/part6/flux_architecture_and_redux#pure-functions-immutable).
+The main difference is that the state is now a dictionary (or an object), instead of the array that we used in [part 6](/part6/flux_architecture_and_redux#pure-functions-immutable).
 
 There are a lot of things happening in the file *state.tsx*, which takes care of setting up the context.
 The main ingredient is the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook
@@ -974,11 +974,11 @@ Do not fetch the information if it already is in the app state (i.e. if the user
 
 Since we now have the state in the context, you'll need to define a new action type for updating an individual patient's data.
 
-The Application uses [MaterialUI](https://material-ui.com/) for styling, which we covered in [part 7](/en/part7/more_about_styles).
+The Application uses [MaterialUI](https://material-ui.com/) for styling, which we covered in [part 7](/part7/more_about_styles).
 You may also use it for the new components but that is up to you since our main focus now is TypeScript.
 
 The Application also uses [React Router](https://reactrouter.com/en/main/start/tutorial) to control which view is visible in the frontend.
-You might want to have a look at [part 7](/en/part7/react_router) if you don't yet have a grasp on how the router works.
+You might want to have a look at [part 7](/part7/react_router) if you don't yet have a grasp on how the router works.
 
 The result could look like this:
 
@@ -1002,7 +1002,7 @@ dispatch({
 });
 ```
 
-Define [action creator functions](/en/part6/flux_architecture_and_redux#action-creators) in the file *src/state/reducer.ts* and refactor the code to use them.
+Define [action creator functions](/part6/flux_architecture_and_redux#action-creators) in the file *src/state/reducer.ts* and refactor the code to use them.
 
 For example, the `App` should become like the following:
 
@@ -1020,7 +1020,7 @@ dispatch(setPatientList(patientListFromApi));
 
 ### Full entries
 
-In [exercise 8.10](/en/part9/typing_the_express_app#exercises-8-10-8-11) we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
+In [exercise 8.10](/part8/typing_the_express_app#exercises-8-10-8-11) we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
 Since we now have a page for viewing a patient's information, it would be nice to expand our data a bit.
 Let's add an `Entry` field to our patient data so that a patient's data contains their medical entries, including possible diagnoses.
 

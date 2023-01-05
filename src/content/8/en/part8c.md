@@ -318,7 +318,7 @@ Check the developer tools to make sure it works:
 ![dev tools showing ping failed](../../images/8/16a.png)
 
 You might also want to have a look at the ***console*** tab.
-If something fails, [part 3](/en/part3) of the course shows how the problem can be solved.
+If something fails, [part 3](/part3) of the course shows how the problem can be solved.
 
 </div>
 
@@ -369,8 +369,8 @@ First, we need to make some decisions on how to structure our source code.
 It is better to place all source code under *src* directory, so source code is not mixed with configuration files.
 We will move *index.ts* there and make the necessary changes to the npm scripts.
 
-We will place all [routers](/en/part4/structure_of_backend_application_introduction_to_testing) and modules which are responsible for handling a set of specific resources such as ***diaries***, under the directory *src/routes*.
-This is a bit different than what we did in [part 4](/en/part4), where we used the directory *src/controllers*.
+We will place all [routers](/part4/structure_of_backend_application_introduction_to_testing) and modules which are responsible for handling a set of specific resources such as ***diaries***, under the directory *src/routes*.
+This is a bit different than what we did in [part 4](/part4), where we used the directory *src/controllers*.
 
 The router taking care of all diary endpoints is in *src/routes/diaries.ts* and looks like this:
 

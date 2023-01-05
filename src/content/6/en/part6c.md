@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 Let's expand the application so that the notes are stored in the backend.
-We'll use [json-server](/en/part2/getting_data_from_server), familiar from part 2.
+We'll use [json-server](/part2/getting_data_from_server), familiar from part 2.
 
 The initial state of the database is stored in the file *db.json*, which is placed in the root of the project:
 

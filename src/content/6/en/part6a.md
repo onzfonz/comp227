@@ -497,7 +497,7 @@ const noteReducer = (state = [], action) => {
 }
 ```
 
-We create a copy of the note whose importance has changed with the syntax [familiar from part 2](/en/part2/altering_data_in_server#changing-the-importance-of-notes), and replace the state with a new state containing all the notes which have not changed and the copy of the changed note `changedNote`.
+We create a copy of the note whose importance has changed with the syntax [familiar from part 2](/part2/altering_data_in_server#changing-the-importance-of-notes), and replace the state with a new state containing all the notes which have not changed and the copy of the changed note `changedNote`.
 
 Let's recap what goes on in the code.
 First, we search for a specific note object, the importance of which we want to change:
@@ -689,7 +689,7 @@ Ensure that the provided first test passes, because Redux expects that the reduc
 Start by expanding the reducer so that both tests pass.
 Then add the rest of the tests, and finally the functionality that they are testing.
 
-A good model for the reducer is the [redux-notes](/en/part6/flux_architecture_and_redux#pure-functions-immutable)
+A good model for the reducer is the [redux-notes](/part6/flux_architecture_and_redux#pure-functions-immutable)
 example above.
 
 #### 6.2: unicafe revisited, step2
@@ -1193,7 +1193,7 @@ The number of votes must be saved to a Redux store.
 
 Implement the functionality for adding new anecdotes.
 
-You can keep the form uncontrolled like we did [earlier](/en/part6/flux_architecture_and_redux#uncontrolled-form).
+You can keep the form uncontrolled like we did [earlier](/part6/flux_architecture_and_redux#uncontrolled-form).
 
 #### 6.5: anecdotes, step3
 
@@ -1201,7 +1201,7 @@ Make sure that the anecdotes are ordered by the number of votes.
 
 #### 6.6: anecdotes, step4
 
-If you haven't done so already, separate the creation of action-objects to [action creator](https://read.reduxbook.com/markdown/part1/04-action-creators.html)-functions and place them in the *src/reducers/anecdoteReducer.js* file, so do what we have been doing since the chapter [action creators](/en/part6/flux_architecture_and_redux#action-creators).
+If you haven't done so already, separate the creation of action-objects to [action creator](https://read.reduxbook.com/markdown/part1/04-action-creators.html)-functions and place them in the *src/reducers/anecdoteReducer.js* file, so do what we have been doing since the chapter [action creators](/part6/flux_architecture_and_redux#action-creators).
 
 #### 6.7: anecdotes, step5
 

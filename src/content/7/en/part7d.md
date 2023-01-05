@@ -19,7 +19,7 @@ We have implemented our applications by dividing our code into separate modules 
 Even though ES6 modules are defined in the ECMAScript standard, the older browsers do not know how to handle code that is divided into modules.
 
 For this reason, code that is divided into modules must be **bundled** for browsers, meaning that all of the source code files are transformed into a single file that contains all of the application code.
-When we deployed our React frontend to production in [part 3](/en/part3/deploying_app_to_internet), we performed the bundling of our application with the `npm run build` command.
+When we deployed our React frontend to production in [part 3](/part3/deploying_app_to_internet), we performed the bundling of our application with the `npm run build` command.
 Under the hood, the npm script bundles the source code using webpack, which produces the following collection of files in the *build* directory:
 
 ```shell
@@ -728,7 +728,7 @@ Our goal is to configure the application with webpack in such a way that, when u
 The bundled file will then be configured to use the backend available at the <https://obscure-harbor-49797.herokuapp.com/api/notes> URL.
 
 We will install ***axios***, start the json-server, and then make the necessary changes to the application.
-For the sake of changing things up, we will fetch the notes from the backend with our [custom hook](/en/part7/custom_hooks) called `useNotes`:
+For the sake of changing things up, we will fetch the notes from the backend with our [custom hook](/part7/custom_hooks) called `useNotes`:
 
 ```js
 // highlight-start
