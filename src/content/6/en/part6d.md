@@ -590,7 +590,6 @@ HOFs are functions that either accept functions as parameters or return function
 We have been using HOFs throughout the course.
 For instance, all of the methods used for dealing with arrays like `map`, `filter` and `find` are HOFs.
 
-<!-- Reactin hook-apin ilmestymisen jälkeen HOC:ien suosio on kääntynyt laskuun, ja melkein kaikki kirjastot, joiden käyttö on aiemmin perustunut HOC:eihin on saanut hook-perustaisen apin. Useimmiten , kuten myös reduxin kohdalla, hook-perustaiset apit ovat HOC-apeja huomattavasti yksinkertaisempia. -->
 After the React hook API was published, HOCs have become less and less popular.
 Almost all libraries which used to be based on HOCs have now been modified to use hooks.
 Most of the time hook-based APIs are a lot simpler than HOC-based ones, as is the case with Redux as well.

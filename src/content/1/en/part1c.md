@@ -136,7 +136,6 @@ const Hello = (props) => {
 }
 ```
 
-<!-- Eli koska -->
 If the object we are destructuring has the values
 
 ```js
@@ -477,11 +476,8 @@ const App = () => {
 
 Our application is now ready!
 
-<!-- ### Tapahtumankäsittelijä on funktio -->
-
 ### An event handler is a function
 
-<!-- Nappien tapahtumankäsittelijät on siis määritelty suoraan <i>onClick</i>-attribuuttien määrittelyn yhteydessä seuraavasti: -->
 We define the event handlers for our buttons where we declare their `onClick` attributes:
 
 ```js
@@ -514,7 +510,6 @@ In the beginning, the value of the `counter` variable is 0.
 When React renders the component for the first time, it executes the function call `setCounter(0+1)`, and changes the value of the component's state to 1.
 This will cause the component to be re-rendered, React will execute the setCounter function call again, and the state will change leading to another rerender...
 
-<!-- Palautetaan siis tapahtumankäsittelijä alkuperäiseen muotoonsa -->
 Let's define the event handlers like we did before:
 
 ```js
@@ -523,23 +518,19 @@ Let's define the event handlers like we did before:
 </button>
 ```
 
-<!-- Nyt napin tapahtumankäsittelijän määrittelevä attribuutti <i>onClick</i> saa arvokseen funktion _() => setCounter(counter + 1)_, ja funktiota kutsutaan siinä vaiheessa kun sovelluksen käyttäjä painaa nappia.  -->
 Now the button's attribute which defines what happens when the button is clicked - `onClick` - has the value `() => setCounter(counter + 1)`.
 The `setCounter` function is called only when a user clicks the button.
 
-<!-- Tapahtumankäsittelijöiden määrittely suoraan JSX-templatejen sisällä ei useimmiten ole kovin viisasta.
-Tässä tapauksessa se tosin on ok, koska tapahtumankäsittelijät ovat niin yksinkertaisia.  -->
 Usually defining event handlers within JSX-templates is not a good idea.
 Here it's ok, because our event handlers are so simple.
 
-<!-- Eriytetään kuitenkin nappien tapahtumankäsittelijät omiksi komponentin sisäisiksi apufunktioikseen: -->
 Let's separate the event handlers into separate functions anyway:
 
 ```js
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
-// highlight-start
+  // highlight-start
   const increaseByOne = () => setCounter(counter + 1)
   
   const setToZero = () => setCounter(0)
@@ -559,7 +550,6 @@ const App = () => {
 }
 ```
 
-<!-- Tälläkin kertaa tapahtumankäsittelijät on määritelty oikein, sillä <i>onClick</i>-attribuutit saavat arvokseen muuttujan, joka tallettaa viitteen funktioon: -->
 Here, the event handlers have been defined correctly.
 The value of the `onClick` attribute is a variable containing a reference to a function:
 
@@ -712,7 +702,6 @@ const Display = ({ counter }) => {
 }
 ```
 
-<!-- Koska komponentin määrittelevä metodi ei sisällä muuta kuin returnin, voimme määritellä sen hyödyntäen nuolifunktioiden tiiviimpää ilmaisumuotoa -->
 The function defining the component contains only the return statement, so
 we can define the function using the more compact form of arrow functions:
 
@@ -720,7 +709,6 @@ we can define the function using the more compact form of arrow functions:
 const Display = ({ counter }) => <div>{counter}</div>
 ```
 
-<!-- Vastaava suoraviivaistus voidaan tehdä myös nappia edustavalle komponentille -->
 We can simplify the Button component as well.
 
 ```js

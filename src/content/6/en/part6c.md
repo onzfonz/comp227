@@ -250,12 +250,10 @@ const App = () => {
 export default App
 ```
 
-<!-- Hookin useEffect käyttö aiheuttaa eslint-varoituksen: -->
 Using the useEffect hook causes an eslint warning:
 
 ![vscode warning useEffect missing dispatch dependency](../../images/6/26ea.png)
 
-<!-- Pääsemme varoituksesta eroon seuraavasti: -->
 We can get rid of it by doing the following:
 
 ```js
@@ -270,13 +268,11 @@ const App = () => {
 }
 ```
 
-<!-- Nyt komponentin _App_ sisällä määritelty muuttuja <i>dispatch</i> eli käytännössä redux-storen dispatch-funktio on lisätty useEffectille parametrina annettuun taulukkoon. **Jos** dispatch-muuttujan sisältö muuttuisi ohjelman suoritusaikana, suoritettaisiin efekti uudelleen, näin ei kuitenkaan ole, eli varoitus on tässä tilanteessa oikeastaan aiheeton. -->
 Now the variable `dispatch` we define in the `App` component, which practically is the dispatch function of the redux store, has been added to the array useEffect receives as a parameter.
 **If** the value of the dispatch variable would change during runtime,
 the effect would be executed again.
 This however cannot happen in our application, so the warning is unnecessary.
 
-<!-- Toinen tapa päästä eroon varoituksesta olisi disabloida se kyseisen rivin kohdalta: -->
 Another way to get rid of the warning would be to disable ESlint on that line:
 
 ```js
@@ -285,9 +281,7 @@ const App = () => {
   useEffect(() => {
     noteService
       .getAll().then(notes => dispatch(setNotes(notes)))   
-      // highlight-start
   }, []) // eslint-disable-line react-hooks/exhaustive-deps  
-  // highlight-end
 
   // ...
 }

@@ -266,7 +266,6 @@ const Notes = () => {
 }
 ```
 
-<!-- Aiemminhan selektorifunktio palautti koko storen tilan: -->
 Previously the selector function returned the whole state of the store:
 
 ```js
@@ -369,14 +368,12 @@ const Notes = () => {
   )
 ```
 
-<!-- Muutos kohdistuu siis ainoastaan selektorifunktioon, joka oli aiemmnin muotoa -->
 We only make changes to the selector function, which used to be
 
 ```js
 useSelector(state => state.notes)
 ```
 
-<!-- Yksinkertaistetaan vielä selektoria destrukturoimalla parametrina olevasta tilasta sen kentät erilleen: -->
 Let's simplify the selector by destructuring the fields from the state it receives as a parameter:
 
 ```js

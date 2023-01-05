@@ -871,8 +871,6 @@ You can find the code for our current application in its entirety in the *part4-
 
 ### Eliminating the try-catch
 
-<!-- Async/await selkeyttää koodia jossain määrin, mutta sen 'hinta' on poikkeusten käsittelyn edellyttämä <i>try/catch</i>-rakenne.
-Kaikki routejen käsittelijät noudattavat samaa kaavaa -->
 Async/await unclutters the code a bit, but the 'price' is the `try`/`catch` structure required for catching exceptions.
 All of the route handlers follow the same structure
 
@@ -884,20 +882,16 @@ try {
 }
 ```
 
-<!-- Mieleen herää kysymys, olisiko koodia mahdollista refaktoroida siten, että <i>catch</i> saataisiin refaktoroitua ulos metodeista?  -->
 One starts to wonder if it would be possible to refactor the code to eliminate the *catch* from the methods?
 
-<!-- Kirjasto [express-async-errors](https://github.com/davidbanham/express-async-errors) tuo tilanteeseen helpotuksen.-->
 The [express-async-errors](https://github.com/davidbanham/express-async-errors) library has a solution for this.
 
-<!-- Asennetaan kirjasto -->
 Let's install the library
 
 ```bash
 npm install express-async-errors
 ```
 
-<!-- Kirjaston käyttö on <i>todella</i> helppoa.
  Kirjaston koodi otetaan käyttöön tiedostossa <i>src/app.js</i>: -->
 Using the library is *very* easy.
 You introduce the library in *app.js*:
@@ -918,7 +912,6 @@ const mongoose = require('mongoose')
 module.exports = app
 ```
 
-<!-- Kirjaston koodiin sisällyttämän "magian" ansiosta pääsemme kokonaan eroon try-catch-lauseista.
 Muistiinpanon poistamisesta huolehtiva route -->
 The 'magic' of the library allows us to eliminate the try-catch blocks completely.
 For example the route for deleting a note
@@ -934,7 +927,6 @@ notesRouter.delete('/:id', async (request, response, next) => {
 })
 ```
 
-<!-- muuttuu muotoon -->
 becomes
 
 ```js
@@ -944,12 +936,10 @@ notesRouter.delete('/:id', async (request, response) => {
 })
 ```
 
-<!-- Kirjaston ansiosta kutsua _next(exception)_ ei siis enää tarvita, kirjasto hoitaa asian konepellin alla, eli jos <i>async</i>-funktiona määritellyn routen sisällä syntyy poikkeus, siirtyy suoritus automaattisesti virheenkäsittelijämiddlewareen.-->
 Because of the library, we do not need the `next(exception)` call anymore.
 The library handles everything under the hood.
 If an exception occurs in an `async` route, the execution is automatically passed to the error handling middleware.
 
-<!-- Muut routet yksinkertaistuvat seuraavasti: -->
 The other routes become:
 
 ```js

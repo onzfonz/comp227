@@ -331,15 +331,10 @@ const NoteForm = ({ createNote }) => {
 export default NoteForm
 ```
 
-<!-- Tilan muuttuja <i>newNote</i> ja sen muutoksesta huolehtiva tapahtumankäsittelijä on siirretty komponentista _App_ lomakkeesta huolehtivaan komponenttiin.
--->
 The `newNote` state attribute and the event handler responsible for changing it have been moved from the `App` component to the component responsible for the note form.
 
-<!-- Propseja on enää yksi, funktio _createNote_, jota lomake kutsuu kun uusi muistiinpano luodaan.-->
 There is only one prop left, the `createNote` function, which the form calls when a new note is created.
 
-<!-- Komponentti _App_ yksintertaistuu, tilasta <i>newNote</i> ja sen käsittelijäfunktiosta on päästy eroon.
-Uuden muistiinpanon luomisesta huolehtiva funktio _addNote_ saa suoraan parametriksi uuden muistiinpanon ja funktio on ainoa props, joka välitetään lomakkeelle: -->
 The `App` component becomes simpler now that we have got rid of the `newNote` state and its event handler.
 The `addNote` function for creating new notes receives a new note as a parameter, and the function is the only prop we send to the form:
 

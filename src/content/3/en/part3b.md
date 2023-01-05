@@ -27,12 +27,10 @@ const getAll = () => {
 export default { getAll, create, update }
 ```
 
-<!-- Frontendin tekemä GET-pyyntö osoitteeseen <http://localhost:3001/api/notes> ei jostain syystä toimi: -->
 Now frontend's GET request to <http://localhost:3001/api/notes> does not work for some reason:
 
 ![Get request showing error in dev tools](../../images/3/3ae.png)
 
-<!-- Mistä on kyse? Backend toimii kuitenkin selaimesta ja postmanista käytettäessä ilman ongelmaa.-->
 What's going on here? We can access the backend from a browser and from postman without any problems.
 
 ### Same origin policy and CORS
