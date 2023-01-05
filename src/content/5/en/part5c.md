@@ -41,11 +41,11 @@ const Note = ({ note, toggleImportance }) => {
 }
 ```
 
-Notice that the <i>li</i> element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname <i>note</i>, that could be used to access the component in our tests.
+Notice that the `li` element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname `note`, that could be used to access the component in our tests.
 
 ### Rendering the component for tests
 
-We will write our test in the <i>src/components/Note.test.js</i> file, which is in the same directory as the component itself.
+We will write our test in the *src/components/Note.test.js* file, which is in the same directory as the component itself.
 
 The first test verifies that the component renders the contents of the note:
 
@@ -74,8 +74,8 @@ After the initial configuration, the test renders the component with the [render
 render(<Note note={note} />)
 ```
 
-Normally React components are rendered to the <i>DOM</i>.
-The render method we used renders the components in a format that is suitable for tests without rendering them to the DOM.
+Normally React components are rendered to the ***DOM***.
+The `render` method we used renders the components in a format that is suitable for tests without rendering them to the DOM.
 
 We can use the object [screen](https://testing-library.com/docs/queries/about#screen) to access the rendered component.
 We use screen's method [getByText](https://testing-library.com/docs/queries/bytext) to search for an element that has the note content and ensure that it exists:
@@ -87,7 +87,7 @@ We use screen's method [getByText](https://testing-library.com/docs/queries/byte
 
 ### Running tests
 
-Create-react-app configures tests to be run in watch mode by default, which means that the *npm test* command will not exit once the tests have finished, and will instead wait for changes to be made to the code.
+Create-react-app configures tests to be run in watch mode by default, which means that the `npm test` command will not exit once the tests have finished, and will instead wait for changes to be made to the code.
 Once new changes to the code are saved, the tests are executed automatically after which Jest goes back to waiting for new changes to be made.
 
 If you want to run tests "normally", you can do so with the command:
@@ -122,7 +122,7 @@ The reason we choose to follow this convention is that it is configured by defau
 ### Searching for content in a component
 
 The react-testing-library package offers many different ways of investigating the content of the component being tested.
-In reality, the *expect* in our test is not needed at all
+In reality, the `expect` in our test is not needed at all
 
 ```js
 import React from 'react'
@@ -144,7 +144,7 @@ test('renders content', () => {
 })
 ```
 
-The test fails if *getByText* does not find the element it is looking for.
+The test fails if `getByText` does not find the element it is looking for.
 
 We could also use [CSS-selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) to find rendered elements by using the method [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) of the object [container](https://testing-library.com/docs/react-testing-library/api/#container-1) that is one of the fields returned by the render:
 
@@ -177,7 +177,7 @@ There are also other methods, e.g. [getByTestId](https://testing-library.com/doc
 
 We typically run into many different kinds of problems when writing our tests.
 
-Object *screen* has method [debug](https://testing-library.com/docs/queries/about/#screendebug) that can be used to print the HTML of a component to the terminal.
+Object `screen` has method [debug](https://testing-library.com/docs/queries/about/#screendebug) that can be used to print the HTML of a component to the terminal.
 If we change the test as follows:
 
 ```js
@@ -258,7 +258,7 @@ Now the HTML of the wanted element gets printed:
 
 ### Clicking buttons in tests
 
-In addition to displaying content, the <i>Note</i> component also makes sure that when the button associated with the note is pressed, the *toggleImportance* event handler function gets called.
+In addition to displaying content, the `Note` component also makes sure that when the button associated with the note is pressed, the `toggleImportance` event handler function gets called.
 
 Let us install a library [user-event](https://testing-library.com/docs/user-event/intro) that makes simulating user input a bit easier:
 
@@ -317,7 +317,7 @@ A [session](https://testing-library.com/docs/user-event/setup/) is started to in
 const user = userEvent.setup()
 ```
 
-The test finds the button <i>based on the text</i> from the rendered component and clicks the element:
+The test finds the button *based on the text* from the rendered component and clicks the element:
 
 ```js
 const button = screen.getByText('make not important')
@@ -326,7 +326,7 @@ await user.click(button)
 
 Clicking happens with the method [click](https://testing-library.com/docs/user-event/convenience/#click) of the userEvent-library.
 
-The expectation of the test verifies that the <i>mock function</i> has been called exactly once.
+The expectation of the test verifies that the **mock function** has been called exactly once.
 
 ```js
 expect(mockHandler.mock.calls).toHaveLength(1)
@@ -337,10 +337,10 @@ Mocks make it possible to return hardcoded responses, and to verify the number o
 
 In our example, the mock function is a perfect choice since it can be easily used for verifying that the method gets called exactly once.
 
-### Tests for the <i>Togglable</i> component
+### Tests for the `Togglable` component
 
-Let's write a few tests for the <i>Togglable</i> component.
-Let's add the <i>togglableContent</i> CSS classname to the div that returns the child components.
+Let's write a few tests for the `Togglable` component.
+Let's add the `togglableContent` CSS classname to the div that returns the child components.
 
 ```js
 const Togglable = forwardRef((props, ref) => {
@@ -404,9 +404,9 @@ describe('<Togglable />', () => {
 })
 ```
 
-The *beforeEach* function gets called before each test, which then renders the <i>Togglable</i> component and saves the field *container* of the return value.
+The `beforeEach` function gets called before each test, which then renders the `Togglable` component and saves the field `container` of the return value.
 
-The first test verifies that the <i>Togglable</i> component renders its child component
+The first test verifies that the `Togglable` component renders its child component
 
 ```html
 <div className="testDiv">
@@ -414,8 +414,8 @@ The first test verifies that the <i>Togglable</i> component renders its child co
 </div>
 ```
 
-The remaining tests use the [toHaveStyle](https://www.npmjs.com/package/@testing-library/jest-dom#tohavestyle) method to verify that the child component of the <i>Togglable</i> component is not visible initially, by checking that the style of the <i>div</i> element contains *{ display: 'none' }*.
-Another test verifies that when the button is pressed the component is visible, meaning that the style for hiding the component <i>is no longer</i> assigned to the component.
+The remaining tests use the [toHaveStyle](https://www.npmjs.com/package/@testing-library/jest-dom#tohavestyle) method to verify that the child component of the `Togglable` component is not visible initially, by checking that the style of the `div` element contains `{ display: 'none' }`.
+Another test verifies that when the button is pressed the component is visible, meaning that the style for hiding the component **is no longer** assigned to the component.
 
 Let's also add a test that can be used to verify that the visible content can be hidden by clicking the second button of the component:
 
@@ -440,7 +440,7 @@ describe('<Togglable />', () => {
 
 ### Testing the forms
 
-We already used the *click* function of the [user-event](https://testing-library.com/docs/user-event/intro) in our previous tests to click buttons.
+We already used the `click` function of the [user-event](https://testing-library.com/docs/user-event/intro) in our previous tests to click buttons.
 
 ```js
 const user = userEvent.setup()
@@ -448,9 +448,9 @@ const button = screen.getByText('show...')
 await user.click(button)
 ```
 
-We can also simulate text input with <i>userEvent</i>.
+We can also simulate text input with `userEvent`.
 
-Let's make a test for the <i>NoteForm</i> component.
+Let's make a test for the `NoteForm` component.
 The code of the component is as follows.
 
 ```js
@@ -491,7 +491,7 @@ const NoteForm = ({ createNote }) => {
 export default NoteForm
 ```
 
-The form works by calling the *createNote* function it received as props with the details of the new note.
+The form works by calling the `createNote` function it received as props with the details of the new note.
 
 The test is as follows:
 
@@ -523,7 +523,7 @@ Tests get access to the input field using the function [getByRole](https://testi
 
 The method [type](https://testing-library.com/docs/user-event/utility#type) of the userEvent is used to write text to the input field.
 
-The first test expectation ensures, that submitting the form calls the *createNote* method.
+The first test expectation ensures, that submitting the form calls the `createNote` method.
 The second expectation checks, that the event handler is called with the right parameters - that a note with the correct content is created when the form is filled.
 
 ### About finding the elements
@@ -566,7 +566,7 @@ would cause an error:
 
 ![node error that shows two elements with textbox since we use getByRole](../../images/5/40.png)
 
-The error message suggests using <i>getAllByRole</i>.
+The error message suggests using `getAllByRole`.
 The test could be fixed as follows:
 
 ```js
@@ -575,10 +575,10 @@ const inputs = screen.getAllByRole('textbox')
 await user.type(inputs[0], 'testing a form...')
 ```
 
-Method <i>getAllByRole</i> now returns an array and the right input field is the first element of the array.
+Method `getAllByRole` now returns an array and the right input field is the first element of the array.
 However, this approach is a bit suspicious since it relies on the order of the input fields.
 
-Quite often input fields have a <i>placeholder</i> text that hints user what kind of input is expected.
+Quite often input fields have **placeholder** text that hints user what kind of input is expected.
 Let us add a placeholder to our form:
 
 ```js
@@ -625,10 +625,10 @@ test('<NoteForm /> updates parent state and calls onSubmit', () => {
 })
 ```
 
-The most flexible way of finding elements in tests is the method <i>querySelector</i> of the *container* object, which is returned by *render*, as was mentioned [earlier in this part](/en/part5/testing_react_apps#searching-for-content-in-a-component).
+The most flexible way of finding elements in tests is the method `querySelector` of the `container` object, which is returned by `render`, as was mentioned [earlier in this part](/en/part5/testing_react_apps#searching-for-content-in-a-component).
 Any CSS selector can be used with this method for searching elements in tests.
 
-Consider e.g. that we would define a unique *id* to the input field:
+Consider e.g. that we would define a unique `id` to the input field:
 
 ```js
 const NoteForm = ({ createNote }) => {
@@ -663,7 +663,7 @@ const { container } = render(<NoteForm createNote={createNote} />)
 const input = container.querySelector('#note-input')
 ```
 
-However, we shall stick to the approach of using *getByPlaceholderText* in the test.
+However, we shall stick to the approach of using `getByPlaceholderText` in the test.
 
 Let us look at a couple of details before moving on.
 Let us assume that a component would render text to an HTML element as follows:
@@ -684,7 +684,7 @@ const Note = ({ note, toggleImportance }) => {
 export default Note
 ```
 
-the *getByText* command that the test uses does <i>not</i> find the element
+the `getByText` command that the test uses does **not** find the element
 
 ```js
 test('renders content', () => {
@@ -701,8 +701,8 @@ test('renders content', () => {
 })
 ```
 
-Command *getByText* looks for an element that has the **same text** that it has as a parameter, and nothing more.
-If we want to look for an element that <i>contains</i> the text, we could use an extra option:
+Command `getByText` looks for an element that has the **same text** that it has as a parameter, and nothing more.
+If we want to look for an element that ***contains*** the text, we could use an extra option:
 
 ```js
 const element = screen.getByText(
@@ -710,18 +710,18 @@ const element = screen.getByText(
 )
 ```
 
-or we could use the command *findByText*:
+or we could use the command `findByText`:
 
 ```js
 const element = await screen.findByText('Does not work anymore :(')
 ```
 
-It is important to notice that, unlike the other *ByText* commands, *findByText* returns a promise!
+It is important to notice that, unlike the other `ByText` commands, `findByText` returns a promise!
 
-There are situations where yet another form of the command *queryByText* is useful.
-The command returns the element but <i>it does not cause an exception</i> if the element is not found.
+There are situations where yet another form of the command `queryByText` is useful.
+The command returns the element but *it does not cause an exception* if the element is not found.
 
-We could use the command to ensure that something <i>is not rendered</i> to the component:
+We could use the command to ensure that something **is not rendered** to the component:
 
 ```js
 test('does not render this', () => {
@@ -747,12 +747,12 @@ CI=true npm test -- --coverage
 
 ![terminal output of test coverage](../../images/5/18ea.png)
 
-A quite primitive HTML report will be generated to the <i>coverage/lcov-report</i> directory.
+A quite primitive HTML report will be generated to the *coverage/lcov-report* directory.
 The report will tell us the lines of untested code in each component:
 
 ![HTML report of the test coverage](../../images/5/19ea.png)
 
-You can find the code for our current application in its entirety in the <i>part5-8</i> branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-8).
+You can find the code for our current application in its entirety in the *part5-8* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-8).
 </div>
 
 <div class="tasks">
@@ -771,7 +771,7 @@ Make a test, which checks that the blog's URL and number of likes are shown when
 
 #### 5.15: Blog list tests, step3
 
-Make a test, which ensures that if the <i>like</i> button is clicked twice, the event handler the component received as props is called twice.
+Make a test, which ensures that if the ***like*** button is clicked twice, the event handler the component received as props is called twice.
 
 #### 5.16: Blog list tests, step4
 
