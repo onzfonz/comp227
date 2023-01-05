@@ -22,7 +22,7 @@ Within the last couple of years, many React libraries have begun to offer hook-b
 [In part 6](/part6/flux_architecture_and_redux) we used the [useSelector](https://react-redux.js.org/api/hooks#useselector) and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch) hooks from the react-redux library to share our redux-store and dispatch function to our components.
 Redux's hook-based API is a lot easier to use than the older, still available, [connect](/part6/connect) API.
 
-The [React Router's](https://reactrouter.com/en/main/start/tutorial) API we introduced in the [previous part](/part7/react_router) is also partially [hook](https://reacttraining.com/react-router/web/api/Hooks)-based.
+The [React Router's](https://reactrouter.com/en/main/start/tutorial) API we introduced in the [previous part](/part7/react_router) is also partially [hook](https://reactrouter.com/en/6.4.5/start/concepts)-based.
 Its hooks can be used to access URL parameters and the `navigation` object, which allows for manipulating the browser URL programmatically.
 
 As mentioned in [part 1](/part1/a_more_complex_state_debugging_react_apps#rules-of-hooks), hooks are not normal functions, and when using those we have to adhere to certain [rules or limitations](https://reactjs.org/docs/hooks-rules.html).

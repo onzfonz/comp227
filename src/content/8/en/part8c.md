@@ -619,7 +619,7 @@ export interface DiaryEntry {
 
 ### Node and JSON modules
 
-It is important to take note of a problem that may arise when using the tsconfig [resolveJsonModule](https://www.typescriptlang.org/en/tsconfig#resolveJsonModule) option:
+It is important to take note of a problem that may arise when using the tsconfig [resolveJsonModule](https://www.typescriptlang.org/tsconfig#resolveJsonModule) option:
 
 ```json
 {
