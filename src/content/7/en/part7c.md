@@ -38,7 +38,7 @@ Let's install the package with the command:
 npm install react-bootstrap
 ```
 
-Then let's add a link for loading the CSS stylesheet for Bootstrap inside of the <i>head</i> tag in the <i>public/index.html</i> file of the application:
+Then let's add a link for loading the CSS stylesheet for Bootstrap inside of the *`head`* tag in the *public/index.html* file of the application:
 
 ```js
 <head>
@@ -57,7 +57,7 @@ When we reload the application, we notice that it already looks a bit more styli
 ![browser notes app with bootstrap](../../images/7/5ea.png)
 
 In Bootstrap, all of the contents of the application are typically rendered inside a [container](https://getbootstrap.com/docs/4.1/layout/overview/#containers).
-In practice this is accomplished by giving the root *div* element of the application the  *container* class attribute:
+In practice this is accomplished by giving the root `div` element of the application the `container` class attribute:
 
 ```js
 const App = () => {
@@ -76,7 +76,7 @@ The content is no longer as close to the edges of the browser as it was earlier:
 
 ![browser notes app with margin spacing](../../images/7/6ea.png)
 
-Next, let's make some changes to the <i>Notes</i> component so that it renders the list of notes as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
+Next, let's make some changes to the `Notes` component so that it renders the list of notes as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
 React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose, so there is no need to define CSS classes separately.
 
 ```js
@@ -115,7 +115,7 @@ import { Table } from 'react-bootstrap'
 
 #### Form in Bootstrap
 
-Let's improve the form in the <i>Login</i> view with the help of Bootstrap [forms](https://getbootstrap.com/docs/4.1/components/forms/).
+Let's improve the form in the `Login` view with the help of Bootstrap [forms](https://getbootstrap.com/docs/4.1/components/forms/).
 
 React Bootstrap provides built-in [components](https://react-bootstrap.github.io/forms/overview/) for creating forms (although the documentation for them is slightly lacking):
 
@@ -162,7 +162,7 @@ Now that the login form is in better shape, let's take a look at improving our a
 ![browser notes app with bootstrap notification](../../images/7/9ea.png)
 
 Let's add a message for the notification when a user logs into the application.
-We will store it in the *message* variable in the <i>App</i> component's state:
+We will store it in the `message` variable in the `App` component's state:
 
 ```js
 const App = () => {
@@ -259,7 +259,7 @@ Install the library with the command
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
-Then add the following line to the <i>head</i> tag in the <i>public/index.html</i> file.
+Then add the following line to the *`head`* tag in the *public/index.html* file.
 The line loads Google's font Roboto.
 
 ```js
@@ -286,7 +286,7 @@ const App = () => {
 }
 ```
 
-Let's start with the <i>Notes</i> component.
+Let's start with the `Notes` component.
 We'll render the list of notes as a [table](https://mui.com/material-ui/react-table/#simple-table):
 
 ```js
@@ -335,7 +335,7 @@ import {
 
 #### Form in Material UI
 
-Next, let's make the login form in the <i>Login</i> view better using the [TextField](https://mui.com/material-ui/react-text-field/) and [Button](https://mui.com/material-ui/api/button/) components:
+Next, let's make the login form in the `Login` view better using the [TextField](https://mui.com/material-ui/react-text-field/) and [Button](https://mui.com/material-ui/api/button/) components:
 
 ```js
 const Login = (props) => {
@@ -442,7 +442,7 @@ By defining
 </Button>
 ```
 
-the *Button* component is rendered so that its root component is react-router-dom's *Link* which receives its path as the prop field *to*.
+the `Button` component is rendered so that its root component is react-router-dom's `Link` which receives its path as the prop field `to`.
 
 The code for the navigation bar is the following:
 
@@ -487,7 +487,7 @@ According to <https://www.npmtrends.com/> which tracks the popularity of differe
 In the two previous examples, we used the UI frameworks with the help of React-integration libraries.
 
 Instead of using the [React Bootstrap](https://react-bootstrap.github.io/) library, we could have just as well used Bootstrap directly by defining CSS classes for our application's HTML elements.
-Instead of defining the table with the <i>Table</i> component:
+Instead of defining the table with the `Table` component:
 
 ```js
 <Table striped>
@@ -495,7 +495,7 @@ Instead of defining the table with the <i>Table</i> component:
 </Table>
 ```
 
-We could have used a regular HTML <i>table</i> and added the required CSS class:
+We could have used a regular HTML *`table`* and added the required CSS class:
 
 ```js
 <table className="table striped">
@@ -569,11 +569,11 @@ const Input = styled.input`
 `
 ```
 
-The code above creates styled versions of the <i>button</i> and <i>input</i> HTML elements and then assigns them to the <i>Button</i> and <i>Input</i> variables.
+The code above creates styled versions of the *`button`* and *`input`* HTML elements and then assigns them to the `Button` and `Input` variables.
 
 The syntax for defining the styles is quite interesting, as the CSS rules are defined inside of backticks.
 
-The styled components that we defined work exactly like regular <i>button</i> and <i>input</i> elements, and they can be used in the same way:
+The styled components that we defined work exactly like regular *`button`* and *`input`* elements, and they can be used in the same way:
 
 ```js
 const Login = (props) => {
@@ -597,7 +597,7 @@ const Login = (props) => {
 }
 ```
 
-Let's create a few more components for styling that application which will be styled versions of <i>div</i> elements:
+Let's create a few more components for styling that application which will be styled versions of *`div`* elements:
 
 ```js
 const Page = styled.div`

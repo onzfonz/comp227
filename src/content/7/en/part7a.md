@@ -97,14 +97,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
 Each view is implemented as its own component.
-We store the view component information in the application state called <i>page</i>.
+We store the view component information in the application state called `page`.
 This information tells us which component, representing a view, should be shown below the menu bar.
 
 However, the method is not very optimal.
 As we can see from the pictures, the address stays the same even though at times we are in different views.
 Each view should preferably have its own address, e.g. to make bookmarking possible.
-The <i>back</i> button doesn't work as expected for our application either, meaning that <i>back</i> doesn't move you to the previously displayed view of the application, but somewhere completely different.
-If the application were to grow even bigger and we wanted to, for example, add separate views for each user and note, then this self-made <i>routing</i>, which means the navigation management of the application, would get overly complicated.
+The ***back*** button doesn't work as expected for our application either, meaning that *back* doesn't move you to the previously displayed view of the application, but somewhere completely different.
+If the application were to grow even bigger and we wanted to, for example, add separate views for each user and note, then this self-made **routing**, which means the navigation management of the application, would get overly complicated.
 
 ### React Router
 
@@ -146,16 +146,16 @@ const App = () => {
       </Routes>
 
       <div>
-        <i>Note app, Department of Computer Science 2022</i>
+        <em>Note app, Department of Computer Science 2022</em>
       </div>
     </Router>
   )
 }
 ```
 
-Routing, or the conditional rendering of components <i>based on the URL</i> in the browser, is used by placing components as children of the <i>Router</i> component, meaning inside <i>Router</i> tags.
+Routing, or the conditional rendering of components *based on the URL* in the browser, is used by placing components as children of the `Router` component, meaning inside `Router` tags.
 
-Notice that, even though the component is referred to by the name <i>Router</i>, we are talking about [BrowserRouter](https://reactrouter.com/en/main/router-components/browser-router), because here the import happens by renaming the imported object:
+Notice that, even though the component is referred to by the name `Router`, we are talking about [BrowserRouter](https://reactrouter.com/en/main/router-components/browser-router), because here the import happens by renaming the imported object:
 
 ```js
 import {
@@ -166,21 +166,21 @@ import {
 
 According to the [v5 docs](https://v5.reactrouter.com/web/api/BrowserRouter):
 
-> <i>BrowserRouter</i> is a <i>Router</i> that uses the HTML5 history API (pushState, replaceState and the popState event) to keep your UI in sync with the URL.
+> `BrowserRouter` is a `Router` that uses the HTML5 history API (pushState, replaceState and the popState event) to keep your UI in sync with the URL.
 
 Normally the browser loads a new page when the URL in the address bar changes.
-However, with the help of the [HTML5 history API](https://css-tricks.com/using-the-html5-history-api/), <i>BrowserRouter</i> enables us to use the URL in the address bar of the browser for internal "routing" in a React application.
+However, with the help of the [HTML5 history API](https://css-tricks.com/using-the-html5-history-api/), `BrowserRouter` enables us to use the URL in the address bar of the browser for internal "routing" in a React application.
 So, even if the URL in the address bar changes, the content of the page is only manipulated using Javascript, and the browser will not load new content from the server.
 Using the back and forward actions, as well as making bookmarks, is still logical like on a traditional web page.
 
-Inside the router, we define <i>links</i> that modify the address bar with the help of the [Link](https://reactrouter.com/en/main/components/link) component.
+Inside the router, we define *links* that modify the address bar with the help of the [Link](https://reactrouter.com/en/main/components/link) component.
 For example,
 
 ```js
 <Link to="/notes">notes</Link>
 ```
 
-creates a link in the application with the text <i>notes</i>, which when clicked changes the URL in the address bar to <i>/notes</i>.
+creates a link in the application with the text *`notes`*, which when clicked changes the URL in the address bar to ***/notes***.
 
 Components rendered based on the URL of the browser are defined with the help of the component [Route](https://reactrouter.com/en/main/route/route).
 For example,
@@ -189,7 +189,7 @@ For example,
 <Route path="/notes" element={<Notes />} />
 ```
 
-defines that, if the browser address is <i>/notes</i>, we render the <i>Notes</i> component.
+defines that, if the browser address is ***/notes***, we render the `Notes` component.
 
 We wrap the components to be rendered based on the URL with a [Routes](https://reactrouter.com/en/main/components/routes) component
 
@@ -201,7 +201,7 @@ We wrap the components to be rendered based on the URL with a [Routes](https://r
 </Routes>
 ```
 
-The Routes works by rendering the first component whose <i>path</i> matches the URL in the browser's address bar.
+The Routes works by rendering the first component whose *path* matches the URL in the browser's address bar.
 
 ### Parameterized route
 
@@ -209,15 +209,15 @@ Let's examine the slightly modified version from the previous example.
 The complete code for the example can be found [here](https://github.com/fullstack-hy2020/misc/blob/master/router-app-v1.js).
 
 The application now contains five different views whose display is controlled by the router.
-In addition to the components from the previous example (<i>Home</i>, <i>Notes</i> and <i>Users</i>), we have <i>Login</i> representing the login view and <i>Note</i> representing the view of a single note.
+In addition to the components from the previous example (*`Home`*, *`Notes`* and *`Users`*), we have `Login` representing the login view and `Note` representing the view of a single note.
 
-<i>Home</i> and <i>Users</i> are unchanged from the previous exercise.
-<i>Notes</i> is a bit more complicated.
+`Home` and `Users` are unchanged from the previous exercise.
+`Notes` is a bit more complicated.
 It renders the list of notes passed to it as props in such a way that the name of each note is clickable.
 
 ![notes app showing notes are clickable](../../images/7/3ea.png)
 
-The ability to click a name is implemented with the component <i>Link</i>, and clicking the name of a note whose id is 3 would trigger an event that changes the address of the browser into <i>notes/3</i>:
+The ability to click a name is implemented with the component `Link`, and clicking the name of a note whose id is 3 would trigger an event that changes the address of the browser into ***notes/3***:
 
 ```js
 const Notes = ({notes}) => (
@@ -234,7 +234,7 @@ const Notes = ({notes}) => (
 )
 ```
 
-We define parameterized URLs in the routing in <i>App</i> component as follows:
+We define parameterized URLs in the routing in `App` component as follows:
 
 ```js
 <Router>
@@ -250,13 +250,13 @@ We define parameterized URLs in the routing in <i>App</i> component as follows:
 </Router>
 ```
 
-We define the route rendering a specific note "express style" by marking the parameter with a colon - <i>:id</i>
+We define the route rendering a specific note "express style" by marking the parameter with a colon - `:id`
 
 ```js
 <Route path="/notes/:id" element={<Note notes={notes} />} />
 ```
 
-When a browser navigates to the URL for a specific note, for example, <i>/notes/3</i>, we render the <i>Note</i> component:
+When a browser navigates to the URL for a specific note, for example, ***/notes/3***, we render the `Note` component:
 
 ```js
 import {
@@ -277,14 +277,14 @@ const Note = ({ notes }) => {
 }
 ```
 
-The *Note* component receives all of the notes as props <i>notes</i>, and it can access the URL parameter (the id of the note to be displayed) with the [useParams](https://reactrouter.com/en/main/hooks/use-params) function of the React Router.
+The `Note` component receives all of the notes as props `notes`, and it can access the URL parameter (the id of the note to be displayed) with the [useParams](https://reactrouter.com/en/main/hooks/use-params) function of the React Router.
 
 ### useNavigate
 
 We have also implemented a simple login function in our application.
-If a user is logged in, information about a logged-in user is saved to the <i>user</i> field of the state of the <i>App</i> component.
+If a user is logged in, information about a logged-in user is saved to the `user` field of the state of the `App` component.
 
-The option to navigate to the <i>Login</i> view is rendered conditionally in the menu.
+The option to navigate to the `Login` view is rendered conditionally in the menu.
 
 ```js
 <Router>
@@ -304,7 +304,7 @@ The option to navigate to the <i>Login</i> view is rendered conditionally in the
 </Router>
 ```
 
-So if the user is already logged in, instead of displaying the link <i>Login</i>, we show the username of the user:
+So if the user is already logged in, instead of displaying the link `Login`, we show the username of the user:
 
 ![browser notes app showing username logged in](../../images/7/4a.png)
 
@@ -345,7 +345,7 @@ const Login = (props) => {
 What is interesting about this component is the use of the [useNavigate](https://reactrouter.com/en/main/hooks/use-navigate) function of the React Router.
 With this function, the browser's URL can be changed programmatically.
 
-With user login, we call *navigate('/')* which causes the browser's URL to change to */* and the application renders the corresponding component <i>Home</i>.
+With user login, we call `navigate('/')` which causes the browser's URL to change to `/` and the application renders the corresponding component `Home`.
 
 Both [useParams](https://reactrouter.com/en/main/hooks/use-params) and [useNavigate](https://reactrouter.com/en/main/hooks/use-navigate) are hook functions, just like useState and useEffect which we have used many times now.
 As you remember from part 1, there are some [rules](/en/part1/a_more_complex_state_debugging_react_apps/#rules-of-hooks) to using hook functions.
@@ -353,14 +353,14 @@ Create-react-app has been configured to warn you if you break these rules, for e
 
 ### redirect
 
-There is one more interesting detail about the <i>Users</i> route:
+There is one more interesting detail about the `Users` route:
 
 ```js
 <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
 ```
 
-If a user isn't logged in, the <i>Users</i> component is not rendered.
-Instead, the user is <i>redirected</i> using the component [Navigate](https://reactrouter.com/en/main/components/navigate) to the login view:
+If a user isn't logged in, the `Users` component is not rendered.
+Instead, the user is **redirected** using the component [Navigate](https://reactrouter.com/en/main/components/navigate) to the login view:
 
 ```js
 <Navigate replace to="/login" />
@@ -368,7 +368,7 @@ Instead, the user is <i>redirected</i> using the component [Navigate](https://re
 
 In reality, it would perhaps be better to not even show links in the navigation bar requiring login if the user is not logged into the application.
 
-Here is the <i>App</i> component in its entirety:
+Here is the `App` component in its entirety:
 
 ```js
 const App = () => {
@@ -416,12 +416,12 @@ const App = () => {
 }
 ```
 
-We define an element common for modern web apps called <i>footer</i>, which defines the part at the bottom of the screen, outside of the <i>Router</i>, so that it is shown regardless of the component shown in the routed part of the application.
+We define an element common for modern web apps called *`footer`*, which defines the part at the bottom of the screen, outside of the `Router`, so that it is shown regardless of the component shown in the routed part of the application.
 
 ### Parameterized route revisited
 
 Our application has a flaw.
-The *Note* component receives all of the notes, even though it only displays the one whose id matches the url parameter:
+The `Note` component receives all of the notes, even though it only displays the one whose id matches the url parameter:
 
 ```js
 const Note = ({ notes }) => { 
@@ -431,7 +431,7 @@ const Note = ({ notes }) => {
 }
 ```
 
-Would it be possible to modify the application so that the *Note* component receives only the note that it should display?
+Would it be possible to modify the application so that the `Note` component receives only the note that it should display?
 
 ```js
 const Note = ({ note }) => {
@@ -445,10 +445,10 @@ const Note = ({ note }) => {
 }
 ```
 
-One way to do this would be to use React Router's [useMatch](https://reactrouter.com/en/v6.3.0/api#usematch) hook to figure out the id of the note to be displayed in the *App* component.
+One way to do this would be to use React Router's [useMatch](https://reactrouter.com/en/v6.3.0/api#usematch) hook to figure out the id of the note to be displayed in the `App` component.
 
-It is not possible to use the <i>useMatch</i> hook in the component which defines the routed part of the application.
-Let's move the use of the *Router* components from *App*:
+It is not possible to use the `useMatch` hook in the component which defines the routed part of the application.
+Let's move the use of the `Router` components from `App`:
 
 ```js
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -506,7 +506,7 @@ Every time the component is rendered, so practically every time the browser's UR
 const match = useMatch('/notes/:id')
 ```
 
-If the URL matches */notes/:id*, the match variable will contain an object from which we can access the parameterized part of the path, the id of the note to be displayed, and we can then fetch the correct note to display.
+If the URL matches ***/notes/:id***, the match variable will contain an object from which we can access the parameterized part of the path, the id of the note to be displayed, and we can then fetch the correct note to display.
 
 ```js
 const note = match 
@@ -524,7 +524,7 @@ The completed code can be found [here](https://github.com/fullstack-hy2020/misc/
 Let's return to working with anecdotes.
 Use the redux-free anecdote app found in the repository <https://github.com/fullstack-hy2020/routed-anecdotes> as the starting point for the exercises.
 
-If you clone the project into an existing git repository, remember to <i>delete the git configuration of the cloned application:</i>
+If you clone the project into an existing git repository, remember to *delete the git configuration of the cloned application:*
 
 ```bash
 cd routed-anecdotes   // go first to directory of the cloned repository
@@ -540,15 +540,15 @@ npm start
 
 #### 7.1: routed anecdotes, step1
 
-Add React Router to the application so that by clicking links in the <i>Menu</i> component the view can be changed.
+Add React Router to the application so that by clicking links in the `Menu` component the view can be changed.
 
-At the root of the application, meaning the path */*, show the list of anecdotes:
+At the root of the application, meaning the path `/`, show the list of anecdotes:
 
 ![browser at baseURL showing anecdotes and footer](../../assets/teht/40.png)
 
-The <i>Footer</i> component should always be visible at the bottom.
+The `Footer` component should always be visible at the bottom.
 
-The creation of a new anecdote should happen e.g. in the path <i>create</i>:
+The creation of a new anecdote should happen e.g. in the path *create*:
 
 ![browser anecdotes /create shows create form](../../assets/teht/41.png)
 
@@ -566,7 +566,7 @@ Navigating to the page showing the single anecdote is done by clicking the name 
 
 The default functionality of the creation form is quite confusing because nothing seems to be happening after creating a new anecdote using the form.
 
-Improve the functionality such that after creating a new anecdote the application transitions automatically to showing the view for all anecdotes <i>and</i> the user is shown a notification informing them of this successful creation for the next five seconds:
+Improve the functionality such that after creating a new anecdote the application transitions automatically to showing the view for all anecdotes **and** the user is shown a notification informing them of this successful creation for the next five seconds:
 
 ![browser anecdotes showing success message for adding anecdote](../../assets/teht/44.png)
 
