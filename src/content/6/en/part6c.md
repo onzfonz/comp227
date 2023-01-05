@@ -10,7 +10,7 @@ lang: en
 Let's expand the application so that the notes are stored in the backend.
 We'll use [json-server](/en/part2/getting_data_from_server), familiar from part 2.
 
-The initial state of the database is stored in the file <i>db.json</i>, which is placed in the root of the project:
+The initial state of the database is stored in the file *db.json*, which is placed in the root of the project:
 
 ```json
 {
@@ -35,7 +35,7 @@ We'll install json-server for the project...
 npm install json-server --save-dev
 ```
 
-and add the following line to the <i>scripts</i> part of the file <i>package.json</i>
+and add the following line to the `scripts` part of the file *package.json*
 
 ```js
 "scripts": {
@@ -44,9 +44,9 @@ and add the following line to the <i>scripts</i> part of the file <i>package.jso
 }
 ```
 
-Now let's launch json-server with the command *npm run server*.
+Now let's launch json-server with the command `npm run server`.
 
-Next, we'll create a method into the file <i>services/notes.js</i>, which uses <i>axios</i> to fetch data from the backend
+Next, we'll create a method into the file *services/notes.js*, which uses `axios` to fetch data from the backend
 
 ```js
 import axios from 'axios'
@@ -67,7 +67,7 @@ We'll add axios to the project
 npm install axios
 ```
 
-We'll change the initialization of the state in <i>noteReducer</i>, so that by default there are no notes:
+We'll change the initialization of the state in `noteReducer`, so that by default there are no notes:
 
 ```js
 const noteSlice = createSlice({
@@ -77,7 +77,7 @@ const noteSlice = createSlice({
 })
 ```
 
-Let's also add a new action <em>appendNote</em> for adding a note object:
+Let's also add a new action `appendNote` for adding a note object:
 
 ```js
 const noteSlice = createSlice({
@@ -120,7 +120,7 @@ export const { createNote, toggleImportanceOf, appendNote } = noteSlice.actions 
 export default noteSlice.reducer
 ```
 
-A quick way to initialize the notes state based on the data received from the server is to fetch the notes in the <i>index.js</i> file and dispatch an action using the <em>appendNote</em> action creator for each individual note object:
+A quick way to initialize the notes state based on the data received from the server is to fetch the notes in the *index.js* file and dispatch an action using the `appendNote` action creator for each individual note object:
 
 ```js
 // ...
@@ -146,8 +146,8 @@ noteService.getAll().then(notes =>
 ```
 
 Dispatching multiple actions seems a bit impractical.
-Let's add an action creator <em>setNotes</em> which can be used to directly replace the notes array.
-We'll get the action creator from the <em>createSlice</em> function by implementing the <em>setNotes</em> action:
+Let's add an action creator `setNotes` which can be used to directly replace the notes array.
+We'll get the action creator from the `createSlice` function by implementing the `setNotes` action:
 
 ```js
 // ...
@@ -195,7 +195,7 @@ export const { createNote, toggleImportanceOf, appendNote, setNotes } = noteSlic
 export default noteSlice.reducer
 ```
 
-Now, the code in the <i>index.js</i> file looks a lot better:
+Now, the code in the *index.js* file looks a lot better:
 
 ```js
 // ...
@@ -214,11 +214,11 @@ noteService.getAll().then(notes =>
 )
 ```
 
-> **NB:** why didn't we use await in place of promises and event handlers (registered to *then*-methods)?
+> **NB:** why didn't we use await in place of promises and event handlers (registered to `then` methods)?
 >
-> Await only works inside <i>async</i> functions, and the code in <i>index.js</i> is not inside a function, so due to the simple nature of the operation, we'll abstain from using <i>async</i> this time.
+> Await only works inside `async` functions, and the code in *index.js* is not inside a function, so due to the simple nature of the operation, we'll abstain from using `async` this time.
 
-We do, however, decide to move the initialization of the notes into the <i>App</i> component, and, as usual, when fetching data from a server, we'll use the <i>effect hook</i>.
+We do, however, decide to move the initialization of the notes into the `App` component, and, as usual, when fetching data from a server, we'll use the **effect hook**.
 
 ```js
 import { useEffect } from 'react' // highlight-line
@@ -271,7 +271,7 @@ const App = () => {
 ```
 
 <!-- Nyt komponentin _App_ sisällä määritelty muuttuja <i>dispatch</i> eli käytännössä redux-storen dispatch-funktio on lisätty useEffectille parametrina annettuun taulukkoon. **Jos** dispatch-muuttujan sisältö muuttuisi ohjelman suoritusaikana, suoritettaisiin efekti uudelleen, näin ei kuitenkaan ole, eli varoitus on tässä tilanteessa oikeastaan aiheeton. -->
-Now the variable <i>dispatch</i> we define in the *App* component, which practically is the dispatch function of the redux store, has been added to the array useEffect receives as a parameter.
+Now the variable `dispatch` we define in the `App` component, which practically is the dispatch function of the redux store, has been added to the array useEffect receives as a parameter.
 **If** the value of the dispatch variable would change during runtime,
 the effect would be executed again.
 This however cannot happen in our application, so the warning is unnecessary.
@@ -323,7 +323,7 @@ export default {
 }
 ```
 
-The method *addNote* of the component <i>NewNote</i> changes slightly:
+The method `addNote` of the component `NewNote` changes slightly:
 
 ```js
 import { useDispatch } from 'react-redux'
@@ -352,7 +352,7 @@ const NewNote = (props) => {
 export default NewNote
 ```
 
-Because the backend generates ids for the notes, we'll change the action creator <em>createNote</em> accordingly:
+Because the backend generates ids for the notes, we'll change the action creator `createNote` accordingly:
 
 ```js
 createNote(state, action) {
@@ -362,7 +362,7 @@ createNote(state, action) {
 
 Changing the importance of notes could be implemented using the same principle, by making an asynchronous method call to the server and then dispatching an appropriate action.
 
-The current state of the code for the application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-3) in the branch <i>part6-3</i>.
+The current state of the code for the application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-3) in the branch *part6-3*.
 
 </div>
 
@@ -387,8 +387,8 @@ Modify the creation of new anecdotes, so that the anecdotes are stored in the ba
 ### Asynchronous actions and Redux thunk
 
 Our approach is quite good, but it is not great that the communication with the server happens inside the functions of the components.
-It would be better if the communication could be abstracted away from the components so that they don't have to do anything else but call the appropriate <i>action creator</i>.
-As an example, <i>App</i> would initialize the state of the application as follows:
+It would be better if the communication could be abstracted away from the components so that they don't have to do anything else but call the appropriate ***action creator***.
+As an example, `App` would initialize the state of the application as follows:
 
 ```js
 const App = () => {
@@ -402,7 +402,7 @@ const App = () => {
 }
 ```
 
-and <i>NewNote</i> would create a new note as follows:
+and `NewNote` would create a new note as follows:
 
 ```js
 const NewNote = () => {
@@ -420,8 +420,8 @@ const NewNote = () => {
 ```
 
 In this implementation, both components would dispatch an action without the need to know about the communication between the server that happens behind the scenes.
-These kinds of <i>async actions</i> can be implemented using the [Redux Thunk](https://github.com/reduxjs/redux-thunk) library.
-The use of the library doesn't need any additional configuration when the Redux store is created using the Redux Toolkit's <em>configureStore</em> function.
+These kinds of **async actions** can be implemented using the [Redux Thunk](https://github.com/reduxjs/redux-thunk) library.
+The use of the library doesn't need any additional configuration when the Redux store is created using the Redux Toolkit's `configureStore` function.
 
 Let us now install the library
 
@@ -429,11 +429,11 @@ Let us now install the library
 npm install redux-thunk
 ```
 
-With Redux Thunk it is possible to implement <i>action creators</i> which return a function instead of an object.
-The function receives Redux store's <em>dispatch</em> and <em>getState</em> methods as parameters.
+With Redux Thunk it is possible to implement **action creators** which return a function instead of an object.
+The function receives Redux store's `dispatch` and `getState` methods as parameters.
 This allows for example implementations of asynchronous action creators, which first wait for the completion of a certain asynchronous operation and after that dispatch some action, which changes the store's state.
 
-We can define an action creator <em>initializeNotes</em> which initializes the notes based on the data received from the server:
+We can define an action creator `initializeNotes` which initializes the notes based on the data received from the server:
 
 ```js
 // ...
@@ -455,9 +455,9 @@ export const initializeNotes = () => {
 export default noteSlice.reducer
 ```
 
-In the inner function, meaning the <i>asynchronous action</i>, the operation first fetches all the notes from the server and then <i>dispatches</i> the <em>setNotes</em> action, which adds them to the store.
+In the inner function, meaning the **asynchronous action**, the operation first fetches all the notes from the server and then ***dispatches*** the `setNotes` action, which adds them to the store.
 
-The component <i>App</i> can now be defined as follows:
+The component `App` can now be defined as follows:
 
 ```js
 // ...
@@ -485,7 +485,7 @@ const App = () => {
 The solution is elegant.
 The initialization logic for the notes has been completely separated from the React component.
 
-Next, let's replace the <em>createNote</em> action creator created by the <em>createSlice</em> function with an asynchronous action creator:
+Next, let's replace the `createNote` action creator created by the `createSlice` function with an asynchronous action creator:
 
 ```js
 // ...
@@ -541,11 +541,11 @@ export const createNote = content => {
 export default noteSlice.reducer
 ```
 
-The principle here is the same: first, an asynchronous operation is executed, after which the action changing the state of the store is <i>dispatched</i>.
+The principle here is the same: first, an asynchronous operation is executed, after which the action changing the state of the store is **dispatched**.
 Redux Toolkit offers a multitude of tools to simplify asynchronous state management.
 Suitable tools for this use case are for example the [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk) function and the [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) API.
 
-The component <i>NewNote</i> changes as follows:
+The component `NewNote` changes as follows:
 
 ```js
 // ...
@@ -570,7 +570,7 @@ const NewNote = () => {
 }
 ```
 
-Finally, let's clean up the <i>index.js</i> file a bit by moving the code related to the creation of the Redux store into its own, <i>store.js</i> file:
+Finally, let's clean up the *index.js* file a bit by moving the code related to the creation of the Redux store into its own, *store.js* file:
 
 ```js
 import { configureStore } from '@reduxjs/toolkit'
@@ -588,7 +588,7 @@ const store = configureStore({
 export default store
 ```
 
-After the changes, the content of the <i>index.js</i> is the following:
+After the changes, the content of the *index.js* is the following:
 
 ```js
 import React from 'react'
@@ -604,7 +604,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-The current state of the code for the application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-4) in the branch <i>part6-4</i>.
+The current state of the code for the application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-4) in the branch *part6-4*.
 
 </div>
 
@@ -627,7 +627,7 @@ Fix the situation with the help of the Redux Thunk library.
 
 #### 6.18 Anecdotes and the backend, step6
 
-The creation of notifications is still a bit tedious since one has to do two actions and use the *setTimeout* function:
+The creation of notifications is still a bit tedious since one has to do two actions and use the `setTimeout` function:
 
 ```js
 dispatch(setNotification(`new anecdote '${content}'`))
