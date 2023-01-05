@@ -28,6 +28,12 @@
         },
         {
             "pattern": "https://studies.cs.helsinki.fi/exampleapp/new_note"
+        },
+        {
+            "pattern": "web.archive.org"
+        },
+        {
+            "pattern": "recharts.org"
         }
 
     ],
