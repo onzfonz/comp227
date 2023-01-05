@@ -32,9 +32,9 @@ After making the changes to the directory structure of our project, we end up wi
 │   └── middleware.js  
 ```
 
-So far we have been using <i>console.log</i> and <i>console.error</i> to print different information from the code.
+So far we have been using `console.log` and `console.error` to print different information from the code.
 However, this is not a very good way to do things.
-Let's separate all printing to the console to its own module <i>utils/logger.js</i>:
+Let's separate all printing to the console to its own module *utils/logger.js*:
 
 ```js
 const info = (...params) => {
@@ -55,7 +55,7 @@ The logger has two functions, **info** for printing normal log messages, and **e
 Extracting logging into its own module is a good idea in more ways than one.
 If we wanted to start writing logs to a file or send them to an external logging service like [graylog](https://www.graylog.org/) or [papertrail](https://papertrailapp.com) we would only have to make changes in one place.
 
-The contents of the <i>index.js</i> file used for starting the application gets simplified as follows:
+The contents of the *index.js* file used for starting the application gets simplified as follows:
 
 ```js
 const app = require('./app') // the actual Express application
@@ -70,10 +70,10 @@ server.listen(config.PORT, () => {
 })
 ```
 
-The <i>index.js</i> file only imports the actual application from the <i>app.js</i> file and then starts the application.
-The function *info* of the logger-module is used for the console printout telling that the application is running.
+The *index.js* file only imports the actual application from the *app.js* file and then starts the application.
+The function `info` of the logger-module is used for the console printout telling that the application is running.
 
-The handling of environment variables is extracted into a separate <i>utils/config.js</i> file:
+The handling of environment variables is extracted into a separate *utils/config.js* file:
 
 ```js
 require('dotenv').config()
@@ -96,10 +96,10 @@ logger.info(`Server running on port ${config.PORT}`)
 ```
 
 The route handlers have also been moved into a dedicated module.
-The event handlers of routes are commonly referred to as <i>controllers</i>, and for this reason we have created a new <i>controllers</i> directory.
-All of the routes related to notes are now in the <i>notes.js</i> module under the <i>controllers</i> directory.
+The event handlers of routes are commonly referred to as **controllers**, and for this reason we have created a new *controllers* directory.
+All of the routes related to notes are now in the *notes.js* module under the *controllers* directory.
 
-The contents of the <i>notes.js</i> module are the following:
+The contents of the *notes.js* module are the following:
 
 ```js
 const notesRouter = require('express').Router()
@@ -165,7 +165,7 @@ notesRouter.put('/:id', (request, response, next) => {
 module.exports = notesRouter
 ```
 
-This is almost an exact copy-paste of our previous <i>index.js</i> file.
+This is almost an exact copy-paste of our previous *index.js* file.
 
 However, there are a few significant changes.
 At the very beginning of the file we create a new [router](http://expressjs.com/en/api.html#router) object:
@@ -197,23 +197,23 @@ notesRouter.delete('/:id', (request, response) => {
 
 So what are these router objects exactly? The Express manual provides the following explanation:
 
-> <i>A router object is an isolated instance of middleware and routes.
-You can think of it as a “mini-application,” capable only of performing middleware and routing functions.
-Every Express application has a built-in app router.</i>
+> *A router object is an isolated instance of middleware and routes.
+  You can think of it as a “mini-application,” capable only of performing middleware and routing functions.
+  Every Express application has a built-in app router.*
 
-The router is in fact a <i>middleware</i>, that can be used for defining "related routes" in a single place, which is typically placed in its own module.
+The router is in fact a **middleware**, that can be used for defining "related routes" in a single place, which is typically placed in its own module.
 
-The <i>app.js</i> file that creates the actual application takes the router into use as shown below:
+The *app.js* file that creates the actual application takes the router into use as shown below:
 
 ```js
 const notesRouter = require('./controllers/notes')
 app.use('/api/notes', notesRouter)
 ```
 
-The router we defined earlier is used <i>if</i> the URL of the request starts with <i>/api/notes</i>.
-For this reason, the notesRouter object must only define the relative parts of the routes, i.e. the empty path <i>/</i> or just the parameter <i>/:id</i>.
+The router we defined earlier is used *if* the URL of the request starts with ***/api/notes***.
+For this reason, the notesRouter object must only define the relative parts of the routes, i.e. the empty path `/` or just the parameter `/:id`.
 
-After making these changes, our <i>app.js</i> file looks like this:
+After making these changes, our *app.js* file looks like this:
 
 ```js
 const config = require('./utils/config')
@@ -248,9 +248,9 @@ app.use(middleware.errorHandler)
 module.exports = app
 ```
 
-The file takes different middleware into use, and one of these is the <i>notesRouter</i> that is attached to the <i>/api/notes</i> route.
+The file takes different middleware into use, and one of these is the `notesRouter` that is attached to the `/api/notes` route.
 
-Our custom middleware has been moved to a new <i>utils/middleware.js</i> module:
+Our custom middleware has been moved to a new *utils/middleware.js* module:
 
 ```js
 const logger = require('./logger')
@@ -286,8 +286,8 @@ module.exports = {
 }
 ```
 
-The responsibility of establishing the connection to the database has been given to the  <i>app.js</i> module.
-The <i>note.js</i> file under the <i>models</i> directory only defines the Mongoose schema for notes.
+The responsibility of establishing the connection to the database has been given to the  *app.js* module.
+The *note.js* file under the *models* directory only defines the Mongoose schema for notes.
 
 ```js
 const mongoose = require('mongoose')
@@ -343,14 +343,14 @@ There is no strict directory structure or file naming convention that is require
 In contrast, Ruby on Rails does require a specific structure.
 Our current structure simply follows some of the best practices you can come across on the internet.
 
-You can find the code for our current application in its entirety in the <i>part4-1</i> branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-1).
+You can find the code for our current application in its entirety in the *part4-1* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-1).
 
-If you clone the project for yourself, run the *npm install* command before starting the application with *npm start*.
+If you clone the project for yourself, run the `npm install` command before starting the application with `npm start`.
 
 ### Note on exports
 
 We have used two different kinds of exports in this part.
-Firstly, e.g. the file <i>utils/logger.js</i> does the export as follows:
+Firstly, e.g. the file *utils/logger.js* does the export as follows:
 
 ```js
 const info = (...params) => {
@@ -368,7 +368,7 @@ module.exports = {
 // highlight-end
 ```
 
-The file exports <i>an object</i> that has two fields, both of which are functions.
+The file exports ***an object*** that has two fields, both of which are functions.
 The functions can be used in two different ways.
 The first option is to require the whole object and refer to functions through the object using the dot notation:
 
@@ -380,7 +380,7 @@ logger.info('message')
 logger.error('error message')
 ```
 
-The other option is to destructure the functions to their own variables in the <i>require</i> statement:
+The other option is to destructure the functions to their own variables in the `require` statement:
 
 ```js
 const { info, error } = require('./utils/logger')
@@ -391,7 +391,7 @@ error('error message')
 
 The latter way may be preferable if only a small portion of the exported functions are used in a file.
 
-e.g. in file <i>controller/notes.js</i> exporting happens as follows:
+e.g. in file *controller/notes.js* exporting happens as follows:
 
 ```js
 const notesRouter = require('express').Router()
@@ -420,7 +420,7 @@ Now the exported "thing" (in this case a router object) is assigned to a variabl
 
 ### Exercises 4.1-4.2
 
-In the exercises for this part, we will be building a <i>blog list application</i>, that allows users to save information about interesting blogs they have stumbled across on the internet.
+In the exercises for this part, we will be building a **blog list application**, which allows users to save information about interesting blogs they have stumbled across on the internet.
 For each listed blog we will save the author, title, URL, and amount of upvotes from users of the application.
 
 #### 4.1 Blog list, step1
@@ -473,8 +473,8 @@ app.listen(PORT, () => {
 })
 ```
 
-Turn the application into a functioning <i>npm</i> project.
-To keep your development productive, configure the application to be executed with <i>nodemon</i>.
+Turn the application into a functioning ***npm*** project.
+To keep your development productive, configure the application to be executed with ***nodemon***.
 You can create a new database for your application with MongoDB Atlas, or use the same database from the previous part's exercises.
 
 Verify that it is possible to add blogs to the list with Postman or the VS Code REST client and that the application returns the added blogs at the correct endpoint.
@@ -500,7 +500,7 @@ We have completely neglected one essential area of software development, and tha
 
 Let's start our testing journey by looking at unit tests.
 The logic of our application is so simple, that there is not much that makes sense to test with unit tests.
-Let's create a new file <i>utils/for_testing.js</i> and write a couple of simple functions that we can use for test writing practice:
+Let's create a new file *utils/for_testing.js* and write a couple of simple functions that we can use for test writing practice:
 
 ```js
 const reverse = (string) => {
@@ -524,23 +524,23 @@ module.exports = {
 }
 ```
 
-> The *average* function uses the array [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) method.
-If the method is not familiar to you yet, then now is a good time to watch the first three videos from the [Functional Javascript](https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84) series on Youtube.
+> The `average` function uses the array [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) method.
+  If the method is not familiar to you yet, then now is a good time to watch the first three videos from the [Functional Javascript](https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84) series on Youtube.
 
-There are many different testing libraries or <i>test runners</i> available for JavaScript.
+There are many different testing libraries or **test runners** available for JavaScript.
 In this course we will be using a testing library developed and used internally by Facebook called [jest](https://jestjs.io/), which resembles the previous king of JavaScript testing libraries [Mocha](https://mochajs.org/).
 
 Jest is a natural choice for this course, as it works well for testing backends, and it shines when it comes to testing React applications.
 
-> <i>**Windows users:**</i> Jest may not work if the path of the project directory contains a directory that has spaces in its name.
+> ***Windows users:*** Jest may not work if the path of the project directory contains a directory that has spaces in its name.
 
-Since tests are only executed during the development of our application, we will install <i>jest</i> as a development dependency with the command:
+Since tests are only executed during the development of our application, we will install `jest` as a development dependency with the command:
 
 ```bash
 npm install --save-dev jest
 ```
 
-Let's define the <i>npm script *test*</i> to execute tests with Jest and to report about the test execution with the <i>verbose</i> style:
+Let's define the *npm script `test`* to execute tests with Jest and to report about the test execution with the `verbose` style:
 
 ```bash
 {
@@ -561,7 +561,7 @@ Let's define the <i>npm script *test*</i> to execute tests with Jest and to repo
 ```
 
 Jest requires one to specify that the execution environment is Node.
-This can be done by adding the following to the end of <i>package.json</i>:
+This can be done by adding the following to the end of *package.json*:
 
 ```js
 {
@@ -572,7 +572,7 @@ This can be done by adding the following to the end of <i>package.json</i>:
 }
 ```
 
-Alternatively, Jest can look for a configuration file with the default name <i>jest.config.js</i>, where we can define the execution environment like this:
+Alternatively, Jest can look for a configuration file with the default name *jest.config.js*, where we can define the execution environment like this:
 
 ```js
 module.exports = {
@@ -580,7 +580,7 @@ module.exports = {
 }
 ```
 
-Let's create a separate directory for our tests called <i>tests</i> and create a new file called <i>reverse.test.js</i> with the following contents:
+Let's create a separate directory for our tests called *tests* and create a new file called *reverse.test.js* with the following contents:
 
 ```js
 const reverse = require('../utils/for_testing').reverse
@@ -604,8 +604,8 @@ test('reverse of releveler', () => {
 })
 ```
 
-The ESLint configuration we added to the project in the previous part complains about the *test* and *expect* commands in our test file since the configuration does not allow <i>globals</i>.
-Let's get rid of the complaints by adding <i>"jest": true</i> to the <i>env</i> property in the <i>.eslintrc.js</i> file.
+The ESLint configuration we added to the project in the previous part complains about the `test` and `expect` commands in our test file since the configuration does not allow *globals*.
+Let's get rid of the complaints by adding `"jest": true` to the `env` property in the *.eslintrc.js* file.
 
 ```js
 module.exports = {
@@ -625,15 +625,15 @@ module.exports = {
 }
 ```
 
-In the first row, the test file imports the function to be tested and assigns it to a variable called *reverse*:
+In the first row, the test file imports the function to be tested and assigns it to a variable called `reverse`:
 
 ```js
 const reverse = require('../utils/for_testing').reverse
 ```
 
-Individual test cases are defined with the *test* function.
-The first parameter of the function is the test description as a string.
-The second parameter is a <i>function</i>, that defines the functionality for the test case.
+Individual test cases are defined with the `test` function.
+The first parameter of the function is the *test description* as a string.
+The second parameter is a *function that defines the functionality* for the test case.
 The functionality for the second test case looks like this:
 
 ```js
@@ -644,17 +644,17 @@ The functionality for the second test case looks like this:
 }
 ```
 
-First, we execute the code to be tested, meaning that we generate a reverse for the string <i>react</i>.
+First, we execute the code to be tested, meaning that we generate a reverse for the string `react`.
 Next, we verify the results with the [expect](https://jestjs.io/docs/expect#expectvalue) function.
-Expect wraps the resulting value into an object that offers a collection of <i>matcher</i> functions, that can be used for verifying the correctness of the result.
+Expect wraps the resulting value into an object that offers a collection of **matcher** functions, that can be used for verifying the correctness of the result.
 Since in this test case we are comparing two strings, we can use the [toBe](https://jestjs.io/docs/expect#tobevalue) matcher.
 
 As expected, all of the tests pass:
 
 ![terminal output from npm test](../../images/4/1x.png)
 
-Jest expects by default that the names of test files contain <i>.test</i>.
-In this course, we will follow the convention of naming our tests files with the extension <i>.test.js</i>.
+Jest expects by default that the names of test files contain *.test*.
+In this course, we will follow the convention of naming our tests files with the extension *.test.js*.
 
 Jest has excellent error messages, let's break the test to demonstrate this:
 
@@ -670,7 +670,7 @@ Running the tests above results in the following error message:
 
 ![terminal output shows failure from npm test](../../images/4/2x.png)
 
-Let's add a few tests for the *average* function, into a new file <i>tests/average.test.js</i>.
+Let's add a few tests for the `average` function, into a new file *tests/average.test.js*.
 
 ```js
 const average = require('../utils/for_testing').average
@@ -690,7 +690,7 @@ describe('average', () => {
 })
 ```
 
-The test reveals that the function does not work correctly with an empty array (this is because in JavaScript dividing by zero results in <i>NaN</i>):
+The test reveals that the function does not work correctly with an empty array (this is because in JavaScript dividing by zero results in `NaN`):
 
 ![terminal output showing empty array fails with jest](../../images/4/3.png)
 
@@ -708,10 +708,10 @@ const average = array => {
 }
 ```
 
-If the length of the array is 0 then we return 0, and in all other cases, we use the *reduce* method to calculate the average.
+If the length of the array is 0 then we return 0, and in all other cases, we use the `reduce` method to calculate the average.
 
 There are a few things to notice about the tests that we just wrote.
-We defined a <i>describe</i> block around the tests that were given the name *average*:
+We defined a `describe` block around the tests that were given the name `average`:
 
 ```js
 describe('average', () => {
@@ -724,7 +724,7 @@ The test output of Jest also uses the name of the describe block:
 
 ![screenshot of npm test shwoing describe blocks](../../images/4/4x.png)
 
-As we will see later on <i>describe</i> blocks are necessary when we want to run some shared setup or teardown operations for a group of tests.
+As we will see later on `describe` blocks are necessary when we want to run some shared setup or teardown operations for a group of tests.
 
 Another thing to notice is that we wrote the tests in quite a compact way, without assigning the output of the function being tested to a variable:
 
@@ -741,13 +741,13 @@ test('of empty array is zero', () => {
 ### Exercises 4.3-4.7
 
 Let's create a collection of helper functions that are meant to assist in dealing with the blog list.
-Create the functions into a file called <i>utils/list_helper.js</i>.
-Write your tests into an appropriately named test file under the <i>tests</i> directory.
+Create the functions into a file called *utils/list_helper.js*.
+Write your tests into an appropriately named test file under the *tests* directory.
 
 #### 4.3: helper functions and unit tests, step1
 
-First, define a *dummy* function that receives an array of blog posts as a parameter and always returns the value 1.
-The contents of the <i>list_helper.js</i> file at this point should be the following:
+First, define a `dummy` function that receives an array of blog posts as a parameter and always returns the value 1.
+The contents of the *list_helper.js* file at this point should be the following:
 
 ```js
 const dummy = (blogs) => {
@@ -774,11 +774,11 @@ test('dummy returns one', () => {
 
 #### 4.4: helper functions and unit tests, step2
 
-Define a new *totalLikes* function that receives a list of blog posts as a parameter.
-The function returns the total sum of <i>likes</i> in all of the blog posts.
+Define a new `totalLikes` function that receives a list of blog posts as a parameter.
+The function returns the total sum of ***likes*** in all of the blog posts.
 
 Write appropriate tests for the function.
-It's recommended to put the tests inside of a <i>describe</i> block so that the test report output gets grouped nicely:
+It's recommended to put the tests inside of a `describe` block so that the test report output gets grouped nicely:
 
 ![npm test passing for list_helper_test](../../images/4/5.png)
 
@@ -809,7 +809,7 @@ If defining your own test input list of blogs is too much work, you can use the 
 
 You are bound to run into problems while writing tests.
 Remember the things that we learned about [debugging](/en/part3/saving_data_to_mongo_db#debugging-node-applications) in part 3.
-You can print things to the console with *console.log* even during test execution.
+You can print things to the console with `console.log` even during test execution.
 It is even possible to use the debugger while running tests, you can find instructions for that [here](https://jestjs.io/docs/en/troubleshooting).
 
 **NB:** if some test is failing, then it is recommended to only run that test while you are fixing the issue.
@@ -823,7 +823,7 @@ npm test -- -t 'when list has only one blog, equals the likes of that'
 
 #### 4.5*: helper functions and unit tests, step3
 
-Define a new *favoriteBlog* function that receives a list of blogs as a parameter.
+Define a new `favoriteBlog` function that receives a list of blogs as a parameter.
 The function finds out which blog has the most likes.
 If there are many top favorites, it is enough to return one of them.
 
@@ -840,7 +840,7 @@ Dijkstra",
 
 **NB** when you are comparing objects, the [toEqual](https://jestjs.io/docs/en/expect#toequalvalue) method is probably what you want to use, since the [toBe](https://jestjs.io/docs/en/expect#tobevalue) tries to verify that the two values are the same value, and not just that they contain the same properties.
 
-Write the tests for this exercise inside of a new <i>describe</i> block.
+Write the tests for this exercise inside of a new `describe` block.
 Do the same for the remaining exercises as well.
 
 #### 4.6*: helper functions and unit tests, step4
@@ -851,8 +851,8 @@ Finishing these two exercises is not required in to advance in the course materi
 Finishing this exercise can be done without the use of additional libraries.
 However, this exercise is a great opportunity to learn how to use the [Lodash](https://lodash.com/) library.
 
-Define a function called *mostBlogs* that receives an array of blogs as a parameter.
-The function returns the <i>author</i> who has the largest amount of blogs.
+Define a function called `mostBlogs` that receives an array of blogs as a parameter.
+The function returns the ***author*** who has the largest amount of blogs.
 The return value also contains the number of blogs the top author has:
 
 ```js
@@ -867,7 +867,7 @@ If there are many top bloggers, then it is enough to return any one of them.
 
 #### 4.7*: helper functions and unit tests, step5
 
-Define a function called *mostLikes* that receives an array of blogs as its parameter.
+Define a function called `mostLikes` that receives an array of blogs as its parameter.
 The function returns the author, whose blog posts have the largest amount of likes.
 The return value also contains the total number of likes that the author has received:
 
