@@ -8,8 +8,10 @@ lang: en
 <div class="content">
 
 TypeScript is a programming language designed for large-scale JavaScript development created by Microsoft.
-For example, Microsoft's *Azure Management Portal* (1.2 million lines of code) and *Visual Studio Code* (300 000 lines of code) have both been written in TypeScript.
-To support building large-scale JavaScript applications, TypeScript offers features such as better development-time tooling, static code analysis, compile-time type checking and code-level documentation.
+For example, Microsoft's *Azure Management Portal* (1.2 million lines of code)
+and *Visual Studio Code* (300 000 lines of code) have both been written in TypeScript.
+To support building large-scale JavaScript applications, TypeScript offers features such as
+better development-time tooling, static code analysis, compile-time type checking and code-level documentation.
 
 ### Main principle
 
@@ -71,14 +73,19 @@ console.log(birthdayGreeter(birthdayHero, age));
 #### Structural typing
 
 TypeScript is a structurally-typed language.
-In structural typing, two elements are considered to be compatible with one another if, for each feature within the type of the first element, a corresponding and identical feature exists within the type of the second element.
+In structural typing, two elements are considered to be compatible with one another if,
+for each feature within the type of the first element, a corresponding and identical feature exists within the type of the second element.
 Two types are considered to be identical if they are compatible with each other.
 
 #### Type inference
 
 The TypeScript compiler can attempt to infer the type information if no type has been specified.
 Variables' type can be inferred based on their assigned value and their usage.
-The type inference takes place when initializing variables and members, setting parameter default values, and determining function return types.
+The type inference takes place when:
+
+- initializing variables and members
+- setting parameter default values, and
+- determining function return types.
 
 For example, consider the function `add`:
 
@@ -114,7 +121,8 @@ func((result) => {
 
 First, we have a declaration of a [type alias](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) called `CallsFunction`.
 `CallsFunction` is a function type with one parameter: `callback`.
-The parameter `callback` is of type function which takes a string parameter and returns [any](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any) value.
+The parameter `callback` is of type function which takes a string parameter
+and returns [any](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any) value.
  As we will learn later in this part, `any` is a kind of "wildcard" type that can represent any type.
 Also, CallsFunction returns [void](https://www.typescriptlang.org/docs/handbook/2/functions.html#void) type.
 
@@ -169,7 +177,8 @@ This form of type annotation-bound documentation will always be up to date and i
 It is also helpful when returning to an old project.
 
 Types can be reused all around the code base, and a change to a type definition will automatically be reflected everywhere the type is used.
-One might argue that you can achieve similar code-level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html), but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily, and is also more verbose.
+One might argue that you can achieve similar code-level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html),
+but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily, and is also more verbose.
 
 The third advantage of TypeScript is that IDEs can provide more **specific and smarter IntelliSense** when they know exactly what types of data you are processing.
 
@@ -189,12 +198,15 @@ Lastly, below, we list some issues many have with TypeScript, which might be goo
 #### Incomplete, invalid or missing types in external libraries
 
 When using external libraries, you may find that some libraries have either missing or in some way invalid type declarations.
-Most often, this is due to the library not being written in TypeScript, and the person adding the type declarations manually not doing such a good job with it.
+Most often, this is due to the library not being written in TypeScript,
+and the person adding the type declarations manually not doing such a good job with it.
 In these cases, you might need to define the type declarations yourself.
 However, there is a good chance someone has already added typings for the package you are using.
 Always check the DefinitelyTyped [GitHub page](https://github.com/DefinitelyTyped/DefinitelyTyped) first.
 They are probably the most popular sources for type declaration files.
-Otherwise, you might want to start by getting acquainted with TypeScript's [documentation](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) regarding type declarations.
+Otherwise, you might want to start by getting acquainted with
+[TypeScript's documentation](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html)
+regarding type declarations.
 
 #### Sometimes, type inference needs assistance
 
@@ -202,7 +214,8 @@ The type inference in TypeScript is pretty good but not quite perfect.
 Sometimes, you may feel like you have declared your types perfectly, but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
 In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting and type guards.
 Using type casting or type guards, you are giving your word to the compiler that the value ***is*** of the type that you declare.
-You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
+and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
 
 #### Mysterious type errors
 

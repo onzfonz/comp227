@@ -36,7 +36,8 @@ You can start the app by running `npm start` in the application's root.
 
 If you take a look at the files and folders, you'll notice that the app is not that different from
 one using pure JavaScript.
-The only differences are that the *.js* and *.jsx* files are now *.ts* and *.tsx* files, they contain some type annotations, and the root directory contains a *tsconfig.json* file.
+The only differences are that the *.js* and *.jsx* files are now *.ts* and *.tsx* files,
+they contain some type annotations, and the root directory contains a *tsconfig.json* file.
 
 Now, let's take a look at the *tsconfig.json* file that has been created for us:
 
@@ -69,10 +70,13 @@ Now, let's take a look at the *tsconfig.json* file that has been created for us:
 }
 ```
 
-Notice `compilerOptions` now has the key [lib](https://www.typescriptlang.org/tsconfig#lib) that includes "type definitions for things found in browser environments (like `document`)."
+Notice `compilerOptions` now has the key [lib](https://www.typescriptlang.org/tsconfig#lib)
+that includes "type definitions for things found in browser environments (like `document`)."
 
-Everything else should be more or less fine except that, at the moment, the configuration allows compiling JavaScript files because `allowJs` is set to `true`.
-That would be fine if you need to mix TypeScript and JavaScript (e.g. if you are in the process of transforming a JavaScript project into TypeScript or something like that), but we want to create a pure TypeScript app, so let's change that configuration to `false`.
+Everything else should be more or less fine except that, at the moment,
+the configuration allows compiling JavaScript files because `allowJs` is set to `true`.
+That would be fine if you need to mix TypeScript and JavaScript (e.g. if you are in the process of transforming a JavaScript project into TypeScript or something like that),
+but we want to create a pure TypeScript app, so let's change that configuration to `false`.
 
 In our previous project, we used ESlint to help us enforce a coding style, and we'll do the same with this app.
 We do not need to install any dependencies, since create-react-app has taken care of that already.
@@ -106,9 +110,12 @@ We configure ESlint in *.eslintrc* with the following settings:
 }
 ```
 
-Since the return type of most React components is generally either `JSX.Element` or `null`, we have loosened up the default linting rules a bit by disabling the rules [explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md) and [explicit-module-boundary-types](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md).
+Since the return type of most React components is generally either `JSX.Element` or `null`,
+we have loosened up the default linting rules a bit by disabling the rules [explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
+and [explicit-module-boundary-types](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md).
 Now we don't need to explicitly state our function return types everywhere.
-We will also disable [react/react-in-jsx-scope](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md) since importing React is [no longer needed](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) in every file.
+We will also disable [react/react-in-jsx-scope](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md) since importing React is
+[no longer needed](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) in every file.
 
 Next, we need to get our linting script to parse `*.tsx` files, which are the TypeScript equivalent of React's JSX files.
 We can do that by altering our lint command in *package.json* to the following:
@@ -152,7 +159,9 @@ ReactDOM.render(element, document.getElementById("root"));
 
 In this example, we have a component called `Welcome` to which we pass a `name` as a prop.
 It then renders the name to the screen.
-We know that the `name` should be a string, and we use the [prop-types](https://www.npmjs.com/package/prop-types) package introduced in [part 5](/part5/props_children_and_proptypes#prop-types) to receive hints about the desired types of a component's props and warnings about invalid prop types.
+We know that the `name` should be a string,
+and we use the [prop-types](https://www.npmjs.com/package/prop-types) package introduced in
+[part 5](/part5/props_children_and_proptypes#prop-types) to receive hints about the desired types of a component's props and warnings about invalid prop types.
 
 With TypeScript, we don't need the ***prop-types*** package anymore.
 We can define the types with the help of TypeScript just like we define types for a regular function as react components are nothing but mere functions.
@@ -352,7 +361,9 @@ the second and third parts also have some distinct additional attributes.
 
 Let's imagine that our application just keeps on growing, and we need to pass the different course parts around in our code.
 On top of that, there are also additional attributes and course parts added to the mix.
-How can we know that our code is capable of handling all the different types of data correctly, and we are not for example forgetting to render a new course part on some page? This is where TypeScript comes in handy!
+How can we know that our code is capable of handling all the different types of data correctly,
+and we are not for example forgetting to render a new course part on some page?
+This is where TypeScript comes in handy!
 
 Let's start by defining types for our different course parts:
 
@@ -387,7 +398,8 @@ type CoursePart = CoursePartOne | CoursePartTwo | CoursePartThree;
 Now we can set the type for our `courseParts` variable.
 Our editor will automatically warn us if we use the wrong type for an attribute, use an extra attribute, or forget to set an expected attribute.
 You can test this by commenting out any attribute for any course part.
-Thanks to the `name` [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types), TypeScript can identify which course part requires which additional attributes, even if the variable is defined to use the type union.
+Thanks to the `name` [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types),
+TypeScript can identify which course part requires which additional attributes, even if the variable is defined to use the type union.
 
 But we're not satisfied yet! There is still a lot of duplication in our types, and we want to avoid that.
 We start by identifying the attributes all course parts have in common, and defining a base type that contains them.
@@ -437,7 +449,9 @@ For instance, if you wanted to handle only specific (but not all) cases of a typ
 Nonetheless, it is recommended to handle all variations separately in most cases.
 
 With TypeScript, we can use a method called **exhaustive type checking**.
-Its basic principle is that if we encounter an unexpected value, we call a function that accepts a value with the type [never](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type) and also has the return type `never`.
+Its basic principle is that if we encounter an unexpected value,
+we call a function that accepts a value with the type
+[never](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type) and also has the return type `never`.
 
 A straightforward version of the function could look like this:
 
@@ -463,7 +477,8 @@ and would also comment out the `Deeper type usage` case block, we would see the 
 
 ![vscode error coursepart three not assignable to type never](../../images/8/33.png)
 
-The error message says that *`Argument of type 'CoursePartThree' is not assignable to parameter of type 'never'`*, which tells us that we are using a variable somewhere where it should never be used.
+The error message says that *`Argument of type 'CoursePartThree' is not assignable to parameter of type 'never'`*,
+which tells us that we are using a variable somewhere where it should never be used.
 This tells us that something needs to be fixed.
 When we remove the comments from the `Deeper type usage` case block, you will see that the error goes away.
 
@@ -542,7 +557,8 @@ Then modify the code so that you can remove the `description` attribute from bot
 Then create a component `Part` that renders all attributes of each type of course part.
 Use a switch case-based exhaustive type checking! Use the new component in component `Content`.
 
-Lastly, add another course part interface with the following attributes: `name`, `exerciseCount`, `description` and `requirements`, the latter being a string array.
+Lastly, add another course part interface with the following attributes:
+`name`, `exerciseCount`, `description` and `requirements`, the latter being a string array.
 The objects of this type look like the following:
 
 ```js
@@ -556,7 +572,8 @@ The objects of this type look like the following:
 ```
 
 Then add that interface to the type union `CoursePart` and add corresponding data to the `courseParts` variable.
-Now, if you have not modified your `Content` component correctly, you should get an error, because you have not yet added support for the fourth course part type.
+Now, if you have not modified your `Content` component correctly, you should get an error,
+because you have not yet added support for the fourth course part type.
 Do the necessary changes to `Content`, so that all attributes for the new course part also get rendered and that the compiler doesn't produce any errors.
 
 The result might look like the following:
@@ -604,7 +621,8 @@ type DiaryEntry = {
 
 In most cases, you can use either `type` or `interface`, whichever syntax you prefer.
 However, there are a few things to keep in mind.
-For example, if you define multiple interfaces with the same name, they will result in a merged interface, whereas if you try to define multiple types with the same name, it will result in an error stating that a type with the same name is already declared.
+For example, if you define multiple interfaces with the same name, they will result in a merged interface, whereas if you try to define multiple types with the same name,
+it will result in an error stating that a type with the same name is already declared.
 
 TypeScript documentation [recommends using interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces) in most cases.
 
@@ -658,7 +676,8 @@ After verifying that everything works, we can start studying the code.
 All the interesting stuff resides in the *src* folder.
 For your convenience, there is already a *types.ts* file for basic types used in the app, which you will have to extend or refactor in the exercises.
 
-In principle, we could use the same types for both backend and frontend, but usually, the frontend has different data structures and use cases for the data, which causes the types to be different.
+In principle, we could use the same types for both backend and frontend, but usually,
+the frontend has different data structures and use cases for the data, which causes the types to be different.
 For example, the frontend has a state and may want to keep data in objects or maps whereas the backend uses an array.
 The frontend might also not need all the fields of a data object saved in the backend, and it may need to add some new fields to use for rendering.
 
@@ -674,17 +693,22 @@ The main functionality of the code in the *state* folder is to keep our data in 
 
 Let's study the state handling a bit closer as a lot of stuff seems to be happening under the hood and it differs a bit from the methods used in the course so far.
 
-The state management is built using the React Hooks [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext) and [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer).
+The state management is built using the React Hooks [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext)
+and [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer).
 This is quite a good setup because we know the app will be rather small and we don't want to use ***redux*** or other similar libraries for state management.
-There are a lot of good materials, like [this article](https://medium.com/@seantheurgel/react-hooks-as-state-management-usecontext-useeffect-usereducer-a75472a862fe), about this approach to state management.
+There are a lot of good materials, like [this article](https://medium.com/@seantheurgel/react-hooks-as-state-management-usecontext-useeffect-usereducer-a75472a862fe),
+about this approach to state management.
 
 The approach taken in this app uses the React [context](https://reactjs.org/docs/context.html) that, according to its documentation:
 
-> *... is designed to share data that can be considered "global" for a tree of React components, such as the current authenticated user, theme, or preferred language.*
+> *... is designed to share data that can be considered "global" for a tree of React components,
+such as the current authenticated user, theme, or preferred language.*
 
 In our case, the "global", shared data is the application state **and** the dispatch function that is used to make changes to data.
-In many ways, our code works much like the Redux-based state management we used in [part 6](/part6), but is more lightweight since it does not require the use of any external libraries.
-This part assumes that you are at least familiar with the way Redux works, e.g. you should have covered at least [the first section](/part6/flux_architecture_and_redux) of part 6.
+In many ways, our code works much like the Redux-based state management we used in [part 6](/part6),
+but is more lightweight since it does not require the use of any external libraries.
+This part assumes that you are at least familiar with the way Redux works,
+e.g. you should have covered at least [the first section](/part6/flux_architecture_and_redux) of part 6.
 
 The [context](https://reactjs.org/docs/context.html) of our application has a tuple containing the app state and the dispatcher for changing the state.
 The application state is typed as follows:
@@ -695,12 +719,16 @@ export type State = {
 };
 ```
 
-The state is an object with one key, `patients`, which has a [dictionary](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html) or simply put an object with string keys and with `Patient` objects as values.
+The state is an object with one key, `patients`, which has a [dictionary](https://www.typescriptlang.org/docs/handbook/2/indexed-access-types.html)
+or simply put an object with string keys and with `Patient` objects as values.
 The index can only be a `string` or a `number` as you can access the object values using those.
 This enforces that the state conforms to the form we want, and prevents developers from misusing the state.
 
-But be aware of one thing! When a type is declared like the type for `patients`, TypeScript does not have any way of knowing if the key you are trying to access exists or not.
-So if we were to try to access a patient by a non-existing id, the compiler would think that the returned value is of type `Patient` and no error would be thrown when trying to access its properties:
+But be aware of one thing!
+When a type is declared like the type for `patients`,
+TypeScript does not have any way of knowing if the key you are trying to access exists or not.
+So if we were to try to access a patient by a non-existing id,
+the compiler would think that the returned value is of type `Patient` and no error would be thrown when trying to access its properties:
 
 ```js
 const myPatient = state.patients['non-existing-id'];
@@ -725,8 +753,11 @@ console.log(myPatient.name); // error, Object is possibly 'undefined'
 This type of additional type security is always good to implement if you e.g. use data from external sources or use the value of a user input to access data in your code.
 But if you are sure that you only handle data that actually exists, then there is no one stopping you from using the first presented solution.
 
-Even though we are not using them in this course part, it is good to mention that a more type-strict way would be to use [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) objects, to which you can declare a type for both the key and the content.
-The Map's accessor function `get()` always returns a union of the declared value type and undefined, so TypeScript automatically requires you to perform validity checks on data retrieved from a map:
+Even though we are not using them in this course part, it is good to mention that a more type-strict way would be to use
+[Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) objects,
+to which you can declare a type for both the key and the content.
+The Map's accessor function `get()` always returns a union of the declared value type and undefined,
+so TypeScript automatically requires you to perform validity checks on data retrieved from a map:
 
 ```js
 interface State {
@@ -785,7 +816,8 @@ export const reducer = (state: State, action: Action): State => {
 };
 ```
 
-The main difference is that the state is now a dictionary (or an object), instead of the array that we used in [part 6](/part6/flux_architecture_and_redux#pure-functions-immutable).
+The main difference is that the state is now a dictionary (or an object),
+instead of the array that we used in [part 6](/part6/flux_architecture_and_redux#pure-functions-immutable).
 
 There are a lot of things happening in the file *state.tsx*, which takes care of setting up the context.
 The main ingredient is the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook
@@ -837,11 +869,14 @@ const PatientListPage = () => {
 }
 ```
 
-Don't worry if this seems confusing; it will be until you have studied the [context's documentation](https://reactjs.org/docs/context.html) and its use in [state management](https://medium.com/@seantheurgel/react-hooks-as-state-management-usecontext-useeffect-usereducer-a75472a862fe).
+Don't worry if this seems confusing; it will be until you have studied the [context's documentation](https://reactjs.org/docs/context.html)
+and its use in [state management](https://medium.com/@seantheurgel/react-hooks-as-state-management-usecontext-useeffect-usereducer-a75472a862fe).
 You do not need to understand all this completely to do the exercises!
 
-It is quite common that when you start working on an existing codebase, you do not understand 100% of what happens under the hood in the beginning.
-If the app has been properly structured (and it has a proper set of tests), you can trust that if you make careful modifications, the app still works despite not understanding all the internal mechanisms.
+It is quite common that when you start working on an existing codebase,
+you do not understand 100% of what happens under the hood in the beginning.
+If the app has been properly structured (and it has a proper set of tests),
+you can trust that if you make careful modifications, the app still works despite not understanding all the internal mechanisms.
 Over time, you will get a grasp on the more unfamiliar parts, but it does not happen overnight when working with a large codebase.
 
 ### Patient listing page
@@ -868,7 +903,8 @@ const [error, setError] = React.useState<string | undefined>();
 
 We give the `useState` hook a type parameter, which is then applied to the actual state.
 So `modalOpen` is a `boolean` while `error` has the type `string | undefined`.
-Both set functions returned by the `useState` hook are functions that accept only arguments according to the type parameter given, e.g. the exact type for `setModalOpen` function is `React.Dispatch<React.SetStateAction<boolean>>`.
+Both set functions returned by the `useState` hook are functions that accept only arguments according to the type parameter given,
+e.g. the exact type for `setModalOpen` function is `React.Dispatch<React.SetStateAction<boolean>>`.
 
 We also have the `openModal` and `closeModal` helper functions for better readability and convenience:
 
@@ -937,7 +973,8 @@ Before going into this, let us do some preparatory work.
 
 #### 8.16: Patientor, step1
 
-Create an endpoint ***/api/patients/:id***  that returns all of the patient information for one patient, including the array of patient entries that is still empty for all the patients.
+Create an endpoint ***/api/patients/:id***  that returns all of the patient information for one patient,
+including the array of patient entries that is still empty for all the patients.
 For the time being, expand the backend types as follows:
 
 ```js
@@ -1072,7 +1109,8 @@ When looking at the `type`, we can see that there are three kinds of entries: `O
 This indicates we need three separate types.
 Since they all have some fields in common, we might just want to create a base entry interface that we can extend with the different fields in each type.
 
-When looking at the data, it seems that the fields `id`, `description`, `date` and `specialist` are something that can be found in each entry.
+When looking at the data,
+it seems that the fields `id`, `description`, `date` and `specialist` are something that can be found in each entry.
 On top of that, it seems that `diagnosisCodes` is only found in one `OccupationalHealthcare` and one `Hospital` type entry.
 Since it is not always used even in those types of entries, it is safe to assume that the field is optional.
 We could consider adding it to the `HealthCheck` type as well
@@ -1090,7 +1128,8 @@ interface BaseEntry {
 }
 ```
 
-If we want to finetune it a bit further, since we already have a `Diagnosis` type defined in the backend, we might just want to refer to the code field of the `Diagnosis` type directly in case its type ever changes.
+If we want to finetune it a bit further, since we already have a `Diagnosis` type defined in the backend,
+we might just want to refer to the code field of the `Diagnosis` type directly in case its type ever changes.
 We can do that like so:
 
 ```js
@@ -1184,9 +1223,11 @@ Use the new diagnosis data to show the descriptions for patient's diagnosis code
 
 #### 8.22: Patientor, step7
 
-Extend the entry listing on the patient's page to include the Entry's details with a new component that shows the rest of the information of the patient's entries distinguishing different types from each other.
+Extend the entry listing on the patient's page to include the Entry's details with a new component
+that shows the rest of the information of the patient's entries distinguishing different types from each other.
 
-You could use e.g. [Icons](https://mui.com/components/material-icons/) or some other [Material UI](https://mui.com/) component to get appropriate visuals for your listing.
+You could use e.g. [Icons](https://mui.com/components/material-icons/) or some other
+[Material UI](https://mui.com/) component to get appropriate visuals for your listing.
 
 You should use a *switch case*-based rendering and **exhaustive type checking** so that no cases can be forgotten.
 
@@ -1264,7 +1305,8 @@ export type GenderOption = {
 };
 ```
 
-In *AddPatientForm.tsx*, we use the `GenderOption` type for the `genderOptions` variable, declaring it to be an array containing objects of type `GenderOption`:
+In *AddPatientForm.tsx*, we use the `GenderOption` type for the `genderOptions` variable,
+declaring it to be an array containing objects of type `GenderOption`:
 
 ```js
 const genderOptions: GenderOption[] = [
@@ -1286,7 +1328,8 @@ type SelectFieldProps = {
 };
 ```
 
-The function component `SelectField` in itself looks a bit cryptic but it just renders the label, a select element, and all given option elements (or, actually, their labels and values).
+The function component `SelectField` in itself looks a bit cryptic but it just renders the label,
+a select element, and all given option elements (or, actually, their labels and values).
 
 ```jsx
 const FormikSelect = ({ field, ...props }: FieldProps) =>
@@ -1558,7 +1601,8 @@ Upon a successful submit, the new entry should be added to the correct patient a
 
 If you like, you can re-use some of the code from the ***Add patient*** form for this exercise, but this is not a requirement.
 
-Note that the file [FormField.tsx](https://github.com/fullstack-hy2020/patientor/blob/master/src/AddPatientModal/FormField.tsx#L58) has a ready-made component called `DiagnosisSelection` that can be used for setting the field `diagnoses`.
+Note that the file [FormField.tsx](https://github.com/fullstack-hy2020/patientor/blob/master/src/AddPatientModal/FormField.tsx#L58)
+has a ready-made component called `DiagnosisSelection` that can be used for setting the field `diagnoses`.
 
 It can be used as follows:
 
@@ -1613,7 +1657,8 @@ You do not need to care about possible errors in the server's response.
 The easiest but surely not the most elegant way to do this exercise is to have a separate form for each different entry type.
 Getting the types to work properly might be a slight challenge if you use just a single form.
 
-Note that if you need to alter the shown form based on user selections, you can access the form values using the parameter `values` of the rendering function:
+Note that if you need to alter the shown form based on user selections,
+you can access the form values using the parameter `values` of the rendering function:
 
 ```js
 <Formik

@@ -12,11 +12,16 @@ The [json-server](https://github.com/typicode/json-server) package claims to be 
 
 > *Get a full fake REST API with zero coding in less than 30 seconds (seriously)*
 
-The json-server does not exactly match the description provided by the textbook [definition](https://en.wikipedia.org/wiki/Representational_state_transfer) of a REST API, but neither do most other APIs claiming to be RESTful.
+The json-server does not exactly match the description provided by the textbook
+[definition](https://en.wikipedia.org/wiki/Representational_state_transfer)
+of a REST API, but neither do most other APIs claiming to be RESTful.
 
 We will take a closer look at REST in the [next part](/part3) of the course.
-But it's important to familiarize ourselves at this point with some of the [conventions](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) used by json-server and REST APIs in general.
-In particular, we will be taking a look at the conventional use of [routes](https://github.com/typicode/json-server#routes), aka URLs and HTTP request types, in REST.
+But it's important to familiarize ourselves at this point with some of the
+[conventions](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services)
+used by json-server and REST APIs in general.
+In particular, we will be taking a look at the conventional use of [routes](https://github.com/typicode/json-server#routes),
+aka URLs and HTTP request types, in REST.
 
 ### REST
 
@@ -33,7 +38,8 @@ Creating a new resource for storing a note is done by making an HTTP POST reques
 The data for the new note resource is sent in the `body` of the request.
 
 json-server requires all data to be sent in JSON format.
-What this means in practice is that the data must be a correctly formatted string and that the request must contain the `Content-Type` request header with the value `application/json`.
+What this means in practice is that the data must be a correctly formatted string
+and that the request must contain the `Content-Type` request header with the value `application/json`.
 
 ### Sending Data to the Server
 
@@ -69,7 +75,8 @@ When we try to create a new note, the following output pops up in the console:
 
 The newly created note resource is stored in the value of the `data` property of the `response` object.
 
-Sometimes it can be useful to inspect HTTP requests in the ***Network*** tab of Chrome developer tools, which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_apps#http-get):
+Sometimes it can be useful to inspect HTTP requests in the ***Network*** tab of Chrome developer tools,
+which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_apps#http-get):
 
 ![content-type and request payload data in dev tools](../../images/2/21e.png)
 
@@ -102,9 +109,12 @@ addNote = event => {
 ```
 
 The new note returned by the backend server is added to the list of notes in our application's state in the customary way of using the `setNotes` function and then resetting the note creation form.
-An [important detail](/part1/a_more_complex_state_debugging_react_apps#handling-arrays) to remember is that the `concat` method does not change the component's original state, but instead creates a new copy of the list.
+An [important detail](/part1/a_more_complex_state_debugging_react_apps#handling-arrays)
+to remember is that the `concat` method does not change the component's original state,
+but instead creates a new copy of the list.
 
-Once the data returned by the server starts to have an effect on the behavior of our web applications, we are immediately faced with a whole new set of challenges arising from, for instance, the asynchronicity of communication.
+Once the data returned by the server starts to have an effect on the behavior of our web applications,
+we are immediately faced with a whole new set of challenges arising from, for instance, the asynchronicity of communication.
 This necessitates new debugging strategies, console logging and other means of debugging become increasingly more important.
 We must also develop a sufficient understanding of the principles of both the JavaScript runtime and React components.
 Guessing won't be enough.
@@ -120,7 +130,8 @@ We will then take a closer look at tools like [Postman](https://www.postman.com/
 However, inspecting the state of the json-server through the browser is sufficient for our current needs.
 
 > **NB:** In the current version of our application, the browser adds the creation date property to the note.
-Since the clock of the machine running the browser can be wrongly configured, it's much wiser to let the backend server generate this timestamp for us.
+Since the clock of the machine running the browser can be wrongly configured,
+it's much wiser to let the backend server generate this timestamp for us.
 This is in fact what we will do in the next part of the course.
 
 The code for the current state of our application can be found in the  *part2-5* branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-5).
@@ -203,7 +214,8 @@ The string printed by the event handler is defined in a Java-like manner by addi
 console.log('importance of ' + id + ' needs to be toggled')
 ```
 
-The [template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) syntax added in ES6 can be used to write similar strings in a much nicer way:
+The [template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) syntax added in ES6
+can be used to write similar strings in a much nicer way:
 
 ```js
 console.log(`importance of ${id} needs to be toggled`)
@@ -232,18 +244,22 @@ const toggleImportanceOf = id => {
 Almost every line of code in the function body contains important details.
 The first line defines the unique URL for each note resource based on its id.
 
-The array [find method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) is used to find the note we want to modify, and we then assign it to the `note` variable.
+The array [find method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
+is used to find the note we want to modify, and we then assign it to the `note` variable.
 
 After this, we create a **new object** that is an exact copy of the old note, apart from the important property.
 
-The code for creating the new object that uses the [object spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax may seem a bit strange at first:
+The code for creating the new object that uses the
+[object spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+may seem a bit strange at first:
 
 ```js
 const changedNote = { ...note, important: !note.important }
 ```
 
 In practice, `{ ...note }` creates a new object with copies of all the properties from the `note` object.
-When we add properties inside the curly braces after the spread object, e.g. `{ ...note, important: true }`, then the value of the `important` property of the new object will be `true`.
+When we add properties inside the curly braces after the spread object,
+e.g. `{ ...note, important: true }`, then the value of the `important` property of the new object will be `true`.
 In our example, the `important` property gets the negation of its previous value in the original object.
 
 There are a few things to point out.
@@ -259,12 +275,15 @@ axios.put(url, note).then(response => {
 
 This is not recommended because the variable `note` is a reference to an item in the `notes` array in the component's state, and as we recall we must never mutate state directly in React.
 
-It's also worth noting that the new object `changedNote` is only a so-called [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy), meaning that the values of the new object are the same as the values of the old object.
+It's also worth noting that the new object `changedNote` is only a so-called
+[shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
+meaning that the values of the new object are the same as the values of the old object.
 If the values of the old object were objects themselves, then the copied values in the new object would reference the same objects that were in the old object.
 
 The new note is then sent with a PUT request to the backend where it will replace the old object.
 
-The callback function sets the component's `notes` state to a new array that contains all the items from the previous `notes` array, except for the old note which is replaced by the updated version of it returned by the server:
+The callback function sets the component's `notes` state to a new array that contains all the items from the previous `notes` array,
+except for the old note which is replaced by the updated version of it returned by the server:
 
 ```js
 axios.put(url, changedNote).then(response => {
@@ -288,7 +307,8 @@ We will be using this method many times throughout the course.
 ### Extracting Communication with the Backend into a Separate Module
 
 The `App` component has become somewhat bloated after adding the code for communicating with the backend server.
-In the spirit of the [single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle), we deem it wise to extract this communication into its own [module](/part2/rendering_a_collection_modules#refactoring-modules).
+In the spirit of the [single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle),
+we deem it wise to extract this communication into its own [module](/part2/rendering_a_collection_modules#refactoring-modules).
 
 Let's create a *src/services* directory and add a file there called *notes.js*:
 
@@ -454,7 +474,8 @@ const getAll = () => {
 }
 ```
 
-The modified `getAll` function still returns a promise, as the `then` method of a promise also [returns a promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then).
+The modified `getAll` function still returns a promise, as the `then` method of a promise also
+[returns a promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then).
 
 After defining the parameter of the `then` method to directly return `response.data`, we have gotten the `getAll` function to work like we wanted it to.
 When the HTTP request is successful, the promise returns the data sent back in the response from the backend.
@@ -514,13 +535,17 @@ const App = () => {
 This is all quite complicated and attempting to explain it may just make it harder to understand.
 The internet is full of material discussing the topic, such as [this](https://javascript.info/promise-chaining) one.
 
-The "Async and performance" book from the [You do not know JS](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed) book series [explains the topic](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch3.md) well, but the explanation is many pages long.
+The "Async and performance" book from the
+[You do not know JS](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
+book series [explains the topic](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch3.md) well,
+but the explanation is many pages long.
 
 Promises are central to modern JavaScript development and it is highly recommended to invest a reasonable amount of time into understanding them.
 
 ### Cleaner Syntax for Defining Object Literals
 
-The module defining note-related services currently exports an object with the properties `getAll`, `create`, and `update` that are assigned to functions for handling notes.
+The module defining note-related services currently exports an object
+with the properties `getAll`, `create`, and `update` that are assigned to functions for handling notes.
 
 The module definition was:
 
@@ -560,7 +585,8 @@ The module exports the following, rather peculiar looking, object:
 }
 ```
 
-The labels to the left of the colon in the object definition are the **keys** of the object, whereas the ones to the right of it are **variables** that are defined inside the module.
+The labels to the left of the colon in the object definition are the **keys** of the object,
+whereas the ones to the right of it are **variables** that are defined inside the module.
 
 Since the names of the keys and the assigned variables are the same, we can write the object definition with a more compact syntax:
 
@@ -596,7 +622,9 @@ const update = (id, newObject) => {
 export default { getAll, create, update } // highlight-line
 ```
 
-In defining the object using this shorter notation, we make use of a [new feature](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#Property_definitions) that was introduced to JavaScript through ES6, enabling a slightly more compact way of defining objects using variables.
+In defining the object using this shorter notation, we make use of a
+[new feature](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#Property_definitions)
+that was introduced to JavaScript through ES6, enabling a slightly more compact way of defining objects using variables.
 
 To demonstrate this feature, let's consider a situation where we have the following values assigned to variables:
 
@@ -655,7 +683,8 @@ We had [previously](/part2/getting_data_from_server#axios-and-promises) mentione
 When an HTTP request fails, the associated promise is ***rejected***.
 Our current code does not handle this rejection in any way.
 
-The rejection of a promise is [handled](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) by providing the `then` method with a second callback function, which is called in the situation where the promise is rejected.
+The rejection of a promise is [handled](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+by providing the `then` method with a second callback function, which is called in the situation where the promise is rejected.
 
 The more common way of adding a handler for rejected promises is to use the [catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch) method.
 
@@ -687,7 +716,8 @@ axios
   })
 ```
 
-The `catch` method can be used to define a handler function at the end of a promise chain, which is called once any promise in the chain throws an error and the promise becomes ***rejected***.
+The `catch` method can be used to define a handler function at the end of a promise chain,
+which is called once any promise in the chain throws an error and the promise becomes ***rejected***.
 
 ```js
 axios
@@ -725,7 +755,9 @@ const toggleImportanceOf = id => {
 
 The error message is displayed to the user with the trusty old [alert](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) dialog popup, and the deleted note gets filtered out from the state.
 
-Removing an already deleted note from the application's state is done with the array [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method, which returns a new array comprising only the items from the list for which the function that was passed as a parameter returns true for:
+Removing an already deleted note from the application's state is done with the array
+[filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method,
+which returns a new array comprising only the items from the list for which the function that was passed as a parameter returns true for:
 
 ```js
 notes.filter(n => n.id !== id)
@@ -736,7 +768,7 @@ We will soon learn a more advanced way of displaying messages and notifications 
 There are situations, however, where a simple, battle-tested method like `alert` can function as a starting point.
 A more advanced method could always be added in later, given that there's time and energy for it.
 
-The code for the current state of our application can be found in the  *part2-6* branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-6).
+The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-6).
 
 </div>
 

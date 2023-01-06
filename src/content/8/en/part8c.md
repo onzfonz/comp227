@@ -18,7 +18,8 @@ This is the exact outcome we are aiming for since TypeScript itself is not execu
 ### Setting up the project
 
 We will create a project for Ilari, who loves flying small planes but has a difficult time managing his flight history.
-He is a coder himself, so he doesn't necessarily need a user interface, but he'd like to use some custom software with HTTP requests and retain the possibility of later adding a web-based user interface to the application.
+He is a coder himself, so he doesn't necessarily need a user interface, but he'd like to use some custom software with HTTP requests
+and retain the possibility of later adding a web-based user interface to the application.
 
 Let's start by creating our first real project: *Ilari's flight diaries*.
 As usual, run `npm init` and install the ***typescript*** package as a dev dependency.
@@ -43,7 +44,8 @@ The npm script for running *tsc* is set as follows:
 }
 ```
 
-The bare `tsc` command is often added to `scripts` so that other scripts can use it, hence don't be surprised to find it set up within the project like this.
+The bare `tsc` command is often added to `scripts` so that other scripts can use it,
+hence don't be surprised to find it set up within the project like this.
 
 We can now initialize our tsconfig.json settings by running:
 
@@ -51,7 +53,8 @@ We can now initialize our tsconfig.json settings by running:
  npm run tsc -- --init
 ```
 
- **Note** the extra `--` before the actual argument! Arguments before `--` are interpreted as being for the ***npm*** command, while the ones after that are meant for the command that is run through the script (i.e. *tsc* in this case).
+**Note** the extra `--` before the actual argument! Arguments before `--` are interpreted as being for the ***npm*** command,
+while the ones after that are meant for the command that is run through the script (i.e. *tsc* in this case).
 
 The *tsconfig.json* file we just created contains a lengthy list of every configuration available to us.
 However, most of them are commented out.
@@ -84,7 +87,8 @@ ES6 is supported by most browsers, so it is a good and safe option.
 `outDir` tells where the compiled code should be placed.
 
 `module` tells the compiler that we want to use ***CommonJS*** modules in the compiled code.
-This means we can use the old `require` syntax instead of the `import` one, which is not supported in older versions of *Node*, such as version 10.
+This means we can use the old `require` syntax instead of the `import` one,
+which is not supported in older versions of *Node*, such as version 10.
 
 `strict` is a shorthand for multiple separate options:
 `noImplicitAny`, `noImplicitThis`, `alwaysStrict`, `strictBindCallApply`, `strictNullChecks`, `strictFunctionTypes` and `strictPropertyInitialization`.
@@ -287,7 +291,8 @@ With this base, we can start creating an app that we could, later on, deploy int
 
 #### Before you start the exercises
 
-For this set of exercises, you will be developing a backend for an existing project called **Patientor**, which is a simple medical record application for doctors who handle diagnoses and basic health information of their patients.
+For this set of exercises, you will be developing a backend for an existing project called **Patientor**,
+which is a simple medical record application for doctors who handle diagnoses and basic health information of their patients.
 
 The [frontend](https://github.com/fullstack-hy2020/patientor) has already been built by outsider experts and your task is to create a backend to support the existing code.
 
@@ -369,8 +374,10 @@ First, we need to make some decisions on how to structure our source code.
 It is better to place all source code under *src* directory, so source code is not mixed with configuration files.
 We will move *index.ts* there and make the necessary changes to the npm scripts.
 
-We will place all [routers](/part4/structure_of_backend_application_introduction_to_testing) and modules which are responsible for handling a set of specific resources such as ***diaries***, under the directory *src/routes*.
-This is a bit different than what we did in [part 4](/part4), where we used the directory *src/controllers*.
+We will place all [routers](/part4/structure_of_backend_application_introduction_to_testing)
+and modules which are responsible for handling a set of specific resources such as ***diaries***, under the directory *src/routes*.
+This is a bit different than what we did in [part 4](/part4),
+where we used the directory *src/controllers*.
 
 The router taking care of all diary endpoints is in *src/routes/diaries.ts* and looks like this:
 
@@ -476,7 +483,10 @@ That is a bug in the editor, and goes away when the editor is restarted.
 Earlier, we saw how the compiler can decide the type of a variable by the value it is assigned.
 Similarly, the compiler can interpret large data sets consisting of objects and arrays.
 Due to this, the compiler warns us if we try to do something suspicious with the JSON data we are handling.
-For example, if we are handling an array containing objects of a specific type, and we try to add an object which does not have all the fields the other objects have, or has type conflicts (for example, a number where there should be a string), the compiler can give us a warning.
+For example, if we are handling an array containing objects of a specific type,
+and we try to add an object which does not have all the fields the other objects have, or has type conflicts
+(for example, a number where there should be a string),
+the compiler can give us a warning.
 
 Even though the compiler is pretty good at making sure we don't do anything unwanted, it is safer to define the types for the data ourselves.
 
@@ -561,8 +571,10 @@ export default {
 };
 ```
 
-We should never use type assertion unless there is no other way to proceed, as there is always the danger we assert an unfit type to an object and cause a nasty runtime error.
-While the compiler trusts you to know what you are doing when using `as`, by doing this, we are not using the full power of TypeScript but relying on the coder to secure the code.
+We should never use type assertion unless there is no other way to proceed,
+as there is always the danger we assert an unfit type to an object and cause a nasty runtime error.
+While the compiler trusts you to know what you are doing when using `as`, by doing this,
+we are not using the full power of TypeScript but relying on the coder to secure the code.
 
 In our case, we could change how we export our data so we can type it within the data file.
 Since we cannot use typings in a JSON file, we should convert the JSON file to a ts file which exports the typed data like so:
@@ -605,7 +617,10 @@ export default {
 };
 ```
 
-Note that, if we want to be able to save entries without a certain field, e.g. *comment*, we could set the type of the field as [optional](http://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties) by adding `?` to the type declaration:
+Note that, if we want to be able to save entries without a certain field, e.g. *comment*,
+we could set the type of the field as
+[optional](http://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties)
+by adding `?` to the type declaration:
 
 ```js
 export interface DiaryEntry {
@@ -619,7 +634,8 @@ export interface DiaryEntry {
 
 ### Node and JSON modules
 
-It is important to take note of a problem that may arise when using the tsconfig [resolveJsonModule](https://www.typescriptlang.org/tsconfig#resolveJsonModule) option:
+It is important to take note of a problem that may arise when using the tsconfig
+[resolveJsonModule](https://www.typescriptlang.org/tsconfig#resolveJsonModule) option:
 
 ```json
 {
@@ -643,7 +659,8 @@ In addition to that, by default, *ts-node* and *ts-node-dev* extend the list of 
  ["js", "json", "node", "ts", "tsx"]
 ```
 
-> **NB**: The validity of *.js*, *.json* and *.node* files as modules in TypeScript depend on environment configuration, including ***tsconfig*** options such as `allowJs` and `resolveJsonModule`.
+> **NB**: The validity of *.js*, *.json* and *.node* files as modules in TypeScript depend on environment configuration,
+including ***tsconfig*** options such as `allowJs` and `resolveJsonModule`.
 
 Consider a flat folder structure containing files:
 
@@ -677,9 +694,11 @@ We might want to be sure that no sensitive data is used or displayed.
 We could ***pick*** the fields of a type we allow to be used to enforce this.
 We can do that by using the utility type [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys).
 
-In our project, we should consider that Ilari might want to create a listing of all his diary entries **excluding** the comment field since, during a very scary flight, he might end up writing something he wouldn't necessarily want to show anyone else.
+In our project, we should consider that Ilari might want to create a listing of all his diary entries **excluding** the comment field since, during a very scary flight,
+he might end up writing something he wouldn't necessarily want to show anyone else.
 
-The [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys) utility type allows us to choose which fields of an existing type we want to use.
+The [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys) utility type
+allows us to choose which fields of an existing type we want to use.
 Pick can be used to either construct a completely new type or to inform a function what it should return on runtime.
 Utility types are a special kind of type, but they can be used just like regular types.
 
@@ -694,7 +713,9 @@ const getNonSensitiveEntries =
 
 and the compiler would expect the function to return an array of values of the modified `DiaryEntry` type, which includes only the four selected fields.
 
-Since [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys) requires the type it modifies to be given as a [type variable](http://www.typescriptlang.org/docs/handbook/generics.html#working-with-generic-type-variables), just like Array does, we now have two nested type variables and the syntax is starting to look a bit odd.
+Since [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys)
+requires the type it modifies to be given as a [type variable](http://www.typescriptlang.org/docs/handbook/generics.html#working-with-generic-type-variables),
+just like Array does, we now have two nested type variables and the syntax is starting to look a bit odd.
 We can improve the code's readability by using the [alternative](http://www.typescriptlang.org/docs/handbook/basic-types.html#array) array syntax:
 
 ```js
@@ -705,7 +726,9 @@ const getNonSensitiveEntries =
 ```
 
 In this case, we want to exclude only one field,
-so it would be even better to use the [Omit](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys) utility type, which we can use to declare which fields to exclude:
+so it would be even better to use the
+[Omit utility type,](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)
+which we can use to declare which fields to exclude:
 
 ```js
 const getNonSensitiveEntries = (): Omit<DiaryEntry, 'comment'>[] => {
@@ -747,11 +770,15 @@ export default {
 One thing in our application is a cause for concern.
 In `getNonSensitiveEntries`, we are returning the complete diary entries, and **no error is given** despite typing!
 
-This happens because [TypeScript only checks](http://www.typescriptlang.org/docs/handbook/type-compatibility.html) whether we have all of the required fields or not, but excess fields are not prohibited.
-In our case, this means that it is **not prohibited** to return an object of type `DiaryEntry[]`, but if we were to try to access the `comment` field, it would not be possible because we would be accessing a field that TypeScript is unaware of even though it exists.
+This happens because [TypeScript only checks](http://www.typescriptlang.org/docs/handbook/type-compatibility.html)
+whether we have all of the required fields or not, but excess fields are not prohibited.
+In our case, this means that it is **not prohibited** to return an object of type `DiaryEntry[]`, but if we were to try to access the `comment` field,
+it would not be possible because we would be accessing a field that TypeScript is unaware of even though it exists.
 
-Unfortunately, this can lead to unwanted behavior if you are not aware of what you are doing; the situation is valid as far as TypeScript is concerned, but you are most likely allowing use that is not wanted.
-If we were now to return all of the diary entries from the `getNonSensitiveEntries` function to the frontend, we would be ***leaking the unwanted fields to the requesting browser*** - even though our types seem to imply otherwise!
+Unfortunately, this can lead to unwanted behavior if you are not aware of what you are doing;
+the situation is valid as far as TypeScript is concerned, but you are most likely allowing use that is not wanted.
+If we were now to return all of the diary entries from the `getNonSensitiveEntries` function to the frontend,
+we would be ***leaking the unwanted fields to the requesting browser*** - even though our types seem to imply otherwise!
 
 Because TypeScript doesn't modify the actual data but only its type, we need to exclude the fields ourselves:
 
@@ -799,9 +826,11 @@ we would get the following error:
 Again, the last line of the error message is the most helpful one.
 Let's undo this undesired modification.
 
-> **Note** that if you make the comment field optional (using the `?` operator), everything will work fine.
+> **Note** that if you make the comment field optional (using the `?` operator),
+  everything will work fine.
 
-Utility types include many handy tools, and it is undoubtedly worth it to take some time to study [the documentation](https://www.typescriptlang.org/docs/handbook/utility-types.html).
+Utility types include many handy tools,
+and it is undoubtedly worth it to take some time to study [the documentation](https://www.typescriptlang.org/docs/handbook/utility-types.html).
 
 Finally, we can complete the route which returns all diary entries:
 
@@ -832,7 +861,9 @@ The response is what we expect it to be:
 
 ### Exercises 8.10-8.11
 
-Similarly to Ilari's flight service, we do not use a real database in our app but instead use hardcoded data that is in the files [diagnoses.json](https://github.com/fullstack-hy2020/misc/blob/master/diagnoses.json) and [patients.json](https://github.com/fullstack-hy2020/misc/blob/master/patients.json).
+Similarly to Ilari's flight service, we do not use a real database in our app
+but instead use hardcoded data that is in the files [diagnoses.json](https://github.com/fullstack-hy2020/misc/blob/master/diagnoses.json)
+and [patients.json](https://github.com/fullstack-hy2020/misc/blob/master/patients.json).
 Get the files and store those in a directory called *data* in your project.
 All data modification can be done in runtime memory, so during this part, it is *not necessary to write to a file*.
 
@@ -894,7 +925,8 @@ But once again, a new problem emerges:
 
 The issue is that there is no guarantee that an entry with the specified id can be found.
 It is good that we are made aware of this potential problem already at compile phase.
-Without TypeScript, we would not be warned about this problem, and in the worst-case scenario, we could have ended up returning an `undefined` object instead of informing the user about the specified entry not being found.
+Without TypeScript, we would not be warned about this problem, and in the worst-case scenario,
+we could have ended up returning an `undefined` object instead of informing the user about the specified entry not being found.
 
 First of all, in cases like this, we need to decide what the ***return value*** should be if an object is not found, and how the case should be handled.
 The `find` method of an array returns `undefined` if the object is not found, and this is fine.
@@ -1025,7 +1057,9 @@ There is still a complaint from our code:
 
 ![vscode error unsafe assignment of any value](../../images/8/43.png)
 
-The cause is the ESlint rule [@typescript-eslint/no-unsafe-assignment](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unsafe-assignment.md) that prevents us from assigning the fields of a request body to variables.
+The cause is the ESlint rule
+[@typescript-eslint/no-unsafe-assignment](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unsafe-assignment.md)
+that prevents us from assigning the fields of a request body to variables.
 
 For the time being, let us just ignore the ESlint rule from the whole file by adding the following as the first line of the file:
 
@@ -1070,7 +1104,8 @@ const newDiaryEntry = diaryService.addDiary({
 });
 ```
 
-We would like to have the assurance that the object in a post request is the correct type, so let us define a function `toNewDiaryEntry` that receives the request body as a parameter and returns a properly-typed `NewDiaryEntry` object.
+We would like to have the assurance that the object in a post request is the correct type,
+so let us define a function `toNewDiaryEntry` that receives the request body as a parameter and returns a properly-typed `NewDiaryEntry` object.
 The function shall be defined in the file *utils.ts*.
 
 The route definition uses the function as follows:
@@ -1098,7 +1133,8 @@ router.post('/', (req, res) => {
 
 We can now also remove the first line that ignores the ESlint rule *no-unsafe-assignment*.
 
-Since we are now writing secure code and trying to ensure that we are getting exactly the data we want from the requests, we should get started with parsing and validating each field we are expecting to receive.
+Since we are now writing secure code and trying to ensure that we are getting exactly the data we want from the requests,
+we should get started with parsing and validating each field we are expecting to receive.
 
 The skeleton of the function `toNewDiaryEntry` looks like the following:
 
@@ -1120,7 +1156,8 @@ The function should parse each field and make sure that the return value is exac
 This means we should check each field separately.
 
 Once again, we have a type issue: what is the `object` type? Since the `object` **is** the body of a request, Express has typed it as `any`.
-Since the idea of this function is to map fields of unknown type to fields of the correct type and check whether they are defined as expected, this might be the rare case where we *want to allow the `any` type*.
+Since the idea of this function is to map fields of unknown type to fields of the correct type and check whether they are defined as expected,
+this might be the rare case where we *want to allow the `any` type*.
 
 However, if we type the object as `any`, ESlint gives us two complaints:
 
@@ -1142,9 +1179,11 @@ const toNewDiaryEntry = (object: unknown): NewDiaryEntry => { // highlight-line
 export default toNewDiaryEntry;
 ```
 
-[unknown](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown) is the ideal type for our kind of situation of input validation, since we don't yet need to define the type to match `any` type, but can first verify the type and then confirm the expected type.
+[unknown](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown) is the ideal type for our kind of situation of input validation,
+since we don't yet need to define the type to match `any` type, but can first verify the type and then confirm the expected type.
 With the use of `unknown`, we also don't need to worry about the `@typescript-eslint/no-explicit-any` ESlint rule, since we are not using `any`.
-However, we might still need to use `any` in some cases where we are not yet sure about the type and need to access properties of an `any` object to validate or type-check the property values themselves.
+However, we might still need to use `any` in some cases where we are not yet sure about the type
+and need to access properties of an `any` object to validate or type-check the property values themselves.
 
 Let us start creating the parsers for each of the fields of `object`.
 
@@ -1188,7 +1227,8 @@ Before the type guard is called, the actual type of the variable `comment` is no
 
 ![vscode hovering over isString(comment) shows type unknown](../../images/8/28e-21.png)
 
-But after the call, if the code proceeds past the exception (that is, the type guard returned true), then the compiler knows that `comment` is of type `string`:
+But after the call, if the code proceeds past the exception (that is, the type guard returned true),
+then the compiler knows that `comment` is of type `string`:
 
 ![vscode hovering over return comment shows type string](../../images/8/29e-21.png)
 
@@ -1246,7 +1286,8 @@ const parseDate = (date: unknown): string => {
 
 The code is nothing special.
 The only thing is that we can't use a type guard here since a date in this case is only considered to be a `string`.
-Note that even though the `parseDate` function accepts the `date` variable as `unknown` after we check the type with `isString`, then its type is set as `string`, which is why we can give the variable to the `isDate` function requiring a string without any problems.
+Note that even though the `parseDate` function accepts the `date` variable as `unknown` after we check the type with `isString`, then its type is set as `string`,
+which is why we can give the variable to the `isDate` function requiring a string without any problems.
 
 Finally, we are ready to move on to the last two types, `Weather` and `Visibility`.
 
@@ -1274,7 +1315,8 @@ This would work just fine, but the problem is that the list of possible values f
 This is most certainly not good, since we would like to have just one source for all possible weather types.
 
 In our case, a better solution would be to improve the actual `Weather` type.
-Instead of a type alias, we should use the TypeScript [enum](https://www.typescriptlang.org/docs/handbook/enums.html), which allows us to use the actual values in our code at runtime, not only in the compilation phase.
+Instead of a type alias, we should use the TypeScript [enum](https://www.typescriptlang.org/docs/handbook/enums.html),
+which allows us to use the actual values in our code at runtime, not only in the compilation phase.
 
 Let us redefine the type `Weather` as follows:
 
@@ -1301,7 +1343,8 @@ const isWeather = (param: any): param is Weather => {
 One thing to notice here is that we have changed the parameter type to `any`.
 If it were `string`, the `includes` check would not compile.
 This makes sense also if you consider the reusability of the function.
-By allowing `any` as a parameter, the function can be used with confidence knowing that whatever we might feed to it, the function always tells us whether the variable is a valid `Weather` or not.
+By allowing `any` as a parameter, the function can be used with confidence knowing that whatever we might feed to it,
+the function always tells us whether the variable is a valid `Weather` or not.
 
 The function `parseWeather` can be simplified a bit:
 
@@ -1346,10 +1389,12 @@ const diaryEntries: DiaryEntry [] = data.map(obj => {
 export default diaryEntries;
 ```
 
-Note that since `toNewDiaryEntry` returns an object of type `NewDiaryEntry`, we need to assert it to be `DiaryEntry` with the [as](http://www.typescriptlang.org/docs/handbook/basic-types.html#type-assertions) operator.
+Note that since `toNewDiaryEntry` returns an object of type `NewDiaryEntry`,
+we need to assert it to be `DiaryEntry` with the [as](http://www.typescriptlang.org/docs/handbook/basic-types.html#type-assertions) operator.
 
 Enums are typically used when there is a set of predetermined values that are not expected to change in the future.
-Usually, enums are used for much tighter unchanging values (for example, weekdays, months, cardinal directions), but since they offer us a great way to validate our incoming values, we might as well use them in our case.
+Usually, enums are used for much tighter unchanging values (for example, weekdays, months, cardinal directions),
+but since they offer us a great way to validate our incoming values, we might as well use them in our case.
 
 We still need to give the same treatment to `visibility`.
 The enum looks as follows:
@@ -1398,7 +1443,8 @@ const toNewDiaryEntry = (object: unknown): NewDiaryEntry => {
 ```
 
 we notice that the code does not compile.
-This is because the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type does not allow any operations, so accessing the fields is not possible.
+This is because the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type
+does not allow any operations, so accessing the fields is not possible.
 
 We can fix this by destructuring the fields to variables of the type unknown as follows:
 

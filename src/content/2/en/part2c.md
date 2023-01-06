@@ -44,7 +44,9 @@ You can [install](https://github.com/typicode/json-server#getting-started) a JSO
 A global installation requires administrative privileges, which means that it is not possible on faculty computers or freshman laptops.
 
 After installing run the following command to run the json-server.
-The *json-server* starts running on port 3000 by default; but since projects created using create-react-app reserve port 3000, we must define an alternate port, such as port 3001, for the json-server.
+The *json-server* starts running on port 3000 by default;
+but since projects created using create-react-app reserve port 3000,
+we must define an alternate port, such as port 3001, for the json-server.
 The --watch option automatically looks for any saved changes to db.json
   
 ```js
@@ -63,7 +65,8 @@ We can see that *json-server* serves the notes we previously wrote to the file i
 
 ![json data of notes](../../images/2/14e.png)
 
-If your browser doesn't have a way to format the display of JSON-data, then install an appropriate plugin, e.g. [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) to make your life easier.
+If your browser doesn't have a way to format the display of JSON-data, then install an appropriate plugin,
+e.g. [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) to make your life easier.
 
 Going forward, the idea will be to save the notes to the server, which in this case means saving them to the json-server.
 The React code fetches the notes from the server and renders them to the screen.
@@ -79,13 +82,19 @@ We will get familiar with the principles of implementing server-side functionali
 
 Our first task is fetching the already existing notes to our React application from the address <http://localhost:3001/notes>.
 
-In the part0 [example project](/part0/fundamentals_of_web_apps#running-application-logic-on-the-browser), we already learned a way to fetch data from a server using JavaScript.
-The code in the example was fetching the data using [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), otherwise known as an HTTP request made using an XHR object.
+In the part0 [example project](/part0/fundamentals_of_web_apps#running-application-logic-on-the-browser),
+we already learned a way to fetch data from a server using JavaScript.
+The code in the example was fetching the data using [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest),
+otherwise known as an HTTP request made using an XHR object.
 This is a technique introduced in 1999, which every browser has supported for a good while now.
 
-The use of XHR is no longer recommended, and browsers already widely support the [fetch](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) method, which is based on so-called [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), instead of the event-driven model used by XHR.
+The use of XHR is no longer recommended, and browsers already widely support the
+[fetch](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) method,
+which is based on so-called [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise),
+instead of the event-driven model used by XHR.
 
-As a reminder from part0 (which one should **remember to not use `xhr`** without a pressing reason), data was fetched using XHR in the following way:
+As a reminder from part0 (which one should **remember to not use `xhr`** without a pressing reason),
+data was fetched using XHR in the following way:
 
 ```js
 const xhttp = new XMLHttpRequest()
@@ -101,7 +110,8 @@ xhttp.open('GET', '/data.json', true)
 xhttp.send()
 ```
 
-Right at the beginning, we register an *event handler* to the `xhttp` object representing the HTTP request, which will be called by the JavaScript runtime whenever the state of the `xhttp` object changes.
+Right at the beginning, we register an *event handler* to the `xhttp` object representing the HTTP request,
+which will be called by the JavaScript runtime whenever the state of the `xhttp` object changes.
 If the change in state means that the response to the request has arrived, then the data is handled accordingly.
 
 It is worth noting that the code in the event handler is defined before the request is sent to the server.
@@ -109,7 +119,8 @@ Despite this, the code within the event handler will be executed at a later poin
 Therefore, the code does not execute synchronously "from top to bottom", but does so **asynchronously**.
 JavaScript calls the event handler that was registered for the request at some point.
 
-A synchronous way of making requests that's common in Java programming, for instance, would play out as follows (NB, this is not actually working Java code):
+A synchronous way of making requests that's common in Java programming, for instance,
+would play out as follows (NB, this is not actually working Java code):
 
 ```java
 HTTPRequest request = new HTTPRequest();
@@ -126,10 +137,13 @@ In Java, the code executes line by line and stops to wait for the HTTP request, 
 The data returned by the command, in this case the notes, are then stored in a variable, and we begin manipulating the data in the desired manner.
 
 On the other hand, JavaScript engines, or runtime environments, follow the [asynchronous model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop).
-In principle, this requires all [IO operations](https://en.wikipedia.org/wiki/Input/output) (with some exceptions) to be executed as non-blocking.
+In principle, this requires all
+[IO operations](https://en.wikipedia.org/wiki/Input/output)
+(with some exceptions) to be executed as non-blocking.
 This means that code execution continues immediately after calling an IO function, without waiting for it to return.
 
-When an asynchronous operation is completed, or, more specifically, at some point after its completion, the JavaScript engine calls the event handlers registered to the operation.
+When an asynchronous operation is completed, or, more specifically, at some point after its completion,
+the JavaScript engine calls the event handlers registered to the operation.
 
 Currently, JavaScript engines are **single-threaded**, which means that they cannot execute code in parallel.
 As a result, it is a requirement in practice to use a non-blocking model for executing IO operations.
@@ -150,22 +164,29 @@ setTimeout(() => {
 ```
 
 everything would work normally for 5 seconds.
-However, when the function defined as the parameter for `setTimeout` is run, the browser will be stuck for the duration of the execution of the long loop.
+However, when the function defined as the parameter for `setTimeout` is run,
+the browser will be stuck for the duration of the execution of the long loop.
 Even the browser tab cannot be closed during the execution of the loop, at least not in Chrome.
 
-For the browser to remain **responsive**, i.e., to be able to continuously react to user operations with sufficient speed, the code logic needs to be such that no single computation can take too long.
+For the browser to remain **responsive**, i.e., to be able to continuously react to user operations with sufficient speed,
+the code logic needs to be such that no single computation can take too long.
 
 There is a host of additional material on the subject to be found on the internet.
-One particularly clear presentation of the topic is the keynote by Philip Roberts called [What the heck is the event loop anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+One particularly clear presentation of the topic is the keynote by Philip Roberts called
+[What the heck is the event loop anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 
-In today's browsers, it is possible to run parallelized code with the help of so-called [web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
-The event loop of an individual browser window is, however, still only handled by a [single thread](https://medium.com/techtrument/multithreading-javascript-46156179cf9a).
+In today's browsers, it is possible to run parallelized code with the help of so-called
+[web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers).
+The event loop of an individual browser window is, however, still only handled by a
+[single thread](https://medium.com/techtrument/multithreading-javascript-46156179cf9a).
 
 ### npm
 
 Let's get back to the topic of fetching data from the server.
 
-We could use the previously mentioned promise-based function [fetch](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) to pull the data from the server.
+We could use the previously mentioned promise-based function
+[fetch](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
+to pull the data from the server.
 Fetch is a great tool.
 It is standardized and supported by all modern browsers (excluding IE).
 
@@ -306,7 +327,8 @@ npm install json-server --save-dev
 
 There is a fine difference in the parameters.
 *axios* is installed as a runtime dependency of the application because the execution of the program requires the existence of the library.
-On the other hand, *json-server* was installed as a development dependency (`--save-dev`), since the program itself doesn't require it.
+On the other hand, *json-server* was installed as a development dependency (`--save-dev`),
+since the program itself doesn't require it.
 It is used for assistance during software development.
 There will be more on different dependencies in the next part of the course.
 
@@ -336,7 +358,8 @@ If you open <http://localhost:3000> in the browser, this should be printed to th
 
 ![promises printed to console](../../images/2/16b.png)
 
-**Note:** when the content of the file *index.js* changes, React does not always notice that automatically, so you might need to refresh the browser to see your changes! A simple workaround to make React notice the change automatically is to create a file named *.env* in the root directory of the project and add this line `FAST_REFRESH=false`.
+**Note:** when the content of the file *index.js* changes, React does not always notice that automatically, so you might need to refresh the browser to see your changes!
+A simple workaround to make React notice the change automatically is to create a file named *.env* in the root directory of the project and add this line `FAST_REFRESH=false`.
 Restart the app for the applied changes to take effect.
 
 Axios' method `get` returns a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises).
@@ -373,7 +396,8 @@ The following is printed to the console:
 ![json object data printed to console](../../images/2/17e.png)
 
 The JavaScript runtime environment calls the callback function registered by the `then` method providing it with a `response` object as a parameter.
-The `response` object contains all the essential data related to the response of an HTTP GET request, which would include the returned ***data***, ***status code***, and ***headers***.
+The `response` object contains all the essential data related to the response of an HTTP GET request,
+which would include the returned ***data***, ***status code***, and ***headers***.
 
 Storing the promise object in a variable is generally unnecessary, and it's instead common to chain the `then` method call to the axios method call, so that it follows it directly:
 
@@ -398,7 +422,8 @@ axios
 ```
 
 The data returned by the server is plain text, basically just one long string.
-The axios library is still able to parse the data into a JavaScript array, since the server has specified that the data format is `application/json; charset=utf-8` (see the previous image) using the `content-type` header.
+The axios library is still able to parse the data into a JavaScript array,
+since the server has specified that the data format is `application/json; charset=utf-8` (see the previous image) using the `content-type` header.
 
 We can finally begin using the data fetched from the server.
 
@@ -425,7 +450,9 @@ What's not immediately obvious, however, is where the command `axios.get` should
 
 ### Effect-hooks
 
-We have already used [state hooks](https://reactjs.org/docs/hooks-state.html) that were introduced along with React version [16.8.0](https://www.npmjs.com/package/react/v/16.8.0), which provide state to React components defined as functions - the so-called **functional components**.
+We have already used [state hooks](https://reactjs.org/docs/hooks-state.html)
+that were introduced along with React version [16.8.0](https://www.npmjs.com/package/react/v/16.8.0),
+which provide state to React components defined as functions - the so-called **functional components**.
 Version 16.8.0 also introduces [effect hooks](https://reactjs.org/docs/hooks-effect.html) as a new feature.
 As per the official docs:
 
@@ -501,7 +528,8 @@ The following function, or effect in React parlance:
 ```
 
 is executed immediately after rendering.
-The execution of the function results in `effect` being printed to the console, and the command `axios.get` initiates the fetching of data from the server as well as registers the following function as an *event handler* for the operation:
+The execution of the function results in `effect` being printed to the console,
+and the command `axios.get` initiates the fetching of data from the server as well as registers the following function as an *event handler* for the operation:
 
 ```js
 response => {
@@ -510,7 +538,8 @@ response => {
 })
 ```
 
-When data arrives from the server, the JavaScript runtime calls the function registered as the event handler, which prints `promise fulfilled` to the console and stores the notes received from the server into the state using the function `setNotes(response.data)`.
+When data arrives from the server, the JavaScript runtime calls the function registered as the event handler,
+which prints `promise fulfilled` to the console and stores the notes received from the server into the state using the function `setNotes(response.data)`.
 
 As always, a call to a state-updating function triggers the re-rendering of the component.
 As a result, `render 3 notes` is printed to the console, and the notes fetched from the server are rendered to the screen.
@@ -560,7 +589,8 @@ There are many possible use cases for an effect hook other than fetching data fr
 However, this use is sufficient for us, for now.
 
 Think back to the sequence of events we just discussed.
-Which parts of the code are run? In what order? How often? Understanding the order of events is critical!
+Which parts of the code are run? In what order? How often?
+Understanding the order of events is critical!
 
 Note that we could have also written the code for the effect function this way:
 
@@ -580,8 +610,10 @@ useEffect(() => {
 
 A reference to an event handler function is assigned to the variable `eventHandler`.
 The promise returned by the `get` method of Axios is stored in the variable `promise`.
-The registration of the callback happens by giving the `eventHandler` variable, referring to the event-handler function, as a parameter to the `then` method of the promise.
-It isn't usually necessary to assign functions and promises to variables, and a more compact way of representing things, as seen further above, is sufficient.
+The registration of the callback happens by giving the `eventHandler` variable,
+referring to the event-handler function, as a parameter to the `then` method of the promise.
+It isn't usually necessary to assign functions and promises to variables,
+and a more compact way of representing things, as seen further above, is sufficient.
 
 ```js
 useEffect(() => {
@@ -598,7 +630,8 @@ useEffect(() => {
 We still have a problem with our application.
 When adding new notes, they are not stored on the server.
 
-The code for the application, as described so far, can be found in full on [github](https://github.com/fullstack-hy2020/part2-notes/tree/part2-4), on branch *part2-4*.
+The code for the application, as described so far, can be found in full on
+[github](https://github.com/fullstack-hy2020/part2-notes/tree/part2-4), on branch *part2-4*.
 
 ### The development runtime environment
 
@@ -697,7 +730,8 @@ If there are ten or fewer countries, but more than one, then all countries match
 
 ![matching countries in a list screenshot](../../images/2/19b2.png)
 
-When there is only one country matching the query, then the basic data of the country (e.g. capital and area), its flag and the languages spoken are shown:
+When there is only one country matching the query, then the basic data of the country (e.g. capital and area),
+its flag and the languages spoken are shown:
 
 ![flag and additional attributes screenshot](../../images/2/19c3.png)
 
@@ -706,13 +740,16 @@ Some countries, like ***Sudan***, can be hard to support since the name of the c
 You don't need to worry about these edge cases.
 
 **WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
-**Most likely you do not want each of your projects to be a separate repository**, so simply run the `rm -rf .git` command at the root of your application.
+**Most likely you do not want each of your projects to be a separate repository**,
+so simply run the `rm -rf .git` command at the root of your application.
 
 #### 2.13*: Data for countries, step2
 
 **There is still a lot to do in this part, so don't get stuck on this exercise!**
 
-Improve on the application in the previous exercise, such that when the names of multiple countries are shown on the page there is a button next to the name of the country, which when pressed shows the view for that country:
+Improve on the application in the previous exercise,
+such that when the names of multiple countries are shown on the page there is a button next to the name of the country,
+which when pressed shows the view for that country:
 
 ![attach show buttons for each country feature](../../images/2/19b4.png)
 
@@ -732,7 +769,8 @@ Note that it might take some minutes until a generated API key is valid.
 
 If you use Open weather map, [here](https://openweathermap.org/weather-conditions#Icon-list) is the description for how to get weather icons.
 
-**NB:** In some browsers (such as Firefox) the chosen API might send an error response, which indicates that HTTPS encryption is not supported, although the request URL starts with `http://`.
+**NB:** In some browsers (such as Firefox) the chosen API might send an error response,
+which indicates that HTTPS encryption is not supported, although the request URL starts with `http://`.
 This issue can be fixed by completing the exercise using Chrome.
 
 **NB:** You need an api-key to use almost every weather service.

@@ -107,7 +107,8 @@ The following object is set as the new state of the application:
 }
 ```
 
-The new value of the `left` property is now the same as the value of `left + 1` from the previous state, and the value of the `right` property is the same as the value of the `right` property from the previous state.
+The new value of the `left` property is now the same as the value of `left + 1` from the previous state,
+and the value of the `right` property is the same as the value of the `right` property from the previous state.
 
 We can define the new state object a bit more neatly by using the [object spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
 syntax that was added to the language specification in the summer of 2018:
@@ -164,9 +165,11 @@ const handleLeftClick = () => {
 The application appears to work.
 However, **it is forbidden in React to mutate state directly**, since [it can result in unexpected side effects](https://stackoverflow.com/a/40309023).
 Changing state has to always be done by setting the state to a new object.
-If properties from the previous state object are not changed, they need to simply be copied, which is done by copying those properties into a new object and setting that as the new state.
+If properties from the previous state object are not changed, they need to simply be copied,
+which is done by copying those properties into a new object and setting that as the new state.
 
-Storing all of the state in a single state object is a bad choice for this particular application; there's no apparent benefit and the resulting application is a lot more complex.
+Storing all of the state in a single state object is a bad choice for this particular application;
+there's no apparent benefit and the resulting application is a lot more complex.
 In this case, storing the click counters into separate pieces of state is a far more suitable choice.
 
 There are situations where it can be beneficial to store a piece of application state in a more complex data structure.
@@ -224,9 +227,11 @@ const handleLeftClick = () => {
 ```
 
 The piece of state stored in `allClicks` is now set to be an array that contains all of the items of the previous state array plus the letter `L`.
-Adding the new item to the array is accomplished with the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) method, which does not mutate the existing array but rather returns a **new copy of the array** with the item added to it.
+Adding the new item to the array is accomplished with the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) method,
+which does not mutate the existing array but rather returns a **new copy of the array** with the item added to it.
 
-As mentioned previously, it's also possible in JavaScript to add items to an array with the [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
+As mentioned previously, it's also possible in JavaScript to add items to an array with the
+[push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
 If we add the item by pushing it to the `allClicks` array and then updating the state, the application would still appear to work:
 
 ```js
@@ -260,7 +265,9 @@ const App = () => {
 }
 ```
 
-We call the [join](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join) method on the `allClicks` array that joins all the items into a single string, separated by the string passed as the function parameter, which in our case is an empty space.
+We call the [join](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join) method
+on the `allClicks` array that joins all the items into a single string,
+separated by the string passed as the function parameter, which in our case is an empty space.
 
 ### Conditional rendering
 
@@ -379,12 +386,15 @@ const App = () => {
 
 ### Old React
 
-In this course, we use the [state hook](https://reactjs.org/docs/hooks-state.html) to add state to our React components, which is part of the newer versions of React and is available from version [16.8.0](https://www.npmjs.com/package/react/v/16.8.0) onwards.
+In this course, we use the [state hook](https://reactjs.org/docs/hooks-state.html) to add state to our React components,
+which is part of the newer versions of React and is available from version [16.8.0](https://www.npmjs.com/package/react/v/16.8.0) onwards.
 Before the addition of hooks, there was no way to add state to functional components.
 Components that required state had to be defined as [class](https://reactjs.org/docs/react-component.html) components, using the JavaScript class syntax.
 
-In this course, we have made the slightly radical decision to use hooks exclusively from day one, to ensure that we are learning the current and future variations of React.
-Even though functional components are the future of React, it is still important to learn the class syntax, as there are billions of lines of legacy React code that you might end up maintaining someday.
+In this course, we have made the slightly radical decision to use hooks exclusively from day one,
+to ensure that we are learning the current and future variations of React.
+Even though functional components are the future of React, it is still important to learn the class syntax,
+as there are billions of lines of legacy React code that you might end up maintaining someday.
 The same applies to documentation and examples of React that you may stumble across on the internet.
 
 We will learn more about React class components later on in the course.
@@ -465,7 +475,8 @@ props value is [object Object]
 Whereas the items separated by a comma will all be available in the browser console for further inspection.
 
 Logging output to the console is by no means the only way of debugging our applications.
-You can pause the execution of your application code in the Chrome developer console's *debugger*, by writing the command [debugger](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) anywhere in your code.
+You can pause the execution of your application code in the Chrome developer console's *debugger*,
+by writing the command [debugger](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) anywhere in your code.
 
 The execution will pause once it arrives at a point where the ***debugger*** command gets executed:
 
@@ -508,7 +519,8 @@ The first *State* contains the value of the `left` state, the next contains the 
 
 There are a few limitations and rules we have to follow to ensure that our application uses hooks-based state functions correctly.
 
-The `useState` function (as well as the `useEffect` function introduced later on in the course) **must not be called** from inside of a loop, a conditional expression, or any place that is not a function defining a component.
+The `useState` function (as well as the `useEffect` function introduced later on in the course) **must not be called** from inside of a loop,
+a conditional expression, or any place that is not a function defining a component.
 This must be done to ensure that the hooks are always called in the same order, and if this isn't the case the application will behave erratically.
 
 To recap, hooks may only be called from the inside of a function body that defines a React component:
@@ -1071,9 +1083,12 @@ However, we use the new style of React for which a large majority of the materia
 
 You may find the following links useful:
 
-- The [official React documentation](https://reactjs.org/docs/hello-world.html) is worth checking out at some point, although most of it will become relevant only later on in the course.
+- The [official React documentation](https://reactjs.org/docs/hello-world.html) is worth checking out at some point,
+- although most of it will become relevant only later on in the course.
 Also, everything related to class-based components is irrelevant to us;
-- Some courses on [Egghead.io](https://egghead.io) like [Start learning React](https://egghead.io/courses/start-learning-react) are of high quality, and the recently updated [Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-reactjs) is also relatively good; both courses introduce concepts that will also be introduced later on in this course.
+- Some courses on [Egghead.io](https://egghead.io) like [Start learning React](https://egghead.io/courses/start-learning-react) are of high quality,
+  and the recently updated [Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-reactjs) is also relatively good;
+  both courses introduce concepts that will also be introduced later on in this course.
 **NB** The first one uses class components but the latter uses the new functional ones.
 
 </div>
@@ -1092,7 +1107,8 @@ In these cases, it is sufficient to submit just the final version of the applica
 If you wish, you can make a commit after every finished exercise, but it is not mandatory.*
 
 **WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
-**Most likely you do not want each of your projects to be a separate repository**, so simply run the `rm -rf .git` command at the root of your application.
+**Most likely you do not want each of your projects to be a separate repository**,
+so simply run the `rm -rf .git` command at the root of your application.
 
 In some situations you may also have to run the command below from the root of the project:
 
@@ -1149,7 +1165,8 @@ export default App
 
 #### 1.7: unicafe step2
 
-Expand your application so that it shows more statistics about the gathered feedback: the total number of collected feedback, the average score (good: 1, neutral: 0, bad: -1) and the percentage of positive feedback.
+Expand your application so that it shows more statistics about the gathered feedback: the total number of collected feedback,
+the average score (good: 1, neutral: 0, bad: -1) and the percentage of positive feedback.
 
 ![average and percentage positive screenshot feedback](../../images/1/14e.png)
 
@@ -1196,7 +1213,8 @@ Extract the following two components:
 - `Button` for defining the buttons used for submitting feedback
 - `StatisticLine` for displaying a single statistic, e.g. the average score.
 
-To be clear: the `StatisticLine` component always displays a single statistic, meaning that the application uses multiple components for rendering all of the statistics:
+To be clear: the `StatisticLine` component always displays a single statistic,
+meaning that the application uses multiple components for rendering all of the statistics:
 
 ```js
 const Statistics = (props) => {
@@ -1217,7 +1235,8 @@ The application's state should still be kept in the root `App` component.
 
 #### 1.11*: unicafe step6
 
-Display the statistics in an HTML [table](https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics), so that your application looks roughly like this:
+Display the statistics in an HTML [table](https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics),
+so that your application looks roughly like this:
 
 ![screenshot of statistics table](../../images/1/16e.png)
 
@@ -1278,7 +1297,8 @@ Your finished application could look something like this:
 ![random anecdote with next button](../../images/1/18a.png)
 
 **WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
-**Most likely you do not want each of your projects to be a separate repository**, so simply run the `rm -rf .git` command at the root of your application.
+**Most likely you do not want each of your projects to be a separate repository**,
+so simply run the `rm -rf .git` command at the root of your application.
 
 #### 1.13*: anecdotes step2
 

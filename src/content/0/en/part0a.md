@@ -40,7 +40,8 @@ The course contains fourteen parts, the first of which is numbered 0 for consist
 One part corresponds loosely to one week (averaging 15-20 hours) of studying, but the speed of completing the course is flexible.
 
 Proceeding from part *n* to part *n+1* is not sensible before enough know-how of the topics in part *n*  has been achieved.
-In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning), and you are only intended to proceed to the next part after doing enough of the exercises of the previous part.
+In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning).
+You should only proceed to the next part after doing enough of the previous part's exercises.
 
 In parts 1-4 you are expected to do *at least* all of the exercises that are not marked with an asterisk(*).
 Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts.
@@ -74,7 +75,8 @@ Part of your grade for the course will be based on the total number of submitted
 | 83           | D        |
 | 72           | F        |
 
-If you wish to pass the course, you must also complete the course exam. The exam does not count towards your final grade, but you must pass it. More info about the exam will be discussed via canvas and discord.
+If you wish to pass the course, you must also complete the course exam. The exam does not count towards your final grade, but you must pass it.
+More info about the exam will be discussed via canvas and discord.
 
 You can only take the exam after submitting a sufficient number of exercises.
 It is not wise in practice to take the exam immediately after submitting the critical number of exercises.
@@ -100,12 +102,16 @@ How to study the course – instructions in a nutshell:
 
 ### Submitting exercises
 
-If you are submitting exercises from different parts to the same repository, use an appropriate system for naming your directories. You can of course create a new repository for each part.  Make sure you use GitHub classroom for your portion.
+If you are submitting exercises from different parts to the same repository, use an appropriate system for naming your directories.
+You can of course create a new repository for each part.
+Make sure you use GitHub classroom for your portion.
 
 Exercises are submitted **one part at a time**.
 Once you have submitted exercises for a part, you can no longer submit any more exercises for that part.
 
-A system for detecting plagiarism is used to check exercises submitted to GitHub. If code is found from model answers or multiple students hand in the same code, the situation is handled according to the policy on plagiarism as outlined in the syllabus.
+A system for detecting plagiarism is used to check exercises submitted to GitHub.
+If code is found from model answers or multiple students hand in the same code,
+the situation is handled according to the policy on plagiarism as outlined in the syllabus.
 
 Many of the exercises build a larger application bit by bit.
 You will be expected to commit often so that you show your work as you move through the course.
@@ -123,7 +129,8 @@ More information about the project will be released via Canvas
 ### Before you start
 
 Using the [Chrome browser](https://www.google.com/chrome/) is recommended for this course because it provides the best tools for web development.
-Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/), which provides the same range of features.
+Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/),
+which provides the same range of features.
 
 The course exercises are submitted to GitHub, so Git must be installed and you should know how to use it.
 For instructions, see [Git and GitHub tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
@@ -141,17 +148,20 @@ See [Node.js installation instructions](https://nodejs.org/en/download/package-m
 
 Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically installed with Node.js.
 We will be actively using npm throughout the course.
-Node also comes with [npx](https://www.npmjs.com/package/npx), which we'll need a few times.
+Node also comes with [npx](https://www.npmjs.com/package/npx),
+which we'll need a few times.
 
 ### Typos in the material
 
-If you find a typo in the material, or something has been expressed unclearly or is simply bad grammar, submit a *pull request* to the course material in the [repository](https://github.com/comp227/comp227).
+If you find a typo in the material, or something has been expressed unclearly or is simply bad grammar,
+submit a *pull request* to the course material in the [repository](https://github.com/comp227/comp227).
 For example, the markdown source code of this page can be found in the repository at <https://github.com/comp227/comp227/edit/source/src/content/0/en/part0a.md>
 
 At the bottom of each part of the material is a link to **propose changes to the material**.
 You can edit the source code of the page by clicking on the link.
 
 There are also lots of links in the material for many kinds of background material.
-If you notice that a link is broken (that happens too often...), propose a change or ping us in Discord if you do not find a replacement for the broken link.
+If you notice that a link is broken (that happens too often...),
+propose a change or ping us in Discord if you do not find a replacement for the broken link.
 
 </div>

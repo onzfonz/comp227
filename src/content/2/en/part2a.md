@@ -11,7 +11,8 @@ Before starting a new part, let's recap some of the topics that proved difficult
 
 ### console.log
 
-***What's the difference between an experienced JavaScript programmer and a rookie? The experienced one uses console.log 10-100 times more.***
+***What's the difference between an experienced JavaScript programmer and a rookie?
+The experienced one uses console.log 10-100 times more.***
 
 Paradoxically, this seems to be true even though a rookie programmer would need `console.log` (or any debugging method) more than an experienced one.
 
@@ -32,13 +33,15 @@ separate the things to be printed with a comma:
 console.log('props value is', props)
 ```
 
-If you concatenate an object with a string and log it to the console (like in our first example), the result will be pretty useless:
+If you concatenate an object with a string and log it to the console (like in our first example),
+the result will be pretty useless:
 
 ```js
 props value is [object Object]
 ```
 
-On the contrary, when you pass objects as distinct arguments separated by commas to `console.log`, like in our second example above, the content of the object is printed to the developer console as strings that are insightful.
+On the contrary, when you pass objects as distinct arguments separated by commas to `console.log`,
+like in our second example above, the content of the object is printed to the developer console as strings that are insightful.
 If necessary, read more about [debugging React applications](/part1/a_more_complex_state_debugging_react_apps#debugging-react-applications).
 
 ### Protip: Visual Studio Code snippets
@@ -70,10 +73,16 @@ More fully featured `console.log()` snippet extensions can be found in the [mark
 
 ### JavaScript Arrays
 
-From here on out, we will be using the functional programming methods of the JavaScript [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), such as `find`, `filter`, and `map` - all of the time.
-They operate on the same general principles as streams do in Java 8, which have been used during the last few years in both the 'Ohjelmoinnin perusteet' and 'Ohjelmoinnin jatkokurssi' courses at the university's department of Computer Science, and also in the programming MOOC.
+From here on out, we will be using the functional programming methods of the JavaScript
+[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array),
+such as `find`, `filter`, and `map` - all of the time.
+They operate on the same general principles as streams do in Java 8,
+which have been used during the last few years in both the 'Ohjelmoinnin perusteet'
+and 'Ohjelmoinnin jatkokurssi' courses at the university's department of Computer Science,
+and also in the programming MOOC.
 
-If functional programming with arrays feels foreign to you, it is worth watching at least the first three parts of the YouTube video series [Functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84):
+If functional programming with arrays feels foreign to you, it is worth watching at least the first three parts of the YouTube video series
+[Functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84):
 
 - [Higher-order functions](https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84)
 - [Map](https://www.youtube.com/watch?v=bCqtb-Z5YGQ&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84&index=2)
@@ -83,7 +92,9 @@ If functional programming with arrays feels foreign to you, it is worth watching
 
 Based on last year's course, event handling has proved to be difficult.
 
-It's worth reading the revision chapter at the end of the previous part - [event handlers revisited](/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited) - if it feels like your own knowledge on the topic needs some brushing up.
+It's worth reading the revision chapter at the end of the previous part -
+[event handlers revisited](/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited) -
+if it feels like your own knowledge on the topic needs some brushing up.
 
 Passing event handlers to the child components of the `App` component has raised some questions.
 A small revision on the topic can be found [here](/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
@@ -158,7 +169,8 @@ A single note is rendered by accessing the objects in the array by referring to 
 ```
 
 This is, of course, not practical.
-We can improve on this by generating React elements from the array objects using the [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
+We can improve on this by generating React elements from the array objects using the
+[map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
 
 ```js
 notes.map(note => <li>{note.content}</li>)
@@ -224,7 +236,8 @@ Even though the application seems to be working, there is a nasty warning in the
 
 ![unique key prop console error](../../images/2/1a.png)
 
-As the linked [React page](https://reactjs.org/docs/lists-and-keys.html#keys) in the error message suggests; the list items, i.e. the elements generated by the `map` method, must each have a unique key value:  an attribute called **key**.
+As the linked [React page](https://reactjs.org/docs/lists-and-keys.html#keys) in the error message suggests;
+the list items, i.e. the elements generated by the `map` method, must each have a unique key value: an attribute called **key**.
 
 Let's add the keys:
 
@@ -254,7 +267,9 @@ More about this is in the [React documentation](https://reactjs.org/docs/reconci
 
 ### Map
 
-Understanding how the array method [`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) works is crucial for the rest of the course.
+Understanding how the array method
+[`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+works is crucial for the rest of the course.
 
 The application contains an array called `notes`:
 
@@ -370,7 +385,8 @@ Read more about this in [this article](https://robinpokorny.medium.com/index-as-
 ### Refactoring Modules
 
 Let's tidy the code up a bit.
-We are only interested in the field `notes` of the props, so let's retrieve that directly using [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
+We are only interested in the field `notes` of the props, so let's retrieve that directly using
+[destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
 
 ```js
 const App = ({ notes }) => { //highlight-line
@@ -435,7 +451,8 @@ import App from './App'
 ```
 
 [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) three modules, enabling them to be used in that file.
-The module ***react*** is placed into the variable `React`, the module ***react-dom*** into the variable `ReactDOM`, and the module that defines the main component of the app is placed into the variable `App`
+The module ***react*** is placed into the variable `React`, the module ***react-dom*** into the variable `ReactDOM`,
+and the module that defines the main component of the app is placed into the variable `App`
 
 Let's move our `Note` component into its own module.
 
@@ -455,7 +472,9 @@ const Note = ({ note }) => {
 export default Note
 ```
 
-The last line of the module [exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) the declared module, the variable `Note`.
+The last line of the module
+[exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)
+the declared module, the variable `Note`.
 
 Now the file that is using the component - *App.js* - can [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) the module:
 
@@ -492,7 +511,8 @@ If you clone the project, run the command `npm install` before starting the appl
 
 ### When the Application Breaks
 
-Early in your programming career (and even after 30 years of coding like yours truly), what often happens is that the application just completely breaks down.
+Early in your programming career (and even after 30 years of coding like yours truly),
+what often happens is that the application just completely breaks down.
 This is even moreso the case with dynamically typed languages, such as JavaScript, where the compiler does not check the data type.
 For instance, function variables or return values.
 
@@ -569,7 +589,8 @@ const Course = ({ course }) => {
 }
 ```
 
-Quite often the root of the problem is that the props are expected to be of a different type, or called with a different name than they actually are, and destructuring fails as a result.
+Quite often the root of the problem is that the props are expected to be of a different type,
+or called with a different name than they actually are, and destructuring fails as a result.
 The problem often begins to solve itself when destructuring is removed and we see what the `props` contain.
 
 ```js
@@ -586,7 +607,8 @@ const Course = (props) => { // highlight-line
 
 If the problem has still not been resolved, sadly there isn't much to do apart from continuing to bug-hunt by sprinkling more `console.log` statements around your code.
 
-I added this chapter to the material after the model answer for the next question exploded completely (due to props being of the wrong type), and I had to debug it using `console.log`.
+I added this chapter to the material after the model answer for the next question exploded completely
+(due to props being of the wrong type), and I had to debug it using `console.log`.
 
 </div>
 
@@ -612,7 +634,8 @@ You probably **do not** want the project to become a repository, so run the comm
 Let's finish the code for rendering course contents from exercises 1.1 - 1.5.
 You can start with the code from the model answers. The model answers for part 1 can be found by going to the directions that were posted in Canvas or in Discord.
 
-**Note that if you copy a project from one place to another, you might have to delete the *node_modules* directory and install the dependencies again with the command `npm install` before you can start the application.**
+**Note that if you copy a project from one place to another, you might have to delete the *node_modules* directory
+and install the dependencies again with the command `npm install` before you can start the application.**
 
 Generally, it's not recommended that you copy a project's whole contents and/or add the *node_modules* directory to the version control system.
 
@@ -670,7 +693,8 @@ The rendered page can, for example, look as follows:
 
 You don't need the sum of the exercises yet.
 
-The application must work *regardless of the number of parts a course has*, so make sure the application works if you add or remove parts of a course.
+The application must work *regardless of the number of parts a course has*,
+so make sure the application works if you add or remove parts of a course.
 
 Ensure that the console shows no errors!
 
@@ -682,7 +706,8 @@ Show also the sum of the exercises of the course.
 
 #### 2.3*: Course information step8
 
-If you haven't done so already, calculate the sum of exercises with the array method [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
+If you haven't done so already, calculate the sum of exercises with the array method
+[reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
 
 **Pro tip:** when your code looks as follows:
 
@@ -702,7 +727,8 @@ const total = parts.reduce((s, p) => {
 
 **Not working? :** Use your search engine to look up how `reduce` is used in an **Object Array**.
 
-**Pro tip 2:** There is a [plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer) that automatically changes the short-form arrow functions into their longer form and vice versa.
+**Pro tip 2:** There is a [plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer)
+that automatically changes the short-form arrow functions into their longer form and vice versa.
 
 ![vscode sample suggestion for arrow function](../../images/2/5b.png)
 

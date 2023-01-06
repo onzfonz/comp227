@@ -13,8 +13,10 @@ Next, we will look into one way to test the [system as a whole](https://en.wikip
 
 We can do E2E testing of a web application using a browser and a testing library.
 There are multiple libraries available.
-One example is [Selenium](http://www.seleniumhq.org/), which can be used with almost any browser.
-Another browser option is so-called [headless browsers](https://en.wikipedia.org/wiki/Headless_browser), which are browsers with no graphical user interface.
+One example is [Selenium](http://www.seleniumhq.org/),
+which can be used with almost any browser.
+Another browser option is so-called [headless browsers](https://en.wikipedia.org/wiki/Headless_browser),
+which are browsers with no graphical user interface.
 For example, Chrome can be used in headless mode.
 
 E2E tests are potentially the most useful category of tests because they test the system through the same interface as real users use.
@@ -86,7 +88,8 @@ Let's add an npm script to *the backend* which starts it in test mode, or so tha
 ```
 
 NB! To get Cypress working with WSL2 one might need to do some additional configuring first.
-These two [links](https://docs.cypress.io/guides/getting-started/installing-cypress#Windows-Subsystem-for-Linux) are great places to [start](https://nickymeuleman.netlify.app/blog/gui-on-wsl2-cypress).
+These two [links](https://docs.cypress.io/guides/getting-started/installing-cypress#Windows-Subsystem-for-Linux)
+are great places to [start](https://nickymeuleman.netlify.app/blog/gui-on-wsl2-cypress).
   
 When both the backend and frontend are running, we can start Cypress with the command
 
@@ -282,7 +285,8 @@ describe('Note app',  function() {
 
 The last row ensures that the login was successful.
 
-Note that the CSS [id-selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors) is #, so if we want to search for an element with the id `username` the CSS selector is `#username`.
+Note that the CSS [id-selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors) is #,
+so if we want to search for an element with the id `username` the CSS selector is `#username`.
 
 ### Some things to note
 
@@ -633,7 +637,8 @@ it('login fails with wrong password', function() {
 
 First, we use [cy.get](https://docs.cypress.io/api/commands/get.html#Syntax) to search for a component with the CSS class `error`.
 Then we check that the error message can be found from this component.
-Note that the [CSS class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors) starts with a full stop, so the selector for the class `error` is `.error`.
+Note that the [CSS class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors)
+starts with a full stop, so the selector for the class `error` is `.error`.
 
 We could do the same using the [should](https://docs.cypress.io/api/commands/should.html) syntax:
 
@@ -647,7 +652,8 @@ it('login fails with wrong password', function() {
 
 Using `should` is a bit trickier than using `contains`, but it allows for more diverse tests than `contains` which works based on text content only.
 
-A list of the most common assertions which can be used with `should` can be found [here](https://docs.cypress.io/guides/references/assertions.html#Common-Assertions).
+A list of the most common assertions which can be used with `should`
+can be found [here](https://docs.cypress.io/guides/references/assertions.html#Common-Assertions).
 
 We can, for example, make sure that the error message is red and it has a border:
 
@@ -663,7 +669,8 @@ it('login fails with wrong password', function() {
 
 Cypress requires the colors to be given as [rgb](https://rgbcolorcode.com/color/red).
 
-Because all tests are for the same component we accessed using [cy.get](https://docs.cypress.io/api/commands/get.html#Syntax), we can chain them using [and](https://docs.cypress.io/api/commands/and.html).
+Because all tests are for the same component we accessed using [cy.get](https://docs.cypress.io/api/commands/get.html#Syntax),
+we can chain them using [and](https://docs.cypress.io/api/commands/and.html).
 
 ```js
 it('login fails with wrong password', function() {
@@ -748,8 +755,11 @@ User is logged in in the `beforeEach` block.
 
 As we said above, each test starts from zero! Tests do not start from the state where the previous tests ended.
 
-The Cypress documentation gives us the following advice: [Fully test the login flow – but only once!](https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Fully-test-the-login-flow-but-only-once).
-So instead of logging in a user using the form in the `beforeEach` block, Cypress recommends that we [bypass the UI](https://docs.cypress.io/guides/getting-started/testing-your-app.html#Bypassing-your-UI) and do an HTTP request to the backend to log in.
+The Cypress documentation gives us the following advice:
+[Fully test the login flow – but only once!](https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Fully-test-the-login-flow-but-only-once).
+So instead of logging in a user using the form in the `beforeEach` block, Cypress recommends that we
+[bypass the UI](https://docs.cypress.io/guides/getting-started/testing-your-app.html#Bypassing-your-UI)
+and do an HTTP request to the backend to log in.
 The reason for this is that logging in with an HTTP request is much faster than filling out a form.
 
 Our situation is a bit more complicated than in the example in the Cypress documentation because when a user logs in, our application saves their details to the localStorage.
@@ -930,7 +940,8 @@ describe('when logged in', function() {
 
 How does the [cy.contains](https://docs.cypress.io/api/commands/contains.html) command actually work?
 
-When we click the `cy.contains('second note')` command in Cypress [Test Runner](https://docs.cypress.io/guides/core-concepts/test-runner.html), we see that the command searches for the element containing the text `second note`:
+When we click the `cy.contains('second note')` command in Cypress [Test Runner](https://docs.cypress.io/guides/core-concepts/test-runner.html),
+we see that the command searches for the element containing the text `second note`:
 
 ![cypress test runner clicking testbody and second note](../../images/5/34x.png)
 
@@ -985,11 +996,13 @@ it('one of those can be made important', function () {
 })
 ```
 
-In the first line, we use the [parent](https://docs.cypress.io/api/commands/parent.html) command to access the parent element of the element containing ***second note*** and find the button from within it.
+In the first line, we use the [parent](https://docs.cypress.io/api/commands/parent.html)
+command to access the parent element of the element containing ***second note*** and find the button from within it.
 Then we click the button and check that the text on it changes.
 
 Note that we use the command [find](https://docs.cypress.io/api/commands/find.html#Syntax) to search for the button.
-We cannot use [cy.get](https://docs.cypress.io/api/commands/get.html) here, because it always searches from the **whole** page and would return all 5 buttons on the page.
+We cannot use [cy.get](https://docs.cypress.io/api/commands/get.html) here,
+because it always searches from the **whole** page and would return all 5 buttons on the page.
 
 Unfortunately, we have some copy-paste in the tests now, because the code for searching for the right button is always the same.
 
@@ -1026,7 +1039,8 @@ When the code of the test method has been executed, Cypress will execute each co
 Cypress commands always return `undefined`, so `button.click()` in the above code would cause an error.
 An attempt to start the debugger would not stop the code between executing the commands, but before any commands have been executed.
 
-Cypress commands are *like promises*, so if we want to access their return values, we have to do it using the [then](https://docs.cypress.io/api/commands/then.html) command.
+Cypress commands are *like promises*, so if we want to access their return values,
+we have to do it using the [then](https://docs.cypress.io/api/commands/then.html) command.
 For example, the following test would print the number of buttons in the application, and click the first button:
 
 ```js
@@ -1081,7 +1095,8 @@ The material of this part should be enough to complete the exercises.
 You **must check out the Cypress [documentation](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell)**.
 It is probably the best documentation I have ever seen for an open-source project.
 
-I especially recommend reading [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Cypress-Can-Be-Simple-Sometimes), which states
+I especially recommend reading
+[Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Cypress-Can-Be-Simple-Sometimes), which states
 
 > **This is the single most important guide for understanding how to test with Cypress. Read it. Understand it.**
 
@@ -1180,7 +1195,8 @@ Make a test for ensuring that the user who created a blog can delete it.
 Make a test that checks that the blogs are ordered according to likes with the blog with the most likes being first.
 
 This exercise is quite a bit trickier than the previous ones.
-One solution is to add a certain class for the element which wraps the blog's content and use the [eq](https://docs.cypress.io/api/commands/eq#Syntax) method to get the blog element in a specific index:
+One solution is to add a certain class for the element which wraps the blog's content
+and use the [eq](https://docs.cypress.io/api/commands/eq#Syntax) method to get the blog element in a specific index:
   
 ```js
 cy.get('.blog').eq(0).should('contain', 'The title with the most likes')

@@ -8,11 +8,14 @@ lang: en
 <div class="content">
 
 The appearance of our current application is quite modest.
-In [exercise 0.2](/part0/fundamentals_of_web_apps#exercises-0-1-0-6), the assignment was to go through Mozilla's [CSS tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics).
+In [exercise 0.2](/part0/fundamentals_of_web_apps#exercises-0-1-0-6),
+the assignment was to go through Mozilla's [CSS tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics).
 
 Before we move to the next part, let's take a look at how we can add styles to a React application.
 There are several different ways of doing this and we will take a look at the other methods later on.
-First, we will add CSS to our application the old-school way; in a single file without using a [CSS preprocessor](https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor) (although this is not entirely true as we will learn later on).
+First, we will add CSS to our application the old-school way; in a single file without using a
+[CSS preprocessor](https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor)
+(although this is not entirely true as we will learn later on).
 
 Let's add a new *index.css* file under the *src* directory and then add it to the application by importing it in the *index.js* file:
 
@@ -48,7 +51,8 @@ h1 {
 
 There are many ways of matching elements by using [different types of CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
 
-If we wanted to target, let's say, each one of the notes with our styles, we could use the selector `li`, as all of the notes are wrapped inside `li` tags:
+If we wanted to target, let's say, each one of the notes with our styles,
+we could use the selector `li`, as all of the notes are wrapped inside `li` tags:
 
 ```js
 const Note = ({ note, toggleImportance }) => {
@@ -137,7 +141,8 @@ const Notification = ({ message }) => {
 }
 ```
 
-If the value of the `message` prop is `null`, then nothing is rendered to the screen, and in other cases, the message gets rendered inside of a div element.
+If the value of the `message` prop is `null`, then nothing is rendered to the screen,
+and in other cases, the message gets rendered inside of a div element.
 
 Let's add a new piece of state called `errorMessage` to the `App` component.
 Let's initialize it with some error message so that we can immediately test our component:
@@ -293,7 +298,8 @@ Traditionally, it has been considered best practice to entirely separate CSS fro
 According to this older school of thought, the goal was to write CSS, HTML, and JavaScript into their separate files.
 
 The philosophy of React is, in fact, the polar opposite of this.
-Since the separation of CSS, HTML, and JavaScript into separate files did not seem to scale well in larger applications, React bases the division of the application along the lines of its logical functional entities.
+Since the separation of CSS, HTML, and JavaScript into separate files did not seem to scale well in larger applications,
+React bases the division of the application along the lines of its logical functional entities.
 
 The structural units that make up the application's functional entities are React components.
 A React component defines the HTML for structuring the content, the JavaScript functions for determining functionality, and also the component's styling; all in one place.
@@ -309,7 +315,8 @@ The code of the final version of our application can be found in the *part2-8* b
 
 #### 2.19: Phonebook step11
 
-Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message) example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a person is added or a number is changed):
+Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message)
+example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a person is added or a number is changed):
 
 ![successful green added screenshot](../../images/2/27e.png)
 

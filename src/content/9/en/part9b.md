@@ -8,13 +8,20 @@ lang: en
 <div class="content">
 
 Now that we have set up our development environment we can get into React Native basics and get started with the development of our application.
-In this section, we will learn how to build user interfaces with React Native's core components, how to add style properties to these core components, how to transition between views, and how to manage the form's state efficiently.
+In this section, we will learn how to:
+
+- build user interfaces with React Native's core components
+- add style properties to these core components
+- transition between views, and
+- manage the form's state efficiently.
 
 ### Core components
 
-In the previous parts, we have learned that we can use React to define components as functions, which receive props as an argument and returns a tree of React elements.
+In the previous parts, we have learned that we can use React to define components as functions,
+which receive props as an argument and returns a tree of React elements.
 This tree is usually represented with JSX syntax.
-In the browser environment, we have used the [ReactDOM](https://reactjs.org/docs/react-dom.html) library to turn these components into a DOM tree that can be rendered by a browser.
+In the browser environment, we have used the [ReactDOM](https://reactjs.org/docs/react-dom.html) library
+to turn these components into a DOM tree that can be rendered by a browser.
 Here is a concrete example of a very simple component:
 
 ```javascript
@@ -37,7 +44,8 @@ As we can see, React is not bound to a certain environment, such as the browser 
 Instead, there are libraries such as ReactDOM that can render *a set of predefined components*, such as DOM elements, in a specific environment.
 In React Native these predefined components are called **core components**.
 
-[Core components](https://reactnative.dev/docs/intro-react-native-components) are a set of components provided by React Native, which behind the scenes utilize the platform's native components.
+[Core components](https://reactnative.dev/docs/intro-react-native-components)
+are a set of components provided by React Native, which behind the scenes utilize the platform's native components.
 Let's implement the previous example using React Native:
 
 ```javascript
@@ -65,7 +73,8 @@ This means that you can't, for example, replace the `Text` component with the `V
 
 The second notable difference is related to the event handlers.
 While working with the DOM elements we are used to adding event handlers such as `onClick` to basically any element such as `<div>` and `<button>`.
-In React Native we have to carefully read the [API documentation](https://reactnative.dev/docs/components-and-apis) to know what event handlers (as well as other props) a component accepts.
+In React Native we have to carefully read the [API documentation](https://reactnative.dev/docs/components-and-apis)
+to know what event handlers (as well as other props) a component accepts.
 For example, the [Pressable](https://reactnative.dev/docs/pressable) component provides props for listening to different kinds of press events.
 We can for example use the component's [onPress](https://reactnative.dev/docs/pressable) prop for listening to press events:
 
@@ -130,7 +139,8 @@ However, there might be times when automatic reload isn't working and the applic
 This can be achieved through the in-app developer menu.
 
 You can access the developer menu by shaking your device or by selecting "Shake Gesture" inside the Hardware menu in the iOS Simulator.
-You can also use the ***⌘D*** keyboard shortcut when your app is running in the iOS Simulator, or ***⌘M*** when running in an Android emulator on Mac OS and ***Ctrl+M*** on Windows and Linux.
+You can also use the ***⌘D*** keyboard shortcut when your app is running in the iOS Simulator,
+or ***⌘M*** when running in an Android emulator on Mac OS and ***Ctrl+M*** on Windows and Linux.
 
 Once the developer menu is open, simply press "Reload" to reload the application.
 After the application has been reloaded, automatic reloads should work without the need for a manual reload.
@@ -144,11 +154,14 @@ After the application has been reloaded, automatic reloads should work without t
 #### Exercise 9.3: the reviewed repositories list
 
 In this exercise, we will implement the first version of the reviewed repositories list.
-The list should contain the repository's full name, description, language, number of forks, number of stars, rating average and number of reviews.
-Luckily React Native provides a handy component for displaying a list of data, which is the [FlatList](https://reactnative.dev/docs/flatlist) component.
+The list should contain the repository's
+full name, description, language, number of forks, number of stars, rating average and number of reviews.
+Luckily React Native provides a handy component for displaying a list of data,
+which is the [FlatList](https://reactnative.dev/docs/flatlist) component.
 
 Implement components `RepositoryList` and `RepositoryItem` in the *components* directory's files *RepositoryList.jsx* and *RepositoryItem.jsx*.
-The `RepositoryList` component should render the `FlatList` component and `RepositoryItem` a single item on the list (hint: use the `FlatList` component's [renderItem](https://reactnative.dev/docs/flatlist#required-renderitem) prop).
+The `RepositoryList` component should render the `FlatList` component and `RepositoryItem` a single item on the list
+(hint: use the `FlatList` component's [renderItem](https://reactnative.dev/docs/flatlist#required-renderitem) prop).
 Use this as the basis for the *RepositoryList.jsx* file:
 
 ```javascript
@@ -263,7 +276,8 @@ On top of the property names, you might have noticed another difference in the e
 In CSS numerical property values commonly have a unit such as *`px`*, *`%`*, *`em`* or *`rem`*.
 In React Native all dimension-related property values such as `width`, `height`, `padding`, and `margin` as well as font sizes are **unitless**.
 These unitless numeric values represent **density-independent pixels**.
-In case you are wondering what are the available style properties for certain core components, check the [React Native Styling Cheat Sheet](https://github.com/vhpoet/react-native-styling-cheat-sheet).
+In case you are wondering what are the available style properties for certain core components,
+check the [React Native Styling Cheat Sheet](https://github.com/vhpoet/react-native-styling-cheat-sheet).
 
 In general, defining styles directly in the `style` prop is not considered such a great idea, because it makes components bloated and unclear.
 Instead, we should define styles outside the component's render function using the [StyleSheet.create](https://reactnative.dev/docs/stylesheet#create) method.
@@ -349,7 +363,8 @@ const Main = () => {
 ```
 
 In the example, we use the `&&` operator with the expression `condition && exprIfTrue`.
-This expression yields *`exprIfTrue`* if the *`condition`* evaluates to true, otherwise it will yield *`condition`*, which in that case is a value that evaluates to false.
+This expression yields *`exprIfTrue`* if the *`condition`* evaluates to true,
+otherwise it will yield *`condition`*, which in that case is a value that evaluates to false.
 This is an extremely widely used and handy shorthand.
 Another option would be to use the [conditional operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) like this:
 
@@ -365,8 +380,10 @@ This means that the appearance of user interface components such as their font s
 To achieve this we have to somehow ***parametrize*** the values of different style properties.
 This method is commonly known as **theming**.
 
-Users of popular user interface libraries such as [Bootstrap](https://getbootstrap.com/docs/4.4/getting-started/theming/) and [Material UI](https://material-ui.com/customization/theming/) might already be quite familiar with theming.
-Even though the theming implementations differ, the main idea is always to use variables such as *`colors.primary`* instead of ["magic numbers"](<https://en.wikipedia.org/wiki/Magic_number_(programming)>) such as *`#0366d6`* when defining styles.
+Users of popular user interface libraries such as [Bootstrap](https://getbootstrap.com/docs/4.4/getting-started/theming/)
+and [Material UI](https://material-ui.com/customization/theming/) might already be quite familiar with theming.
+Even though the theming implementations differ, the main idea is always to use variables such as *`colors.primary`*
+instead of ["magic numbers"](<https://en.wikipedia.org/wiki/Magic_number_(programming)>) such as *`#0366d6`* when defining styles.
 This leads to increased consistency and flexibility.
 
 Let's see how theming could work in practice in our application.
@@ -499,13 +516,16 @@ const FlexboxExample = () => {
 
 Perhaps the most important properties of a flex container are the following:
 
-- [flexDirection](https://css-tricks.com/almanac/properties/f/flex-direction/) property controls the direction in which the flex items are laid out within the container.
+- [flexDirection](https://css-tricks.com/almanac/properties/f/flex-direction/) property
+  controls the direction in which the flex items are laid out within the container.
 Possible values for this property are *`row`*, *`row-reverse`*, *`column`* (default value) and *`column-reverse`*.
 Flex direction `row` will lay out the flex items from left to right, whereas `column` from top to bottom.
 `*-reverse` directions will just reverse the order of the flex items.
 
-- [justifyContent](https://css-tricks.com/almanac/properties/j/justify-content/) property controls the alignment of flex items along the main axis (defined by the `flexDirection` property).
-Possible values for this property are *`flex-start`* (default value), *`flex-end`*, *`center`*, *`space-between`*, *`space-around`* and *`space-evenly`*.
+- [justifyContent](https://css-tricks.com/almanac/properties/j/justify-content/) property
+  controls the alignment of flex items along the main axis (defined by the `flexDirection` property).
+Possible values for this property are *`flex-start`* (default value),
+*`flex-end`*, *`center`*, *`space-between`*, *`space-around`* and *`space-evenly`*.
 - [alignItems](https://css-tricks.com/almanac/properties/a/align-items/) property does the same as `justifyContent` but for the opposite axis.
 Possible values for this property are *`flex-start`*, *`flex-end`*, *`center`*, *`baseline`* and *`stretch`* (default value).
 
@@ -550,7 +570,8 @@ It accepts a unitless value which defines the ability for a flex item to grow if
 If all flex items have a `flexGrow` of `1`, they will share all the available space evenly.
 If a flex item has a `flexGrow` of `0`, it will only use the space its content requires and leave the rest of the space for other flex items.
 
-Here is a more interactive and concrete example of how to use flexbox to implement a simple card component with a header, body and footer: [Flexbox example](https://snack.expo.io/@kalleilv/3d045d).
+Here is a more interactive and concrete example of how to use flexbox
+to implement a simple card component with a header, body and footer: [Flexbox example](https://snack.expo.io/@kalleilv/3d045d).
 
 Next, read the article [A Complete Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) which has comprehensive visual examples of flexbox.
 It is also a good idea to play around with the flexbox properties in the [Flexbox Playground](https://flexbox.tech/) to see how different flexbox properties affect the layout.
@@ -593,9 +614,11 @@ const AppBar = () => {
 export default AppBar;
 ```
 
-Now that the `AppBar` component will prevent the status bar from overlapping the content, you can remove the *`marginTop`* style we added for the `Main` component earlier in the *Main.jsx* file.
+Now that the `AppBar` component will prevent the status bar from overlapping the content,
+you can remove the *`marginTop`* style we added for the `Main` component earlier in the *Main.jsx* file.
 The `AppBar` component should currently contain a tab with the text *`"Repositories"`*.
-Make the tab pressable by using the [Pressable](https://reactnative.dev/docs/pressable) component but you don't have to handle the `onPress` event in any way.
+Make the tab pressable by using the [Pressable](https://reactnative.dev/docs/pressable) component
+but you don't have to handle the `onPress` event in any way.
 Add the `AppBar` component to the `Main` component so that it is the uppermost component on the screen.
 The `AppBar` component should look something like this:
 
@@ -628,14 +651,18 @@ Also when needed, split the `RepositoryItem` component into smaller components.
 ### Routing
 
 When we start to expand our application we will need a way to transition between different views such as the repositories view and the sign-in view.
-In [part 7](/part7/react_router) we got familiar with [React router](https://reactrouter.com/) library and learned how to use it to implement routing in a web application.
+In [part 7](/part7/react_router) we got familiar with [React router](https://reactrouter.com/) library
+and learned how to use it to implement routing in a web application.
 
 Routing in a React Native application is a bit different from routing in a web application.
-The main difference is that we can't reference pages with URLs, which we type into the browser's address bar, and can't navigate back and forth through the user's history using the browser's [history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
+The main difference is that we can't reference pages with URLs, which we type into the browser's address bar,
+and can't navigate back and forth through the user's history using the browser's [history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
 However, this is just a matter of the router interface we are using.
 
 With React Native we can use the entire React router's core, including the hooks and components.
-The only difference to the browser environment is that we must replace the `BrowserRouter` with React Native compatible [NativeRouter](https://reactrouter.com/en/6.4.5/router-components/native-router), provided by the [react-router-native](https://www.npmjs.com/package/react-router-native) library.
+The only difference to the browser environment is that we must replace the `BrowserRouter` with React Native compatible
+[NativeRouter](https://reactrouter.com/en/6.4.5/router-components/native-router),
+provided by the [react-router-native](https://www.npmjs.com/package/react-router-native) library.
 Let's get started by installing the *react-router-native* library:
 
 ```shell
@@ -728,7 +755,8 @@ export default SignIn;
 
 Set up a route for this `SignIn` component in the `Main` component.
 Also, add a tab with the text "Sign in" to the app bar next to the "Repositories" tab.
-Users should be able to navigate between the two views by pressing the tabs (hint: you can use the React router's [Link](https://reactrouter.com/en/6.4.5/components/link-native) component).
+Users should be able to navigate between the two views by pressing the tabs
+(hint: you can use the React router's [Link](https://reactrouter.com/en/6.4.5/components/link-native) component).
 
 #### Exercise 9.7: scrollable app bar
 
@@ -747,7 +775,8 @@ const AppBar = () => {
 };
 ```
 
-Setting the [horizontal](https://reactnative.dev/docs/scrollview#horizontal) prop `true` will cause the `ScrollView` component to scroll horizontally once the content won't fit the screen.
+Setting the [horizontal](https://reactnative.dev/docs/scrollview#horizontal) prop `true`
+will cause the `ScrollView` component to scroll horizontally once the content won't fit the screen.
 Note that, you will need to add suitable style properties to the `ScrollView` component so that the tabs will be laid in a ***row*** inside the flex container.
 You can make sure that the app bar can be scrolled horizontally by adding tabs until the last tab won't fit the screen.
 Just remember to remove the extra tabs once the app bar is working as intended.
@@ -837,14 +866,20 @@ You can share Expo Snacks with others using a link or embedding them as a *Snack
 You might have bumped into Snack Players for example in this material and React Native documentation.
 
 In the example, we define the `Formik` context in the `BodyMassIndexCalculator` component and provide it with initial values and a submit callback.
-Initial values are provided through the [initialValues](https://formik.org/docs/api/formik#initialvalues-values) prop as an object with field names as keys and the corresponding initial values as values.
-The submit callback is provided through the [onSubmit](https://formik.org/docs/api/formik#onsubmit-values-values-formikbag-formikbag--void--promiseany) prop and it is called when the `handleSubmit` function is called, with the condition that there aren't any validation errors.
-*Children* of the `Formik` component is a function that is called with [props](https://formik.org/docs/api/formik#formik-render-methods-and-props) including state-related information and actions such as the `handleSubmit` function.
+Initial values are provided through the [initialValues](https://formik.org/docs/api/formik#initialvalues-values) prop
+as an object with field names as keys and the corresponding initial values as values.
+The submit callback is provided through the [onSubmit](https://formik.org/docs/api/formik#onsubmit-values-values-formikbag-formikbag--void--promiseany) prop
+and it is called when the `handleSubmit` function is called, with the condition that there aren't any validation errors.
+*Children* of the `Formik` component is a function that is called with [props](https://formik.org/docs/api/formik#formik-render-methods-and-props)
+including state-related information and actions such as the `handleSubmit` function.
 
 The `BodyMassIndexForm` component contains the state bindings between the context and text inputs.
 We use the [useField](https://formik.org/docs/api/useField) hook to get the value of a field and to change it.
 `useField` hooks have one argument which is the name of the field and it returns an array with three values, `[field, meta, helpers]`.
-The [field object](https://formik.org/docs/api/useField#fieldinputpropsvalue) contains the value of the field, the [meta object](https://formik.org/docs/api/useField#fieldmetapropsvalue) contains field meta information such as a possible error message and the [helpers object](https://formik.org/docs/api/useField#fieldhelperprops) contains different actions for changing the state of the field such as the `setValue` function.
+The [field object](https://formik.org/docs/api/useField#fieldinputpropsvalue) contains the value of the field,
+the [meta object](https://formik.org/docs/api/useField#fieldmetapropsvalue) contains field meta information such as a possible error message
+and the [helpers object](https://formik.org/docs/api/useField#fieldhelperprops)
+contains different actions for changing the state of the field such as the `setValue` function.
 Note that the component that uses the `useField` hook has to be ***within Formik's context***.
 This means that the component has to be a descendant of the `Formik` component.
 
@@ -966,7 +1001,8 @@ Formik offers two approaches to form validation: a validation function or a vali
 A validation function is a function provided for the `Formik` component as the value of the [validate](https://formik.org/docs/guides/validation#validate) prop.
 It receives the form's values as an argument and returns an object containing possible field-specific error messages.
 
-The second approach is the validation schema which is provided for the `Formik` component as the value of the [validationSchema](https://formik.org/docs/guides/validation#validationschema) prop.
+The second approach is the validation schema which is provided for the `Formik` component as the value of the
+[validationSchema](https://formik.org/docs/guides/validation#validationschema) prop.
 This validation schema can be created with a validation library called [Yup](https://github.com/jquense/yup).
 Let's get started by installing Yup:
 
@@ -1093,7 +1129,8 @@ const WhatIsMyPlatform = () => {
 
 Possible values for the `Platform.OS` constants are `android` and `ios`.
 Another useful way to define platform-specific code branches is to use the `Platform.select` method.
-Given an object where keys are one of `ios`, `android`, `native` and `default`, the `Platform.select` method returns the most fitting value for the platform the user is currently running on.
+Given an object where keys are one of `ios`, `android`, `native` and `default`,
+the `Platform.select` method returns the most fitting value for the platform the user is currently running on.
 We can rewrite the `styles` variable in the previous example using the `Platform.select` method like this:
 
 ```javascript
@@ -1119,7 +1156,8 @@ const MyComponent = Platform.select({
 <MyComponent />;
 ```
 
-However, a more sophisticated method for implementing and importing platform-specific components (or any other piece of code) is to use the *.ios.jsx* and *.android.jsx* file extensions.
+However, a more sophisticated method for implementing and importing platform-specific components (or any other piece of code)
+is to use the *.ios.jsx* and *.android.jsx* file extensions.
 Note that the *.jsx* extension can as well be any extension recognized by the bundler, such as *.js*.
 We can for example have files *Button.ios.jsx* and *Button.android.jsx* which we can import like this:
 

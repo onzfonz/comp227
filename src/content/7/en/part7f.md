@@ -7,8 +7,11 @@ lang: en
 
 <div class="content">
 
-In addition to the eight exercises in the [React router](/part7/react_router) and [custom hooks](/part7/custom_hooks) sections of this seventh part of the course material, 13 exercises continue our work on the Bloglist application that we worked on in parts four and five of the course material.
-Some of the following exercises are "features" that are independent of one another, meaning that there is no need to finish the exercises in any particular order.
+In addition to the eight exercises in the [React router](/part7/react_router)
+and [custom hooks](/part7/custom_hooks) sections of this seventh part of the course material,
+13 exercises continue our work on the Bloglist application that we worked on in parts four and five of the course material.
+Some of the following exercises are "features" that are independent of one another,
+meaning that there is no need to finish the exercises in any particular order.
 You are free to skip over a part of the exercises if you wish to do so.
 
 If you do not want to use your Bloglist application, you are free to use the code from the model solution as a starting point for these exercises.
@@ -29,7 +32,8 @@ Losing your sanity is almost guaranteed if you leave the application in a comple
 
 In the previous parts, we used ESLint to ensure that code follows the defined conventions.
 [Prettier](https://prettier.io/) is yet another approach for the same.
-According to the documentation, Prettier is *an opinionated code formatter*, that is, Prettier not only controls the code style but also formats the code according to the definition.
+According to the documentation, Prettier is *an opinionated code formatter*, that is,
+Prettier not only controls the code style but also formats the code according to the definition.
 
 Prettier is easy to integrate into the code editor so that when the code is saved, it is automatically formatted correctly.
 

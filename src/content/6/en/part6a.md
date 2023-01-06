@@ -156,7 +156,8 @@ because at first, the state of the store is 0.
 After three `INCREMENT` actions the state is 3.
 In the end, after `ZERO` and `DECREMENT` actions, the state is -1.
 
-The third important method the store has is [subscribe](https://redux.js.org/api/store#subscribelistener), which is used to create callback functions the store calls whenever an action is dispatched to the store.
+The third important method the store has is [subscribe](https://redux.js.org/api/store#subscribelistener),
+which is used to create callback functions the store calls whenever an action is dispatched to the store.
 
 If, for example, we would add the following function to subscribe, *every change in the store* would be printed to the console.
 
@@ -195,7 +196,8 @@ would cause the following to be printed
 ```
 
 The code of our counter application is the following.
-All of the code has been written in the same file (*index.js*), so `store` is straight available for the React code.
+All of the code has been written in the same file (*index.js*),
+so `store` is straight available for the React code.
 We will get to know better ways to structure React/Redux code later.
 
 ```js
@@ -346,13 +348,17 @@ The state is now an Array.
 *NEW_NOTE*-type actions cause a new note to be added to the state with the [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
 
 The application seems to be working, but the reducer we have declared is bad.
-It breaks the [basic assumption](https://redux.js.org/tutorials/essentials/part-1-overview-concepts#reducers) of Redux reducer that reducers must be [pure functions](https://en.wikipedia.org/wiki/Pure_function).
+It breaks the [basic assumption](https://redux.js.org/tutorials/essentials/part-1-overview-concepts#reducers) of Redux reducer
+that reducers must be [pure functions](https://en.wikipedia.org/wiki/Pure_function).
 
 Pure functions are such, that they **do not cause any side effects** and they must always return the same response when called with the same parameters.
 
 We added a new note to the state with the method `state.push(action.data)` which ***changes*** the state of the state-object.
 This is not allowed.
-The problem is easily solved by using the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) method, which creates a *new array*, which contains all the elements of the old array and the new element:
+The problem is easily solved by using the
+[concat method,](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)
+which creates a *new array*,
+which contains all the elements of the old array and the new element:
 
 ```js
 const noteReducer = (state = [], action) => {
@@ -383,7 +389,8 @@ Since we do not have any code which uses this functionality yet, we are expandin
 Let's start by creating a test for handling the action `NEW_NOTE`.
 
 To make testing easier, we'll first move the reducer's code to its own module to file *src/reducers/noteReducer.js*.
-We'll also add the library [deep-freeze](https://www.npmjs.com/package/deep-freeze), which can be used to ensure that the reducer has been correctly defined as an immutable function.
+We'll also add the library [deep-freeze](https://www.npmjs.com/package/deep-freeze),
+which can be used to ensure that the reducer has been correctly defined as an immutable function.
 Let's install the library as a development dependency
 
 ```js
@@ -497,7 +504,8 @@ const noteReducer = (state = [], action) => {
 }
 ```
 
-We create a copy of the note whose importance has changed with the syntax [familiar from part 2](/part2/altering_data_in_server#changing-the-importance-of-notes), and replace the state with a new state containing all the notes which have not changed and the copy of the changed note `changedNote`.
+We create a copy of the note whose importance has changed with the syntax [familiar from part 2](/part2/altering_data_in_server#changing-the-importance-of-notes),
+and replace the state with a new state containing all the notes which have not changed and the copy of the changed note `changedNote`.
 
 Let's recap what goes on in the code.
 First, we search for a specific note object, the importance of which we want to change:
@@ -567,7 +575,8 @@ If we would have placed the array to another array without the spread
 
 the result would have been `[ [1, 2, 3], 4, 5]`.
 
-When we take elements from an array by [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), a similar-looking syntax is used to *gather* the rest of the elements:
+When we take elements from an array by [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment),
+a similar-looking syntax is used to *gather* the rest of the elements:
 
 ```js
 const numbers = [1, 2, 3, 4, 5, 6]
@@ -683,8 +692,8 @@ describe('unicafe reducer', () => {
 **Implement the reducer and its tests.**
 
 In the tests, make sure that the reducer is an **immutable function** with the ***deep-freeze*** library.
-Ensure that the provided first test passes, because Redux expects that the reducer returns a sensible original state when it is called so that the first parameter `state`, which represents the previous state, is
-`undefined`.
+Ensure that the provided first test passes, because Redux expects that the reducer returns a sensible original state when it is called so that the first parameter `state`,
+which represents the previous state, is `undefined`.
 
 Start by expanding the reducer so that both tests pass.
 Then add the rest of the tests, and finally the functionality that they are testing.
@@ -696,7 +705,8 @@ example above.
 
 Now implement the actual functionality of the application.
 
-Note that since all the code is in the file *index.js* and you might need to manually reload the page after each change since the automatic reloading of the browser content does not always work for that file!
+Note that since all the code is in the file *index.js* and you might need to manually reload the page after each change
+since the automatic reloading of the browser content does not always work for that file!
 
 </div>
 
@@ -857,7 +867,8 @@ const App = () => {
 Aside from the reducer, our application is in one file.
 This is of course not sensible, and we should separate `App` into its module.
 
-Now the question is, how can the `App` access the store after the move? And more broadly, when a component is composed of many smaller components, there must be a way for all of the components to access the store.
+Now the question is, how can the `App` access the store after the move?
+And more broadly, when a component is composed of many smaller components, there must be a way for all of the components to access the store.
 There are multiple ways to share the Redux store with components.
 First, we will look into the newest, and possibly the easiest way is using the [hooks](https://react-redux.js.org/api/hooks) API of the [react-redux](https://react-redux.js.org/) library.
 
@@ -1092,7 +1103,8 @@ const NewNote = (props) => {
 export default NewNote
 ```
 
-Unlike in the React code we did without Redux, the event handler for changing the state of the app (which now lives in Redux) has been moved away from the `App` to a child component.
+Unlike in the React code we did without Redux, the event handler for changing the state of the app (which now lives in Redux)
+has been moved away from the `App` to a child component.
 The logic for changing the state in Redux is still neatly separated from the whole React part of the application.
 
 We'll also separate the list of notes and displaying a single note into their own components (which will both be placed in the *Notes.js* file ):
@@ -1151,11 +1163,15 @@ const App = () => {
 `Note`, responsible for rendering a single note, is very simple and is not aware that the event handler it gets as props dispatches an action.
 These kinds of components are called [presentational](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) in React terminology.
 
-`Notes`, on the other hand, is a [container](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) component, as it contains some application logic: it defines what the event handlers of the `Note` components do and coordinates the configuration of **presentational** components, that is, the `Note`s.
+`Notes`, on the other hand, is a
+[container component,](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
+as it contains some application logic:
+it defines what the event handlers of the `Note` components do and coordinates the configuration of **presentational** components, that is, the `Note`s.
 
 We will return to the presentational/container division later in this part.
 
-The code of the Redux application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-1), branch *part6-1*.
+The code of the Redux application can be found on
+[GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-1), branch *part6-1*.
 
 </div>
 
@@ -1201,7 +1217,9 @@ Make sure that the anecdotes are ordered by the number of votes.
 
 #### 6.6: anecdotes, step4
 
-If you haven't done so already, separate the creation of action-objects to [action creator](https://read.reduxbook.com/markdown/part1/04-action-creators.html)-functions and place them in the *src/reducers/anecdoteReducer.js* file, so do what we have been doing since the chapter [action creators](/part6/flux_architecture_and_redux#action-creators).
+If you haven't done so already, separate the creation of action-objects to [action creator](https://read.reduxbook.com/markdown/part1/04-action-creators.html)
+functions and place them in the *src/reducers/anecdoteReducer.js* file,
+so do what we have been doing since the chapter [action creators](/part6/flux_architecture_and_redux#action-creators).
 
 #### 6.7: anecdotes, step5
 

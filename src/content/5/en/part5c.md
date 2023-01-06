@@ -78,7 +78,8 @@ Normally React components are rendered to the ***DOM***.
 The `render` method we used renders the components in a format that is suitable for tests without rendering them to the DOM.
 
 We can use the object [screen](https://testing-library.com/docs/queries/about#screen) to access the rendered component.
-We use screen's method [getByText](https://testing-library.com/docs/queries/bytext) to search for an element that has the note content and ensure that it exists:
+We use screen's method [getByText](https://testing-library.com/docs/queries/bytext)
+to search for an element that has the note content and ensure that it exists:
 
 ```js
   const element = screen.getByText('Component testing is done with react-testing-library')
@@ -87,7 +88,8 @@ We use screen's method [getByText](https://testing-library.com/docs/queries/byte
 
 ### Running tests
 
-Create-react-app configures tests to be run in watch mode by default, which means that the `npm test` command will not exit once the tests have finished, and will instead wait for changes to be made to the code.
+Create-react-app configures tests to be run in watch mode by default, which means that the `npm test` command will not exit once the tests have finished,
+and will instead wait for changes to be made to the code.
 Once new changes to the code are saved, the tests are executed automatically after which Jest goes back to waiting for new changes to be made.
 
 If you want to run tests "normally", you can do so with the command:
@@ -104,13 +106,16 @@ $env:CI=$true; npm test
 
 **NB:** the console may issue a warning if you have not installed Watchman.
 Watchman is an application developed by Facebook that watches for changes that are made to files.
-The program speeds up the execution of tests and at least starting from macOS Sierra, running tests in watch mode issues some warnings to the console, that can be removed by installing Watchman.
+The program speeds up the execution of tests and at least starting from macOS Sierra,
+running tests in watch mode issues some warnings to the console, that can be removed by installing Watchman.
 
 Instructions for installing Watchman on different operating systems can be found on the official Watchman website: <https://facebook.github.io/watchman/>
 
 ### Test file location
 
-In React there are (at least) [two different conventions](https://medium.com/@JeffLombardJr/organizing-tests-in-jest-17fc431ff850) for the test file's location.
+In React there are (at least)
+[two different conventions](https://medium.com/@JeffLombardJr/organizing-tests-in-jest-17fc431ff850)
+for the test file's location.
 We created our test files according to the current standard by placing them in the same directory as the component being tested.
 
 The other convention is to store the test files "normally" in a separate *test* directory.
@@ -146,7 +151,9 @@ test('renders content', () => {
 
 The test fails if `getByText` does not find the element it is looking for.
 
-We could also use [CSS-selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) to find rendered elements by using the method [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) of the object [container](https://testing-library.com/docs/react-testing-library/api/#container-1) that is one of the fields returned by the render:
+We could also use [CSS-selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
+to find rendered elements by using the method [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
+of the object [container](https://testing-library.com/docs/react-testing-library/api/#container-1) that is one of the fields returned by the render:
 
 ```js
 import React from 'react'
@@ -171,7 +178,8 @@ test('renders content', () => {
 })
 ```
 
-There are also other methods, e.g. [getByTestId](https://testing-library.com/docs/queries/bytestid/), that look for elements based on id-attributes that are inserted into the code specifically for testing purposes.
+There are also other methods, e.g. [getByTestId](https://testing-library.com/docs/queries/bytestid/),
+that look for elements based on id-attributes that are inserted into the code specifically for testing purposes.
 
 ### Debugging tests
 
@@ -414,8 +422,11 @@ The first test verifies that the `Togglable` component renders its child compone
 </div>
 ```
 
-The remaining tests use the [toHaveStyle](https://www.npmjs.com/package/@testing-library/jest-dom#tohavestyle) method to verify that the child component of the `Togglable` component is not visible initially, by checking that the style of the `div` element contains `{ display: 'none' }`.
-Another test verifies that when the button is pressed the component is visible, meaning that the style for hiding the component **is no longer** assigned to the component.
+The remaining tests use the [toHaveStyle](https://www.npmjs.com/package/@testing-library/jest-dom#tohavestyle)
+method to verify that the child component of the `Togglable` component is not visible initially,
+by checking that the style of the `div` element contains `{ display: 'none' }`.
+Another test verifies that when the button is pressed the component is visible,
+meaning that the style for hiding the component **is no longer** assigned to the component.
 
 Let's also add a test that can be used to verify that the visible content can be hidden by clicking the second button of the component:
 
@@ -625,7 +636,8 @@ test('<NoteForm /> updates parent state and calls onSubmit', () => {
 })
 ```
 
-The most flexible way of finding elements in tests is the method `querySelector` of the `container` object, which is returned by `render`, as was mentioned [earlier in this part](/part5/testing_react_apps#searching-for-content-in-a-component).
+The most flexible way of finding elements in tests is the method `querySelector` of the `container` object, which is returned by `render`,
+as was mentioned [earlier in this part](/part5/testing_react_apps#searching-for-content-in-a-component).
 Any CSS selector can be used with this method for searching elements in tests.
 
 Consider e.g. that we would define a unique `id` to the input field:
@@ -739,7 +751,8 @@ test('does not render this', () => {
 
 ### Test coverage
 
-We can easily find out the [coverage](https://github.com/facebookincubator/create-react-app/blob/ed5c48c81b2139b4414810e1efe917e04c96ee8d/packages/react-scripts/template/README.md#coverage-reporting) of our tests by running them with the command.
+We can easily find out the [coverage](https://github.com/facebookincubator/create-react-app/blob/ed5c48c81b2139b4414810e1efe917e04c96ee8d/packages/react-scripts/template/README.md#coverage-reporting)
+of our tests by running them with the command.
 
 ```js
 CI=true npm test -- --coverage
@@ -752,7 +765,8 @@ The report will tell us the lines of untested code in each component:
 
 ![HTML report of the test coverage](../../images/5/19ea.png)
 
-You can find the code for our current application in its entirety in the *part5-8* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-8).
+You can find the code for our current application in its entirety in the *part5-8* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-8).
 </div>
 
 <div class="tasks">
@@ -785,7 +799,8 @@ The test should check, that the form calls the event handler it received as prop
 ### Frontend integration tests
 
 In the previous part of the course material, we wrote integration tests for the backend that tested its logic and connected the database through the API provided by the backend.
-When writing these tests, we made the conscious decision not to write unit tests, as the code for that backend is fairly simple, and it is likely that bugs in our application occur in more complicated scenarios than unit tests are well suited for.
+When writing these tests, we made the conscious decision not to write unit tests, as the code for that backend is fairly simple,
+and it is likely that bugs in our application occur in more complicated scenarios than unit tests are well suited for.
 
 So far all of our tests for the frontend have been unit tests that have validated the correct functioning of individual components.
 Unit testing is useful at times, but even a comprehensive suite of unit tests is not enough to validate that the application works as a whole.
@@ -806,6 +821,7 @@ The fundamental principle is to compare the HTML code defined by the component a
 If the snapshot notices some change in the HTML defined by the component, then either it is new functionality or a "bug" caused by accident.
 Snapshot tests notify the developer if the HTML code of the component changes.
 The developer has to tell Jest if the change was desired or undesired.
-If the change to the HTML code is unexpected, it strongly implies a bug, and the developer can become aware of these potential issues easily thanks to snapshot testing.
+If the change to the HTML code is unexpected, it strongly implies a bug,
+and the developer can become aware of these potential issues easily thanks to snapshot testing.
 
 </div>

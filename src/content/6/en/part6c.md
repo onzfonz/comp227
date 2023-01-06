@@ -8,7 +8,8 @@ lang: en
 <div class="content">
 
 Let's expand the application so that the notes are stored in the backend.
-We'll use [json-server](/part2/getting_data_from_server), familiar from part 2.
+We'll use [json-server](/part2/getting_data_from_server),
+familiar from part 2.
 
 The initial state of the database is stored in the file *db.json*, which is placed in the root of the project:
 
@@ -120,7 +121,8 @@ export const { createNote, toggleImportanceOf, appendNote } = noteSlice.actions 
 export default noteSlice.reducer
 ```
 
-A quick way to initialize the notes state based on the data received from the server is to fetch the notes in the *index.js* file and dispatch an action using the `appendNote` action creator for each individual note object:
+A quick way to initialize the notes state based on the data received from the server is to fetch the notes in the *index.js* file
+and dispatch an action using the `appendNote` action creator for each individual note object:
 
 ```js
 // ...
@@ -216,9 +218,11 @@ noteService.getAll().then(notes =>
 
 > **NB:** why didn't we use await in place of promises and event handlers (registered to `then` methods)?
 >
-> Await only works inside `async` functions, and the code in *index.js* is not inside a function, so due to the simple nature of the operation, we'll abstain from using `async` this time.
+> Await only works inside `async` functions, and the code in *index.js* is not inside a function,
+so due to the simple nature of the operation, we'll abstain from using `async` this time.
 
-We do, however, decide to move the initialization of the notes into the `App` component, and, as usual, when fetching data from a server, we'll use the **effect hook**.
+We do, however, decide to move the initialization of the notes into the `App` component,
+and, as usual, when fetching data from a server, we'll use the **effect hook**.
 
 ```js
 import { useEffect } from 'react' // highlight-line
@@ -288,7 +292,8 @@ const App = () => {
 ```
 
 Generally disabling ESlint when it throws a warning is not a good idea.
-Even though the ESlint rule in question has caused some [arguments](https://github.com/facebook/create-react-app/issues/6880), we will use the first solution.
+Even though the ESlint rule in question has caused some [arguments](https://github.com/facebook/create-react-app/issues/6880),
+we will use the first solution.
 
 More about the need to define the hooks dependencies in [the react documentation](https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies).
 
@@ -354,7 +359,8 @@ createNote(state, action) {
 }
 ```
 
-Changing the importance of notes could be implemented using the same principle, by making an asynchronous method call to the server and then dispatching an appropriate action.
+Changing the importance of notes could be implemented using the same principle,
+by making an asynchronous method call to the server and then dispatching an appropriate action.
 
 The current state of the code for the application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-3) in the branch *part6-3*.
 
@@ -425,7 +431,9 @@ npm install redux-thunk
 
 With Redux Thunk it is possible to implement **action creators** which return a function instead of an object.
 The function receives Redux store's `dispatch` and `getState` methods as parameters.
-This allows for example implementations of asynchronous action creators, which first wait for the completion of a certain asynchronous operation and after that dispatch some action, which changes the store's state.
+This allows for example implementations of asynchronous action creators,
+which first wait for the completion of a certain asynchronous operation
+and after that dispatch some action, which changes the store's state.
 
 We can define an action creator `initializeNotes` which initializes the notes based on the data received from the server:
 
@@ -535,9 +543,11 @@ export const createNote = content => {
 export default noteSlice.reducer
 ```
 
-The principle here is the same: first, an asynchronous operation is executed, after which the action changing the state of the store is **dispatched**.
+The principle here is the same: first, an asynchronous operation is executed,
+after which the action changing the state of the store is **dispatched**.
 Redux Toolkit offers a multitude of tools to simplify asynchronous state management.
-Suitable tools for this use case are for example the [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk) function and the [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) API.
+Suitable tools for this use case are for example the [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk)
+function and the [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) API.
 
 The component `NewNote` changes as follows:
 

@@ -10,22 +10,31 @@ lang: en
 The exercises in this part are a bit different than the exercises in the previous parts.
 The exercises in the previous part and the exercises in this part [are about the theory presented in this part](/part7/custom_hooks#exercises-7-4-7-8).
 
-This part also contains a [series of exercises](/part7/exercises_extending_the_bloglist) in which we modify the Bloglist application from parts 4 and 5 to rehearse and apply the skills we have learned.
+This part also contains a [series of exercises](/part7/exercises_extending_the_bloglist)
+in which we modify the Bloglist application from parts 4 and 5 to rehearse and apply the skills we have learned.
 
 ### Hooks
 
-React offers 15 different [built-in hooks](https://reactjs.org/docs/hooks-reference.html), of which the most popular ones are the [useState](https://reactjs.org/docs/hooks-reference.html#usestate) and [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) hooks that we have already been using extensively.
+React offers 15 different [built-in hooks](https://reactjs.org/docs/hooks-reference.html),
+of which the most popular ones are the [useState](https://reactjs.org/docs/hooks-reference.html#usestate)
+and [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) hooks that we have already been using extensively.
 
-In [part 5](/part5/props_children_and_proptypes#references-to-components-with-ref) we used the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) hook which allows components to provide their functions to other components.
+In [part 5](/part5/props_children_and_proptypes#references-to-components-with-ref) we used the
+[useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle)
+hook which allows components to provide their functions to other components.
 
 Within the last couple of years, many React libraries have begun to offer hook-based APIs.
-[In part 6](/part6/flux_architecture_and_redux) we used the [useSelector](https://react-redux.js.org/api/hooks#useselector) and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch) hooks from the react-redux library to share our redux-store and dispatch function to our components.
+[In part 6](/part6/flux_architecture_and_redux) we used the [useSelector](https://react-redux.js.org/api/hooks#useselector)
+and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch)
+hooks from the react-redux library to share our redux-store and dispatch function to our components.
 Redux's hook-based API is a lot easier to use than the older, still available, [connect](/part6/connect) API.
 
-The [React Router's](https://reactrouter.com/en/main/start/tutorial) API we introduced in the [previous part](/part7/react_router) is also partially [hook](https://reactrouter.com/en/6.4.5/start/concepts)-based.
+The [React Router's](https://reactrouter.com/en/main/start/tutorial) API we introduced in the
+[previous part](/part7/react_router) is also partially [hook](https://reactrouter.com/en/6.4.5/start/concepts)-based.
 Its hooks can be used to access URL parameters and the `navigation` object, which allows for manipulating the browser URL programmatically.
 
-As mentioned in [part 1](/part1/a_more_complex_state_debugging_react_apps#rules-of-hooks), hooks are not normal functions, and when using those we have to adhere to certain [rules or limitations](https://reactjs.org/docs/hooks-rules.html).
+As mentioned in [part 1](/part1/a_more_complex_state_debugging_react_apps#rules-of-hooks),
+hooks are not normal functions, and when using those we have to adhere to certain [rules or limitations](https://reactjs.org/docs/hooks-rules.html).
 Let's recap the rules of using hooks, copied verbatim from the official React documentation:
 
 **Don’t call Hooks inside loops, conditions, or nested functions.** Instead, always use Hooks at the top level of your React function.
@@ -37,7 +46,9 @@ Let's recap the rules of using hooks, copied verbatim from the official React do
 
 There's an existing [ESlint](https://www.npmjs.com/package/eslint-plugin-react-hooks) rule that can be used to verify that the application uses hooks correctly.
 
-Create-react-app has the readily-configured rule [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) that complains if hooks are used in an illegal manner:
+Create-react-app has the readily-configured rule
+[eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)
+that complains if hooks are used in an illegal manner:
 
 ![vscode error useState being called conditionally](../../images/7/60ea.png)
 
@@ -48,7 +59,8 @@ According to React, the primary purpose of custom hooks is to facilitate the reu
 
 > *Building your own Hooks lets you extract component logic into reusable functions.*
 
-Custom hooks are regular JavaScript functions that can use any other hooks, as long as they adhere to the [rules of hooks](/part1/a_more_complex_state_debugging_react_apps#rules-of-hooks).
+Custom hooks are regular JavaScript functions that can use any other hooks,
+as long as they adhere to the [rules of hooks](/part1/a_more_complex_state_debugging_react_apps#rules-of-hooks).
 Additionally, the name of custom hooks must start with the word `use`.
 
 We implemented a counter application in [part 1](/part1/component_state_event_handlers#event-handling) that can have its value incremented, decremented, or reset.
@@ -201,7 +213,8 @@ const App = () => {
 ```
 
 Every field of the form has its own state.
-To keep the state of the form synchronized with the data provided by the user, we have to register an appropriate `onChange` handler for each of the `input` elements.
+To keep the state of the form synchronized with the data provided by the user,
+we have to register an appropriate `onChange` handler for each of the `input` elements.
 
 Let's define our own custom `useField` hook that simplifies the state management of the form:
 
@@ -249,13 +262,16 @@ const App = () => {
 ### Spread attributes
 
 We could simplify things a bit further.
-Since the `name` object has exactly all of the attributes that the `input` element expects to receive as props, we can pass the props to the element using the [spread syntax](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the following way:
+Since the `name` object has exactly all of the attributes that the `input` element expects to receive as props,
+we can pass the props to the element using the
+[spread syntax](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the following way:
 
 ```js
 <input {...name} /> 
 ```
 
-As the [example](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the React documentation states, the following two ways of passing props to a component achieve the exact same result:
+As the [example](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the React documentation states,
+the following two ways of passing props to a component achieve the exact same result:
 
 ```js
 <Greeting firstName='Arto' lastName='Hellas' />
@@ -427,11 +443,15 @@ If no country is found, a message is displayed to the user:
 
 ![browser showing country not found](../../images/7/70ea.png)
 
-The application is otherwise complete, but in this exercise, you have to implement a custom hook `useCountry`, which can be used to search for the details of the country given to the hook as a parameter.
+The application is otherwise complete, but in this exercise, you have to implement a custom hook `useCountry`,
+which can be used to search for the details of the country given to the hook as a parameter.
 
-Use the API endpoint [full name](https://restcountries.com/#api-endpoints-v3-full-name) to fetch a country's details in a `useEffect` hook within your custom hook.
+Use the API endpoint [full name](https://restcountries.com/#api-endpoints-v3-full-name)
+to fetch a country's details in a `useEffect` hook within your custom hook.
 
-Note that in this exercise it is essential to use useEffect's [second parameter](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect) array to control when the effect function is executed.
+Note that in this exercise it is essential to use useEffect's
+[second parameter](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect)
+array to control when the effect function is executed.
 
 #### 7.8: ultimate hooks
 

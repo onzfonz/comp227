@@ -45,7 +45,8 @@ const App = (props) => {
 }
 ```
 
-If we wanted to start with an empty list of notes, we would set the initial value as an empty array, and since the props would not be used, we could omit the `props` parameter from the function definition:
+If we wanted to start with an empty list of notes, we would set the initial value as an empty array,
+and since the props would not be used, we could omit the `props` parameter from the function definition:
 
 ```js
 const App = () => { 
@@ -103,7 +104,8 @@ const addNote = (event) => {
 The `event` parameter is the [event](https://reactjs.org/docs/handling-events.html) that triggers the call to the event handler function:
 
 The event handler immediately calls the `event.preventDefault()` method, which prevents the default action of submitting a form.
-The default action would, [among other things](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event), cause the page to reload.
+The default action would, [among other things](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event),
+cause the page to reload.
 
 The target of the event stored in `event.target` is logged to the console:
 
@@ -115,7 +117,8 @@ How do we access the data contained in the form's `input` element?
 
 ### Controlled component
 
-There are many ways to accomplish this; the first method we will take a look at is through the use of so-called [controlled components](https://reactjs.org/docs/forms.html#controlled-components).
+There are many ways to accomplish this; the first method we will take a look at is through the use of so-called
+[controlled components](https://reactjs.org/docs/forms.html#controlled-components).
 
 Let's add a new piece of state called `newNote` for storing the user-submitted input **and** let's set it as the `input` element's `value` attribute:
 
@@ -155,7 +158,8 @@ The console displays a warning that gives us a clue as to what might be wrong:
 
 ![provided value to prop without onchange console error](../../images/2/7e.png)
 
-Since we assigned a piece of the `App` component's state as the `value` attribute of the input element, the `App` component now [controls](https://reactjs.org/docs/forms.html#controlled-components) the behavior of the input element.
+Since we assigned a piece of the `App` component's state as the `value` attribute of the input element,
+the `App` component now [controls](https://reactjs.org/docs/forms.html#controlled-components) the behavior of the input element.
 
 To enable editing of the input element, we have to register an **event handler** that synchronizes the changes made to the input with the component's state:
 
@@ -228,7 +232,8 @@ You can directly view how the state changes from the React Devtools tab:
 
 ![state changes in react devtools shows typing too](../../images/2/9ea.png)
 
-Now the `App` component's `newNote` state reflects the current value of the input, which means that we can complete the `addNote` function for creating new notes:
+Now the `App` component's `newNote` state reflects the current value of the input,
+which means that we can complete the `addNote` function for creating new notes:
 
 ```js
 const addNote = (event) => {
@@ -250,7 +255,9 @@ The unique identifier `id` is generated based on the total number of notes.
 This method works for our application since notes are never deleted.
 With the help of the `Math.random()` function, our note has a 50% chance of being marked as important.
 
-The new note is added to the list of notes using the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) array method, introduced in [part 1](/part1/java_script#arrays):
+The new note is added to the list of notes using the
+[concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) array method,
+introduced in [part 1](/part1/java_script#arrays):
 
 ```js
 setNotes(notes.concat(noteObject))
@@ -265,7 +272,8 @@ The event handler also resets the value of the controlled input element by calli
 setNewNote('')
 ```
 
-You can find the code for our current application in its entirety in the *part2-2* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part2-2).
+You can find the code for our current application in its entirety in the *part2-2* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part2-2).
 
 ### Filtering Displayed Elements
 
@@ -350,7 +358,8 @@ The comparison operator is redundant, since the value of `note.important` is eit
 notes.filter(note => note.important)
 ```
 
-The reason we showed the comparison operator first was to emphasize an important detail: in JavaScript `val1 == val2` does not work as expected in all situations and it's safer to use `val1 === val2` exclusively in comparisons.
+The reason we showed the comparison operator first was to emphasize an important detail: in JavaScript `val1 == val2` does not work as expected in all situations
+and it's safer to use `val1 === val2` exclusively in comparisons.
 You can read more about the topic [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness).
 
 You can test out the filtering functionality by changing the initial value of the `showAll` state.
@@ -405,7 +414,8 @@ The text of the button depends on the value of the `showAll` state:
 show {showAll ? 'important' : 'all'}
 ```
 
-You can find the code for our current application in its entirety in the *part2-3* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part2-3).
+You can find the code for our current application in its entirety in the *part2-3* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part2-3).
 </div>
 
 <div class="tasks">
@@ -466,7 +476,8 @@ You can temporarily add the following element to the rendered component:
 ```
 
 It's also important to put what we learned in the [debugging React applications](/part1/a_more_complex_state_debugging_react_apps) chapter of part one into good use.
-The [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) extension is ***incredibly*** useful for tracking changes that occur in the application's state.
+The [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+extension is ***incredibly*** useful for tracking changes that occur in the application's state.
 
 After finishing this exercise your application should look something like this:
 
@@ -482,14 +493,17 @@ Note the use of the React developer tools extension in the picture above!
 #### 2.7: The Phonebook Step2
 
 Prevent the user from being able to add names that already exist in the phonebook.
-JavaScript arrays have numerous suitable [methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) for accomplishing this task.
+JavaScript arrays have numerous suitable
+[methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+for accomplishing this task.
 Keep in mind [how object equality works](https://www.joshbritz.co/posts/why-its-so-hard-to-check-object-equality/) in Javascript.
 
 Issue a warning with the [alert](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) command when such an action is attempted:
 
 ![2.7 sample screenshot](../../images/2/11e.png)
 
-**Hint:** when you are forming strings that contain values from variables, it is recommended to use a [template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals):
+**Hint:** when you are forming strings that contain values from variables, it is recommended to use a
+[template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals):
 
 ```js
 `${newName} is already added to phonebook`
@@ -559,7 +573,8 @@ If you have implemented your application in a single component, refactor it by e
 Maintain the application's state and all event handlers in the `App` root component.
 
 It is sufficient to extract ***three*** components from the application.
-Good candidates for separate components are, for example, the search filter, the form for adding new people to the phonebook, a component that renders all people from the phonebook, and a component that renders a single person's details.
+Good candidates for separate components are, for example, the search filter, the form for adding new people to the phonebook,
+a component that renders all people from the phonebook, and a component that renders a single person's details.
 
 The application's root component could look similar to this after the refactoring.
 The refactored root component below only renders titles and lets the extracted components take care of the rest.

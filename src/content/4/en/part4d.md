@@ -7,7 +7,8 @@ lang: en
 
 <div class="content">
 
-Users must be able to log into our application, and when a user is logged in, their user information must automatically be attached to any new notes they create.
+Users must be able to log into our application, and when a user is logged in,
+their user information must automatically be attached to any new notes they create.
 
 We will now implement support for [token-based authentication](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works) to the backend.
 
@@ -22,7 +23,8 @@ The principles of token-based authentication are depicted in the following seque
     - The token is signed digitally, making it impossible to falsify (with cryptographic means)
 - The backend responds with a status code indicating the operation was successful and returns the token with the response.
 - The browser saves the token, for example to the state of a React application.
-- When the user creates a new note (or does some other operation requiring identification), the React code sends the token to the server with the request.
+- When the user creates a new note (or does some other operation requiring identification),
+the React code sends the token to the server with the request.
 - The server uses the token to identify the user
 
 Let's first implement the functionality for logging in.
@@ -71,13 +73,15 @@ module.exports = loginRouter
 
 The code starts by searching for the user from the database by the `username` attached to the request.
 Next, it checks the `password`, also attached to the request.
-Because the passwords themselves are not saved to the database, but **hashes** calculated from the passwords, the `bcrypt.compare` method is used to check if the password is correct:
+Because the passwords themselves are not saved to the database, but **hashes** calculated from the passwords,
+the `bcrypt.compare` method is used to check if the password is correct:
 
 ```js
 await bcrypt.compare(body.password, user.passwordHash)
 ```
 
-If the user is not found, or the password is incorrect, the request is responded to with the status code [401 unauthorized](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2).
+If the user is not found, or the password is incorrect,
+the request is responded to with the status code [401 unauthorized](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2).
 The reason for the failure is explained in the response body.
 
 If the password is correct, a token is created with the method `jwt.sign`.
@@ -210,7 +214,9 @@ const decodedToken = jwt.verify(token, process.env.SECRET)
 
 The object decoded from the token contains the `username` and `id` fields, which tell the server who made the request.
 
-If the object decoded from the token does not contain the user's identity (`decodedToken.id` is undefined), error status code [401 unauthorized](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2) is returned and the reason for the failure is explained in the response body.
+If the object decoded from the token does not contain the user's identity (`decodedToken.id` is undefined),
+error status code [401 unauthorized](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2)
+is returned and the reason for the failure is explained in the response body.
 
 ```js
 if (!decodedToken.id) {
@@ -222,7 +228,8 @@ if (!decodedToken.id) {
 
 When the identity of the maker of the request is resolved, the execution continues as before.
 
-A new note can now be created using Postman if the ***authorization*** header is given the correct value, the string `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ`, where the second value is the token returned by the ***login*** operation.
+A new note can now be created using Postman if the ***authorization*** header is given the correct value,
+the string `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ`, where the second value is the token returned by the ***login*** operation.
 
 Using Postman this looks as follows:
 
@@ -246,7 +253,8 @@ JsonWebTokenError: invalid signature
 ```
 
 There are many possible reasons for a decoding error.
-The token can be faulty (like in our example), falsified, or expired.
+The token can be faulty (like in our example),
+falsified, or expired.
 Let's extend our errorHandler middleware to take into account the different decoding errors.
 
 ```js
@@ -275,7 +283,8 @@ const errorHandler = (error, request, response, next) => {
 }
 ```
 
-The current application code can be found on [GitHub](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-9), branch *part4-9*.
+The current application code can be found on
+[GitHub](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-9), branch *part4-9*.
 
 If the application has multiple interfaces requiring identification, JWT's validation should be separated into its own middleware.
 An existing library like [express-jwt](https://www.npmjs.com/package/express-jwt) could also be used.
@@ -361,11 +370,14 @@ The other solution is to save info about each token to backend database and to c
 With this scheme, access rights can be revoked at any time.
 This kind of solution is often called a **server-side session**.
 
-The negative aspect of server-side sessions is the increased complexity in the backend and also the effect on performance since the token validity needs to be checked for each API request to the database.
+The negative aspect of server-side sessions is the increased complexity in the backend and also the effect on performance
+since the token validity needs to be checked for each API request to the database.
 A database access is considerably slower compared to checking the validity of the token itself.
-That is why it is quite common to save the session corresponding to a token to a **key-value database** such as [Redis](https://redis.io/) that is limited in functionality compared to a MongoDB or relational database but extremely fast in some usage scenarios.
+That is why it is quite common to save the session corresponding to a token to a **key-value database** such as [Redis](https://redis.io/)
+that is limited in functionality compared to a MongoDB or relational database but extremely fast in some usage scenarios.
 
-When server-side sessions are used, the token is quite often just a random string, that does not include any information about the user as it is quite often the case when jwt-tokens are used.
+When server-side sessions are used, the token is quite often just a random string,
+that does not include any information about the user as it is quite often the case when jwt-tokens are used.
 For each API request, the server fetches the relevant information about the identity of the user from the database.
 It is also quite usual that instead of using Authorization-header, **cookies** are used as the mechanism for transferring the token between the client and the server.
 
@@ -375,8 +387,10 @@ There have been many changes to the code which have caused a typical problem for
 Because this part of the course is already jammed with new information, we will leave fixing the tests to a non-compulsory exercise.
 
 Usernames, passwords and applications using token authentication must always be used over [HTTPS](https://en.wikipedia.org/wiki/HTTPS).
-We could use a Node [HTTPS](https://nodejs.org/api/https.html) server in our application instead of the [HTTP](https://nodejs.org/docs/latest-v8.x/api/http.html) server (it requires more configuration).
-On the other hand, the production version of our application is in Heroku, so our application stays secure: Heroku routes all traffic between a browser and the Heroku server over HTTPS.
+We could use a Node [HTTPS](https://nodejs.org/api/https.html) server in our application instead of the
+[HTTP](https://nodejs.org/docs/latest-v8.x/api/http.html) server (it requires more configuration).
+On the other hand, the production version of our application is in Heroku, so our application stays secure.
+Heroku routes all traffic between a browser and the Heroku server over HTTPS.
 
 We will implement login to the frontend in the [next part](/part5).
 
@@ -478,7 +492,8 @@ blogsRouter.post('/', async (request, response) => {
 })
 ```
 
-Remember that a normal [middleware function](/part3/node_js_and_express#middleware) is a function with three parameters, that at the end calls the last parameter `next` to move the control to the next middleware:
+Remember that a normal [middleware function](/part3/node_js_and_express#middleware) is a function with three parameters,
+that at the end calls the last parameter `next` to move the control to the next middleware:
 
 ```js
 const tokenExtractor = (request, response, next) => {

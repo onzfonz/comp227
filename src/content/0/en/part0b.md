@@ -9,7 +9,8 @@ lang: en
 
 Before we start programming, we will go through some principles of web development by examining an example application at <https://studies.cs.helsinki.fi/exampleapp>.
 
-The application exists only to demonstrate some basic concepts of the course, and is, by no means, an example of *how* a modern web application should be made.
+The application exists only to demonstrate some basic concepts of the course,
+and is, by no means, an example of *how* a modern web application should be made.
 On the contrary, it demonstrates some old techniques of web development, which could even be considered *bad practices* nowadays.
 
 Code will conform to contemporary best practices from [part 1](/part1) onwards.
@@ -39,7 +40,8 @@ However, in this introduction, we will be using the ***Network*** tab quite a bi
 The server and the web browser communicate with each other using the [HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) protocol.
 The *Network* tab shows how the browser and the server communicate.
 
-When you reload the page (press the ***F5*** key or the &#8635; symbol on your browser), the console will show that two events have happened:
+When you reload the page (press the ***F5*** key or the &#8635; symbol on your browser),
+the console will show that two events have happened:
 
 - The browser has fetched the contents of the page *studies.cs.helsinki.fi/exampleapp* from the server
 - And has downloaded the image *kuva.png*
@@ -63,7 +65,8 @@ The request and the server response have several [headers](https://en.wikipedia.
 ![Screenshot of response headers](../../images/0/4e.png)
 
 The **Response headers** on top tell us e.g. the size of the response in bytes and the exact time of the response.
-An important header [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) tells us that the response is a text file in [utf-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
+An important header [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
+tells us that the response is a text file in [utf-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
 This way the browser knows the response to be a regular [HTML](https://en.wikipedia.org/wiki/HTML) page and to render it to the browser 'like a web page'.
 
 The **Response** tab shows the response data, a regular HTML page.
@@ -71,7 +74,12 @@ The **body** section determines the structure of the page rendered to the screen
 
 ![Screenshot of the response tab](../../images/0/5e.png)
 
-The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element, which in turn contains a heading, a link to the page ***notes***, and an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag, and displays the number of notes created.
+The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element which in turn contains:
+
+- a heading (`h1`)
+- the number of notes created.
+- a link to the page ***notes***
+- an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag
 
 Because of the `img` tag, the browser does a second *HTTP request* to fetch the image *kuva.png* from the server.
 The details of the request are as follows:
@@ -79,10 +87,13 @@ The details of the request are as follows:
 ![Detailed view of the second event](../../images/0/6e.png)
 
 The request was made to the address <https://studies.cs.helsinki.fi/exampleapp/kuva.png> and its type is *HTTP GET*.
-The response headers tell us that the response size is 89350 bytes, and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is *image/png*, so it is a png image.
+The response headers tell us that the response size is 89350 bytes,
+and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is *image/png*,
+so it is a png image.
 The browser uses this information to render the image correctly to the screen.
 
-The chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp> on a browser form the following [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/):
+The chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp>
+on a browser from the following [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/):
 
 ![Sequence diagram of the flow covered above](../../images/0/7e.png)
 
@@ -132,13 +143,18 @@ app.get('/', (req, res) => {
 You don't have to understand the code just yet.
 
 The content of the HTML page has been saved as a template string or a string that allows for evaluating, for example, variables in the midst of it.
-The dynamically changing part of the homepage, the number of saved notes (in the code `noteCount`), is replaced by the current number of notes (in the code `notes.length`) in the template string.
+The dynamically changing part of the homepage, the number of saved notes (in the code `noteCount`),
+is replaced by the current number of notes (in the code `notes.length`) in the template string.
 
 Writing HTML amid the code is of course not smart, but for old-school PHP programmers, it was a normal practice.
 
 In traditional web applications, the browser is "dumb".
 It only fetches HTML data from the server, and all application logic is on the server.
-A server can be created using Java Spring (like in the University of Helsinki course [Web-palvelinohjelmointi](https://courses.helsinki.fi/fi/tkt21007/119558639)), Python Flask (like the courses [database applications](https://materiaalit.github.io/tsoha-18/)) or [Ruby on Rails](http://rubyonrails.org/) to name just a few examples.
+A server can be created using many different technologies such as:
+
+- Java Spring (like in the University of Helsinki course [Web-palvelinohjelmointi](https://courses.helsinki.fi/fi/tkt21007/119558639))
+- Python Flask (like the courses [database applications](https://materiaalit.github.io/tsoha-18/))
+- [Ruby on Rails](http://rubyonrails.org/)
 
 The example uses [Express](https://expressjs.com/) library with Node.js.
 This course will use Node.js and Express to create web servers.
@@ -158,7 +174,9 @@ It is the HTML code of the page, and it looks as follows:
 ![Detailed view of the first request](../../images/0/9e.png)
 
 When we compare the page shown on the browser and the HTML code returned by the server, we notice that the code does not contain the list of notes.
-The [`head`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) section of the HTML contains a [`script`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag, which causes the browser to fetch a JavaScript file called *main.js*.
+The [`head`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) section of the HTML contains a
+[`script`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag.
+`script` causes the browser to fetch a JavaScript file called *main.js*.
 
 The JavaScript code looks as follows:
 
@@ -303,7 +321,11 @@ xhttp.onreadystatechange = function () {
 
 On this line, an **event handler** for the event `onreadystatechange` is defined for the `xhttp` object doing the request.
 When the state of the object changes, the browser calls the event handler function.
-The function code checks that the [readyState](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState) equals 4 (which depicts the situation *The operation is complete*) and that the HTTP status code of the response is 200.
+The function code checks:
+
+- that the [readyState](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState) equals 4
+    - which depicts the situation *The operation is complete*
+- that the HTTP status code of the response is 200.
 
 ```js
 xhttp.onreadystatechange = function() {
@@ -315,7 +337,8 @@ xhttp.onreadystatechange = function() {
 
 The mechanism of invoking event handlers is very common in JavaScript.
 Event handler functions are called [callback](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function) functions.
-The application code does not invoke the functions itself, but the runtime environment - the browser, invokes the function at an appropriate time when the **event** has occurred.
+The application code does not invoke the functions itself, but the runtime environment.
+The *browser invokes* the function at an appropriate time when the **event** has occurred.
 
 ### Document Object Model or DOM
 
@@ -345,7 +368,9 @@ The same treelike structure can be seen on the console tab ***Elements***.
 
 The functioning of the browser is based on the idea of depicting HTML elements as a tree.
 
-Document Object Model, or [DOM](https://en.wikipedia.org/wiki/Document_Object_Model), is an Application Programming Interface (**API**) that enables programmatic modification of the **element trees** corresponding to web pages.
+Document Object Model, or [DOM](https://en.wikipedia.org/wiki/Document_Object_Model),
+is an Application Programming Interface (**API**).
+The DOM enables programmatic modification of the **element trees** corresponding to web pages.
 
 The JavaScript code introduced in the previous chapter used the DOM-API to add a list of notes to the page.
 
@@ -406,7 +431,9 @@ The JavaScript code the browser fetches will always create the list of notes bas
 
 ### CSS
 
-The `head` element of the HTML code of the Notes page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag, which determines that the browser must fetch a [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) style sheet from the address [main.css](https://studies.cs.helsinki.fi/exampleapp/main.css).
+The `head` element of the HTML code of the Notes page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag.
+This `link` tag determines that the browser must fetch a [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+style sheet from the address [main.css](https://studies.cs.helsinki.fi/exampleapp/main.css).
 
 Cascading Style Sheets, or CSS, is a style sheet language used to determine the appearance of web pages.
 
@@ -428,7 +455,8 @@ These are used to select certain parts of the page and to define styling rules t
 
 A class selector definition always starts with a period and contains the name of the class.
 
-The classes are [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class), which can be added to HTML elements.
+The classes are [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class),
+which can be added to HTML elements.
 
 CSS attributes can be examined on the ***elements*** tab of the console:  
 
@@ -489,10 +517,12 @@ Let's zoom into it:
 
 It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address ***new_note***.
 The server responds with HTTP status code 302.
-This is a [URL redirect](https://en.wikipedia.org/wiki/URL_redirection), with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `notes`.
+This is a [URL redirect](https://en.wikipedia.org/wiki/URL_redirection),
+with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `notes`.
 
 So, the browser reloads the Notes page.
-The reload causes three more HTTP requests: fetching the style sheet (main.css), the JavaScript code (main.js), and the raw data of the notes (data.json).
+The reload causes three more HTTP requests: fetching the style sheet (main.css),
+the JavaScript code (main.js), and the raw data of the notes (data.json).
 
 The network tab also shows the data submitted with the form:
 
@@ -539,17 +569,24 @@ The server does not save new notes to a database, so new notes disappear when th
 The Notes page of the application follows an early-nineties style of web development and uses "Ajax".
 As such, it's on the crest of the wave of early 2000s web technology.
 
-[AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML) is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach that enabled the fetching of content to web pages using JavaScript included within the HTML, without the need to rerender the page.
+[AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML)
+is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach.
+AJAX enables the fetching of content to web pages using JavaScript included within the HTML, without the need to rerender the page.
 
-Before the AJAX era, all web pages worked like the [traditional web application](/part0/fundamentals_of_web_apps#traditional-web-applications) we saw earlier in this chapter.
+Before the AJAX era, all web pages worked like the
+[traditional web application](/part0/fundamentals_of_web_apps#traditional-web-applications)
+we saw earlier in this chapter.
 All of the data shown on the page was fetched with the HTML code generated by the server.
 
 The Notes page uses AJAX to fetch the notes data.
 Submitting the form still uses the traditional mechanism of submitting web forms.
 
 The application URLs reflect the old, carefree times.
-JSON data is fetched from the URL <https://studies.cs.helsinki.fi/exampleapp/data.json> and new notes are sent to the URL <https://studies.cs.helsinki.fi/exampleapp/new_note>.
-Nowadays URLs like these would not be considered acceptable, as they don't follow the generally acknowledged conventions of [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) APIs, which we'll look into more in [part 3](/part3).
+JSON data is fetched from the URL <https://studies.cs.helsinki.fi/exampleapp/data.json>
+and new notes are sent to the URL <https://studies.cs.helsinki.fi/exampleapp/new_note>.
+Nowadays URLs like these would not be considered acceptable,
+as they don't follow the generally acknowledged conventions of [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) APIs,
+which we'll look into more in [part 3](/part3).
 
 The thing termed AJAX is now so commonplace that it's taken for granted.
 The term has faded into oblivion, and the new generation has not even heard of it.
@@ -563,7 +600,9 @@ The browser tackles this task by executing the JavaScript code it fetched from t
 The code fetches the notes from the server as JSON data and adds HTML elements for displaying the notes to the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
 
 In recent years, the [Single-page application](https://en.wikipedia.org/wiki/Single-page_application) (SPA) style of creating web applications has emerged.
-SPA-style websites don't fetch all of their pages separately from the server like our sample application does, but instead comprise only one HTML page fetched from the server, the contents of which are manipulated with JavaScript that executes in the browser.
+SPA-style websites don't fetch all of their pages separately from the server like our sample application does,
+but instead comprise only one HTML page fetched from the server,
+the contents of which are manipulated with JavaScript that executes in the browser.
 
 The Notes page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
 Even though the logic for rendering the notes is run on the browser, the page still uses the traditional way of adding new notes.
@@ -624,7 +663,8 @@ The command `document.getElementById('notes_form')` instructs the code to fetch 
 The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of form's submit.
 The default method would send the data to the server and cause a new GET request, which we don't want to happen.
 
-Then the event handler creates a new note, adds it to the notes list with the command `notes.push(note)`, rerenders the note list on the page and sends the new note to the server.
+Then the event handler creates a new note, adds it to the notes list with the command `notes.push(note)`,
+rerenders the note list on the page and sends the new note to the server.
 
 The code for sending the note to the server is as follows:
 
@@ -653,21 +693,27 @@ The URL `new_note_spa` that new notes are sent to, does not adhere to current be
 
 ### JavaScript libraries
 
-The sample app is done with so-called [vanilla JavaScript](https://www.freecodecamp.org/news/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34/), using only the DOM-API and JavaScript to manipulate the structure of the pages.
+The sample app is done with so-called [vanilla JavaScript](https://www.freecodecamp.org/news/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34/),
+using only the DOM-API and JavaScript to manipulate the structure of the pages.
 
 Instead of using JavaScript and the DOM-API only, different libraries containing tools that are easier to work with compared to the DOM-API are often used to manipulate pages.
 One of these libraries is the ever-so-popular [jQuery](https://jquery.com/).
 
-jQuery was developed back when web applications mainly followed the traditional style of the server generating HTML pages, the functionality of which was enhanced on the browser side using JavaScript written with jQuery.
+jQuery was developed back when web applications mainly followed the traditional style of the server generating HTML pages,
+the functionality of which was enhanced on the browser side using JavaScript written with jQuery.
 One of the reasons for the success of jQuery was its so-called cross-browser compatibility.
 The library worked regardless of the browser or the company that made it, so there was no need for browser-specific solutions.
-Nowadays using jQuery is not as justified given the advancement of JavaScript, and the most popular browsers generally support basic functionalities well.
+Nowadays using jQuery is not as justified given the advancement of JavaScript,
+and the most popular browsers generally support basic functionalities well.
 
 The rise of the single-page app brought several more "modern" ways of web development than jQuery.
 The favorite of the first wave of developers was [BackboneJS](http://backbonejs.org/).
-After its [launch](https://github.com/angular/angular.js/blob/master/CHANGELOG.md#100-temporal-domination-2012-06-13) in 2012, Google's [AngularJS](https://angularjs.org/) quickly became almost the de facto standard of modern web development.
+After its [launch](https://github.com/angular/angular.js/blob/master/CHANGELOG.md#100-temporal-domination-2012-06-13) in 2012,
+Google's [AngularJS](https://angularjs.org/) quickly became almost the de facto standard of modern web development.
 
-However, the popularity of Angular plummeted in October 2014 after the [Angular team announced that support for version 1 will end](https://web.archive.org/web/20151208002550/https://jaxenter.com/angular-2-0-announcement-backfires-112127.html), and Angular 2 will not be backwards compatible with the first version.
+However, the popularity of Angular plummeted in October 2014 after the
+[Angular team announced that support for version 1 will end](https://web.archive.org/web/20151208002550/https://jaxenter.com/angular-2-0-announcement-backfires-112127.html),
+and Angular 2 will not be backwards compatible with the first version.
 Angular 2 and the newer versions have not gotten too warm of a welcome.
 
 Currently, the most popular tool for implementing the browser-side logic of web applications is Facebook's [React](https://reactjs.org/) library.
@@ -678,10 +724,12 @@ For example, recently a newcomer - [VueJS](https://vuejs.org/) - has been captur
 
 ### Full-stack web development
 
-What does the name of the course, *Full-stack web development*, mean? Full stack is a buzzword that everyone talks about, but no one knows what it means.
+What does the name of the course, *Full-stack web development*, mean?
+Full stack is a buzzword that everyone talks about, but no one knows what it means.
 Or at least, there is no agreed-upon definition for the term.
 
-Practically all web applications have (at least) two "layers": the browser, being closer to the end-user, is the top layer, and the server the bottom one.
+Practically all web applications have (at least) two "layers":
+the browser, being closer to the end-user, is the top layer, and the server the bottom one.
 There is often also a database layer below the server.
 We can therefore think of the **architecture** of a web application as a kind of **stack** of layers.
 
@@ -705,7 +753,8 @@ Oftentimes, full-stack developers must also have enough configuration and admini
 
 Full-stack web development is challenging in many ways.
 Things are happening in many places at once, and debugging is quite a bit harder than with regular desktop applications.
-JavaScript does not always work as you'd expect it to (compared to many other languages), and the asynchronous way its runtime environments work causes all sorts of challenges.
+JavaScript does not always work as you'd expect it to (compared to many other languages),
+and the asynchronous way its runtime environments work causes all sorts of challenges.
 Communicating on the web requires knowledge of the HTTP protocol.
 One must also handle databases and server administration and configuration.
 It would also be good to know enough CSS to make applications at least somewhat presentable.
@@ -713,7 +762,8 @@ It would also be good to know enough CSS to make applications at least somewhat 
 The world of JavaScript develops fast, which brings its own set of challenges.
 Tools, libraries and the language itself are under constant development.
 Some are starting to get tired of the constant change, and have coined a term for it: **JavaScript fatigue**.
-See [How to Manage JavaScript Fatigue on auth0](https://auth0.com/blog/how-to-manage-javascript-fatigue/) or [JavaScript fatigue on Medium](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4).
+See [How to Manage JavaScript Fatigue on auth0](https://auth0.com/blog/how-to-manage-javascript-fatigue/) or
+[JavaScript fatigue on Medium](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4).
 
 You will suffer from JavaScript fatigue yourself during this course.
 Fortunately for us, there are a few ways to smooth the learning curve, and we can start with coding instead of configuration.
@@ -768,7 +818,9 @@ This exercise *is not submitted to GitHub*, it's enough to just read the tutoria
 
 #### 0.4: New note diagram
 
-In the section [Loading a page containing JavaScript - review](/part0/fundamentals_of_web_apps#loading-a-page-containing-java-script-review), the chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp/notes> is depicted as a [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/)
+In the section [Loading a page containing JavaScript - review](/part0/fundamentals_of_web_apps#loading-a-page-containing-java-script-review),
+the chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp/notes>
+is depicted as a [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/)
 
 The diagram was made using the [web sequence diagrams](https://www.websequencediagrams.com) service as follows:
 
@@ -794,7 +846,8 @@ that renders notes to display
 end note
 ```
 
-**Create a similar diagram** depicting the situation where the user creates a new note on page <https://studies.cs.helsinki.fi/exampleapp/notes> when writing something into the text field and clicking the ***submit*** button.
+**Create a similar diagram** depicting the situation where the user creates a new note on page <https://studies.cs.helsinki.fi/exampleapp/notes>
+when writing something into the text field and clicking the ***submit*** button.
 
 If necessary, show operations on the browser or on the server as comments on the diagram.
 
@@ -805,11 +858,13 @@ All necessary information for doing this, and the next two exercises, can be fou
 The idea of these exercises is to read the text through once more and to think through what is going on there.
 Reading the application [code](https://github.com/mluukkai/example_app) is not necessary, but it is of course possible.
 
-**Note** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor) syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/) markdown pages!
+**Note** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor)
+syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/) markdown pages!
 
 #### 0.5: Single-page app diagram
 
-Create a diagram depicting the situation where the user goes to the [single-page app](/part0/fundamentals_of_web_apps#single-page-app) version of the notes app at <https://studies.cs.helsinki.fi/exampleapp/spa>.
+Create a diagram depicting the situation where the user goes to the [single-page app](/part0/fundamentals_of_web_apps#single-page-app)
+version of the notes app at <https://studies.cs.helsinki.fi/exampleapp/spa>.
 
 #### 0.6: New note in Single-page app diagram
 

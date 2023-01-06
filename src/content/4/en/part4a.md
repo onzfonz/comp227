@@ -53,7 +53,8 @@ module.exports = {
 The logger has two functions, **info** for printing normal log messages, and **error** for all error messages.
 
 Extracting logging into its own module is a good idea in more ways than one.
-If we wanted to start writing logs to a file or send them to an external logging service like [graylog](https://www.graylog.org/) or [papertrail](https://papertrailapp.com) we would only have to make changes in one place.
+If we wanted to start writing logs to a file or send them to an external logging service like [graylog](https://www.graylog.org/)
+or [papertrail](https://papertrailapp.com) we would only have to make changes in one place.
 
 The contents of the *index.js* file used for starting the application gets simplified as follows:
 
@@ -195,7 +196,8 @@ And in the current version, we have:
 notesRouter.delete('/:id', (request, response) => {
 ```
 
-So what are these router objects exactly? The Express manual provides the following explanation:
+So what are these router objects exactly?
+The Express manual provides the following explanation:
 
 > *A router object is an isolated instance of middleware and routes.
   You can think of it as a “mini-application,” capable only of performing middleware and routing functions.
@@ -336,14 +338,16 @@ To recap, the directory structure looks like this after the changes have been ma
 ```
 
 For smaller applications, the structure does not matter that much.
-Once the application starts to grow in size, you are going to have to establish some kind of structure and separate the different responsibilities of the application into separate modules.
+Once the application starts to grow in size, you are going to have to establish some kind of structure
+and separate the different responsibilities of the application into separate modules.
 This will make developing the application much easier.
 
 There is no strict directory structure or file naming convention that is required for Express applications.
 In contrast, Ruby on Rails does require a specific structure.
 Our current structure simply follows some of the best practices you can come across on the internet.
 
-You can find the code for our current application in its entirety in the *part4-1* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-1).
+You can find the code for our current application in its entirety in the *part4-1* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-1).
 
 If you clone the project for yourself, run the `npm install` command before starting the application with `npm start`.
 
@@ -420,7 +424,8 @@ Now the exported "thing" (in this case a router object) is assigned to a variabl
 
 ### Exercises 4.1-4.2
 
-In the exercises for this part, we will be building a **blog list application**, which allows users to save information about interesting blogs they have stumbled across on the internet.
+In the exercises for this part, we will be building a **blog list application**,
+which allows users to save information about interesting blogs they have stumbled across on the internet.
 For each listed blog we will save the author, title, URL, and amount of upvotes from users of the application.
 
 #### 4.1 Blog list, step1
@@ -484,7 +489,8 @@ Verify that it is possible to add blogs to the list with Postman or the VS Code 
 Refactor the application into separate modules as shown earlier in this part of the course material.
 
 **NB** refactor your application in baby steps and verify that the application works after every change you make.
-If you try to take a "shortcut" by refactoring many things at once, then [Murphy's law](https://en.wikipedia.org/wiki/Murphy%27s_law) will kick in and it is almost certain that something will break in your application.
+If you try to take a "shortcut" by refactoring many things at once, then [Murphy's law](https://en.wikipedia.org/wiki/Murphy%27s_law)
+will kick in and it is almost certain that something will break in your application.
 The "shortcut" will end up taking more time than moving forward slowly and systematically.
 
 One best practice is to commit your code every time it is in a stable state.
@@ -525,10 +531,12 @@ module.exports = {
 ```
 
 > The `average` function uses the array [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) method.
-  If the method is not familiar to you yet, then now is a good time to watch the first three videos from the [Functional Javascript](https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84) series on Youtube.
+  If the method is not familiar to you yet, then now is a good time to watch the first three videos from the
+  [Functional Javascript](https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84) series on Youtube.
 
 There are many different testing libraries or **test runners** available for JavaScript.
-In this course we will be using a testing library developed and used internally by Facebook called [jest](https://jestjs.io/), which resembles the previous king of JavaScript testing libraries [Mocha](https://mochajs.org/).
+In this course we will be using a testing library developed and used internally by Facebook called [jest](https://jestjs.io/),
+which resembles the previous king of JavaScript testing libraries [Mocha](https://mochajs.org/).
 
 Jest is a natural choice for this course, as it works well for testing backends, and it shines when it comes to testing React applications.
 
@@ -604,7 +612,8 @@ test('reverse of releveler', () => {
 })
 ```
 
-The ESLint configuration we added to the project in the previous part complains about the `test` and `expect` commands in our test file since the configuration does not allow *globals*.
+The ESLint configuration we added to the project in the previous part complains about the `test` and `expect` commands in our test file
+since the configuration does not allow *globals*.
 Let's get rid of the complaints by adding `"jest": true` to the `env` property in the *.eslintrc.js* file.
 
 ```js
@@ -726,7 +735,8 @@ The test output of Jest also uses the name of the describe block:
 
 As we will see later on `describe` blocks are necessary when we want to run some shared setup or teardown operations for a group of tests.
 
-Another thing to notice is that we wrote the tests in quite a compact way, without assigning the output of the function being tested to a variable:
+Another thing to notice is that we wrote the tests in quite a compact way,
+without assigning the output of the function being tested to a variable:
 
 ```js
 test('of empty array is zero', () => {
@@ -805,7 +815,8 @@ Dijkstra',
 })
 ```
 
-If defining your own test input list of blogs is too much work, you can use the ready-made list [here](https://raw.githubusercontent.com/fullstack-hy2020/misc/master/blogs_for_test.md).
+If defining your own test input list of blogs is too much work,
+you can use the ready-made list [here](https://raw.githubusercontent.com/fullstack-hy2020/misc/master/blogs_for_test.md).
 
 You are bound to run into problems while writing tests.
 Remember the things that we learned about [debugging](/part3/saving_data_to_mongo_db#debugging-node-applications) in part 3.
@@ -838,7 +849,8 @@ Dijkstra",
 }
 ```
 
-**NB** when you are comparing objects, the [toEqual](https://jestjs.io/docs/en/expect#toequalvalue) method is probably what you want to use, since the [toBe](https://jestjs.io/docs/en/expect#tobevalue) tries to verify that the two values are the same value, and not just that they contain the same properties.
+**NB** when you are comparing objects, the [toEqual](https://jestjs.io/docs/en/expect#toequalvalue) method is probably what you want to use,
+since the [toBe](https://jestjs.io/docs/en/expect#tobevalue) tries to verify that the two values are the same value, and not just that they contain the same properties.
 
 Write the tests for this exercise inside of a new `describe` block.
 Do the same for the remaining exercises as well.
@@ -846,7 +858,8 @@ Do the same for the remaining exercises as well.
 #### 4.6*: helper functions and unit tests, step4
 
 This and the next exercise are a little bit more challenging.
-Finishing these two exercises is not required in to advance in the course material, so it may be a good idea to return to these once you're done going through the material for this part in its entirety.
+Finishing these two exercises is not required in to advance in the course material,
+so it may be a good idea to return to these once you're done going through the material for this part in its entirety.
 
 Finishing this exercise can be done without the use of additional libraries.
 However, this exercise is a great opportunity to learn how to use the [Lodash](https://lodash.com/) library.

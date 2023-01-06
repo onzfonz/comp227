@@ -62,7 +62,8 @@ const Hello = (props) => {
 
 The logic for guessing the year of birth is separated into a function of its own that is called when the component is rendered.
 
-The person's age does not have to be passed as a parameter to the function, since it can directly access all props that are passed to the component.
+The person's age does not have to be passed as a parameter to the function,
+since it can directly access all props that are passed to the component.
 
 If we examine our current code closely, we'll notice that the helper function is defined inside of another function that defines the behavior of our component.
 In Java programming, defining a function inside another one is complex and cumbersome, so not all that common.
@@ -70,7 +71,8 @@ In JavaScript, however, defining functions within functions is a commonly-used t
 
 ### Destructuring
 
-Before we move forward, we will take a look at a small but useful feature of the JavaScript language that was added in the ES6 specification, that allows us to [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) values from objects and arrays upon assignment.
+Before we move forward, we will take a look at a small but useful feature of the JavaScript language that was added in the ES6 specification, that allows us to
+[destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) values from objects and arrays upon assignment.
 
 In our previous code, we had to reference the data passed to our component as `props.name` and `props.age`.
 Of these two expressions, we had to repeat `props.age` twice in our code.
@@ -105,7 +107,8 @@ const Hello = (props) => {
 ```
 
 Note that we've also utilized the more compact syntax for arrow functions when defining the `bornYear` function.
-As mentioned earlier, if an arrow function consists of a single expression, then the function body does not need to be written inside of curly braces.
+As mentioned earlier, if an arrow function consists of a single expression,
+then the function body does not need to be written inside of curly braces.
 In this more compact form, the function simply returns the result of the single expression.
 
 To recap, the two function definitions shown below are equivalent:
@@ -215,7 +218,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 The App component is given the value of the counter via the `counter` prop.
 This component renders the value to the screen.
-What happens when the value of `counter` changes? Even if we were to add the following
+What happens when the value of `counter` changes?
+Even if we were to add the following
 
 ```js
 counter += 1
@@ -245,7 +249,8 @@ The re-rendering command has been wrapped inside of the `refresh` function to cu
 Now the component ***renders three times***, first with the value 1, then 2, and finally 3.
 However, values 1 and 2 are displayed on the screen for such a short amount of time that they can't be noticed.
 
-We can implement slightly more interesting functionality by re-rendering and incrementing the counter every second by using [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval):
+We can implement slightly more interesting functionality by re-rendering and incrementing the counter every second by using
+[setInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval):
 
 ```js
 setInterval(() => {
@@ -317,7 +322,10 @@ We assign the items to the variables `counter` and `setCounter` by using the des
 The `counter` variable is assigned the initial value of ***state*** which is zero.
 The variable `setCounter` is assigned to a function that will be used to *modify the state*.
 
-The application calls the [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) function and passes it two parameters: a function to increment the counter state and a timeout of one second:
+The application calls the
+[setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout)
+function and passes it two parameters:
+a function to increment the counter state and a timeout of one second:
 
 ```js
 setTimeout(
@@ -350,7 +358,8 @@ When the state modifying function `setCounter` is called, **React re-renders the
 ```
 
 The second time the component function is executed it calls the `useState` function and returns the new value of the state: 1.
-Executing the function body again also makes a new function call to `setTimeout`, which executes the one-second timeout and increments the `counter` state again.
+Executing the function body again also makes a new function call to `setTimeout`,
+which executes the one-second timeout and increments the `counter` state again.
 Because the value of the `counter` variable is 1, incrementing the value by 1 is essentially the same as an expression setting the value of `counter` to 2.
 
 ```js
@@ -362,7 +371,8 @@ Meanwhile, the old value of `counter` - "1" - is rendered to the screen.
 Every time the `setCounter` modifies the state it causes the component to re-render.
 The value of the state will be incremented again after one second, and this will continue to repeat for as long as the application is running.
 
-If the component doesn't render when you think it should, or if it renders at the "wrong time", you can debug the application by logging the values of the component's variables to the console.
+If the component doesn't render when you think it should, or if it renders at the "wrong time",
+you can debug the application by logging the values of the component's variables to the console.
 If we make the following additions to our code:
 
 ```js
@@ -391,9 +401,11 @@ It's easy to follow and track the calls made to the `App` component's render fun
 We have already mentioned **event handlers** that are registered to be called when specific events occur a few times in [part 0](/part0).
 A user's interaction with the different elements of a web page can cause a collection of various kinds of events to be triggered.
 
-Let's change the application so that increasing the counter happens when a user clicks a button, which is implemented with the [button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) element.
+Let's change the application so that increasing the counter happens when a user clicks a button,
+which is implemented with the [button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) element.
 
-Button elements support so-called [mouse events](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent), of which [click](https://developer.mozilla.org/en-US/docs/Web/Events/click) is the most common event.
+Button elements support so-called [mouse events](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent),
+of which [click](https://developer.mozilla.org/en-US/docs/Web/Events/click) is the most common event.
 The click event on a button can also be triggered with the keyboard or a touch screen despite the name *mouse event*.
 
 In React, [registering an event handler function](https://reactjs.org/docs/handling-events.html) to the ***click*** event happens like this:
@@ -423,7 +435,8 @@ const App = () => {
 
 We set the value of the button's `onClick` attribute to be a reference to the `handleClick` function defined in the code.
 
-Now every click of the ***plus*** button causes the `handleClick` function to be called, meaning that every click event will log a `clicked` message to the browser console.
+Now every click of the ***plus*** button causes the `handleClick` function to be called,
+meaning that every click event will log a `clicked` message to the browser console.
 
 The event handler function can also be defined directly in the value assignment of the onClick-attribute:
 
@@ -498,7 +511,8 @@ This would completely break our application:
 
 ![screenshot of re-renders error](../../images/1/5c.png)
 
-What's going on? An event handler is supposed to be either a **function** or a **function reference**, and when we write:
+What's going on?
+An event handler is supposed to be either a **function** or a **function reference**, and when we write:
 
 ```js
 <button onClick={setCounter(counter + 1)}>
@@ -562,7 +576,8 @@ The value of the `onClick` attribute is a variable containing a reference to a f
 ### Passing state - to child components
 
 It's recommended to write React components that are small and reusable across the application and even across projects.
-Let's refactor our application so that it's composed of three smaller components, one component for displaying the counter and two components for buttons.
+Let's refactor our application so that it's composed of three smaller components,
+one component for displaying the counter and two components for buttons.
 
 Let's first implement a `Display` component that's responsible for displaying the value of the counter.
 
@@ -666,7 +681,9 @@ React's own official [tutorial](https://reactjs.org/tutorial/tutorial.html) sugg
 Let's go over the main principles of how an application works once more.
 
 When the application starts, the code in `App` is executed.
-This code uses a [useState](https://reactjs.org/docs/hooks-reference.html#usestate) hook to create the application state, setting an initial value of the variable `counter`.
+This code uses a [useState](https://reactjs.org/docs/hooks-reference.html#usestate)
+hook to create the application state,
+setting an initial value of the variable `counter`.
 This component contains the `Display` component - which displays the counter's value, `0` - and three `Button` components.
 The buttons all have event handlers, which are used to change the state of the counter.
 

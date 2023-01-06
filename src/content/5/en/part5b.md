@@ -132,7 +132,8 @@ Both buttons have their event handlers defined directly in the component:
 <button onClick={() => setLoginVisible(false)}>cancel</button>
 ```
 
-The visibility of the component is defined by giving the component an [inline](/part2/adding_styles_to_react_app#inline-styles) style rule, where the value of the [display](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property is `none` if we do not want the component to be displayed:
+The visibility of the component is defined by giving the component an [inline](/part2/adding_styles_to_react_app#inline-styles) style rule,
+where the value of the [display](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property is `none` if we do not want the component to be displayed:
 
 ```js
 const hideWhenVisible = { display: loginVisible ? 'none' : '' }
@@ -158,7 +159,8 @@ If `loginVisible` is `false`, then `display` will not receive any value related 
 
 ### The components children, AKA props.children
 
-The code related to managing the visibility of the login form could be considered to be its own logical entity, and for this reason, it would be good to extract it from the `App` component into a separate component.
+The code related to managing the visibility of the login form could be considered to be its own logical entity,
+and for this reason, it would be good to extract it from the `App` component into a separate component.
 
 Our goal is to implement a new `Togglable` component that can be used in the following way:
 
@@ -218,7 +220,8 @@ const Togglable = (props) => {
 export default Togglable
 ```
 
-The new and interesting part of the code is [props.children](https://reactjs.org/docs/glossary.html#propschildren), which is used for referencing the child components of the component.
+The new and interesting part of the code is [props.children](https://reactjs.org/docs/glossary.html#propschildren),
+which is used for referencing the child components of the component.
 The child components are the React elements that we define between the opening and closing tags of a component.
 
 This time the children are rendered in the code that is used for rendering the component itself:
@@ -277,7 +280,8 @@ Next, let's define the form component inside of a `Togglable` component:
 </Togglable>
 ```
 
-You can find the code for our current application in its entirety in the *part5-4* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-4).
+You can find the code for our current application in its entirety in the *part5-4* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-4).
 
 ### State of the forms
 
@@ -374,7 +378,8 @@ There is a slight problem with hiding the form.
 The visibility is controlled with the `visible` variable inside of the `Togglable` component.
 How can we access it outside of the component?
 
-There are many ways to implement closing the form from the parent component, but let's use the [ref](https://reactjs.org/docs/refs-and-the-dom.html) mechanism of React, which offers a reference to the component.
+There are many ways to implement closing the form from the parent component,
+but let's use the [ref](https://reactjs.org/docs/refs-and-the-dom.html) mechanism of React, which offers a reference to the component.
 
 Let's make the following changes to the `App` component:
 
@@ -395,7 +400,8 @@ const App = () => {
 }
 ```
 
-The [useRef](https://reactjs.org/docs/hooks-reference.html#useref) hook is used to create a `noteFormRef` ref, that is assigned to the `Togglable` component containing the creation note form.
+The [useRef](https://reactjs.org/docs/hooks-reference.html#useref) hook is used to create a `noteFormRef` ref,
+that is assigned to the `Togglable` component containing the creation note form.
 The `noteFormRef` variable acts as a reference to the component.
 This hook ensures the same reference (ref) that is kept throughout re-renders of the component.
 
@@ -441,7 +447,8 @@ export default Togglable
 The function that creates the component is wrapped inside of a [forwardRef](https://reactjs.org/docs/react-api.html#reactforwardref) function call.
 This way the component can access the ref that is assigned to it.
 
-The component uses the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) hook to make its `toggleVisibility` function available outside of the component.
+The component uses the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) hook
+to make its `toggleVisibility` function available outside of the component.
 
 We can now hide the form by calling `noteFormRef.current.toggleVisibility()` after a new note has been created:
 
@@ -460,7 +467,8 @@ const App = () => {
 }
 ```
 
-To recap, the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) function is a React hook, that is used for defining functions in a component, which can be invoked from outside of the component.
+To recap, the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) function is a React hook,
+that is used for defining functions in a component, which can be invoked from outside of the component.
 
 This trick works for changing the state of a component, but it looks a bit unpleasant.
 We could have accomplished the same functionality with slightly cleaner code using "old React" class-based components.
@@ -469,7 +477,8 @@ So far this is the only situation where using React hooks leads to code that is 
 
 There are also [other use cases](https://reactjs.org/docs/refs-and-the-dom.html) for refs than accessing React components.
 
-You can find the code for our current application in its entirety in the *part5-6* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-6).
+You can find the code for our current application in its entirety in the *part5-6* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-6).
 
 ### One point about components
 
@@ -529,7 +538,8 @@ The form closes when a new blog is created.
 
 #### 5.6 Blog list frontend, step6
 
-Separate the form for creating a new blog into its own component (if you have not already done so), and move all the states required for creating a new blog to this component.
+Separate the form for creating a new blog into its own component (if you have not already done so),
+and move all the states required for creating a new blog to this component.
 
 The component must work like the `NoteForm` component from the [material](/part5/props_children_and_proptypes) of this part.
 
@@ -569,7 +579,8 @@ const Blog = ({ blog }) => {
 )}
 ```
 
-**NB:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component, the component can not be used directly to achieve the desired behavior.
+**NB:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component,
+the component can not be used directly to achieve the desired behavior.
 The easiest solution will be to add a state to the blog post that controls the displayed form of the blog post.
 
 #### 5.8: Blog list frontend, step8
@@ -836,11 +847,14 @@ Togglable.displayName = 'Togglable' // highlight-line
 export default Togglable
 ```
 
-You can find the code for our current application in its entirety in the *part5-7* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-7).
+You can find the code for our current application in its entirety in the *part5-7* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-7).
 
-Note that create-react-app has also a [default ESLint-configuration](https://www.npmjs.com/package/eslint-config-react-app), that we have now overridden.
-[The documentation](https://create-react-app.dev/docs/setting-up-your-editor/#extending-or-replacing-the-default-eslint-config) mentions that it is ok to replace the default but does not encourage us to do so:
- **We highly recommend extending the base config, as removing it could introduce hard-to-find issues**.
+Note that create-react-app has also a [default ESLint-configuration](https://www.npmjs.com/package/eslint-config-react-app),
+that we have now overridden.
+[The documentation](https://create-react-app.dev/docs/setting-up-your-editor/#extending-or-replacing-the-default-eslint-config)
+mentions that it is ok to replace the default but does not encourage us to do so:
+> **We highly recommend extending the base config, as removing it could introduce hard-to-find issues**.
 
 </div>
 

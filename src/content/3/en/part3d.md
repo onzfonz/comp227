@@ -26,7 +26,8 @@ app.post('/api/notes', (request, response) => {
 
 If the note does not have the `content` property, we respond to the request with the status code **400 bad request**.
 
-One smarter way of validating the format of the data before it is stored in the database is to use the [validation](https://mongoosejs.com/docs/validation.html) functionality available in Mongoose.
+One smarter way of validating the format of the data before it is stored in the database is to use the
+[validation](https://mongoosejs.com/docs/validation.html) functionality available in Mongoose.
 
 We can define specific validation rules for each field in the schema:
 
@@ -53,7 +54,8 @@ The same constraint is also applied to the `content` field since the minimum len
 We have not added any constraints to the `important` field, so its definition in the schema has not changed.
 
 The `minLength` and `required` validators are [built-in](https://mongoosejs.com/docs/validation.html#built-in-validators) and provided by Mongoose.
-The Mongoose [custom validator](https://mongoosejs.com/docs/validation.html#custom-validators) functionality allows us to create new validators if none of the built-in ones cover our needs.
+The Mongoose [custom validator](https://mongoosejs.com/docs/validation.html#custom-validators) functionality
+allows us to create new validators if none of the built-in ones cover our needs.
 
 If we try to store an object in the database that breaks one of the constraints, the operation will throw an exception.
 Let's change our handler for creating a new note so that it passes any potential exceptions to the error handler middleware:
@@ -97,7 +99,8 @@ When validating an object fails, we return the following default error message f
 ![postman showing error message](../../images/3/50.png)
 
 We notice that the backend has now a problem: validations are not done when editing a note.
-The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem, validations are not run by default when `findOneAndUpdate` is executed.
+The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem:
+validations are not run by default when `findOneAndUpdate` is executed.
 
 The fix is easy.
 Let us also reformulate the route code a bit:
@@ -156,7 +159,8 @@ The logs showed the following:
 For some reason the URL of the database was undefined.
 The `heroku config` command revealed that I had accidentally defined the URL to the `MONGO_URL` environment variable when the code expected it to be in `MONGODB_URI`.
 
-You can find the code for our current application in its entirety in the *part3-5* branch of [this GitHub repository](https://github.com/fullstack-hy2019/part3-notes-backend/tree/part3-5).
+You can find the code for our current application in its entirety in the *part3-5* branch of
+[this GitHub repository](https://github.com/fullstack-hy2019/part3-notes-backend/tree/part3-5).
 
 </div>
 
@@ -203,7 +207,8 @@ A phone number must
 
 Use a [Custom validator](https://mongoosejs.com/docs/validation.html#custom-validators) to implement the second part of the validation.
 
-If an HTTP POST request tries to add a name that is already in the phonebook, the server must respond with an appropriate status code and error message.
+If an HTTP POST request tries to add a name that is already in the phonebook,
+the server must respond with an appropriate status code and error message.
 
 #### 3.21 Deploying the database backend to production
 
@@ -226,7 +231,8 @@ Wikipedia says the following about lint:
   Lint-like tools generally perform static analysis of source code.*
 
 In compiled statically typed languages like Java, IDEs like NetBeans can point out errors in the code, even ones that are more than just compile errors.
-Additional tools for performing [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) like [checkstyle](https://checkstyle.sourceforge.io), can be used for expanding the capabilities of the IDE to also point out problems related to style, like indentation.
+Additional tools for performing [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) like [checkstyle](https://checkstyle.sourceforge.io),
+can be used for expanding the capabilities of the IDE to also point out problems related to style, like indentation.
 
 In the JavaScript universe, the current leading tool for static analysis aka.
 "linting" is [ESlint](https://eslint.org/).
@@ -314,7 +320,8 @@ It is recommended to create a separate `npm script` for linting:
 Now the `npm run lint` command will check every file in the project.
 
 Also, the files in the *build* directory get checked when the command is run.
-We do not want this to happen, and we can accomplish this by creating a [.eslintignore](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories) file in the project's root with the following contents:
+We do not want this to happen, and we can accomplish this by creating a [.eslintignore](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories)
+file in the project's root with the following contents:
 
 ```bash
 build
@@ -355,7 +362,9 @@ The rule is added under the `rules` field in the configuration file.
 
 While we're at it, let's make a few other changes to the rules.
 
-Let's prevent unnecessary [trailing spaces](https://eslint.org/docs/rules/no-trailing-spaces) at the ends of lines, let's require that [there is always a space before and after curly braces](https://eslint.org/docs/rules/object-curly-spacing), and let's also demand a consistent use of whitespaces in the function parameters of arrow functions.
+Let's prevent unnecessary [trailing spaces](https://eslint.org/docs/rules/no-trailing-spaces) at the ends of lines,
+let's require that [there is always a space before and after curly braces](https://eslint.org/docs/rules/object-curly-spacing),
+and let's also demand a consistent use of whitespaces in the function parameters of arrow functions.
 
 ```js
 {
@@ -381,7 +390,8 @@ Our default configuration takes a bunch of predetermined rules into use from `es
 ```
 
 This includes a rule that warns about *console.log* commands.
-[Disabling](https://eslint.org/docs/user-guide/configuring#configuring-rules) a rule can be accomplished by defining its "value" as 0 in the configuration file.
+[Disabling](https://eslint.org/docs/user-guide/configuring#configuring-rules) a rule can be accomplished by
+defining its "value" as 0 in the configuration file.
 Let's do this for the `no-console` rule in the meantime.
 
 ```js
@@ -410,10 +420,13 @@ This will verify that the configuration file is correctly formatted:
 If there is something wrong in your configuration file, the lint plugin can behave quite erratically.
 
 Many companies define coding standards that are enforced throughout the organization through the ESlint configuration file.
-It is not recommended to keep reinventing the wheel over and over again, and it can be a good idea to adopt a ready-made configuration from someone else's project into yours.
-Recently many projects have adopted the Airbnb [Javascript style guide](https://github.com/airbnb/javascript) by taking Airbnb's [ESlint](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) configuration into use.
+It is not recommended to keep reinventing the wheel over and over again,
+and it can be a good idea to adopt a ready-made configuration from someone else's project into yours.
+Recently many projects have adopted the Airbnb [Javascript style guide](https://github.com/airbnb/javascript)
+by taking Airbnb's [ESlint](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) configuration into use.
 
-You can find the code for our current application in its entirety in the *part3-7* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-7).
+You can find the code for our current application in its entirety in the *part3-7* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-7).
 </div>
 
 <div class="tasks">

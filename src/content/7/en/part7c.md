@@ -7,7 +7,8 @@ lang: en
 
 <div class="content">
 
-In part 2, we examined two different ways of adding styles to our application: the old-school [single CSS](/part2/adding_styles_to_react_app) file and [inline styles](/part2/adding_styles_to_react_app#inline_styles).
+In part 2, we examined two different ways of adding styles to our application:
+the old-school [single CSS](/part2/adding_styles_to_react_app) file and [inline styles](/part2/adding_styles_to_react_app#inline_styles).
 In this part, we will take a look at a few other ways.
 
 ### Ready-made UI libraries
@@ -77,7 +78,8 @@ The content is no longer as close to the edges of the browser as it was earlier:
 ![browser notes app with margin spacing](../../images/7/6ea.png)
 
 Next, let's make some changes to the `Notes` component so that it renders the list of notes as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
-React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose, so there is no need to define CSS classes separately.
+React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose,
+so there is no need to define CSS classes separately.
 
 ```js
 const Notes = ({ notes }) => (
@@ -117,7 +119,8 @@ import { Table } from 'react-bootstrap'
 
 Let's improve the form in the `Login` view with the help of Bootstrap [forms](https://getbootstrap.com/docs/4.1/components/forms/).
 
-React Bootstrap provides built-in [components](https://react-bootstrap.github.io/forms/overview/) for creating forms (although the documentation for them is slightly lacking):
+React Bootstrap provides built-in [components](https://react-bootstrap.github.io/forms/overview/)
+for creating forms (although the documentation for them is slightly lacking):
 
 ```js
 let Login = (props) => {
@@ -241,7 +244,8 @@ If the viewport of the browser is narrowed, we notice that the menu "collapses" 
 
 ![browser notes app with hamburger menu](../../images/7/11ea.png)
 
-Bootstrap and a large majority of existing UI frameworks produce [responsive](https://en.wikipedia.org/wiki/Responsive_web_design) designs, meaning that the resulting applications render well on a variety of different screen sizes.
+Bootstrap and a large majority of existing UI frameworks produce [responsive](https://en.wikipedia.org/wiki/Responsive_web_design) designs,
+meaning that the resulting applications render well on a variety of different screen sizes.
 
 Chrome's developer tools make it possible to simulate using our application in the browser of different mobile clients:
 
@@ -251,7 +255,8 @@ You can find the complete code for the application [here](https://github.com/ful
 
 ### Material UI
 
-As our second example, we will look into the [MaterialUI](https://mui.com/) React library, which implements the [Material Design](https://material.io/) visual language developed by Google.
+As our second example, we will look into the [MaterialUI](https://mui.com/) React library,
+which implements the [Material Design](https://material.io/) visual language developed by Google.
 
 Install the library with the command
 
@@ -486,7 +491,8 @@ According to <https://www.npmtrends.com/> which tracks the popularity of differe
 
 In the two previous examples, we used the UI frameworks with the help of React-integration libraries.
 
-Instead of using the [React Bootstrap](https://react-bootstrap.github.io/) library, we could have just as well used Bootstrap directly by defining CSS classes for our application's HTML elements.
+Instead of using the [React Bootstrap](https://react-bootstrap.github.io/) library,
+we could have just as well used Bootstrap directly by defining CSS classes for our application's HTML elements.
 Instead of defining the table with the `Table` component:
 
 ```js
@@ -506,7 +512,9 @@ We could have used a regular HTML *`table`* and added the required CSS class:
 The benefit of using the React Bootstrap library is not that evident from this example.
 
 In addition to making the frontend code more compact and readable, another benefit of using React UI framework libraries is that they include the JavaScript that is needed to make specific components work.
-Some Bootstrap components require a few unpleasant [JavaScript dependencies](https://getbootstrap.com/docs/4.1/getting-started/introduction/#js) that we would prefer not to include in our React applications.
+Some Bootstrap components require a few unpleasant
+[JavaScript dependencies](https://getbootstrap.com/docs/4.1/getting-started/introduction/#js)
+that we would prefer not to include in our React applications.
 
 Some potential downsides to using UI frameworks through integration libraries instead of using them "directly" are that integration libraries may have unstable APIs and poor documentation.
 The situation with [Semantic UI React](https://react.semantic-ui.com) is a lot better than with many other UI frameworks, as it is an official React integration library.
@@ -541,7 +549,8 @@ If you do not see your favorite UI framework in the list, please make a pull req
 
 There are also [other ways](https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b) of styling React applications that we have not yet taken a look at.
 
-The [styled components](https://www.styled-components.com/) library offers an interesting approach for defining styles through [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) that were introduced in ES6.
+The [styled components](https://www.styled-components.com/) library offers an interesting approach for defining styles
+through [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) that were introduced in ES6.
 
 Let's make a few changes to the styles of our application with the help of styled components.
 First, install the package with the command:
@@ -655,7 +664,8 @@ The appearance of the resulting application is shown below:
 
 ![browser notes app styled components](../../images/7/18ea.png)
 
-Styled components have seen consistent growth in popularity in recent times, and quite a lot of people consider it to be the best way of defining styles in React applications.
+Styled components have seen consistent growth in popularity in recent times,
+and quite a lot of people consider it to be the best way of defining styles in React applications.
 
 </div>
 
@@ -663,6 +673,7 @@ Styled components have seen consistent growth in popularity in recent times, and
 
 ### Exercises
 
-The exercises related to the topics presented here can be found at the end of this course material section in the exercise set [for extending the blog list application](/part7/exercises_extending_the_bloglist).
+The exercises related to the topics presented here can be found at the end of this course material section in the exercise set
+[for extending the blog list application](/part7/exercises_extending_the_bloglist).
 
 </div>

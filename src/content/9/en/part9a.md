@@ -20,23 +20,36 @@ That is why these applications can not achieve the performance nor the look-and-
 
 [React Native](https://reactnative.dev/) is a framework for developing native Android and iOS applications using JavaScript and React.
 It provides a set of cross-platform components that behind the scenes utilize the platform's native components.
-Using React Native allows us to bring all the familiar features of React such as JSX, components, props, state, and hooks into native application development.
-On top of that, we can utilize many familiar libraries in the React ecosystem such as [react-redux](https://react-redux.js.org/), [react-apollo](https://github.com/apollographql/react-apollo), [react-router](https://reactrouter.com/en/6.4.5/start/tutorial) and many more.
+Using React Native allows us to bring all the familiar features of React such as
+JSX, components, props, state, and hooks into native application development.
+On top of that, we can utilize many familiar libraries in the React ecosystem such as [react-redux](https://react-redux.js.org/),
+[react-apollo](https://github.com/apollographql/react-apollo),
+[react-router](https://reactrouter.com/en/6.4.5/start/tutorial) and many more.
 
 The speed of development and gentle learning curve for developers familiar with React is one of the most important benefits of React Native.
-Here's a motivational quote from Coinbase's article [Onboarding thousands of users with React Native](https://benbronsteiny.wordpress.com/2020/02/27/onboarding-thousands-of-users-with-react-native/) on the benefits of React Native:
+Here's a motivational quote from Coinbase's article
+[Onboarding thousands of users with React Native](https://benbronsteiny.wordpress.com/2020/02/27/onboarding-thousands-of-users-with-react-native/)
+on the benefits of React Native:
 
 > If we were to reduce the benefits of React Native to a single word, it would be “velocity”.
-On average, our team was able to onboard engineers in less time, share more code (which we expect will lead to future productivity boosts), and ultimately deliver features faster than if we had taken a purely native approach.
+On average, our team was able to onboard engineers in less time, share more code (which we expect will lead to future productivity boosts),
+and ultimately deliver features faster than if we had taken a purely native approach.
 
 ### About this part
 
 During this part, we will learn how to build an actual React Native application from the bottom up.
-We will learn concepts such as what are React Native's core components, how to create beautiful user interfaces, how to communicate with a server and how to test a React Native application.
+We will learn concepts such as what are React Native's core components, how to create beautiful user interfaces,
+how to communicate with a server and how to test a React Native application.
 
 We will be developing an application for rating [GitHub](https://github.com/) repositories.
-Our application will have features such as, sorting and filtering reviewed repositories, registering a user, logging in and creating a review for a repository.
-The back end for the application will be provided for us so that we can solely focus on the React Native development.
+Our application will have features such as:
+
+- sorting and filtering reviewed repositories
+- registering a user
+- logging in and
+- creating a review for a repository.
+
+The backend for the application will be provided for us so that we can solely focus on the React Native development.
 The final version of our application will look something like this:
 
 ![Application preview](../../images/9/4.png)
@@ -50,11 +63,14 @@ Instead, develop your application at the same pace as the material progresses.
 This part will heavily rely on concepts covered in the previous parts.
 Before starting this part you will need basic knowledge of JavaScript and React.
 Deep knowledge of server-side development is not required and all the server-side code is provided for you.
-The recommended parts to complete before this part are [part 1](/part1), [part 2](/part2), [part 5](/part5), and [part 7](/part7).
+The recommended parts to complete before this part are
+[part 1](/part1), [part 2](/part2), [part 5](/part5), and [part 7](/part7).
 
 ### Submitting exercises
 
-Exercises are submitted via GitHub just like in the previous parts. Note that, exercises in this part are submitted *to a different course repo* than in parts 0-7. This means that you will be submitting exercises a single section at a time starting with this section, "Introduction to React Native", which is part 1 on Canvas.
+Exercises are submitted via GitHub just like in the previous parts.
+Note that, exercises in this part are submitted *to a different course repo* than in parts 0-7.
+This means that you will be submitting exercises a single section at a time starting with this section, "Introduction to React Native", which is part 1 on Canvas.
 
 ### Initializing the application
 
@@ -88,7 +104,8 @@ The structure should be more or less the following:
 
 We might spot some familiar files and directories such as *package.json* and *node_modules*.
 On top of those, the most relevant files are the *app.json* file which contains Expo-related configuration and *App.js* which is the root component of our application.
-**Do not** rename or move the *App.js* file because by default Expo imports it to [register the root component](https://docs.expo.io/versions/latest/sdk/register-root-component/).
+**Do not** rename or move the *App.js* file because by default Expo imports it to
+[register the root component](https://docs.expo.io/versions/latest/sdk/register-root-component/).
 
 Let's look at the *`scripts`* section of the *package.json* file which has the following scripts:
 
@@ -139,16 +156,21 @@ After pressing the key, Expo should connect to the emulator and you should event
 Be patient, this might take a while.
 
 In addition to emulators, there is one extremely useful way to develop React Native applications with Expo, the Expo mobile app.
-With the Expo mobile app, you can preview your application using your actual mobile device, which provides a bit more concrete development experience compared to emulators.
-To get started, install the Expo mobile app by following the instructions in the [Expo's documentation](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and).
-Note that the Expo mobile app can only open your application if your mobile device is connected to *the same local network* (e.g. connected to the same Wi-Fi network) as the computer you are using for development.
+With the Expo mobile app, you can preview your application using your actual mobile device,
+which provides a bit more concrete development experience compared to emulators.
+To get started, install the Expo mobile app by following the instructions in
+[Expo's documentation](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and).
+Note that the Expo mobile app can only open your application
+if your mobile device is connected to *the same local network* (e.g. connected to the same Wi-Fi network)
+as the computer you are using for development.
 
 When the Expo mobile app has finished installing, open it up.
 Next, if the Expo development tools are not already running, start them by running `npm start`.
 You should be able to see a QR code at the beginning of the command output.
 Within the Expo mobile app, press ***Scan QR Code*** and scan the QR code displayed in the development tools.
 The Expo mobile app should start building the JavaScript bundle and after it is finished you should be able to see your application.
-Now, every time you want to reopen your application in the Expo mobile app, you should be able to access the application without scanning the QR code by pressing it in the ***Recently opened*** list in the ***Projects*** view.
+Now, every time you want to reopen your application in the Expo mobile app,
+you should be able to access the application without scanning the QR code by pressing it in the ***Recently opened*** list in the ***Projects*** view.
 
 </div>
 
@@ -251,21 +273,28 @@ It's time to push your code to GitHub if you haven't already and mark the exerci
   
 When our application doesn't work as intended, we should immediately start **debugging** it.
 In practice, this means that we'll need to reproduce the erroneous behavior and monitor the code execution to find out which part of the code behaves incorrectly.
-During the course, we have already done a bunch of debugging by logging messages, inspecting network traffic, and using specific development tools, such as ***React Development Tools***.
+During the course, we have already done a bunch of debugging by logging messages,
+inspecting network traffic, and using specific development tools, such as ***React Development Tools***.
 In general, debugging isn't that different in React Native, we'll just need the right tools for the job.
   
-[React Native Debugger](https://docs.expo.io/workflow/debugging/#react-native-debugger) is a tool that offers a similar set of debugging features as the browser's developer tools.
+[React Native Debugger](https://docs.expo.io/workflow/debugging/#react-native-debugger)
+is a tool that offers a similar set of debugging features as the browser's developer tools.
 Let's get started by installing React Native Debugger with the help of the [installation instructions](https://github.com/jhen0409/react-native-debugger#installation).
-If you are unsure which installation method to choose, downloading a pre-built binary from the [release page](https://github.com/jhen0409/react-native-debugger/releases) is perhaps the easiest option.
-On the release page, find the latest release which supports React Native version 0.69 and download the binary suitable for your operating system (for example *.dmg* file for macOS and *.exe* file for Windows) under the "Assets" section.
-Once the installation is complete, start the React Native Debugger, open a new debugger window (shortcuts: ***Command+T*** on macOS, ***Ctrl+T*** on Linux/Windows) and set the React Native packager port to `19000`.
+If you are unsure which installation method to choose, downloading a pre-built binary from the
+[release page](https://github.com/jhen0409/react-native-debugger/releases) is perhaps the easiest option.
+On the release page, find the latest release which supports React Native version 0.69
+and download the binary suitable for your operating system (for example *.dmg* file for macOS and *.exe* file for Windows) under the "Assets" section.
+Once the installation is complete, start the React Native Debugger, open a new debugger window (shortcuts: ***Command+T*** on macOS,
+***Ctrl+T*** on Linux/Windows) and set the React Native packager port to `19000`.
 
-**NB:** If the debugger can't connect to the application and you see the error message "Another debugger is already connected", make sure that *<http://localhost:19000/debugger-ui>* is not open in some browser tab.
+**NB:** If the debugger can't connect to the application and you see the error message "Another debugger is already connected",
+make sure that *<http://localhost:19000/debugger-ui>* is not open in some browser tab.
   
 Next, we need to start our application and connect to the debugger.
 Start the application by running `npm start`.
 Once the application is running, open it with either an emulator or the Expo mobile app.
-Inside the emulator or the Expo mobile app, open the developer menu by following the [instructions](https://docs.expo.io/workflow/debugging/#developer-menu) in the Expo's documentation.
+Inside the emulator or the Expo mobile app, open the developer menu by following the
+[instructions](https://docs.expo.io/workflow/debugging/#developer-menu) in the Expo's documentation.
 From the developer menu, select ***Debug remote JS*** to connect to the debugger.
 Now, you should be able to see the application's component tree in the debugger:
 

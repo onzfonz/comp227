@@ -8,9 +8,11 @@ lang: en
 <div class="content">
 
 So far we have used our Redux store with the help of the [hook](https://react-redux.js.org/api/hooks) API from react-redux.
-Practically this has meant using the [useSelector](https://react-redux.js.org/api/hooks#useselector) and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch) functions.
+Practically this has meant using the [useSelector](https://react-redux.js.org/api/hooks#useselector)
+and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch) functions.
 
-To finish this part we will look into another older and more complicated way to use Redux, the [connect](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md) function provided by react-redux.
+To finish this part we will look into another older and more complicated way to use Redux,
+the [connect](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md) function provided by react-redux.
 
 ***In new applications, use the hook API***.
 Knowing how to use connect though is useful when maintaining older projects using Redux.
@@ -74,7 +76,9 @@ export default ConnectedNotes           // highlight-line
 The module exports the *connected component* that works exactly like the previous regular component for now.
 
 The component needs the list of notes and the value of the filter from the Redux store.
-The `connect` function accepts a so-called [mapStateToProps](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md#mapstatetoprops-state-ownprops--object) function as its first parameter.
+The `connect` function accepts a so-called
+[mapStateToProps function](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md#mapstatetoprops-state-ownprops--object)
+as its first parameter.
 The function can be used for defining the props of the *connected component* that are based on the state of the Redux store.
 
 If we define:
@@ -198,7 +202,9 @@ const Notes = (props) => {
 }
 ```
 
-The second parameter of the `connect` function can be used for defining [mapDispatchToProps](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md#mapdispatchtoprops-object--dispatch-ownprops--object) which is a group of **action creator** functions passed to the connected component as props.
+The second parameter of the `connect` function can be used for defining
+[mapDispatchToProps](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md#mapdispatchtoprops-object--dispatch-ownprops--object),
+which is a group of **action creator** functions passed to the connected component as props.
 Let's make the following changes to our existing connect operation:
 
 ```js
@@ -255,13 +261,15 @@ props.toggleImportanceOf(note.id)
 
 There is no need to call the `dispatch` function separately since `connect` has already modified the `toggleImportanceOf` action creator into a form that contains the dispatch.
 
-It can take some time to wrap your head around how `mapDispatchToProps` works, especially once we take a look at an [alternative way of using it](/part6/connect#alternative-way-of-using-map-dispatch-to-props).
+It can take some time to wrap your head around how `mapDispatchToProps` works,
+especially once we take a look at an [alternative way of using it](/part6/connect#alternative-way-of-using-map-dispatch-to-props).
 
 The resulting situation from using `connect` can be visualized like this:
 
 ![diagram showing toggle connecting to state in redux and dispatch inside of redux](../../images/6/25b.png)
 
-In addition to accessing the store's state via `props.notes` and `props.filter`, the component also references a function that can be used for dispatching ***notes/toggleImportanceOf***-type actions via its `toggleImportanceOf` prop.
+In addition to accessing the store's state via `props.notes` and `props.filter`,
+the component also references a function that can be used for dispatching ***notes/toggleImportanceOf***-type actions via its `toggleImportanceOf` prop.
 
 The code for the newly refactored `Notes` component looks like this:
 
@@ -341,7 +349,8 @@ export default connect(
 
 Since the component does not need to access the store's state, we can simply pass `null` as the first parameter to `connect`.
 
-You can find the code for our current application in its entirety in the *part6-5* branch of [this GitHub repository](https://github.com/fullstack-hy2020/redux-notes/tree/part6-5).
+You can find the code for our current application in its entirety in the *part6-5* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/redux-notes/tree/part6-5).
 
 ### Referencing action creators passed as props
 
@@ -376,7 +385,8 @@ export default connect(
 
 Developers who are new to connect may find it puzzling that there are two versions of the `createNote` action creator in the component.
 
-The function must be referenced as `props.createNote` through the component's props, as this is the version that *contains the automatic dispatch* added by `connect`.
+The function must be referenced as `props.createNote` through the component's props,
+as this is the version that *contains the automatic dispatch* added by `connect`.
 
 Due to the way that the action creator is imported:
 
@@ -507,15 +517,19 @@ const NewNote = (props) => {
 
 The concept is quite complex and describing it through text is challenging.
 In most cases, it is sufficient to use the simpler form of `mapDispatchToProps`.
-However, there are situations where a more complicated definition is necessary, like if the *dispatched actions* need to reference [the props of the component](https://github.com/gaearon/redux-devtools/issues/250#issuecomment-186429931).
+However, there are situations where a more complicated definition is necessary,
+like if the *dispatched actions* need to reference [the props of the component](https://github.com/gaearon/redux-devtools/issues/250#issuecomment-186429931).
 
-The creator of Redux Dan Abramov has created a wonderful tutorial called [Getting started with Redux](https://egghead.io/courses/getting-started-with-redux) that you can find on Egghead.io.
+The creator of Redux Dan Abramov has created a wonderful tutorial called
+[Getting started with Redux](https://egghead.io/courses/getting-started-with-redux)
+that you can find on Egghead.io.
 I highly recommend the tutorial to everyone.
 The last four videos discuss the `connect` method, particularly the more "complicated" way of using it.
 
 ### Presentational/Container revisited
 
-The refactored `Notes` component is almost entirely focused on rendering notes and is quite close to being a so-called [presentational component](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
+The refactored `Notes` component is almost entirely focused on rendering notes
+and is quite close to being a so-called [presentational component](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
 According to the [description](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) provided by Dan Abramov, presentational components:
 
 - Are concerned with how things look.
@@ -573,7 +587,8 @@ Abramov attributes the following [benefits](https://medium.com/@dan_abramov/smar
 - Better separation of concerns.
 You understand your app and your UI better by writing components this way.
 - Better reusability.
-You can use the same presentational component with completely different state sources, and turn those into separate container components that can be further reused.
+You can use the same presentational component with completely different state sources,
+and turn those into separate container components that can be further reused.
 - Presentational components are essentially your app’s “palette”.
 You can put them on a single page and let the designer tweak all their variations without touching the app’s logic.
 You can run screenshot regression tests on that page.
@@ -596,16 +611,21 @@ Most of the time hook-based APIs are a lot simpler than HOC-based ones, as is th
 
 ### Redux and the component state
 
-We have come a long way in this course and, finally, we have come to the point at which we are using React "the right way", meaning React only focuses on generating the views, and the application state is wholly separated from the React components and passed on to Redux, its actions, and its reducers.
+We have come a long way in this course and, finally, we have come to the point at which we are using React "the right way",
+meaning React only focuses on generating the views, and the application state is wholly separated from the React components and passed on to Redux, its actions, and its reducers.
 
-What about the `useState` hook, which provides components with their own state? Does it have any role if an application is using Redux or some other external state management solution? If the application has more complicated forms, it may be beneficial to implement their local state using the state provided by the `useState` function.
+What about the `useState` hook, which provides components with their own state?
+Does it have any role if an application is using Redux or some other external state management solution?
+If the application has more complicated forms, it may be beneficial to implement their local state using the state provided by the `useState` function.
 One can, of course, have Redux manage the state of the forms.
-However, if the state of the form is only relevant when filling the form (e.g. for validation) it may be wise to leave the management of state to the component responsible for the form.
+However, if the state of the form is only relevant when filling the form (e.g. for validation)
+it may be wise to leave the management of state to the component responsible for the form.
 
 Should we always use Redux? Probably not.
 Dan Abramov, the developer of Redux, discusses this in his article [You Might Not Need Redux](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367).
 
-Nowadays it is possible to implement Redux-like state management without Redux by using the React [context](https://reactjs.org/docs/context.html) API and the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook.
+Nowadays it is possible to implement Redux-like state management without Redux by using the React [context](https://reactjs.org/docs/context.html) API
+and the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook.
 More about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/) and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/).
 We will also practice this in [part 8](/part8).
 

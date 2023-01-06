@@ -64,7 +64,7 @@ You may delete the files:
 - *App.test.js*
 - *index.css*
 - *logo.svg*
-- *setupTests.js* 
+- *setupTests.js*
 - *reportWebVitals.js*
 
 as they are not needed in our application right now.
@@ -133,7 +133,8 @@ const App = ...
 ```
 
 There are a few ways to define functions in JavaScript.
-Here we will use [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), which are described in a newer version of JavaScript known as [ECMAScript 6](http://es6-features.org/#Constants), also called ES6.
+Here we will use [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions),
+which are described in a newer version of JavaScript known as [ECMAScript 6](http://es6-features.org/#Constants), also called ES6.
 
 Because the function consists of only a single expression we have used a shorthand, which represents this piece of code:
 
@@ -285,7 +286,8 @@ Writing components with React is easy, and by combining components, even a more 
 Indeed, a core philosophy of React is composing applications from many specialized reusable components.
 
 Another strong convention is the idea of a **root component** called `App` at the top of the component tree of the application.
-Nevertheless, as we will learn in [part 6](/part6), there are situations where the component `App` is not exactly the root, but is wrapped within an appropriate utility component.
+Nevertheless, as we will learn in [part 6](/part6),
+there are situations where the component `App` is not exactly the root, but is wrapped within an appropriate utility component.
 
 ### props: passing data to components
 
@@ -392,8 +394,11 @@ const App = () => {
 }
 ```
 
-the page is not going to display the content defined within the Footer component, and instead React only creates an empty [footer](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer) element, i.e. the built-in HTML element instead of the custom React element of the same name.
-If you change the first letter of the component name to a capital letter, then React creates a `div` element defined in the `Footer` component, which is rendered on the page.
+the page is not going to display the content defined within the Footer component,
+and instead React only creates an empty [footer](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer) element,
+i.e. the built-in HTML element instead of the custom React element of the same name.
+If you change the first letter of the component name to a capital letter,
+then React creates a `div` element defined in the `Footer` component, which is rendered on the page.
 
 Note that the content of a React component (usually) needs to contain **one root element**.
 If we, for example, try to define the component `App` without the outermost `div` element:
@@ -428,7 +433,8 @@ const App = () => {
 However, when defining the root component of the application this is not a particularly wise thing to do, and it makes the code look a bit ugly.
 
 Because the root element is stipulated, we have "extra" div elements in the DOM tree.
-This can be avoided by using [fragments](https://reactjs.org/docs/fragments.html#short-syntax), i.e. by wrapping the elements to be returned by the component with an empty element:
+This can be avoided by using [fragments](https://reactjs.org/docs/fragments.html#short-syntax),
+i.e. by wrapping the elements to be returned by the component with an empty element:
 
 ```js
 const App = () => {

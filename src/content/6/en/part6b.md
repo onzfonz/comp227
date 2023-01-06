@@ -90,7 +90,10 @@ The state of the store should look like this after making these changes:
 ```
 
 Only the array of notes is stored in the state of the current implementation of our application.
-In the new implementation, the state object has two properties, `notes` that contains the array of notes and `filter` that contains a string indicating which notes should be displayed to the user.
+In the new implementation, the state object has two properties:
+
+- `notes` that contains the array of notes
+- `filter` that contains a string indicating which notes should be displayed to the user.
 
 ### Combined reducers
 
@@ -203,7 +206,8 @@ store.dispatch(filterChange('IMPORTANT'))
 store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
 ```
 
-By simulating the creation of a note and changing the state of the filter in this fashion, the state of the store gets logged to the console after every change that is made to the store:
+By simulating the creation of a note and changing the state of the filter in this fashion,
+the state of the store gets logged to the console after every change that is made to the store:
 
 ![devtools console output showing notes filter and new note](../../images/6/5e.png)
 
@@ -437,7 +441,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 ```
 
 We already got rid of a few lines of code now that we don't need the `combineReducers` function to create the reducer for the store.
-We will soon see that the `configureStore` function has many additional benefits such as the effortless integration of development tools and many commonly used libraries without the need for additional configuration.
+We will soon see that the `configureStore` function has many additional benefits such as the effortless integration of development tools
+and many commonly used libraries without the need for additional configuration.
 
 Let's move on to refactoring the reducers, which brings forth the benefits of the Redux Toolkit.
 With Redux Toolkit, we can easily create reducer and related action creators using the [createSlice](https://redux-toolkit.js.org/api/createSlice) function.
@@ -513,7 +518,8 @@ This dispatch call responds to dispatching the following object:
 dispatch({ type: 'notes/createNote', payload: 'Redux Toolkit is awesome!' })
 ```
 
-If you followed closely, you might have noticed that inside the `createNote` action, there seems to happen something that violates the reducers' immutability principle mentioned earlier:
+If you followed closely, you might have noticed that inside the `createNote` action,
+there seems to happen something that violates the reducers' immutability principle mentioned earlier:
 
 ```js
 createNote(state, action) {
@@ -530,7 +536,8 @@ createNote(state, action) {
 We are mutating `state` argument's array by calling the `push` method instead of returning a new instance of the array.
 What's this all about?
 
-Redux Toolkit utilizes the [Immer](https://immerjs.github.io/immer/) library with reducers created by `createSlice` function, which makes it possible to mutate the `state` argument inside the reducer.
+Redux Toolkit utilizes the [Immer](https://immerjs.github.io/immer/) library with reducers created by `createSlice` function,
+which makes it possible to mutate the `state` argument inside the reducer.
 Immer uses the mutated state to produce a new, immutable state and thus the state changes remain immutable.
 Note that `state` can be changed without "mutating" it, as we have done with the `toggleImportanceOf` action.
 In this case, the function ***returns*** the new state.
@@ -629,7 +636,8 @@ It is also possible to dispatch actions to the store using the development tools
 
 ![devtools redux dispatching createNote with payload](../../images/6/13ea.png)
 
-You can find the code for our current application in its entirety in the *part6-2* branch of [this GitHub repository](https://github.com/fullstack-hy2020/redux-notes/tree/part6-2).
+You can find the code for our current application in its entirety in the *part6-2* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/redux-notes/tree/part6-2).
 
 </div>
 

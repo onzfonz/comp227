@@ -100,7 +100,8 @@ Document databases do not demand the foreign key to be stored in the note resour
 
 Since users can have many notes, the related ids are stored in an array in the `notes` field.
 
-Document databases also offer a radically different way of organizing the data: In some situations, it might be beneficial to nest the entire notes array as a part of the documents in the users collection:
+Document databases also offer a radically different way of organizing the data: In some situations,
+it might be beneficial to nest the entire notes array as a part of the documents in the users collection:
 
 ```js
 [
@@ -209,13 +210,16 @@ const noteSchema = new mongoose.Schema({
 })
 ```
 
-In stark contrast to the conventions of relational databases, ***references are now stored in both documents***: the note references the user who created it, and the user has an array of references to all of the notes created by them.
+In stark contrast to the conventions of relational databases, ***references are now stored in both documents***:
+the note references the user who created it, and the user has an array of references to all of the notes created by them.
 
 ### Creating users
 
 Let's implement a route for creating new users.
 Users have a unique `username`, a `name` and something called a `passwordHash`.
-The password hash is the output of a [one-way hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function) applied to the user's password.
+The password hash is the output of a
+[one-way hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
+applied to the user's password.
 It is never wise to store unencrypted plain text passwords in the database!
 
 Let's install the [bcrypt](https://github.com/kelektiv/node.bcrypt.js) package for generating the password hashes:
@@ -224,7 +228,8 @@ Let's install the [bcrypt](https://github.com/kelektiv/node.bcrypt.js) package f
 npm install bcrypt
 ```
 
-Creating new users happens in compliance with the RESTful conventions discussed in [part 3](/part3/node_js_and_express#rest), by making an HTTP POST request to the ***users*** path.
+Creating new users happens in compliance with the RESTful conventions discussed in [part 3](/part3/node_js_and_express#rest),
+by making an HTTP POST request to the ***users*** path.
 
 Let's define a separate ***router*** for dealing with users in a new *controllers/users.js* file.
 Let's take the router into use in our application in the *app.js* file, so that it handles requests made to the ***/api/users*** URL:
@@ -371,10 +376,13 @@ describe('when there is initially one user in db', () => {
 ```
 
 The test case obviously will not pass at this point.
-We are essentially practicing [test-driven development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development), where tests for new functionality are written before the functionality is implemented.
+We are essentially practicing [test-driven development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development),
+where tests for new functionality are written before the functionality is implemented.
 
 Mongoose does not have a built-in validator for checking the uniqueness of a field.
-In principle we could find a ready-made solution for this from the [mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator) npm package but unfortunately at the time of writing (24th Jan 2022)
+In principle we could find a ready-made solution for this from the
+[mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator)
+npm package but unfortunately at the time of writing (24th Jan 2022)
 mongoose-unique-validator does not work with Mongoose version 6.x, so we have to implement the uniqueness check by ourselves in the controller:
 
 ```js
@@ -433,7 +441,8 @@ The list looks like this:
 
 ![browser api/users shows JSON data with notes array](../../images/4/9.png)
 
-You can find the code for our current application in its entirety in the *part4-7* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-7).
+You can find the code for our current application in its entirety in the *part4-7* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-7).
 
 ### Creating a new note
 
@@ -495,12 +504,15 @@ Likewise, the ids of the users who created the notes can be seen when we visit t
 
 ### Populate
 
-We would like our API to work in such a way, that when an HTTP GET request is made to the ***/api/users*** route, the user objects would also contain the contents of the user's notes and not just their id.
+We would like our API to work in such a way, that when an HTTP GET request is made to the ***/api/users*** route,
+the user objects would also contain the contents of the user's notes and not just their id.
 In a relational database, this functionality would be implemented with a **join query**.
 
 As previously mentioned, document databases do not properly support join queries between collections, but the Mongoose library can do some of these joins for us.
-Mongoose accomplishes the join by doing multiple queries, which is different from join queries in relational databases which are **transactional**, meaning that the state of the database does not change during the time that the query is made.
-With join queries in Mongoose, nothing can guarantee that the state between the collections being joined is consistent, meaning that if we make a query that joins the user and notes collections, the state of the collections may change during the query.
+Mongoose accomplishes the join by doing multiple queries, which is different from join queries in relational databases which are **transactional**,
+meaning that the state of the database does not change during the time that the query is made.
+With join queries in Mongoose, nothing can guarantee that the state between the collections being joined is consistent,
+meaning that if we make a query that joins the user and notes collections, the state of the collections may change during the query.
 
 The Mongoose join is done with the [populate](http://mongoosejs.com/docs/populate.html) method.
 Let's update the route that returns all users first:
@@ -572,6 +584,7 @@ const noteSchema = new mongoose.Schema({
 })
 ```
 
-You can find the code for our current application in its entirety in the *part4-8* branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-8).
+You can find the code for our current application in its entirety in the *part4-8* branch of
+[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-8).
 
 </div>
