@@ -46,11 +46,13 @@ If necessary, read more about [debugging React applications](/part1/a_more_compl
 
 ### Protip: Visual Studio Code snippets
 
-With Visual Studio Code it's easy to create 'snippets', i.e., shortcuts for quickly generating commonly re-used portions of code, much like how 'sout' works in Netbeans.
+With Visual Studio Code it's easy to create 'snippets', i.e., shortcuts
+for quickly generating commonly re-used portions of code, much like how 'sout' works in Netbeans.
 
 Instructions for creating snippets can be found [here](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets).
 
-Useful, ready-made snippets can also be found as VS Code plugins, in the [marketplace](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets).
+Useful, ready-made snippets can also be found as VS Code plugins,
+in the [marketplace](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets).
 
 The most important snippet is the one for the `console.log()` command, for example, **clog**.
 This can be created like so:
@@ -158,7 +160,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-Every note contains its textual content and a timestamp, as well as a `boolean` value for marking whether the note has been categorized as important or not, and also a unique `id`.
+Every note contains its textual content and a timestamp,
+as well as a `boolean` value for marking whether the note has been categorized as important or not, and also a unique `id`.
 
 The example above works because there are exactly three notes in the array.
 
@@ -306,7 +309,8 @@ console.log(result)
 ```
 
 `[1, 2, 3]`  will be printed to the console.
- `map` always creates a new array, the elements of which have been created from the elements of the original array by ***mapping***: using the function given as a parameter to the `map` method.
+ `map` always creates a new array, the elements of which have been created from the elements of the original array by ***mapping***:
+ using the function given as a parameter to the `map` method.
 
 The function is
 
@@ -494,7 +498,8 @@ Note that when importing our own components, their location must be given *in re
 './components/Note'
 ```
 
-The period - `.` - in the beginning refers to the current directory, so the module's location is a file called *Note.js* in the *components* sub-directory of the current directory.
+The period - `.` - in the beginning refers to the current directory,
+so the module's location is a file called *Note.js* in the *components* sub-directory of the current directory.
 The filename extension *.js* can be omitted.
 
 Modules have plenty of other uses other than enabling component declarations to be separated into their own files.

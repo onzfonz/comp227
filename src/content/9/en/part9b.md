@@ -1051,7 +1051,8 @@ const BodyMassIndexCalculator = () => {
 The validation is performed by default every time a field's value changes and when the `handleSubmit` function is called.
 If the validation fails, the function provided for the `onSubmit` prop of the `Formik` component is not called.
 
-The `FormikTextInput` component we previously implemented displays field's error message if it is present and the field is "touched", meaning that the field has received and lost focus:
+The `FormikTextInput` component we previously implemented displays field's error message if it is present and the field is "touched",
+meaning that the field has received and lost focus:
 
 ```javascript
 const FormikTextInput = ({ name, ...props }) => {

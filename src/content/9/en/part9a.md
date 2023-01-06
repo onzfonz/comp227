@@ -126,7 +126,8 @@ Let's look at the *`scripts`* section of the *package.json* file which has the f
 Running the script `npm start` starts the [Metro bundler](https://facebook.github.io/metro/) which is a JavaScript bundler for React Native.
 It can be described as the [Webpack](https://webpack.js.org/) of the React Native ecosystem.
 In addition to the Metro bundler, the Expo command-line interface should be open in the terminal window.
-The command-line interface has a useful set of commands for viewing the application logs and starting the application in an emulator or in Expo's mobile application.
+The command-line interface has a useful set of commands for viewing the application logs
+and starting the application in an emulator or in Expo's mobile application.
 We will get to emulators and Expo's mobile application soon, but first, let's open our application.
   
 Expo command-line interface suggests a few ways to open our application.
@@ -272,7 +273,8 @@ It's time to push your code to GitHub if you haven't already and mark the exerci
 ### Debugging
   
 When our application doesn't work as intended, we should immediately start **debugging** it.
-In practice, this means that we'll need to reproduce the erroneous behavior and monitor the code execution to find out which part of the code behaves incorrectly.
+In practice, this means that we'll need to reproduce the erroneous behavior
+and monitor the code execution to find out which part of the code behaves incorrectly.
 During the course, we have already done a bunch of debugging by logging messages,
 inspecting network traffic, and using specific development tools, such as ***React Development Tools***.
 In general, debugging isn't that different in React Native, we'll just need the right tools for the job.

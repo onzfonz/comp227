@@ -83,7 +83,8 @@ The react app running in the browser now fetches the data from node/express-serv
 Now that the whole stack is ready, let's move our application to the internet.
 
 There are an ever-growing number of services that can be used to host an app on the internet.
-The developer-friendly services like PaaS (i.e. Platform as a Service) take care of installing the execution environment (e.g. Node.js) and could also provide various services such as databases.
+The developer-friendly services like PaaS (i.e. Platform as a Service) take care of installing the execution environment (e.g. Node.js)
+and could also provide various services such as databases.
 
 For a decade already, [Heroku](http://heroku.com) has been dominating the PaaS scene.
 In August 2022 Heroku announced that they will end their free tier on 27th November 2022.
@@ -134,7 +135,8 @@ app.listen(PORT, () => {
 })
 ```
 
-Don't forget to add your *cors* package to `dependencies` in *package.json* and you might need to remove the `morgan` code from the server application.
+Don't forget to add your *cors* package to `dependencies` in *package.json*
+and you might need to remove the `morgan` code from the server application.
 
 Start by [authenticating](https://fly.io/docs/hands-on/sign-in/) via the command line with the command
 
@@ -381,7 +383,8 @@ The setup that is ready for a product deployment looks as follows:
 
 ![diagram of deployment ready react app](../../images/3/101.png)
 
-Unlike when running the app in a development environment, everything is now in the same node/express-backend that runs in [localhost:3001](http://localhost:3001).
+Unlike when running the app in a development environment,
+everything is now in the same node/express-backend that runs in [localhost:3001](http://localhost:3001).
 When the browser goes to the page, the file *index.html* is rendered.
 That causes the browser to fetch the product version of the React app.
 Once it starts to run, it fetches the json-data from the address [localhost:3001/api/notes](http://localhost:3001/api/notes).
@@ -564,7 +567,8 @@ you can use the command [npx heroku](https://www.npmjs.com/package/heroku).
 
 Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
 
-**PRO TIP:** When you deploy your application to Heroku, it is worth it to at least in the beginning keep an eye on the logs of the heroku application **AT ALL TIMES** with the command `heroku logs -t`.
+**PRO TIP:** When you deploy your application to Heroku,
+it is worth it to at least in the beginning keep an eye on the logs of the heroku application **AT ALL TIMES** with the command `heroku logs -t`.
 
 The following is a log of one typical problem.
 Heroku cannot find application dependency *express*:

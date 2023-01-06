@@ -620,7 +620,8 @@ You would have to make an HTTP PUT request to the address ***/api/blogs/5a43fde2
 
 The backend has to be updated too to handle the user reference.
 
-**One last warning:** if you notice that you are using `async`/`await` and the `then` method in the same code, it is almost certain that you are doing something wrong.
+**One last warning:** if you notice that you are using `async`/`await` and the `then` method in the same code,
+it is almost certain that you are doing something wrong.
 Stick to using one or the other, and never use both at the same time "just in case".
 
 #### 5.9: Blog list frontend, step9
@@ -724,7 +725,8 @@ Create-react-app has installed ESlint to the project by default, so all that's l
 *NB:* do not run the `eslint --init` command.
 It will install the latest version of ESlint that is not compatible with the configuration file created by create-react-app!
 
-Next, we will start testing the frontend and in order to avoid undesired and irrelevant linter errors we will install the [eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest) package:
+Next, we will start testing the frontend and in order to avoid undesired and irrelevant linter errors
+we will install the [eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest) package:
 
 ```bash
 npm install --save-dev eslint-plugin-jest

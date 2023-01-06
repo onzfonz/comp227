@@ -41,7 +41,8 @@ const Note = ({ note, toggleImportance }) => {
 }
 ```
 
-Notice that the `li` element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname `note`, that could be used to access the component in our tests.
+Notice that the `li` element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname `note`,
+that could be used to access the component in our tests.
 
 ### Rendering the component for tests
 
@@ -266,7 +267,8 @@ Now the HTML of the wanted element gets printed:
 
 ### Clicking buttons in tests
 
-In addition to displaying content, the `Note` component also makes sure that when the button associated with the note is pressed, the `toggleImportance` event handler function gets called.
+In addition to displaying content, the `Note` component also makes sure that when the button associated with the note is pressed,
+the `toggleImportance` event handler function gets called.
 
 Let us install a library [user-event](https://testing-library.com/docs/user-event/intro) that makes simulating user input a bit easier:
 
@@ -340,7 +342,8 @@ The expectation of the test verifies that the **mock function** has been called 
 expect(mockHandler.mock.calls).toHaveLength(1)
 ```
 
-[Mock objects and functions](https://en.wikipedia.org/wiki/Mock_object) are commonly used stub components in testing that are used for replacing dependencies of the components being tested.
+[Mock objects and functions](https://en.wikipedia.org/wiki/Mock_object)
+are commonly used stub components in testing that are used for replacing dependencies of the components being tested.
 Mocks make it possible to return hardcoded responses, and to verify the number of times the mock functions are called and with what parameters.
 
 In our example, the mock function is a perfect choice since it can be easily used for verifying that the method gets called exactly once.

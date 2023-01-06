@@ -153,7 +153,8 @@ Identifying the scheme tells the server how the attached credentials should be i
 
 The **Bearer** scheme is suitable for our needs.
 
-In practice, this means that if the token is, for example, the string `eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW`, the Authorization header will have the value:
+In practice, this means that if the token is, for example,
+the string `eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW`, the Authorization header will have the value:
 
 ```text
 Bearer eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW
@@ -366,7 +367,8 @@ The shorter the expiration time, the more safe the solution is.
 So if the token gets into the wrong hands or user access to the system needs to be revoked, the token is only usable for a limited amount of time.
 On the other hand, a short expiration time forces a potential pain to a user, one must login to the system more frequently.
 
-The other solution is to save info about each token to backend database and to check for each API request if the access right corresponding to the token is still valid.
+The other solution is to save info about each token to backend database
+and to check for each API request if the access right corresponding to the token is still valid.
 With this scheme, access rights can be revoked at any time.
 This kind of solution is often called a **server-side session**.
 
@@ -401,7 +403,8 @@ We will implement login to the frontend in the [next part](/part5).
 ### Exercises 4.15-4.23
 
 In the next exercises, the basics of user management will be implemented for the Bloglist application.
-The safest way is to follow the story from part 4 chapter [User administration](/part4/user_administration) to the chapter [Token-based authentication](/part4/token_authentication).
+The safest way is to follow the story from part 4 chapter [User administration](/part4/user_administration)
+to the chapter [Token-based authentication](/part4/token_authentication).
 You can of course also use your creativity.
 
 **One more warning:** If you notice you are mixing `async`/`await` and `then` calls, it is 99% certain you are doing something wrong.
@@ -412,7 +415,8 @@ Use either or, never both.
 Implement a way to create new users by doing an HTTP POST request to address ***api/users***.
 Users have a *username, password and name*.
 
-Do not save passwords to the database as clear text, but use the ***bcrypt*** library like we did in part 4 chapter [Creating new users](/part4/user_administration#creating-users).
+Do not save passwords to the database as clear text,
+but use the ***bcrypt*** library like we did in part 4 chapter [Creating new users](/part4/user_administration#creating-users).
 
 **NB** Some Windows users have had problems with ***bcrypt***.
 If you run into problems, remove the library with command
@@ -527,7 +531,8 @@ if ( blog.user.toString() === userid.toString() ) // ...
 #### 4.22*:  bloglist expansion, step10
 
 Both the new blog creation and blog deletion need to find out the identity of the user who is doing the operation.
-The middleware `tokenExtractor` that we did in exercise 4.20 helps but still both the handlers of *post* and *delete* operations need to find out who the user holding a specific token is.
+The middleware `tokenExtractor` that we did in exercise 4.20 helps
+but still both the handlers of *post* and *delete* operations need to find out who the user holding a specific token is.
 
 Now create a new middleware `userExtractor`, that finds out the user and sets it to the request object.
 When you register the middleware in *app.js*

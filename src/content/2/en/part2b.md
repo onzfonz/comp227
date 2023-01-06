@@ -11,7 +11,8 @@ Let's continue expanding our application by allowing users to add new notes.
 You can find the code for our current application [here](https://github.com/comp227/part2-notes/tree/part2-1).
 
 To get our page to update when new notes are added it's best to store the notes in the `App` component's state.
-Let's import the [useState](https://reactjs.org/docs/hooks-state.html) function and use it to define a piece of state that gets initialized with the initial notes array passed in the props.
+Let's import the [useState](https://reactjs.org/docs/hooks-state.html) function
+and use it to define a piece of state that gets initialized with the initial notes array passed in the props.
 
 ```js
 import { useState } from 'react' // highlight-line

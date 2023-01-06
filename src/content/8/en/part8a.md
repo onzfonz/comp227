@@ -42,7 +42,8 @@ In TypeScript, human-readable source code is transformed into another human-read
 However, compiling has been the most commonly-used term in this context, so we will continue to use it.
 
 The compiler also performs a static code analysis.
-It can emit warnings or errors if it finds a reason to do so, and it can be set to perform additional tasks such as combining the generated code into a single file.
+It can emit warnings or errors if it finds a reason to do so,
+and it can be set to perform additional tasks such as combining the generated code into a single file.
 
 The **language service** collects type information from the source code.
 Development tools can use the type information for providing IntelliSense, type hints and possible refactoring alternatives.
@@ -169,21 +170,25 @@ Anyway, here are some of our reasons behind why we think that the use of TypeScr
 First of all, TypeScript offers **type checking and static code analysis**.
 We can require values to be of a certain type, and have the compiler warn about using them incorrectly.
 This can reduce runtime errors, and you might even be able to reduce the number of required unit tests in a project, at least concerning pure-type tests.
-The static code analysis doesn't only warn about wrongful type usage, but also other mistakes such as misspelling a variable or function name or trying to use a variable beyond its scope.
+The static code analysis doesn't only warn about wrongful type usage,
+but also other mistakes such as misspelling a variable or function name or trying to use a variable beyond its scope.
 
 The second advantage of TypeScript is that the type annotations in the code can function as a type of **code-level documentation**.
 It's easy to check from a function signature what kind of arguments the function can consume and what type of data it will return.
-This form of type annotation-bound documentation will always be up to date and it makes it easier for new programmers to start working on an existing project.
+This form of type annotation-bound documentation will always be up to date
+and it makes it easier for new programmers to start working on an existing project.
 It is also helpful when returning to an old project.
 
 Types can be reused all around the code base, and a change to a type definition will automatically be reflected everywhere the type is used.
 One might argue that you can achieve similar code-level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html),
 but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily, and is also more verbose.
 
-The third advantage of TypeScript is that IDEs can provide more **specific and smarter IntelliSense** when they know exactly what types of data you are processing.
+The third advantage of TypeScript is that IDEs can provide more **specific and smarter IntelliSense**
+when they know exactly what types of data you are processing.
 
 All of these features are extremely helpful when you need to refactor your code.
-The static code analysis warns you about any errors in your code, and IntelliSense can give you hints about available properties and even possible refactoring options.
+The static code analysis warns you about any errors in your code,
+and IntelliSense can give you hints about available properties and even possible refactoring options.
 The code-level documentation helps you understand the existing code.
 With the help of TypeScript, it is also very easy to start using the newest JavaScript language features at an early stage just by altering its configuration.
 
@@ -211,7 +216,8 @@ regarding type declarations.
 #### Sometimes, type inference needs assistance
 
 The type inference in TypeScript is pretty good but not quite perfect.
-Sometimes, you may feel like you have declared your types perfectly, but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
+Sometimes, you may feel like you have declared your types perfectly,
+but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
 In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting and type guards.
 Using type casting or type guards, you are giving your word to the compiler that the value ***is*** of the type that you declare.
 You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)

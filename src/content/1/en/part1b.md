@@ -29,7 +29,8 @@ The latest versions of Node already understand the latest versions of JavaScript
 
 The code is written into files ending with *.js* that are run by issuing the command `node name_of_file.js`
 
-It is also possible to write JavaScript code into the Node.js console, which is opened by typing `node` in the command line, as well as into the browser's developer tool console.
+It is also possible to write JavaScript code into the Node.js console,
+which is opened by typing `node` in the command line, as well as into the browser's developer tool console.
 [The newest revisions of Chrome handle the newer features of JavaScript pretty well](http://kangax.github.io/compat-table/es2016plus/) without transpiling the code.
 Alternatively, you can use a tool like [JS Bin](https://jsbin.com/?js,console).
 
@@ -523,7 +524,8 @@ When calling the method through a reference the value of `this` becomes the so-c
 and the end result is often not what the software developer had originally intended.
 
 Losing track of `this` when writing JavaScript code brings forth a few potential issues.
-Situations often arise where React or Node (or more specifically the JavaScript engine of the web browser) needs to call some method in an object that the developer has defined.
+Situations often arise where React or Node (or more specifically the JavaScript engine of the web browser)
+needs to call some method in an object that the developer has defined.
 However, in this course, we avoid these issues by using "this-less" JavaScript.
 
 One situation leading to the "disappearance" of `this` arises when we set a timeout to call the `greet` function on the `arto` object,
@@ -608,7 +610,9 @@ we have no concrete use for JavaScript's class syntax.
 There exist both good and poor guides for JavaScript on the Internet.
 Most of the links on this page relating to JavaScript features reference [Mozilla's JavaScript Guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
-It is highly recommended to immediately read [A re-introduction to JavaScript (JS tutorial)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript) on Mozilla's website.
+It is highly recommended to immediately read
+[A re-introduction to JavaScript (JS tutorial)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
+on Mozilla's website.
 
 If you wish to get to know JavaScript deeply there is a great free book series on the Internet called [You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS).
 

@@ -439,7 +439,8 @@ We can then build a switch case around that attribute and TypeScript will know w
 
 In the above example, TypeScript knows that a `part` has the type `CoursePart`.
 It can then infer that `part` is of either type `CoursePartOne`, `CoursePartTwo` or `CoursePartThree`.
-The `name` is distinct for each type, so we can use it to identify each type and TypeScript can let us know which attributes are available in each case block.
+The `name` is distinct for each type, so we can use it to identify each type
+and TypeScript can let us know which attributes are available in each case block.
 Then, TypeScript will produce an error if you try to use the `part.description` within the `"Using props to pass data"` block for example.
 
 What about adding new types? If we were to add a new course part, wouldn't it be nice to know if we had already implemented handling that type in our code?
@@ -549,7 +550,9 @@ const courseParts: CoursePart[] = [
 ]
 ```
 
-Now we know that both interfaces `CourseNormalPart` and `CourseSubmissionPart` share not only the base attributes but also an attribute called `description`, which is a string in both interfaces.
+Now we know that both interfaces `CourseNormalPart` and `CourseSubmissionPart`
+share not only the base attributes but also an attribute called `description`,
+which is a string in both interfaces.
 
 Your first task is to declare a new interface that includes the `description` attribute and extends the `CoursePartBase` interface.
 Then modify the code so that you can remove the `description` attribute from both `CourseNormalPart` and `CourseSubmissionPart` without getting any errors.
@@ -621,7 +624,8 @@ type DiaryEntry = {
 
 In most cases, you can use either `type` or `interface`, whichever syntax you prefer.
 However, there are a few things to keep in mind.
-For example, if you define multiple interfaces with the same name, they will result in a merged interface, whereas if you try to define multiple types with the same name,
+For example, if you define multiple interfaces with the same name,
+they will result in a merged interface, whereas if you try to define multiple types with the same name,
 it will result in an error stating that a type with the same name is already declared.
 
 TypeScript documentation [recommends using interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#differences-between-type-aliases-and-interfaces) in most cases.
@@ -640,7 +644,8 @@ The [sample project](https://github.com/comp227/patientor) used in the rest of t
 You can see what pages the application has, and some general components, e.g. modals and state.
 Keep in mind that the features may have
 different scopes.
-For example, modals are visible UI-level components whereas the state is comparable to business logic and keeps the data organized under the hood for the rest of the app to use.
+For example, modals are visible UI-level components
+whereas the state is comparable to business logic and keeps the data organized under the hood for the rest of the app to use.
 
 TypeScript provides types for what kind of data structures, functions, components, and state to expect.
 You can try looking for *types.ts* or something similar to get started.
@@ -695,7 +700,8 @@ Let's study the state handling a bit closer as a lot of stuff seems to be happen
 
 The state management is built using the React Hooks [useContext](https://reactjs.org/docs/hooks-reference.html#usecontext)
 and [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer).
-This is quite a good setup because we know the app will be rather small and we don't want to use ***redux*** or other similar libraries for state management.
+This is quite a good setup because we know the app will be rather small
+and we don't want to use ***redux*** or other similar libraries for state management.
 There are a lot of good materials, like [this article](https://medium.com/@seantheurgel/react-hooks-as-state-management-usecontext-useeffect-usereducer-a75472a862fe),
 about this approach to state management.
 
@@ -1057,7 +1063,9 @@ dispatch(setPatientList(patientListFromApi));
 
 ### Full entries
 
-In [exercise 8.10](/part8/typing_the_express_app#exercises-8-10-8-11) we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
+In [exercise 8.10](/part8/typing_the_express_app#exercises-8-10-8-11)
+we implemented an endpoint for fetching information about various diagnoses,
+but we are still not using that endpoint at all.
 Since we now have a page for viewing a patient's information, it would be nice to expand our data a bit.
 Let's add an `Entry` field to our patient data so that a patient's data contains their medical entries, including possible diagnoses.
 
@@ -1102,7 +1110,8 @@ For example, let's take a look at the first two entries:
 }
 ```
 
-Immediately, we can see that while the first few fields are the same, the first entry has a `discharge` field and the second entry has `employerName` and `sickLeave` fields.
+Immediately, we can see that while the first few fields are the same,
+the first entry has a `discharge` field and the second entry has `employerName` and `sickLeave` fields.
 All the entries seem to have some fields in common, but some fields are entry-specific.
 
 When looking at the `type`, we can see that there are three kinds of entries: `OccupationalHealthcare`, `Hospital` and `HealthCheck`.
@@ -1143,7 +1152,8 @@ interface BaseEntry {
 ```
 
 As you might remember, `Array<Type>` is just an alternative way to say *`Type[]`*.
-In cases like this, it is just much clearer to use the array convention since the other option would be to define the type by saying `Diagnosis['code'][]` which starts to look a bit strange.
+In cases like this, it is just much clearer to use the array convention
+since the other option would be to define the type by saying `Diagnosis['code'][]` which starts to look a bit strange.
 
 Now that we have the `BaseEntry` defined, we can start creating the extended entry types we will actually be using.
 Let's start by creating the `HealthCheckEntry` type.
@@ -1201,7 +1211,9 @@ Ensure that your backend returns the entries properly when you go to an individu
 
 ![browser shoiwing entries json data properly for patient](../../images/8/40.png)
 
-Use types properly in the backend! For now, there is no need to do a proper validation for all the fields of the entries in the backend, it is enough to check that a ***field's type has a correct value***.
+Use types properly in the backend!
+For now, there is no need to do a proper validation for all the fields of the entries in the backend,
+it is enough to check that a ***field's type has a correct value***.
 
 #### 8.20: Patientor, step5
 
@@ -1257,7 +1269,8 @@ Here's a small intro from Formik's documentation:
 >
 > By colocating all of the above in one place, Formik will keep things organized - making testing, refactoring, and reasoning about your forms a breeze.
 
-The code for the form can be found from *src/AddPatientModal/AddPatientForm.tsx* and some form field helpers can be found from *src/AddPatientModal/FormField.tsx*.
+The code for the form can be found from *src/AddPatientModal/AddPatientForm.tsx*
+and some form field helpers can be found from *src/AddPatientModal/FormField.tsx*.
 
 Looking at the top of the *AddPatientForm.tsx* you can see we have created a type for our form values, which we have simply called `PatientFormValues`.
 The type is a modified version of the `Patient` type with the `id` and `entries` properties omitted.
@@ -1282,7 +1295,8 @@ Both are callback functions that return `void`.
 The `onSubmit` function should receive an
 object of type `PatientFormValues` as an argument so that the callback can handle our form values.
 
-Looking at the `AddPatientForm` function component, you can see we have bound the `Props` as our component's props, and we destructure `onSubmit` and `onCancel` from those props.
+Looking at the `AddPatientForm` function component,
+you can see we have bound the `Props` as our component's props, and we destructure `onSubmit` and `onCancel` from those props.
 
 ```js
 export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
@@ -1398,7 +1412,8 @@ The role of the props is quite self-explanatory.
 The Formik wrapper keeps a track of your form's state, and then exposes it and a few reusable methods and event handlers to your form via props.
 
 We are also using an optional `validate` prop that expects a validation function and returns an object containing possible errors.
-Here, we only check that our text fields are not falsy, but it could easily contain e.g. some validation for the social security number format or something like that.
+Here, we only check that our text fields are not falsy,
+but it could easily contain e.g. some validation for the social security number format or something like that.
 The error messages defined by this function can then be displayed on the corresponding field's ErrorMessage component.
 
 First, have a look at the entire component.
@@ -1586,7 +1601,8 @@ We don't yet have any way of adding entries to patients in our app, so, at the m
 
 Your next task is to add endpoint ***/api/patients/:id/entries*** to your backend, through which you can POST an entry for a patient.
 
-Remember that we have different kinds of entries in our app, so our backend should support all those types and check that at least all required fields are given for each type.
+Remember that we have different kinds of entries in our app,
+so our backend should support all those types and check that at least all required fields are given for each type.
 
 #### 8.24: Patientor, step9
 
@@ -1597,7 +1613,8 @@ An intuitive place for accessing the form would be on a patient's page.
 In this exercise, it is enough to **support *one* entry type**, and you do not have to handle any errors.
 It is enough if a new entry can be created when the form is filled with valid data.
 
-Upon a successful submit, the new entry should be added to the correct patient and the patient's entries on the patient page should be updated to contain the new entry.
+Upon a successful submit, the new entry should be added to the correct patient
+and the patient's entries on the patient page should be updated to contain the new entry.
 
 If you like, you can re-use some of the code from the ***Add patient*** form for this exercise, but this is not a requirement.
 

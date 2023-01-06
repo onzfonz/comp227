@@ -69,7 +69,8 @@ You can also inspect values of variables and execute your own JavaScript code.
 #### Question everything
 
 Debugging Full Stack applications may seem tricky at first.
-Soon our application will also have a database in addition to the frontend and backend, and there will be many potential areas for bugs in the application.
+Soon our application will also have a database in addition to the frontend and backend,
+and there will be many potential areas for bugs in the application.
 
 When the application "does not work", we have to first figure out where the problem actually occurs.
 It's very common for the problem to exist in a place where you didn't expect it to,
@@ -150,7 +151,9 @@ mongodb+srv://comp227:$<password>@cluster0.o1opl.mongodb.net/myFirstDatabase?ret
 
 We are now ready to use the database.
 
-We could use the database directly from our JavaScript code with the [official MongoDB Node.js driver](https://mongodb.github.io/node-mongodb-native/) library, but it is quite cumbersome to use.
+We could use the database directly from our JavaScript code
+with the [official MongoDB Node.js driver](https://mongodb.github.io/node-mongodb-native/) library,
+but it is quite cumbersome to use.
 We will instead use the [Mongoose](http://mongoosejs.com/index.html) library that offers a higher-level API.
 
 Mongoose could be described as an **object document mapper** (ODM),
@@ -218,7 +221,8 @@ const password = process.argv[2]
 When the code is run with the command `node mongo.js password`, Mongo will add a new document to the database.
 
 **NB:** Please note the password is the password created for the database user, not your MongoDB Atlas password.
-Also, if you created a password with special characters, then you'll need to [URL encode that password](https://docs.atlas.mongodb.com/troubleshoot-connection/#special-characters-in-connection-string-password).
+Also, if you created a password with special characters,
+then you'll need to [URL encode that password](https://docs.atlas.mongodb.com/troubleshoot-connection/#special-characters-in-connection-string-password).
 
 We can view the current state of the database from the MongoDB Atlas from ***Browse collections***, in the Database tab.
 
@@ -282,7 +286,8 @@ const note = new Note({
 ```
 
 Models are so-called **constructor functions** that create new JavaScript objects based on the provided parameters.
-Since the objects are created with the model's constructor function, they have all the properties of the model, which include methods for saving the object to the database.
+Since the objects are created with the model's constructor function,
+they have all the properties of the model, which include methods for saving the object to the database.
 
 Saving the object to the database happens with the appropriately named `save` method, which can be provided with an event handler with the `then` method:
 
@@ -404,7 +409,8 @@ mongoose.connection.close()
 ```
 
 In the code above the `mongoose.connection.close()` command will get executed immediately after the `Person.find` operation is started.
-This means that the database connection will be closed immediately, and the execution will never get to the point where `Person.find` operation finishes and the `callback` function gets called.
+This means that the database connection will be closed immediately,
+and the execution will never get to the point where `Person.find` operation finishes and the `callback` function gets called.
 
 The correct place for closing the database connection is at the end of the callback function:
 
@@ -729,7 +735,8 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.13-3.14
 
-The following exercises are pretty straightforward, but if your frontend stops working with the backend, then finding and fixing the bugs can be quite interesting.
+The following exercises are pretty straightforward,
+but if your frontend stops working with the backend, then finding and fixing the bugs can be quite interesting.
 
 #### 3.13: Phonebook database, step1
 

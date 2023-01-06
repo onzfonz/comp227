@@ -402,7 +402,8 @@ We will learn more about React class components later on in the course.
 ### Debugging React applications
 
 A large part of a typical developer's time is spent on debugging and reading existing code.
-Every now and then we do get to write a line or two of new code, but a large part of our time is spent trying to figure out why something is broken or how something works.
+Every now and then we do get to write a line or two of new code,
+but a large part of our time is spent trying to figure out why something is broken or how something works.
 Good practices and tools for debugging are extremely important for this reason.
 
 Lucky for us, React is an extremely developer-friendly library when it comes to debugging.
@@ -437,7 +438,8 @@ const Button = ({ onClick, text }) => (
 ```
 
 is not working as intended, it's useful to start printing its variables out to the console.
-To do this effectively, we must transform our function into the less compact form and receive the entire props object without destructuring it immediately:
+To do this effectively, we must transform our function into the less compact form
+and receive the entire props object without destructuring it immediately:
 
 ```js
 const Button = (props) => { 
@@ -513,7 +515,8 @@ Dev tools show the state of hooks in the order of their definition:
 
 ![state of hooks in react dev tools](../../images/1/11ea.png)
 
-The first *State* contains the value of the `left` state, the next contains the value of the `right` state and the last contains the value of the `allClicks` state.
+The first *State* contains the value of the `left` state,
+the next contains the value of the `right` state and the last contains the value of the `allClicks` state.
 
 ### Rules of Hooks
 
@@ -628,7 +631,8 @@ What about the following:
 The message gets printed to the console once when the component is rendered but nothing happens when we click the button.
 Why does this not work even when our event handler contains a function `console.log`?
 
-The issue here is that our event handler is defined as a *function call* which means that the event handler is assigned the returned value from the function, which in the case of `console.log` is `undefined`.
+The issue here is that our event handler is defined as a *function call*
+which means that the event handler is assigned the returned value from the function, which in the case of `console.log` is `undefined`.
 
 The `console.log` function call gets executed when the component is rendered and for this reason, it gets printed once to the console.
 
@@ -939,7 +943,8 @@ The increase button is declared as follows:
 <button onClick={setToValue(value + 1)}>increment</button>
 ```
 
-The event handler is created by the function call `setToValue(value + 1)` which receives as its parameter the current value of the state variable `value` increased by one.
+The event handler is created by the function call `setToValue(value + 1)`
+which receives as its parameter the current value of the state variable `value` increased by one.
 If the value of `value` was 10, then the created event handler would be the function:
 
 ```js

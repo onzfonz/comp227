@@ -14,7 +14,8 @@ The only potential thing we could unit test is the `toJSON` method that is used 
 In some situations, it can be beneficial to implement some of the backend tests by mocking the database instead of using a real database.
 One library that could be used for this is [mongodb-memory-server](https://github.com/nodkz/mongodb-memory-server).
 
-Since our application's backend is still relatively simple, we will decide to test the entire application through its REST API, so that the database is also included.
+Since our application's backend is still relatively simple,
+we will decide to test the entire application through its REST API, so that the database is also included.
 This kind of testing where multiple components of the system are being tested as a group is called [integration testing](https://en.wikipedia.org/wiki/Integration_testing).
 
 ### Test environment
@@ -74,7 +75,8 @@ We can then achieve cross-platform compatibility by using the cross-env library 
 }
 ```
 
-**NB**: If you are deploying this application to heroku, keep in mind that if cross-env is saved as a development dependency, it would cause an application error on your web server.
+**NB**: If you are deploying this application to heroku,
+keep in mind that if cross-env is saved as a development dependency, it would cause an application error on your web server.
 To fix this, change cross-env to a production dependency by running this in the command line:
 
 ```bash
@@ -162,7 +164,8 @@ afterAll(() => {
 })
 ```
 
-The test imports the Express application from the *app.js* module and wraps it with the `supertest` function into a so-called [superagent](https://github.com/visionmedia/superagent) object.
+The test imports the Express application from the *app.js* module and wraps it with the `supertest` function
+into a so-called [superagent](https://github.com/visionmedia/superagent) object.
 This object is assigned to the `api` variable and tests can use it for making HTTP requests to the backend.
 
 Our test makes an HTTP GET request to the ***api/notes*** URL and verifies that the request is responded to with the status code 200.
@@ -171,7 +174,8 @@ The test also verifies that the `Content-Type` header is set to `application/jso
 you can learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).)
 
 The test contains some details that we will explore [a bit later on](/part4/testing_the_backend#async-await).
-The arrow function that defines the test is preceded by the `async` keyword and the method call for the `api` object is preceded by the `await` keyword.
+The arrow function that defines the test is preceded by the `async` keyword
+and the method call for the `api` object is preceded by the `await` keyword.
 We will write a few tests and then take a closer look at this async/await magic.
 Do not concern yourself with them for now, just be assured that the example tests work correctly.
 The async/await syntax is related to the fact that making a request to the API is an **asynchronous** operation.
@@ -324,7 +328,8 @@ To make our tests more robust, we have to reset the database and generate the ne
 
 Our tests are already using the [afterAll](https://jestjs.io/docs/api#afterallfn-timeout) function of Jest
 to close the connection to the database after the tests are finished executing.
-Jest offers many other [functions](https://jestjs.io/docs/setup-teardown) that can be used for executing operations once before any test is run or every time before a test is run.
+Jest offers many other [functions](https://jestjs.io/docs/setup-teardown)
+that can be used for executing operations once before any test is run or every time before a test is run.
 
 Let's initialize the database ***before every test*** with the [beforeEach](https://jestjs.io/docs/en/api.html#beforeeachfn-timeout) function:
 
@@ -659,7 +664,8 @@ module.exports = {
 
 The module defines the `notesInDb` function that can be used for checking the notes stored in the database.
 The `initialNotes` array containing the initial database state is also in the module.
-We also define the `nonExistingId` function ahead of time, which can be used for creating a database object ID that does not belong to any note object in the database.
+We also define the `nonExistingId` function ahead of time,
+which can be used for creating a database object ID that does not belong to any note object in the database.
 
 Our tests can now use the helper module and be changed like this:
 

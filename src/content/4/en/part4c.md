@@ -139,7 +139,8 @@ The structure and schema of the database are not as self-evident as it was with 
 The chosen schema must support the use cases of the application the best.
 This is not a simple design decision to make, as all use cases of the applications are not known when the design decision is made.
 
-Paradoxically, schema-less databases like Mongo require developers to make far more radical design decisions about data organization at the beginning of the project than relational databases with schemas.
+Paradoxically, schema-less databases like Mongo require developers to make far more radical design decisions about data organization at the beginning of the project
+than relational databases with schemas.
 On average, relational databases offer a more or less suitable way of organizing data for many applications.
 
 ### Mongoose schema for users
@@ -273,7 +274,8 @@ The password sent in the request is ***not*** stored in the database.
 We store the **hash** of the password that is generated with the `bcrypt.hash` function.
 
 The fundamentals of [storing passwords](https://codahale.com/how-to-safely-store-a-password/) are outside the scope of this course material.
-We will not discuss what the magic number 10 assigned to the [saltRounds](https://github.com/kelektiv/node.bcrypt.js/#a-note-on-rounds) variable means, but you can read more about it in the linked material.
+We will not discuss what the magic number 10 assigned to the [saltRounds](https://github.com/kelektiv/node.bcrypt.js/#a-note-on-rounds) variable means,
+but you can read more about it in the linked material.
 
 Our current code does not contain any error handling or input validation for verifying that the username and password are in the desired format.
 
@@ -426,7 +428,8 @@ usersRouter.get('/', async (request, response) => {
 })
 ```
 
-For making new users in a production or development environment, you may send a POST request to ```/api/users/``` via Postman or REST Client in the following format:
+For making new users in a production or development environment,
+you may send a POST request to ```/api/users/``` via Postman or REST Client in the following format:
 
 ```js
 {
@@ -527,7 +530,8 @@ usersRouter.get('/', async (request, response) => {
 ```
 
 The [populate](http://mongoosejs.com/docs/populate.html) method is chained after the `find` method making the initial query.
-The parameter given to the populate method defines that the ***ids*** referencing `note` objects in the `notes` field of the `user` document will be replaced by the referenced `note` documents.
+The parameter given to the populate method defines that the ***ids*** referencing `note` objects in the `notes` field of the `user` document
+will be replaced by the referenced `note` documents.
 
 The result is almost exactly what we wanted:
 

@@ -375,7 +375,8 @@ Our configuration contains nearly everything that we need for React development.
 The process of transforming code from one form of JavaScript to another is called [transpiling](https://en.wiktionary.org/wiki/transpile).
 The general definition of the term is to compile source code by transforming it from one language to another.
 
-By using the configuration from the previous section, we are ***transpiling*** the code containing JSX into regular JavaScript with the help of [babel](https://babeljs.io/),
+By using the configuration from the previous section,
+we are ***transpiling*** the code containing JSX into regular JavaScript with the help of [babel](https://babeljs.io/),
 which is currently the most popular tool for the job.
 
 As mentioned in part 1, most browsers do not support the latest features that were introduced in ES6 and ES7,
@@ -674,7 +675,8 @@ When we deploy the application to production, we are using the *main.js* code bu
 The size of the *main.js* file is 1356668 bytes even though our application only contains a few lines of our code.
 The large file size is because the bundle also contains the source code for the entire React library.
 The size of the bundled code matters since the browser has to load the code when the application is first used.
-With high-speed internet connections, 1356668 bytes is not an issue, but if we were to keep adding more external dependencies, loading speeds could become an issue, particularly for mobile users.
+With high-speed internet connections, 1356668 bytes is not an issue,
+but if we were to keep adding more external dependencies, loading speeds could become an issue, particularly for mobile users.
 
 If we inspect the contents of the bundle file, we notice that it could be greatly optimized in terms of file size by removing all of the comments.
 There's no point in manually optimizing these files, as there are many existing tools for the job.
@@ -821,7 +823,8 @@ module.exports = config
 ```
 
 The definition remains almost the same, except for the fact that the configuration object is now returned by the function.
-The function receives the two parameters, `env` and `argv`, the second of which can be used for accessing the ***mode*** that is defined in the npm script.
+The function receives the two parameters, `env` and `argv`,
+the second of which can be used for accessing the ***mode*** that is defined in the npm script.
 
 We can also use webpack's [DefinePlugin](https://webpack.js.org/plugins/define-plugin/)
 for defining ***global default constants*** that can be used in the bundled code.
@@ -901,7 +904,8 @@ By default, the bundled application will be available at <http://localhost:9080>
 ### Polyfill
 
 Our application is finished and works with all relatively recent versions of modern browsers, except for Internet Explorer.
-The reason for this is that, because of ***axios***, our code uses [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise),
+The reason for this is that, because of ***axios***,
+our code uses [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise),
 and no existing version of IE supports them:
 
 ![browser compatibility chart highlighting how bad internet explorer is](../../images/7/29.png)
@@ -913,7 +917,8 @@ of JavaScript arrays exceeds the capabilities of IE:
 
 ![browser compatibility chart showing IE does not support find method](../../images/7/30.png)
 
-In these situations, it is not enough to transpile the code, as transpilation simply transforms the code from a newer version of JavaScript to an older one with wider browser support.
+In these situations, it is not enough to transpile the code,
+as transpilation simply transforms the code from a newer version of JavaScript to an older one with wider browser support.
 IE understands Promises syntactically but it simply has not implemented their functionality.
 The `find` property of arrays in IE is simply `undefined`.
 

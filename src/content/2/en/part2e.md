@@ -31,7 +31,8 @@ h1 {
 }
 ```
 
-**Note:** when the content of the file *index.css* changes, React might not notice that automatically, so you may need to refresh the browser to see your changes!
+**Note:** when the content of the file *index.css* changes,
+React might not notice that automatically, so you may need to refresh the browser to see your changes!
 
 CSS rules comprise of **selectors** and **declarations**.
 The selector defines which elements the rule should be applied to.
@@ -82,7 +83,8 @@ li {
 Using element types for defining CSS rules is slightly problematic.
 If our application contained other `li` tags, the same style rule would also be applied to them.
 
-If we want to apply our style specifically to notes, then it is better to use [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
+If we want to apply our style specifically to notes,
+then it is better to use [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
 In regular HTML, classes are defined as the value of the `class` attribute:
 
@@ -302,7 +304,8 @@ Since the separation of CSS, HTML, and JavaScript into separate files did not se
 React bases the division of the application along the lines of its logical functional entities.
 
 The structural units that make up the application's functional entities are React components.
-A React component defines the HTML for structuring the content, the JavaScript functions for determining functionality, and also the component's styling; all in one place.
+A React component defines the HTML for structuring the content,
+the JavaScript functions for determining functionality, and also the component's styling; all in one place.
 This is to create individual components that are as independent and reusable as possible.
 
 The code of the final version of our application can be found in the *part2-8* branch on [GitHub](https://github.com/comp227/part2-notes/tree/part2-8).

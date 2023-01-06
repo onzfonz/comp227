@@ -358,7 +358,8 @@ If you open <http://localhost:3000> in the browser, this should be printed to th
 
 ![promises printed to console](../../images/2/16b.png)
 
-**Note:** when the content of the file *index.js* changes, React does not always notice that automatically, so you might need to refresh the browser to see your changes!
+**Note:** when the content of the file *index.js* changes,
+React does not always notice that automatically, so you might need to refresh the browser to see your changes!
 A simple workaround to make React notice the change automatically is to create a file named *.env* in the root directory of the project and add this line `FAST_REFRESH=false`.
 Restart the app for the applied changes to take effect.
 
@@ -372,7 +373,8 @@ In other words, a promise is an object that represents an asynchronous operation
 A promise can have three distinct states:
 
 1. The promise is **pending**: It means that the final value (one of the following two) is not available yet.
-2. The promise is **fulfilled**: It means that the operation has been completed and the final value is available, which generally is a successful operation.
+2. The promise is **fulfilled**: It means that the operation has been completed
+and the final value is available, which generally is a successful operation.
 This state is sometimes also called **resolved**.
 3. The promise is **rejected**: It means that an error prevented the final value from being determined, which generally represents a failed operation.
 
@@ -399,7 +401,8 @@ The JavaScript runtime environment calls the callback function registered by the
 The `response` object contains all the essential data related to the response of an HTTP GET request,
 which would include the returned ***data***, ***status code***, and ***headers***.
 
-Storing the promise object in a variable is generally unnecessary, and it's instead common to chain the `then` method call to the axios method call, so that it follows it directly:
+Storing the promise object in a variable is generally unnecessary,
+and it's instead common to chain the `then` method call to the axios method call, so that it follows it directly:
 
 ```js
 axios.get('http://localhost:3001/notes').then(response => {
@@ -792,7 +795,8 @@ const api_key = process.env.REACT_APP_API_KEY
 // variable api_key has now the value set in startup
 ```
 
-Note that if you created the application using `npx create-react-app ...` and you want to use a different name for your environment variable then the environment variable name must still begin with `REACT_APP_`.
+Note that if you created the application using `npx create-react-app ...`
+and you want to use a different name for your environment variable then the environment variable name must still begin with `REACT_APP_`.
 You can also use a `.env` file rather than defining it on the command line each time by creating a file entitled '.env' in the root of the project and adding the following.
 
 ```text

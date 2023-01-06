@@ -698,7 +698,8 @@ This forces the user to re-login to the app once the token has expired.
 The other approach is to save the validity information of each token to the backend database.
 This solution is often called a **server-side session**.
 
-No matter how the validity of tokens is checked and ensured, saving a token in the local storage might contain a security risk if the application has a security vulnerability that allows
+No matter how the validity of tokens is checked and ensured,
+saving a token in the local storage might contain a security risk if the application has a security vulnerability that allows
 [Cross Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) attacks.
 An XSS attack is possible if the application would allow a user to inject arbitrary JavaScript code (e.g. using a form) that the app would then execute.
 When using React sensibly it should not be possible since [React sanitizes](https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks)

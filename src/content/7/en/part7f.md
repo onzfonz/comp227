@@ -17,7 +17,8 @@ You are free to skip over a part of the exercises if you wish to do so.
 If you do not want to use your Bloglist application, you are free to use the code from the model solution as a starting point for these exercises.
 
 Many of the exercises in this part of the course material will require the refactoring of existing code.
-This is a common reality of extending existing applications, meaning that refactoring is an important and necessary skill even if it may feel difficult and unpleasant at times.
+This is a common reality of extending existing applications,
+meaning that refactoring is an important and necessary skill even if it may feel difficult and unpleasant at times.
 
 One good piece of advice for both refactoring and writing new code is to take ***baby steps***.
 Losing your sanity is almost guaranteed if you leave the application in a completely broken state for long periods while refactoring.

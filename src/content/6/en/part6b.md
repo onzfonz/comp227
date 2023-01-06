@@ -227,7 +227,8 @@ Based on the console output one might get the impression that every action gets 
 
 Is there a bug in our code? No.
 The combined reducer works in such a way that every `action` gets handled in ***every*** part of the combined reducer.
-Typically only one reducer is interested in any given action, but there are situations where multiple reducers change their respective parts of the state based on the same action.
+Typically only one reducer is interested in any given action,
+but there are situations where multiple reducers change their respective parts of the state based on the same action.
 
 ### Finishing the filters
 

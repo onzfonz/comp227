@@ -612,7 +612,8 @@ Most of the time hook-based APIs are a lot simpler than HOC-based ones, as is th
 ### Redux and the component state
 
 We have come a long way in this course and, finally, we have come to the point at which we are using React "the right way",
-meaning React only focuses on generating the views, and the application state is wholly separated from the React components and passed on to Redux, its actions, and its reducers.
+meaning React only focuses on generating the views,
+and the application state is wholly separated from the React components and passed on to Redux, its actions, and its reducers.
 
 What about the `useState` hook, which provides components with their own state?
 Does it have any role if an application is using Redux or some other external state management solution?

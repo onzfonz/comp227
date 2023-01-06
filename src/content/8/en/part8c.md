@@ -11,7 +11,8 @@ Now that we have a basic understanding of how TypeScript works and how to create
 We are now going to create a new project that will introduce use cases that are a little more realistic.
 
 One major change from the previous part is that ***we're not going to use ts-node anymore***.
-It is a handy tool that helps you get started, but in the long run, it is advisable to use the official TypeScript compiler that comes with the *typescript* npm-package.
+It is a handy tool that helps you get started, but in the long run,
+it is advisable to use the official TypeScript compiler that comes with the *typescript* npm-package.
 The official compiler generates and packages JavaScript files from the .ts files so that the built *production version* won't contain any TypeScript code anymore.
 This is the exact outcome we are aiming for since TypeScript itself is not executable by browsers or Node.
 
@@ -491,7 +492,8 @@ the compiler can give us a warning.
 Even though the compiler is pretty good at making sure we don't do anything unwanted, it is safer to define the types for the data ourselves.
 
 Currently, we have a basic working TypeScript express app, but there are barely any actual ***typings*** in the code.
-Since we know what type of data should be accepted for the ***weather*** and ***visibility*** fields, there is no reason for us not to include their types in the code.
+Since we know what type of data should be accepted for the ***weather*** and ***visibility*** fields,
+there is no reason for us not to include their types in the code.
 
 Let's create a file for our types, *types.ts*, where we'll define all our types for this project.
 

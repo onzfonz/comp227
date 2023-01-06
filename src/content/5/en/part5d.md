@@ -217,7 +217,8 @@ The login field contains two *input* fields, which the test should write into.
 
 The [cy.get](https://docs.cypress.io/api/commands/get.html#Syntax) command allows for searching elements by CSS selectors.
 
-We can access the first and the last input field on the page, and write to them with the command [cy.type](https://docs.cypress.io/api/commands/type.html#Syntax) like so:
+We can access the first and the last input field on the page,
+and write to them with the command [cy.type](https://docs.cypress.io/api/commands/type.html#Syntax) like so:
 
 ```js
 it('user can login', function () {
@@ -585,7 +586,8 @@ The tests and the current frontend code can be found on the [GitHub](https://git
 Let's make a test to ensure that a login attempt fails if the password is wrong.
 
 Cypress will run all tests each time by default, and as the number of tests increases, it starts to become quite time-consuming.
-When developing a new test or when debugging a broken test, we can define the test with `it.only` instead of `it`, so that Cypress will only run the required test.
+When developing a new test or when debugging a broken test,
+we can define the test with `it.only` instead of `it`, so that Cypress will only run the required test.
 When the test is working, we can remove `.only`.
 
 First version of our tests is as follows:
@@ -788,7 +790,8 @@ describe('when logged in', function() {
 ```
 
 We can access the response to a [cy.request](https://docs.cypress.io/api/commands/request.html) with the `then` method.
-Under the hood `cy.request`, like all Cypress commands, are [promises](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Commands-Are-Promises).
+Under the hood `cy.request`, like all Cypress commands,
+are [promises](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Commands-Are-Promises).
 The callback function saves the details of a logged-in user to localStorage, and reloads the page.
 Now there is no difference to a user logging in with the login form.
 

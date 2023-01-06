@@ -113,7 +113,8 @@ then this self-made **routing**, which means the navigation management of the ap
 
 ### React Router
 
-Luckily, React has the [React Router](https://reactrouter.com/) library which provides an excellent solution for managing navigation in a React application.
+Luckily, React has the [React Router](https://reactrouter.com/) library
+which provides an excellent solution for managing navigation in a React application.
 
 Let's change the above application to use React Router.
 First, we install React Router with the command
@@ -228,7 +229,8 @@ It renders the list of notes passed to it as props in such a way that the name o
 
 ![notes app showing notes are clickable](../../images/7/3ea.png)
 
-The ability to click a name is implemented with the component `Link`, and clicking the name of a note whose id is 3 would trigger an event that changes the address of the browser into ***notes/3***:
+The ability to click a name is implemented with the component `Link`,
+and clicking the name of a note whose id is 3 would trigger an event that changes the address of the browser into ***notes/3***:
 
 ```js
 const Notes = ({notes}) => (

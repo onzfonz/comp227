@@ -27,7 +27,8 @@ aka URLs and HTTP request types, in REST.
 
 In REST terminology, we refer to individual data objects, such as the notes in our application, as **resources**.
 Every resource has a unique address associated with it - its URL.
-According to a general convention used by json-server, we would be able to locate an individual note at the resource URL ***notes/3***, where 3 is the id of the resource.
+According to a general convention used by json-server,
+we would be able to locate an individual note at the resource URL ***notes/3***, where 3 is the id of the resource.
 The ***notes*** URL, on the other hand, would point to a resource collection containing all the notes.
 
 Resources are fetched from the server with HTTP GET requests.
@@ -82,7 +83,8 @@ which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_a
 
 We can use the inspector to check that the headers sent in the POST request are what we expected them to be and that their values are correct.
 
-Since the data we sent in the POST request was a JavaScript object, axios automatically knew to set the appropriate `application/json` value for the `Content-Type` header.
+Since the data we sent in the POST request was a JavaScript object,
+axios automatically knew to set the appropriate `application/json` value for the `Content-Type` header.
 
 The new note is not rendered to the screen yet.
 This is because we did not update the state of the `App` component when we created the new note.
@@ -278,7 +280,8 @@ This is not recommended because the variable `note` is a reference to an item in
 It's also worth noting that the new object `changedNote` is only a so-called
 [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
 meaning that the values of the new object are the same as the values of the old object.
-If the values of the old object were objects themselves, then the copied values in the new object would reference the same objects that were in the old object.
+If the values of the old object were objects themselves,
+then the copied values in the new object would reference the same objects that were in the old object.
 
 The new note is then sent with a PUT request to the backend where it will replace the old object.
 

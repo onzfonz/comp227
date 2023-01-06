@@ -482,7 +482,8 @@ See this [example submission repository](https://github.com/comp227/example-subm
 
 For each part of the course, there is a directory, which further branches into directories containing a series of exercises, like "unicafe" for part 1.
 
-For each web application for a series of exercises, it is recommended to submit all files relating to that application, except for the directory *node_modules*.
+For each web application for a series of exercises,
+it is recommended to submit all files relating to that application, except for the directory *node_modules*.
 
 The exercises are submitted **one part at a time**.
 When you have submitted the exercises for a part of the course you can no longer submit undone exercises for the same part.
@@ -544,7 +545,8 @@ and remove extra files (*App.css*, *App.test.js*, *index.css*, *logo.svg*, *setu
 Unfortunately, the entire application is in the same component.
 Refactor the code so that it consists of three new components: `Header`, `Content`, and `Total`.
 All data still resides in the `App` component, which passes the necessary data to each component using `props`.
-`Header` takes care of rendering the name of the course, `Content` renders the parts and their number of exercises and `Total` renders the total number of exercises.
+`Header` takes care of rendering the name of the course,
+`Content` renders the parts and their number of exercises and `Total` renders the total number of exercises.
 
 Define the new components in the file *App.js*.
 

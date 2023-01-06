@@ -340,7 +340,8 @@ The function passed as the first parameter to the `setTimeout` function is invok
 () => setCounter(counter + 1)
 ```
 
-When the state modifying function `setCounter` is called, **React re-renders the component** which means that the function body of the component function gets re-executed:
+When the state modifying function `setCounter` is called, **React re-renders the component**
+which means that the function body of the component function gets re-executed:
 
 ```js
 () => {
@@ -521,7 +522,8 @@ An event handler is supposed to be either a **function** or a **function referen
 the event handler is actually a **function call**.
 In many situations this is ok, but not in this particular situation.
 In the beginning, the value of the `counter` variable is 0.
-When React renders the component for the first time, it executes the function call `setCounter(0+1)`, and changes the value of the component's state to 1.
+When React renders the component for the first time,
+it executes the function call `setCounter(0+1)`, and changes the value of the component's state to 1.
 This will cause the component to be re-rendered, React will execute the setCounter function call again, and the state will change leading to another rerender...
 
 Let's define the event handlers like we did before:
@@ -670,7 +672,8 @@ const App = () => {
 }
 ```
 
-Since we now have an easily reusable `Button` component, we've also implemented new functionality into our application by adding a button that can be used to decrement the counter.
+Since we now have an easily reusable `Button` component,
+we've also implemented new functionality into our application by adding a button that can be used to decrement the counter.
 
 The event handler is passed to the `Button` component through the `onClick` prop.
 The name of the prop itself is not that significant, but our naming choice wasn't completely random.

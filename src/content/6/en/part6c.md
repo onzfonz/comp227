@@ -272,7 +272,8 @@ const App = () => {
 }
 ```
 
-Now the variable `dispatch` we define in the `App` component, which practically is the dispatch function of the redux store, has been added to the array useEffect receives as a parameter.
+Now the variable `dispatch` we define in the `App` component,
+which practically is the dispatch function of the redux store, has been added to the array useEffect receives as a parameter.
 **If** the value of the dispatch variable would change during runtime,
 the effect would be executed again.
 This however cannot happen in our application, so the warning is unnecessary.
@@ -457,7 +458,8 @@ export const initializeNotes = () => {
 export default noteSlice.reducer
 ```
 
-In the inner function, meaning the **asynchronous action**, the operation first fetches all the notes from the server and then ***dispatches*** the `setNotes` action, which adds them to the store.
+In the inner function, meaning the **asynchronous action**, the operation first fetches all the notes from the server
+and then ***dispatches*** the `setNotes` action, which adds them to the store.
 
 The component `App` can now be defined as follows:
 

@@ -122,7 +122,8 @@ const counterReducer = (state = 0, action) => {
 const store = createStore(counterReducer)
 ```
 
-The store now uses the reducer to handle **actions**, which are **dispatched** or 'sent' to the store with its [dispatch](https://redux.js.org/api/store#dispatchaction) method.
+The store now uses the reducer to handle **actions**,
+which are **dispatched** or 'sent' to the store with its [dispatch](https://redux.js.org/api/store#dispatchaction) method.
 
 ```js
 store.dispatch({ type: 'INCREMENT' })
@@ -537,7 +538,8 @@ state.map(note =>
 Because we now have quite good tests for the reducer, we can refactor the code safely.
 
 Adding a new note creates the state it returns with Array's `concat` function.
-Let's take a look at how we can achieve the same by using the JavaScript [array spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) -syntax:
+Let's take a look at how we can achieve the same
+by using the JavaScript [array spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_operator) syntax:
 
 ```js
 const noteReducer = (state = [], action) => {

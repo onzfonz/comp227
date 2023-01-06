@@ -339,7 +339,8 @@ a community project to maintain types of everything in one place.
 Sometimes, an npm package can also include its types within the code and,
 in that case, installing the corresponding `@types/*` is not necessary.
 
-> **NB:** Since the typings are only used before compilation, the typings are not needed in the production build and they should **always** be in the devDependencies of the package.json.
+> **NB:** Since the typings are only used before compilation,
+> the typings are not needed in the production build and they should **always** be in the devDependencies of the package.json.
 
 Since the global variable `process` is defined by Node itself, we get its typings from the package *@types/node*.
 
@@ -482,7 +483,8 @@ interface MultiplyValues {
 }
 ```
 
-The definition utilizes TypeScript's Interface [object type](https://www.typescriptlang.org/docs/handbook/2/objects.html) keyword, which is one way to define the "shape" an object should have.
+The definition utilizes TypeScript's Interface [object type](https://www.typescriptlang.org/docs/handbook/2/objects.html) keyword,
+which is one way to define the "shape" an object should have.
 In our case, it is quite obvious that the return value should be an object with the two properties `value1` and `value2`, which should both be of type number.
 
 </div>
@@ -750,14 +752,16 @@ This is because we banned unused parameters in our *tsconfig.json*:
 }
 ```
 
-This configuration might create problems if you have library-wide predefined functions which require declaring a variable even if it's not used at all, as is the case here.
+This configuration might create problems if you have library-wide predefined functions
+which require declaring a variable even if it's not used at all, as is the case here.
 Fortunately, this issue has already been solved on the configuration level.
 Once again hovering over the issue gives us a solution.
 This time we can just click the quick fix button:
 
 ![vscode quickfix to add underscore to variable](../../images/8/14a.png)
 
-If it is absolutely impossible to get rid of an unused variable, you can prefix it with an underscore to inform the compiler you have thought about it and there is nothing you can do.
+If it is absolutely impossible to get rid of an unused variable,
+you can prefix it with an underscore to inform the compiler you have thought about it and there is nothing you can do.
 
 Let's rename the `req` variable to `_req`.
 Finally, we are ready to start the application.
@@ -851,7 +855,8 @@ If the query parameters of the request are of the wrong type or missing, a respo
 }
 ```
 
-Do not copy the calculator code to file *index.ts*; instead, make it a [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules.html) that can be imported into *index.ts*.
+Do not copy the calculator code to file *index.ts*;
+instead, make it a [TypeScript module](https://www.typescriptlang.org/docs/handbook/modules.html) that can be imported into *index.ts*.
 
 </div>
 
@@ -961,7 +966,8 @@ Now lint will complain if we try to define a variable of type `any`:
 
 [@typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) has a lot of TypeScript-specific ESlint rules,
 but you can also use all basic ESlint rules in TypeScript projects.
-For now, we should probably go with the recommended settings, and we will modify the rules as we go along whenever we find something we want to change the behavior of.
+For now, we should probably go with the recommended settings,
+and we will modify the rules as we go along whenever we find something we want to change the behavior of.
 
 On top of the recommended settings, we should try to get familiar with the coding style required in this part and ***set the semicolon at the end of each line of code to required***.
 

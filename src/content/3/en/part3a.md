@@ -32,7 +32,8 @@ We had already mentioned [npm](/part2/getting_data_from_server#npm) back in part
 In fact, npm originates from the Node ecosystem.
 
 Let's navigate to an appropriate directory, and create a new template for our application with the `npm init` command.
-We will answer the questions presented by the utility, and the result will be an automatically generated *package.json* file at the root of the project that contains information about the project.
+We will answer the questions presented by the utility,
+and the result will be an automatically generated *package.json* file at the root of the project that contains information about the project.
 
 ```json
 {
@@ -190,7 +191,8 @@ const app = http.createServer((request, response) => {
 The code uses the `createServer` method of the [http](https://nodejs.org/docs/latest-v8.x/api/http.html) module to create a new web server.
 An **event handler** is registered to the server that is called *every time* an HTTP request is made to the server's address <http://localhost:3001>.
 
-The request is responded to with the status code 200, with the `Content-Type` header set to `text/plain`, and the content of the site to be returned set to `Hello World`.
+The request is responded to with the status code 200,
+with the `Content-Type` header set to `text/plain`, and the content of the site to be returned set to `Hello World`.
 
 The last rows bind the http server assigned to the `app` variable, to listen to HTTP requests sent to port 3001:
 
@@ -313,7 +315,8 @@ we can install all up-to-date dependencies of the project defined in *package.js
 npm install
 ```
 
-If the *major* number of a dependency does not change, then the newer versions should be [backwards compatible](https://en.wikipedia.org/wiki/Backward_compatibility).
+If the *major* number of a dependency does not change,
+then the newer versions should be [backwards compatible](https://en.wikipedia.org/wiki/Backward_compatibility).
 This means that if our application happened to use version 4.99.175 of express in the future,
 then all the code implemented in this part would still have to work without making changes to the code.
 In contrast, the future 5.0.0 version of express [may contain](https://expressjs.com/en/guide/migrating-5.html) changes that would cause our application to no longer work.
@@ -347,7 +350,8 @@ app.listen(PORT, () => {
 To get the new version of our application into use, we have to restart the application.
 
 The application did not change a whole lot.
-Right at the beginning of our code, we're importing `express`, which this time is a *function* that is used to create an express application stored in the `app` variable:
+Right at the beginning of our code, we're importing `express`,
+which this time is a *function* that is used to create an express application stored in the `app` variable:
 
 ```js
 const express = require('express')
@@ -458,7 +462,8 @@ node_modules/.bin/nodemon index.js
 
 Changes to the application code now cause the server to restart automatically.
 It's worth noting that even though the backend server restarts automatically, the browser still has to be manually refreshed.
-This is because unlike when working in React, we don't have the [hot reload](https://gaearon.github.io/react-hot-loader/getstarted/) functionality needed to automatically reload the browser.
+This is because unlike when working in React,
+we don't have the [hot reload](https://gaearon.github.io/react-hot-loader/getstarted/) functionality needed to automatically reload the browser.
 
 The command is long and quite unpleasant, so let's define a dedicated *npm script* for it in the *package.json* file:
 
@@ -506,7 +511,8 @@ One convention for creating unique addresses is to combine the name of the resou
 
 Let's assume that the root URL of our service is ***www.example.com/api***.
 
-If we define the resource type of note to be ***notes***, then the address of a note resource with the identifier 10, has the unique address ***www.example.com/api/notes/10***.
+If we define the resource type of note to be ***notes***,
+then the address of a note resource with the identifier 10, has the unique address ***www.example.com/api/notes/10***.
 
 The URL for the entire collection of all note resources is ***www.example.com/api/notes***.
 
@@ -529,7 +535,8 @@ which means a consistent way of defining interfaces that makes it possible for s
 This way of interpreting REST falls under the
 [second level of RESTful maturity](https://martinfowler.com/articles/richardsonMaturityModel.html)
 in the Richardson Maturity Model.
-According to the definition provided by Roy Fielding, we have not defined a [REST API](http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven).
+According to the definition provided by Roy Fielding,
+we have not defined a [REST API](http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven).
 In fact, a large majority of the world's purported "REST" APIs do not meet Fielding's original criteria outlined in his dissertation.
 
 In some places (e.g. [Richardson, Ruby: RESTful Web Services](http://shop.oreilly.com/product/9780596529260.do))
@@ -821,7 +828,8 @@ The POST request can be sent with the REST client like this:
 We created a new *create_note.rest* file for the request.
 The request is formatted according to the [instructions in the documentation](https://github.com/Huachao/vscode-restclient/blob/master/README.md#usage).
 
-One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository, and they can be distributed to everyone in the development team.
+One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository,
+and they can be distributed to everyone in the development team.
 You can also add multiple requests in the same file using `###` separators:
 
 ```text
@@ -941,7 +949,8 @@ important: body.important || false,
 If the data saved in the `body` variable has the `important` property, the expression will evaluate to its value.
 If the property does not exist, then the expression will evaluate to false which is defined on the right-hand side of the vertical lines.
 
-> To be exact, when the `important` property is `false`, then the `body.important || false` expression will in fact return `false` from the right-hand side...
+> To be exact, when the `important` property is `false`,
+then the `body.important || false` expression will in fact return `false` from the right-hand side...
 
 You can find the code for our current application in its entirety in the *part3-1* branch of
 [this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-1).
@@ -973,7 +982,8 @@ Math.max(...notes.map(n => n.id))
 What exactly is happening in that line of code? `notes.map(n => n.id)` creates a new array that contains all the ids of the notes.
 [Math.max](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) returns the maximum value of the numbers that are passed to it.
 However, `notes.map(n => n.id)` is an *array* so it can't directly be given as a parameter to `Math.max`.
-The array can be transformed into individual numbers by using the "three dot" [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax `...`.
+The array can be transformed into individual numbers by using the
+"three dot" [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax `...`.
 
 </div>
 
@@ -1110,7 +1120,8 @@ This means that if a request does not generate side effects, then the result sho
 If we make an HTTP PUT request to the URL ***/api/notes/10*** and with the request we send the data `{ content: "no side effects!", important: true }`,
 the result is the same regardless of how many times the request is sent.
 
-Like *safety* for the GET request, **idempotence** is also just a recommendation in the HTTP standard and not something that can be guaranteed simply based on the request type.
+Like *safety* for the GET request, **idempotence** is also just a recommendation in the HTTP standard
+and not something that can be guaranteed simply based on the request type.
 However, when our API adheres to RESTful principles, then GET, HEAD, PUT, and DELETE requests are used in such a way that they are idempotent.
 
 POST is the only HTTP request type that is neither *safe* nor *idempotent*.
@@ -1199,7 +1210,8 @@ Configure morgan so that it also shows the data sent in HTTP POST requests:
 
 ![terminal showing post data being sent](../../images/3/24.png)
 
-Note that logging data even in the console can be dangerous since it can contain sensitive data and may violate local privacy law (e.g. GDPR in EU) or business-standard.
+Note that logging data even in the console can be dangerous since it can contain sensitive data
+and may violate local privacy law (e.g. GDPR in EU) or business-standard.
 In this exercise, you don't have to worry about privacy issues, but in practice, try not to log any sensitive data.
 
 This exercise can be quite challenging, even though the solution does not require a lot of code.

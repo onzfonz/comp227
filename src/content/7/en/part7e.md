@@ -239,7 +239,8 @@ During the course, we have created the frontend and backend into separate reposi
 This is a very typical approach.
 However, we did the deployment by [copying](/part3/deploying_app_to_internet#serving-static-files-from-the-backend) the bundled frontend code into the backend repository.
 A possibly better approach would have been to deploy the frontend code separately.
-Especially with applications created using Create React App, it is very straightforward thanks to the included [buildpack](https://github.com/mars/create-react-app-buildpack).
+Especially with applications created using Create React App,
+it is very straightforward thanks to the included [buildpack](https://github.com/mars/create-react-app-buildpack).
 
 Sometimes, there may be a situation where the entire application is to be put into a single repository.
 In this case, a common approach is to put the *package.json* and *webpack.config.js* in the root directory,
@@ -259,7 +260,8 @@ meaning repeated requests to the backend API e.g. using the [setInterval](https:
 
 A more sophisticated way is to use [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 which allow for establishing a two-way communication channel between the browser and the server.
-In this case, the browser does not need to poll the backend, and instead only has to define callback functions for situations when the server sends data about updating state using a WebSocket.
+In this case, the browser does not need to poll the backend,
+and instead only has to define callback functions for situations when the server sends data about updating state using a WebSocket.
 
 WebSockets is an API provided by the browser, which is not yet fully supported on all browsers:
 
@@ -333,7 +335,8 @@ it might be a good idea to use React "wrong", since [over-engineering](https://e
 As I mentioned at the end of [part 6](/part6/connect#redux-and-the-component-state),
 the React [Context API](https://reactjs.org/docs/context.html)
 offers one alternative solution for centralized state management without the need for third-party libraries such as redux.
-You can read more about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/) and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/).
+You can read more about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/)
+and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/).
 
 ### React/node-application security
 
@@ -552,7 +555,8 @@ Typescript is covered in [part 8](/part8).
 
 The browser is not the only domain where components defined using React can be rendered.
 The rendering can also be done on the [server](https://reactjs.org/docs/react-dom-server.html).
-This kind of approach is increasingly being used, such that, when accessing the application for the first time, the server serves a pre-rendered page made with React.
+This kind of approach is increasingly being used, such that,
+when accessing the application for the first time, the server serves a pre-rendered page made with React.
 From here onwards, the operation of the application continues, as usual,
 meaning the browser executes React, which manipulates the DOM shown by the browser.
 The rendering that is done on the server goes by the name: **server-side rendering**.
@@ -599,7 +603,8 @@ The offline functionality is usually implemented with the help of [service worke
 #### Microservice architecture
 
 During this course, we have only scratched the surface of the server end of things.
-In our applications, we had a **monolithic** backend, meaning one application making up a whole and running on a single server, serving only a few API endpoints.
+In our applications, we had a **monolithic** backend,
+meaning one application making up a whole and running on a single server, serving only a few API endpoints.
 
 As the application grows, the monolithic backend approach starts turning problematic both in terms of performance and maintainability.
 
@@ -668,7 +673,8 @@ as well as [similar functionality in Azure](https://azure.microsoft.com/en-us/se
 is that it enables *the execution of individual functions* in the cloud.
 Before, the smallest executable unit in the cloud was a single **process**, e.g. a runtime environment running a Node backend.
 
-e.g. Using Amazon's [API gateway](https://aws.amazon.com/api-gateway/) it is possible to make serverless applications where the requests to the defined HTTP API get responses directly from cloud functions.
+e.g. Using Amazon's [API gateway](https://aws.amazon.com/api-gateway/)
+it is possible to make serverless applications where the requests to the defined HTTP API get responses directly from cloud functions.
 Usually, the functions already operate using stored data in the databases of the cloud service.
 
 Serverless is not about there not being a server in applications, but about how the server is defined.

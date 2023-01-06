@@ -15,7 +15,8 @@ In this part, we will take a look at a few other ways.
 
 One approach to defining styles for an application is to use a ready-made "UI framework".
 
-One of the first widely popular UI frameworks was the [Bootstrap](https://getbootstrap.com/) toolkit created by Twitter which may still be the most popular framework.
+One of the first widely popular UI frameworks was the [Bootstrap](https://getbootstrap.com/) toolkit
+created by Twitter which may still be the most popular framework.
 Recently, there has been an explosion in the number of new UI frameworks that have entered the arena.
 The selection is so vast that there is little hope of creating an exhaustive list of options.
 
@@ -340,7 +341,8 @@ import {
 
 #### Form in Material UI
 
-Next, let's make the login form in the `Login` view better using the [TextField](https://mui.com/material-ui/react-text-field/) and [Button](https://mui.com/material-ui/api/button/) components:
+Next, let's make the login form in the `Login` view better using the [TextField](https://mui.com/material-ui/react-text-field/)
+and [Button](https://mui.com/material-ui/api/button/) components:
 
 ```js
 const Login = (props) => {
@@ -384,7 +386,8 @@ Remember to import all the components used in the form.
 
 #### Notification in Material UI
 
-The notification displayed on login can be done using the [Alert](https://mui.com/material-ui/react-alert/) component, which is quite similar to Bootstrap's equivalent component:
+The notification displayed on login can be done using the [Alert](https://mui.com/material-ui/react-alert/) component,
+which is quite similar to Bootstrap's equivalent component:
 
 ```js
 <div>
@@ -511,7 +514,8 @@ We could have used a regular HTML *`table`* and added the required CSS class:
 
 The benefit of using the React Bootstrap library is not that evident from this example.
 
-In addition to making the frontend code more compact and readable, another benefit of using React UI framework libraries is that they include the JavaScript that is needed to make specific components work.
+In addition to making the frontend code more compact and readable,
+another benefit of using React UI framework libraries is that they include the JavaScript that is needed to make specific components work.
 Some Bootstrap components require a few unpleasant
 [JavaScript dependencies](https://getbootstrap.com/docs/4.1/getting-started/introduction/#js)
 that we would prefer not to include in our React applications.

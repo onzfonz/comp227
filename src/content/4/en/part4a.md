@@ -482,7 +482,8 @@ Turn the application into a functioning ***npm*** project.
 To keep your development productive, configure the application to be executed with ***nodemon***.
 You can create a new database for your application with MongoDB Atlas, or use the same database from the previous part's exercises.
 
-Verify that it is possible to add blogs to the list with Postman or the VS Code REST client and that the application returns the added blogs at the correct endpoint.
+Verify that it is possible to add blogs to the list with Postman or the VS Code REST client
+and that the application returns the added blogs at the correct endpoint.
 
 #### 4.2 Blog list, step2
 
