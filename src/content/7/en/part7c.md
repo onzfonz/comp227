@@ -251,7 +251,7 @@ Chrome's developer tools make it possible to simulate using our application in t
 
 ![chrome devtools with mobile browser preview of notes app](../../images/7/12ea.png)
 
-You can find the complete code for the application [here](https://github.com/fullstack-hy2020/misc/blob/master/notes-bootstrap.js).
+You can find the complete code for the application [here](https://github.com/comp227/misc/blob/main/notes-bootstrap.js).
 
 ### Material UI
 
@@ -477,7 +477,7 @@ and it looks like we want it to:
 
 ![browser notes app MaterialUI blue nav bar white text](../../images/7/67ea.png)
 
-The code of the application can be found [here](https://github.com/fullstack-hy2020/misc/blob/master/notes-materialui.js).
+The code of the application can be found [here](https://github.com/comp227/misc/blob/main/notes-materialui.js).
 
 ### Closing thoughts
 

@@ -482,7 +482,7 @@ Make sure your backend is running in test mode by starting it with this command 
   npm run start:test
 ```
 
-The modified backend code can be found on the [GitHub](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part5-1) branch *part5-1*.
+The modified backend code can be found on the [GitHub](https://github.com/comp227/part3-notes-backend/tree/part5-1) branch *part5-1*.
 
 Next, we will change the `beforeEach` block so that it empties the server's database before tests are run.
 
@@ -578,7 +578,7 @@ It then clicks the button.
 
 The second command checks that the text on the button has changed to ***make not important***.
 
-The tests and the current frontend code can be found on the [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part5-9) branch *part5-9*.
+The tests and the current frontend code can be found on the [GitHub](https://github.com/comp227/part2-notes/tree/part5-9) branch *part5-9*.
 
 ### Failed login test
 
@@ -908,7 +908,7 @@ describe('Note app', function() {
 })
 ```
 
-The tests and the frontend code can be found on the [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part5-10) branch *part5-10*.
+The tests and the frontend code can be found on the [GitHub](https://github.com/comp227/part2-notes/tree/part5-10) branch *part5-10*.
 
 ### Changing the importance of a note
 
@@ -1082,7 +1082,7 @@ Now we can run our tests from the command line with the command `npm run test:e2
 
 Note that videos of the test execution will be saved to *cypress/videos/*, so you should probably git ignore this directory.
 
-The frontend and the test code can be found on the [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part5-11) branch *part5-11*.
+The frontend and the test code can be found on the [GitHub](https://github.com/comp227/part2-notes/tree/part5-11) branch *part5-11*.
 
 </div>
 

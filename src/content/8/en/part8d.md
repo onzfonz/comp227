@@ -636,7 +636,7 @@ It is always a good idea to start the application and click around to verify you
 
 You can also browse the folder structure to get some insight into the application's functionality and/or the architecture used.
 These are not always clear, and the developers might have chosen a way to organize code that is not familiar to you.
-The [sample project](https://github.com/fullstack-hy2020/patientor) used in the rest of this part is organized, feature-wise.
+The [sample project](https://github.com/comp227/patientor) used in the rest of this part is organized, feature-wise.
 You can see what pages the application has, and some general components, e.g. modals and state.
 Keep in mind that the features may have
 different scopes.
@@ -1601,7 +1601,7 @@ Upon a successful submit, the new entry should be added to the correct patient a
 
 If you like, you can re-use some of the code from the ***Add patient*** form for this exercise, but this is not a requirement.
 
-Note that the file [FormField.tsx](https://github.com/fullstack-hy2020/patientor/blob/master/src/AddPatientModal/FormField.tsx#L58)
+Note that the file [FormField.tsx](https://github.com/comp227/patientor/blob/master/src/AddPatientModal/FormField.tsx#L58)
 has a ready-made component called `DiagnosisSelection` that can be used for setting the field `diagnoses`.
 
 It can be used as follows:

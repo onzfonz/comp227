@@ -426,7 +426,7 @@ Recently many projects have adopted the Airbnb [Javascript style guide](https://
 by taking Airbnb's [ESlint](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) configuration into use.
 
 You can find the code for our current application in its entirety in the *part3-7* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-7).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-7).
 </div>
 
 <div class="tasks">

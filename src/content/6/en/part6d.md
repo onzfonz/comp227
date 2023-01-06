@@ -350,7 +350,7 @@ export default connect(
 Since the component does not need to access the store's state, we can simply pass `null` as the first parameter to `connect`.
 
 You can find the code for our current application in its entirety in the *part6-5* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/redux-notes/tree/part6-5).
+[this GitHub repository](https://github.com/comp227/redux-notes/tree/part6-5).
 
 ### Referencing action creators passed as props
 

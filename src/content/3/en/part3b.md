@@ -186,7 +186,7 @@ flyctl ping -o personal
 ```
 
 your computer can not for some reason connect to Fly.io.
-If this happens to you, [this](https://github.com/fullstack-hy2020/misc/blob/master/fly_io_problem.md) describes one possible way to proceed.
+If this happens to you, [this](https://github.com/comp227/misc/blob/main/fly_io_problem.md) describes one possible way to proceed.
 
 If the output of the below command looks like this:
 
@@ -232,7 +232,7 @@ If not, the issue can be found by reading the heroku logs with the command `hero
 The best way to do this is with command `heroku logs -t` which prints the logs to console whenever something happens on the server.
 >
 >**NB** If you are deploying from a git repository where your code is not on the main branch
-(i.e. if you are altering the [notes repo](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-2) from the last lesson)
+(i.e. if you are altering the [notes repo](https://github.com/comp227/part3-notes-backend/tree/part3-2) from the last lesson)
 you will need to run `git push heroku HEAD:master`.
 If you have already done a push to heroku, you may need to run `git push heroku HEAD:main --force`.
 
@@ -530,9 +530,9 @@ There are multiple ways to achieve this (for example placing both backend and fr
 In some situations, it may be sensible to deploy the frontend code as its own application.
 With apps created with create-react-app it is [straightforward](https://github.com/mars/create-react-app-buildpack).
 
-The current backend code can be found on [Github](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-3),
+The current backend code can be found on [Github](https://github.com/comp227/part3-notes-backend/tree/part3-3),
 in the branch *part3-3*.
-The changes in frontend code are in *part3-1* branch of the [frontend repository](https://github.com/fullstack-hy2020/part2-notes/tree/part3-1).
+The changes in frontend code are in *part3-1* branch of the [frontend repository](https://github.com/comp227/part2-notes/tree/part3-1).
 
 </div>
 
@@ -589,6 +589,6 @@ Generate a production build of your frontend, and add it to the internet applica
 Also, make sure that the frontend still works locally (in development mode when started with command `npm start`).
 
 If you have problems getting the app working make sure that your directory structure matches
-[the example app](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-3).
+[the example app](https://github.com/comp227/part3-notes-backend/tree/part3-3).
 
 </div>

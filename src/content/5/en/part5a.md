@@ -93,7 +93,7 @@ export default App
 ```
 
 The current application code can be found on
-[Github](https://github.com/fullstack-hy2020/part2-notes/tree/part5-1), branch *part5-1*.
+[Github](https://github.com/comp227/part2-notes/tree/part5-1), branch *part5-1*.
 If you clone the repo, don't forget to run `npm install` before attempting to run the frontend.
 
 The frontend will not display any notes if it's not connected to the backend.
@@ -345,7 +345,7 @@ The changes we did now are a clear sign that the forms should be refactored into
 However, we will leave that for an optional exercise.
 
 The current application code can be found on
-[GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part5-2), branch *part5-2*.
+[GitHub](https://github.com/comp227/part2-notes/tree/part5-2), branch *part5-2*.
 
 ### Creating new notes
 
@@ -570,7 +570,7 @@ window.localStorage.clear()
 ```
 
 The current application code can be found on
-[GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part5-3), branch *part5-3*.
+[GitHub](https://github.com/comp227/part2-notes/tree/part5-3), branch *part5-3*.
 
 </div>
 
@@ -579,7 +579,7 @@ The current application code can be found on
 ### Exercises 5.1-5.4
 
 We will now create a frontend for the bloglist backend we created in the last part.
-You can use [this application](https://github.com/fullstack-hy2020/bloglist-frontend) from GitHub as the base of your solution.
+You can use [this application](https://github.com/comp227/bloglist-frontend) from GitHub as the base of your solution.
 The application expects your backend to be running on port 3003.
 
 It is enough to submit your finished solution.
@@ -596,10 +596,10 @@ Use either or, never both.
 
 #### 5.1: bloglist frontend, step1
 
-Clone the application from [GitHub](https://github.com/fullstack-hy2020/bloglist-frontend) with the command:
+Clone the application from [GitHub](https://github.com/comp227/bloglist-frontend) with the command:
 
 ```bash
-git clone https://github.com/fullstack-hy2020/bloglist-frontend
+git clone https://github.com/comp227/bloglist-frontend
 ```
 
 > *Remove the git configuration of the cloned application.*

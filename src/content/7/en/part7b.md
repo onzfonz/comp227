@@ -432,7 +432,7 @@ Instead, come up with a solution that fixes the issue, but is still easy to use 
 
 Let's return to exercises [2.12-14](/part2/getting_data_from_server#exercises-2-11-2-14).
 
-Use the code from <https://github.com/fullstack-hy2020/country-hook> as your starting point.
+Use the code from <https://github.com/comp227/country-hook> as your starting point.
 
 The application can be used to search for a country's details from the <https://restcountries.com/> interface.
 If a country is found, the details of the country are displayed:
@@ -495,7 +495,7 @@ Excluding the value of the `baseUrl` variable, the same code could be reused in 
 Extract the code for communicating with the backend into its own `useResource` hook.
 It is sufficient to implement fetching all resources and creating a new resource.
 
-You can do the exercise for the project found in the <https://github.com/fullstack-hy2020/ultimate-hooks> repository.
+You can do the exercise for the project found in the <https://github.com/comp227/ultimate-hooks> repository.
 The `App` component for the project is the following:
 
 ```js

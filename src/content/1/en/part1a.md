@@ -478,7 +478,7 @@ part2
   countries
 ```
 
-See this [example submission repository](https://github.com/fullstack-hy2020/example-submission-repository)!
+See this [example submission repository](https://github.com/comp227/example-submission-repository)!
 
 For each part of the course, there is a directory, which further branches into directories containing a series of exercises, like "unicafe" for part 1.
 

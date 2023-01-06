@@ -245,7 +245,7 @@ Sometimes, there may be a situation where the entire application is to be put in
 In this case, a common approach is to put the *package.json* and *webpack.config.js* in the root directory,
 as well as place the frontend and backend code into their own directories, e.g. *client* and *server*.
 
-[This repository](https://github.com/fullstack-hy2020/create-app) provides one possible starting point for the organization of "single repository code".
+[This repository](https://github.com/comp227/create-app) provides one possible starting point for the organization of "single repository code".
 
 ### Changes on the server
 

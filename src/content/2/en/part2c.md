@@ -631,7 +631,7 @@ We still have a problem with our application.
 When adding new notes, they are not stored on the server.
 
 The code for the application, as described so far, can be found in full on
-[github](https://github.com/fullstack-hy2020/part2-notes/tree/part2-4), on branch *part2-4*.
+[github](https://github.com/comp227/part2-notes/tree/part2-4), on branch *part2-4*.
 
 ### The development runtime environment
 

@@ -294,7 +294,7 @@ With this base, we can start creating an app that we could, later on, deploy int
 For this set of exercises, you will be developing a backend for an existing project called **Patientor**,
 which is a simple medical record application for doctors who handle diagnoses and basic health information of their patients.
 
-The [frontend](https://github.com/fullstack-hy2020/patientor) has already been built by outsider experts and your task is to create a backend to support the existing code.
+The [frontend](https://github.com/comp227/patientor) has already been built by outsider experts and your task is to create a backend to support the existing code.
 
 #### 8.8: Patientor backend, step1
 
@@ -306,7 +306,7 @@ The project should be runnable with npm scripts, both in development mode and, a
 
 #### 8.9: Patientor backend, step2
 
-Fork and clone the project [patientor](https://github.com/fullstack-hy2020/patientor).
+Fork and clone the project [patientor](https://github.com/comp227/patientor).
 Start the project with the help of the README file.
 
 You can run this command if you get an error message when trying to start the frontend:
@@ -344,7 +344,7 @@ He wants to be able to save *diary entries*, which contain:
 - Free text detailing the experience
 
 We have obtained some sample data, which we will use as a base to build on.
-The data is saved in JSON format and can be found [here](https://github.com/fullstack-hy2020/misc/blob/master/diaryentries.json).
+The data is saved in JSON format and can be found [here](https://github.com/comp227/misc/blob/main/diaryentries.json).
 
 The data looks like the following:
 
@@ -422,7 +422,7 @@ app.listen(PORT, () => {
 
 And now, if we make an HTTP GET request to <http://localhost:3000/api/diaries>, we should see the message: `Fetching all diaries!`
 
-Next, we need to start serving the seed data (found [here](https://github.com/fullstack-hy2020/misc/blob/master/diaryentries.json)) from the app.
+Next, we need to start serving the seed data (found [here](https://github.com/comp227/misc/blob/main/diaryentries.json)) from the app.
 We will fetch the data and save it to *data/diaries.json*.
 
 We won't be writing the code for the actual data manipulations in the router.
@@ -862,8 +862,8 @@ The response is what we expect it to be:
 ### Exercises 8.10-8.11
 
 Similarly to Ilari's flight service, we do not use a real database in our app
-but instead use hardcoded data that is in the files [diagnoses.json](https://github.com/fullstack-hy2020/misc/blob/master/diagnoses.json)
-and [patients.json](https://github.com/fullstack-hy2020/misc/blob/master/patients.json).
+but instead use hardcoded data that is in the files [diagnoses.json](https://github.com/comp227/misc/blob/main/diagnoses.json)
+and [patients.json](https://github.com/comp227/misc/blob/main/patients.json).
 Get the files and store those in a directory called *data* in your project.
 All data modification can be done in runtime memory, so during this part, it is *not necessary to write to a file*.
 

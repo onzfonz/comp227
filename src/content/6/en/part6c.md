@@ -362,7 +362,7 @@ createNote(state, action) {
 Changing the importance of notes could be implemented using the same principle,
 by making an asynchronous method call to the server and then dispatching an appropriate action.
 
-The current state of the code for the application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-3) in the branch *part6-3*.
+The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-notes/tree/part6-3) in the branch *part6-3*.
 
 </div>
 
@@ -374,7 +374,7 @@ The current state of the code for the application can be found on [GitHub](https
 
 When the application launches, fetch the anecdotes from the backend implemented using json-server.
 
-As the initial backend data, you can use, e.g. [this](https://github.com/fullstack-hy2020/misc/blob/master/anecdotes.json).
+As the initial backend data, you can use, e.g. [this](https://github.com/comp227/misc/blob/main/anecdotes.json).
 
 #### 6.14 Anecdotes and the backend, step2
 
@@ -608,7 +608,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-The current state of the code for the application can be found on [GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-4) in the branch *part6-4*.
+The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-notes/tree/part6-4) in the branch *part6-4*.
 
 </div>
 

@@ -129,7 +129,7 @@ Writing our implementation is justified since our application is simple, and als
 These are the only changes we need to make to our application's code.
 
 You can find the code for our current application in its entirety in the *part4-2* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-2).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-2).
 
 ### supertest
 
@@ -539,7 +539,7 @@ notesRouter.get('/', async (request, response) => {
 We can verify that our refactoring was successful by testing the endpoint through the browser and by running the tests that we wrote earlier.
 
 You can find the code for our current application in its entirety in the *part4-3* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-3).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-3).
 
 ### More tests and refactoring the backend
 
@@ -882,7 +882,7 @@ notesRouter.delete('/:id', async (request, response, next) => {
 ```
 
 You can find the code for our current application in its entirety in the *part4-4* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-4).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-4).
 
 ### Eliminating the try-catch
 
@@ -1093,7 +1093,7 @@ it is important to pay careful attention when using the async/await syntax.
 Even though the syntax makes it easier to deal with promises, it is still necessary to understand how promises work!
 
 The code for our application can be found on
-[GitHub](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-5), branch *part4-5*.
+[GitHub](https://github.com/comp227/part3-notes-backend/tree/part4-5), branch *part4-5*.
 
 </div>
 
@@ -1340,7 +1340,7 @@ is by no means the only nor the best way of conducting API-level integration tes
 There is no universal best way of writing tests, as it all depends on the application being tested and available resources.
 
 You can find the code for our current application in its entirety in the *part4-6* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-6).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-6).
 
 </div>
 

@@ -637,7 +637,7 @@ It is also possible to dispatch actions to the store using the development tools
 ![devtools redux dispatching createNote with payload](../../images/6/13ea.png)
 
 You can find the code for our current application in its entirety in the *part6-2* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/redux-notes/tree/part6-2).
+[this GitHub repository](https://github.com/comp227/redux-notes/tree/part6-2).
 
 </div>
 

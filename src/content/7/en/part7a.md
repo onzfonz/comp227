@@ -216,7 +216,7 @@ The Routes works by rendering the first component whose *path* matches the URL i
 ### Parameterized route
 
 Let's examine the slightly modified version from the previous example.
-The complete code for the example can be found [here](https://github.com/fullstack-hy2020/misc/blob/master/router-app-v1.js).
+The complete code for the example can be found [here](https://github.com/comp227/misc/blob/main/router-app-v1.js).
 
 The application now contains five different views whose display is controlled by the router.
 In addition to the components from the previous example (*`Home`*, *`Notes`* and *`Users`*),
@@ -530,7 +530,7 @@ const note = match
   : null
 ```
 
-The completed code can be found [here](https://github.com/fullstack-hy2020/misc/blob/master/router-app-v2.js).
+The completed code can be found [here](https://github.com/comp227/misc/blob/main/router-app-v2.js).
 
 </div>
 <div class="tasks">
@@ -538,7 +538,7 @@ The completed code can be found [here](https://github.com/fullstack-hy2020/misc/
 ### Exercises 7.1-7.3
 
 Let's return to working with anecdotes.
-Use the redux-free anecdote app found in the repository <https://github.com/fullstack-hy2020/routed-anecdotes> as the starting point for the exercises.
+Use the redux-free anecdote app found in the repository <https://github.com/comp227/routed-anecdotes> as the starting point for the exercises.
 
 If you clone the project into an existing git repository, remember to *delete the git configuration of the cloned application:*
 

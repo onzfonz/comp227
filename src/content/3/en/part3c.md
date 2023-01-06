@@ -721,7 +721,7 @@ Once we introduce a database into the mix, it is useful to inspect the state per
 Quite often little Node helper programs like the *mongo.js* program we wrote earlier can be very helpful during development.
 
 You can find the code for our current application in its entirety in the *part3-4* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-4).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-4).
 
 </div>
 
@@ -1037,7 +1037,7 @@ After testing the backend directly with Postman and the VS Code REST client, we 
 The frontend also appears to work with the backend using the database.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-5).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-5).
 
 </div>
 

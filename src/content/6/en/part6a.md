@@ -597,7 +597,7 @@ console.log(rest)     // prints [3, 4, 5, 6]
 Let's make a simplified version of the unicafe exercise from part 1.
 Let's handle the state management with Redux.
 
-You can take the project from this repository <https://github.com/fullstack-hy2020/unicafe-redux> for the base of your project.
+You can take the project from this repository <https://github.com/comp227/unicafe-redux> for the base of your project.
 
 > *Start by removing the git configuration of the cloned repository, and by installing dependencies*
 
@@ -1171,7 +1171,7 @@ it defines what the event handlers of the `Note` components do and coordinates t
 We will return to the presentational/container division later in this part.
 
 The code of the Redux application can be found on
-[GitHub](https://github.com/fullstack-hy2020/redux-notes/tree/part6-1), branch *part6-1*.
+[GitHub](https://github.com/comp227/redux-notes/tree/part6-1), branch *part6-1*.
 
 </div>
 
@@ -1180,7 +1180,7 @@ The code of the Redux application can be found on
 ### Exercises 6.3-6.8
 
 Let's make a new version of the anecdote voting application from part 1.
-Take the project from this repository <https://github.com/fullstack-hy2020/redux-anecdotes> to base your solution on.
+Take the project from this repository <https://github.com/comp227/redux-anecdotes> to base your solution on.
 
 If you clone the project into an existing git repository, *remove the git configuration of the cloned application:*
 

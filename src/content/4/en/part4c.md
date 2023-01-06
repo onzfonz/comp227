@@ -442,7 +442,7 @@ The list looks like this:
 ![browser api/users shows JSON data with notes array](../../images/4/9.png)
 
 You can find the code for our current application in its entirety in the *part4-7* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-7).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-7).
 
 ### Creating a new note
 
@@ -585,6 +585,6 @@ const noteSchema = new mongoose.Schema({
 ```
 
 You can find the code for our current application in its entirety in the *part4-8* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-8).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-8).
 
 </div>

@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 Let's continue expanding our application by allowing users to add new notes.
-You can find the code for our current application [here](https://github.com/fullstack-hy2020/part2-notes/tree/part2-1).
+You can find the code for our current application [here](https://github.com/comp227/part2-notes/tree/part2-1).
 
 To get our page to update when new notes are added it's best to store the notes in the `App` component's state.
 Let's import the [useState](https://reactjs.org/docs/hooks-state.html) function and use it to define a piece of state that gets initialized with the initial notes array passed in the props.
@@ -273,7 +273,7 @@ setNewNote('')
 ```
 
 You can find the code for our current application in its entirety in the *part2-2* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part2-2).
+[this GitHub repository](https://github.com/comp227/part2-notes/tree/part2-2).
 
 ### Filtering Displayed Elements
 
@@ -415,7 +415,7 @@ show {showAll ? 'important' : 'all'}
 ```
 
 You can find the code for our current application in its entirety in the *part2-3* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part2-3).
+[this GitHub repository](https://github.com/comp227/part2-notes/tree/part2-3).
 </div>
 
 <div class="tasks">

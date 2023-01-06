@@ -134,7 +134,7 @@ Since the clock of the machine running the browser can be wrongly configured,
 it's much wiser to let the backend server generate this timestamp for us.
 This is in fact what we will do in the next part of the course.
 
-The code for the current state of our application can be found in the  *part2-5* branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-5).
+The code for the current state of our application can be found in the  *part2-5* branch on [GitHub](https://github.com/comp227/part2-notes/tree/part2-5).
 
 ### Changing the Importance of Notes
 
@@ -768,7 +768,7 @@ We will soon learn a more advanced way of displaying messages and notifications 
 There are situations, however, where a simple, battle-tested method like `alert` can function as a starting point.
 A more advanced method could always be added in later, given that there's time and energy for it.
 
-The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-6).
+The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/comp227/part2-notes/tree/part2-6).
 
 </div>
 

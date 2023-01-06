@@ -281,7 +281,7 @@ Next, let's define the form component inside of a `Togglable` component:
 ```
 
 You can find the code for our current application in its entirety in the *part5-4* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-4).
+[this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-4).
 
 ### State of the forms
 
@@ -365,7 +365,7 @@ const App = () => {
 
 We could do the same for the log in form, but we'll leave that for an optional exercise.
 
-The application code can be found on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part5-5),
+The application code can be found on [GitHub](https://github.com/comp227/part2-notes/tree/part5-5),
 branch *part5-5*.
 
 ### References to components with ref
@@ -478,7 +478,7 @@ So far this is the only situation where using React hooks leads to code that is 
 There are also [other use cases](https://reactjs.org/docs/refs-and-the-dom.html) for refs than accessing React components.
 
 You can find the code for our current application in its entirety in the *part5-6* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-6).
+[this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-6).
 
 ### One point about components
 
@@ -848,7 +848,7 @@ export default Togglable
 ```
 
 You can find the code for our current application in its entirety in the *part5-7* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-7).
+[this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-7).
 
 Note that create-react-app has also a [default ESLint-configuration](https://www.npmjs.com/package/eslint-config-react-app),
 that we have now overridden.

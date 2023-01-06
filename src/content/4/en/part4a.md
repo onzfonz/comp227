@@ -347,7 +347,7 @@ In contrast, Ruby on Rails does require a specific structure.
 Our current structure simply follows some of the best practices you can come across on the internet.
 
 You can find the code for our current application in its entirety in the *part4-1* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part4-1).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-1).
 
 If you clone the project for yourself, run the `npm install` command before starting the application with `npm start`.
 
@@ -816,7 +816,7 @@ Dijkstra',
 ```
 
 If defining your own test input list of blogs is too much work,
-you can use the ready-made list [here](https://raw.githubusercontent.com/fullstack-hy2020/misc/master/blogs_for_test.md).
+you can use the ready-made list [here](https://raw.githubusercontent.com/comp227/misc/main/blogs_for_test.md).
 
 You are bound to run into problems while writing tests.
 Remember the things that we learned about [debugging](/part3/saving_data_to_mongo_db#debugging-node-applications) in part 3.

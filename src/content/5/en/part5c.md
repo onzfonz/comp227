@@ -766,7 +766,7 @@ The report will tell us the lines of untested code in each component:
 ![HTML report of the test coverage](../../images/5/19ea.png)
 
 You can find the code for our current application in its entirety in the *part5-8* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part2-notes/tree/part5-8).
+[this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-8).
 </div>
 
 <div class="tasks">

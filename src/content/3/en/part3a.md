@@ -944,9 +944,9 @@ If the property does not exist, then the expression will evaluate to false which
 > To be exact, when the `important` property is `false`, then the `body.important || false` expression will in fact return `false` from the right-hand side...
 
 You can find the code for our current application in its entirety in the *part3-1* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-1).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-1).
 
-The code for the current state of the application is specified in branch [part3-1](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-1).
+The code for the current state of the application is specified in branch [part3-1](https://github.com/comp227/part3-notes-backend/tree/part3-1).
 
 ![GitHub screenshot of branch 3-1](../../images/3/21.png)
 
@@ -1173,7 +1173,7 @@ app.use(unknownEndpoint)
 ```
 
 You can find the code for our current application in its entirety in the *part3-2* branch of
-[this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-2).
+[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-2).
 
 </div>
 
