@@ -145,7 +145,7 @@ The view displays the *MongoDB URI*, which is the address of the database that w
 The address looks like this:
 
 ```bash
-mongodb+srv://fullstack:$<password>@cluster0.o1opl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+mongodb+srv://comp227:$<password>@cluster0.o1opl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 ```
 
 We are now ready to use the database.
@@ -231,7 +231,7 @@ As the view states, the *document* matching the note has been added to the ***no
 Let's destroy the default database ***myFirstDatabase*** and change the name of the database referenced in our connection string to `noteApp` instead, by modifying the URI:
 
 ```bash
-mongodb+srv://fullstack:$<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
+mongodb+srv://comp227:$<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
 ```
 
 Let's run our code again:
@@ -434,7 +434,7 @@ const mongoose = require('mongoose')
 
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 const url =
-  `mongodb+srv://fullstack:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority`
+  `mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority`
 
 mongoose.connect(url)
 
@@ -594,7 +594,7 @@ To use the library, we create a *.env* file at the root of the project.
 The environment variables are defined inside of the file, and it can look like this:
 
 ```bash
-MONGODB_URI=mongodb+srv://fullstack:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
 PORT=3001
 ```
 
@@ -635,7 +635,7 @@ That can be done through the Heroku dashboard as follows:
 or from the command line with the command:
 
 ```bash
-heroku config:set MONGODB_URI='mongodb+srv://fullstack:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
+heroku config:set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
 ```
 
 Because GitHub is not used with Fly.io, also the file .env gets to the Fly.io servers when the app is deployed.
@@ -651,7 +651,7 @@ is to prevent .env from being copied to Fly.io by creating to the project root t
 and set the env value from the command line with the command:
 
 ```bash
-fly secrets set MONGODB_URI='mongodb+srv://fullstack:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
+fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
 ```
 
 ### Using database in route handlers
@@ -798,8 +798,8 @@ Path:   /api/notes/someInvalidId
 Body:   {}
 ---
 { CastError: Cast to ObjectId failed for value "someInvalidId" at path "_id"
-    at CastError (/Users/mluukkai/opetus/_fullstack/osa3-muisiinpanot/node_modules/mongoose/lib/error/cast.js:27:11)
-    at ObjectId.cast (/Users/mluukkai/opetus/_fullstack/osa3-muisiinpanot/node_modules/mongoose/lib/schema/objectid.js:158:13)
+    at CastError (/Users/powercat/comp227/part3-notes/node_modules/mongoose/lib/error/cast.js:27:11)
+    at ObjectId.cast (/Users/powercat/comp227/part3-notes/node_modules/mongoose/lib/schema/objectid.js:158:13)
     ...
 ```
 

@@ -685,7 +685,7 @@ The code determines that the data is to be sent with an HTTP POST request and th
 The data type is determined with a *Content-type* header.
 Then the data is sent as JSON string.
 
-The application code is available at <https://github.com/mluukkai/example_app>.
+The application code is available at <https://github.com/comp227/example_app>.
 It's worth remembering that the application is only meant to demonstrate the concepts of the course.
 The code follows a poor style of development in some measures, and should not be used as an example when creating your applications.
 The same is true for the URLs used.
@@ -856,7 +856,7 @@ Any sensible way of presenting the events is fine.
 
 All necessary information for doing this, and the next two exercises, can be found in the text of [this part](/part0/fundamentals_of_web_apps#forms-and-http-post).
 The idea of these exercises is to read the text through once more and to think through what is going on there.
-Reading the application [code](https://github.com/mluukkai/example_app) is not necessary, but it is of course possible.
+Reading the application [code](https://github.com/comp227/example_app) is not necessary, but it is of course possible.
 
 **Note** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor)
 syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/) markdown pages!

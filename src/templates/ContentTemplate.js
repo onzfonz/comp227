@@ -99,7 +99,7 @@ export default class ContentTemplate extends Component {
         if (type === 'tag' && name === 'picture') {
           const alt = children[0].attribs.alt
             ? children[0].attribs.alt
-            : 'fullstack content';
+            : 'comp227 content';
           return (
             <picture>
               <img

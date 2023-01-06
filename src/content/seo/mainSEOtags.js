@@ -1,7 +1,5 @@
 module.exports = [
-  'fullstack',
   'course',
-  'full stack',
   'comp227',
   'web',
   'React',

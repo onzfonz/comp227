@@ -596,7 +596,7 @@ If you wanted to add a like to the following blog post:
   _id: "5a43fde2cbd20b12a2c34e91",
   user: {
     _id: "5a43e6b6c37f3d065eaaa581",
-    username: "mluukkai",
+    username: "powercat",
     name: "Matti Luukkainen"
   },
   likes: 0,

@@ -174,7 +174,7 @@ Let's remove the failing code from the test.
 ### Writing to a form
 
 Let's extend our tests so that the test tries to log in to our application.
-We assume our backend contains a user with the username `mluukkai` and password `salainen`.
+We assume our backend contains a user with the username `powercat` and password `tigers`.
 
 The test begins by opening the login form.
 
@@ -222,8 +222,8 @@ We can access the first and the last input field on the page, and write to them 
 ```js
 it('user can login', function () {
   cy.contains('login').click()
-  cy.get('input:first').type('mluukkai')
-  cy.get('input:last').type('salainen')
+  cy.get('input:first').type('powercat')
+  cy.get('input:last').type('tigers')
 })  
 ```
 
@@ -274,8 +274,8 @@ describe('Note app',  function() {
   // ..
   it('user can log in', function() {
     cy.contains('login').click()
-    cy.get('#username').type('mluukkai')  // highlight-line    
-    cy.get('#password').type('salainen')  // highlight-line
+    cy.get('#username').type('powercat')  // highlight-line    
+    cy.get('#password').type('tigers')  // highlight-line
     cy.get('#login-button').click()  // highlight-line
 
     cy.contains('Matti Luukkainen logged in') // highlight-line
@@ -355,8 +355,8 @@ describe('Note app', function() {
   describe('when logged in', function() {
     beforeEach(function() {
       cy.contains('login').click()
-      cy.get('input:first').type('mluukkai')
-      cy.get('input:last').type('salainen')
+      cy.get('input:first').type('powercat')
+      cy.get('input:last').type('tigers')
       cy.get('#login-button').click()
     })
     // highlight-end
@@ -397,8 +397,8 @@ describe('Note app', function() {
 
   it('user can log in', function() {
     cy.contains('login').click()
-    cy.get('#username').type('mluukkai')
-    cy.get('#password').type('salainen')
+    cy.get('#username').type('powercat')
+    cy.get('#password').type('tigers')
     cy.get('#login-button').click()
 
     cy.contains('Matti Luukkainen logged in')
@@ -407,8 +407,8 @@ describe('Note app', function() {
   describe('when logged in', function() {
     beforeEach(function() {
       cy.contains('login').click()
-      cy.get('input:first').type('mluukkai')
-      cy.get('input:last').type('salainen')
+      cy.get('input:first').type('powercat')
+      cy.get('input:last').type('tigers')
       cy.get('#login-button').click()
     })
 
@@ -495,8 +495,8 @@ describe('Note app', function() {
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     const user = {
       name: 'Matti Luukkainen',
-      username: 'mluukkai',
-      password: 'salainen'
+      username: 'powercat',
+      password: 'tigers'
     }
     cy.request('POST', 'http://localhost:3001/api/users/', user) 
     // highlight-end
@@ -596,7 +596,7 @@ describe('Note app', function() {
 
   it.only('login fails with wrong password', function() {
     cy.contains('login').click()
-    cy.get('#username').type('mluukkai')
+    cy.get('#username').type('powercat')
     cy.get('#password').type('wrong')
     cy.get('#login-button').click()
 
@@ -688,7 +688,7 @@ Let's finish the test so that it also checks that the application does not rende
 ```js
 it('login fails with wrong password', function() {
   cy.contains('login').click()
-  cy.get('#username').type('mluukkai')
+  cy.get('#username').type('powercat')
   cy.get('#password').type('wrong')
   cy.get('#login-button').click()
 
@@ -721,8 +721,8 @@ Currently, we have the following tests:
 describe('Note app', function() {
   it('user can login', function() {
     cy.contains('login').click()
-    cy.get('#username').type('mluukkai')
-    cy.get('#password').type('salainen')
+    cy.get('#username').type('powercat')
+    cy.get('#password').type('tigers')
     cy.get('#login-button').click()
 
     cy.contains('Matti Luukkainen logged in')
@@ -735,8 +735,8 @@ describe('Note app', function() {
   describe('when logged in', function() {
     beforeEach(function() {
       cy.contains('login').click()
-      cy.get('input:first').type('mluukkai')
-      cy.get('input:last').type('salainen')
+      cy.get('input:first').type('powercat')
+      cy.get('input:last').type('tigers')
       cy.get('#login-button').click()
     })
 
@@ -771,7 +771,7 @@ describe('when logged in', function() {
   beforeEach(function() {
     // highlight-start
     cy.request('POST', 'http://localhost:3001/api/login', {
-      username: 'mluukkai', password: 'salainen'
+      username: 'powercat', password: 'tigers'
     }).then(response => {
       localStorage.setItem('loggedNoteappUser', JSON.stringify(response.body))
       cy.visit('http://localhost:3000')
@@ -815,7 +815,7 @@ Using our custom command is easy, and our test becomes cleaner:
 describe('when logged in', function() {
   beforeEach(function() {
     // highlight-start
-    cy.login({ username: 'mluukkai', password: 'salainen' })
+    cy.login({ username: 'powercat', password: 'tigers' })
     // highlight-end
   })
 

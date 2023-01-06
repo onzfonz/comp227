@@ -374,7 +374,7 @@ If you try defining a component as follows:
 const footer = () => {
   return (
     <div>
-      greeting app created by <a href='https://github.com/mluukkai'>mluukkai</a>
+      greeting app created by <a href='https://github.com/onzfonz'>onzfonz</a>
     </div>
   )
 }

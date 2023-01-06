@@ -19,7 +19,7 @@ which will probably never be completely rewritten using the updated syntax.
 
 Let's get to know the main features of Class Components by producing yet another very familiar anecdote application.
 We store the anecdotes in the file *db.json* using *json-server*.
-The contents of the file are lifted from [here](https://github.com/fullstack-hy/misc/blob/master/anecdotes.json).
+The contents of the file are lifted from [here](https://github.com/comp227/misc/blob/main/anecdotes.json).
 
 The initial version of the Class Component looks like this
 

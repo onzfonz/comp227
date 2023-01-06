@@ -348,7 +348,7 @@ const Login = (props) => {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    props.onLogin('mluukkai')
+    props.onLogin('powercat')
     navigate('/')
   }
 

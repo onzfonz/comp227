@@ -66,7 +66,7 @@ export default function PartIntroTemplate({ data }) {
               content={[
                 {
                   backgroundColor: colors[partColors[part]],
-                  text: 'Fullstack',
+                  text: 'COMP 227',
                   link: `/${lang === 'en' ? '' : `${lang}/`}#course-contents`,
                 },
                 {

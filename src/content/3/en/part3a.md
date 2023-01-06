@@ -138,7 +138,7 @@ Also the address <http://localhost:3001/foo/bar> will display the same content.
 ```bash
 ➜  hello npm start
 
-> hello@1.0.0 start /Users/mluukkai/opetus/_2019fullstack-code/part3/hello
+> hello@1.0.0 start /Users/powercat/comp227/part3/hello
 > node index.js
 
 Server running on port 3001

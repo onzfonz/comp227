@@ -1061,7 +1061,7 @@ In [exercise 8.10](/part8/typing_the_express_app#exercises-8-10-8-11) we impleme
 Since we now have a page for viewing a patient's information, it would be nice to expand our data a bit.
 Let's add an `Entry` field to our patient data so that a patient's data contains their medical entries, including possible diagnoses.
 
-Let's ditch our old patient seed data from the backend and start using [this expanded format](https://github.com/fullstack-hy/misc/blob/master/patients.ts).
+Let's ditch our old patient seed data from the backend and start using [this expanded format](https://github.com/comp227/misc/blob/main/patients.ts).
 
 **Notice:** This time, the data is not in the .json format but instead in the .ts format.
 You should already have the complete `Gender` and `Patient` types implemented, so only correct the paths where they are imported from if needed.

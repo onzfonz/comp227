@@ -125,7 +125,7 @@ would play out as follows (NB, this is not actually working Java code):
 ```java
 HTTPRequest request = new HTTPRequest();
 
-String url = "https://fullstack-exampleapp.herokuapp.com/data.json";
+String url = "https://comp227-exampleapp.herokuapp.com/data.json";
 List<Note> notes = request.get(url);
 
 notes.forEach(m => {

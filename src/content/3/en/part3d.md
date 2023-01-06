@@ -133,19 +133,19 @@ For production, we have to set the database URL in the service that is hosting o
 In Fly.io that is done via `fly secrets set`:
 
 ```bash
-fly secrets set MONGODB_URI='mongodb+srv://fullstack:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
+fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
 ```
 
 For Heroku, the same is done with the `heroku config:set` command.
 
 ```bash
-heroku config:set MONGODB_URI=mongodb+srv://fullstack:secretpasswordhere@cluster0-ostce.mongodb.net/note-app?retryWrites=true
+heroku config:set MONGODB_URI=mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/note-app?retryWrites=true
 ```
 
 **NB:** if the command causes an error, give the value of MONGODB_URI in apostrophes:
 
 ```bash
-heroku config:set MONGODB_URI='mongodb+srv://fullstack:secretpasswordhere@cluster0-ostce.mongodb.net/note-app?retryWrites=true'
+heroku config:set MONGODB_URI='mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/note-app?retryWrites=true'
 ```
 
 The application should now work.
@@ -160,7 +160,7 @@ For some reason the URL of the database was undefined.
 The `heroku config` command revealed that I had accidentally defined the URL to the `MONGO_URL` environment variable when the code expected it to be in `MONGODB_URI`.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of
-[this GitHub repository](https://github.com/fullstack-hy2019/part3-notes-backend/tree/part3-5).
+[this GitHub repository](https://github.com/comp227-hy2019/part3-notes-backend/tree/part3-5).
 
 </div>
 
@@ -212,7 +212,7 @@ the server must respond with an appropriate status code and error message.
 
 #### 3.21 Deploying the database backend to production
 
-Generate a new "full stack" version of the application by creating a new production build of the frontend, and copying it to the backend repository.
+Generate a new "comp227" version of the application by creating a new production build of the frontend, and copying it to the backend repository.
 Verify that everything works locally by using the entire application from the address <http://localhost:3001/>.
 
 Push the latest version to Heroku and verify that everything works there as well.

@@ -46,7 +46,7 @@ Let's assume that the `users` collection contains two users:
 ```js
 [
   {
-    username: 'mluukkai',
+    username: 'powercat',
     _id: 123456,
   },
   {
@@ -86,7 +86,7 @@ Document databases do not demand the foreign key to be stored in the note resour
 ```js
 [
   {
-    username: 'mluukkai',
+    username: 'powercat',
     _id: 123456,
     notes: [221212, 221255],
   },
@@ -106,7 +106,7 @@ it might be beneficial to nest the entire notes array as a part of the documents
 ```js
 [
   {
-    username: 'mluukkai',
+    username: 'powercat',
     _id: 123456,
     notes: [
       {
@@ -304,9 +304,9 @@ describe('when there is initially one user in db', () => {
     const usersAtStart = await helper.usersInDb()
 
     const newUser = {
-      username: 'mluukkai',
+      username: 'powercat',
       name: 'Matti Luukkainen',
-      password: 'salainen',
+      password: 'tigers',
     }
 
     await api
@@ -358,7 +358,7 @@ describe('when there is initially one user in db', () => {
     const newUser = {
       username: 'root',
       name: 'Superuser',
-      password: 'salainen',
+      password: 'tigers',
     }
 
     const result = await api
@@ -432,7 +432,7 @@ For making new users in a production or development environment, you may send a 
 {
     "username": "root",
     "name": "Superuser",
-    "password": "salainen"
+    "password": "tigers"
 }
 
 ```

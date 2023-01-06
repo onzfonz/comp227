@@ -708,7 +708,7 @@ When we bundle the application again, the size of the resulting *main.js* decrea
 
 ```js
 $ ls -l build/main.js
--rw-r--r--  1 mluukkai  ATKK\hyad-all  227651 Feb  7 15:58 build/main.js
+-rw-r--r--  1 powercat  ATKK\hyad-all  227651 Feb  7 15:58 build/main.js
 ```
 
 The output of the minification process resembles old-school C code; all of the comments and even unnecessary whitespace

@@ -122,8 +122,8 @@ The following is printed to the console:
 
 ```bash
 (node:32911) UnhandledPromiseRejectionWarning: Error: secretOrPrivateKey must have a value
-    at Object.module.exports [as sign] (/Users/mluukkai/opetus/_2019fullstack-koodit/osa3/notes-backend/node_modules/jsonwebtoken/sign.js:101:20)
-    at loginRouter.post (/Users/mluukkai/opetus/_2019fullstack-koodit/osa3/notes-backend/controllers/login.js:26:21)
+    at Object.module.exports [as sign] (/Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/sign.js:101:20)
+    at loginRouter.post (/Users/powercat/comp227/part3/notes-backend/controllers/login.js:26:21)
 (node:32911) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 2)
 ```
 
@@ -246,10 +246,10 @@ If we for example remove a few characters from the token and try creating a new 
 
 ```bash
 JsonWebTokenError: invalid signature
-    at /Users/mluukkai/opetus/_2019fullstack-koodit/osa3/notes-backend/node_modules/jsonwebtoken/verify.js:126:19
-    at getSecret (/Users/mluukkai/opetus/_2019fullstack-koodit/osa3/notes-backend/node_modules/jsonwebtoken/verify.js:80:14)
-    at Object.module.exports [as verify] (/Users/mluukkai/opetus/_2019fullstack-koodit/osa3/notes-backend/node_modules/jsonwebtoken/verify.js:84:10)
-    at notesRouter.post (/Users/mluukkai/opetus/_2019fullstack-koodit/osa3/notes-backend/controllers/notes.js:40:30)
+    at /Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/verify.js:126:19
+    at getSecret (/Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/verify.js:80:14)
+    at Object.module.exports [as verify] (/Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/verify.js:84:10)
+    at notesRouter.post (/Users/powercat/comp227/part3/notes-backend/controllers/notes.js:40:30)
 ```
 
 There are many possible reasons for a decoding error.
