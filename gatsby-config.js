@@ -117,11 +117,12 @@ const plugins = [
   {
     resolve: `gatsby-plugin-google-analytics`,
     options: {
-      trackingId: 'G-SCES2E0BD7',
-      head: false,
+      trackingId: 'G-47G19EZV14',
+      head: true,
       respectDNT: true,
       exclude: [],
       cookieDomain: 'comp227.djosv.com',
+      enableWebVitalsTracking: true
     },
   },
   {
