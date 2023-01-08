@@ -1,7 +1,7 @@
 {
   "en": {
     "mainTitle": "COMP 227",
-    "intro": "Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This course will introduce you to modern JavaScript-based web development. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js.",
+    "intro": "Learn React, Node.js, MongoDB, TypeScript and Redux in one go! This course will introduce you to modern JavaScript-based web development. The main focus is on building single page applications with ReactJS that use REST APIs built with Node.js.",
     "current": [
       "Welcome to COMP 227!  As I go through the rest of the site, you will be noticing changes.  Please be patient with me as we make all of those changes happen",
       "You can discuss the course and related topics in our dedicated group on <a target='_blank' href='https://discord.gg/VRUKRxCJ95'>Discord</a> and via Canvas."

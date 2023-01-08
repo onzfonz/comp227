@@ -270,9 +270,6 @@ WebSockets is an API provided by the browser, which is not yet fully supported o
 Instead of directly using the WebSocket API, it is advisable to use the [Socket.io](https://socket.io/) library,
 which provides various **fallback** options in case the browser does not have full support for WebSockets.
 
-In [part 8](/part8), our topic is GraphQL,
-which provides a nice mechanism for notifying clients when there are changes in the backend data.
-
 ### Virtual DOM
 
 The concept of the Virtual DOM often comes up when discussing React.

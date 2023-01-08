@@ -7,7 +7,6 @@ module.exports = [
   'Node.js',
   'Node',
   'MongoDB',
-  'GraphQL',
   'REST',
   'REST api',
   'web development',
