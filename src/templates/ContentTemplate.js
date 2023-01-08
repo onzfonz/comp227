@@ -154,7 +154,7 @@ export default class ContentTemplate extends Component {
       <Layout isCoursePage={true}>
         <SEO
           lang={lang}
-          title={`Fullstack ${'part'}${part} | ${this.state.h1Title}`}
+          title={`COMP227 ${'part'}${part} | ${this.state.h1Title}`}
           description={mainSEOdescription[lang]}
           keywords={[
             ...mainSEOtags,
@@ -195,7 +195,7 @@ export default class ContentTemplate extends Component {
                 content={[
                   {
                     backgroundColor: colorCode,
-                    text: 'Fullstack',
+                    text: 'COMP227',
                     link: `/${lang === 'en' ? '' : `${lang}/`}#course-contents`,
                   },
                   {
