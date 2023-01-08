@@ -110,7 +110,8 @@ addNote = event => {
 }
 ```
 
-The new note returned by the backend server is added to the list of notes in our application's state in the customary way of using the `setNotes` function and then resetting the note creation form.
+The new note returned by the backend server is added to the list of notes in our application's state
+in the customary way of using the `setNotes` function and then resetting the note creation form.
 An [important detail](/part1/a_more_complex_state_debugging_react_apps#handling-arrays)
 to remember is that the `concat` method does not change the component's original state,
 but instead creates a new copy of the list.
@@ -275,7 +276,8 @@ axios.put(url, note).then(response => {
   // ...
 ```
 
-This is not recommended because the variable `note` is a reference to an item in the `notes` array in the component's state, and as we recall we must never mutate state directly in React.
+This is not recommended because the variable `note` is a reference to an item in the `notes` array in the component's state,
+and as we recall we must never mutate state directly in React.
 
 It's also worth noting that the new object `changedNote` is only a so-called
 [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
@@ -756,7 +758,9 @@ const toggleImportanceOf = id => {
 }
 ```
 
-The error message is displayed to the user with the trusty old [alert](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) dialog popup, and the deleted note gets filtered out from the state.
+The error message is displayed to the user with the trusty old
+[alert](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) dialog popup,
+and the deleted note gets filtered out from the state.
 
 Removing an already deleted note from the application's state is done with the array
 [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method,

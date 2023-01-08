@@ -334,7 +334,8 @@ const notesToShow = showAll
   : notes.filter(note => note.important === true)
 ```
 
-The definition uses the [conditional](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) operator also found in many other programming languages.
+The definition uses the [conditional](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) operator
+also found in many other programming languages.
 
 The operator functions as follows.
 If we have:
