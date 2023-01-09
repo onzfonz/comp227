@@ -3,6 +3,7 @@ module.exports = {
     '0': {
       a: 'General info',
       b: 'Fundamentals of Web apps',
+      c: 'Configuring your machine for this course'
     },
     '1': {
       a: 'Introduction to React',
