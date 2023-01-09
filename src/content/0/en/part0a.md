@@ -42,10 +42,11 @@ The code of the example applications for each step of each part can be found on 
 
 ### Taking the course
 
-The course contains fourteen parts, the first of which is numbered 0 for consistency with past iterations.
-One part corresponds loosely to one week (averaging 15-20 hours) of studying, but the speed of completing the course is flexible.
+The course contains 10 parts, the first of which is numbered 0 for consistency with past iterations.
+One part corresponds loosely to one week (averaging 15-20 hours) of studying,
+but this varies as has been taken into account with respect to coursework.
 
-Proceeding from part *n* to part *n+1* is not sensible before enough know-how of the topics in part *n*  has been achieved.
+For parts 0-5, Proceeding from part *n* to part *n+1* is not sensible before enough know-how of the topics in part *n*  has been achieved.
 In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning).
 You should only proceed to the next part after doing enough of the previous part's exercises.
 
@@ -53,7 +54,7 @@ In parts 1-4 you are expected to do *at least* all of the exercises that are not
 Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts.
 Other parts do not have asterisk-marked exercises since there is no similar dependency on previous parts.
 
-You will need to complete the course as specified on Canvas and based on those due dates
+You will need to complete the course and the course parts as specified on Canvas and based on those due dates, as some of the course parts are optional.
 
 ### Course channel in Discord
 
@@ -63,11 +64,11 @@ You will be expected to be active on Discord!
 
 ### Parts and completion
 
-Full Stack studies consist of the core course and multiple extensions.
+The COMP 227 course consists of the core course and multiple extensions.
 
 #### Parts 0-5 (core course) - Full Stack Web Development
 
-Part of your grade for the course will be based on the total number of submitted exercises for parts 0-7 (including exercises marked with an asterisk).
+Part of your grade for the course will be based on the total number of submitted exercises for parts 0-5 (including exercises marked with an asterisk).
 
  are calculated as follows:
 
@@ -88,15 +89,12 @@ You can only take the exam after submitting a sufficient number of exercises.
 It is not wise in practice to take the exam immediately after submitting the critical number of exercises.
 The exam is the same and does not count toward your grade (you just need to pass it).
 
-For the other modules, here's the number of exercises that you should submit.
-
-| Module Number | total minimum exercises needed |
-| --- | --- |
-| 6 | 127 |
-| 7 | 138 |
+For the other modules, we will determine at a later date which ones will be completed, but these may be done in a different order sequence.
 
 | Additional Modules | Module name | Minimum Exercises to submit | work needed |
 | --- | --- | --- | --- |
+| 6  | Redux | 24 | 1 |
+| 7  | React router, hooks & styling | 24 | 1 |
 | 8  | TypeScript | 24 | 1 |
 | 9 | React Native | 10 | 1 |
 
@@ -105,12 +103,15 @@ For the other modules, here's the number of exercises that you should submit.
 How to study the course – instructions in a nutshell:
 
 - Do the exercises. The exercises are submitted through GitHub and marking them as done on Canvas.
+- You need to work regularly.
+  The easiest way to fall behind in the course is to not work on this on a daily basis.
+  Set yourself an alarm...do anything! But make it a habit of working on it at least 3 times a week for a little bit of time.
 
 ### Submitting exercises
 
-If you are submitting exercises from different parts to the same repository, use an appropriate system for naming your directories.
-You can of course create a new repository for each part.
-Make sure you use GitHub classroom for your portion.
+You will be submitting exercises via the GitHub classroom repos that will be provided on Canvas.
+**All of the exercises from this website must be submitted through GitHub.**
+You will also be expected to submit your progress for exercises regularly, even if it is not finished.
 
 Exercises are submitted **one part at a time**.
 Once you have submitted exercises for a part, you can no longer submit any more exercises for that part.
@@ -138,17 +139,15 @@ Using the [Chrome browser](https://www.google.com/chrome/) is recommended for th
 Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/),
 which provides the same range of features.
 
-The course exercises are submitted to GitHub, so Git must be installed and you should know how to use it.
-For instructions, see [Git and GitHub tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
+In a couple of parts from now we'll do a deeper dive into two of the tools that we will be using extensively - GitHub and WebStorm.
 
-Install a sensible text editor that supports web development.
-[Visual Studio Code](https://code.visualstudio.com/) is highly recommended.
+The course exercises will be submitted to GitHub, so Git must be installed and you should know how to use it.
+For more instructions beyond [part c](part0c.md), see [Git and GitHub tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
+Please ensure that you signup for the education pack.
 
-Don't code with nano, Notepad or Gedit.
-NetBeans isn't very good for web development either.
-It is also rather heavy in comparison to Visual Studio Code.
+[Webstorm](https://www.jetbrains.com/webstorm/download/) from JetBrains will also be the text editor you will install in [part c](part0c.md)
 
-Also, install [Node.js](https://nodejs.org/en/).
+You will also need to install [Node.js](https://nodejs.org/en/).
 The material has been done with version 16.13.2, so don't install any version older than that.
 See [Node.js installation instructions](https://nodejs.org/en/download/package-manager/).
 
