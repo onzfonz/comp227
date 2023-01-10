@@ -41,7 +41,7 @@ git config --list
 ```
 
 If by doing that you get a list of options, two of them being your correct `user.name` and `user.email` (that you have in GitHub),
-then you have almost everything you need to [move on to step 4](#4-join-our-github-classroom).
+then you have almost everything you need to [move on to step 4](#4-install-node).
 The last thing to check would be if you have a package manager.
 We'll explain that below:
 
@@ -55,7 +55,7 @@ Just make sure your terminal program is open and type (or copy)
 
 |Windows|Mac|
 |:---|:--|
-|`winget install -e --id Git.Git`|`brew install git`|
+|`winget install --id Git.Git -e --source winget`|`brew install git`|
 
 Press enter and wait.  It's not too bad.  If it complains, you may need administrative privileges, but just let it do its work.
 
@@ -76,7 +76,7 @@ If you are on a lab
 computer, you may need to select the portable version once you get to
 the windows page.
 
-![git-scm download link](../../images/0/partc/image1.png)
+![git-scm download link](../../images/0/partc/gitportable.png)
 
 #### Get Git Installed
 
@@ -139,20 +139,45 @@ git config --list
 
 You should now see your username and email displayed among lots of other options.
 
-### 4: Join our Github Classroom
+### 4: Install Node
+
+Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
+If you already have node installed,
+make sure it is at least version 16.13.2.
+We will discuss node.js further in [part 1](../../1/en/part1.md).
+
+I've taken the [installation instructions](https://nodejs.org/en/download/package-manager/) for node and provided the most popular options here.
+For now, open up your terminal of choice and type:
+
+|Windows|Mac|
+|:---|:--|
+|`winget install OpenJS.NodeJS`|`brew install node`|
+
+If we run into issues we may need to install a specific version of node in the future
+(since the bulk of this course was written with Node 16.13.2).
+If that is the case, you could also install **[NVM](https://github.com/nvm-sh/nvm)**,
+which allows us to have different versions of node.js on our computer and to switch between them.
+
+This can be done via these two commands.
+|Windows|Mac|
+|:---|:--|
+|`winget install CoreyButler.NVMforWindows`|`brew install nvm`|
+
+Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically installed with Node.js.
+We will be actively using npm throughout the course.
+Node also comes with [npx](https://www.npmjs.com/package/npx),
+which we'll need a few times.
+
+### 5: Join our Github Classroom
 
 At this point, you have made sure that your git configuration is correct.
 
-Next, you'll visit this URL:
+Then, you'll visit this URL:
 
 **<http://go.djosv.com/227start>**
 
-You'll be presented with a window like this (while this says 55, imagine it is replaced with 227 instead):
-
-![GitHub classroom join link](../../images/0/partc/classroominit.png)
-
-Select your email from the list below, and continue, making sure to accept any of the authorizations that are present and to
-Accept the assignment.
+Make sure you login and accept any of the authorizations that are present.
+Next, Accept the assignment.
 
 ![GitHub classroom Accept assignment](../../images/0/partc/classroomaccept.png)
 
@@ -175,7 +200,7 @@ Make sure to save this URL that was just created specifically for you.
 You will need it in the next step, so please also just keep this page open.
 Otherwise if you close it', you'll need to navigate back through it by going to <classroom.github.com> and logging yourself in.
 
-### 5: Installing WebStorm
+### 6: Install WebStorm
 
 For this course, I will be asking that you use [Webstorm](https://www.jetbrains.com/webstorm/download/) from JetBrains.
 You can do this with the package manager by merely typing `winget install JetBrains.WebStorm` or `brew install --cask webstorm` in your Terminal depending on your configuration.
@@ -218,7 +243,7 @@ Now that we have WebStorm and have a GitHub repo, we are almost ready to connect
 Before we can do that though, we need to generate credentials that the computer can use to login to GitHub via Webstorm.
 Let's do that now.  
 
-### 6: Generate a GitHub token
+### 7: Generate a GitHub token
 
 In the past two years, with even more threats to security,
 GitHub has moved to having us use tokens to access our projects from our computers.
@@ -242,7 +267,7 @@ Make sure to copy it someplace safe or leave the page open for now.
 If you do lose the token, you can safely generate a new one.
 You may also want to consider deleting the old one, which prevents it from being used anymore.
 
-### 7: Connecting Webstorm with GitHub
+### 8: Connect Webstorm with GitHub
 
 Now what we will do is:
 
@@ -273,7 +298,7 @@ For me this allows me to not have to worry about learning new keyboard shortcuts
 I can continue using handy shortcuts from eclipse like:
 (***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Ctrl-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
 
-### 8: Configure your settings
+#### Configure your settings
 
 When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
 (but not too much initially, spend no more than 10-15 minutes initially.
@@ -284,7 +309,7 @@ Pick the file that will work best for you in navigating using keyboard shortcuts
 
 ![keymap selection](https://i.imgur.com/g7eYe1H.gif)
 
-### 9: Making changes
+### 9: Make changes
 
 By this point, your project should be open.
 
@@ -301,7 +326,7 @@ That is used to create a commit, which is a record of the changes that you have 
 Committing small changes is a good idea, because then you can more easily keep track of (and potentially revert changes).
 It's also a good way to document what has been added or changed as well.
 
-### 10: Assignment Submission
+### 10: Submit Assignment
 
 For every project that we have thereafter, there will most likely be a new repo that you'll need to add to Webstorm using some of the steps that we've highlighted here.
 For every repo you'll need to accept the assignment and open up a new project from VCS.
@@ -312,7 +337,13 @@ To submit the assignment I would like you to edit the file via Webstorm to add y
 You should also upload a screenshot of your project open in webstorm to the repo as well.
 You can [verify that your changes appear on GitHub in the readme file](#verifying-changes-made-it-to-github).
 
-### Optional: Learn to use git via the command line
+### Recommended: Learn to use git via the command line
+
+**It's vital that you feel comfortable using git.**
+
+If you have not worked with Git or GitHub at all and/or still feel uneasy about using it,
+please follow along with the tutorial below.
+For further reinforcement, you may also want to see this [Git and GitHub tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
 
 While the workflow in JetBrains is fairly good for what we want,
 (especially if you start leaning into keyboard shortcuts),
@@ -368,15 +399,16 @@ via your explorer of choice.
 
 ![git terminal showing main as repo](../../images/0/partc/image5.png)
 
-You'll also notice that for this lab, if you look at the directroy where you cloned into, you should see two files ```.gitignore``` and ```.gitattributes``` and a folder called ```.git```.
+You'll also notice that for this lab, if you look at the directroy where you cloned into, you should see a file ```.gitignore``` and a folder called ```.git```.
 If you do not see these files, then you should
 [turn on the visibility for them](https://support.microsoft.com/en-us/windows/show-hidden-files-0320fe58-0117-fd59-6851-9b7f9840fdb2).
 
-**You do not want to play around or modify the git folder.**
+**You do not want to play around or modify the .git folder.**
+
 You also want to be careful not to create repositories with git inside of other repositories that have a git folder.
 So make sure that any projects that you clone have no nested or cloned projects inside.
 
-For this lab, we were only interested in getting you used to the
+For this part, we were only interested in getting you used to the
 mechanics of adding, committing and pushing changes up to GitHub.
 So here’s what I’m going to ask you to do.
 
@@ -384,13 +416,15 @@ So here’s what I’m going to ask you to do.
 
 2. After importing the project via webstorm
 type ```git status``` to see what’s changed.
+If nothing has changed, you can add a file or make a new file in the directory.
 
 ![git status showing lots of untracked files](../../images/0/partc/image7.png)
 
-Notice the red text and the message that git gives us.
+Once you add something, notice the red text and the message that git gives us.
 The files you see will be different, as these images are merely samples.
-It tells us that there are many files that are **untracked**, which means that git is not monitoring them for any changes.
-If the file changes, git knows nothing about it.
+It tells us that there are many files that are **untracked**,
+which means that git is not monitoring them for any changes.
+When untracked files change, *git knows nothing about them*.
 So let's add a set of files so that git starts tracking them for any changes.
 Let's practice adding one set of files to what will be our next commit.  You can do this with your uploaded picture of your webstorm setup.
 
@@ -400,7 +434,7 @@ git add my_personalized_webstorm_setup.png
 
 (Don't forget about tab completion!  I almost never type anything out anymore, just a few letters and then press ***Tab*** to have the shell give its best suggestion)
 
-If you type ```git status``` again, you'll notice that now you have a file that is staged, while the other files and folders are still unstaged.
+If you type ```git status``` again, you'll notice that now you have a file that is staged, while the other files and folders would still be unstaged.
 In the example above if i had added UserSettings, it would look like this:
 
 ![git status showing staged and unstaged files](../../images/0/partc/usersettingsadded.png)

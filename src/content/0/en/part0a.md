@@ -70,9 +70,13 @@ The COMP 227 course consists of the core course and multiple extensions.
 
 Part of your grade for the course will be based on the total number of submitted exercises for parts 0-5 (including exercises marked with an asterisk).
 
- are calculated as follows:
+**Do not assume this is where your grade will come from**.
 
-| exercises    | grade for exercise portion    |
+We will be having other exercises and assignment as well that will be just as important to your grade.
+
+A rough calculation for for this portion is as follows:
+
+| exercises    | rough grade for exercise portion    |
 | ------------ | :------: |
 | 138          | A        |
 | 127          | B+        |
@@ -82,7 +86,9 @@ Part of your grade for the course will be based on the total number of submitted
 | 83           | D        |
 | 72           | F        |
 
-If you wish to pass the course, you must also complete the course exam. The exam does not count towards your final grade, but you must pass it.
+If you wish to pass the course, you will need to submit the assignments as listed in Canvas.
+You must also complete the course exam.
+The exam does not count towards your final grade, but you must pass it.
 More info about the exam will be discussed via canvas and discord.
 
 You can only take the exam after submitting a sufficient number of exercises.
@@ -139,22 +145,12 @@ Using the [Chrome browser](https://www.google.com/chrome/) is recommended for th
 Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/),
 which provides the same range of features.
 
-In a couple of parts from now we'll do a deeper dive into two of the tools that we will be using extensively - GitHub and WebStorm.
+In [part c](part0c.md) we'll provide detailed instructions for installing some of the tools that we will be using extensively:
+[Git](https://git-scm.org) (via GitHub),
+[Webstorm](https://www.jetbrains.com/webstorm/download/)
+and [Node.js](https://nodejs.org/en/).
 
 The course exercises will be submitted to GitHub, so Git must be installed and you should know how to use it.
-For more instructions beyond [part c](part0c.md), see [Git and GitHub tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
-Please ensure that you signup for the education pack.
-
-[Webstorm](https://www.jetbrains.com/webstorm/download/) from JetBrains will also be the text editor you will install in [part c](part0c.md)
-
-You will also need to install [Node.js](https://nodejs.org/en/).
-The material has been done with version 16.13.2, so don't install any version older than that.
-See [Node.js installation instructions](https://nodejs.org/en/download/package-manager/).
-
-Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically installed with Node.js.
-We will be actively using npm throughout the course.
-Node also comes with [npx](https://www.npmjs.com/package/npx),
-which we'll need a few times.
 
 ### Typos in the material
 
