@@ -57,7 +57,7 @@
   }
 
   pre {
-    margin: 2rem 0;
+    margin-left: 1rem;
     background-color: var(--color-pre-background);
     color: $white;
   }
@@ -72,6 +72,7 @@
   }
 
   img {
+    margin-left: 1rem;
     border-width: 0px;
     border-style: solid;
     border-color: transparent;
