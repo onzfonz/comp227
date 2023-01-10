@@ -39,6 +39,9 @@ export default class ContentTemplate extends Component {
     const links = Array.from(
       document.querySelectorAll('a:not(.skip-to-content')
     );
+    const strongs = Array.from(
+        document.querySelectorAll('strong')
+    );
     const h1 = document.querySelector('h1');
     const h3 = document.querySelectorAll('h3');
     const h3Arr = Array.from(h3).map(t => t.innerText);
@@ -62,6 +65,11 @@ export default class ContentTemplate extends Component {
 
       return null;
     });
+
+    strongs.map(i => {
+        i.style = `color: ${colors[partColors[frontmatter.part]]}`;
+        return null;
+    })
 
     this.setState({
       h1Title: h1.innerText,
