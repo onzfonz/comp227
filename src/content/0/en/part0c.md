@@ -192,9 +192,8 @@ Once accepted you'll be greeted with this image asking you to refresh.
 Wait a minute or two, and then follow the lead given by GitHub, refresh the page, then click on the repo name, which will have your own GitHub handle on it as part of the link.
 That will take you to the GitHub site where you will see your repository, with your handle at the end of the repository name.
 Click on the green code button ![green code button icon](../../images/0/partc/greencode.png)
-and then the copy button ![copy button icon](../../images/0/partc/image8.png) to copy the URL, as shown here:
-
-![animation accepting and clicking on the assignment](../../images/0/partc/gitacceptcopy.gif)
+and then the copy button ![copy button icon](../../images/0/partc/image8.png) to copy the URL,
+as shown via this [animation accepting and clicking on the assignment](https://imgur.com/5Tv7mVM)
 
 Make sure to save this URL that was just created specifically for you.
 You will need it in the next step, so please also just keep this page open.
@@ -254,11 +253,11 @@ Because Webstorm will be constantly communicating with GitHub, let's generate a 
 
 Go back to [GitHub](http://github.com) and log in,
 then click on your profile icon in the upper right,
-and then go to [*Settings->Developer settings->Personal Access Tokens->Tokens (classic)->Generate new token->Generate new token (classic)*](../../images/0/partc/reaching_token_page.gif).
+and then go to [*Settings->Developer settings->Personal Access Tokens->Tokens (classic)->Generate new token->Generate new token (classic)*](https://imgur.com/S1E0tQc).
 Then give the token a name,
 set expiration to *Custom* (providing a date up to 1 year from now) and select the ```repo, workflow, read:org and gist``` checkboxes for the scopes.
 Once you do that, scroll all the way down and click the green Generate new Token.
-[I did another short animation of this as well.](../../images/0/partc/token_scopes.gif)
+[I did another short animation of this as well.](https://imgur.com/LUAt5DU)
 You'll then see a page that has the token that says to copy it because you won't be able to see it again.
 
 ![token about to expire](../../images/0/partc/github_token_ready.png)
@@ -281,9 +280,7 @@ Now what we will do is:
 
 Following all of these steps would result in the project opening up, with it opening up the *README.md* file.
 
-Here's a recap in a relooping gif of all of these steps:
-
-![doing token and repo and all for the first time](../../0/../images/0/partc/webstorm_token.gif)
+Here's a recap in a [relooping gif of all of these steps that you should see](https://imgur.com/UDQXB6V)
 
 #### Other permissions
 
@@ -306,16 +303,15 @@ I'll go over a few different settings that I've found useful.
 
 To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
 Pick the file that will work best for you in navigating using keyboard shortcuts.
-
-![keymap selection](https://i.imgur.com/g7eYe1H.gif)
+This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
 
 ### 9: Make changes
 
 By this point, your project should be open.
 
-What you should do is to watch this animation a few times to see how to make changes to the markdown file and how to send those changes so that they are recorded on GitHub.
-
-![making changes in webstorm](../../images/0/partc/webstorm_initial_push.gif)
+What you should do is to watch
+[this animation a few times to see how to make changes to the markdown file](https://imgur.com/blj5aGh)
+and how to send those changes so that they are recorded on GitHub.
 
 Because we are editing a markdown file, Webstorm defaults for it to be in preview mode,
 but if I were to have clicked the middle button it would have shown a split preview between text and what it looks like. (instead of flipping back and forth)
@@ -512,9 +508,7 @@ push was indeed successful.
 ### Verifying changes made it to GitHub
 
 Once you completed the steps and push, verify that you have in fact finished by visiting **github.com** and clicking on your repository.
-Once there, follow the gif below:
-
-![verifying the commits were in fact made on GitHub](../../images/0/partc/githubprepcheck.gif)
+Once there, you can click to see [this gif animation that helps you verify that the commits were made on GitHub](https://imgur.com/7rNTgGF)
 
 Like the image, you should see your changes.
 If github.com
