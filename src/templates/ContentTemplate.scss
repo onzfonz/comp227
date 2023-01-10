@@ -65,7 +65,8 @@
   code.language-text {
     background-color: rgba(var(--color-main), 0.6);
     color: rgba(var(--color-main), 0.6);
-    font-family: Courier;
+    font-family: 'SFMono-Regular', Consolas, 'Roboto Mono', 'Droid Sans Mono',
+    'Liberation Mono', Menlo, Courier, monospace;
     font-weight: bold;
     padding: 2px 0px 0px 5px;
   }

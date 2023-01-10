@@ -1,5 +1,5 @@
 html {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -92,7 +92,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-size: 1em;
 }
 figure {
@@ -183,7 +183,7 @@ textarea {
   font: inherit;
 }
 html {
-  font: 112.5%/1.45em 'IBM Plex Mono', monospace;
+  font: 112.5%/1.45em 'Alegreya Sans', monospace;
   box-sizing: border-box;
   overflow-y: scroll;
 }
@@ -198,7 +198,7 @@ html {
 }
 body {
   color: hsla(var(--color-text-hsl), 0.8);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-weight: normal;
   word-wrap: break-word;
   font-kerning: normal;
@@ -228,7 +228,7 @@ h1 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 2.25rem;
@@ -244,10 +244,10 @@ h2 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-weight: bold;
   text-rendering: optimizeLegibility;
-  font-size: 1.62671rem;
+  font-size: 2.25rem;
   line-height: 1.1;
 }
 h3 {
@@ -260,10 +260,10 @@ h3 {
   margin-top: 2rem;
   margin-bottom: -0.5rem;
   color: inherit;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-weight: bold;
   text-rendering: optimizeLegibility;
-  font-size: 1.38316rem;
+  font-size: 1.75rem;
   line-height: 1.1;
 }
 h4 {
@@ -276,10 +276,10 @@ h4 {
   margin-top: 2rem;
   margin-bottom: -1rem;
   color: inherit;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-weight: bold;
   text-rendering: optimizeLegibility;
-  font-size: 1rem;
+  font-size: 1.25rem;
   line-height: 1.1;
 }
 h5 {
@@ -292,10 +292,10 @@ h5 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-weight: bold;
   text-rendering: optimizeLegibility;
-  font-size: 0.85028rem;
+  font-size: 1rem;
   line-height: 1.1;
 }
 h6 {
@@ -308,7 +308,7 @@ h6 {
   padding-top: 0;
   margin-bottom: 1.45rem;
   color: inherit;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: 'Alegreya Sans', monospace;
   font-weight: bold;
   text-rendering: optimizeLegibility;
   font-size: 0.78405rem;
