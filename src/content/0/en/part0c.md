@@ -159,6 +159,7 @@ If that is the case, you could also install **[NVM](https://github.com/nvm-sh/nv
 which allows us to have different versions of node.js on our computer and to switch between them.
 
 This can be done via these two commands.
+
 |Windows|Mac|
 |:---|:--|
 |`winget install CoreyButler.NVMforWindows`|`brew install nvm`|
