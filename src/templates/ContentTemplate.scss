@@ -19,10 +19,6 @@
     }
   }
 
-  strong {
-    background-color: var(--color-pre-background);
-  }
-
   p:not(:last-of-type) {
     margin-bottom: $vertical-spacing;
   }
