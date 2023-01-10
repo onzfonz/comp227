@@ -16,7 +16,7 @@ sure to read through the step to ensure you did all the steps that are here.
 
 ### 1: Setup a GitHub account
 
-Easiest way to do this is by going here:
+The easiest way to do this is by going here:
 
 **<http://education.github.com/pack>**
 
@@ -28,13 +28,13 @@ If you have a warning icon like this picture, then you’ll want to ask to resen
 
 ![resend verification button](https://docs.github.com/assets/images/help/settings/email-verify-button.png)
 
-The other thing you should do is to give youself an icon picture, which is always fun to do and can be done from the profile option in settings.
+The other thing you should do is to give yourself an icon picture, which is always fun to do and can be done from the profile option in settings.
 
 ### 2: Making sure Git is installed
 
 Now we are going to make sure that you have a version of git on your computer
 
-Some of you may already have git setup.  To check, I would type in terminal:
+Some of you may already have git setup.  To check, I would type in Terminal:
 
 ```bash
 git config --list
@@ -47,7 +47,7 @@ We'll explain that below:
 
 #### Using a package manager  
 
-If you saw something like command not found, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
+If you saw something like: *command not found*, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
 This will be done via the package manager.
 A **package manager** is a piece of software that keeps track of what you've installed and allows you to easily install and uninstall entire programs.
 Many can (when you ask them to) also upgrade to new versions when those become available.  
@@ -68,7 +68,7 @@ Successfully installing git via the package manager means that you can skip to t
 
 ### 2 Alternative: Traditional git directions
 
-You should really learn [to use a package manager](#2-making-sure-git-is-installed)!
+You should *really* learn [to use a package manager](#2-making-sure-git-is-installed)!
 However, if that makes you queasy or you are running into major issues, here's how to install git the regular way.
 Go to <https://git-scm.com/downloads> (or search “download git” via
 google) Pick your operating system of choice.
@@ -97,7 +97,7 @@ and let’s change some user preferences in git.
 To streamline your git activity, let’s add some of your credentials to
 git preferences.
 I took most of this from the [git-scm book](https://git-scm.com/book/en/v2), but you’ll
-want to **set the git preferences on all your computers that you use.**  Let me say that again in big letters
+want to **set the git preferences on all the computers that you use.**  Let me say that again in big letters
 
 #### Set your git preferences on all computers that you will work on
 
@@ -113,8 +113,7 @@ git config --global user.name your_github_username
 Make sure you press enter after each command.
 
 Vim is the default text editor that is used in the command line.
-If you
-aren’t comfortable or have never used vim, you can setup other unix text
+If you aren’t comfortable or have never used vim, you can set up other Unix text
 editors instead.
 So if you'd like to use emacs you’d write:
 
@@ -124,8 +123,7 @@ git config --global core.editor emacs
 
 If you’re like me, you’ll want to use something like [notepad++](https://notepad-plus-plus.org/downloads/) or
 possibly some other text editor that you love.
-In those cases you’d have
-to provide the entire path.
+In those cases, you’d have to provide the entire path.
 
 ```bash
 git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
@@ -156,7 +154,7 @@ For now, open up your terminal of choice and type:
 If we run into issues we may need to install a specific version of node in the future
 (since the bulk of this course was written with Node 16.13.2).
 If that is the case, you could also install **[NVM](https://github.com/nvm-sh/nvm)**,
-which allows us to have different versions of node.js on our computer and to switch between them.
+which allows us to have different versions of node.js on our computer and switch between them.
 
 This can be done via these two commands.
 
@@ -169,7 +167,7 @@ We will be actively using npm throughout the course.
 Node also comes with [npx](https://www.npmjs.com/package/npx),
 which we'll need a few times.
 
-### 5: Join our Github Classroom
+### 5: Join our GitHub Classroom
 
 At this point, you have made sure that your git configuration is correct.
 
@@ -177,7 +175,7 @@ Then, you'll visit this URL:
 
 **<http://go.djosv.com/227start>**
 
-Make sure you login and accept any of the authorizations that are present.
+Make sure you log in and accept any of the authorizations that are present.
 Next, Accept the assignment.
 
 ![GitHub classroom Accept assignment](../../images/0/partc/classroomaccept.png)
@@ -198,7 +196,7 @@ as shown via this [animation accepting and clicking on the assignment](https://i
 
 Make sure to save this URL that was just created specifically for you.
 You will need it in the next step, so please also just keep this page open.
-Otherwise if you close it', you'll need to navigate back through it by going to <classroom.github.com> and logging yourself in.
+Otherwise, if you close it, you'll need to navigate back through it by going to <classroom.github.com> and logging in.
 
 ### 6: Install WebStorm
 
@@ -225,7 +223,7 @@ Jetbrains provides free access to all Jetbrains products while you're a student.
 
 Once it finishes installing and you pass all the permissions, you can open it up.
 
-You'll be greeted with a simple window
+You'll be greeted with a simple window.
 
 ![import settings](../../images/0/partc/import_settings.png)
 
@@ -238,7 +236,7 @@ At this point, you'll now move on to the project page, where you'll need a proje
 
 Before moving on, make sure that you have generated the repository from the GitHub classroom assignment.
 
-Now that we have WebStorm and have a GitHub repo, we are almost ready to connect webstorm to our GitHub profile and to the repo we created via GitHub classroom.
+Now that we have WebStorm and a GitHub repo, we are almost ready to connect WebStorm to our GitHub profile and to the repo we created via GitHub classroom.
 
 Before we can do that though, we need to generate credentials that the computer can use to login to GitHub via Webstorm.
 Let's do that now.  
@@ -246,9 +244,9 @@ Let's do that now.
 ### 7: Generate a GitHub token
 
 In the past two years, with even more threats to security,
-GitHub has moved to having us use tokens to access our projects from our computers.
+GitHub has moved to have us use tokens to access our projects from our computers.
 **Tokens** act like credentials but have much more fine-grained controls on what they can and cannot access.
-Tokens are slightly analogous to using like a temporary credit card number for purchases,
+Tokens are slightly analogous to using a temporary credit card number for purchases,
 instead of giving everyone access to your bank account.
 Because Webstorm will be constantly communicating with GitHub, let's generate a token that will be stored on our computer.
 
@@ -273,15 +271,15 @@ Now what we will do is:
 
 1. Take the GitHub repo that we generated from classroom
 2. Copy the link for it
-3. Switch to webstorm and select ***Get From VCS***, using the copied URL from GitHub.
-4. After clicking OK, selecting Use Token from the authentication options
-5. Switching back to the token page that we just generated and copying that token
-6. Pasting that token back in webstorm
-7. Trusting and opening the project.  
+3. Switch to WebStorm and select ***Get From VCS***, using the copied URL from GitHub.
+4. After clicking OK, select ***Use Token*** from the authentication options
+5. Switch back to the token page that we just generated and copy that token
+6. Paste that token back in WebStorm
+7. Trust and open the project.  
 
 Following all of these steps would result in the project opening up, with it opening up the *README.md* file.
 
-Here's a recap in a [relooping gif of all of these steps that you should see](https://imgur.com/UDQXB6V)
+Here's a recap in a [re-looping gif of all of these steps that you should see](https://imgur.com/UDQXB6V)
 
 #### Other permissions
 
@@ -299,7 +297,7 @@ I can continue using handy shortcuts from eclipse like:
 #### Configure your settings
 
 When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
-(but not too much initially, spend no more than 10-15 minutes initially.
+(but not too much initially, spend no more than 10-15 minutes).
 I'll go over a few different settings that I've found useful.  
 
 To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
@@ -310,28 +308,28 @@ This [gif will show you how to find and install a keymap like eclipse](https://i
 
 By this point, your project should be open.
 
-What you should do is to watch
+What you should do is watch
 [this animation a few times to see how to make changes to the markdown file](https://imgur.com/blj5aGh)
 and how to send those changes so that they are recorded on GitHub.
 
 Because we are editing a markdown file, Webstorm defaults for it to be in preview mode,
-but if I were to have clicked the middle button it would have shown a split preview between text and what it looks like. (instead of flipping back and forth)
+but if I were to have clicked the middle button it would have shown a split preview between the raw text and what it looks like. (instead of flipping back and forth)
 
-Also notice the green button up at the top.
+Also, notice the green button at the top.
 That is used to create a commit, which is a record of the changes that you have made.
 **You'll want to get in the habit of committing often**.
-Committing small changes is a good idea, because then you can more easily keep track of (and potentially revert changes).
+Committing small changes is a good idea because then you can more easily keep track of (and potentially revert changes).
 It's also a good way to document what has been added or changed as well.
 
-### 10: Submit Assignment
+### 10: Submit the Assignment
 
 For every project that we have thereafter, there will most likely be a new repo that you'll need to add to Webstorm using some of the steps that we've highlighted here.
 For every repo you'll need to accept the assignment and open up a new project from VCS.
-You won't need to generate a new token however.
+You won't need to generate a new token, however.
 The process that we follow here is merely to get you to understand the workflow for checking out projects from GitHub.
 
 To submit the assignment I would like you to edit the file via Webstorm to add your name.
-You should also upload a screenshot of your project open in webstorm to the repo as well.
+You should also upload a screenshot of your project open in WebStorm to the repo as well.
 You can [verify that your changes appear on GitHub in the readme file](#verifying-changes-made-it-to-github).
 
 ### Recommended: Learn to use git via the command line
@@ -345,31 +343,31 @@ For further reinforcement, you may also want to see this [Git and GitHub tutoria
 While the workflow in JetBrains is fairly good for what we want,
 (especially if you start leaning into keyboard shortcuts),
 at some point you are going to want to do something that is beyond what's available.
-The best thing that you can do to help yourself is to begint to practice using git on the command line.
+The best thing that you can do to help yourself is to begin to practice using git on the command line.
 It is harder to use.
 However, there are many more resources out there (like with stackoverflow) that give you the keyboard combination or command to do some neat things,
-like amend your last commit, or to go back a couple of commits, among other things.
+like amend your last commit, or go back a couple of commits, among other things.
 
-For this we'll need to use the command line and the git command tool.
+For this, we'll need to use the command line and the git command tool.
 I like git bash.
 The first thing that you'll need to do is to ensure that you can navigate to the location of where your project is located.
 If you’re not sure how to
-use the command line, feel free to ask in the discord, but easiest commands to learn
+use the command line, feel free to ask in the discord, but the easiest commands to learn
 are:
 
-- ```cd``` (changes the directory to the one specified afterwards, to go up use
+- ```cd``` (changes the directory to the one specified afterward, to go up use
 ```cd ..```)
 
 - ```ls``` (list the files in a directory, if you want to see all files, say ```ls –a```)
 
-- ```mkdir``` (makes a directory with the name you specify afterwards)
+- ```mkdir``` (makes a directory with the name you specify afterward)
 
 And press the tab key to autocomplete any folders and folder paths as
 you type so that you don’t misspell things as you go along.
 Another
-other option you have is, if you are on your own computer, use windows
+other option you have is, if you are on your computer, to use windows
 explorer to get to the directory where you want to download the project,
-and then right click and select *Git Bash Here*.
+and then right-click and select *Git Bash Here*.
 If you are on windows and using the new [Terminal](https://github.com/microsoft/terminal),
 you can also click the folder from explorer and drag the folder from windows into Terminal to have it automatically type the path for you.
 Once you are inside the correct place that you want to be, then you can move on.
@@ -377,14 +375,13 @@ Once you are inside the correct place that you want to be, then you can move on.
 ### Some git command line tools
 
 If you didn't want to use the WebStorm Git integration, you could always use git to download the project, if you don't have it on your computer already.
-The quickets way to do this would be:
+The quickest way to do this would be:
 
 ```bash
 git clone THE_URL_YOU_COPIED_HERE
 ```
 
-In many command line tools, you can right
-click and it *should* paste the URL that you just copied to the clipboard.
+In many command line tools, you can right-click and it *should* paste the URL that you just copied to the clipboard.
 Once it finishes cloning, do a sanity check.
 You should see that the command line now shows a
 highlight showing you that you are on the main branch, which would be
@@ -396,7 +393,9 @@ via your explorer of choice.
 
 ![git terminal showing main as repo](../../images/0/partc/image5.png)
 
-You'll also notice that for this lab, if you look at the directroy where you cloned into, you should see a file ```.gitignore``` and a folder called ```.git```.
+You'll also notice that for this lab
+(if you look at the directory where you cloned your repo)
+you should see a file ```.gitignore``` and a folder called ```.git```.
 If you do not see these files, then you should
 [turn on the visibility for them](https://support.microsoft.com/en-us/windows/show-hidden-files-0320fe58-0117-fd59-6851-9b7f9840fdb2).
 
@@ -411,7 +410,7 @@ So here’s what I’m going to ask you to do.
 
 1. Navigate to the directory where your Webstorm project is with the files that you moved over to in git bash.
 
-2. After importing the project via webstorm
+2. After importing the project via WebStorm
 type ```git status``` to see what’s changed.
 If nothing has changed, you can add a file or make a new file in the directory.
 
@@ -419,20 +418,20 @@ If nothing has changed, you can add a file or make a new file in the directory.
 
 Once you add something, notice the red text and the message that git gives us.
 The files you see will be different, as these images are merely samples.
-It tells us that there are many files that are **untracked**,
+It tells us that many files are **untracked**,
 which means that git is not monitoring them for any changes.
 When untracked files change, *git knows nothing about them*.
 So let's add a set of files so that git starts tracking them for any changes.
-Let's practice adding one set of files to what will be our next commit.  You can do this with your uploaded picture of your webstorm setup.
+Let's practice adding one set of files to what will be our next commit.  You can do this with your uploaded picture of your WebStorm setup.
 
 ```bash
 git add my_personalized_webstorm_setup.png
 ```
 
-(Don't forget about tab completion!  I almost never type anything out anymore, just a few letters and then press ***Tab*** to have the shell give its best suggestion)
+(Don't forget about tab completion!  I seldom type anything out anymore, just a few letters and then press ***Tab*** to have the shell give its best suggestion)
 
 If you type ```git status``` again, you'll notice that now you have a file that is staged, while the other files and folders would still be unstaged.
-In the example above if i had added UserSettings, it would look like this:
+In the example above if I had added UserSettings, it would look like this:
 
 ![git status showing staged and unstaged files](../../images/0/partc/usersettingsadded.png)
 
@@ -448,7 +447,7 @@ git add .
 Once you do a ```git status``` again, you'll now see that all of the files are staged to be committed (lots of green files), while nothing is red anymore.
 This means that the next time you say commit via git all of the files will be placed into and tracked by the repository.
 
-In this case let's write this line
+In this case, let's write this line
 
 ```bash
 git commit -m "Adding screenshot and other repo files from webstorm"
@@ -458,15 +457,15 @@ By having the `-m`, we are providing the commit message that we would like to ha
 
 Let's make one more change to the file so that we can dive a little bit deeper into staged vs unstaged.
 Go ahead and open up your README.md and move over to Line 3 or so, where you have the description.
-Modify the description one more time, or add in another comment into the file.
+Modify the description one more time, or add another comment to the file.
 Save the file and then back at the command prompt, do a status check via git.
 Once you do, you'll see something like this (except yours will be for readme):
 
 ![git status showing modified files that haven't been staged](../../images/0/partc/gitmodifiednotstaged.png)
 
 While we have this in red text, notice that rather than it saying it is untracked, now it is saying it has been modified, however, if we were to commit right now, nothing would happen.
-In git when you save a file, git merely tells you that the file that you have saved is in fact different than what you had before.
-If you want that file to become part of the record, you'll need to stage the changes, which you can do again by calling this ambiguous term add.
+In git when you save a file, git merely tells you that the file that you have saved differs from what you had before.
+If you want that file to become part of the record, you'll need to stage the changes, which you can do again by calling this ambiguous term `add`.
 If you were to add the file, then it would show in green again to let you know that it will be committed.
 However, there is a way to automatically commit any of your tracked files into your repository, which is to use the flag -a, so typically when I commit, I do something like this:
 
@@ -476,7 +475,7 @@ git commit -am "Added another sentence about 227 to test git"
 
 While
 I typically use the ```-a``` flag to automatically add all my changes to the next commit, one reason for not
-automatically adding (or staging) all changes is in order to make multiple commits so that you split
+automatically adding (or staging) all changes is to make multiple commits so that you split
 apart multiple changes that you’ve made.
  Leaving files unstaged won’t
 make them a part of the commit, so you can commit multiple times and add
@@ -508,7 +507,7 @@ push was indeed successful.
 
 ### Verifying changes made it to GitHub
 
-Once you completed the steps and push, verify that you have in fact finished by visiting **github.com** and clicking on your repository.
+Once you completed the steps and push, verify that you have finished by visiting **github.com** and clicking on your repository.
 Once there, you can click to see [this gif animation that helps you verify that the commits were made on GitHub](https://imgur.com/7rNTgGF)
 
 Like the image, you should see your changes.
@@ -522,7 +521,7 @@ the project.
 You should see a commit that has your picture and name on
 it at the top.
 
-Like the gif above click on the text has your commit message and you'll see the
+Like the gif above click on the text that has your commit message and you'll see the
 changes that you committed and how your commit changed the file, which
 you can immediately identify.
 If you see your custom picture and your
