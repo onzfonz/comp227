@@ -13,7 +13,26 @@ Let's start by making a simple React application as well as getting to know the 
 The easiest way to get started by far is by using a tool called [create-react-app](https://github.com/facebook/create-react-app).
 It is possible (but not necessary) to install *create-react-app* on your machine if the *npm* tool that was installed along with Node has a version number of at least *5.3*.
 
-Let's create an application called `part1` and navigate to its directory.
+First, visit the classroom link: <http://go.djosv.com/227lab1>
+and use the steps outlined [from part 0c](/part0/configuring_your_machine_for_this_course) to
+[accept](https://imgur.com/5Tv7mVM), [download](https://imgur.com/UDQXB6V) and set up the repository from within WebStorm.
+The only different step in our [high-level checklist](/part0/configuring_your_machine_for_this_course#8-connect-webstorm-with-github)
+is that in step 3 we need to do is say ***File->New Project from Version Control*** from within WebStorm to open the URL prompt.
+
+I would also make sure to check **trust projects** that is presented in the first window so that you don't have to keep doing so.
+![clicking trust projects](../../images/1/custom/trust_projects.png)
+
+Lastly, I would choose the option ***Attach*** and check ***don't ask again*** in the next window.
+Attaching the project will provide you with one window where all of your projects would be.
+![attach and don't ask again](../../images/1/custom/attach_dont_ask.png)
+
+You can click on the [project bar in the upper right](../../images/1/custom/webstorm_project.png) to return to see that you should now have two sets of folders: *lab0* and *lab1*.
+
+You can now right-click on lab1 and select **Open in->Terminal**.
+If you did not review the [part 0c's coverage of git commands and the terminal](/part0/configuring_your_machine_for_this_course#some-git-command-line-tools),
+it might make sense to do so now.
+
+With your terminal now open you can type the following:
 
 ```bash
 npx create-react-app part1
