@@ -67,9 +67,9 @@ Press enter and wait.  It's not too bad.  If it complains, you may need administ
 Once it finishes, you may need to restart your terminal, but then we'll get to this
 
 ---
-***Please at this point open git bash as we'll be using it shortly again to install another application.***
+***Please leave your terminal of choice open as we'll be using it shortly again to install other applications.***
 
-Successfully installing git via the package manager means that you can skip to the [next section about configuring git](#3-configure-git).
+Successfully installing git via the package manager means that you can skip to the [next section and move to configuring git](#3-configure-git).
 
 ### 2 Alternative: Traditional git directions
 
@@ -101,8 +101,6 @@ and let’s change some user preferences in git.
 
 To streamline your git activity, let’s add some of your credentials to
 git preferences.
-To also aid in making this easier for all, I'm ***going to use git bash from here on out***, as it was installed with git.
-
 I took most of this from the [git-scm book](https://git-scm.com/book/en/v2), but you’ll
 want to **set the git preferences on all the computers that you use.**  Let me say that again in big letters
 
