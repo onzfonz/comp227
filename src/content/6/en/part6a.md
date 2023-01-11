@@ -596,20 +596,20 @@ console.log(rest)     // prints [3, 4, 5, 6]
 
 ### Exercises 6.1-6.2
 
-Let's make a simplified version of the unicafe exercise from part 1.
+Let's make a simplified version of the studytracker exercise from part 1.
 Let's handle the state management with Redux.
 
-You can take the project from this repository <https://github.com/comp227/unicafe-redux> for the base of your project.
+You can take the project from this repository <https://github.com/comp227/studytracker-redux> for the base of your project.
 
 > *Start by removing the git configuration of the cloned repository, and by installing dependencies*
 
 ```bash
-cd unicafe-redux   // go to the directory of cloned repository
+cd studytracker-redux   // go to the directory of cloned repository
 rm -rf .git
 npm install
 ```
 
-#### 6.1: unicafe revisited, step1
+#### 6.1: studytracker revisited, step1
 
 Before implementing the functionality of the UI, let's implement the functionality required by the store.
 
@@ -657,7 +657,7 @@ and a base for its tests
 import deepFreeze from 'deep-freeze'
 import counterReducer from './reducer'
 
-describe('unicafe reducer', () => {
+describe('studytracker reducer', () => {
   const initialState = {
     good: 0,
     ok: 0,
@@ -703,7 +703,7 @@ Then add the rest of the tests, and finally the functionality that they are test
 A good model for the reducer is the [redux-notes](/part6/flux_architecture_and_redux#pure-functions-immutable)
 example above.
 
-#### 6.2: unicafe revisited, step2
+#### 6.2: studytracker revisited, step2
 
 Now implement the actual functionality of the application.
 

@@ -480,11 +480,11 @@ We will use the following file structure for our submission repository:
 lab1
   reading
   arcadeinfo
-  unicafe
+  studytracker
   jokes
 ```
 
-Each repo for each part will branch into directories containing a series of exercises, like "unicafe" for part 1.
+Each repo will need directories that will be used for an application that will be linked to a series of exercises, like "studytracker" for part 1.
 
 We have provided you with a fairly robust .gitignore file, which ignores things like the *node_modules* directory,
 so you should commit and add all of the files that you use in your directories.
@@ -499,7 +499,8 @@ Note that in this part, there are more exercises besides those found below.
 This exercise will start the ongoing development of a small application that will be further developed in a few of the following exercises.
 Please make sure to commit often.
 
-Use *create-react-app* to initialize a new application called arcadeinfo.
+Use *create-react-app* in the base folder of lab1 to initialize a new application called **arcadeinfo**.
+Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* folders.
 Modify *index.js* to match the following
 
 ```js

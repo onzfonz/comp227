@@ -1104,16 +1104,13 @@ Also, everything related to class-based components is irrelevant to us;
 
 Submit your solutions to the exercises by first pushing your code to GitHub and then marking the completed exercises in Canvas.
 
-Remember, submit **all** the exercises of one part **in a single submission**.
-Once you have submitted your solutions for one part, **you cannot submit more exercises to that part anymore**.
+Once you have marked your submission as complete, **you cannot submit more exercises**.
 
 *Some of the exercises work on the same application.
-In these cases, it is sufficient to submit just the final version of the application.
-If you wish, you can make a commit after every finished exercise, but it is not mandatory.*
+In these cases, it is sufficient to submit just the final version of the application,
+but you will need to commit regularly, it should often be at least 4 or 5 times while working on a particular exercise*
 
-**WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
-**Most likely you do not want each of your projects to be a separate repository**,
-so simply run the `rm -rf .git` command at the root of your application.
+**WARNING** ensure you are at the base folder of the correct repository when using `create-react-app`.
 
 In some situations you may also have to run the command below from the root of the project:
 
@@ -1121,19 +1118,18 @@ In some situations you may also have to run the command below from the root of t
 rm -rf node_modules/ && npm i
 ```
 
-#### 1.6: unicafe step1
+#### 1.6: studytracker step1
 
-Like most companies, [Unicafe](https://www.unicafe.fi/#/9/4) collects feedback from its customers.
-Your task is to implement a web application for collecting customer feedback.
-There are only three options for feedback: ***good***, ***neutral***, and ***bad***.
+Let's figure out a way to devise a web application that helps track your self-reported feelings on whether or not you had a good study day.
+There are only three options: ***yeah***, ***kinda***, and ***nah***.
 
-The application must display the total number of collected feedback for each category.
+The application must display the total number of collected samples for each response.
 Your final application could look like this:
 
-![screenshot of feedback options](../../images/1/13e.png)
+![screenshot of study day options](../../images/1/13e.png)
 
 Note that your application needs to work only during a single browser session.
-Once you refresh the page, the collected feedback is allowed to disappear.
+Once you refresh the page, the collected data is allowed to disappear.
 
 It is advisable to use the same structure that is used in the material and previous exercise.
 File *index.js* is as follows:
@@ -1145,7 +1141,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
-```
+```negative
 
 You can use the code below as a starting point for the *App.js* file:
 
@@ -1154,9 +1150,9 @@ import { useState } from 'react'
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [yeah, setYeah] = useState(0)
+  const [kinda, setKinda] = useState(0)
+  const [nah, setNah] = useState(0)
 
   return (
     <div>
@@ -1168,14 +1164,18 @@ const App = () => {
 export default App
 ```
 
-#### 1.7: unicafe step2
+#### 1.7: studytracker step2
 
-Expand your application so that it shows more statistics about the gathered feedback: the total number of collected feedback,
-the average score (good: 1, neutral: 0, bad: -1) and the percentage of positive feedback.
+Expand your application so that it shows more statistics about the gathered data.
+The application should show:
 
-![average and percentage positive screenshot feedback](../../images/1/14e.png)
+- the total number of days recorded,
+- the average score using this scoring system - (nah: -1, kinda: 0, yeah: 1)
+- the percentage of days that the use clicked yeah.
 
-#### 1.8: unicafe step3
+![average and percentage good screenshot feedback](../../images/1/14e.png)
+
+#### 1.8: studytracker step3
 
 Refactor your application so that displaying the statistics is extracted into its own `Statistics` component.
 The state of the application should remain in the `App` root component.
@@ -1189,9 +1189,9 @@ const Statistics = (props) => {
 }
 
 const App = () => {
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
+  const [yeah, setYeah] = useState(0)
+  const [kinda, setKinda] = useState(0)
+  const [nah, setNah] = useState(0)
 
   // do not define a component within another component
   const Statistics = (props) => {
@@ -1204,18 +1204,18 @@ const App = () => {
 }
 ```
 
-#### 1.9: unicafe step4
+#### 1.9: studytracker step4
 
-Change your application to display statistics only once feedback has been gathered.
+Change your application to display the statistics only once a response has been gathered.
 
-![no feedback given text screenshot](../../images/1/15e.png)
+![no answers recorded yet text screenshot](../../images/1/15e.png)
 
-#### 1.10: unicafe step5
+#### 1.10: studytracker step5
 
 Let's continue refactoring the application.
 Extract the following two components:
 
-- `Button` for defining the buttons used for submitting feedback
+- `Button` for defining the buttons used for submitting mood
 - `StatisticLine` for displaying a single statistic, e.g. the average score.
 
 To be clear: the `StatisticLine` component always displays a single statistic,
@@ -1226,9 +1226,9 @@ const Statistics = (props) => {
   /// ...
   return(
     <div>
-      <StatisticLine text="good" value ={...} />
-      <StatisticLine text="neutral" value ={...} />
-      <StatisticLine text="bad" value ={...} />
+      <StatisticLine text="yeah" value ={...} />
+      <StatisticLine text="kinda" value ={...} />
+      <StatisticLine text="nah" value ={...} />
       // ...
     </div>
   )
@@ -1238,7 +1238,7 @@ const Statistics = (props) => {
 
 The application's state should still be kept in the root `App` component.
 
-#### 1.11*: unicafe step6
+#### 1.11*: studytracker step6
 
 Display the statistics in an HTML [table](https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics),
 so that your application looks roughly like this:
@@ -1301,10 +1301,8 @@ Your finished application could look something like this:
 
 ![random joke with next button](../../images/1/18a.png)
 
-**WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
-**Most likely you do not want each of your projects to be a separate repository**,
-so simply run the `rm -rf .git` command at the root of your application.
 
+**WARNING** Make sure that when you call create-react-app that you are inside of your repo's base folder - not inside of your other folders (like *reading*!)!
 #### 1.13*: jokes step2
 
 Expand your application so that you can vote for the displayed joke.
