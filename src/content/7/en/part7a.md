@@ -539,13 +539,13 @@ The completed code can be found [here](https://github.com/comp227/misc/blob/main
 
 ### Exercises 7.1-7.3
 
-Let's return to working with anecdotes.
-Use the redux-free anecdote app found in the repository <https://github.com/comp227/routed-anecdotes> as the starting point for the exercises.
+Let's return to working with jokes.
+Use the redux-free joke app found in the repository <https://github.com/comp227/routed-jokes> as the starting point for the exercises.
 
 If you clone the project into an existing git repository, remember to *delete the git configuration of the cloned application:*
 
 ```bash
-cd routed-anecdotes   // go first to directory of the cloned repository
+cd routed-jokes   // go first to directory of the cloned repository
 rm -rf .git
 ```
 
@@ -556,37 +556,37 @@ npm install
 npm start
 ```
 
-#### 7.1: routed anecdotes, step1
+#### 7.1: routed jokes, step1
 
 Add React Router to the application so that by clicking links in the `Menu` component the view can be changed.
 
-At the root of the application, meaning the path `/`, show the list of anecdotes:
+At the root of the application, meaning the path `/`, show the list of jokes:
 
-![browser at baseURL showing anecdotes and footer](../../assets/teht/40.png)
+![browser at baseURL showing jokes and footer](../../assets/teht/40.png)
 
 The `Footer` component should always be visible at the bottom.
 
-The creation of a new anecdote should happen e.g. in the path *create*:
+The creation of a new joke should happen e.g. in the path *create*:
 
-![browser anecdotes /create shows create form](../../assets/teht/41.png)
+![browser jokes /create shows create form](../../assets/teht/41.png)
 
-#### 7.2: routed anecdotes, step2
+#### 7.2: routed jokes, step2
 
-Implement a view for showing a single anecdote:
+Implement a view for showing a single joke:
 
-![browser /anecdotes/number showing single anecdote](../../assets/teht/42.png)
+![browser /jokes/number showing single joke](../../assets/teht/42.png)
 
-Navigating to the page showing the single anecdote is done by clicking the name of that anecdote:
+Navigating to the page showing the single joke is done by clicking the name of that joke:
 
 ![browser showing previous link that was clicked](../../assets/teht/43.png)
 
-#### 7.3: routed anecdotes, step3
+#### 7.3: routed jokes, step3
 
-The default functionality of the creation form is quite confusing because nothing seems to be happening after creating a new anecdote using the form.
+The default functionality of the creation form is quite confusing because nothing seems to be happening after creating a new joke using the form.
 
-Improve the functionality such that after creating a new anecdote the application transitions automatically to showing the view for all anecdotes
+Improve the functionality such that after creating a new joke the application transitions automatically to showing the view for all jokes
 **and** the user is shown a notification informing them of this successful creation for the next five seconds:
 
-![browser anecdotes showing success message for adding anecdote](../../assets/teht/44.png)
+![browser jokes showing success message for adding joke](../../assets/teht/44.png)
 
 </div>

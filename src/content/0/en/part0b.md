@@ -786,7 +786,7 @@ part0
 part1
   courseinfo
   unicafe
-  anecdotes
+  jokes
 part2
   courseinfo
   phonebook

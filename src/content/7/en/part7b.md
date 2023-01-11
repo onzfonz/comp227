@@ -333,9 +333,9 @@ The following sources are worth checking out:
 
 We'll continue with the app from [exercises](/part7/react_router#exercises-7-1-7-3) of the chapter [react router](/part7/react_router).
 
-#### 7.4: anecdotes and hooks step1
+#### 7.4: jokes and hooks step1
 
-Simplify the anecdote creation form of your application with the `useField` custom hook we defined earlier.
+Simplify the joke creation form of your application with the `useField` custom hook we defined earlier.
 
 One natural place to save the custom hooks of your application is in the */src/hooks/index.js* file.
 
@@ -376,11 +376,11 @@ const App = () => {
 }
 ```
 
-#### 7.5: anecdotes and hooks step2
+#### 7.5: jokes and hooks step2
 
 Add a button to the form that you can use to clear all the input fields:
 
-![browser anecdotes with reset button](../../images/7/61ea.png)
+![browser jokes with reset button](../../images/7/61ea.png)
 
 Expand the functionality of the `useField` hook so that it offers a new ***reset*** operation for clearing the field.
 
@@ -390,7 +390,7 @@ Depending on your solution, you may see the following warning in your console:
 
 We will return to this warning in the next exercise.
 
-#### 7.6: anecdotes and hooks step3
+#### 7.6: jokes and hooks step3
 
 If your solution did not cause a warning to appear in the console, you have already finished this exercise.
 

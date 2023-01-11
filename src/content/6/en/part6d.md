@@ -636,17 +636,17 @@ We will also practice this in [part 8](/part8).
 
 ### Exercises 6.19-6.21
 
-#### 6.19 anecdotes and connect, step1
+#### 6.19 jokes and connect, step1
 
 The *redux store* is currently being accessed by the components through the `useSelector` and `useDispatch` hooks.
 
 Modify the `Notification` component so that it uses the `connect` function instead of the hooks.
 
-#### 6.20 anecdotes and connect, step2
+#### 6.20 jokes and connect, step2
 
-Do the same for the `Filter` and `AnecdoteForm` components.
+Do the same for the `Filter` and `JokeForm` components.
 
-#### 6.21 anecdotes, the grand finale
+#### 6.21 jokes, the grand finale
 
 You (probably) have one nasty bug in your application.
 If the user clicks the vote button multiple times in a row, the notification is displayed funnily.

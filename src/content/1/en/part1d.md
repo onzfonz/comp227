@@ -1259,31 +1259,31 @@ Try going to `chrome://extensions/` and try disabling them one by one and refres
 
 **Make sure that from now on you don't see any warnings in your console!**
 
-#### 1.12*: anecdotes step1
+#### 1.12*: jokes step1
 
-The world of software engineering is filled with [anecdotes](http://www.comp.nus.edu.sg/~damithch/pages/SE-quotes.htm) that distill timeless truths from our field into short one-liners.
+The world of software engineering is filled with [bad jokes](https://www.devtopics.com/best-programming-jokes/).
 
-Expand the following application by adding a button that can be clicked to display a *random* anecdote from the field of software engineering:
+Expand the following application by adding a button that can be clicked to display a *random* joke from the field of software engineering:
 
 ```js
 import { useState } from 'react'
 
 const App = () => {
-  const anecdotes = [
-    'If it hurts, do it more often.',
-    'Adding manpower to a late software project makes it later!',
-    'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-    'Premature optimization is the root of all evil.',
-    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
-    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.'
+  const jokes = [
+    'How many programmers does it take to change a light bulb? None - That is a hardware problem',
+    'All programmers are playwrights, and all computers are lousy actors.',
+    'The generation of random numbers is too important to be left to chance.',
+    'I just saw my life flash before my eyes and all I could see was a close tag',
+    'The computer is mightier than the pen, the sword, and usually, the programmer.',
+    'A programmer had a problem. He thought to himself, "I know, I’ll solve it with threads!" has Now problems. two he',
+    '!false is funny because it is true'
   ]
    
   const [selected, setSelected] = useState(0)
 
   return (
     <div>
-      {anecdotes[selected]}
+      {jokes[selected]}
     </div>
   )
 }
@@ -1299,19 +1299,19 @@ Remember that you can test generating random numbers e.g. straight in the consol
 
 Your finished application could look something like this:
 
-![random anecdote with next button](../../images/1/18a.png)
+![random joke with next button](../../images/1/18a.png)
 
 **WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
 **Most likely you do not want each of your projects to be a separate repository**,
 so simply run the `rm -rf .git` command at the root of your application.
 
-#### 1.13*: anecdotes step2
+#### 1.13*: jokes step2
 
-Expand your application so that you can vote for the displayed anecdote.
+Expand your application so that you can vote for the displayed joke.
 
-![anecdote app with votes button added](../../images/1/19a.png)
+![joke app with votes button added](../../images/1/19a.png)
 
-**NB** store the votes of each anecdote into an array or object in the component's state.
+**NB** store the votes of each joke into an array or object in the component's state.
 Remember that the correct way of updating state stored in complex data structures like objects and arrays is to make a copy of the state.
 
 You can create a copy of an object like this:
@@ -1337,13 +1337,13 @@ copy[2] += 1
 Using an array might be the simpler choice in this case.
 Searching the Internet will provide you with lots of hints on how to [create a zero-filled array of the desired length](https://stackoverflow.com/questions/20222501/how-to-create-a-zero-filled-javascript-array-of-arbitrary-length/22209781).
 
-#### 1.14*: anecdotes step3
+#### 1.14*: jokes step3
 
-Now implement the final version of the application that displays the anecdote with the largest number of votes:
+Now implement the final version of the application that displays the joke with the largest number of votes:
 
-![anecdote with largest number of votes](../../images/1/20a.png)
+![joke with largest number of votes](../../images/1/20a.png)
 
-If multiple anecdotes are tied for first place it is sufficient to just show one of them.
+If multiple jokes are tied for first place it is sufficient to just show one of them.
 
 This was the last exercise for this part of the course and it's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 

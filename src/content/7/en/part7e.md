@@ -17,9 +17,9 @@ Before, when defining a component that uses state, one had to define it using Ja
 It is beneficial to at least be familiar with Class Components to some extent since the world contains a lot of old React code,
 which will probably never be completely rewritten using the updated syntax.
 
-Let's get to know the main features of Class Components by producing yet another very familiar anecdote application.
-We store the anecdotes in the file *db.json* using *json-server*.
-The contents of the file are lifted from [here](https://github.com/comp227/misc/blob/main/anecdotes.json).
+Let's get to know the main features of Class Components by producing yet another very familiar joke application.
+We store the jokes in the file *db.json* using *json-server*.
+The contents of the file are lifted from [here](https://github.com/comp227/misc/blob/main/jokes.json).
 
 The initial version of the Class Component looks like this
 
@@ -34,7 +34,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>anecdote of the day</h1>
+        <h1>joke of the day</h1>
       </div>
     )
   }
@@ -47,7 +47,7 @@ The component now has a [constructor](https://reactjs.org/docs/react-component.h
 in which nothing happens at the moment, and contains the method [render](https://reactjs.org/docs/react-component.html#render).
 As one might guess, render defines how and what is rendered to the screen.
 
-Let's define a state for the list of anecdotes and the currently-visible anecdote.
+Let's define a state for the list of jokes and the currently-visible joke.
 In contrast to when using the [useState](https://reactjs.org/docs/hooks-state.html) hook, Class Components only contain one state.
 So if the state is made up of multiple "parts", they should be stored as properties of the state.
 The state is initialized in the constructor:
@@ -59,7 +59,7 @@ class App extends React.Component {
 
     // highlight-start
     this.state = {
-      anecdotes: [],
+      jokes: [],
       current: 0
     }
     // highlight-end
@@ -67,17 +67,17 @@ class App extends React.Component {
 
   render() {
   // highlight-start
-    if (this.state.anecdotes.length === 0) {
-      return <div>no anecdotes...</div>
+    if (this.state.jokes.length === 0) {
+      return <div>no jokes...</div>
     }
   // highlight-end
 
     return (
       <div>
-        <h1>anecdote of the day</h1>
+        <h1>joke of the day</h1>
         // highlight-start
         <div>
-          {this.state.anecdotes[this.state.current].content}
+          {this.state.jokes[this.state.current].content}
         </div>
         <button>next</button>
         // highlight-end
@@ -89,7 +89,7 @@ class App extends React.Component {
 
 The component state is in the instance variable `this.state`.
 The state is an object having two properties.
-`this.state.anecdotes` is the list of anecdotes and `this.state.current` is the index of the currently-shown anecdote.
+`this.state.jokes` is the list of jokes and `this.state.current` is the index of the currently-shown joke.
 
 In Functional components, the right place for fetching data from a server is inside an [effect hook](https://reactjs.org/docs/hooks-effect.html),
 which is executed when a component renders or less frequently if necessary, e.g. only in combination with the first render.
@@ -105,15 +105,15 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      anecdotes: [],
+      jokes: [],
       current: 0
     }
   }
 
   // highlight-start
   componentDidMount = () => {
-    axios.get('http://localhost:3001/anecdotes').then(response => {
-      this.setState({ anecdotes: response.data })
+    axios.get('http://localhost:3001/jokes').then(response => {
+      this.setState({ jokes: response.data })
     })
   }
   // highlight-end
@@ -128,7 +128,7 @@ The value for the key `current` remains unchanged.
 
 Calling the method setState always triggers the rerender of the Class Component, i.e. calling the method `render`.
 
-We'll finish off the component with the ability to change the shown anecdote.
+We'll finish off the component with the ability to change the shown joke.
 The following is the code for the entire component with the addition highlighted:
 
 ```js
@@ -137,35 +137,35 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      anecdotes: [],
+      jokes: [],
       current: 0
     }
   }
 
   componentDidMount = () => {
-    axios.get('http://localhost:3001/anecdotes').then(response => {
-      this.setState({ anecdotes: response.data })
+    axios.get('http://localhost:3001/jokes').then(response => {
+      this.setState({ jokes: response.data })
     })
   }
 
   // highlight-start
   handleClick = () => {
     const current = Math.floor(
-      Math.random() * this.state.anecdotes.length
+      Math.random() * this.state.jokes.length
     )
     this.setState({ current })
   }
   // highlight-end
 
   render() {
-    if (this.state.anecdotes.length === 0 ) {
-      return <div>no anecdotes...</div>
+    if (this.state.jokes.length === 0 ) {
+      return <div>no jokes...</div>
     }
 
     return (
       <div>
-        <h1>anecdote of the day</h1>
-        <div>{this.state.anecdotes[this.state.current].content}</div>
+        <h1>joke of the day</h1>
+        <div>{this.state.jokes[this.state.current].content}</div>
         <button onClick={this.handleClick}>next</button> // highlight-line
       </div>
     )
@@ -177,27 +177,27 @@ For comparison, here is the same application as a Functional component:
 
 ```js
 const App = () => {
-  const [anecdotes, setAnecdotes] = useState([])
+  const [jokes, setJokes] = useState([])
   const [current, setCurrent] = useState(0)
 
   useEffect(() =>{
-    axios.get('http://localhost:3001/anecdotes').then(response => {
-      setAnecdotes(response.data)
+    axios.get('http://localhost:3001/jokes').then(response => {
+      setJokes(response.data)
     })
   },[])
 
   const handleClick = () => {
-    setCurrent(Math.round(Math.random() * (anecdotes.length - 1)))
+    setCurrent(Math.round(Math.random() * (jokes.length - 1)))
   }
 
-  if (anecdotes.length === 0) {
-    return <div>no anecdotes...</div>
+  if (jokes.length === 0) {
+    return <div>no jokes...</div>
   }
 
   return (
     <div>
-      <h1>anecdote of the day</h1>
-      <div>{anecdotes[current].content}</div>
+      <h1>joke of the day</h1>
+      <div>{jokes[current].content}</div>
       <button onClick={handleClick}>next</button>
     </div>
   )

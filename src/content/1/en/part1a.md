@@ -482,21 +482,17 @@ lab1
   reading
   courseinfo
   unicafe
-  anecdotes
+  jokes
 ```
-
-While up top we started at the base level, please feel free to either move the contents into the reading folder.
 
 Each repo for each part will branch into directories containing a series of exercises, like "unicafe" for part 1.
 
 For each web application for a series of exercises,
-it is recommended to submit all files relating to that application, except for the directory *node_modules*.
+it is recommended to submit all files relating to that application, as we have provided you with a fairly robust .gitignore file, which ignores things like the *node_modules* directory.
 
-The exercises are submitted **one part at a time**.
-When you have submitted the exercises for a part of the course you can no longer submit undone exercises for the same part.
+Please make sure that you commit often, as that will be the way you show your work and progress through the course.
 
 Note that in this part, there are more exercises besides those found below.
-*Do not submit your work* until you have completed all of the exercises you want to submit for the part.
   
 #### 1.1: course information, step1
 

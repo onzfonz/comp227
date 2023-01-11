@@ -1181,13 +1181,13 @@ The code of the Redux application can be found on
 
 ### Exercises 6.3-6.8
 
-Let's make a new version of the anecdote voting application from part 1.
-Take the project from this repository <https://github.com/comp227/redux-anecdotes> to base your solution on.
+Let's make a new version of the joke voting application from part 1.
+Take the project from this repository <https://github.com/comp227/redux-jokes> to base your solution on.
 
 If you clone the project into an existing git repository, *remove the git configuration of the cloned application:*
 
 ```bash
-cd redux-anecdotes  // go to the cloned repository
+cd redux-jokes  // go to the cloned repository
 rm -rf .git
 ```
 
@@ -1200,51 +1200,51 @@ npm start
 
 After completing these exercises, your application should look like this:
 
-![browser showing anecdotes and vote buttons](../../images/6/3.png)
+![browser showing jokes and vote buttons](../../images/6/3.png)
 
-#### 6.3: anecdotes, step1
+#### 6.3: jokes, step1
 
-Implement the functionality for voting anecdotes.
+Implement the functionality for voting jokes.
 The number of votes must be saved to a Redux store.
 
-#### 6.4: anecdotes, step2
+#### 6.4: jokes, step2
 
-Implement the functionality for adding new anecdotes.
+Implement the functionality for adding new jokes.
 
 You can keep the form uncontrolled like we did [earlier](/part6/flux_architecture_and_redux#uncontrolled-form).
 
-#### 6.5: anecdotes, step3
+#### 6.5: jokes, step3
 
-Make sure that the anecdotes are ordered by the number of votes.
+Make sure that the jokes are ordered by the number of votes.
 
-#### 6.6: anecdotes, step4
+#### 6.6: jokes, step4
 
 If you haven't done so already, separate the creation of action-objects to [action creator](https://read.reduxbook.com/markdown/part1/04-action-creators.html)
-functions and place them in the *src/reducers/anecdoteReducer.js* file,
+functions and place them in the *src/reducers/jokeReducer.js* file,
 so do what we have been doing since the chapter [action creators](/part6/flux_architecture_and_redux#action-creators).
 
-#### 6.7: anecdotes, step5
+#### 6.7: jokes, step5
 
-Separate the creation of new anecdotes into a component called `AnecdoteForm`.
-Move all logic for creating a new anecdote into this new component.
+Separate the creation of new jokes into a component called `JokeForm`.
+Move all logic for creating a new joke into this new component.
 
-#### 6.8: anecdotes, step6
+#### 6.8: jokes, step6
 
-Separate the rendering of the anecdote list into a component called `AnecdoteList`.
-Move all logic related to voting for an anecdote to this new component.
+Separate the rendering of the joke list into a component called `JokeList`.
+Move all logic related to voting for a joke to this new component.
 
 Now the `App` component should look like this:
 
 ```js
-import AnecdoteForm from './components/AnecdoteForm'
-import AnecdoteList from './components/AnecdoteList'
+import JokeForm from './components/JokeForm'
+import JokeList from './components/JokeList'
 
 const App = () => {
   return (
     <div>
-      <h2>Anecdotes</h2>
-      <AnecdoteForm />
-      <AnecdoteList />
+      <h2>Jokes</h2>
+      <JokeForm />
+      <JokeList />
     </div>
   )
 }

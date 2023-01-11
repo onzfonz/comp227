@@ -371,15 +371,15 @@ The current state of the code for the application can be found on [GitHub](https
 
 ### Exercises 6.13-6.14
 
-#### 6.13 Anecdotes and the backend, step1
+#### 6.13 Jokes and the backend, step1
 
-When the application launches, fetch the anecdotes from the backend implemented using json-server.
+When the application launches, fetch the jokes from the backend implemented using json-server.
 
-As the initial backend data, you can use, e.g. [this](https://github.com/comp227/misc/blob/main/anecdotes.json).
+As the initial backend data, you can use, e.g. [this](https://github.com/comp227/misc/blob/main/jokes.json).
 
-#### 6.14 Anecdotes and the backend, step2
+#### 6.14 Jokes and the backend, step2
 
-Modify the creation of new anecdotes, so that the anecdotes are stored in the backend.
+Modify the creation of new jokes, so that the jokes are stored in the backend.
 
 </div>
 
@@ -618,25 +618,25 @@ The current state of the code for the application can be found on [GitHub](https
 
 ### Exercises 6.15-6.18
 
-#### 6.15 Anecdotes and the backend, step3
+#### 6.15 Jokes and the backend, step3
 
 Modify the initialization of the Redux store to happen using asynchronous action creators, which are made possible by the Redux Thunk library.
 
-#### 6.16 Anecdotes and the backend, step4
+#### 6.16 Jokes and the backend, step4
 
-Also modify the creation of a new anecdote to happen using asynchronous action creators, made possible by the Redux Thunk library.
+Also modify the creation of a new joke to happen using asynchronous action creators, made possible by the Redux Thunk library.
 
-#### 6.17 Anecdotes and the backend, step5
+#### 6.17 Jokes and the backend, step5
 
 Voting does not yet save changes to the backend.
 Fix the situation with the help of the Redux Thunk library.
 
-#### 6.18 Anecdotes and the backend, step6
+#### 6.18 Jokes and the backend, step6
 
 The creation of notifications is still a bit tedious since one has to do two actions and use the `setTimeout` function:
 
 ```js
-dispatch(setNotification(`new anecdote '${content}'`))
+dispatch(setNotification(`new joke '${content}'`))
 setTimeout(() => {
   dispatch(clearNotification())
 }, 5000)
@@ -645,7 +645,7 @@ setTimeout(() => {
 Make an action creator, which enables one to provide the notification as follows:
 
 ```js
-dispatch(setNotification(`you voted '${anecdote.content}'`, 10))
+dispatch(setNotification(`you voted '${joke.content}'`, 10))
 ```
 
 The first parameter is the text to be rendered and the second parameter is the time to display the notification given in seconds.

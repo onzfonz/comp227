@@ -646,15 +646,15 @@ You can find the code for our current application in its entirety in the *part6-
 
 ### Exercises 6.9-6.12
 
-Let's continue working on the anecdote application using Redux that we started in exercise 6.3.
+Let's continue working on the joke application using Redux that we started in exercise 6.3.
 
-#### 6.9 Better anecdotes, step7
+#### 6.9 Better jokes, step7
 
 Install Redux Toolkit for the project.
 Move the Redux store creation into the file *store.js* and use Redux Toolkit's `configureStore` to create the store.
 Also, start using Redux DevTools to debug the application's state easier.
 
-#### 6.10 Better anecdotes, step8
+#### 6.10 Better jokes, step8
 
 The application has a ready-made body for the `Notification` component:
 
@@ -702,19 +702,19 @@ Also, refactor the application so that it uses a combined reducer as shown in th
 The application does not have to use the `Notification` component intelligently at this point in the exercises.
 It is enough for the application to display the initial value set for the message in the `notificationReducer`.
 
-#### 6.11 Better anecdotes, step9
+#### 6.11 Better jokes, step9
 
-Extend the application so that it uses the `Notification` component to display a message for five seconds when the user votes for an anecdote or creates a new anecdote:
+Extend the application so that it uses the `Notification` component to display a message for five seconds when the user votes for a joke or creates a new joke:
 
 ![browser showing message of having voted](../../images/6/8ea.png)
 
 It's recommended to create separate [action creators](https://redux-toolkit.js.org/api/createSlice#reducers) for setting and removing notifications.
 
-#### 6.12* Better anecdotes, step10
+#### 6.12* Better jokes, step10
 
-Implement filtering for the anecdotes that are displayed to the user.
+Implement filtering for the jokes that are displayed to the user.
 
-![browser showing filtering of anecdotes](../../images/6/9ea.png)
+![browser showing filtering of jokes](../../images/6/9ea.png)
 
 Store the state of the filter in the redux store.
 It is recommended to create a new reducer and action creators for this purpose.
