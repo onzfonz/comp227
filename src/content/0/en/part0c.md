@@ -41,14 +41,19 @@ git config --list
 ```
 
 If by doing that you get a list of options, two of them being your correct `user.name` and `user.email` (that you have in GitHub),
-then you have almost everything you need to [move on to step 4](#4-install-node).
-The last thing to check would be if you have a package manager.
-We'll explain that below:
+If you do see the options, I'd also like you to verify that you have:
+
+- git bash - (a command-line/terminal program) that comes with the git package we'll install
+- a package manager - (something like winget, choco, scoop or brew)
+
+If you have all of that then you can [move on to step 4](#4-install-node).
+
+If this is all foreign to you, then please read on.
 
 #### Using a package manager  
 
 If you saw something like: *command not found*, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
-This will be done via the package manager.
+***We will install git using package manager.***
 A **package manager** is a piece of software that keeps track of what you've installed and allows you to easily install and uninstall entire programs.
 Many can (when you ask them to) also upgrade to new versions when those become available.  
 Just make sure your terminal program is open and type (or copy)
@@ -62,7 +67,7 @@ Press enter and wait.  It's not too bad.  If it complains, you may need administ
 Once it finishes, you may need to restart your terminal, but then we'll get to this
 
 ---
-***Please leave your terminal of choice open (or reopen) as we'll be using it shortly again to install another application.***
+***Please at this point open git bash as we'll be using it shortly again to install another application.***
 
 Successfully installing git via the package manager means that you can skip to the [next section about configuring git](#3-configure-git).
 
@@ -96,6 +101,8 @@ and let’s change some user preferences in git.
 
 To streamline your git activity, let’s add some of your credentials to
 git preferences.
+To also aid in making this easier for all, I'm ***going to use git bash from here on out***, as it was installed with git.
+
 I took most of this from the [git-scm book](https://git-scm.com/book/en/v2), but you’ll
 want to **set the git preferences on all the computers that you use.**  Let me say that again in big letters
 
@@ -298,11 +305,19 @@ I can continue using handy shortcuts from eclipse like:
 
 When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
 (but not too much initially, spend no more than 10-15 minutes).
+
 I'll go over a few different settings that I've found useful.  
 
 To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
 Pick the file that will work best for you in navigating using keyboard shortcuts.
 This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
+
+While installing the eclipse keymap is optional, what I would like you to do is to change your terminal of choice to git bash.
+Just like with the gif from above, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
+Navigate to the ***Tools*** on the left sidebar and select the dropdown for the Shell path.
+There you should see bash.exe with a path for git.
+
+![webstorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
 
 ### 9: Make changes
 
@@ -315,11 +330,18 @@ and how to send those changes so that they are recorded on GitHub.
 Because we are editing a markdown file, Webstorm defaults for it to be in preview mode,
 but if I were to have clicked the middle button it would have shown a split preview between the raw text and what it looks like. (instead of flipping back and forth)
 
-Also, notice the green button at the top.
+Also, notice the green button at the top - ![green commit button](../../images/0/partc/git_green_button.png).
 That is used to create a commit, which is a record of the changes that you have made.
 **You'll want to get in the habit of committing often**.
 Committing small changes is a good idea because then you can more easily keep track of (and potentially revert changes).
 It's also a good way to document what has been added or changed as well.
+
+As you are toying around, you may get a popup like this in webstorm.
+
+![popup asking if you want to add files to git](../../images/0/partc/add_file_to_git.png)
+
+Like the picture shows, I would check ***Don't ask again*** and then click ***Cancel***.
+I like to be purposeful in my commits in git, so I do not like adding in files to be tracked that may not be necessary.
 
 ### 10: Submit the Assignment
 
@@ -348,8 +370,7 @@ It is harder to use.
 However, there are many more resources out there (like with stackoverflow) that give you the keyboard combination or command to do some neat things,
 like amend your last commit, or go back a couple of commits, among other things.
 
-For this, we'll need to use the command line and the git command tool.
-I like git bash.
+For this, we'll continue getting comfortable with git bash.
 The first thing that you'll need to do is to ensure that you can navigate to the location of where your project is located.
 If you’re not sure how to
 use the command line, feel free to ask in the discord, but the easiest commands to learn
@@ -371,33 +392,26 @@ and then right-click and select *Git Bash Here*.
 If you are on windows and using the new [Terminal](https://github.com/microsoft/terminal),
 you can also click the folder from explorer and drag the folder from windows into Terminal to have it automatically type the path for you.
 Once you are inside the correct place that you want to be, then you can move on.
+Lastly, one of the last ways to do this is merely via Webstorm.
+You can right click on your project and say ***Open In->Terminal***, and the terminal will open down below.
 
 ### Some git command line tools
 
-If you didn't want to use the WebStorm Git integration, you could always use git to download the project, if you don't have it on your computer already.
-The quickest way to do this would be:
+While we will use gitstorms's git integration and tools to help us commit regularly,
+knowing a little bit about how to use the command line will be important for this course.
+One of the most important parts of knowing how to use the command line is being able to navigate through your folders.
 
-```bash
-git clone THE_URL_YOU_COPIED_HERE
-```
-
-In many command line tools, you can right-click and it *should* paste the URL that you just copied to the clipboard.
-Once it finishes cloning, do a sanity check.
-You should see that the command line now shows a
-highlight showing you that you are on the main branch, which would be
-in a different syntax color: notice how the end of the prompt ends with
-main, that lets you know that you are on the main branch of a git
-project.
-You can take a look at the files either in the command line or
-via your explorer of choice.
+Anytime you make any changes or commands, it's important to understand where you are.
+Let's verify that you are in fact in the correct place.
+When using git bash, you know you have entered a git repository when you see  that the command line shows ***`(name_of_branch)`*** in a different color.
+In our case, notice how the end of the prompt ends with
+`main`, that lets you know that you are on the main branch of a git
+project.  I will move up a directory and down just so you can see the difference.
 
 ![git terminal showing main as repo](../../images/0/partc/image5.png)
 
-You'll also notice that for this lab
-(if you look at the directory where you cloned your repo)
-you should see a file ```.gitignore``` and a folder called ```.git```.
-If you do not see these files, then you should
-[turn on the visibility for them](https://support.microsoft.com/en-us/windows/show-hidden-files-0320fe58-0117-fd59-6851-9b7f9840fdb2).
+You'll also notice that for this lab you should see a file ```.gitignore``` and a folder called ```.git```.
+You may not see those files if you type `ls`.
 
 **You do not want to play around or modify the .git folder.**
 
@@ -408,37 +422,44 @@ For this part, we were only interested in getting you used to the
 mechanics of adding, committing and pushing changes up to GitHub.
 So here’s what I’m going to ask you to do.
 
-1. Navigate to the directory where your Webstorm project is with the files that you moved over to in git bash.
-
-2. After importing the project via WebStorm
+1. With the terminal open,
 type ```git status``` to see what’s changed.
 If nothing has changed, you can add a file or make a new file in the directory.
 
 ![git status showing lots of untracked files](../../images/0/partc/image7.png)
 
 Once you add something, notice the red text and the message that git gives us.
-The files you see will be different, as these images are merely samples.
-It tells us that many files are **untracked**,
+It tells us that we have a file (or in this case a folder) that is **untracked**,
 which means that git is not monitoring them for any changes.
 When untracked files change, *git knows nothing about them*.
 So let's add a set of files so that git starts tracking them for any changes.
-Let's practice adding one set of files to what will be our next commit.  You can do this with your uploaded picture of your WebStorm setup.
+Let's practice adding one set of files to what will be our next commit.
+Part of what you need to do is add a picture or screenshot to the repo, which can you can drag into webstorm on top of the your lab0 folder.
+You'll see a move window pop up that you can click ***Refactor***.
+Go ahead and do that, and typing `git status` again you'll now see the file appear as an untracked file.
+
+![git status again shows new file](../../images/0/partc/git_status_2.png)
+
+To get git to start tracking a file, you can say:
 
 ```bash
-git add my_personalized_webstorm_setup.png
+git add path/to/name_of_file.extension
 ```
 
-(Don't forget about tab completion!  I seldom type anything out anymore, just a few letters and then press ***Tab*** to have the shell give its best suggestion)
+***Don't forget about Tab completion!***
+I seldom type anything out anymore.
+After I type a few letters, I press ***Tab*** to have the shell give its best suggestion and make sure I have the right location and no typos.
+You can even press Tab again if you get no further completions to see the list of everything available for files.
 
 If you type ```git status``` again, you'll notice that now you have a file that is staged, while the other files and folders would still be unstaged.
-In the example above if I had added UserSettings, it would look like this:
+In the example above, if instead had added the .idea folder (and not the png), it would look like this:
 
 ![git status showing staged and unstaged files](../../images/0/partc/usersettingsadded.png)
 
 The files in green are what are called **staged changes**.
 What this means is that not only is git going to track them, but they are different than what is currently in the repo,
 and so if you **commit**, you would be placing those changes and additions formally into the git record/history.
-If you'd like, please add the rest of the files, which you can do by writing
+If you'd like, please add the remaining file, which you can do by writing
 
 ```bash
 git add .
@@ -458,19 +479,21 @@ By having the `-m`, we are providing the commit message that we would like to ha
 Let's make one more change to the file so that we can dive a little bit deeper into staged vs unstaged.
 Go ahead and open up your README.md and move over to Line 3 or so, where you have the description.
 Modify the description one more time, or add another comment to the file.
-Save the file and then back at the command prompt, do a status check via git.
+Save the file and then back at the command prompt, do a `git status` again.
 Once you do, you'll see something like this (except yours will be for readme):
 
 ![git status showing modified files that haven't been staged](../../images/0/partc/gitmodifiednotstaged.png)
 
-While we have this in red text, notice that rather than it saying it is untracked, now it is saying it has been modified, however, if we were to commit right now, nothing would happen.
+Notice that the red text does not say it is untracked,
+instead it is saying it has been modified.
+Furthermore, if we were to commit right now, nothing would happen.
 In git when you save a file, git merely tells you that the file that you have saved differs from what you had before.
 If you want that file to become part of the record, you'll need to stage the changes, which you can do again by calling this ambiguous term `add`.
 If you were to add the file, then it would show in green again to let you know that it will be committed.
 However, there is a way to automatically commit any of your tracked files into your repository, which is to use the flag -a, so typically when I commit, I do something like this:
 
 ```bash
-git commit -am "Added another sentence about 227 to test git"
+git commit -am "Personalized the readme with my name Osvaldo"
 ```
 
 While
@@ -508,7 +531,7 @@ push was indeed successful.
 ### Verifying changes made it to GitHub
 
 Once you completed the steps and push, verify that you have finished by visiting **github.com** and clicking on your repository.
-Once there, you can click to see [this gif animation that helps you verify that the commits were made on GitHub](https://imgur.com/7rNTgGF)
+Once there, you can click to see [this gif animation that helps you verify that the commits were made on GitHub](https://imgur.com/fpaI9XK)
 
 Like the image, you should see your changes.
 If github.com
