@@ -12,25 +12,25 @@ Let's go back to working with React.
 We start with a new example:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   return (
     <div>
       <p>
-        Hello {props.name}, you are {props.age} years old
+        Hi {props.name}, you are {props.age} years old
       </p>
     </div>
   )
 }
 
 const App = () => {
-  const name = 'Peter'
+  const name = 'Buddy'
   const age = 10
 
   return (
     <div>
       <h1>Greetings</h1>
-      <Hello name="Maya" age={26 + 10} />
-      <Hello name={name} age={age} />
+      <Greet name="Bailey" age={14 + 7} />
+      <Greet name={name} age={age} />
     </div>
   )
 }
@@ -38,10 +38,10 @@ const App = () => {
 
 ### Component helper functions
 
-Let's expand our `Hello` component so that it guesses the year of birth of the person being greeted:
+Let's expand our `Greet` component so that it guesses the year of birth of the person being greeted:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   // highlight-start
   const bornYear = () => {
     const yearNow = new Date().getFullYear()
@@ -52,7 +52,7 @@ const Hello = (props) => {
   return (
     <div>
       <p>
-        Hello {props.name}, you are {props.age} years old
+        Hi {props.name}, you are {props.age} years old
       </p>
       <p>So you were probably born in {bornYear()}</p> // highlight-line
     </div>
@@ -81,15 +81,15 @@ Since `props` is an object
 
 ```js
 props = {
-  name: 'Arto Hellas',
-  age: 35,
+  name: 'Powercat',
+  age: 23,
 }
 ```
 
 we can streamline our component by assigning the values of the properties directly into two variables `name` and `age` which we can then use in our code:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   // highlight-start
   const name = props.name
   const age = props.age
@@ -99,7 +99,7 @@ const Hello = (props) => {
 
   return (
     <div>
-      <p>Hello {name}, you are {age} years old</p> // highlight-line
+      <p>Hi {name}, you are {age} years old</p> // highlight-line
       <p>So you were probably born in {bornYear()}</p>
     </div>
   )
@@ -124,7 +124,7 @@ const bornYear = () => {
 Destructuring makes the assignment of variables even easier since we can use it to extract and gather the values of an object's properties into separate variables:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
     // highlight-start
   const { name, age } = props
     // highlight-end
@@ -132,7 +132,7 @@ const Hello = (props) => {
 
   return (
     <div>
-      <p>Hello {name}, you are {age} years old</p>
+      <p>Hi {name}, you are {age} years old</p>
       <p>So you were probably born in {bornYear()}</p>
     </div>
   )
@@ -143,23 +143,23 @@ If the object we are destructuring has the values
 
 ```js
 props = {
-  name: 'Arto Hellas',
-  age: 35,
+  name: 'Powercat',
+  age: 23,
 }
 ```
 
-the expression `const { name, age } = props` assigns the values `'Arto Hellas'` to `name` and `35` to `age`.
+the expression `const { name, age } = props` assigns the values `'Powercat'` to `name` and `23` to `age`.
 
 We can take destructuring a step further:
 
 ```js
-const Hello = ({ name, age }) => { // highlight-line
+const Greet = ({ name, age }) => { // highlight-line
   const bornYear = () => new Date().getFullYear() - age
 
   return (
     <div>
       <p>
-        Hello {name}, you are {age} years old
+        Hi {name}, you are {age} years old
       </p>
       <p>So you were probably born in {bornYear()}</p>
     </div>
@@ -172,14 +172,14 @@ The props that are passed to the component are now directly destructured into th
 This means that instead of assigning the entire props object into a variable called `props` and then assigning its properties to the variables `name` and `age`
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   const { name, age } = props
 ```
 
 we assign the values of the properties directly to variables by destructuring the props object that is passed to the component function as a parameter:
 
 ```js
-const Hello = ({ name, age }) => {
+const Greet = ({ name, age }) => {
 ```
 
 ### Page re-rendering
