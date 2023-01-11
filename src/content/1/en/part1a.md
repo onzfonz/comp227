@@ -35,11 +35,13 @@ it might make sense to do so now.
 With your terminal now open you can type the following:
 
 ```bash
-npx create-react-app part1
-cd part1
+npx create-react-app reading
+cd reading
 ```
 
-The application runs as follows
+Say yes to any prompts that appear asking you to update or that ask you to allow access.
+
+Once you are in the reading directory, start our application by typing:
 
 ```bash
 npm start
@@ -48,13 +50,16 @@ npm start
 By default, the application runs on localhost port 3000 with the address <http://localhost:3000>
 
 Your default browser should launch automatically.
-Open the browser console **immediately**.
+Open the browser console (***Ctrl-Shift-I***) **immediately**.
 Also, open a text editor so that you can view the code as well as the webpage at the same time on the screen:
 
 ![code and browser side by side](../../images/1/1e.png)
 
-The code of the application resides in the *src* folder.
-Let's simplify the default code such that the contents of the file index.js looks like this:
+You can collapse lab0 and close the README.md from that lab that we had from the previous folder.
+Because we attached the projects, you'll need to make sure that you are editing the correct file, which you can check in the upper left breadcrumb trail.
+
+The code of the application resides in the *reading/src* folder.
+Let's simplify the default code such that the contents of the file *index.js* looks like this:
 
 ```js
 import React from 'react'
@@ -70,7 +75,7 @@ and file *App.js* looks like this
 ```js
 const App = () => (
   <div>
-    <p>Hello world</p>
+      <p>Hola COMP 227!</p>
   </div>
 )
 
@@ -83,29 +88,13 @@ You may delete the files:
 - *App.test.js*
 - *index.css*
 - *logo.svg*
-- *setupTests.js*
 - *reportWebVitals.js*
+- *setupTests.js*
 
 as they are not needed in our application right now.
+If you use safe delete, you should not see any warnings about the files being used.
 
-If you end up with the following error:
-
-![resolve react-dom/client error](../../images/1/r18-error.png)
-
-Then, for some reason, you are using a React version older than the current version 18.
-
-The fix is to change *index.js* as follows:
-
-```js
-import ReactDOM from 'react-dom'
-import App from './App'
-
-ReactDOM.render(<App />, document.getElementById('root'))
-```
-
-You quite likely need to do the same for your other projects.
-
-See [this](/part1/a_more_complex_state_debugging_react_apps/#a-note-on-react-version) for more about the version differences.
+If you do see warnings, then you way want to read [this future section about react version differences](/part1/a_more_complex_state_debugging_react_apps/#a-note-on-react-version).
 
 ### Component
 
@@ -127,12 +116,12 @@ Let's take a closer look at the code defining the component:
 ```js
 const App = () => (
   <div>
-    <p>Hello world</p>
+    <p>Hola COMP 227!</p>
   </div>
 )
 ```
 
-As you probably guessed, the component will be rendered as a `div` tag, which wraps a `p` tag containing the text `Hello world`.
+As you probably guessed, the component will be rendered as a `div` tag, which wraps a `p` tag containing the text `Hola COMP 227!`.
 
 Technically the component is defined as a JavaScript function.
 The following is a function (which does not receive any parameters):
@@ -140,7 +129,7 @@ The following is a function (which does not receive any parameters):
 ```js
 () => (
   <div>
-    <p>Hello world</p>
+    <p>Hola COMP 227!</p>
   </div>
 )
 ```
@@ -157,27 +146,22 @@ which are described in a newer version of JavaScript known as [ECMAScript 6](htt
 
 Because the function consists of only a single expression we have used a shorthand, which represents this piece of code:
 
-```js
-const App = () => {
-  return (
-    <div>
-      <p>Hello world</p>
-    </div>
-  )
-}
-```
+| original shorthand | long form |
+| --- | --- |
+|<pre lang="javascript">const App = () => (<br><br>  \<div><br>    \<p>Hola COMP 227!\</p><br>  \</div><br><br>)<br>|<pre lang="javascript">const App = () => {<br>  return (<br>    \<div><br>      \<p>Hola COMP 227!\</p><br>    \</div><br>  )<br>}|
 
+**Notice the return and curly braces instead of parenthesis**!
 In other words, the function returns the value of the expression.
 
 The function defining the component may contain any kind of JavaScript code.
-Modify your component to be as follows and observe what happens in the console:
+Modify your component to be as follows and observe what happens in the developer tool's console: (I'll refer to this as the **console** from here on out.)
 
 ```js
 const App = () => {
   console.log('Hello from component')
   return (
     <div>
-      <p>Hello world</p>
+      <p>Hola COMP 227!</p>
     </div>
   )
 }
@@ -190,12 +174,12 @@ Modify the component as follows:
 ```js
 const App = () => {
   const now = new Date()
-  const a = 10
-  const b = 20
+  const a = 18
+  const b = 24
 
   return (
     <div>
-      <p>Hello world, it is {now.toString()}</p>
+      <p>Hola COMP 227! It is {now.toString()}</p>
       <p>
         {a} plus {b} is {a + b}
       </p>
@@ -219,13 +203,13 @@ After compiling, our application looks like this:
 ```js
 const App = () => {
   const now = new Date()
-  const a = 10
-  const b = 20
+  const a = 18
+  const b = 24
   return React.createElement(
     'div',
     null,
     React.createElement(
-      'p', null, 'Hello world, it is ', now.toString()
+      'p', null, 'Hola COMP 227! It is ', now.toString()
     ),
     React.createElement(
       'p', null, a, ' plus ', b, ' is ', a + b
@@ -239,7 +223,7 @@ Projects created with *create-react-app* are configured to compile automatically
 We will learn more about this topic in [part 7](/part7) of this course.
 
 It is also possible to write React as "pure JavaScript" without using JSX.
-Although, nobody with a sound mind would do so.
+Just like it's possible to chisel one of your programs from undergrad into a stone tablet. In either case, I wouldn't recommend it.
 
 In practice, JSX is much like HTML with the distinction that with JSX you can easily embed dynamic content by writing appropriate JavaScript within curly braces.
 The idea of JSX is quite similar to many templating languages, such as Thymeleaf used along with Java Spring, which are used on servers.
@@ -259,15 +243,14 @@ but when writing JSX, the tag needs to be closed:
 
 ### Multiple components
 
-Let's modify the file *App.js* as follows (NB: `export` at the bottom is left out in these *examples*, now and in the future.
-It is still needed for the code to work):
+Let's modify the file *App.js* as follows:
 
 ```js
 // highlight-start
-const Hello = () => {
+const Greet = () => {
   return (
     <div>
-      <p>Hello world</p>
+      <p>Hola COMP 227!</p>
     </div>
   )
 }
@@ -277,13 +260,16 @@ const App = () => {
   return (
     <div>
       <h1>Greetings</h1>
-      <Hello /> // highlight-line
+      <Greet /> // highlight-line
     </div>
   )
 }
 ```
 
-We have defined a new component `Hello` and used it inside the component `App`.
+(Note: `export` at the bottom is left out in these *examples*, now and in the future.
+We still need **`export` for the code to work.**)
+
+We have defined a new component `Greet` and used it inside the component `App`.
 Naturally, a component can be used multiple times:
 
 ```js
@@ -291,10 +277,10 @@ const App = () => {
   return (
     <div>
       <h1>Greetings</h1>
-      <Hello />
+      <Greet />
       // highlight-start
-      <Hello />
-      <Hello />
+      <Greet />
+      <Greet />
       // highlight-end
     </div>
   )
@@ -312,13 +298,13 @@ there are situations where the component `App` is not exactly the root, but is w
 
 It is possible to pass data to components using so-called [props](https://reactjs.org/docs/components-and-props.html).
 
-Let's modify the component `Hello` as follows:
+Let's modify the component `Greet` as follows:
 
 ```js
-const Hello = (props) => { // highlight-line
+const Greet = (props) => { // highlight-line
   return (
     <div>
-      <p>Hello {props.name}</p> // highlight-line
+      <p>Hi {props.name}</p> // highlight-line
     </div>
   )
 }
@@ -334,38 +320,38 @@ const App = () => {
   return (
     <div>
       <h1>Greetings</h1>
-      <Hello name='George' /> // highlight-line
-      <Hello name='Daisy' /> // highlight-line
+      <Greet name='Luna' /> // highlight-line
+      <Greet name='Jordan' /> // highlight-line
     </div>
   )
 }
 ```
 
-There can be an arbitrary number of props and their values can be "hard-coded" strings or the results of JavaScript expressions.
+There can be an arbitrary number of props and their values can be *hard-coded* strings or the results of JavaScript expressions.
 If the value of the prop is achieved using JavaScript it must be wrapped with curly braces.
 
-Let's modify the code so that the component `Hello` uses two props:
+Let's modify the code so that the component `Greet` uses two props:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   return (
     <div>
       <p>
-        Hello {props.name}, you are {props.age} years old // highlight-line
+        Hi {props.name}, you are {props.age} years old // highlight-line
       </p>
     </div>
   )
 }
 
 const App = () => {
-  const name = 'Peter' // highlight-line
+  const name = 'Buddy' // highlight-line
   const age = 10       // highlight-line
 
   return (
     <div>
       <h1>Greetings</h1>
-      <Hello name='Maya' age={26 + 10} /> // highlight-line
-      <Hello name={name} age={age} />     // highlight-line
+      <Greet name='Bailey' age={7 + 14} /> // highlight-line
+      <Greet name={name} age={age} />     // highlight-line
     </div>
   )
 }
@@ -375,14 +361,18 @@ The props sent by the component `App` are the values of the variables, the resul
 
 ### Some notes
 
-React has been configured to generate quite clear error messages.
+React generates helpful error messages.
 Despite this, you should, at least in the beginning, advance in **very small steps** and make sure that every change works as desired.
 
 **The console should always be open**.
-If the browser reports errors, it is not advisable to continue writing more code, hoping for miracles.
+If the browser reports errors, don't continue writing more code, hoping for miracles.
 You should instead try to understand the cause of the error and, for example, go back to the previous working state:
 
 ![screenshot of undefined prop error](../../images/1/2a.png)
+
+While using undo (***Ctrl-Z***) and redo (***Ctrl-Y***) is great,
+if you commit often, looking at changes becomes even easier,
+as you could always look at the previously recorded changes on any line.
 
 It is good to remember that in React it is possible and worthwhile to write `console.log()` commands (which print to the console) within your code.
 
@@ -406,7 +396,7 @@ const App = () => {
   return (
     <div>
       <h1>Greetings</h1>
-      <Hello name='Maya' age={26 + 10} />
+      <Greet name='Bailey' age={7 + 14} />
       <footer /> // highlight-line
     </div>
   )
@@ -426,7 +416,7 @@ If we, for example, try to define the component `App` without the outermost `div
 const App = () => {
   return (
     <h1>Greetings</h1>
-    <Hello name='Maya' age={26 + 10} />
+    <Greet name='Bailey' age={7 + 14} />
     <Footer />
   )
 }
@@ -443,7 +433,7 @@ An *array* of components is also a valid solution:
 const App = () => {
   return [
     <h1>Greetings</h1>,
-    <Hello name='Maya' age={26 + 10} />,
+    <Greet name='Bailey' age={7 + 14} />,
     <Footer />
   ]
 }
@@ -457,14 +447,14 @@ i.e. by wrapping the elements to be returned by the component with an empty elem
 
 ```js
 const App = () => {
-  const name = 'Peter'
+  const name = 'Buddy'
   const age = 10
 
   return (
     <>
       <h1>Greetings</h1>
-      <Hello name='Maya' age={26 + 10} />
-      <Hello name={name} age={age} />
+      <Greet name='Bailey' age={7 + 14} />
+      <Greet name={name} age={age} />
       <Footer />
     </>
   )
@@ -481,25 +471,23 @@ It now compiles successfully, and the DOM generated by React no longer contains 
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
-You may submit all the exercises of this course into the same repository, or use multiple repositories.
+You should submit the exercises in each part with the corresponding repo that is mentioned.  In this case, you will use the repo that was generated from <http://go.djosv.com/227lab1>.
+
 If you submit exercises of different parts into the same repository, please use a sensible naming scheme for the directories.
 
-One very functional file  structure for the submission repository is as follows:
+One very functional file structure for the submission repository is as follows:
 
 ```text
-part0
-part1
+lab1
+  reading
   courseinfo
   unicafe
   anecdotes
-part2
-  phonebook
-  countries
 ```
 
-See this [example submission repository](https://github.com/comp227/example-submission-repository)!
+While up top we started at the base level, please feel free to either move the contents into the reading folder.
 
-For each part of the course, there is a directory, which further branches into directories containing a series of exercises, like "unicafe" for part 1.
+Each repo for each part will branch into directories containing a series of exercises, like "unicafe" for part 1.
 
 For each web application for a series of exercises,
 it is recommended to submit all files relating to that application, except for the directory *node_modules*.
