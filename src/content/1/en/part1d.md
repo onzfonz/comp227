@@ -532,7 +532,7 @@ To recap, hooks may only be called from the inside of a function body that defin
 const App = () => {
   // these are ok
   const [age, setAge] = useState(0)
-  const [name, setName] = useState('Juha Tauriainen')
+  const [name, setName] = useState('CW Longbottom')
 
   if ( age > 10 ) {
     // this does not work!
@@ -734,7 +734,7 @@ const App = () => {
 
   // highlight-start
   const hello = () => {
-    const handler = () => console.log('hello world')
+    const handler = () => console.log('hello comp227')
 
     return handler
   }
@@ -764,7 +764,7 @@ When the component is rendered, the following function gets executed:
 
 ```js
 const hello = () => {
-  const handler = () => console.log('hello world')
+  const handler = () => console.log('hello comp227')
 
   return handler
 }
@@ -782,7 +782,7 @@ It assigns the return value of `hello()` to the `onClick` attribute.
 Essentially the line gets transformed into:
 
 ```js
-<button onClick={() => console.log('hello world')}>
+<button onClick={() => console.log('hello comp227')}>
   button
 </button>
 ```
@@ -811,8 +811,8 @@ const App = () => {
     <div>
       {value}
   // highlight-start      
-      <button onClick={hello('world')}>button</button>
-      <button onClick={hello('react')}>button</button>
+      <button onClick={hello('comp227')}>button</button>
+      <button onClick={hello('you')}>button</button>
       <button onClick={hello('function')}>button</button>
   // highlight-end      
     </div>
@@ -825,29 +825,29 @@ Now the application has three buttons with event handlers defined by the `hello`
 The first button is defined as
 
 ```js
-<button onClick={hello('world')}>button</button>
+<button onClick={hello('comp227')}>button</button>
 ```
 
-The event handler is created by *executing* the function call `hello('world')`.
+The event handler is created by *executing* the function call `hello('comp227')`.
 The function call returns the function:
 
 ```js
 () => {
-  console.log('hello', 'world')
+  console.log('hello', 'comp227')
 }
 ```
 
 The second button is defined as:
 
 ```js
-<button onClick={hello('react')}>button</button>
+<button onClick={hello('you')}>button</button>
 ```
 
-The function call `hello('react')` that creates the event handler returns:
+The function call `hello('you')` that creates the event handler returns:
 
 ```js
 () => {
-  console.log('hello', 'react')
+  console.log('hello', 'you')
 }
 ```
 
@@ -1110,7 +1110,7 @@ Once you have marked your submission as complete, **you cannot submit more exerc
 In these cases, it is sufficient to submit just the final version of the application,
 but you will need to commit regularly, it should often be at least 4 or 5 times while working on a particular exercise*
 
-**WARNING** ensure you are at the base folder of the correct repository when using `create-react-app`.
+**WARNING** ensure you are at the base folder of the correct repository when using `create-react-app` to create the studytracker and jokes apps/directories.
 
 In some situations you may also have to run the command below from the root of the project:
 
