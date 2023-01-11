@@ -149,24 +149,41 @@ If you already have node installed,
 make sure it is at least version 16.13.2.
 We will discuss node.js further in [part 1](../../1/en/part1.md).
 
-I've taken the [installation instructions](https://nodejs.org/en/download/package-manager/) for node and provided the most popular options here.
-For now, open up your terminal of choice and type:
-
-|Windows|Mac|
-|:---|:--|
-|`winget install OpenJS.NodeJS`|`brew install node`|
-
-If we run into issues we may need to install a specific version of node in the future
-(since the bulk of this course was written with Node 16.13.2).
+For this class, I'm going to install nvm first so that we can use a specific version of node,
+since the bulk of this course was written and tested with Node 16.13.2.
 If that is the case, you could also install **[NVM](https://github.com/nvm-sh/nvm)**,
 which allows us to have different versions of node.js on our computer and switch between them.
 
-This can be done via these two commands.
+This can be done via one of these commands.
 
 |Windows|Mac|
 |:---|:--|
-|`winget install CoreyButler.NVMforWindows`|`brew install nvm`|
+|`winget install -e CoreyButler.NVMforWindows`|`brew install nvm`|
 
+After installing nvm, you can use the nvm's help to install a version (like 16.3.2, which is what I'll do).
+Type nvm to navigate through, and you'll notice that you need to these two commands separately.
+
+```bash
+nvm install 16.3
+nvm use 16
+```
+
+After this, you should be able to type `node -v` and you'll notice that it should print out `v16.3.0`.
+
+#### 4 Alternate: Installing node directly
+
+Alternatively, you can try to just install node without using a version manager.
+I've taken the [installation instructions](https://nodejs.org/en/download/package-manager/) for node and provided the most popular options here.
+
+|Windows|Mac|
+|:---|:--|
+|`winget install -e OpenJS.NodeJS`|`brew install node`|
+
+You should only use this option if you have trouble doing anything with nvm..
+
+---
+
+Regardless of which option you choose,
 Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically installed with Node.js.
 We will be actively using npm throughout the course.
 Node also comes with [npx](https://www.npmjs.com/package/npx),
@@ -220,7 +237,7 @@ If you haven't already, use the command line to download WebStorm.
 
 |Windows|Mac|
 |:--|:--|
-|`winget install JetBrains.WebStorm`|`brew install --cask webstorm`|
+|`winget install -e JetBrains.WebStorm`|`brew install --cask webstorm`|
 
 As you are downloading the product, make sure that you fill out the [student application](https://www.jetbrains.com/shop/eform/students).
 While WebStorm offers a 30-day free trial, we want to start the application process early to avoid any hiccups.
