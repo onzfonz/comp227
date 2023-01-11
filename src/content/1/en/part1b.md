@@ -17,14 +17,14 @@ At this moment, the latest version is the one released in June of 2022 with the 
 Browsers do not yet support all of JavaScript's newest features.
 Due to this fact, a lot of code run in browsers has been *transpiled* from a newer version of JavaScript to an older, more compatible version.
 
-Today, the most popular way to do transpiling is by using [Babel](https://babeljs.io/).
+Today, the most popular way to transpile is via [Babel](https://babeljs.io/).
 Transpilation is automatically configured in React applications created with create-react-app.
-We will take a closer look at the configuration of the transpilation in [part 7](/part7) of this course.
+We will take a closer look at transpilation in [part 7](/part7) of this course.
 
 [Node.js](https://nodejs.org/en/) is a JavaScript runtime environment based on Google's [Chrome V8](https://developers.google.com/v8/)
 JavaScript engine and works practically anywhere - from servers to mobile phones.
 Let's practice writing some JavaScript using Node.
-It is expected that the version of Node.js installed on your machine is at least version *16.13.2*.
+It is expected that the version of Node.js installed on your machine is at least version *16.13.0*.
 The latest versions of Node already understand the latest versions of JavaScript, so the code does not need to be transpiled.
 
 The code is written into files ending with *.js* that are run by issuing the command `node name_of_file.js`
@@ -39,7 +39,7 @@ But when it comes to the core mechanism of the language they could not be more d
 Coming from a Java background, the behavior of JavaScript can seem a bit alien, especially if one does not make the effort to look up its features.
 
 In certain circles, it has also been popular to attempt "simulating" Java features and design patterns in JavaScript.
-We do not recommend doing this as the languages and respective ecosystems are ultimately very different.
+We do not recommend doing this as the languages and their ecosystems are ultimately very different.
 
 ### Variables
 
@@ -66,12 +66,15 @@ At the start, `y` stores an integer; at the end, it stores a string.
 
 It is also possible to define variables in JavaScript using the keyword [var](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var).
 var was, for a long time, the only way to define variables.
-const and let were only recently added in version ES6.
+`const` and `let` were only recently added in version ES6.
 In specific situations, var works differently compared to variable definitions in most languages - see
 [JavaScript Variables - Should You Use let, var or const? on Medium](https://medium.com/craft-academy/javascript-variables-should-you-use-let-var-or-const-394f7645c88f) or
 [Keyword: var vs let on JS Tips](http://www.jstips.co/en/javascript/keyword-var-vs-let/) for more information.
-During this course the use of var is ill-advised and you should stick with using const and let!
+During this course, ***you should only use const and let***!
+Avoid var as if it tested positive for COVID.
 You can find more on this topic on YouTube - e.g. [var, let and const - ES6 JavaScript Features](https://youtu.be/sjyJBL5fkp8)
+
+![let const meme](../../images/1/custom/let_const_meme.png)
 
 ### Arrays
 
@@ -171,21 +174,21 @@ which happens by listing its properties within braces:
 
 ```js
 const object1 = {
-  name: 'Arto Hellas',
-  age: 35,
-  education: 'PhD',
+  name: 'Powercat',
+  age: 23,
+  education: 'BS',
 }
 
 const object2 = {
-  name: 'Full Stack web application development',
-  level: 'intermediate studies',
-  size: 5,
+  name: 'COMP 227',
+  level: 'graduate',
+  units: 3,
 }
 
 const object3 = {
   name: {
-    first: 'Dan',
-    last: 'Abramov',
+    first: 'Randy',
+    last: 'Lau',
   },
   grades: [2, 3, 5, 3],
   department: 'Stanford University',
@@ -197,20 +200,20 @@ The values of the properties can be of any type, like integers, strings, arrays,
 The properties of an object are referenced by using the "dot" notation, or by using brackets:
 
 ```js
-console.log(object1.name)         // Arto Hellas is printed
+console.log(object1.name)         // Powercat is printed
 const fieldName = 'age' 
-console.log(object1[fieldName])    // 35 is printed
+console.log(object1[fieldName])    // 23 is printed
 ```
 
 You can also add properties to an object on the fly by either using dot notation or brackets:
 
 ```js
-object1.address = 'Helsinki'
-object1['secret number'] = 12341
+object1.address = 'University of the Pacific'
+object1['student id'] = 989123456
 ```
 
 The latter of the additions has to be done by using brackets because when using dot notation,
-`secret number` is not a valid property name because of the space character.
+`student id` is not a valid property name because of the space character.
 
 Naturally, objects in JavaScript can also have methods.
 However, during this course, we do not need to define any objects with methods of their own.
@@ -268,30 +271,23 @@ const tSquared = t.map(p => p * p)
 The arrow function feature was added to JavaScript only a couple of years ago, with version [ES6](http://es6-features.org/).
 Before this, the only way to define functions was by using the keyword `function`.
 
-There are two ways to reference the function; one is giving a name in a [function declaration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function).
+There are two ways to reference the function via the old way.
+
+|[function declaration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)|[function expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)|
+| :--- | :--- |
+|<pre>function product(a, b) {<br/>  return a * b<br/>}<br/><br/>const result = product(2, 6)<br>// result is now 12|<pre>const product = function(a, b) {<br/>  return a * b<br/>}<br/><br/>const result = product(2, 6)<br>// result is now 12|
+
+In the function expression case, there is no need to give the function a name and the definition may reside among the rest of the code:
+
+During this course, we will define all functions using the arrow syntax, which means that the above function would be:
 
 ```js
-function product(a, b) {
-  return a * b
+const product = (a, b) => {
+    return a * b
 }
 
 const result = product(2, 6)
-// result is now 12
 ```
-
-The other way to define the function is by using a [function expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function).
-In this case, there is no need to give the function a name and the definition may reside among the rest of the code:
-
-```js
-const average = function(a, b) {
-  return (a + b) / 2
-}
-
-const result = average(2, 5)
-// result is now 3.5
-```
-
-During this course, we will define all functions using the arrow syntax.
 
 </div>
 
@@ -442,10 +438,10 @@ which refers to the object itself.
 We can assign methods to an object by defining properties that are functions:
 
 ```js
-const arto = {
-  name: 'Arto Hellas',
-  age: 35,
-  education: 'PhD',
+const mascot = {
+  name: 'Powercat',
+  age: 23,
+  education: 'BS',
   // highlight-start
   greet: function() {
     console.log('hello, my name is ' + this.name)
@@ -453,39 +449,39 @@ const arto = {
   // highlight-end
 }
 
-arto.greet()  // "hello, my name is Arto Hellas" gets printed
+mascot.greet()  // "hello, my name is Powercat" gets printed
 ```
 
 Methods can be assigned to objects even after the creation of the object:
 
 ```js
-const arto = {
-  name: 'Arto Hellas',
-  age: 35,
-  education: 'PhD',
+const mascot ={
+  name: 'Powercat',
+  age: 23,
+  education: 'BS',
   greet: function() {
     console.log('hello, my name is ' + this.name)
   },
 }
 
 // highlight-start
-arto.growOlder = function() {
+mascot.growOlder = function() {
   this.age += 1
 }
 // highlight-end
 
-console.log(arto.age)   // 35 is printed
-arto.growOlder()
-console.log(arto.age)   // 36 is printed
+console.log(mascot.age)   // 23 is printed
+mascot.growOlder()
+console.log(mascot.age)   // 36 is printed
 ```
 
 Let's slightly modify the object:
 
 ```js
-const arto = {
-  name: 'Arto Hellas',
-  age: 35,
-  education: 'PhD',
+const mascot ={
+  name: 'Powercat',
+  age: 23,
+  education: 'BS',
   greet: function() {
     console.log('hello, my name is ' + this.name)
   },
@@ -496,23 +492,23 @@ const arto = {
   // highlight-end
 }
 
-arto.doAddition(1, 4)        // 5 is printed
+mascot.doAddition(1, 4)        // 5 is printed
 
-const referenceToAddition = arto.doAddition
+const referenceToAddition = mascot.doAddition
 referenceToAddition(10, 15)   // 25 is printed
 ```
 
 Now the object has the method `doAddition` which calculates the sum of numbers given to it as parameters.
-The method is called in the usual way, using the object `arto.doAddition(1, 4)`
+The method is called in the usual way, using the object `mascot.doAddition(1, 4)`
 or by storing a **method reference** in a variable and calling the method through the variable:
 `referenceToAddition(10, 15)`.
 
 If we try to do the same with the method `greet` we run into an issue:
 
 ```js
-arto.greet()       // "hello, my name is Arto Hellas" gets printed
+mascot.greet()       // "hello, my name is Powercat" gets printed
 
-const referenceToGreet = arto.greet
+const referenceToGreet = mascot.greet
 referenceToGreet() // prints "hello, my name is undefined"
 ```
 
@@ -528,18 +524,18 @@ Situations often arise where React or Node (or more specifically the JavaScript 
 needs to call some method in an object that the developer has defined.
 However, in this course, we avoid these issues by using "this-less" JavaScript.
 
-One situation leading to the "disappearance" of `this` arises when we set a timeout to call the `greet` function on the `arto` object,
+One situation leading to the "disappearance" of `this` arises when we set a timeout to call the `greet` function on the `mascot` object,
 using the [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) function.
 
 ```js
-const arto = {
-  name: 'Arto Hellas',
+const mascot ={
+  name: 'Powercat',
   greet: function() {
     console.log('hello, my name is ' + this.name)
   },
 }
 
-setTimeout(arto.greet, 1000)  // highlight-line
+setTimeout(mascot.greet, 1000)  // highlight-line
 ```
 
 As mentioned, the value of `this` in JavaScript is defined based on how the method is being called.
@@ -549,10 +545,10 @@ There are several mechanisms by which the original `this` can be preserved.
 One of these is using a method called [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind):
 
 ```js
-setTimeout(arto.greet.bind(arto), 1000)
+setTimeout(mascot.greet.bind(mascot), 1000)
 ```
 
-Calling `arto.greet.bind(arto)` creates a new function where `this` is bound to point to Arto, independent of where and how the method is being called.
+Calling `mascot.greet.bind(mascot)` creates a new function where `this` is bound to point to Arto, independent of where and how the method is being called.
 
 Using [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) it is possible to solve some of the problems related to `this`.
 They should not, however, be used as methods for objects because then `this` does not work at all.
@@ -584,11 +580,11 @@ class Person {
   }
 }
 
-const adam = new Person('Adam Ondra', 29)
-adam.greet()
+const inigo = new Person('Inigo Montoya', 31)
+inigo.greet()
 
-const janja = new Person('Janja Garnbret', 23)
-janja.greet()
+const osvaldo = new Person('Too Hard to Pronounce', 51)
+osvaldo.greet()
 ```
 
 When it comes to syntax, the classes and the objects created from them are very reminiscent of Java classes and objects.
