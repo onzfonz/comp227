@@ -257,37 +257,37 @@ and *App.tsx* to the following:
 
 ```jsx
 const App = () => {
-  const courseName = "Half Stack application development";
-  const courseParts = [
+  const companyName = "Nintendo";
+  const companyHandhelds = [
     {
       name: "Fundamentals",
-      exerciseCount: 10
+      gameCount: 1046
     },
     {
-      name: "Using props to pass data",
-      exerciseCount: 7
+      name: "Game Boy Advance",
+      gameCount: 1538
     },
     {
       name: "Deeper type usage",
-      exerciseCount: 14
+      gameCount: 1791
     }
   ];
 
   return (
     <div>
-      <h1>{courseName}</h1>
+      <h1>{companyName}</h1>
       <p>
-        {courseParts[0].name} {courseParts[0].exerciseCount}
+        {companyHandhelds[0].name} {companyHandhelds[0].gameCount}
       </p>
       <p>
-        {courseParts[1].name} {courseParts[1].exerciseCount}
+        {companyHandhelds[1].name} {companyHandhelds[1].gameCount}
       </p>
       <p>
-        {courseParts[2].name} {courseParts[2].exerciseCount}
+        {companyHandhelds[2].name} {companyHandhelds[2].gameCount}
       </p>
       <p>
         Number of exercises{" "}
-        {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
+        {companyHandhelds.reduce((carry, part) => carry + part.gameCount, 0)}
       </p>
     </div>
   );
@@ -315,7 +315,7 @@ const App = () => {
 
   return (
     <div>
-      <Header name={courseName} />
+      <Header name={companyName} />
       <Content ... />
       <Total ... />
     </div>
@@ -329,25 +329,25 @@ const App = () => {
 
 ### Deeper type usage
 
-In the previous exercise, we had three parts of a course, and all parts had the same attributes `name` and `exerciseCount`.
+In the previous exercise, we had three parts of a course, and all parts had the same attributes `name` and `gameCount`.
 But what if we needed additional attributes for the parts and each part needs different attributes? How would this look, codewise?
 Let's consider the following example:
 
 ```js
-const courseParts = [
+const companyHandhelds = [
   {
     name: "Fundamentals",
-    exerciseCount: 10,
+    gameCount: 1046,
     description: "This is an awesome course part"
   },
   {
-    name: "Using props to pass data",
-    exerciseCount: 7,
+    name: "Game Boy Advance",
+    gameCount: 1538,
     groupProjectCount: 3
   },
   {
     name: "Deeper type usage",
-    exerciseCount: 14,
+    gameCount: 1791,
     description: "Confusing description",
     exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev"
   }
@@ -355,7 +355,7 @@ const courseParts = [
 ```
 
 In the above example, we have added some additional attributes to each course part.
-Each part has the `name` and `exerciseCount` attributes,
+Each part has the `name` and `gameCount` attributes,
 but the first and the third also have an attribute called `description`, and
 the second and third parts also have some distinct additional attributes.
 
@@ -370,19 +370,19 @@ Let's start by defining types for our different course parts:
 ```js
 interface CoursePartOne {
   name: "Fundamentals";
-  exerciseCount: number;
+  gameCount: number;
   description: string;
 }
 
 interface CoursePartTwo {
-  name: "Using props to pass data";
-  exerciseCount: number;
+  name: "Game Boy Advance";
+  gameCount: number;
   groupProjectCount: number;
 }
 
 interface CoursePartThree {
   name: "Deeper type usage";
-  exerciseCount: number;
+  gameCount: number;
   description: string;
   exerciseSubmissionLink: string;
 }
@@ -395,7 +395,7 @@ We can then use it to define a type for our array, which should accept any of th
 type CoursePart = CoursePartOne | CoursePartTwo | CoursePartThree;
 ```
 
-Now we can set the type for our `courseParts` variable.
+Now we can set the type for our `companyHandhelds` variable.
 Our editor will automatically warn us if we use the wrong type for an attribute, use an extra attribute, or forget to set an expected attribute.
 You can test this by commenting out any attribute for any course part.
 Thanks to the `name` [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types),
@@ -408,7 +408,7 @@ Then we will [extend](https://www.typescriptlang.org/docs/handbook/2/objects.htm
 ```js
 interface CoursePartBase {
   name: string;
-  exerciseCount: number;
+  gameCount: number;
 }
 
 interface CoursePartOne extends CoursePartBase {
@@ -417,7 +417,7 @@ interface CoursePartOne extends CoursePartBase {
 }
 
 interface CoursePartTwo extends CoursePartBase {
-  name: "Using props to pass data";
+  name: "Game Boy Advance";
   groupProjectCount: number;
 }
 
@@ -441,7 +441,7 @@ In the above example, TypeScript knows that a `part` has the type `CoursePart`.
 It can then infer that `part` is of either type `CoursePartOne`, `CoursePartTwo` or `CoursePartThree`.
 The `name` is distinct for each type, so we can use it to identify each type
 and TypeScript can let us know which attributes are available in each case block.
-Then, TypeScript will produce an error if you try to use the `part.description` within the `"Using props to pass data"` block for example.
+Then, TypeScript will produce an error if you try to use the `part.description` within the `"Game Boy Advance"` block for example.
 
 What about adding new types? If we were to add a new course part, wouldn't it be nice to know if we had already implemented handling that type in our code?
 In the example above, a new type would go to the `default` block and nothing would get printed for a new type.
@@ -492,13 +492,13 @@ When we remove the comments from the `Deeper type usage` case block, you will se
 #### 8.15
 
 Let us now continue extending the app created in exercise 8.14.
-First, add the type information and replace the variable `courseParts` with the one from the example below.
+First, add the type information and replace the variable `companyHandhelds` with the one from the example below.
 
 ```js
 // new types
 interface CoursePartBase {
   name: string;
-  exerciseCount: number;
+  gameCount: number;
   type: string;
 }
 
@@ -521,28 +521,28 @@ interface CourseSubmissionPart extends CoursePartBase {
 type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart;
 
 // this is the new coursePart variable
-const courseParts: CoursePart[] = [
+const companyHandhelds: CoursePart[] = [
   {
     name: "Fundamentals",
-    exerciseCount: 10,
+    gameCount: 1046,
     description: "This is the easy course part",
     type: "normal"
   },
   {
     name: "Advanced",
-    exerciseCount: 7,
+    gameCount: 1538,
     description: "This is the hard course part",
     type: "normal"
   },
   {
-    name: "Using props to pass data",
-    exerciseCount: 7,
+    name: "Game Boy Advance",
+    gameCount: 7,
     groupProjectCount: 3,
     type: "groupProject"
   },
   {
     name: "Deeper type usage",
-    exerciseCount: 14,
+    gameCount: 1791,
     description: "Confusing description",
     exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev",
     type: "submission"
@@ -561,27 +561,27 @@ Then create a component `Part` that renders all attributes of each type of cours
 Use a switch case-based exhaustive type checking! Use the new component in component `Content`.
 
 Lastly, add another course part interface with the following attributes:
-`name`, `exerciseCount`, `description` and `requirements`, the latter being a string array.
+`name`, `gameCount`, `description` and `requirements`, the latter being a string array.
 The objects of this type look like the following:
 
 ```js
 {
   name: "Backend development",
-  exerciseCount: 21,
+  gameCount: 21,
   description: "Typing the backend",
   requirements: ["nodejs", "jest"],
   type: "special"
 }
 ```
 
-Then add that interface to the type union `CoursePart` and add corresponding data to the `courseParts` variable.
+Then add that interface to the type union `CoursePart` and add corresponding data to the `companyHandhelds` variable.
 Now, if you have not modified your `Content` component correctly, you should get an error,
 because you have not yet added support for the fourth course part type.
 Do the necessary changes to `Content`, so that all attributes for the new course part also get rendered and that the compiler doesn't produce any errors.
 
 The result might look like the following:
 
-![browser showing half stack application development](../../images/8/45.png)
+![browser showing Nintendo](../../images/8/45.png)
 
 </div>
 
@@ -606,7 +606,7 @@ and in the course part of this section
 ```js
 interface CoursePartBase {
   name: string;
-  exerciseCount: number;
+  gameCount: number;
 }
 ```
 

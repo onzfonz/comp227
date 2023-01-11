@@ -299,7 +299,7 @@ During this course, we will define all functions using the arrow syntax.
 ### Exercises 1.3-1.5
 
 *We continue building the application that we started working on in the previous exercises.
-You can write the code into the same project since we are only interested in the final state of the submitted application.*
+You can write the code into the same project since you have been committing your changes from the previous exercises.*
 
 **Pro-tip:** you may run into issues when it comes to the structure of the `props` that components receive.
 A good way to make things more clear is by printing the props to the console, e.g. as follows:
@@ -311,25 +311,25 @@ const Header = (props) => {
 }
 ```
 
-#### 1.3: course information step3
+#### 1.3: handheld arcade info step3
 
 Let's move forward to using objects in our application.
 Modify the variable definitions of the `App` component as follows and also refactor the application so that it still works:
 
 ```js
 const App = () => {
-  const course = 'Half Stack application development'
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10
+  const company = 'Nintendo'
+  const handheld1 = {
+    name: 'Game Boy',
+    games: 1046
   }
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7
+  const handheld2 = {
+    name: 'Game Boy Advance',
+    games: 1538
   }
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14
+  const handheld3 = {
+    name: 'DS',
+    games: 1791
   }
 
   return (
@@ -340,26 +340,26 @@ const App = () => {
 }
 ```
 
-#### 1.4: course information step4
+#### 1.4: handheld arcade info step4
 
 And then place the objects into an array.
 Modify the variable definitions of `App` into the following form and modify the other parts of the application accordingly:
 
 ```js
 const App = () => {
-  const course = 'Half Stack application development'
-  const parts = [
+  const company = 'Nintendo'
+  const handhelds = [
     {
-      name: 'Fundamentals of React',
-      exercises: 10
+      name: 'Game Boy',
+      games: 1046
     },
     {
-      name: 'Using props to pass data',
-      exercises: 7
+      name: 'Game Boy Advance',
+      games: 1538
     },
     {
-      name: 'State of a component',
-      exercises: 14
+      name: 'DS',
+      games: 1791
     }
   ]
 
@@ -383,36 +383,36 @@ const App = () => {
 
   return (
     <div>
-      <Header course={course} />
-      <Content parts={parts} />
-      <Total parts={parts} />
+      <Header company={company} />
+      <Content handhelds={handhelds} />
+      <Total handhelds={handhelds} />
     </div>
   )
 }
 ```
 
-#### 1.5: course information step5
+#### 1.5: handheld arcade info step5
 
 Let's take the changes one step further.
-Change the course and its parts into a single JavaScript object.
+Change the company and its handhelds into a single JavaScript object.
 Fix everything that breaks.
 
 ```js
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
+  const company = {
+    name: 'Nintendo',
+    handhelds: [
       {
-        name: 'Fundamentals of React',
-        exercises: 10
+        name: 'Game Boy',
+        games: 1046
       },
       {
-        name: 'Using props to pass data',
-        exercises: 7
+        name: 'Game Boy Advance',
+        games: 1538
       },
       {
-        name: 'State of a component',
-        exercises: 14
+        name: 'DS',
+        games: 1791
       }
     ]
   }

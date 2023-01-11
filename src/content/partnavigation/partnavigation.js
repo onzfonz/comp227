@@ -48,7 +48,7 @@ module.exports = {
       c: 'More about styles',
       d: 'Webpack',
       e: 'Class components, Miscellaneous',
-      f: 'Exercises: extending the bloglist',
+      f: 'games: extending the bloglist',
     },
     '8': {
       a: 'Background and introduction',

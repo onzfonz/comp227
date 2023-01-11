@@ -784,11 +784,11 @@ Name the directories in your submission repository as follows:
 ```text
 part0
 part1
-  courseinfo
+  arcadeinfo
   unicafe
   jokes
 part2
-  courseinfo
+  arcadeinfo
   phonebook
   countries
 ```

@@ -530,20 +530,20 @@ In these situations, your best way out is the `console.log` method.
 The piece of code causing the explosion is this:
 
 ```js
-const Course = ({ course }) => (
+const Company = ({ company }) => (
   <div>
-    <Header course={course} />
+    <Header company={company} />
   </div>
 )
 
 const App = () => {
-  const course = {
+  const company = {
     // ...
   }
 
   return (
     <div>
-      <Course course={course} />
+      <Company company={company} />
     </div>
   )
 }
@@ -554,7 +554,7 @@ Because the first thing to be rendered is the `App` component, it's worth puttin
 
 ```js
 const App = () => {
-  const course = {
+  const company = {
     // ...
   }
 
@@ -574,9 +574,9 @@ When one thing is found to be working, it's time to log deeper.
 If the component has been declared as a single statement or a function without a return, it makes printing to the console harder.
 
 ```js
-const Course = ({ course }) => (
+const Company = ({ company }) => (
   <div>
-    <Header course={course} />
+    <Header company={company} />
   </div>
 )
 ```
@@ -584,11 +584,11 @@ const Course = ({ course }) => (
 The component should be changed to its longer form for us to add the printing:
 
 ```js
-const Course = ({ course }) => { 
-  console.log(course) // highlight-line
+const Company = ({ company }) => { 
+  console.log(company) // highlight-line
   return (
     <div>
-      <Header course={course} />
+      <Header company={company} />
     </div>
   )
 }
@@ -599,12 +599,12 @@ or called with a different name than they actually are, and destructuring fails 
 The problem often begins to solve itself when destructuring is removed and we see what the `props` contain.
 
 ```js
-const Course = (props) => { // highlight-line
+const Company = (props) => { // highlight-line
   console.log(props)  // highlight-line
-  const { course } = props
+  const { company } = props
   return (
     <div>
-      <Header course={course} />
+      <Header company={company} />
     </div>
   )
 }
@@ -612,7 +612,7 @@ const Course = (props) => { // highlight-line
 
 If the problem has still not been resolved, sadly there isn't much to do apart from continuing to bug-hunt by sprinkling more `console.log` statements around your code.
 
-I added this chapter to the material after the model answer for the next question exploded completely
+The original author added this chapter to the material after the model answer for the next question exploded completely
 (due to props being of the wrong type), and I had to debug it using `console.log`.
 
 </div>
@@ -623,24 +623,19 @@ I added this chapter to the material after the model answer for the next questio
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
-You can submit all of the exercises into the same repository, or use multiple different repositories.
-If you submit exercises from different parts into the same repository, name your directories well.
+Please make sure that you commit often, as that will be the way you show your work and progress through the course.
 
-The exercises are submitted **One part at a time**.
-When you have submitted the exercises for a part, you can no longer submit any missed exercises for that part.
+**WARNING** make sure you are in the correct location before calling `create-react-app`
 
-Note that this part has more exercises than the ones before, so **do not submit** until you have done all exercises from this part you want to submit.
+#### 2.1: handheld arcade info step6
 
-**WARNING** create-react-app makes the project automatically into a git repository if the project is not created inside of an already existing repository.
-You probably **do not** want the project to become a repository, so run the command `rm -rf .git` from its root.
-
-#### 2.1: Course information step6
-
-Let's finish the code for rendering course contents from exercises 1.1 - 1.5.
-You can start with the code from the model answers. The model answers for part 1 can be found by going to the directions that were posted in Canvas or in Discord.
+Let's finish the code for rendering companies' handheld arcade games and systems from exercises 1.1 - 1.5.
+If you need help getting your solution to a good state, please let me know, but I'd like you to copy the code from that repo and paste it into this one.
 
 **Note that if you copy a project from one place to another, you might have to delete the *node_modules* directory
 and install the dependencies again with the command `npm install` before you can start the application.**
+
+You only need to copy the **code**!
 
 Generally, it's not recommended that you copy a project's whole contents and/or add the *node_modules* directory to the version control system.
 
@@ -648,140 +643,140 @@ Let's change the `App` component like so:
 
 ```js
 const App = () => {
-  const course = {
+  const company = {
     id: 1,
-    name: 'Half Stack application development',
-    parts: [
+    name: 'Nintendo',
+    handhelds: [
       {
-        name: 'Fundamentals of React',
-        exercises: 10,
+        name: 'Game Boy',
+        games: 1046,
         id: 1
       },
       {
-        name: 'Using props to pass data',
-        exercises: 7,
+        name: 'Game Boy Advance',
+        games: 1538,
         id: 2
       },
       {
-        name: 'State of a component',
-        exercises: 14,
+        name: 'DS',
+        games: 1791,
         id: 3
       }
     ]
   }
 
-  return <Course course={course} />
+  return <Company company={company} />
 }
 
 export default App
 ```
 
-Define a component responsible for formatting a single course called `Course`.
+Define a component responsible for formatting a single company called `Company`.
 
 The component structure of the application can be, for example, the following:
 
 ```shell
 App
-  Course
+  Company
     Header
     Content
-      Part
-      Part
+      Handheld
+      Handheld
       ...
 ```
 
-Hence, the `Course` component contains the components defined in the previous part, which are responsible for rendering the course name and its parts.
+Hence, the `Company` component contains the components defined in the previous part, which are responsible for rendering the company name and its handhelds.
 
 The rendered page can, for example, look as follows:
 
 ![half stack application screenshot](../../images/teht/8e.png)
 
-You don't need the sum of the exercises yet.
+You don't need the sum of the games yet.
 
-The application must work *regardless of the number of parts a course has*,
-so make sure the application works if you add or remove parts of a course.
+The application must work *regardless of the number of handhelds a company has*,
+so make sure the application works if you add or remove handheld systems that a company has.
 
 Ensure that the console shows no errors!
 
-#### 2.2: Course information step7
+#### 2.2: handheld arcade info step7
 
-Show also the sum of the exercises of the course.
+Show also the sum of the games published for all handhelds of a company.
 
 ![sum of exercises added feature](../../images/teht/9e.png)
 
-#### 2.3*: Course information step8
+#### 2.3*: handheld arcade info step8
 
-If you haven't done so already, calculate the sum of exercises with the array method
+If you haven't done so already, calculate the sum of games with the array method
 [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
 
 **Pro tip:** when your code looks as follows:
 
 ```js
 const total = 
-  parts.reduce((s, p) => someMagicHere)
+  handhelds.reduce((s, p) => someMagicHere)
 ```
   
 and does not work, it's worth it to use `console.log`, which requires the arrow function to be written in its longer form:
 
 ```js
-const total = parts.reduce((s, p) => {
-  console.log('what is happening', s, p)
+const total = handhelds.reduce((s, p) => {
+  console.log('what is going on inside handhelds reduce? ', s, p)
   return someMagicHere 
 })
 ```
 
-**Not working? :** Use your search engine to look up how `reduce` is used in an **Object Array**.
+**Not working?** Use your search engine to look up how `reduce` is used in an **Object Array**.
 
 **Pro tip 2:** There is a [plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer)
 that automatically changes the short-form arrow functions into their longer form and vice versa.
 
 ![vscode sample suggestion for arrow function](../../images/2/5b.png)
 
-#### 2.4: Course information step9
+#### 2.4: handheld arcade info step9
 
-Let's extend our application to allow for an ***arbitrary number*** of courses:
+Let's extend our application to allow for an ***arbitrary number*** of companies:
 
 ```js
 const App = () => {
-  const courses = [
+  const companies = [
     {
-      name: 'Half Stack application development',
+      name: 'Nintendo',
       id: 1,
-      parts: [
+      handhelds: [
         {
-          name: 'Fundamentals of React',
-          exercises: 10,
+          name: 'Game Boy',
+          games: 1046,
           id: 1
         },
         {
-          name: 'Using props to pass data',
-          exercises: 7,
+          name: 'Game Boy Advance',
+          games: 1538,
           id: 2
         },
         {
-          name: 'State of a component',
-          exercises: 14,
+          name: 'DS',
+          games: 1791,
           id: 3
         },
         {
-          name: 'Redux',
-          exercises: 11,
+          name: '3DS',
+          games: 1402,
           id: 4
         }
       ]
     }, 
     {
-      name: 'Node.js',
+      name: 'Sony',
       id: 2,
-      parts: [
+      handhelds: [
         {
-          name: 'Routing',
-          exercises: 3,
+          name: 'PSP',
+          games: 1925,
           id: 1
         },
         {
-          name: 'Middlewares',
-          exercises: 7,
+          name: 'PS Vita',
+          games: 1500,
           id: 2
         }
       ]
@@ -802,7 +797,7 @@ The application can, for example, look like this:
 
 #### 2.5: separate module
 
-Declare the `Course` component as a separate module, which is imported by the `App` component.
-You can include all subcomponents of the course in the same module.
+Declare the `Company` component as a separate module, which is imported by the `App` component.
+You can include all subcomponents of the company in the same module.
 
 </div>
