@@ -310,29 +310,44 @@ You can do this by [visiting GitHub's apps settings](https://github.com/settings
 Click on that and then you should be able to see the heading ***Organization Access***.
 Click on the ***Grant*** button next to comp227, and now try cloning the project again.
 
+#### Configure your settings
+
+When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
+(but not too much initially, spend no more than 10-15 minutes).
+
+I'll go over a few different settings that I've found useful:
+
+- [Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
+- [Changing your default terminal](#changing-default-terminal-app)
+- [Enabling autosave](#enabling-autosave)
+
+#### Changing keyboard shortcuts
+
 Since by this point I have become accustomed to eclipse keyboard shortcuts, WebStorm provides an ability in its settings to use an Eclipse keymap.
 They also have other keymaps as well.
 For me this allows me to not have to worry about learning new keyboard shortcuts,
 I can continue using handy shortcuts from eclipse like:
 (***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Ctrl-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
 
-#### Configure your settings
-
-When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
-(but not too much initially, spend no more than 10-15 minutes).
-
-I'll go over a few different settings that I've found useful.  
-
 To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
 Pick the file that will work best for you in navigating using keyboard shortcuts.
 This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
 
+#### Changing default terminal app
+
 While installing the eclipse keymap is optional, what I would like you to do is to change your terminal of choice to git bash.
-Just like with the gif from above, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
+Just like with the gif from below, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
 Navigate to the ***Tools*** on the left sidebar and select the dropdown for the Shell path.
 There you should see bash.exe with a path for git.
 
 ![webstorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
+
+#### Enabling autosave
+
+This last one I find to be incredibly useful, but it's a double edged sword, as sometimes tends to break whatever I am working on.
+On the flipside, it allows me to not have to worry about saving all the time, which is key nowadays.
+Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
+check the option which says to ***Save files if the IDE is idle for 15 seconds***.
 
 ### 9: Make changes
 
