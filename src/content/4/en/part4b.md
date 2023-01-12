@@ -275,7 +275,7 @@ test('there are two tasks', async () => {
 test('the first task is about HTTP methods', async () => {
   const response = await api.get('/api/tasks')
 
-  expect(response.body[0].content).toBe('HTML is easy')
+  expect(response.body[0].content).toBe('Wash the dishes')
 })
 ```
 
@@ -345,12 +345,12 @@ const Task = require('../models/task')
 // highlight-start
 const initialTasks = [
   {
-    content: 'HTML is easy',
+    content: 'Wash the dishes',
     date: new Date(),
     important: false,
   },
   {
-    content: 'Browser can execute only Javascript',
+    content: 'Take out the trash',
     date: new Date(),
     important: true,
   },
@@ -390,7 +390,7 @@ test('a specific task is within the returned tasks', async () => {
   const contents = response.body.map(r => r.content)
 
   expect(contents).toContain(
-    'Browser can execute only Javascript'
+    'Take out the trash'
   )
   // highlight-end
 })
@@ -633,12 +633,12 @@ const Task = require('../models/task')
 
 const initialTasks = [
   {
-    content: 'HTML is easy',
+    content: 'Wash the dishes',
     date: new Date(),
     important: false
   },
   {
-    content: 'Browser can execute only Javascript',
+    content: 'Take out the trash',
     date: new Date(),
     important: true
   }
@@ -707,7 +707,7 @@ test('a specific task is within the returned tasks', async () => {
   const contents = response.body.map(r => r.content)
 
   expect(contents).toContain(
-    'Browser can execute only Javascript'
+    'Take out the trash'
   )
 })
 
@@ -1231,7 +1231,7 @@ describe('when there is initially some tasks saved', () => {
     const contents = response.body.map(r => r.content)
 
     expect(contents).toContain(
-      'Browser can execute only Javascript'
+      'Take out the trash'
     )
   })
 })

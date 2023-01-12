@@ -20,19 +20,19 @@ Create a file named *db.json* in the root directory of the previous tasks projec
   "tasks": [
     {
       "id": 1,
-      "content": "HTML is easy",
+      "content": "Wash the dishes",
       "date": "2022-1-17T17:30:31.098Z",
       "important": true
     },
     {
       "id": 2,
-      "content": "Browser can execute only JavaScript",
+      "content": "Take out the trash",
       "date": "2022-1-17T18:39:34.091Z",
       "important": false
     },
     {
       "id": 3,
-      "content": "GET and POST are the most important methods of HTTP protocol",
+      "content": "Buy salty snacks",
       "date": "2022-1-17T19:20:14.298Z",
       "important": true
     }

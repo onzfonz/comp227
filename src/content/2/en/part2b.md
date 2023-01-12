@@ -8,7 +8,10 @@ lang: en
 <div class="content">
 
 Let's continue expanding our application by allowing users to add new tasks.
-You can find the code for our current application [here](https://github.com/comp227/part2-tasks/tree/part2-1).
+I would encourage you to follow along with using the code and typing things in as we go.
+Is it more frustrating? Absolutely.
+But merely reading (or just watching) is not enough, you have to practice and type things in and work with the examples given.
+However, if you missed a step, you can find the code for our current application [here](https://github.com/comp227/part2-tasks/tree/part2-1).
 
 To get our page to update when new tasks are added it's best to store the tasks in the `App` component's state.
 Let's import the [useState](https://reactjs.org/docs/hooks-state.html) function
@@ -33,7 +36,7 @@ const App = (props) => { // highlight-line
   )
 }
 
-export default App 
+export default App;
 ```
 
 The component uses the `useState` function to initialize the piece of state stored in `tasks` with the array of tasks passed in the props:

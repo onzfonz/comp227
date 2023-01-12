@@ -731,7 +731,7 @@ Let's store the following content in the *db.json* file:
   "tasks": [
     {
       "important": true,
-      "content": "HTML is easy",
+      "content": "Wash the dishes",
       "id": "5a3b8481bb01f9cb00ccb4a9"
     },
     {

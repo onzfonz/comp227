@@ -625,8 +625,8 @@ The POST request to the address `new_task_spa` contains the new task as JSON dat
 
 ```js
 {
-  content: "single page app does not reload the whole page",
-  date: "2019-05-25T15:15:59.905Z"
+  content: "study for comp227",
+  date: "2022-05-25T15:15:59.905Z"
 }
 ```
 
@@ -838,7 +838,7 @@ that requests JSON data from server
 end task
 
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+server-->browser: [{ content: "Wash the dishes", date: "2022-05-23" }, ...]
 
 task over browser:
 browser executes the event handler

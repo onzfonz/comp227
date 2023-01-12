@@ -61,7 +61,7 @@ The `tasks` collection contains three tasks that all have a `user` field that re
 ```js
 [
   {
-    content: 'HTML is easy',
+    content: 'Wash the dishes',
     important: false,
     _id: 221212,
     user: 123456,
@@ -110,7 +110,7 @@ it might be beneficial to nest the entire tasks array as a part of the documents
     _id: 123456,
     tasks: [
       {
-        content: 'HTML is easy',
+        content: 'Wash the dishes',
         important: false,
       },
       {

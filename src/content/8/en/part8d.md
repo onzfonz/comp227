@@ -1096,7 +1096,7 @@ For example, let's take a look at the first two entries:
 ...
 {
   id: 'fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62',
-  date: '2019-08-05',
+  date: '2022-08-05',
   type: 'OccupationalHealthcare',
   specialist: 'MD House',
   employerName: 'HyPD',
@@ -1104,8 +1104,8 @@ For example, let's take a look at the first two entries:
   description:
     'Patient mistakenly found himself in a nuclear plant waste site without protection gear. Very minor radiation poisoning. ',
   sickLeave: {
-    startDate: '2019-08-05',
-    endDate: '2019-08-28'
+    startDate: '2022-08-05',
+    endDate: '2022-08-28'
   }
 }
 ```
