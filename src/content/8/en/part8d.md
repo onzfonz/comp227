@@ -926,7 +926,7 @@ const closeModal = (): void => {
 The frontend's types are based on what you have created when developing the backend in the previous part.
 
 When the component `App` mounts, it fetches patients from the backend using [Axios](https://github.com/axios/axios).
-Note how we are giving the `axios.get` function a type parameter to describe the type of the response data:
+Notice how we are giving the `axios.get` function a type parameter to describe the type of the response data:
 
 ````js
 React.useEffect(() => {
@@ -1029,7 +1029,7 @@ The result could look like this:
 
 Example uses [Material UI Icons](https://mui.com/components/material-icons/) to represent genders.
 
-**Note** that to access the id in the URL, you need to give [useParams](https://reactrouter.com/en/main/hooks/use-params) a proper type argument:
+**Notice** that to access the id in the URL, you need to give [useParams](https://reactrouter.com/en/main/hooks/use-params) a proper type argument:
 
 ```js
 const { id } = useParams<{ id: string }>();
@@ -1393,7 +1393,7 @@ export const TextField = ({ field, label, placeholder }: TextProps) => (
 );
 ```
 
-Note that we use the Formik [ErrorMessage](https://formik.org/docs/api/errormessage) component to render an error message for the input when needed.
+Notice that we use the Formik [ErrorMessage](https://formik.org/docs/api/errormessage) component to render an error message for the input when needed.
 The component does everything under the hood, and we don't need to specify what it should do.
 
 It would also be possible to get hold of the error messages within the component by using the prop `form`:
@@ -1618,7 +1618,7 @@ and the patient's entries on the patient page should be updated to contain the n
 
 If you like, you can re-use some of the code from the ***Add patient*** form for this exercise, but this is not a requirement.
 
-Note that the file [FormField.tsx](https://github.com/comp227/patientor/blob/master/src/AddPatientModal/FormField.tsx#L58)
+Notice that the file [FormField.tsx](https://github.com/comp227/patientor/blob/master/src/AddPatientModal/FormField.tsx#L58)
 has a ready-made component called `DiagnosisSelection` that can be used for setting the field `diagnoses`.
 
 It can be used as follows:
@@ -1674,7 +1674,7 @@ You do not need to care about possible errors in the server's response.
 The easiest but surely not the most elegant way to do this exercise is to have a separate form for each different entry type.
 Getting the types to work properly might be a slight challenge if you use just a single form.
 
-Note that if you need to alter the shown form based on user selections,
+Notice that if you need to alter the shown form based on user selections,
 you can access the form values using the parameter `values` of the rendering function:
 
 ```js

@@ -777,7 +777,7 @@ const AppBar = () => {
 
 Setting the [horizontal](https://reactnative.dev/docs/scrollview#horizontal) prop `true`
 will cause the `ScrollView` component to scroll horizontally once the content won't fit the screen.
-Note that, you will need to add suitable style properties to the `ScrollView` component so that the tabs will be laid in a ***row*** inside the flex container.
+Notice that, you will need to add suitable style properties to the `ScrollView` component so that the tabs will be laid in a ***row*** inside the flex container.
 You can make sure that the app bar can be scrolled horizontally by adding tabs until the last tab won't fit the screen.
 Just remember to remove the extra tabs once the app bar is working as intended.
 
@@ -880,7 +880,7 @@ The [field object](https://formik.org/docs/api/useField#fieldinputpropsvalue) co
 the [meta object](https://formik.org/docs/api/useField#fieldmetapropsvalue) contains field meta information such as a possible error message
 and the [helpers object](https://formik.org/docs/api/useField#fieldhelperprops)
 contains different actions for changing the state of the field such as the `setValue` function.
-Note that the component that uses the `useField` hook has to be ***within Formik's context***.
+Notice that the component that uses the `useField` hook has to be ***within Formik's context***.
 This means that the component has to be a descendant of the `Formik` component.
 
 Here is an interactive version of our previous example: [Formik example](https://snack.expo.io/@kalleilv/formik-example).
@@ -1086,7 +1086,7 @@ const FormikTextInput = ({ name, ...props }) => {
 #### Exercise 9.9: validating the sign-in form
 
 Validate the sign-in form so that both username and password fields are required.
-Note that the `onSubmit` callback implemented in the previous exercise, **should not be called** if the form validation fails.
+Notice that the `onSubmit` callback implemented in the previous exercise, **should not be called** if the form validation fails.
 
 The current implementation of the `FormikTextInput` component should display an error message if a touched field has an error.
 Emphasize this error message by giving it a red color.
@@ -1159,7 +1159,7 @@ const MyComponent = Platform.select({
 
 However, a more sophisticated method for implementing and importing platform-specific components (or any other piece of code)
 is to use the *.ios.jsx* and *.android.jsx* file extensions.
-Note that the *.jsx* extension can as well be any extension recognized by the bundler, such as *.js*.
+Notice that the *.jsx* extension can as well be any extension recognized by the bundler, such as *.js*.
 We can for example have files *Button.ios.jsx* and *Button.android.jsx* which we can import like this:
 
 ```javascript

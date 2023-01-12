@@ -286,10 +286,10 @@ describe('Note app',  function() {
 
 The last row ensures that the login was successful.
 
-Note that the CSS [id-selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors) is #,
+Notice that the CSS [id-selector](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors) is #,
 so if we want to search for an element with the id `username` the CSS selector is `#username`.
 
-### Some things to note
+### Some things to remember
 
 The test first clicks the button opening the login form:
 
@@ -639,7 +639,7 @@ it('login fails with wrong password', function() {
 
 First, we use [cy.get](https://docs.cypress.io/api/commands/get.html#Syntax) to search for a component with the CSS class `error`.
 Then we check that the error message can be found from this component.
-Note that the [CSS class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors)
+Notice that the [CSS class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors)
 starts with a full stop, so the selector for the class `error` is `.error`.
 
 We could do the same using the [should](https://docs.cypress.io/api/commands/should.html) syntax:
@@ -1003,7 +1003,7 @@ In the first line, we use the [parent](https://docs.cypress.io/api/commands/pare
 command to access the parent element of the element containing ***second note*** and find the button from within it.
 Then we click the button and check that the text on it changes.
 
-Note that we use the command [find](https://docs.cypress.io/api/commands/find.html#Syntax) to search for the button.
+Notice that we use the command [find](https://docs.cypress.io/api/commands/find.html#Syntax) to search for the button.
 We cannot use [cy.get](https://docs.cypress.io/api/commands/get.html) here,
 because it always searches from the **whole** page and would return all 5 buttons on the page.
 
@@ -1083,7 +1083,7 @@ Now we can run our tests from the command line with the command `npm run test:e2
 
 ![terminal output of running npm e2e tests showing passed](../../images/5/39x.png)
 
-Note that videos of the test execution will be saved to *cypress/videos/*, so you should probably git ignore this directory.
+Notice that videos of the test execution will be saved to *cypress/videos/*, so you should probably git ignore this directory.
 
 The frontend and the test code can be found on the [GitHub](https://github.com/comp227/part2-notes/tree/part5-11) branch *part5-11*.
 
@@ -1206,7 +1206,7 @@ cy.get('.blog').eq(0).should('contain', 'The title with the most likes')
 cy.get('.blog').eq(1).should('contain', 'The title with the second most likes')
 ```
 
-Note that you might end up having problems if you click a like button many times in a row.
+Notice that you might end up having problems if you click a like button many times in a row.
 It might be that cypress does the clicking so fast that it does not have time to update the app state in between the clicks.
 One remedy for this is to wait for the number of likes to update in between all clicks.
 

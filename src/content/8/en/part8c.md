@@ -54,7 +54,7 @@ We can now initialize our tsconfig.json settings by running:
  npm run tsc -- --init
 ```
 
-**Note** the extra `--` before the actual argument! Arguments before `--` are interpreted as being for the ***npm*** command,
+**Notice** the extra `--` before the actual argument! Arguments before `--` are interpreted as being for the ***npm*** command,
 while the ones after that are meant for the command that is run through the script (i.e. *tsc* in this case).
 
 The *tsconfig.json* file we just created contains a lengthy list of every configuration available to us.
@@ -619,7 +619,7 @@ export default {
 };
 ```
 
-Note that, if we want to be able to save entries without a certain field, e.g. *comment*,
+Notice that, if we want to be able to save entries without a certain field, e.g. *comment*,
 we could set the type of the field as
 [optional](http://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties)
 by adding `?` to the type declaration:
@@ -636,7 +636,7 @@ export interface DiaryEntry {
 
 ### Node and JSON modules
 
-It is important to take note of a problem that may arise when using the tsconfig
+It is important to consider a problem that may arise when using the tsconfig
 [resolveJsonModule](https://www.typescriptlang.org/tsconfig#resolveJsonModule) option:
 
 ```json
@@ -828,7 +828,7 @@ we would get the following error:
 Again, the last line of the error message is the most helpful one.
 Let's undo this undesired modification.
 
-> **Note** that if you make the comment field optional (using the `?` operator),
+> **Notice** that if you make the comment field optional (using the `?` operator),
   everything will work fine.
 
 Utility types include many handy tools,
@@ -875,7 +875,7 @@ Create a type `Diagnose` and use it to create endpoint ***/api/diagnoses*** for 
 
 Structure your code properly by using meaningfully-named directories and files.
 
-**Note** that *diagnoses* may or may not contain the field `latin`.
+**Notice** that *diagnoses* may or may not contain the field `latin`.
 You might want to use [optional properties](https://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties) in the type definition.
 
 #### 8.11: Patientor backend, step4
@@ -1288,7 +1288,7 @@ const parseDate = (date: unknown): string => {
 
 The code is nothing special.
 The only thing is that we can't use a type guard here since a date in this case is only considered to be a `string`.
-Note that even though the `parseDate` function accepts the `date` variable as `unknown` after we check the type with `isString`, then its type is set as `string`,
+Notice that even though the `parseDate` function accepts the `date` variable as `unknown` after we check the type with `isString`, then its type is set as `string`,
 which is why we can give the variable to the `isDate` function requiring a string without any problems.
 
 Finally, we are ready to move on to the last two types, `Weather` and `Visibility`.
@@ -1391,7 +1391,7 @@ const diaryEntries: DiaryEntry [] = data.map(obj => {
 export default diaryEntries;
 ```
 
-Note that since `toNewDiaryEntry` returns an object of type `NewDiaryEntry`,
+Notice that since `toNewDiaryEntry` returns an object of type `NewDiaryEntry`,
 we need to assert it to be `DiaryEntry` with the [as](http://www.typescriptlang.org/docs/handbook/basic-types.html#type-assertions) operator.
 
 Enums are typically used when there is a set of predetermined values that are not expected to change in the future.

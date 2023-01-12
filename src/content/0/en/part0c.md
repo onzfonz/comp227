@@ -225,7 +225,7 @@ Otherwise, if you close it, you'll need to navigate back through it by going to 
 For this course, I will be asking that you use [Webstorm](https://www.jetbrains.com/webstorm/download/) from JetBrains.
 You can do this with the package manager by merely typing `winget install JetBrains.WebStorm` or `brew install --cask webstorm` in your Terminal depending on your configuration.
 While I am OK if you decide to use [VS Code](http://code.visualstudio.com) instead,
-please note that I will only be supporting or answering questions about Webstorm.
+please be aware that I will only be supporting or answering questions about Webstorm.
 *Some of the pictures below may be from PHPStorm, which is just like WebStorm, except it's designed for PHP.
 If you see pictures below that have PHPStorm, pretend they say Webstorm, they behave similarly.*
 This also goes for anything that mentions COMP 127 (Assume it's 227).

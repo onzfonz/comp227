@@ -351,7 +351,7 @@ You can find the code for our current application in its entirety in the *part4-
 
 If you clone the project for yourself, run the `npm install` command before starting the application with `npm start`.
 
-### Note on exports
+### Notice about exports
 
 We have used two different kinds of exports in this part.
 Firstly, e.g. the file *utils/logger.js* does the export as follows:

@@ -31,7 +31,7 @@ h1 {
 }
 ```
 
-**Note:** when the content of the file *index.css* changes,
+**Notice** when the content of the file *index.css* changes,
 React might not notice that automatically, so you may need to refresh the browser to see your changes!
 
 CSS rules comprise of **selectors** and **declarations**.
@@ -336,7 +336,7 @@ The messages shown for successful and unsuccessful events should look different:
 
 ![error message shown on screen instead of in console feature add-on](../../images/2/28e.png)
 
-**Note** that even if you handle the exception, the error message is printed to the console.
+**Notice** that even if you handle the exception, the error message is printed to the console.
 
 This was the last exercise of this part of the course.
 It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.

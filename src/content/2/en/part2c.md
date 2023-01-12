@@ -358,7 +358,7 @@ If you open <http://localhost:3000> in the browser, this should be printed to th
 
 ![promises printed to console](../../images/2/16b.png)
 
-**Note:** when the content of the file *index.js* changes,
+**Notice** when the content of the file *index.js* changes,
 React does not always notice that automatically, so you might need to refresh the browser to see your changes!
 A simple workaround to make React notice the change automatically is to create a file named *.env* in the root directory of the project and add this line `FAST_REFRESH=false`.
 Restart the app for the applied changes to take effect.
@@ -431,7 +431,7 @@ since the server has specified that the data format is `application/json; charse
 We can finally begin using the data fetched from the server.
 
 Let's try and request the notes from our local server and render them, initially as the App component.
-Please note that this approach has many issues, as we're rendering the entire `App` component only when we successfully retrieve a response:
+Consider that this approach has many issues, as we're rendering the entire `App` component only when we successfully retrieve a response:
 
 ```js
 import React from 'react'
@@ -595,7 +595,7 @@ Think back to the sequence of events we just discussed.
 Which parts of the code are run? In what order? How often?
 Understanding the order of events is critical!
 
-Note that we could have also written the code for the effect function this way:
+Notice that we could have also written the code for the effect function this way:
 
 ```js
 useEffect(() => {
@@ -766,7 +766,7 @@ Countries whose name appears in the name of another country, like ***Sudan***, c
 Add to the view showing the data of a single country, the weather report for the capital of that country.
 There are dozens of providers for weather data.
 One suggested API is [https://openweathermap.org](https://openweathermap.org).
-Note that it might take some minutes until a generated API key is valid.
+Notice that it might take some minutes until a generated API key is valid.
 
 ![weather report added feature](../../images/2/19x.png)
 
@@ -795,7 +795,7 @@ const api_key = process.env.REACT_APP_API_KEY
 // variable api_key has now the value set in startup
 ```
 
-Note that if you created the application using `npx create-react-app ...`
+Notice that if you created the application using `npx create-react-app ...`
 and you want to use a different name for your environment variable then the environment variable name must still begin with `REACT_APP_`.
 You can also use a `.env` file rather than defining it on the command line each time by creating a file entitled '.env' in the root of the project and adding the following.
 
@@ -805,5 +805,5 @@ You can also use a `.env` file rather than defining it on the command line each 
 REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3
 ```
 
-Note that you will need to restart the server to apply the changes.
+Notice that you will need to restart the server to apply the changes.
 </div>

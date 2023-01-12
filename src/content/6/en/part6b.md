@@ -507,7 +507,7 @@ It is a good practice to give the parameter a value, which is unique among the r
 This way there won't be unexpected collisions between the application's action type values.
 The `initialState` parameter defines the reducer's initial state.
 The `reducers` parameter takes the reducer itself as an object, of which functions handle state changes caused by certain actions.
-Note that the `action.payload` in the function contains the argument provided by calling the action creator:
+Notice that the `action.payload` in the function contains the argument provided by calling the action creator:
 
 ```js
 dispatch(createNote('Redux Toolkit is awesome!'))
@@ -540,7 +540,7 @@ What's this all about?
 Redux Toolkit utilizes the [Immer](https://immerjs.github.io/immer/) library with reducers created by `createSlice` function,
 which makes it possible to mutate the `state` argument inside the reducer.
 Immer uses the mutated state to produce a new, immutable state and thus the state changes remain immutable.
-Note that `state` can be changed without "mutating" it, as we have done with the `toggleImportanceOf` action.
+Notice that `state` can be changed without "mutating" it, as we have done with the `toggleImportanceOf` action.
 In this case, the function ***returns*** the new state.
 Nevertheless mutating the state will often come in handy especially when a complex state needs to be updated.
 

@@ -852,7 +852,7 @@ export default Togglable
 You can find the code for our current application in its entirety in the *part5-7* branch of
 [this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-7).
 
-Note that create-react-app has also a [default ESLint-configuration](https://www.npmjs.com/package/eslint-config-react-app),
+Notice that create-react-app has also a [default ESLint-configuration](https://www.npmjs.com/package/eslint-config-react-app),
 that we have now overridden.
 [The documentation](https://create-react-app.dev/docs/setting-up-your-editor/#extending-or-replacing-the-default-eslint-config)
 mentions that it is ok to replace the default but does not encourage us to do so:

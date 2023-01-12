@@ -514,7 +514,7 @@ Therefore, deleting a blog is possible only if the token sent with the request i
 
 If deleting a blog is attempted without a token or by an invalid user, the operation should return a suitable status code.
 
-Note that if you fetch a blog from the database,
+Notice that if you fetch a blog from the database,
 
 ```js
 const blog = await Blog.findById(...)
@@ -557,7 +557,7 @@ blogsRouter.delete('/:id', async (request, response) => {
 })
 ```
 
-Note that it is possible to register a middleware only for a specific set of routes.
+Notice that it is possible to register a middleware only for a specific set of routes.
 So instead of using `userExtractor` with all the routes,
 
 ```js

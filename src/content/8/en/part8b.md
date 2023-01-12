@@ -60,7 +60,7 @@ and setting up *scripts* within the package.json:
 ```
 
 You can now use *ts-node* within this directory by running `npm run ts-node`.
-Note that if you are using ts-node through package.json, all command-line arguments for the script need to be prefixed with `--`.
+Notice that if you are using ts-node through package.json, all command-line arguments for the script need to be prefixed with `--`.
 So if you want to run file.ts with *ts-node*, the whole command is:
 
 ```shell
@@ -353,7 +353,7 @@ npm install --save-dev @types/node
 ```
 
 When the package @types/node is installed, the compiler does not complain about the variable `process`.
-Note that there is no need to require the types to the code, the installation of the package is enough!
+Notice that there is no need to require the types to the code, the installation of the package is enough!
 
 ### Improving the project
 
@@ -1132,6 +1132,6 @@ Our ESlint configuration is preventing this but you may unset this rule for a pa
 You might also get in trouble with rules ***no-unsafe-member-access*** and ***no-unsafe-assignment***.
 These rules may be ignored in this exercise.
 
-Note that you need to have a correct setup to get the request body; see [part 3](/part3/node_js_and_express#receiving-data).
+Notice that you need to have a correct setup to get the request body; see [part 3](/part3/node_js_and_express#receiving-data).
 
 </div>

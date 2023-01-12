@@ -124,7 +124,7 @@ After that, you should [create a Fly.io account](https://fly.io/docs/hands-on/si
 
 By default, everyone gets two free virtual machines that can be used for running two apps at the same time.
 
-Note that the Fly.io instructions have only been added to this course on the 28th of August 2022.
+Notice that the Fly.io instructions have only been added to this course on the 28th of August 2022.
 If you run into problems, please ask for help on Discord! If your build keeps failing due to unhealthy checks,
 make sure that you have changed the bottom of the *index.js* file like so:
 
@@ -144,7 +144,7 @@ Start by [authenticating](https://fly.io/docs/hands-on/sign-in/) via the command
 fly auth login
 ```
 
-*Note* if the command `fly` does not work on your machine, you can try the longer version `flyctl`.
+*Notice* if the command `fly` does not work on your machine, you can try the longer version `flyctl`.
 E.g. on MacOS, both forms of the command work.
 
 Initializing an app happens by running the following command in the root directory of the app
@@ -180,7 +180,7 @@ Fly.io creates a file *fly.toml* in the root of your app.
 The file contains all the configuration of your server.
 In this course we can mostly ignore the contents of the file.
 
-**Note:** In some cases (the cause is so far unknown) running Fly.io commands especially on Windows WSL has caused problems.
+**Notice** In some cases (the cause is so far unknown) running Fly.io commands especially on Windows WSL has caused problems.
 If the following command just hangs
 
 ```bash
@@ -446,7 +446,7 @@ The script `npm run build:ui` builds the frontend and copies the production vers
 
 There is also a script `npm run logs:prod` to show the Fly.io logs.
 
-Note that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
+Notice that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
 
 #### Heroku script
 
@@ -472,7 +472,7 @@ The script `npm run build:ui` builds the frontend and copies the production vers
 
 There is also a script `npm run logs:prod` to show the Heroku logs.
 
-Note that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
+Notice that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
 
 >**NB**  On Windows, npm scripts are executed in cmd.exe as the default shell which does not support bash commands.
 For the above bash commands to work, you can change the default shell to Bash (in the default Git for Windows installation) as follows:

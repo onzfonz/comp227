@@ -131,7 +131,7 @@ Similarly, `props.filter` references the value of the filter.
 
 The situation that results from using `connect` with the `mapStateToProps` function we defined can be visualized like this:
 
-![diagram notelist and filter connected to redux store](../../images/6/24c.png)
+![diagram note list and filter connected to redux store](../../images/6/24c.png)
 
 The `Notes` component has "direct access" via `props.notes` and `props.filter` for inspecting the state of the Redux store.
 

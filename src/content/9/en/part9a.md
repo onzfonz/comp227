@@ -69,7 +69,7 @@ The recommended parts to complete before this part are
 ### Submitting exercises
 
 Exercises are submitted via GitHub just like in the previous parts.
-Note that, exercises in this part are submitted *to a different course repo* than in parts 0-7.
+Notice that, exercises in this part are submitted *to a different course repo* than in parts 0-7.
 This means that you will be submitting exercises a single section at a time starting with this section, "Introduction to React Native", which is part 1 on Canvas.
 
 ### Initializing the application
@@ -86,7 +86,7 @@ Let's get started with Expo by initializing our project with ***create-expo-app*
 npx create-expo-app rate-repository-app --template expo-template-blank@sdk-46
 ```
   
-Note, that the `@sdk-46` sets the project's *Expo SDK version to 46*, which supports *React Native version 0.69*.
+Notice that the `@sdk-46` sets the project's *Expo SDK version to 46*, which supports *React Native version 0.69*.
 Using other Expo SDK versions might cause you trouble while following this material.
 Also, Expo has a [few limitations](https://docs.expo.io/introduction/why-not-expo/) when compared to plain React Native CLI.
 However, these limitations do not affect the application implemented in the material.
@@ -161,7 +161,7 @@ With the Expo mobile app, you can preview your application using your actual mob
 which provides a bit more concrete development experience compared to emulators.
 To get started, install the Expo mobile app by following the instructions in
 [Expo's documentation](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and).
-Note that the Expo mobile app can only open your application
+Notice that the Expo mobile app can only open your application
 if your mobile device is connected to *the same local network* (e.g. connected to the same Wi-Fi network)
 as the computer you are using for development.
 

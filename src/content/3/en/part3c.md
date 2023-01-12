@@ -24,7 +24,7 @@ You can launch the application in debugging mode like this:
 
 ![screenshot showing how to launch debugger in vscode](../../images/3/35x.png)
 
-Note that the application shouldn't be running in another console, otherwise the port will already be in use.
+Notice that the application shouldn't be running in another console, otherwise the port will already be in use.
 
 **NB** A newer version of Visual Studio Code may have ***Run*** instead of ***Debug***.
 Furthermore, you may have to configure your *launch.json* file to start debugging.
@@ -122,7 +122,7 @@ This can take some minutes.
 **NB** do not continue before the cluster is ready.
 
 Let's use the ***security*** tab for creating user credentials for the database.
-Please note that these are not the same credentials you use for logging into MongoDB Atlas.
+*These are not the same credentials you use for logging into MongoDB Atlas.*
 These will be used for your application to connect to the database.
 
 ![mongodb security quickstart](../../images/3/mongo3.png)
@@ -915,7 +915,7 @@ The error handler checks if the error is a `CastError` exception, in which case 
 In this situation, the error handler will send a response to the browser with the response object passed as a parameter.
 In all other error situations, the middleware passes the error forward to the default Express error handler.
 
-Note that the error-handling middleware has to be the last loaded middleware!
+Notice that the error-handling middleware has to be the last loaded middleware!
 
 ### The order of middleware loading
 

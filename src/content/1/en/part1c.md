@@ -106,7 +106,7 @@ const Greet = (props) => {
 }
 ```
 
-Note that we've also utilized the more compact syntax for arrow functions when defining the `bornYear` function.
+Notice that we've also utilized the more compact syntax for arrow functions when defining the `bornYear` function.
 As mentioned earlier, if an arrow function consists of a single expression,
 then the function body does not need to be written inside of curly braces.
 In this more compact form, the function simply returns the result of the single expression.

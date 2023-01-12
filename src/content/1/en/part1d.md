@@ -557,9 +557,7 @@ const App = () => {
 
 ### Event Handling Revisited
 
-Event handling has proven to be a difficult topic in previous iterations of this course.
-
-For this reason, we will revisit the topic.
+Event handling is tricky, so we will revisit the topic.
 
 Let's assume that we're developing this simple application with the following component `App`:
 
@@ -1128,7 +1126,7 @@ Your final application could look like this:
 
 ![screenshot of study day options](../../images/1/13e.png)
 
-Note that your application needs to work only during a single browser session.
+Notice that your application needs to work only during a single browser session.
 Once you refresh the page, the collected data is allowed to disappear.
 
 It is advisable to use the same structure that is used in the material and previous exercise.

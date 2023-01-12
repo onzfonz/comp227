@@ -449,7 +449,7 @@ which can be used to search for the details of the country given to the hook as 
 Use the API endpoint [full name](https://restcountries.com/#api-endpoints-v3-full-name)
 to fetch a country's details in a `useEffect` hook within your custom hook.
 
-Note that in this exercise it is essential to use useEffect's
+Notice that in this exercise it is essential to use useEffect's
 [second parameter](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect)
 array to control when the effect function is executed.
 

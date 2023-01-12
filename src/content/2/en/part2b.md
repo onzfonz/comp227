@@ -221,7 +221,7 @@ const handleNoteChange = (event) => {
 
 The `target` property of the event object now corresponds to the controlled `input` element, and `event.target.value` refers to the input value of that element.
 
-Note that we did not need to call the `event.preventDefault()` method like we did in the `onSubmit` event handler.
+Notice that we did not need to call the `event.preventDefault()` method like we did in the `onSubmit` event handler.
 This is because no default action occurs on an input change, unlike a form submission.
 
 You can follow along in the console to see how the event handler is called:
@@ -485,7 +485,7 @@ After finishing this exercise your application should look something like this:
 
 ![screenshot of 2.6 finished](../../images/2/10e.png)
 
-Note the use of the React developer tools extension in the picture above!
+Notice the use of the React developer tools extension in the picture above!
 
 **NB:**
 

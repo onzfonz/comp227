@@ -266,7 +266,7 @@ const App = () => {
 }
 ```
 
-(Note: `export` at the bottom is left out in these *examples*, now and in the future.
+(Notice `export` at the bottom is left out in these *examples*, now and in the future.
 We still need **`export` for the code to work.**)
 
 We have defined a new component `Greet` and used it inside the component `App`.
@@ -409,7 +409,7 @@ i.e. the built-in HTML element instead of the custom React element of the same n
 If you change the first letter of the component name to a capital letter,
 then React creates a `div` element defined in the `Footer` component, which is rendered on the page.
 
-Note that the content of a React component (usually) needs to contain **one root element**.
+Notice that the content of a React component (usually) needs to contain **one root element**.
 If we, for example, try to define the component `App` without the outermost `div` element:
 
 ```js
@@ -492,7 +492,7 @@ so you should commit and add all of the files that you use in your directories.
 
 Please make sure that you commit often, as that will be the way you show your work and progress through the course.
 
-Note that in this part, there are more exercises besides those found below.
+Notice that in this part, there are more exercises besides those found below.
   
 #### 1.1: handheld arcade info, step1
 

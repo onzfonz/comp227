@@ -260,7 +260,7 @@ The action handlers of the buttons ***dispatch*** the right actions to the store
 
 When the state in the store is changed, React is not able to automatically rerender the application.
 Thus we have registered a function `renderApp`, which renders the whole app, to listen for changes in the store with the `store.subscribe` method.
-Note that we have to immediately call the `renderApp` method.
+Notice that we have to immediately call the `renderApp` method.
 Without the call, the first rendering of the app would never happen.
 
 ### Redux-notes
@@ -707,7 +707,7 @@ example above.
 
 Now implement the actual functionality of the application.
 
-Note that since all the code is in the file *index.js* and you might need to manually reload the page after each change
+Notice that since all the code is in the file *index.js* and you might need to manually reload the page after each change
 since the automatic reloading of the browser content does not always work for that file!
 
 </div>
@@ -766,7 +766,7 @@ const App = () => {
 ```
 
 The implementation of both functionalities is straightforward.
-It is noteworthy that we **have not** bound the state of the form fields to the state of the `App` component like we have previously done.
+Notice that we **have not** bound the state of the form fields to the state of the `App` component like we have previously done.
 React calls this kind of form [uncontrolled](https://reactjs.org/docs/uncontrolled-components.html).
 
 >Uncontrolled forms have certain limitations (for example, dynamic error messages or disabling the submit button based on input are not possible).
@@ -904,7 +904,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-Note, that the application is now defined as a child of a [Provider](https://react-redux.js.org/api/provider) component provided by the react-redux library.
+Notice that the application is now defined as a child of a [Provider](https://react-redux.js.org/api/provider) component provided by the react-redux library.
 The application's store is given to the Provider as its attribute `store`.
 
 Defining the action creators has been moved to the file *reducers/noteReducer.js* where the reducer is defined.
@@ -1011,7 +1011,7 @@ const App = () => {
 export default App
 ```
 
-There are a few things to note in the code.
+There are a few things to observe in the code.
 Previously the code dispatched actions by calling the dispatch method of the Redux store:
 
 ```js
@@ -1109,7 +1109,7 @@ Unlike in the React code we did without Redux, the event handler for changing th
 has been moved away from the `App` to a child component.
 The logic for changing the state in Redux is still neatly separated from the whole React part of the application.
 
-We'll also separate the list of notes and displaying a single note into their own components (which will both be placed in the *Notes.js* file ):
+We'll also separate the list of notes and displaying a single note into their own components (which will both be placed in the *Notices.js* file ):
 
 ```js
 import { useDispatch, useSelector } from 'react-redux' // highlight-line
