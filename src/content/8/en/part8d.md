@@ -260,7 +260,7 @@ const App = () => {
   const companyName = "Nintendo";
   const companyHandhelds = [
     {
-      name: "Fundamentals",
+      name: "Game Boy",
       gameCount: 1046
     },
     {
@@ -268,7 +268,7 @@ const App = () => {
       gameCount: 1538
     },
     {
-      name: "Deeper type usage",
+      name: "DS",
       gameCount: 1791
     }
   ];
@@ -327,64 +327,64 @@ const App = () => {
 
 <div class="content">
 
-### Deeper type usage
+### DS
 
-In the previous exercise, we had three parts of a course, and all parts had the same attributes `name` and `gameCount`.
-But what if we needed additional attributes for the parts and each part needs different attributes? How would this look, codewise?
+In the previous exercise, we had three parts of a handheld, and all parts had the same attributes `name` and `gameCount`.
+But what if we needed additional attributes for the systems and each handheld needs different attributes? How would this look, codewise?
 Let's consider the following example:
 
 ```js
 const companyHandhelds = [
   {
-    name: "Fundamentals",
+    name: "Game Boy",
     gameCount: 1046,
-    description: "This is an awesome course part"
+    description: "AA Battery monster, here we come!"
   },
   {
     name: "Game Boy Advance",
     gameCount: 1538,
-    groupProjectCount: 3
+    description: "The SP version was OP",
+    adapterURL: "https://www.ebay.com/b/gamecube-gameboy-adapter/bn_7024745584"
   },
   {
-    name: "Deeper type usage",
+    name: "DS",
     gameCount: 1791,
-    description: "Confusing description",
-    exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev"
+    numberOfScreens: 2
   }
 ];
 ```
 
 In the above example, we have added some additional attributes to each course part.
 Each part has the `name` and `gameCount` attributes,
-but the first and the third also have an attribute called `description`, and
+but the first and the second also have an attribute called `description`, and
 the second and third parts also have some distinct additional attributes.
 
-Let's imagine that our application just keeps on growing, and we need to pass the different course parts around in our code.
-On top of that, there are also additional attributes and course parts added to the mix.
+Let's imagine that our application just keeps on growing, and we need to pass the different handheld systems around in our code.
+On top of that, there are also additional attributes and handheld systems added to the mix.
 How can we know that our code is capable of handling all the different types of data correctly,
-and we are not for example forgetting to render a new course part on some page?
+and we are not for example forgetting to render a new handheld system on some page?
 This is where TypeScript comes in handy!
 
-Let's start by defining types for our different course parts:
+Let's start by defining types for our different hanhelds:
 
 ```js
-interface CoursePartOne {
-  name: "Fundamentals";
+interface HandheldOne {
+  name: "Game Boy";
   gameCount: number;
   description: string;
 }
 
-interface CoursePartTwo {
+interface HandheldTwo {
   name: "Game Boy Advance";
   gameCount: number;
-  groupProjectCount: number;
+  description: string;
+  adapterURL: string;
 }
 
-interface CoursePartThree {
-  name: "Deeper type usage";
+interface HandheldThree {
+  name: "DS";
   gameCount: number;
-  description: string;
-  exerciseSubmissionLink: string;
+  numberOfScreens: number;
 }
 ```
 
@@ -392,7 +392,7 @@ Next, we will create a type [union](https://www.typescriptlang.org/docs/handbook
 We can then use it to define a type for our array, which should accept any of these course part types:
 
 ```js
-type CoursePart = CoursePartOne | CoursePartTwo | CoursePartThree;
+type Handheld = HandheldOne | HandheldTwo | HandheldThree;
 ```
 
 Now we can set the type for our `companyHandhelds` variable.
@@ -406,25 +406,25 @@ We start by identifying the attributes all course parts have in common, and defi
 Then we will [extend](https://www.typescriptlang.org/docs/handbook/2/objects.html#extending-types) that base type to create our part-specific types:
 
 ```js
-interface CoursePartBase {
+interface HandheldBase {
   name: string;
   gameCount: number;
 }
 
-interface CoursePartOne extends CoursePartBase {
-  name: "Fundamentals";
+interface HandheldOne extends HandheldBase {
+  name: "Game Boy";
   description: string;
 }
 
-interface CoursePartTwo extends CoursePartBase {
+interface HandheldTwo extends HandheldBase {
   name: "Game Boy Advance";
-  groupProjectCount: number;
+  description: string;
+  adapterURL: string;
 }
 
-interface CoursePartThree extends CoursePartBase {
-  name: "Deeper type usage";
-  description: string;
-  exerciseSubmissionLink: string;
+interface HandheldThree extends HandheldBase {
+  name: "DS";
+  numberOfScreens: number;
 }
 ```
 
@@ -437,11 +437,11 @@ We can then build a switch case around that attribute and TypeScript will know w
 
 ![vscode showing attributes with dot usage on part](../../images/8/32.png)
 
-In the above example, TypeScript knows that a `part` has the type `CoursePart`.
-It can then infer that `part` is of either type `CoursePartOne`, `CoursePartTwo` or `CoursePartThree`.
+In the above example, TypeScript knows that a `system` has the type `Handheld`.
+It can then infer that `system` is of either type `HandheldOne`, `HandheldTwo` or `HandheldThree`.
 The `name` is distinct for each type, so we can use it to identify each type
 and TypeScript can let us know which attributes are available in each case block.
-Then, TypeScript will produce an error if you try to use the `part.description` within the `"Game Boy Advance"` block for example.
+Then, TypeScript will produce an error if you try to use the `system.description` within the `"Game Boy Advance"` block for example.
 
 What about adding new types? If we were to add a new course part, wouldn't it be nice to know if we had already implemented handling that type in our code?
 In the example above, a new type would go to the `default` block and nothing would get printed for a new type.
@@ -474,14 +474,14 @@ default:
   return assertNever(part);
 ```
 
-and would also comment out the `Deeper type usage` case block, we would see the following error:
+and would also comment out the `DS` case block, we would see the following error:
 
 ![vscode error coursepart three not assignable to type never](../../images/8/33.png)
 
-The error message says that *`Argument of type 'CoursePartThree' is not assignable to parameter of type 'never'`*,
+The error message says that *`Argument of type 'HandheldThree' is not assignable to parameter of type 'never'`*,
 which tells us that we are using a variable somewhere where it should never be used.
 This tells us that something needs to be fixed.
-When we remove the comments from the `Deeper type usage` case block, you will see that the error goes away.
+When we remove the comments from the `DS` case block, you will see that the error goes away.
 
 </div>
 
@@ -496,34 +496,34 @@ First, add the type information and replace the variable `companyHandhelds` with
 
 ```js
 // new types
-interface CoursePartBase {
+interface HandheldBase {
   name: string;
   gameCount: number;
   type: string;
 }
 
-interface CourseNormalPart extends CoursePartBase {
+interface CourseNormalPart extends HandheldBase {
   type: "normal";
   description: string;
 }
 
-interface CourseProjectPart extends CoursePartBase {
+interface CourseProjectPart extends HandheldBase {
   type: "groupProject";
   groupProjectCount: number;
 }
 
-interface CourseSubmissionPart extends CoursePartBase {
+interface CourseSubmissionPart extends HandheldBase {
   type: "submission";
   description: string;
   exerciseSubmissionLink: string;
 }
 
-type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart;
+type Handheld = CourseNormalPart | CourseProjectPart | CourseSubmissionPart;
 
 // this is the new coursePart variable
-const companyHandhelds: CoursePart[] = [
+const companyHandhelds: Handheld[] = [
   {
-    name: "Fundamentals",
+    name: "Game Boy",
     gameCount: 1046,
     description: "This is the easy course part",
     type: "normal"
@@ -541,7 +541,7 @@ const companyHandhelds: CoursePart[] = [
     type: "groupProject"
   },
   {
-    name: "Deeper type usage",
+    name: "DS",
     gameCount: 1791,
     description: "Confusing description",
     exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev",
@@ -554,7 +554,7 @@ Now we know that both interfaces `CourseNormalPart` and `CourseSubmissionPart`
 share not only the base attributes but also an attribute called `description`,
 which is a string in both interfaces.
 
-Your first job is to declare a new interface that includes the `description` attribute and extends the `CoursePartBase` interface.
+Your first job is to declare a new interface that includes the `description` attribute and extends the `HandheldBase` interface.
 Then modify the code so that you can remove the `description` attribute from both `CourseNormalPart` and `CourseSubmissionPart` without getting any errors.
 
 Then create a component `Part` that renders all attributes of each type of course part.
@@ -574,7 +574,7 @@ The objects of this type look like the following:
 }
 ```
 
-Then add that interface to the type union `CoursePart` and add corresponding data to the `companyHandhelds` variable.
+Then add that interface to the type union `Handheld` and add corresponding data to the `companyHandhelds` variable.
 Now, if you have not modified your `Content` component correctly, you should get an error,
 because you have not yet added support for the fourth course part type.
 Do the necessary changes to `Content`, so that all attributes for the new course part also get rendered and that the compiler doesn't produce any errors.
@@ -604,7 +604,7 @@ interface DiaryEntry {
 and in the course part of this section
 
 ```js
-interface CoursePartBase {
+interface HandheldBase {
   name: string;
   gameCount: number;
 }
