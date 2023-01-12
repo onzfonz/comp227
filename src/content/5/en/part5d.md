@@ -41,7 +41,7 @@ Let's make some end-to-end tests for our task application.
 We begin by installing Cypress to *the frontend* as a development dependency
 
 ```js
-npm install --save-dev cypress
+npm install cypress --save-dev
 ```
 
 and by adding an npm-script to run it:

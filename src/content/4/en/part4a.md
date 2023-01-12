@@ -546,7 +546,7 @@ Jest is a natural choice for this course, as it works well for testing backends,
 Since tests are only executed during the development of our application, we will install `jest` as a development dependency with the command:
 
 ```bash
-npm install --save-dev jest
+npm install jest --save-dev
 ```
 
 Let's define the *npm script `test`* to execute tests with Jest and to report about the test execution with the `verbose` style:

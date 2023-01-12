@@ -729,7 +729,7 @@ Next, we will start testing the frontend and in order to avoid undesired and irr
 we will install the [eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest) package:
 
 ```bash
-npm install --save-dev eslint-plugin-jest
+npm install eslint-plugin-jest --save-dev
 ```
 
 Let's create a *.eslintrc.js* file with the following contents:

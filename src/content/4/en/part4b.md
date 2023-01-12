@@ -57,7 +57,7 @@ There is a slight issue in the way that we have specified the mode of the applic
 We can correct this by installing the [cross-env](https://www.npmjs.com/package/cross-env) package as a development dependency with the command:
 
 ```bash
-npm install --save-dev cross-env
+npm install cross-env --save-dev
 ```
 
 We can then achieve cross-platform compatibility by using the cross-env library in our npm scripts defined in *package.json*:
@@ -140,7 +140,7 @@ Let's use the [supertest](https://github.com/visionmedia/supertest) package to h
 We will install the package as a development dependency:
 
 ```bash
-npm install --save-dev supertest
+npm install supertest --save-dev
 ```
 
 Let's write our first test in the *tests/task_api.test.js* file:

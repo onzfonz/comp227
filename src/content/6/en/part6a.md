@@ -395,7 +395,7 @@ which can be used to ensure that the reducer has been correctly defined as an im
 Let's install the library as a development dependency
 
 ```js
-npm install --save-dev deep-freeze
+npm install deep-freeze --save-dev
 ```
 
 The test, which we define in file *src/reducers/taskReducer.test.js*, has the following content:

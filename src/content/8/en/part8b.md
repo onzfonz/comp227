@@ -44,7 +44,7 @@ an npm project is set by running the command `npm init` in an empty directory.
 Then we can install the dependencies by running
 
 ```bash
-npm install --save-dev ts-node typescript
+npm install ts-node typescript --save-dev
 ```
 
 and setting up *scripts* within the package.json:
@@ -332,7 +332,7 @@ You can almost always find the typings for npm packages, so you don't have to cr
 
 Usually, types for existing packages can be found from the ***@types*** organization within npm,
 and you can add the relevant types to your project by installing an npm package with the name of your package with a @types/ prefix.
-For example: `npm install --save-dev @types/react @types/express @types/lodash @types/jest @types/mongoose` and so on and so on.
+For example: `npm install @types/react @types/express @types/lodash @types/jest @types/mongoose` and so on and so on. --save-dev
 The `@types/*` are maintained by [Definitely typed](https://github.com/DefinitelyTyped/DefinitelyTyped),
 a community project to maintain types of everything in one place.
 
@@ -349,7 +349,7 @@ If the version of npm is at least 7.0, the peer dependencies of a project are au
 If you have an older npm, the peer dependency must be installed explicitly:
 
 ```shell
-npm install --save-dev @types/node
+npm install @types/node --save-dev
 ```
 
 When the package @types/node is installed, the compiler does not complain about the variable `process`.
@@ -711,7 +711,7 @@ We haven't installed types for *express*.
 Let's do what the suggestion says and run:
 
 ```bash
-npm install --save-dev @types/express
+npm install @types/express --save-dev
 ```
 
 And no more errors! Let's take a look at what changed.
@@ -776,7 +776,7 @@ It is meant to be used only with a development environment that takes care of re
 Let's install ***ts-node-dev*** to our development dependencies:
 
 ```bash
-npm install --save-dev ts-node-dev
+npm install ts-node-dev --save-dev
 ```
 
 Add a script to *package.json*:
@@ -923,7 +923,7 @@ our code.
 Let's install ESlint and its TypeScript extensions:
 
 ```shell
-npm install --save-dev eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
+npm install eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev
 ```
 
 We will configure ESlint to [disallow explicit any]( https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md).

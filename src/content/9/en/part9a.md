@@ -201,7 +201,7 @@ We will be using [ESLint](https://eslint.org/) which is already familiar to us f
 Let's get started by installing the dependencies:
 
 ```shell
-npm install --save-dev eslint @babel/eslint-parser eslint-plugin-react eslint-plugin-react-native
+npm install eslint @babel/eslint-parser eslint-plugin-react eslint-plugin-react-native --save-dev
 ```
 
 Next, let's add the ESLint configuration into a *.eslintrc* file in the *rate-repository-app* directory with the following content:

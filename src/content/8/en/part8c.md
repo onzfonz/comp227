@@ -112,7 +112,7 @@ Also, since this is a real project, which is intended to be grown over time, we 
 
 ```shell
 npm install express
-npm install --save-dev eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser
+npm install eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev
 ```
 
 Now our *package.json* should look like this:
@@ -183,7 +183,7 @@ However, as we saw earlier, *ts-node-dev* does the same thing, so we will use th
 So, let's install *ts-node-dev*:
 
 ```shell
-npm install --save-dev ts-node-dev
+npm install ts-node-dev --save-dev
 ```
 
 We finally define a few more npm scripts, and voilà, we are ready to begin:

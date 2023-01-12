@@ -100,7 +100,7 @@ The contents of the *package.json* file can e.g. be the following:
 Let's install webpack with the command:
 
 ```js
-npm install --save-dev webpack webpack-cli
+npm install webpack webpack-cli --save-dev
 ```
 
 We define the functionality of webpack in the *webpack.config.js* file, which we initialize with the following content:
@@ -512,7 +512,7 @@ The [webpack-dev-server](https://webpack.js.org/guides/development/#using-webpac
 Let's install it with the command:
 
 ```js
-npm install --save-dev webpack-dev-server
+npm install webpack-dev-server --save-dev
 ```
 
 Let's define an npm script for starting the dev server:

@@ -429,7 +429,7 @@ and if any files change, nodemon will automatically restart your node applicatio
 Let's install nodemon by defining it as a **development dependency** with the command:
 
 ```bash
-npm install --save-dev nodemon
+npm install nodemon --save-dev
 ```
 
 The contents of *package.json* have also changed:

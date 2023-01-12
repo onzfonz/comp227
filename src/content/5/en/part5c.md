@@ -19,7 +19,7 @@ The current best option for this is [react-testing-library](https://github.com/t
 Let's install the library with the command:
 
 ```js
-npm install --save-dev @testing-library/react @testing-library/jest-dom
+npm install @testing-library/react @testing-library/jest-dom --save-dev
 ```
 
 We also installed [jest-dom](https://testing-library.com/docs/ecosystem-jest-dom/) which provides some nice Jest-related helper methods.
@@ -273,7 +273,7 @@ the `toggleImportance` event handler function gets called.
 Let us install a library [user-event](https://testing-library.com/docs/user-event/intro) that makes simulating user input a bit easier:
 
 ```bash
-npm install --save-dev @testing-library/user-event
+npm install @testing-library/user-event --save-dev
 ```
 
 At the moment of writing (28.1.2022) there is a mismatch between the version of a dependency jest-watch-typeahead that create-react-app and user-event are using.
