@@ -9,13 +9,13 @@ lang: en
 
 Next, let's connect the frontend we made in [part 2](/part2) to our own backend.
 
-In the previous part, the frontend could ask for the list of notes from the json-server we had as a backend, from the address <http://localhost:3001/notes>.
-Our backend has a slightly different URL structure now, as the notes can be found at <http://localhost:3001/api/notes>.
-Let's change the attribute `baseUrl` in the *src/services/notes.js* like so:
+In the previous part, the frontend could ask for the list of tasks from the json-server we had as a backend, from the address <http://localhost:3001/tasks>.
+Our backend has a slightly different URL structure now, as the tasks can be found at <http://localhost:3001/api/tasks>.
+Let's change the attribute `baseUrl` in the *src/services/tasks.js* like so:
 
 ```js
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/notes' //highlight-line
+const baseUrl = 'http://localhost:3001/api/tasks' //highlight-line
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -27,7 +27,7 @@ const getAll = () => {
 export default { getAll, create, update }
 ```
 
-Now frontend's GET request to <http://localhost:3001/api/notes> does not work for some reason:
+Now frontend's GET request to <http://localhost:3001/api/tasks> does not work for some reason:
 
 ![Get request showing error in dev tools](../../images/3/3ae.png)
 
@@ -68,7 +68,7 @@ const cors = require('cors')
 app.use(cors())
 ```
 
-And the frontend works! However, the functionality for changing the importance of notes has not yet been implemented on the backend.
+And the frontend works! However, the functionality for changing the importance of tasks has not yet been implemented on the backend.
 
 You can read more about CORS from [Mozilla's page](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
@@ -226,7 +226,7 @@ Create a Heroku application with the command `heroku create`, commit your code t
 
 If everything went well, the application works:
 
-![live site screenshot of api/notes showing JSON](../../images/3/25ea.png)
+![live site screenshot of api/tasks showing JSON](../../images/3/25ea.png)
 
 If not, the issue can be found by reading the heroku logs with the command `heroku logs`.
 
@@ -234,7 +234,7 @@ If not, the issue can be found by reading the heroku logs with the command `hero
 The best way to do this is with command `heroku logs -t` which prints the logs to console whenever something happens on the server.
 >
 >**NB** If you are deploying from a git repository where your code is not on the main branch
-(i.e. if you are altering the [notes repo](https://github.com/comp227/part3-notes-backend/tree/part3-2) from the last lesson)
+(i.e. if you are altering the [tasks repo](https://github.com/comp227/part3-tasks-backend/tree/part3-2) from the last lesson)
 you will need to run `git push heroku HEAD:master`.
 If you have already done a push to heroku, you may need to run `git push heroku HEAD:main --force`.
 
@@ -304,7 +304,7 @@ We begin by copying the production build of the frontend to the root of the back
 With a Mac or Linux computer, the copying can be done from the frontend directory with the command
 
 ```bash
-cp -r build ../notes-backend
+cp -r build ../tasks-backend
 ```
 
 If you are using a Windows computer, you may use either [copy](https://www.windows-commandline.com/windows-copy-command-syntax-examples/)
@@ -328,7 +328,7 @@ whenever express gets an HTTP GET request it will first check if the *build* dir
 If a correct file is found, express will return it.
 
 Now HTTP GET requests to the address ***www.serversaddress.com/index.html*** or ***www.serversaddress.com*** will show the React frontend.
-GET requests to the address ***www.serversaddress.com/api/notes*** will be handled by the backend's code.
+GET requests to the address ***www.serversaddress.com/api/tasks*** will be handled by the backend's code.
 
 Because of our situation, both the frontend and the backend are at the same address,
 we can declare `baseUrl` as a [relative](https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2) URL.
@@ -336,7 +336,7 @@ This means we can leave out the part declaring the server.
 
 ```js
 import axios from 'axios'
-const baseUrl = '/api/notes' // highlight-line
+const baseUrl = '/api/tasks' // highlight-line
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -350,7 +350,7 @@ After the change, we have to create a new production build and copy it to the ro
 
 The application can now be used from the *backend* address <http://localhost:3001>:
 
-![Notes application screenshot](../../images/3/28e.png)
+![Tasks application screenshot](../../images/3/28e.png)
 
 Our application now works exactly like the [single-page app](/part0/fundamentals_of_web_apps#single-page-app) example application we studied in part 0.
 
@@ -374,10 +374,10 @@ The summarized contents of the file are as follows:
 The file contains instructions to fetch a CSS stylesheet defining the styles of the application,
 and two `script` tags that instruct the browser to fetch the JavaScript code of the application - the actual React application.
 
-The React code fetches notes from the server address <http://localhost:3001/api/notes> and renders them to the screen.
+The React code fetches tasks from the server address <http://localhost:3001/api/tasks> and renders them to the screen.
 The communications between the server and the browser can be seen in the ***Network*** tab of the developer console:
 
-![Network tab of notes application on backend](../../images/3/29ea.png)
+![Network tab of tasks application on backend](../../images/3/29ea.png)
 
 The setup that is ready for a product deployment looks as follows:
 
@@ -387,7 +387,7 @@ Unlike when running the app in a development environment,
 everything is now in the same node/express-backend that runs in [localhost:3001](http://localhost:3001).
 When the browser goes to the page, the file *index.html* is rendered.
 That causes the browser to fetch the product version of the React app.
-Once it starts to run, it fetches the json-data from the address [localhost:3001/api/notes](http://localhost:3001/api/notes).
+Once it starts to run, it fetches the json-data from the address [localhost:3001/api/tasks](http://localhost:3001/api/tasks).
 
 ### The whole app to the internet
 
@@ -400,11 +400,11 @@ fly deploy
 ```
 
 [The application](https://obscure-harbor-49797.herokuapp.com/) works perfectly,
-except we haven't added the functionality for changing the importance of a note to the backend yet.
+except we haven't added the functionality for changing the importance of a task to the backend yet.
 
-![screenshot of notes application](../../images/3/30ea.png)
+![screenshot of tasks application](../../images/3/30ea.png)
 
-Our application saves the notes to a variable.
+Our application saves the tasks to a variable.
 If the application crashes or is restarted, all of the data will disappear.
 
 The application needs a database.
@@ -431,7 +431,7 @@ The script looks like this
 {
   "scripts": {
     // ...
-    "build:ui": "rm -rf build && cd ../part2-notes/ && npm run build && cp -r build ../notes-backend",
+    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../tasks-backend",
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",    
     "logs:prod": "fly logs"
@@ -456,7 +456,7 @@ In case of Heroku, the script looks like the following
 {
   "scripts": {
     //...
-    "build:ui": "rm -rf build && cd ../part2-notes/ && npm run build && cp -r build ../notes-backend",
+    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../tasks-backend",
     "deploy": "git push heroku main",
     "deploy:full": "npm run build:ui && git add .
 && git commit -m uibuild && npm run deploy",    
@@ -488,16 +488,16 @@ Another option is the use of [shx](https://www.npmjs.com/package/shx).
 Changes on the frontend have caused it to no longer work in development mode (when started with command `npm start`),
 as the connection to the backend does not work.
 
-![Network dev tools showing a 404 on getting notes](../../images/3/32ea.png)
+![Network dev tools showing a 404 on getting tasks](../../images/3/32ea.png)
 
 This is due to changing the backend address to a relative URL:
 
 ```js
-const baseUrl = '/api/notes'
+const baseUrl = '/api/tasks'
 ```
 
 Because in development mode the frontend is at the address [localhost:3000](http://localhost:3000),
-the requests to the backend go to the wrong address [localhost:3000/api/notes](http://localhost:3000/api/notes).
+the requests to the backend go to the wrong address [localhost:3000/api/tasks](http://localhost:3000/api/tasks).
 The backend is at [localhost:3001](http://localhost:3001).
 
 If the project was created with create-react-app, this problem is easy to solve.
@@ -533,9 +533,9 @@ There are multiple ways to achieve this (for example placing both backend and fr
 In some situations, it may be sensible to deploy the frontend code as its own application.
 With apps created with create-react-app it is [straightforward](https://github.com/mars/create-react-app-buildpack).
 
-The current backend code can be found on [Github](https://github.com/comp227/part3-notes-backend/tree/part3-3),
+The current backend code can be found on [Github](https://github.com/comp227/part3-tasks-backend/tree/part3-3),
 in the branch *part3-3*.
-The changes in frontend code are in *part3-1* branch of the [frontend repository](https://github.com/comp227/part2-notes/tree/part3-1).
+The changes in frontend code are in *part3-1* branch of the [frontend repository](https://github.com/comp227/part2-tasks/tree/part3-1).
 
 </div>
 
@@ -593,6 +593,6 @@ Generate a production build of your frontend, and add it to the internet applica
 Also, make sure that the frontend still works locally (in development mode when started with command `npm start`).
 
 If you have problems getting the app working make sure that your directory structure matches
-[the example app](https://github.com/comp227/part3-notes-backend/tree/part3-3).
+[the example app](https://github.com/comp227/part3-tasks-backend/tree/part3-3).
 
 </div>

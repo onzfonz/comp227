@@ -75,7 +75,7 @@ You can access TypeScript's official playground [here](https://www.typescriptlan
 which is why you might see different warnings there compared to your local environment.
 The playground's tsconfig is modifiable through the config dropdown menu.
 
-#### A note about the coding style
+#### A notice about the coding style
 
 JavaScript is a quite relaxed language in itself, and things can often be done in multiple different ways.
 For example, we have named vs anonymous functions, using const and let or var, and the use of *semicolons*.
@@ -304,7 +304,7 @@ try {
 As of TypeScript 4.0, `catch` blocks allow you to specify the type of catch clause variables.
 Pre-4.4, all `catch` clause variables were of type `any`.
 However, with the release of 4.4, the default type is `unknown`.
-The [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type)
+The [unknown](https://www.typescriptlang.org/docs/handbook/release-tasks/typescript-3-0.html#new-unknown-top-type)
 is a kind of top type that was introduced in TypeScript version 3 to be the type-safe counterpart of `any`.
 Anything is assignable to `unknown`, but `unknown` isn’t assignable to anything but itself and `any` without a type assertion or a control flow-based narrowing.
 Likewise, no operations are permitted on an `unknown` without first asserting or narrowing it to a more specific type.

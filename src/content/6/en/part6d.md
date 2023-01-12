@@ -19,34 +19,34 @@ Knowing how to use connect though is useful when maintaining older projects usin
 
 ### Using the connect function to share the Redux store to components
 
-Let's modify the `Notes` component so that instead of using the hook API (the `useDispatch` and  `useSelector` functions) it uses the `connect` function.
+Let's modify the `Tasks` component so that instead of using the hook API (the `useDispatch` and  `useSelector` functions) it uses the `connect` function.
 We have to modify the following parts of the component:
 
 ````js
 import { useDispatch, useSelector } from 'react-redux' // highlight-line
-import { toggleImportanceOf } from '../reducers/noteReducer'
+import { toggleImportanceOf } from '../reducers/taskReducer'
 
-const Notes = () => {
+const Tasks = () => {
   // highlight-start
   const dispatch = useDispatch() 
-  const notes = useSelector(({filter, notes}) => {
+  const tasks = useSelector(({filter, tasks}) => {
     if ( filter === 'ALL' ) {
-      return notes
+      return tasks
     }
     return filter === 'IMPORTANT'
-      ? notes.filter(note => note.important)
-      : notes.filter(note => !note.important)
+      ? tasks.filter(task => task.important)
+      : tasks.filter(task => !task.important)
   })
   // highlight-end
 
   return(
     <ul>
-      {notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
+      {tasks.map(task =>
+        <Task
+          key={task.id}
+          task={task}
           handleClick={() => 
-            dispatch(toggleImportanceOf(note.id)) // highlight-line
+            dispatch(toggleImportanceOf(task.id)) // highlight-line
           }
         />
       )}
@@ -54,28 +54,28 @@ const Notes = () => {
   )
 }
 
-export default Notes
+export default Tasks
 ````
 
 The `connect` function can be used for transforming "regular" React components so that the state of the Redux store can be "mapped" into the component's props.
 
-Let's first use the `connect` function to transform our `Notes` component into a **connected component**:
+Let's first use the `connect` function to transform our `Tasks` component into a **connected component**:
 
 ```js
 import { connect } from 'react-redux' // highlight-line
-import { toggleImportanceOf } from '../reducers/noteReducer'
+import { toggleImportanceOf } from '../reducers/taskReducer'
 
-const Notes = () => {
+const Tasks = () => {
   // ...
 }
 
-const ConnectedNotes = connect()(Notes) // highlight-line
-export default ConnectedNotes           // highlight-line
+const ConnectedTasks = connect()(Tasks) // highlight-line
+export default ConnectedTasks           // highlight-line
 ```
 
 The module exports the *connected component* that works exactly like the previous regular component for now.
 
-The component needs the list of notes and the value of the filter from the Redux store.
+The component needs the list of tasks and the value of the filter from the Redux store.
 The `connect` function accepts a so-called
 [mapStateToProps function](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md#mapstatetoprops-state-ownprops--object)
 as its first parameter.
@@ -84,29 +84,29 @@ The function can be used for defining the props of the *connected component* tha
 If we define:
 
 ```js
-const Notes = (props) => { // highlight-line
+const Tasks = (props) => { // highlight-line
   const dispatch = useDispatch()
 
 // highlight-start
-  const notesToShow = () => {
+  const tasksToShow = () => {
     if ( props.filter === 'ALL' ) {
-      return props.notes
+      return props.tasks
     }
     
     return props.filter  === 'IMPORTANT'
-      ? props.notes.filter(note => note.important)
-      : props.notes.filter(note => !note.important)
+      ? props.tasks.filter(task => task.important)
+      : props.tasks.filter(task => !task.important)
   }
   // highlight-end
 
   return(
     <ul>
-      {notesToShow().map(note => // highlight-line
-        <Note
-          key={note.id}
-          note={note}
+      {tasksToShow().map(task => // highlight-line
+        <Task
+          key={task.id}
+          task={task}
           handleClick={() => 
-            dispatch(toggleImportanceOf(note.id))
+            dispatch(toggleImportanceOf(task.id))
           }
         />
       )}
@@ -116,40 +116,40 @@ const Notes = (props) => { // highlight-line
 
 const mapStateToProps = (state) => {
   return {
-    notes: state.notes,
+    tasks: state.tasks,
     filter: state.filter,
   }
 }
 
-const ConnectedNotes = connect(mapStateToProps)(Notes) // highlight-line
+const ConnectedTasks = connect(mapStateToProps)(Tasks) // highlight-line
 
-export default ConnectedNotes
+export default ConnectedTasks
 ```
 
-The `Notes` component can access the state of the store directly, e.g. through `props.notes` contains the list of notes.
+The `Tasks` component can access the state of the store directly, e.g. through `props.tasks` contains the list of tasks.
 Similarly, `props.filter` references the value of the filter.
 
 The situation that results from using `connect` with the `mapStateToProps` function we defined can be visualized like this:
 
-![diagram note list and filter connected to redux store](../../images/6/24c.png)
+![diagram task list and filter connected to redux store](../../images/6/24c.png)
 
-The `Notes` component has "direct access" via `props.notes` and `props.filter` for inspecting the state of the Redux store.
+The `Tasks` component has "direct access" via `props.tasks` and `props.filter` for inspecting the state of the Redux store.
 
-The `NoteList` component does not need the information about which filter is selected, so we can move the filtering logic elsewhere.
-We just have to give it correctly filtered notes in the `notes` prop:
+The `TaskList` component does not need the information about which filter is selected, so we can move the filtering logic elsewhere.
+We just have to give it correctly filtered tasks in the `tasks` prop:
 
 ```js
-const Notes = (props) => {
+const Tasks = (props) => {
   const dispatch = useDispatch()
 
   return(
     <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
+      {props.tasks.map(task =>
+        <Task
+          key={task.id}
+          task={task}
           handleClick={() => 
-            dispatch(toggleImportanceOf(note.id))
+            dispatch(toggleImportanceOf(task.id))
           }
         />
       )}
@@ -161,39 +161,39 @@ const Notes = (props) => {
 const mapStateToProps = (state) => {
   if ( state.filter === 'ALL' ) {
     return {
-      notes: state.notes
+      tasks: state.tasks
     }
   }
 
   return {
-    notes: (state.filter  === 'IMPORTANT' 
-      ? state.notes.filter(note => note.important)
-      : state.notes.filter(note => !note.important)
+    tasks: (state.filter  === 'IMPORTANT' 
+      ? state.tasks.filter(task => task.important)
+      : state.tasks.filter(task => !task.important)
     )
   }
 }
 // highlight-end
 
-const ConnectedNotes = connect(mapStateToProps)(Notes)
-export default ConnectedNotes  
+const ConnectedTasks = connect(mapStateToProps)(Tasks)
+export default ConnectedTasks  
 ```
 
 ### mapDispatchToProps
 
-Now we have gotten rid of `useSelector`, but `Notes` still uses the `useDispatch` hook and the `dispatch` function returning it:
+Now we have gotten rid of `useSelector`, but `Tasks` still uses the `useDispatch` hook and the `dispatch` function returning it:
 
 ```js
-const Notes = (props) => {
+const Tasks = (props) => {
   const dispatch = useDispatch() // highlight-line
 
   return(
     <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
+      {props.tasks.map(task =>
+        <Task
+          key={task.id}
+          task={task}
           handleClick={() => 
-            dispatch(toggleImportanceOf(note.id)) // highlight-line
+            dispatch(toggleImportanceOf(task.id)) // highlight-line
           }
         />
       )}
@@ -210,7 +210,7 @@ Let's make the following changes to our existing connect operation:
 ```js
 const mapStateToProps = (state) => {
   return {
-    notes: state.notes,
+    tasks: state.tasks,
     filter: state.filter,
   }
 }
@@ -221,25 +221,25 @@ const mapDispatchToProps = {
 }
 // highlight-end
 
-const ConnectedNotes = connect(
+const ConnectedTasks = connect(
   mapStateToProps,
   mapDispatchToProps // highlight-line
-)(Notes)
+)(Tasks)
 
-export default ConnectedNotes
+export default ConnectedTasks
 ```
 
 Now the component can directly dispatch the action defined by the `toggleImportanceOf` action creator by calling the function through its props:
 
 ```js
-const Notes = (props) => {
+const Tasks = (props) => {
   return(
     <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => props.toggleImportanceOf(note.id)}
+      {props.tasks.map(task =>
+        <Task
+          key={task.id}
+          task={task}
+          handleClick={() => props.toggleImportanceOf(task.id)}
         />
       )}
     </ul>
@@ -250,13 +250,13 @@ const Notes = (props) => {
 This means that instead of dispatching the action like this:
 
 ```js
-dispatch(toggleImportanceOf(note.id))
+dispatch(toggleImportanceOf(task.id))
 ```
 
 When using `connect` we can simply do this:
 
 ```js
-props.toggleImportanceOf(note.id)
+props.toggleImportanceOf(task.id)
 ```
 
 There is no need to call the `dispatch` function separately since `connect` has already modified the `toggleImportanceOf` action creator into a form that contains the dispatch.
@@ -268,23 +268,23 @@ The resulting situation from using `connect` can be visualized like this:
 
 ![diagram showing toggle connecting to state in redux and dispatch inside of redux](../../images/6/25b.png)
 
-In addition to accessing the store's state via `props.notes` and `props.filter`,
-the component also references a function that can be used for dispatching ***notes/toggleImportanceOf***-type actions via its `toggleImportanceOf` prop.
+In addition to accessing the store's state via `props.tasks` and `props.filter`,
+the component also references a function that can be used for dispatching ***tasks/toggleImportanceOf***-type actions via its `toggleImportanceOf` prop.
 
-The code for the newly refactored `Notes` component looks like this:
+The code for the newly refactored `Tasks` component looks like this:
 
 ```js
 import { connect } from 'react-redux' 
-import { toggleImportanceOf } from '../reducers/noteReducer'
+import { toggleImportanceOf } from '../reducers/taskReducer'
 
-const Notes = (props) => {
+const Tasks = (props) => {
   return(
     <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => props.toggleImportanceOf(note.id)}
+      {props.tasks.map(task =>
+        <Task
+          key={task.id}
+          task={task}
+          handleClick={() => props.toggleImportanceOf(task.id)}
         />
       )}
     </ul>
@@ -294,14 +294,14 @@ const Notes = (props) => {
 const mapStateToProps = (state) => {
   if ( state.filter === 'ALL' ) {
     return {
-      notes: state.notes
+      tasks: state.tasks
     }
   }
 
   return {
-    notes: (state.filter  === 'IMPORTANT' 
-    ? state.notes.filter(note => note.important)
-    : state.notes.filter(note => !note.important)
+    tasks: (state.filter  === 'IMPORTANT' 
+    ? state.tasks.filter(task => task.important)
+    : state.tasks.filter(task => !task.important)
     )
   }
 }
@@ -313,27 +313,27 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Notes)
+)(Tasks)
 ```
 
-Let's also use `connect` to create new notes:
+Let's also use `connect` to create new tasks:
 
 ```js
 import { connect } from 'react-redux' 
-import { createNote } from '../reducers/noteReducer'
+import { createTask } from '../reducers/taskReducer'
 
-const NewNote = (props) => { // highlight-line
+const NewTask = (props) => { // highlight-line
   
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content) // highlight-line
+    const content = event.target.task.value
+    event.target.task.value = ''
+    props.createTask(content) // highlight-line
   }
 
   return (
-    <form onSubmit={addNote}>
-      <input name="note" />
+    <form onSubmit={addTask}>
+      <input name="task" />
       <button type="submit">add</button>
     </form>
   )
@@ -342,36 +342,36 @@ const NewNote = (props) => { // highlight-line
 // highlight-start
 export default connect(
   null, 
-  { createNote }
-)(NewNote)
+  { createTask }
+)(NewTask)
 // highlight-end
 ```
 
 Since the component does not need to access the store's state, we can simply pass `null` as the first parameter to `connect`.
 
 You can find the code for our current application in its entirety in the *part6-5* branch of
-[this GitHub repository](https://github.com/comp227/redux-notes/tree/part6-5).
+[this GitHub repository](https://github.com/comp227/redux-tasks/tree/part6-5).
 
 ### Referencing action creators passed as props
 
-Let's direct our attention to one interesting detail in the `NewNote` component:
+Let's direct our attention to one interesting detail in the `NewTask` component:
 
 ```js
 import { connect } from 'react-redux' 
-import { createNote } from '../reducers/noteReducer'  // highlight-line
+import { createTask } from '../reducers/taskReducer'  // highlight-line
 
-const NewNote = (props) => {
+const NewTask = (props) => {
   
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content)  // highlight-line
+    const content = event.target.task.value
+    event.target.task.value = ''
+    props.createTask(content)  // highlight-line
   }
 
   return (
-    <form onSubmit={addNote}>
-      <input name="note" />
+    <form onSubmit={addTask}>
+      <input name="task" />
       <button type="submit">add</button>
     </form>
   )
@@ -379,36 +379,36 @@ const NewNote = (props) => {
 
 export default connect(
   null, 
-  { createNote }  // highlight-line
-)(NewNote)
+  { createTask }  // highlight-line
+)(NewTask)
 ```
 
-Developers who are new to connect may find it puzzling that there are two versions of the `createNote` action creator in the component.
+Developers who are new to connect may find it puzzling that there are two versions of the `createTask` action creator in the component.
 
-The function must be referenced as `props.createNote` through the component's props,
+The function must be referenced as `props.createTask` through the component's props,
 as this is the version that *contains the automatic dispatch* added by `connect`.
 
 Due to the way that the action creator is imported:
 
 ```js
-import { createNote } from './../reducers/noteReducer'
+import { createTask } from './../reducers/taskReducer'
 ```
 
-The action creator can also be referenced directly by calling `createNote`.
+The action creator can also be referenced directly by calling `createTask`.
 You should not do this, since this is the unmodified version of the action creator that does not contain the added automatic dispatch.
 
 If we print the functions to the console from the code (we have not yet looked at this useful debugging trick):
 
 ```js
-const NewNote = (props) => {
-  console.log(createNote)
-  console.log(props.createNote)
+const NewTask = (props) => {
+  console.log(createTask)
+  console.log(props.createTask)
 
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content)
+    const content = event.target.task.value
+    event.target.task.value = ''
+    props.createTask(content)
   }
 
   // ...
@@ -425,20 +425,20 @@ Connect is an incredibly useful tool although it may seem difficult at first due
 
 ### An alternative way of using mapDispatchToProps
 
-We defined the function for dispatching actions from the connected `NewNote` component in the following way:
+We defined the function for dispatching actions from the connected `NewTask` component in the following way:
 
 ```js
-const NewNote = () => {
+const NewTask = () => {
   // ...
 }
 
 export default connect(
   null,
-  { createNote }
-)(NewNote)
+  { createTask }
+)(NewTask)
 ```
 
-The connect expression above enables the component to dispatch actions for creating new notes with the `props.createNote('a new note')` command.
+The connect expression above enables the component to dispatch actions for creating new tasks with the `props.createTask('a new task')` command.
 
 The functions passed in `mapDispatchToProps` must be *action creators*, that is, functions that return Redux actions.
 
@@ -446,7 +446,7 @@ It is worth noting that the `mapDispatchToProps` parameter is a **JavaScript obj
 
 ```js
 {
-  createNote
+  createTask
 }
 ```
 
@@ -454,24 +454,24 @@ Is just shorthand for defining the object literal:
 
 ```js
 {
-  createNote: createNote
+  createTask: createTask
 }
 ```
 
-Which is an object that has a single `createNote` property with the `createNote` function as its value.
+Which is an object that has a single `createTask` property with the `createTask` function as its value.
 
 Alternatively, we could pass the following *function* definition as the second parameter to `connect`:
 
 ```js
-const NewNote = (props) => {
+const NewTask = (props) => {
   // ...
 }
 
 // highlight-start
 const mapDispatchToProps = dispatch => {
   return {
-    createNote: value => {
-      dispatch(createNote(value))
+    createTask: value => {
+      dispatch(createTask(value))
     },
   }
 }
@@ -480,35 +480,35 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   null,
   mapDispatchToProps
-)(NewNote)
+)(NewTask)
 ```
 
 In this alternative definition, `mapDispatchToProps` is a function that `connect` will invoke by passing to it the `dispatch` function as its parameter.
 The return value of the function is an object that defines a group of functions that get passed to the connected component as props.
-Our example defines the function passed as the `createNote` prop:
+Our example defines the function passed as the `createTask` prop:
 
 ```js
 value => {
-  dispatch(createNote(value))
+  dispatch(createTask(value))
 }
 ```
 
-Which simply dispatches the action created with the `createNote` action creator.
+Which simply dispatches the action created with the `createTask` action creator.
 
-The component then references the function through its props by calling `props.createNote`:
+The component then references the function through its props by calling `props.createTask`:
 
 ```js
-const NewNote = (props) => {
-  const addNote = (event) => {
+const NewTask = (props) => {
+  const addTask = (event) => {
     event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content)
+    const content = event.target.task.value
+    event.target.task.value = ''
+    props.createTask(content)
   }
 
   return (
-    <form onSubmit={addNote}>
-      <input name="note" />
+    <form onSubmit={addTask}>
+      <input name="task" />
       <button type="submit">add</button>
     </form>
   )
@@ -528,7 +528,7 @@ The last four videos discuss the `connect` method, particularly the more "compli
 
 ### Presentational/Container revisited
 
-The refactored `Notes` component is almost entirely focused on rendering notes
+The refactored `Tasks` component is almost entirely focused on rendering tasks
 and is quite close to being a so-called [presentational component](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
 According to the [description](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) provided by Dan Abramov, presentational components:
 
@@ -547,14 +547,14 @@ The **connected component** that is created with the `connect` function:
 const mapStateToProps = (state) => {
   if ( state.filter === 'ALL' ) {
     return {
-      notes: state.notes
+      tasks: state.tasks
     }
   }
 
   return {
-    notes: (state.filter  === 'IMPORTANT' 
-    ? state.notes.filter(note => note.important)
-    : state.notes.filter(note => !note.important)
+    tasks: (state.filter  === 'IMPORTANT' 
+    ? state.tasks.filter(task => task.important)
+    : state.tasks.filter(task => !task.important)
     )
   }
 }
@@ -566,7 +566,7 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Notes)
+)(Tasks)
 ```
 
 Fits the description of a **container** component.
@@ -594,7 +594,7 @@ You can put them on a single page and let the designer tweak all their variation
 You can run screenshot regression tests on that page.
 
 Abramov mentions the term [higher-order component](https://reactjs.org/docs/higher-order-components.html).
-The `Notes` component is an example of a regular component, whereas the `connect` method provided by React-Redux is an example of a **high-order component**.
+The `Tasks` component is an example of a regular component, whereas the `connect` method provided by React-Redux is an example of a **high-order component**.
 Essentially, a higher-order component is a function that accepts a "regular" component as its parameter, which then returns a new "regular" component as its return value.
 
 Higher-order components, or HOCs, are a way of defining generic functionality that can be applied to components.

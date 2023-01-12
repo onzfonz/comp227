@@ -9,7 +9,7 @@ lang: en
 
 We will now start writing tests for the backend.
 Since the backend does not contain any complicated logic, it doesn't make sense to write [unit tests](https://en.wikipedia.org/wiki/Unit_testing) for it.
-The only potential thing we could unit test is the `toJSON` method that is used for formatting notes.
+The only potential thing we could unit test is the `toJSON` method that is used for formatting tasks.
 
 In some situations, it can be beneficial to implement some of the backend tests by mocking the database instead of using a real database.
 One library that could be used for this is [mongodb-memory-server](https://github.com/nodkz/mongodb-memory-server).
@@ -35,7 +35,7 @@ Next, let's change the scripts in our *package.json* so that when tests are run,
   "scripts": {
     "start": "NODE_ENV=production node index.js",// highlight-line
     "dev": "NODE_ENV=development nodemon index.js",// highlight-line
-    "build:ui": "rm -rf build && cd ../../../2/luento/notes && npm run build && cp -r build ../../../3/luento/notes-backend",
+    "build:ui": "rm -rf build && cd ../../../2/luento/tasks && npm run build && cp -r build ../../../3/luento/tasks-backend",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add .
 && git commit -m uibuild && git push && npm run deploy",
@@ -117,11 +117,11 @@ module.exports = {
 The *.env* file has ***separate variables*** for the database addresses of the development and test databases:
 
 ```bash
-MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority
 PORT=3001
 
 // highlight-start
-TEST_MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/testNoteApp?retryWrites=true&w=majority
+TEST_MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/testTaskApp?retryWrites=true&w=majority
 // highlight-end
 ```
 
@@ -131,7 +131,7 @@ Writing our implementation is justified since our application is simple, and als
 These are the only changes we need to make to our application's code.
 
 You can find the code for our current application in its entirety in the *part4-2* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-2).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-2).
 
 ### supertest
 
@@ -143,7 +143,7 @@ We will install the package as a development dependency:
 npm install --save-dev supertest
 ```
 
-Let's write our first test in the *tests/note_api.test.js* file:
+Let's write our first test in the *tests/task_api.test.js* file:
 
 ```js
 const mongoose = require('mongoose')
@@ -152,9 +152,9 @@ const app = require('../app')
 
 const api = supertest(app)
 
-test('notes are returned as json', async () => {
+test('tasks are returned as json', async () => {
   await api
-    .get('/api/notes')
+    .get('/api/tasks')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
@@ -168,7 +168,7 @@ The test imports the Express application from the *app.js* module and wraps it w
 into a so-called [superagent](https://github.com/visionmedia/superagent) object.
 This object is assigned to the `api` variable and tests can use it for making HTTP requests to the backend.
 
-Our test makes an HTTP GET request to the ***api/notes*** URL and verifies that the request is responded to with the status code 200.
+Our test makes an HTTP GET request to the ***api/tasks*** URL and verifies that the request is responded to with the status code 200.
 The test also verifies that the `Content-Type` header is set to `application/json`, indicating that the data is in the desired format.
 (If you're not familiar with the RegEx syntax of `/application\/json/`,
 you can learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).)
@@ -216,9 +216,9 @@ Another error you may come across is your test takes longer than the default Jes
 This can be solved by adding a third parameter to the test function:
   
 ```js
-test('notes are returned as json', async () => {
+test('tasks are returned as json', async () => {
   await api
-    .get('/api/notes')
+    .get('/api/tasks')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 }, 100000)
@@ -266,14 +266,14 @@ In other words, supertest takes care that the application being tested is starte
 Let's write a few more tests:
 
 ```js
-test('there are two notes', async () => {
-  const response = await api.get('/api/notes')
+test('there are two tasks', async () => {
+  const response = await api.get('/api/tasks')
 
   expect(response.body).toHaveLength(2)
 })
 
-test('the first note is about HTTP methods', async () => {
-  const response = await api.get('/api/notes')
+test('the first task is about HTTP methods', async () => {
+  const response = await api.get('/api/tasks')
 
   expect(response.body[0].content).toBe('HTML is easy')
 })
@@ -288,7 +288,7 @@ The benefit of using the async/await syntax is starting to become evident.
 Normally we would have to use callback functions to access the data returned by promises, but with the new syntax things are a lot more comfortable:
 
 ```js
-const response = await api.get('/api/notes')
+const response = await api.get('/api/tasks')
 
 // execution gets here only after the HTTP request is complete
 // the result of HTTP request is saved in variable response
@@ -339,11 +339,11 @@ const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
 // highlight-start
-const Note = require('../models/note')
+const Task = require('../models/task')
 // highlight-end
 
 // highlight-start
-const initialNotes = [
+const initialTasks = [
   {
     content: 'HTML is easy',
     date: new Date(),
@@ -359,32 +359,32 @@ const initialNotes = [
 
 // highlight-start
 beforeEach(async () => {
-  await Note.deleteMany({})
+  await Task.deleteMany({})
 
-  let noteObject = new Note(initialNotes[0])
-  await noteObject.save()
+  let taskObject = new Task(initialTasks[0])
+  await taskObject.save()
 
-  noteObject = new Note(initialNotes[1])
-  await noteObject.save()
+  taskObject = new Task(initialTasks[1])
+  await taskObject.save()
 })
 // highlight-end
 // ...
 ```
 
-The database is cleared out at the beginning, and after that, we save the two notes stored in the `initialNotes` array to the database.
+The database is cleared out at the beginning, and after that, we save the two tasks stored in the `initialTasks` array to the database.
 By doing this, we ensure that the database is in the same state before every test is run.
 
 Let's also make the following changes to the last two tests:
 
 ```js
-test('all notes are returned', async () => {
-  const response = await api.get('/api/notes')
+test('all tasks are returned', async () => {
+  const response = await api.get('/api/tasks')
 
-  expect(response.body).toHaveLength(initialNotes.length) // highlight-line
+  expect(response.body).toHaveLength(initialTasks.length) // highlight-line
 })
 
-test('a specific note is within the returned notes', async () => {
-  const response = await api.get('/api/notes')
+test('a specific task is within the returned tasks', async () => {
+  const response = await api.get('/api/tasks')
 
   // highlight-start
   const contents = response.body.map(r => r.content)
@@ -397,8 +397,8 @@ test('a specific note is within the returned notes', async () => {
 ```
 
 Pay special attention to the expect in the latter test.
-The `response.body.map(r => r.content)` command is used to create an array containing the content of every note returned by the API.
-The [toContain](https://jestjs.io/docs/expect#tocontainitem) method is used for checking that the note given to it as a parameter is in the list of notes returned by the API.
+The `response.body.map(r => r.content)` command is used to create an array containing the content of every task returned by the API.
+The [toContain](https://jestjs.io/docs/expect#tocontainitem) method is used for checking that the task given to it as a parameter is in the list of tasks returned by the API.
 
 ### Running tests one by one
 
@@ -409,24 +409,24 @@ If tests are written across many files, this method is not great.
 
 A better option is to specify the tests that need to be run as parameters of the `npm test` command.
 
-The following command only runs the tests found in the *tests/note_api.test.js* file:
+The following command only runs the tests found in the *tests/task_api.test.js* file:
 
 ```js
-npm test -- tests/note_api.test.js
+npm test -- tests/task_api.test.js
 ```
 
 The `-t` option can be used for running tests with a specific name:
 
 ```js
-npm test -- -t "a specific note is within the returned notes"
+npm test -- -t "a specific task is within the returned tasks"
 ```
 
 The provided parameter can refer to the name of the test or the describe block.
 The parameter can also contain just a part of the name.
-The following command will run all of the tests that contain `notes` in their name:
+The following command will run all of the tests that contain `tasks` in their name:
 
 ```js
-npm test -- -t 'notes'
+npm test -- -t 'tasks'
 ```
 
 **NB**: When running a single test, the mongoose connection might stay open if no tests using the connection are run.
@@ -438,15 +438,15 @@ Before we write more tests let's take a look at the `async` and `await` keywords
 
 The async/await syntax that was introduced in ES7 makes it possible to use *asynchronous functions that return a promise* in a way that makes the code look synchronous.
 
-As an example, the fetching of notes from the database with promises looks like this:
+As an example, the fetching of tasks from the database with promises looks like this:
 
 ```js
-Note.find({}).then(notes => {
-  console.log('operation returned the following notes', notes)
+Task.find({}).then(tasks => {
+  console.log('operation returned the following tasks', tasks)
 })
 ```
 
-The `Note.find()` method returns a promise and we can access the result of the operation by registering a callback function with the `then` method.
+The `Task.find()` method returns a promise and we can access the result of the operation by registering a callback function with the `then` method.
 
 All of the code we want to execute once the operation finishes is written in the callback function.
 If we wanted to make several asynchronous function calls in sequence, the situation would soon become painful.
@@ -456,15 +456,15 @@ This would likely lead to complicated code and could potentially give birth to a
 By [chaining promises](https://javascript.info/promise-chaining) we could keep the situation somewhat under control,
 and avoid callback hell by creating a fairly clean chain of `then` method calls.
 We have seen a few of these during the course.
-To illustrate this, you can view an artificial example of a function that fetches all notes and then deletes the first one:
+To illustrate this, you can view an artificial example of a function that fetches all tasks and then deletes the first one:
 
 ```js
-Note.find({})
-  .then(notes => {
-    return notes[0].remove()
+Task.find({})
+  .then(tasks => {
+    return tasks[0].remove()
   })
   .then(response => {
-    console.log('the first note is removed')
+    console.log('the first task is removed')
     // more code here
   })
 ```
@@ -478,25 +478,25 @@ The syntax is a bit clunky and not widely used.
 The `async` and `await` keywords introduced in ES7 bring the same functionality as the generators,
 but in an understandable and syntactically cleaner way to the hands of all citizens of the JavaScript world.
 
-We could fetch all of the notes in the database by utilizing the [await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await) operator like this:
+We could fetch all of the tasks in the database by utilizing the [await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await) operator like this:
 
 ```js
-const notes = await Note.find({})
+const tasks = await Task.find({})
 
-console.log('operation returned the following notes', notes)
+console.log('operation returned the following tasks', tasks)
 ```
 
 The code looks exactly like synchronous code.
-The execution of code pauses at `const notes = await Note.find({})` and waits until the related promise is ***fulfilled***, and then continues its execution to the next line.
-When the execution continues, the result of the operation that returned a promise is assigned to the `notes` variable.
+The execution of code pauses at `const tasks = await Task.find({})` and waits until the related promise is ***fulfilled***, and then continues its execution to the next line.
+When the execution continues, the result of the operation that returned a promise is assigned to the `tasks` variable.
 
 The slightly complicated example presented above could be implemented by using await like this:
 
 ```js
-const notes = await Note.find({})
-const response = await notes[0].remove()
+const tasks = await Task.find({})
+const response = await tasks[0].remove()
 
-console.log('the first note is removed')
+console.log('the first task is removed')
 ```
 
 Thanks to the new syntax, the code is a lot simpler than the previous then-chain.
@@ -513,11 +513,11 @@ Notice the first line in the arrow function definition:
 
 ```js
 const main = async () => { // highlight-line
-  const notes = await Note.find({})
-  console.log('operation returned the following notes', notes)
+  const tasks = await Task.find({})
+  console.log('operation returned the following tasks', tasks)
 
-  const response = await notes[0].remove()
-  console.log('the first note is removed')
+  const response = await tasks[0].remove()
+  console.log('the first task is removed')
 }
 
 main() // highlight-line
@@ -532,19 +532,19 @@ Let's start to change the backend to async and await.
 As all of the asynchronous operations are currently done inside of a function,
 it is enough to change the route handler functions into async functions.
 
-The route for fetching all notes gets changed to the following:
+The route for fetching all tasks gets changed to the following:
 
 ```js
-notesRouter.get('/', async (request, response) => { 
-  const notes = await Note.find({})
-  response.json(notes)
+tasksRouter.get('/', async (request, response) => { 
+  const tasks = await Task.find({})
+  response.json(tasks)
 })
 ```
 
 We can verify that our refactoring was successful by testing the endpoint through the browser and by running the tests that we wrote earlier.
 
 You can find the code for our current application in its entirety in the *part4-3* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-3).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-3).
 
 ### More tests and refactoring the backend
 
@@ -552,86 +552,86 @@ When code gets refactored, there is always the risk of [regression](https://en.w
 meaning that existing functionality may break.
 Let's refactor the remaining operations by first writing a test for each route of the API.
 
-Let's start with the operation for adding a new note.
-Let's write a test that adds a new note and verifies that the number of notes returned by the API increases and that the newly added note is in the list.
+Let's start with the operation for adding a new task.
+Let's write a test that adds a new task and verifies that the number of tasks returned by the API increases and that the newly added task is in the list.
 
 ```js
-test('a valid note can be added', async () => {
-  const newNote = {
+test('a valid task can be added', async () => {
+  const newTask = {
     content: 'async/await simplifies making async calls',
     important: true,
   }
 
   await api
-    .post('/api/notes')
-    .send(newNote)
+    .post('/api/tasks')
+    .send(newTask)
     .expect(201)
     .expect('Content-Type', /application\/json/)
 
-  const response = await api.get('/api/notes')
+  const response = await api.get('/api/tasks')
 
   const contents = response.body.map(r => r.content)
 
-  expect(response.body).toHaveLength(initialNotes.length + 1)
+  expect(response.body).toHaveLength(initialTasks.length + 1)
   expect(contents).toContain(
     'async/await simplifies making async calls'
   )
 })
 ```
 
-Our test fails since we are by accident returning the status code ***200 OK*** when a new note is created.
+Our test fails since we are by accident returning the status code ***200 OK*** when a new task is created.
 Let us change that to ***201 CREATED***:
 
 ```js
-notesRouter.post('/', (request, response, next) => {
+tasksRouter.post('/', (request, response, next) => {
   const body = request.body
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important || false,
     date: new Date(),
   })
 
-  note.save()
-    .then(savedNote => {
-      response.status(201).json(savedNote) // highlight-line
+  task.save()
+    .then(savedTask => {
+      response.status(201).json(savedTask) // highlight-line
     })
     .catch(error => next(error))
 })
 ```
 
-Let's also write a test that verifies that a note without content will not be saved into the database.
+Let's also write a test that verifies that a task without content will not be saved into the database.
 
 ```js
-test('note without content is not added', async () => {
-  const newNote = {
+test('task without content is not added', async () => {
+  const newTask = {
     important: true
   }
 
   await api
-    .post('/api/notes')
-    .send(newNote)
+    .post('/api/tasks')
+    .send(newTask)
     .expect(400)
 
-  const response = await api.get('/api/notes')
+  const response = await api.get('/api/tasks')
 
-  expect(response.body).toHaveLength(initialNotes.length)
+  expect(response.body).toHaveLength(initialTasks.length)
 })
 ```
 
-Both tests check the state stored in the database after the saving operation, by fetching all the notes of the application.
+Both tests check the state stored in the database after the saving operation, by fetching all the tasks of the application.
 
 ```js
-const response = await api.get('/api/notes')
+const response = await api.get('/api/tasks')
 ```
 
 The same verification steps will repeat in other tests later on, and it is a good idea to extract these steps into helper functions.
 Let's add the function into a new file called *tests/test_helper.js* which is in the same directory as the test file.
 
 ```js
-const Note = require('../models/note')
+const Task = require('../models/task')
 
-const initialNotes = [
+const initialTasks = [
   {
     content: 'HTML is easy',
     date: new Date(),
@@ -645,27 +645,27 @@ const initialNotes = [
 ]
 
 const nonExistingId = async () => {
-  const note = new Note({ content: 'willremovethissoon', date: new Date() })
-  await note.save()
-  await note.remove()
+  const task = new Task({ content: 'willremovethissoon', date: new Date() })
+  await task.save()
+  await task.remove()
 
-  return note._id.toString()
+  return task._id.toString()
 }
 
-const notesInDb = async () => {
-  const notes = await Note.find({})
-  return notes.map(note => note.toJSON())
+const tasksInDb = async () => {
+  const tasks = await Task.find({})
+  return tasks.map(task => task.toJSON())
 }
 
 module.exports = {
-  initialNotes, nonExistingId, notesInDb
+  initialTasks, nonExistingId, tasksInDb
 }
 ```
 
-The module defines the `notesInDb` function that can be used for checking the notes stored in the database.
-The `initialNotes` array containing the initial database state is also in the module.
+The module defines the `tasksInDb` function that can be used for checking the tasks stored in the database.
+The `initialTasks` array containing the initial database state is also in the module.
 We also define the `nonExistingId` function ahead of time,
-which can be used for creating a database object ID that does not belong to any note object in the database.
+which can be used for creating a database object ID that does not belong to any task object in the database.
 
 Our tests can now use the helper module and be changed like this:
 
@@ -676,33 +676,33 @@ const helper = require('./test_helper') // highlight-line
 const app = require('../app')
 const api = supertest(app)
 
-const Note = require('../models/note')
+const Task = require('../models/task')
 
 beforeEach(async () => {
-  await Note.deleteMany({})
+  await Task.deleteMany({})
 
-  let noteObject = new Note(helper.initialNotes[0]) // highlight-line
-  await noteObject.save()
+  let taskObject = new Task(helper.initialTasks[0]) // highlight-line
+  await taskObject.save()
 
-  noteObject = new Note(helper.initialNotes[1]) // highlight-line
-  await noteObject.save()
+  taskObject = new Task(helper.initialTasks[1]) // highlight-line
+  await taskObject.save()
 })
 
-test('notes are returned as json', async () => {
+test('tasks are returned as json', async () => {
   await api
-    .get('/api/notes')
+    .get('/api/tasks')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
 
-test('all notes are returned', async () => {
-  const response = await api.get('/api/notes')
+test('all tasks are returned', async () => {
+  const response = await api.get('/api/tasks')
 
-  expect(response.body).toHaveLength(helper.initialNotes.length) // highlight-line
+  expect(response.body).toHaveLength(helper.initialTasks.length) // highlight-line
 })
 
-test('a specific note is within the returned notes', async () => {
-  const response = await api.get('/api/notes')
+test('a specific task is within the returned tasks', async () => {
+  const response = await api.get('/api/tasks')
 
   const contents = response.body.map(r => r.content)
 
@@ -711,40 +711,40 @@ test('a specific note is within the returned notes', async () => {
   )
 })
 
-test('a valid note can be added ', async () => {
-  const newNote = {
+test('a valid task can be added ', async () => {
+  const newTask = {
     content: 'async/await simplifies making async calls',
     important: true,
   }
 
   await api
-    .post('/api/notes')
-    .send(newNote)
+    .post('/api/tasks')
+    .send(newTask)
     .expect(201)
     .expect('Content-Type', /application\/json/)
 
-  const notesAtEnd = await helper.notesInDb() // highlight-line
-  expect(notesAtEnd).toHaveLength(helper.initialNotes.length + 1) // highlight-line
+  const tasksAtEnd = await helper.tasksInDb() // highlight-line
+  expect(tasksAtEnd).toHaveLength(helper.initialTasks.length + 1) // highlight-line
 
-  const contents = notesAtEnd.map(n => n.content) // highlight-line
+  const contents = tasksAtEnd.map(n => n.content) // highlight-line
   expect(contents).toContain(
     'async/await simplifies making async calls'
   )
 })
 
-test('note without content is not added', async () => {
-  const newNote = {
+test('task without content is not added', async () => {
+  const newTask = {
     important: true
   }
 
   await api
-    .post('/api/notes')
-    .send(newNote)
+    .post('/api/tasks')
+    .send(newTask)
     .expect(400)
 
-  const notesAtEnd = await helper.notesInDb() // highlight-line
+  const tasksAtEnd = await helper.tasksInDb() // highlight-line
 
-  expect(notesAtEnd).toHaveLength(helper.initialNotes.length) // highlight-line
+  expect(tasksAtEnd).toHaveLength(helper.initialTasks.length) // highlight-line
 })
 
 afterAll(() => {
@@ -755,20 +755,20 @@ afterAll(() => {
 The code using promises works and the tests pass.
 We are ready to refactor our code to use the async/await syntax.
 
-We make the following changes to the code that takes care of adding a new note(notice that the route handler definition is preceded by the `async` keyword):
+We make the following changes to the code that takes care of adding a new task(notice that the route handler definition is preceded by the `async` keyword):
 
 ```js
-notesRouter.post('/', async (request, response, next) => {
+tasksRouter.post('/', async (request, response, next) => {
   const body = request.body
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important || false,
     date: new Date(),
   })
 
-  const savedNote = await note.save()
-  response.status(201).json(savedNote)
+  const savedTask = await task.save()
+  response.status(201).json(savedTask)
 })
 ```
 
@@ -786,18 +786,18 @@ In other words, we end up with an unhandled promise rejection, and the request n
 With async/await the recommended way of dealing with exceptions is the old and familiar *try/catch* mechanism:
 
 ```js
-notesRouter.post('/', async (request, response, next) => {
+tasksRouter.post('/', async (request, response, next) => {
   const body = request.body
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important || false,
     date: new Date(),
   })
   // highlight-start
   try {
-    const savedNote = await note.save()
-    response.status(201).json(savedNote)
+    const savedTask = await task.save()
+    response.status(201).json(savedTask)
   } catch(exception) {
     next(exception)
   }
@@ -809,66 +809,66 @@ The catch block simply calls the `next` function, which passes the request handl
 
 After making the change, all of our tests will pass once again.
 
-Next, let's write tests for fetching and removing an individual note:
+Next, let's write tests for fetching and removing an individual task:
 
 ```js
-test('a specific note can be viewed', async () => {
-  const notesAtStart = await helper.notesInDb()
+test('a specific task can be viewed', async () => {
+  const tasksAtStart = await helper.tasksInDb()
 
-  const noteToView = notesAtStart[0]
+  const taskToView = tasksAtStart[0]
 
 // highlight-start
-  const resultNote = await api
-    .get(`/api/notes/${noteToView.id}`)
+  const resultTask = await api
+    .get(`/api/tasks/${taskToView.id}`)
     .expect(200)
     .expect('Content-Type', /application\/json/)
 // highlight-end
 
-  const processedNoteToView = JSON.parse(JSON.stringify(noteToView))
+  const processedTaskToView = JSON.parse(JSON.stringify(taskToView))
 
-  expect(resultNote.body).toEqual(processedNoteToView)
+  expect(resultTask.body).toEqual(processedTaskToView)
 })
 
-test('a note can be deleted', async () => {
-  const notesAtStart = await helper.notesInDb()
-  const noteToDelete = notesAtStart[0]
+test('a task can be deleted', async () => {
+  const tasksAtStart = await helper.tasksInDb()
+  const taskToDelete = tasksAtStart[0]
 
 // highlight-start
   await api
-    .delete(`/api/notes/${noteToDelete.id}`)
+    .delete(`/api/tasks/${taskToDelete.id}`)
     .expect(204)
 // highlight-end
 
-  const notesAtEnd = await helper.notesInDb()
+  const tasksAtEnd = await helper.tasksInDb()
 
-  expect(notesAtEnd).toHaveLength(
-    helper.initialNotes.length - 1
+  expect(tasksAtEnd).toHaveLength(
+    helper.initialTasks.length - 1
   )
 
-  const contents = notesAtEnd.map(r => r.content)
+  const contents = tasksAtEnd.map(r => r.content)
 
-  expect(contents).not.toContain(noteToDelete.content)
+  expect(contents).not.toContain(taskToDelete.content)
 })
 ```
 
 Both tests share a similar structure.
-In the initialization phase, they fetch a note from the database.
+In the initialization phase, they fetch a task from the database.
 After this, the tests call the actual operation being tested, which is highlighted in the code block.
 Lastly, the tests verify that the outcome of the operation is as expected.
 
-In the first test, the note object we receive as the response body goes through JSON serialization and parsing.
-This processing will turn the note object's `date` property value's type from `Date` object into a string.
-Because of this we can't directly compare the equality of the `resultNote.body` and `noteToView` that is read from the database.
-Instead, we must first perform similar JSON serialization and parsing for the `noteToView` as the server is performing for the note object.
+In the first test, the task object we receive as the response body goes through JSON serialization and parsing.
+This processing will turn the task object's `date` property value's type from `Date` object into a string.
+Because of this we can't directly compare the equality of the `resultTask.body` and `taskToView` that is read from the database.
+Instead, we must first perform similar JSON serialization and parsing for the `taskToView` as the server is performing for the task object.
 
 The tests pass and we can safely refactor the tested routes to use async/await:
 
 ```js
-notesRouter.get('/:id', async (request, response, next) => {
+tasksRouter.get('/:id', async (request, response, next) => {
   try {
-    const note = await Note.findById(request.params.id)
-    if (note) {
-      response.json(note)
+    const task = await Task.findById(request.params.id)
+    if (task) {
+      response.json(task)
     } else {
       response.status(404).end()
     }
@@ -877,9 +877,9 @@ notesRouter.get('/:id', async (request, response, next) => {
   }
 })
 
-notesRouter.delete('/:id', async (request, response, next) => {
+tasksRouter.delete('/:id', async (request, response, next) => {
   try {
-    await Note.findByIdAndRemove(request.params.id)
+    await Task.findByIdAndRemove(request.params.id)
     response.status(204).end()
   } catch(exception) {
     next(exception)
@@ -888,7 +888,7 @@ notesRouter.delete('/:id', async (request, response, next) => {
 ```
 
 You can find the code for our current application in its entirety in the *part4-4* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-4).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-4).
 
 ### Eliminating the try-catch
 
@@ -923,7 +923,7 @@ const express = require('express')
 require('express-async-errors') // highlight-line
 const app = express()
 const cors = require('cors')
-const notesRouter = require('./controllers/notes')
+const tasksRouter = require('./controllers/tasks')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -935,12 +935,12 @@ module.exports = app
 
 Muistiinpanon poistamisesta huolehtiva route -->
 The 'magic' of the library allows us to eliminate the try-catch blocks completely.
-For example the route for deleting a note
+For example the route for deleting a task
 
 ```js
-notesRouter.delete('/:id', async (request, response, next) => {
+tasksRouter.delete('/:id', async (request, response, next) => {
   try {
-    await Note.findByIdAndRemove(request.params.id)
+    await Task.findByIdAndRemove(request.params.id)
     response.status(204).end()
   } catch (exception) {
     next(exception)
@@ -951,8 +951,8 @@ notesRouter.delete('/:id', async (request, response, next) => {
 becomes
 
 ```js
-notesRouter.delete('/:id', async (request, response) => {
-  await Note.findByIdAndRemove(request.params.id)
+tasksRouter.delete('/:id', async (request, response) => {
+  await Task.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
 ```
@@ -964,23 +964,23 @@ If an exception occurs in an `async` route, the execution is automatically passe
 The other routes become:
 
 ```js
-notesRouter.post('/', async (request, response) => {
+tasksRouter.post('/', async (request, response) => {
   const body = request.body
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important || false,
     date: new Date(),
   })
 
-  const savedNote = await note.save()
-  response.status(201).json(savedNote)
+  const savedTask = await task.save()
+  response.status(201).json(savedTask)
 })
 
-notesRouter.get('/:id', async (request, response) => {
-  const note = await Note.findById(request.params.id)
-  if (note) {
-    response.json(note)
+tasksRouter.get('/:id', async (request, response) => {
+  const task = await Task.findById(request.params.id)
+  if (task) {
+    response.json(task)
   } else {
     response.status(404).end()
   }
@@ -993,39 +993,39 @@ Let's return to writing our tests and take a closer look at the `beforeEach` fun
 
 ```js
 beforeEach(async () => {
-  await Note.deleteMany({})
+  await Task.deleteMany({})
 
-  let noteObject = new Note(helper.initialNotes[0])
-  await noteObject.save()
+  let taskObject = new Task(helper.initialTasks[0])
+  await taskObject.save()
 
-  noteObject = new Note(helper.initialNotes[1])
-  await noteObject.save()
+  taskObject = new Task(helper.initialTasks[1])
+  await taskObject.save()
 })
 ```
 
-The function saves the first two notes from the `helper.initialNotes` array into the database with two separate operations.
+The function saves the first two tasks from the `helper.initialTasks` array into the database with two separate operations.
 The solution is alright, but there's a better way of saving multiple objects to the database:
 
 ```js
 beforeEach(async () => {
-  await Note.deleteMany({})
+  await Task.deleteMany({})
   console.log('cleared')
 
-  helper.initialNotes.forEach(async (note) => {
-    let noteObject = new Note(note)
-    await noteObject.save()
+  helper.initialTasks.forEach(async (task) => {
+    let taskObject = new Task(task)
+    await taskObject.save()
     console.log('saved')
   })
   console.log('done')
 })
 
-test('notes are returned as json', async () => {
+test('tasks are returned as json', async () => {
   console.log('entered test')
   // ...
 }
 ```
 
-We save the notes stored in the array into the database inside of a `forEach` loop.
+We save the tasks stored in the array into the database inside of a `forEach` loop.
 The tests don't quite seem to work however, so we have added some console logs to help us find the problem.
 
 The console displays the following output:
@@ -1052,25 +1052,25 @@ One way of fixing this is to wait for all of the asynchronous operations to fini
 
 ```js
 beforeEach(async () => {
-  await Note.deleteMany({})
+  await Task.deleteMany({})
 
-  const noteObjects = helper.initialNotes
-    .map(note => new Note(note))
-  const promiseArray = noteObjects.map(note => note.save())
+  const taskObjects = helper.initialTasks
+    .map(task => new Task(task))
+  const promiseArray = taskObjects.map(task => task.save())
   await Promise.all(promiseArray)
 })
 ```
 
 The solution is quite advanced despite its compact appearance.
-The `noteObjects` variable is assigned to an array of Mongoose objects that are created with the `Note` constructor for each of the notes in the `helper.initialNotes` array.
+The `taskObjects` variable is assigned to an array of Mongoose objects that are created with the `Task` constructor for each of the tasks in the `helper.initialTasks` array.
 The next line of code creates a new array that **consists of promises**,
-that are created by calling the `save` method of each item in the `noteObjects` array.
+that are created by calling the `save` method of each item in the `taskObjects` array.
 In other words, it is an array of promises for saving each of the items to the database.
 
 The [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all) method
 can be used for transforming an array of promises into a single promise,
 that will be ***fulfilled*** once every promise in the array passed to it as a parameter is resolved.
-The last line of code `await Promise.all(promiseArray)` waits until every promise for saving a note is finished, meaning that the database has been initialized.
+The last line of code `await Promise.all(promiseArray)` waits until every promise for saving a task is finished, meaning that the database has been initialized.
 
 > The returned values of each promise in the array can still be accessed when using the Promise.all method.
   If we wait for the promises to be resolved with the `await` syntax `const results = await Promise.all(promiseArray)`,
@@ -1085,11 +1085,11 @@ that guarantees a specific execution order.
 
 ```js
 beforeEach(async () => {
-  await Note.deleteMany({})
+  await Task.deleteMany({})
 
-  for (let note of helper.initialNotes) {
-    let noteObject = new Note(note)
-    await noteObject.save()
+  for (let task of helper.initialTasks) {
+    let taskObject = new Task(task)
+    await taskObject.save()
   }
 })
 ```
@@ -1099,7 +1099,7 @@ it is important to pay careful attention when using the async/await syntax.
 Even though the syntax makes it easier to deal with promises, it is still necessary to understand how promises work!
 
 The code for our application can be found on
-[GitHub](https://github.com/comp227/part3-notes-backend/tree/part4-5), branch *part4-5*.
+[GitHub](https://github.com/comp227/part3-tasks-backend/tree/part4-5), branch *part4-5*.
 
 </div>
 
@@ -1191,7 +1191,7 @@ Make the required changes to the code so that it passes the test.
 ### Refactoring tests
 
 Our test coverage is currently lacking.
-Some requests like ***GET /api/notes/:id*** and ***DELETE /api/notes/:id*** aren't tested when the request is sent with an invalid id.
+Some requests like ***GET /api/tasks/:id*** and ***DELETE /api/tasks/:id*** aren't tested when the request is sent with an invalid id.
 The grouping and organization of tests could also use some improvement, as all tests exist on the same "top level" in the test file.
 The readability of the test would improve if we group related tests with `describe` blocks.
 
@@ -1204,29 +1204,29 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 
-const Note = require('../models/note')
+const Task = require('../models/task')
 
 beforeEach(async () => {
-  await Note.deleteMany({})
-  await Note.insertMany(helper.initialNotes)
+  await Task.deleteMany({})
+  await Task.insertMany(helper.initialTasks)
 })
 
-describe('when there is initially some notes saved', () => {
-  test('notes are returned as json', async () => {
+describe('when there is initially some tasks saved', () => {
+  test('tasks are returned as json', async () => {
     await api
-      .get('/api/notes')
+      .get('/api/tasks')
       .expect(200)
       .expect('Content-Type', /application\/json/)
   })
 
-  test('all notes are returned', async () => {
-    const response = await api.get('/api/notes')
+  test('all tasks are returned', async () => {
+    const response = await api.get('/api/tasks')
 
-    expect(response.body).toHaveLength(helper.initialNotes.length)
+    expect(response.body).toHaveLength(helper.initialTasks.length)
   })
 
-  test('a specific note is within the returned notes', async () => {
-    const response = await api.get('/api/notes')
+  test('a specific task is within the returned tasks', async () => {
+    const response = await api.get('/api/tasks')
 
     const contents = response.body.map(r => r.content)
 
@@ -1236,29 +1236,29 @@ describe('when there is initially some notes saved', () => {
   })
 })
 
-describe('viewing a specific note', () => {
+describe('viewing a specific task', () => {
   test('succeeds with a valid id', async () => {
-    const notesAtStart = await helper.notesInDb()
+    const tasksAtStart = await helper.tasksInDb()
 
-    const noteToView = notesAtStart[0]
+    const taskToView = tasksAtStart[0]
 
-    const resultNote = await api
-      .get(`/api/notes/${noteToView.id}`)
+    const resultTask = await api
+      .get(`/api/tasks/${taskToView.id}`)
       .expect(200)
       .expect('Content-Type', /application\/json/)
       
-    const processedNoteToView = JSON.parse(JSON.stringify(noteToView))
+    const processedTaskToView = JSON.parse(JSON.stringify(taskToView))
 
-    expect(resultNote.body).toEqual(processedNoteToView)
+    expect(resultTask.body).toEqual(processedTaskToView)
   })
 
-  test('fails with statuscode 404 if note does not exist', async () => {
+  test('fails with statuscode 404 if task does not exist', async () => {
     const validNonexistingId = await helper.nonExistingId()
 
     console.log(validNonexistingId)
 
     await api
-      .get(`/api/notes/${validNonexistingId}`)
+      .get(`/api/tasks/${validNonexistingId}`)
       .expect(404)
   })
 
@@ -1266,67 +1266,67 @@ describe('viewing a specific note', () => {
     const invalidId = '5a3d5da59070081a82a3445'
 
     await api
-      .get(`/api/notes/${invalidId}`)
+      .get(`/api/tasks/${invalidId}`)
       .expect(400)
   })
 })
 
-describe('addition of a new note', () => {
+describe('addition of a new task', () => {
   test('succeeds with valid data', async () => {
-    const newNote = {
+    const newTask = {
       content: 'async/await simplifies making async calls',
       important: true,
     }
 
     await api
-      .post('/api/notes')
-      .send(newNote)
+      .post('/api/tasks')
+      .send(newTask)
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
-    const notesAtEnd = await helper.notesInDb()
-    expect(notesAtEnd).toHaveLength(helper.initialNotes.length + 1)
+    const tasksAtEnd = await helper.tasksInDb()
+    expect(tasksAtEnd).toHaveLength(helper.initialTasks.length + 1)
 
-    const contents = notesAtEnd.map(n => n.content)
+    const contents = tasksAtEnd.map(n => n.content)
     expect(contents).toContain(
       'async/await simplifies making async calls'
     )
   })
 
   test('fails with status code 400 if data invalid', async () => {
-    const newNote = {
+    const newTask = {
       important: true
     }
 
     await api
-      .post('/api/notes')
-      .send(newNote)
+      .post('/api/tasks')
+      .send(newTask)
       .expect(400)
 
-    const notesAtEnd = await helper.notesInDb()
+    const tasksAtEnd = await helper.tasksInDb()
 
-    expect(notesAtEnd).toHaveLength(helper.initialNotes.length)
+    expect(tasksAtEnd).toHaveLength(helper.initialTasks.length)
   })
 })
 
-describe('deletion of a note', () => {
+describe('deletion of a task', () => {
   test('succeeds with status code 204 if id is valid', async () => {
-    const notesAtStart = await helper.notesInDb()
-    const noteToDelete = notesAtStart[0]
+    const tasksAtStart = await helper.tasksInDb()
+    const taskToDelete = tasksAtStart[0]
 
     await api
-      .delete(`/api/notes/${noteToDelete.id}`)
+      .delete(`/api/tasks/${taskToDelete.id}`)
       .expect(204)
 
-    const notesAtEnd = await helper.notesInDb()
+    const tasksAtEnd = await helper.tasksInDb()
 
-    expect(notesAtEnd).toHaveLength(
-      helper.initialNotes.length - 1
+    expect(tasksAtEnd).toHaveLength(
+      helper.initialTasks.length - 1
     )
 
-    const contents = notesAtEnd.map(r => r.content)
+    const contents = tasksAtEnd.map(r => r.content)
 
-    expect(contents).not.toContain(noteToDelete.content)
+    expect(contents).not.toContain(taskToDelete.content)
   })
 })
 
@@ -1346,7 +1346,7 @@ is by no means the only nor the best way of conducting API-level integration tes
 There is no universal best way of writing tests, as it all depends on the application being tested and available resources.
 
 You can find the code for our current application in its entirety in the *part4-6* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-6).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-6).
 
 </div>
 
@@ -1370,7 +1370,7 @@ Implement functionality for updating the information of an individual blog post.
 Use `async`/`await`.
 
 The application mostly needs to update the number of ***likes*** for a blog post.
-You can implement this functionality the same way that we implemented updating notes in [part 3](/part3/saving_data_to_mongo_db#other-operations).
+You can implement this functionality the same way that we implemented updating tasks in [part 3](/part3/saving_data_to_mongo_db#other-operations).
 
 Implement tests for the functionality.
 

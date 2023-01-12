@@ -237,24 +237,24 @@ Unlike the "normal" props we've seen before, ***children*** is automatically add
 If a component is defined with an automatically closing `/>` tag, like this:
 
 ```js
-<Note
-  key={note.id}
-  note={note}
-  toggleImportance={() => toggleImportanceOf(note.id)}
+<Task
+  key={task.id}
+  task={task}
+  toggleImportance={() => toggleImportanceOf(task.id)}
 />
 ```
 
 Then `props.children` is an empty array.
 
-The `Togglable` component is reusable and we can use it to add similar visibility toggling functionality to the form that is used for creating new notes.
+The `Togglable` component is reusable and we can use it to add similar visibility toggling functionality to the form that is used for creating new tasks.
 
-Before we do that, let's extract the form for creating notes into a component:
+Before we do that, let's extract the form for creating tasks into a component:
 
 ```js
-const NoteForm = ({ onSubmit, handleChange, value}) => {
+const TaskForm = ({ onSubmit, handleChange, value}) => {
   return (
     <div>
-      <h2>Create a new note</h2>
+      <h2>Create a new task</h2>
 
       <form onSubmit={onSubmit}>
         <input
@@ -271,17 +271,17 @@ const NoteForm = ({ onSubmit, handleChange, value}) => {
 Next, let's define the form component inside of a `Togglable` component:
 
 ```js
-<Togglable buttonLabel="new note">
-  <NoteForm
-    onSubmit={addNote}
-    value={newNote}
-    handleChange={handleNoteChange}
+<Togglable buttonLabel="new task">
+  <TaskForm
+    onSubmit={addTask}
+    value={newTask}
+    handleChange={handleTaskChange}
   />
 </Togglable>
 ```
 
 You can find the code for our current application in its entirety in the *part5-4* branch of
-[this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-4).
+[this GitHub repository](https://github.com/comp227/part2-tasks/tree/part5-4).
 
 ### State of the forms
 
@@ -292,38 +292,38 @@ React documentation says the [following](https://reactjs.org/docs/lifting-state-
 > *Often, several components need to reflect the same changing data.
   We recommend lifting the shared state up to their closest common ancestor.*
 
-If we think about the state of the forms, so for example the contents of a new note before it has been created, the `App` component does not need it for anything.
+If we think about the state of the forms, so for example the contents of a new task before it has been created, the `App` component does not need it for anything.
 We could just as well move the state of the forms to the corresponding components.
 
-The component for a note changes like so:
+The component for a task changes like so:
 
 ```js
 import { useState } from 'react' 
 
-const NoteForm = ({ createNote }) => {
-  const [newNote, setNewNote] = useState('') 
+const TaskForm = ({ createTask }) => {
+  const [newTask, setNewTask] = useState('') 
 
   const handleChange = (event) => {
-    setNewNote(event.target.value)
+    setNewTask(event.target.value)
   }
 
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
-    createNote({
-      content: newNote,
+    createTask({
+      content: newTask,
       important: Math.random() > 0.5,
     })
 
-    setNewNote('')
+    setNewTask('')
   }
 
   return (
     <div>
-      <h2>Create a new note</h2>
+      <h2>Create a new task</h2>
 
-      <form onSubmit={addNote}>
+      <form onSubmit={addTask}>
         <input
-          value={newNote}
+          value={newTask}
           onChange={handleChange}
         />
         <button type="submit">save</button>
@@ -332,30 +332,30 @@ const NoteForm = ({ createNote }) => {
   )
 }
 
-export default NoteForm
+export default TaskForm
 ```
 
-The `newNote` state attribute and the event handler responsible for changing it have been moved from the `App` component to the component responsible for the note form.
+The `newTask` state attribute and the event handler responsible for changing it have been moved from the `App` component to the component responsible for the task form.
 
-There is only one prop left, the `createNote` function, which the form calls when a new note is created.
+There is only one prop left, the `createTask` function, which the form calls when a new task is created.
 
-The `App` component becomes simpler now that we have got rid of the `newNote` state and its event handler.
-The `addNote` function for creating new notes receives a new note as a parameter, and the function is the only prop we send to the form:
+The `App` component becomes simpler now that we have got rid of the `newTask` state and its event handler.
+The `addTask` function for creating new tasks receives a new task as a parameter, and the function is the only prop we send to the form:
 
 ```js
 const App = () => {
   // ...
-  const addNote = (noteObject) => {
-    noteService
-      .create(noteObject)
-      .then(returnedNote => {
-        setNotes(notes.concat(returnedNote))
+  const addTask = (taskObject) => {
+    taskService
+      .create(taskObject)
+      .then(returnedTask => {
+        setTasks(tasks.concat(returnedTask))
       })
   }
   // ...
-  const noteForm = () => (
-    <Togglable buttonLabel='new note'>
-      <NoteForm createNote={addNote} />
+  const taskForm = () => (
+    <Togglable buttonLabel='new task'>
+      <TaskForm createTask={addTask} />
     </Togglable>
   )
 
@@ -365,14 +365,14 @@ const App = () => {
 
 We could do the same for the log in form, but we'll leave that for an optional exercise.
 
-The application code can be found on [GitHub](https://github.com/comp227/part2-notes/tree/part5-5),
+The application code can be found on [GitHub](https://github.com/comp227/part2-tasks/tree/part5-5),
 branch *part5-5*.
 
 ### References to components with ref
 
 Our current implementation is quite good; it has one aspect that could be improved.
 
-After a new note is created, it would make sense to hide the new note form.
+After a new task is created, it would make sense to hide the new task form.
 Currently, the form stays visible.
 There is a slight problem with hiding the form.
 The visibility is controlled with the `visible` variable inside of the `Togglable` component.
@@ -388,11 +388,11 @@ import { useState, useEffect, useRef } from 'react' // highlight-line
 
 const App = () => {
   // ...
-  const noteFormRef = useRef() // highlight-line
+  const taskFormRef = useRef() // highlight-line
 
-  const noteForm = () => (
-    <Togglable buttonLabel='new note' ref={noteFormRef}>  // highlight-line
-      <NoteForm createNote={addNote} />
+  const taskForm = () => (
+    <Togglable buttonLabel='new task' ref={taskFormRef}>  // highlight-line
+      <TaskForm createTask={addTask} />
     </Togglable>
   )
 
@@ -400,9 +400,9 @@ const App = () => {
 }
 ```
 
-The [useRef](https://reactjs.org/docs/hooks-reference.html#useref) hook is used to create a `noteFormRef` ref,
-that is assigned to the `Togglable` component containing the creation note form.
-The `noteFormRef` variable acts as a reference to the component.
+The [useRef](https://reactjs.org/docs/hooks-reference.html#useref) hook is used to create a `taskFormRef` ref,
+that is assigned to the `Togglable` component containing the creation task form.
+The `taskFormRef` variable acts as a reference to the component.
 This hook ensures the same reference (ref) that is kept throughout re-renders of the component.
 
 We also make the following changes to the `Togglable` component:
@@ -450,17 +450,17 @@ This way the component can access the ref that is assigned to it.
 The component uses the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) hook
 to make its `toggleVisibility` function available outside of the component.
 
-We can now hide the form by calling `noteFormRef.current.toggleVisibility()` after a new note has been created:
+We can now hide the form by calling `taskFormRef.current.toggleVisibility()` after a new task has been created:
 
 ```js
 const App = () => {
   // ...
-  const addNote = (noteObject) => {
-    noteFormRef.current.toggleVisibility() // highlight-line
-    noteService
-      .create(noteObject)
-      .then(returnedNote => {     
-        setNotes(notes.concat(returnedNote))
+  const addTask = (taskObject) => {
+    taskFormRef.current.toggleVisibility() // highlight-line
+    taskService
+      .create(taskObject)
+      .then(returnedTask => {     
+        setTasks(tasks.concat(returnedTask))
       })
   }
   // ...
@@ -478,7 +478,7 @@ So far this is the only situation where using React hooks leads to code that is 
 There are also [other use cases](https://reactjs.org/docs/refs-and-the-dom.html) for refs than accessing React components.
 
 You can find the code for our current application in its entirety in the *part5-6* branch of
-[this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-6).
+[this GitHub repository](https://github.com/comp227/part2-tasks/tree/part5-6).
 
 ### One point about components
 
@@ -528,7 +528,7 @@ If you wish to do so, you can use the `Togglable` component defined in part 5.
 
 By default the form is not visible
 
-![browser showing new note button with no form](../../images/5/13ae.png)
+![browser showing new task button with no form](../../images/5/13ae.png)
 
 It expands when button ***create new blog*** is clicked
 
@@ -541,7 +541,7 @@ The form closes when a new blog is created.
 Separate the form for creating a new blog into its own component (if you have not already done so),
 and move all the states required for creating a new blog to this component.
 
-The component must work like the `NoteForm` component from the [material](/part5/props_children_and_proptypes) of this part.
+The component must work like the `TaskForm` component from the [material](/part5/props_children_and_proptypes) of this part.
 
 #### 5.7* Blog list frontend, step7
 
@@ -850,7 +850,7 @@ export default Togglable
 ```
 
 You can find the code for our current application in its entirety in the *part5-7* branch of
-[this GitHub repository](https://github.com/comp227/part2-notes/tree/part5-7).
+[this GitHub repository](https://github.com/comp227/part2-tasks/tree/part5-7).
 
 Notice that create-react-app has also a [default ESLint-configuration](https://www.npmjs.com/package/eslint-config-react-app),
 that we have now overridden.

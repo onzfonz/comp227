@@ -22,7 +22,7 @@ The situation with JavaScript running in the backend is different.
 The newest version of Node supports a large majority of the latest features of JavaScript,
 so we can use the latest features without having to transpile our code.
 
-Our goal is to implement a backend that will work with the notes application from [part 2](/part2/).
+Our goal is to implement a backend that will work with the tasks application from [part 2](/part2/).
 However, let's start with the basics by implementing a classic "hello world" application.
 
 **Notice** that the applications and exercises in this part are not all React applications,
@@ -203,13 +203,13 @@ console.log(`Server running on port ${PORT}`)
 ```
 
 The primary purpose of the backend server in this course is to offer raw data in JSON format to the frontend.
-For this reason, let's immediately change our server to return a hardcoded list of notes in the JSON format:
+For this reason, let's immediately change our server to return a hardcoded list of tasks in the JSON format:
 
 ```js
 const http = require('http')
 
 // highlight-start
-let notes = [
+let tasks = [
   {
     id: 1,
     content: "HTML is easy",
@@ -232,7 +232,7 @@ let notes = [
 
 const app = http.createServer((request, response) => {
   response.writeHead(200, { 'Content-Type': 'application/json' })
-  response.end(JSON.stringify(notes))
+  response.end(JSON.stringify(tasks))
 })
 // highlight-end
 
@@ -244,12 +244,12 @@ console.log(`Server running on port ${PORT}`)
 Let's restart the server (you can shut the server down by pressing *Ctrl+C* in the console) and let's refresh the browser.
 
 The `application/json` value in the `Content-Type` header informs the receiver that the data is in the JSON format.
-The `notes` array gets transformed into JSON with the `JSON.stringify(notes)` method.
+The `tasks` array gets transformed into JSON with the `JSON.stringify(tasks)` method.
 
 When we open the browser, the displayed format is exactly the same as in [part 2](/part2/getting_data_from_server/)
-where we used [json-server](https://github.com/typicode/json-server) to serve the list of notes:
+where we used [json-server](https://github.com/typicode/json-server) to serve the list of tasks:
 
-![formatted JSON notes data](../../images/3/2e.png)
+![formatted JSON tasks data](../../images/3/2e.png)
 
 ### Express
 
@@ -329,7 +329,7 @@ Let's get back to our application and make the following changes:
 const express = require('express')
 const app = express()
 
-let notes = [
+let tasks = [
   ...
 ]
 
@@ -337,8 +337,8 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
-app.get('/api/notes', (request, response) => {
-  response.json(notes)
+app.get('/api/tasks', (request, response) => {
+  response.json(tasks)
 })
 
 const PORT = 3001
@@ -380,31 +380,31 @@ We can verify this from the ***Network*** tab in developer tools:
 
 ![network tab in dev tools](../../images/3/5.png)
 
-The second route defines an event handler that handles HTTP GET requests made to the *notes* path of the application:
+The second route defines an event handler that handles HTTP GET requests made to the *tasks* path of the application:
 
 ```js
-app.get('/api/notes', (request, response) => {
-  response.json(notes)
+app.get('/api/tasks', (request, response) => {
+  response.json(tasks)
 })
 ```
 
 The request is responded to with the [json](http://expressjs.com/en/4x/api.html#res.json) method of the `response` object.
-Calling the method will send the **notes** array that was passed to it as a JSON formatted string.
+Calling the method will send the **tasks** array that was passed to it as a JSON formatted string.
 Express automatically sets the `Content-Type` header with the appropriate value of `application/json`.
 
-![api/notes gives the formatted JSON data again](../../images/3/6ea.png)
+![api/tasks gives the formatted JSON data again](../../images/3/6ea.png)
 
 Next, let's take a quick look at the data sent in JSON format.
 
 In the earlier version where we were only using Node, we had to transform the data into the JSON format with the `JSON.stringify` method:
 
 ```js
-response.end(JSON.stringify(notes))
+response.end(JSON.stringify(tasks))
 ```
 
 With express, this is no longer required, because this transformation happens automatically.
 
-It's worth noting that [JSON](https://en.wikipedia.org/wiki/JSON) is a string and not a JavaScript object like the value assigned to `notes`.
+It's worth noting that [JSON](https://en.wikipedia.org/wiki/JSON) is a string and not a JavaScript object like the value assigned to `tasks`.
 
 The experiment shown below illustrates this point:
 
@@ -504,29 +504,29 @@ by only concerning ourselves with how RESTful APIs are typically understood in w
 The original definition of REST is not even limited to web applications.
 
 We mentioned in the [previous part](/part2/altering_data_in_server#rest) that singular things,
-like notes in the case of our application, are called **resources** in RESTful thinking.
+like tasks in the case of our application, are called **resources** in RESTful thinking.
 Every resource has an associated URL which is the resource's unique address.
 
 One convention for creating unique addresses is to combine the name of the resource type with the resource's unique identifier.
 
 Let's assume that the root URL of our service is ***www.example.com/api***.
 
-If we define the resource type of note to be ***notes***,
-then the address of a note resource with the identifier 10, has the unique address ***www.example.com/api/notes/10***.
+If we define the resource type of task to be ***tasks***,
+then the address of a task resource with the identifier 10, has the unique address ***www.example.com/api/tasks/10***.
 
-The URL for the entire collection of all note resources is ***www.example.com/api/notes***.
+The URL for the entire collection of all task resources is ***www.example.com/api/tasks***.
 
 We can execute different operations on resources.
 The operation to be executed is defined by the HTTP *verb*:
 
 | URL                   | verb                | functionality                                                    |
 | --------------------- | ------------------- | -----------------------------------------------------------------|
-| notes/10              | GET                 | fetches a single resource                                        |
-| notes                 | GET                 | fetches all resources in the collection                          |
-| notes                 | POST                | creates a new resource based on the request data                 |
-| notes/10              | DELETE              | removes the identified resource                                  |
-| notes/10              | PUT                 | replaces the entire identified resource with the request data    |
-| notes/10              | PATCH               | replaces a part of the identified resource with the request data |
+| tasks/10              | GET                 | fetches a single resource                                        |
+| tasks                 | GET                 | fetches all resources in the collection                          |
+| tasks                 | POST                | creates a new resource based on the request data                 |
+| tasks/10              | DELETE              | removes the identified resource                                  |
+| tasks/10              | PUT                 | replaces the entire identified resource with the request data    |
+| tasks/10              | PATCH               | replaces a part of the identified resource with the request data |
 |                       |                     |                                                                  |
 
 This is how we manage to roughly define what REST refers to as a [uniform interface](https://en.wikipedia.org/wiki/Representational_state_transfer#Architectural_constraints),
@@ -546,22 +546,22 @@ We will avoid getting stuck arguing semantics and instead return to working on o
 
 ### Fetching a single resource
 
-Let's expand our application so that it offers a REST interface for operating on individual notes.
+Let's expand our application so that it offers a REST interface for operating on individual tasks.
 First, let's create a [route](http://expressjs.com/en/guide/routing.html) for fetching a single resource.
 
-The unique address we will use for an individual note is of the form ***notes/10***, where the number at the end refers to the note's unique id number.
+The unique address we will use for an individual task is of the form ***tasks/10***, where the number at the end refers to the task's unique id number.
 
 We can define [parameters](http://expressjs.com/en/guide/routing.html#route-parameters) for routes in express by using the colon syntax:
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/tasks/:id', (request, response) => {
   const id = request.params.id
-  const note = notes.find(note => note.id === id)
-  response.json(note)
+  const task = tasks.find(task => task.id === id)
+  response.json(task)
 })
 ```
 
-Now `app.get('/api/notes/:id', ...)` will handle all HTTP GET requests that are of the form ***/api/notes/SOMETHING***, where ***SOMETHING*** is an arbitrary string.
+Now `app.get('/api/tasks/:id', ...)` will handle all HTTP GET requests that are of the form ***/api/tasks/SOMETHING***, where ***SOMETHING*** is an arbitrary string.
 
 The `id` parameter in the route of a request can be accessed through the [request](http://expressjs.com/en/api.html#req) object:
 
@@ -569,44 +569,44 @@ The `id` parameter in the route of a request can be accessed through the [reques
 const id = request.params.id
 ```
 
-The now familiar `find` method of arrays is used to find the note with an id that matches the parameter.
-The note is then returned to the sender of the request.
+The now familiar `find` method of arrays is used to find the task with an id that matches the parameter.
+The task is then returned to the sender of the request.
 
-When we test our application by going to <http://localhost:3001/api/notes/1> in our browser,
+When we test our application by going to <http://localhost:3001/api/tasks/1> in our browser,
 we notice that it does not appear to work, as the browser displays an empty page.
 This comes as no surprise to us as software developers, and it's time to debug.
 
 Adding `console.log` commands into our code is a time-proven trick:
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/tasks/:id', (request, response) => {
   const id = request.params.id
   console.log(id)
-  const note = notes.find(note => note.id === id)
-  console.log(note)
-  response.json(note)
+  const task = tasks.find(task => task.id === id)
+  console.log(task)
+  response.json(task)
 })
 ```
 
-When we visit <http://localhost:3001/api/notes/1> again in the browser,
+When we visit <http://localhost:3001/api/tasks/1> again in the browser,
 the console - which is the terminal (in this case) - will display the following:
 
 ![terminal displaying 1 then undefined](../../images/3/8.png)
 
-The id parameter from the route is passed to our application but the `find` method does not find a matching note.
+The id parameter from the route is passed to our application but the `find` method does not find a matching task.
 
 To further our investigation, we also add a console log inside the comparison function passed to the `find` method.
-To do this, we have to get rid of the compact arrow function syntax `note => note.id === id`, and use the syntax with an explicit return statement:
+To do this, we have to get rid of the compact arrow function syntax `task => task.id === id`, and use the syntax with an explicit return statement:
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/tasks/:id', (request, response) => {
   const id = request.params.id
-  const note = notes.find(note => {
-    console.log(note.id, typeof note.id, id, typeof id, note.id === id)
-    return note.id === id
+  const task = tasks.find(task => {
+    console.log(task.id, typeof task.id, id, typeof id, task.id === id)
+    return task.id === id
   })
-  console.log(note)
-  response.json(note)
+  console.log(task)
+  response.json(task)
 })
 ```
 
@@ -620,46 +620,46 @@ The console output is the following:
 ```
 
 The cause of the bug becomes clear.
-The `id` variable contains a string '1', whereas the ids of notes are integers.
+The `id` variable contains a string '1', whereas the ids of tasks are integers.
 In JavaScript, the "triple equals" comparison === considers all values of different types to not be equal by default, meaning that 1 is not '1'.
 
 Let's fix the issue by changing the id parameter from a string into a [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number):
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/tasks/:id', (request, response) => {
   const id = Number(request.params.id) // highlight-line
-  const note = notes.find(note => note.id === id)
-  response.json(note)
+  const task = tasks.find(task => task.id === id)
+  response.json(task)
 })
 ```
 
 Now fetching an individual resource works.
 
-![api/notes/1 gives a single note as JSON](../../images/3/9ea.png)
+![api/tasks/1 gives a single task as JSON](../../images/3/9ea.png)
 
 However, there's another problem with our application.
 
-If we search for a note with an id that does not exist, the server responds with:
+If we search for a task with an id that does not exist, the server responds with:
 
 ![network tools showing 200 and content-length 0](../../images/3/10ea.png)
 
 The HTTP status code that is returned is 200, which means that the response succeeded.
 There is no data sent back with the response, since the value of the `content-length` header is 0, and the same can be verified from the browser.
 
-The reason for this behavior is that the `note` variable is set to `undefined` if no matching note is found.
+The reason for this behavior is that the `task` variable is set to `undefined` if no matching task is found.
 The situation needs to be handled on the server in a better way.
-If no note is found, the server should respond with the status code [404 not found](https://www.rfc-editor.org/rfc/rfc9110.html#name-404-not-found) instead of 200.
+If no task is found, the server should respond with the status code [404 not found](https://www.rfc-editor.org/rfc/rfc9110.html#name-404-not-found) instead of 200.
 
 Let's make the following change to our code:
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
+app.get('/api/tasks/:id', (request, response) => {
   const id = Number(request.params.id)
-  const note = notes.find(note => note.id === id)
+  const task = tasks.find(task => task.id === id)
   
   // highlight-start
-  if (note) {
-    response.json(note)
+  if (task) {
+    response.json(task)
   } else {
     response.status(404).end()
   }
@@ -675,7 +675,7 @@ The if-condition leverages the fact that all JavaScript objects are [truthy](htt
 meaning that they evaluate to true in a comparison operation.
 However, `undefined` is [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) meaning that it will evaluate to false.
 
-Our application works and sends the error status code if no note is found.
+Our application works and sends the error status code if no task is found.
 However, the application doesn't return anything to show to the user, like web applications normally do when we visit a page that does not exist.
 We do not need to display anything in the browser because REST APIs are interfaces that are intended for programmatic use, and the error status code is all that is needed.
   
@@ -688,15 +688,15 @@ Next, let's implement a route for deleting resources.
 Deletion happens by making an HTTP DELETE request to the URL of the resource:
 
 ```js
-app.delete('/api/notes/:id', (request, response) => {
+app.delete('/api/tasks/:id', (request, response) => {
   const id = Number(request.params.id)
-  notes = notes.filter(note => note.id !== id)
+  tasks = tasks.filter(task => task.id !== id)
 
   response.status(204).end()
 })
 ```
 
-If deleting the resource is successful, meaning that the note exists and is removed,
+If deleting the resource is successful, meaning that the task exists and is removed,
 we respond to the request with the status code [204 no content](https://www.rfc-editor.org/rfc/rfc9110.html#name-204-no-content) and return no data with the response.
 
 There's no consensus on what status code should be returned to a DELETE request if the resource does not exist.
@@ -715,15 +715,15 @@ However, instead of curl, we will take a look at using [Postman](https://www.pos
 
 Let's install the Postman desktop client [from here](https://www.postman.com/downloads/)  and try it out:
 
-![postman screenshot on api/notes/2](../../images/3/11x.png)
+![postman screenshot on api/tasks/2](../../images/3/11x.png)
 
 Using Postman is quite easy in this situation.
 It's enough to define the URL and then select the correct request type (DELETE).
 
 The backend server appears to respond correctly.
-By making an HTTP GET request to <http://localhost:3001/api/notes> we see that the note with the id 2 is no longer in the list, which indicates that the deletion was successful.
+By making an HTTP GET request to <http://localhost:3001/api/tasks> we see that the task with the id 2 is no longer in the list, which indicates that the deletion was successful.
 
-Because the notes in the application are only saved to memory, the list of notes will return to its original state when we restart the application.
+Because the tasks in the application are only saved to memory, the list of tasks will return to its original state when we restart the application.
 
 ### The Visual Studio Code REST client
 
@@ -735,9 +735,9 @@ Once the plugin is installed, using it is very simple.
 We make a directory at the root of the application named ***requests***.
 We save all the REST client requests in the directory as files that end with the *.rest* extension.
 
-Let's create a new *all_notes.rest* file and define the request that fetches all notes.
+Let's create a new *all_tasks.rest* file and define the request that fetches all tasks.
 
-![get all notes rest file with get request on notes](../../images/3/12ea.png)
+![get all tasks rest file with get request on tasks](../../images/3/12ea.png)
 
 By clicking the ***Send Request*** text, the REST client will execute the HTTP request and the response from the server is opened in the editor.
 
@@ -751,9 +751,9 @@ You can learn more about it by following [this guide](https://www.jetbrains.com/
 
 ### Receiving data
 
-Next, let's make it possible to add new notes to the server.
-Adding a note happens by making an HTTP POST request to the address <http://localhost:3001/api/notes>,
-and by sending all the information for the new note in the request [body](https://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7) in JSON format.
+Next, let's make it possible to add new tasks to the server.
+Adding a task happens by making an HTTP POST request to the address <http://localhost:3001/api/tasks>,
+and by sending all the information for the new task in the request [body](https://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7) in JSON format.
 
 To access the data easily, we need the help of the express [json-parser](https://expressjs.com/en/api.html) that is taken to use with command `app.use(express.json())`.
 
@@ -768,11 +768,11 @@ app.use(express.json())  // highlight-line
 //...
 
 // highlight-start
-app.post('/api/notes', (request, response) => {
-  const note = request.body
-  console.log(note)
+app.post('/api/tasks', (request, response) => {
+  const task = request.body
+  console.log(task)
 
-  response.json(note)
+  response.json(task)
 })
 // highlight-end
 ```
@@ -788,7 +788,7 @@ For the time being, the application does not do anything with the received data 
 Before we implement the rest of the application logic, let's verify with Postman that the data is in fact received by the server.
 In addition to defining the URL and request type in Postman, we also have to define the data sent in the `body`:
 
-![postman post on api/notes with post content](../../images/3/14x.png)
+![postman post on api/tasks with post content](../../images/3/14x.png)
 
 The application prints the data that we sent in the request to the console:
 
@@ -825,7 +825,7 @@ The POST request can be sent with the REST client like this:
 
 ![sample post request in vscode with JSON data](../../images/3/20eb.png)
 
-We created a new *create_note.rest* file for the request.
+We created a new *create_task.rest* file for the request.
 The request is formatted according to the [instructions in the documentation](https://github.com/Huachao/vscode-restclient/blob/master/README.md#usage).
 
 One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository,
@@ -833,10 +833,10 @@ and they can be distributed to everyone in the development team.
 You can also add multiple requests in the same file using `###` separators:
 
 ```text
-GET http://localhost:3001/api/notes/
+GET http://localhost:3001/api/tasks/
 
 ###
-POST http://localhost:3001/api/notes/ HTTP/1.1
+POST http://localhost:3001/api/tasks/ HTTP/1.1
 content-type: application/json
 
 {
@@ -847,7 +847,7 @@ content-type: application/json
 
 Postman also allows users to save requests, but the situation can get quite chaotic especially when you're working on multiple unrelated projects.
 
-> **Important sidenote**
+> **Important sidetask**
 >
 > Sometimes when you're debugging, you may want to find out what headers have been set in the HTTP request.
 > One way of accomplishing this is through the [get](http://expressjs.com/en/4x/api.html#req.get) method of the `request` object,
@@ -865,23 +865,23 @@ Let's return to the application.
 Once we know that the application receives data correctly, it's time to finalize the handling of the request:
 
 ```js
-app.post('/api/notes', (request, response) => {
-  const maxId = notes.length > 0
-    ? Math.max(...notes.map(n => n.id)) 
+app.post('/api/tasks', (request, response) => {
+  const maxId = tasks.length > 0
+    ? Math.max(...tasks.map(n => n.id)) 
     : 0
 
-  const note = request.body
-  note.id = maxId + 1
+  const task = request.body
+  task.id = maxId + 1
 
-  notes = notes.concat(note)
+  tasks = tasks.concat(task)
 
-  response.json(note)
+  response.json(task)
 })
 ```
 
-We need a unique id for the note.
+We need a unique id for the task.
 First, we find out the largest id number in the current list and assign it to the `maxId` variable.
-The id of the new note is then defined as `maxId + 1`.
+The id of the new task is then defined as `maxId + 1`.
 This method is not recommended, but we will live with it for now as we will replace it soon enough.
 
 The current version still has the problem that the HTTP POST request can be used to add objects with arbitrary properties.
@@ -891,13 +891,13 @@ All other properties are discarded:
 
 ```js
 const generateId = () => {
-  const maxId = notes.length > 0
-    ? Math.max(...notes.map(n => n.id))
+  const maxId = tasks.length > 0
+    ? Math.max(...tasks.map(n => n.id))
     : 0
   return maxId + 1
 }
 
-app.post('/api/notes', (request, response) => {
+app.post('/api/tasks', (request, response) => {
   const body = request.body
 
   if (!body.content) {
@@ -906,20 +906,20 @@ app.post('/api/notes', (request, response) => {
     })
   }
 
-  const note = {
+  const task = {
     content: body.content,
     important: body.important || false,
     date: new Date(),
     id: generateId(),
   }
 
-  notes = notes.concat(note)
+  tasks = tasks.concat(task)
 
-  response.json(note)
+  response.json(task)
 })
 ```
 
-The logic for generating the new id number for notes has been extracted into a separate `generateId` function.
+The logic for generating the new id number for tasks has been extracted into a separate `generateId` function.
 
 If the received data is missing a value for the `content` property, the server will respond to the request with the status code
 [400 bad request](https://www.rfc-editor.org/rfc/rfc9110.html#name-400-bad-request):
@@ -932,9 +932,9 @@ if (!body.content) {
 }
 ```
 
-Notice that calling return is crucial because otherwise the code will execute to the very end and the malformed note gets saved to the application.
+Notice that calling return is crucial because otherwise the code will execute to the very end and the malformed task gets saved to the application.
 
-If the content property has a value, the note will be based on the received data.
+If the content property has a value, the task will be based on the received data.
 As mentioned previously, it is better to generate timestamps on the server than in the browser,
 since we can't trust that the host machine running the browser has its clock set correctly.
 The generation of the `date` property is now done by the server.
@@ -953,9 +953,9 @@ If the property does not exist, then the expression will evaluate to false which
 then the `body.important || false` expression will in fact return `false` from the right-hand side...
 
 You can find the code for our current application in its entirety in the *part3-1* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-1).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-1).
 
-The code for the current state of the application is specified in branch [part3-1](https://github.com/comp227/part3-notes-backend/tree/part3-1).
+The code for the current state of the application is specified in branch [part3-1](https://github.com/comp227/part3-tasks-backend/tree/part3-1).
 
 ![GitHub screenshot of branch 3-1](../../images/3/21.png)
 
@@ -966,8 +966,8 @@ The function for generating IDs looks currently like this:
 
 ```js
 const generateId = () => {
-  const maxId = notes.length > 0
-    ? Math.max(...notes.map(n => n.id))
+  const maxId = tasks.length > 0
+    ? Math.max(...tasks.map(n => n.id))
     : 0
   return maxId + 1
 }
@@ -976,12 +976,12 @@ const generateId = () => {
 The function body contains a row that looks a bit intriguing:
 
 ```js
-Math.max(...notes.map(n => n.id))
+Math.max(...tasks.map(n => n.id))
 ```
 
-What exactly is happening in that line of code? `notes.map(n => n.id)` creates a new array that contains all the ids of the notes.
+What exactly is happening in that line of code? `tasks.map(n => n.id)` creates a new array that contains all the ids of the tasks.
 [Math.max](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) returns the maximum value of the numbers that are passed to it.
-However, `notes.map(n => n.id)` is an *array* so it can't directly be given as a parameter to `Math.max`.
+However, `tasks.map(n => n.id)` is an *array* so it can't directly be given as a parameter to `Math.max`.
 The array can be transformed into individual numbers by using the
 "three dot" [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax `...`.
 
@@ -1117,7 +1117,7 @@ the side-effects of N > 0 identical requests is the same as for a single request
 
 This means that if a request does not generate side effects, then the result should be the same regardless of how many times the request is sent.
 
-If we make an HTTP PUT request to the URL ***/api/notes/10*** and with the request we send the data `{ content: "no side effects!", important: true }`,
+If we make an HTTP PUT request to the URL ***/api/tasks/10*** and with the request we send the data `{ content: "no side effects!", important: true }`,
 the result is the same regardless of how many times the request is sent.
 
 Like *safety* for the GET request, **idempotence** is also just a recommendation in the HTTP standard
@@ -1125,8 +1125,8 @@ and not something that can be guaranteed simply based on the request type.
 However, when our API adheres to RESTful principles, then GET, HEAD, PUT, and DELETE requests are used in such a way that they are idempotent.
 
 POST is the only HTTP request type that is neither *safe* nor *idempotent*.
-If we send 5 different HTTP POST requests to ***/api/notes*** with a body of
-`{content: "many same", important: true}`, the resulting 5 notes on the server will all have the same content.
+If we send 5 different HTTP POST requests to ***/api/tasks*** with a body of
+`{content: "many same", important: true}`, the resulting 5 tasks on the server will all have the same content.
 
 ### Middleware
 
@@ -1184,7 +1184,7 @@ app.use(unknownEndpoint)
 ```
 
 You can find the code for our current application in its entirety in the *part3-2* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-2).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-2).
 
 </div>
 

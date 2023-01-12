@@ -94,7 +94,7 @@ You may delete the files:
 as they are not needed in our application right now.
 If you use safe delete, you should not see any warnings about the files being used.
 
-If you do see warnings, then you way want to read [this future section about react version differences](/part1/a_more_complex_state_debugging_react_apps/#a-note-on-react-version).
+If you do see warnings, then you way want to read [this future section about react version differences](/part1/a_more_complex_state_debugging_react_apps/#old-react).
 
 ### Component
 
@@ -359,7 +359,7 @@ const App = () => {
 
 The props sent by the component `App` are the values of the variables, the result of the evaluation of the sum expression and a regular string.
 
-### Some notes
+### Some tips
 
 React generates helpful error messages.
 Despite this, you should, at least in the beginning, advance in **very small steps** and make sure that every change works as desired.

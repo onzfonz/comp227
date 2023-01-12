@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-Let's expand the application so that the notes are stored in the backend.
+Let's expand the application so that the tasks are stored in the backend.
 We'll use [json-server](/part2/getting_data_from_server),
 familiar from part 2.
 
@@ -15,7 +15,7 @@ The initial state of the database is stored in the file *db.json*, which is plac
 
 ```json
 {
-  "notes": [
+  "tasks": [
     {
       "content": "the app state is in redux store",
       "important": true,
@@ -47,12 +47,12 @@ and add the following line to the `scripts` part of the file *package.json*
 
 Now let's launch json-server with the command `npm run server`.
 
-Next, we'll create a method into the file *services/notes.js*, which uses `axios` to fetch data from the backend
+Next, we'll create a method into the file *services/tasks.js*, which uses `axios` to fetch data from the backend
 
 ```js
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/notes'
+const baseUrl = 'http://localhost:3001/tasks'
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
@@ -68,24 +68,24 @@ We'll add axios to the project
 npm install axios
 ```
 
-We'll change the initialization of the state in `noteReducer`, so that by default there are no notes:
+We'll change the initialization of the state in `taskReducer`, so that by default there are no tasks:
 
 ```js
-const noteSlice = createSlice({
-  name: 'notes',
+const taskSlice = createSlice({
+  name: 'tasks',
   initialState: [], // highlight-line
   // ...
 })
 ```
 
-Let's also add a new action `appendNote` for adding a note object:
+Let's also add a new action `appendTask` for adding a task object:
 
 ```js
-const noteSlice = createSlice({
-  name: 'notes',
+const taskSlice = createSlice({
+  name: 'tasks',
   initialState: [],
   reducers: {
-    createNote(state, action) {
+    createTask(state, action) {
       const content = action.payload
 
       state.push({
@@ -97,49 +97,49 @@ const noteSlice = createSlice({
     toggleImportanceOf(state, action) {
       const id = action.payload
 
-      const noteToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(n => n.id === id)
 
-      const changedNote = { 
-        ...noteToChange, 
-        important: !noteToChange.important 
+      const changedTask = { 
+        ...taskToChange, 
+        important: !taskToChange.important 
       }
 
-      return state.map(note =>
-        note.id !== id ? note : changedNote 
+      return state.map(task =>
+        task.id !== id ? task : changedTask 
       )     
     },
     // highlight-start
-    appendNote(state, action) {
+    appendTask(state, action) {
       state.push(action.payload)
     }
     // highlight-end
   },
 })
 
-export const { createNote, toggleImportanceOf, appendNote } = noteSlice.actions // highlight-line
+export const { createTask, toggleImportanceOf, appendTask } = taskSlice.actions // highlight-line
 
-export default noteSlice.reducer
+export default taskSlice.reducer
 ```
 
-A quick way to initialize the notes state based on the data received from the server is to fetch the notes in the *index.js* file
-and dispatch an action using the `appendNote` action creator for each individual note object:
+A quick way to initialize the tasks state based on the data received from the server is to fetch the tasks in the *index.js* file
+and dispatch an action using the `appendTask` action creator for each individual task object:
 
 ```js
 // ...
-import noteService from './services/notes' // highlight-line
-import noteReducer, { appendNote } from './reducers/noteReducer' // highlight-line
+import taskService from './services/tasks' // highlight-line
+import taskReducer, { appendTask } from './reducers/taskReducer' // highlight-line
 
 const store = configureStore({
   reducer: {
-    notes: noteReducer,
+    tasks: taskReducer,
     filter: filterReducer,
   }
 })
 
 // highlight-start
-noteService.getAll().then(notes =>
-  notes.forEach(note => {
-    store.dispatch(appendNote(note))
+taskService.getAll().then(tasks =>
+  tasks.forEach(task => {
+    store.dispatch(appendTask(task))
   })
 )
 // highlight-end
@@ -148,17 +148,17 @@ noteService.getAll().then(notes =>
 ```
 
 Dispatching multiple actions seems a bit impractical.
-Let's add an action creator `setNotes` which can be used to directly replace the notes array.
-We'll get the action creator from the `createSlice` function by implementing the `setNotes` action:
+Let's add an action creator `setTasks` which can be used to directly replace the tasks array.
+We'll get the action creator from the `createSlice` function by implementing the `setTasks` action:
 
 ```js
 // ...
 
-const noteSlice = createSlice({
-  name: 'notes',
+const taskSlice = createSlice({
+  name: 'tasks',
   initialState: [],
   reducers: {
-    createNote(state, action) {
+    createTask(state, action) {
       const content = action.payload
 
       state.push({
@@ -170,49 +170,49 @@ const noteSlice = createSlice({
     toggleImportanceOf(state, action) {
       const id = action.payload
 
-      const noteToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(n => n.id === id)
 
-      const changedNote = { 
-        ...noteToChange, 
-        important: !noteToChange.important 
+      const changedTask = { 
+        ...taskToChange, 
+        important: !taskToChange.important 
       }
 
-      return state.map(note =>
-        note.id !== id ? note : changedNote 
+      return state.map(task =>
+        task.id !== id ? task : changedTask 
       )     
     },
-    appendNote(state, action) {
+    appendTask(state, action) {
       state.push(action.payload)
     },
     // highlight-start
-    setNotes(state, action) {
+    setTasks(state, action) {
       return action.payload
     }
     // highlight-end
   },
 })
 
-export const { createNote, toggleImportanceOf, appendNote, setNotes } = noteSlice.actions // highlight-line
+export const { createTask, toggleImportanceOf, appendTask, setTasks } = taskSlice.actions // highlight-line
 
-export default noteSlice.reducer
+export default taskSlice.reducer
 ```
 
 Now, the code in the *index.js* file looks a lot better:
 
 ```js
 // ...
-import noteService from './services/notes'
-import noteReducer, { setNotes } from './reducers/noteReducer' // highlight-line
+import taskService from './services/tasks'
+import taskReducer, { setTasks } from './reducers/taskReducer' // highlight-line
 
 const store = configureStore({
   reducer: {
-    notes: noteReducer,
+    tasks: taskReducer,
     filter: filterReducer,
   }
 })
 
-noteService.getAll().then(notes =>
-  store.dispatch(setNotes(notes)) // highlight-line
+taskService.getAll().then(tasks =>
+  store.dispatch(setTasks(tasks)) // highlight-line
 )
 ```
 
@@ -221,32 +221,32 @@ noteService.getAll().then(notes =>
 > Await only works inside `async` functions, and the code in *index.js* is not inside a function,
 so due to the simple nature of the operation, we'll abstain from using `async` this time.
 
-We do, however, decide to move the initialization of the notes into the `App` component,
+We do, however, decide to move the initialization of the tasks into the `App` component,
 and, as usual, when fetching data from a server, we'll use the **effect hook**.
 
 ```js
 import { useEffect } from 'react' // highlight-line
-import NewNote from './components/NewNote'
-import Notes from './components/Notes'
+import NewTask from './components/NewTask'
+import Tasks from './components/Tasks'
 import VisibilityFilter from './components/VisibilityFilter'
-import noteService from './services/notes'  // highlight-line
-import { setNotes } from './reducers/noteReducer' // highlight-line
+import taskService from './services/tasks'  // highlight-line
+import { setTasks } from './reducers/taskReducer' // highlight-line
 import { useDispatch } from 'react-redux' // highlight-line
 
 const App = () => {
     // highlight-start
   const dispatch = useDispatch()
   useEffect(() => {
-    noteService
-      .getAll().then(notes => dispatch(setNotes(notes)))
+    taskService
+      .getAll().then(tasks => dispatch(setTasks(tasks)))
   }, [])
   // highlight-end
 
   return (
     <div>
-      <NewNote />
+      <NewTask />
       <VisibilityFilter />
-      <Notes />
+      <Tasks />
     </div>
   )
 }
@@ -264,8 +264,8 @@ We can get rid of it by doing the following:
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    noteService
-      .getAll().then(notes => dispatch(setNotes(notes)))
+    taskService
+      .getAll().then(tasks => dispatch(setTasks(tasks)))
   }, [dispatch]) // highlight-line
 
   // ...
@@ -284,8 +284,8 @@ Another way to get rid of the warning would be to disable ESlint on that line:
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    noteService
-      .getAll().then(notes => dispatch(setNotes(notes)))   
+    taskService
+      .getAll().then(tasks => dispatch(setTasks(tasks)))   
   }, []) // eslint-disable-line react-hooks/exhaustive-deps  
 
   // ...
@@ -298,11 +298,11 @@ we will use the first solution.
 
 More about the need to define the hooks dependencies in [the react documentation](https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies).
 
-We can do the same thing when it comes to creating a new note.
+We can do the same thing when it comes to creating a new task.
 Let's expand the code communicating with the server as follows:
 
 ```js
-const baseUrl = 'http://localhost:3001/notes'
+const baseUrl = 'http://localhost:3001/tasks'
 
 const getAll = async () => {
   const response = await axios.get(baseUrl)
@@ -323,47 +323,47 @@ export default {
 }
 ```
 
-The method `addNote` of the component `NewNote` changes slightly:
+The method `addTask` of the component `NewTask` changes slightly:
 
 ```js
 import { useDispatch } from 'react-redux'
-import { createNote } from '../reducers/noteReducer'
-import noteService from '../services/notes' // highlight-line
+import { createTask } from '../reducers/taskReducer'
+import taskService from '../services/tasks' // highlight-line
 
-const NewNote = (props) => {
+const NewTask = (props) => {
   const dispatch = useDispatch()
   
-  const addNote = async (event) => { // highlight-line
+  const addTask = async (event) => { // highlight-line
     event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    const newNote = await noteService.createNew(content) // highlight-line
-    dispatch(createNote(newNote)) // highlight-line
+    const content = event.target.task.value
+    event.target.task.value = ''
+    const newTask = await taskService.createNew(content) // highlight-line
+    dispatch(createTask(newTask)) // highlight-line
   }
 
   return (
-    <form onSubmit={addNote}>
-      <input name="note" />
+    <form onSubmit={addTask}>
+      <input name="task" />
       <button type="submit">add</button>
     </form>
   )
 }
 
-export default NewNote
+export default NewTask
 ```
 
-Because the backend generates ids for the notes, we'll change the action creator `createNote` accordingly:
+Because the backend generates ids for the tasks, we'll change the action creator `createTask` accordingly:
 
 ```js
-createNote(state, action) {
+createTask(state, action) {
   state.push(action.payload)
 }
 ```
 
-Changing the importance of notes could be implemented using the same principle,
+Changing the importance of tasks could be implemented using the same principle,
 by making an asynchronous method call to the server and then dispatching an appropriate action.
 
-The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-notes/tree/part6-3) in the branch *part6-3*.
+The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-tasks/tree/part6-3) in the branch *part6-3*.
 
 </div>
 
@@ -396,24 +396,24 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(initializeNotes()))  
+    dispatch(initializeTasks()))  
   }, [dispatch]) 
 
   // ...
 }
 ```
 
-and `NewNote` would create a new note as follows:
+and `NewTask` would create a new task as follows:
 
 ```js
-const NewNote = () => {
+const NewTask = () => {
   const dispatch = useDispatch()
   
-  const addNote = async (event) => {
+  const addTask = async (event) => {
     event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    dispatch(createNote(content))
+    const content = event.target.task.value
+    event.target.task.value = ''
+    dispatch(createTask(content))
   }
 
   // ...
@@ -436,113 +436,113 @@ This allows for example implementations of asynchronous action creators,
 which first wait for the completion of a certain asynchronous operation
 and after that dispatch some action, which changes the store's state.
 
-We can define an action creator `initializeNotes` which initializes the notes based on the data received from the server:
+We can define an action creator `initializeTasks` which initializes the tasks based on the data received from the server:
 
 ```js
 // ...
-import noteService from '../services/notes' // highlight-line
+import taskService from '../services/tasks' // highlight-line
 
-const noteSlice = createSlice(/* ... */)
+const taskSlice = createSlice(/* ... */)
 
-export const { createNote, toggleImportanceOf, setNotes, appendNote } = noteSlice.actions
+export const { createTask, toggleImportanceOf, setTasks, appendTask } = taskSlice.actions
 
 // highlight-start
-export const initializeNotes = () => {
+export const initializeTasks = () => {
   return async dispatch => {
-    const notes = await noteService.getAll()
-    dispatch(setNotes(notes))
+    const tasks = await taskService.getAll()
+    dispatch(setTasks(tasks))
   }
 }
 // highlight-end
 
-export default noteSlice.reducer
+export default taskSlice.reducer
 ```
 
-In the inner function, meaning the **asynchronous action**, the operation first fetches all the notes from the server
-and then ***dispatches*** the `setNotes` action, which adds them to the store.
+In the inner function, meaning the **asynchronous action**, the operation first fetches all the tasks from the server
+and then ***dispatches*** the `setTasks` action, which adds them to the store.
 
 The component `App` can now be defined as follows:
 
 ```js
 // ...
-import { initializeNotes } from './reducers/noteReducer' // highlight-line
+import { initializeTasks } from './reducers/taskReducer' // highlight-line
 
 const App = () => {
   const dispatch = useDispatch()
 
   // highlight-start
   useEffect(() => {
-    dispatch(initializeNotes()) 
+    dispatch(initializeTasks()) 
   }, [dispatch]) 
   // highlight-end
 
   return (
     <div>
-      <NewNote />
+      <NewTask />
       <VisibilityFilter />
-      <Notes />
+      <Tasks />
     </div>
   )
 }
 ```
 
 The solution is elegant.
-The initialization logic for the notes has been completely separated from the React component.
+The initialization logic for the tasks has been completely separated from the React component.
 
-Next, let's replace the `createNote` action creator created by the `createSlice` function with an asynchronous action creator:
+Next, let's replace the `createTask` action creator created by the `createSlice` function with an asynchronous action creator:
 
 ```js
 // ...
-import noteService from '../services/notes'
+import taskService from '../services/tasks'
 
-const noteSlice = createSlice({
-  name: 'notes',
+const taskSlice = createSlice({
+  name: 'tasks',
   initialState: [],
   reducers: {
     // highlight-start
     toggleImportanceOf(state, action) {
       const id = action.payload
 
-      const noteToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(n => n.id === id)
 
-      const changedNote = { 
-        ...noteToChange, 
-        important: !noteToChange.important 
+      const changedTask = { 
+        ...taskToChange, 
+        important: !taskToChange.important 
       }
 
-      return state.map(note =>
-        note.id !== id ? note : changedNote 
+      return state.map(task =>
+        task.id !== id ? task : changedTask 
       )     
     },
-    appendNote(state, action) {
+    appendTask(state, action) {
       state.push(action.payload)
     },
-    setNotes(state, action) {
+    setTasks(state, action) {
       return action.payload
     }
     // highlight-end
   },
 })
 
-export const { toggleImportanceOf, appendNote, setNotes } = noteSlice.actions // highlight-line
+export const { toggleImportanceOf, appendTask, setTasks } = taskSlice.actions // highlight-line
 
-export const initializeNotes = () => {
+export const initializeTasks = () => {
   return async dispatch => {
-    const notes = await noteService.getAll()
-    dispatch(setNotes(notes))
+    const tasks = await taskService.getAll()
+    dispatch(setTasks(tasks))
   }
 }
 
 // highlight-start
-export const createNote = content => {
+export const createTask = content => {
   return async dispatch => {
-    const newNote = await noteService.createNew(content)
-    dispatch(appendNote(newNote))
+    const newTask = await taskService.createNew(content)
+    dispatch(appendTask(newTask))
   }
 }
 // highlight-end
 
-export default noteSlice.reducer
+export default taskSlice.reducer
 ```
 
 The principle here is the same: first, an asynchronous operation is executed,
@@ -551,25 +551,25 @@ Redux Toolkit offers a multitude of tools to simplify asynchronous state managem
 Suitable tools for this use case are for example the [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk)
 function and the [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) API.
 
-The component `NewNote` changes as follows:
+The component `NewTask` changes as follows:
 
 ```js
 // ...
-import { createNote } from '../reducers/noteReducer' // highlight-line
+import { createTask } from '../reducers/taskReducer' // highlight-line
 
-const NewNote = () => {
+const NewTask = () => {
   const dispatch = useDispatch()
   
-  const addNote = async (event) => {
+  const addTask = async (event) => {
     event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    dispatch(createNote(content)) //highlight-line
+    const content = event.target.task.value
+    event.target.task.value = ''
+    dispatch(createTask(content)) //highlight-line
   }
 
   return (
-    <form onSubmit={addNote}>
-      <input name="note" />
+    <form onSubmit={addTask}>
+      <input name="task" />
       <button type="submit">add</button>
     </form>
   )
@@ -581,12 +581,12 @@ Finally, let's clean up the *index.js* file a bit by moving the code related to 
 ```js
 import { configureStore } from '@reduxjs/toolkit'
 
-import noteReducer from './reducers/noteReducer'
+import taskReducer from './reducers/taskReducer'
 import filterReducer from './reducers/filterReducer'
 
 const store = configureStore({
   reducer: {
-    notes: noteReducer,
+    tasks: taskReducer,
     filter: filterReducer
   }
 })
@@ -610,7 +610,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-notes/tree/part6-4) in the branch *part6-4*.
+The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-tasks/tree/part6-4) in the branch *part6-4*.
 
 </div>
 

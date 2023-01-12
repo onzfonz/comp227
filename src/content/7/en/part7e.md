@@ -383,7 +383,7 @@ More on the topic can be found e.g. [here](https://web.archive.org/web/202209010
 
 **Cross-site scripting (XSS)** is an attack where it is possible to inject malicious JavaScript code into a legitimate web application.
 The malicious code would then be executed in the browser of the victim.
-If we try to inject the following into e.g. the notes application:
+If we try to inject the following into e.g. the tasks application:
 
 ```html
 <script>
@@ -393,7 +393,7 @@ If we try to inject the following into e.g. the notes application:
 
 the code is not executed, but is only rendered as 'text' on the page:
 
-![browser showing notes with XSS attempt](../../images/7/32e.png)
+![browser showing tasks with XSS attempt](../../images/7/32e.png)
 
 since React [takes care of sanitizing data in variables](https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks).
 Some versions of React [have been vulnerable](https://medium.com/dailyjs/exploiting-script-injection-flaws-in-reactjs-883fb1fe36c1) to XSS attacks.

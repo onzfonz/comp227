@@ -554,7 +554,7 @@ Now we know that both interfaces `CourseNormalPart` and `CourseSubmissionPart`
 share not only the base attributes but also an attribute called `description`,
 which is a string in both interfaces.
 
-Your first task is to declare a new interface that includes the `description` attribute and extends the `CoursePartBase` interface.
+Your first job is to declare a new interface that includes the `description` attribute and extends the `CoursePartBase` interface.
 Then modify the code so that you can remove the `description` attribute from both `CourseNormalPart` and `CourseSubmissionPart` without getting any errors.
 
 Then create a component `Part` that renders all attributes of each type of course part.
@@ -587,7 +587,7 @@ The result might look like the following:
 
 <div class="content">
 
-### A note about defining object types
+### A message about defining object types
 
 We have used [interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) to define object types, e.g. diary entries, in the previous section
 

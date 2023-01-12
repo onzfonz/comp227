@@ -455,11 +455,11 @@ array to control when the effect function is executed.
 
 #### 7.8: ultimate hooks
 
-The code of the application responsible for communicating with the backend of the note application of the previous parts looks like this:
+The code of the application responsible for communicating with the backend of the task application of the previous parts looks like this:
 
 ```js
 import axios from 'axios'
-const baseUrl = '/api/notes'
+const baseUrl = '/api/tasks'
 
 let token = null
 
@@ -489,7 +489,7 @@ const update = async (id, newObject) => {
 export default { getAll, create, update, setToken }
 ```
 
-We notice that the code is in no way specific to the fact that our application deals with notes.
+We notice that the code is in no way specific to the fact that our application deals with tasks.
 Excluding the value of the `baseUrl` variable, the same code could be reused in the blog post application for dealing with the communication with the backend.
 
 Extract the code for communicating with the backend into its own `useResource` hook.
@@ -504,12 +504,12 @@ const App = () => {
   const name = useField('text')
   const number = useField('text')
 
-  const [notes, noteService] = useResource('http://localhost:3005/notes')
+  const [tasks, taskService] = useResource('http://localhost:3005/tasks')
   const [persons, personService] = useResource('http://localhost:3005/persons')
 
-  const handleNoteSubmit = (event) => {
+  const handleTaskSubmit = (event) => {
     event.preventDefault()
-    noteService.create({ content: content.value })
+    taskService.create({ content: content.value })
   }
  
   const handlePersonSubmit = (event) => {
@@ -519,12 +519,12 @@ const App = () => {
 
   return (
     <div>
-      <h2>notes</h2>
-      <form onSubmit={handleNoteSubmit}>
+      <h2>tasks</h2>
+      <form onSubmit={handleTaskSubmit}>
         <input {...content} />
         <button>create</button>
       </form>
-      {notes.map(n => <p key={n.id}>{n.content}</p>)}
+      {tasks.map(n => <p key={n.id}>{n.content}</p>)}
 
       <h2>persons</h2>
       <form onSubmit={handlePersonSubmit}>
@@ -542,8 +542,8 @@ The `useResource` custom hook returns an array of two items just like the state 
 The first item of the array contains all of the individual resources
 and the second item of the array is an object that can be used for manipulating the resource collection, like creating new ones.
 
-If you implement the hook correctly, it can be used for both notes and phone numbers (start the server with the `npm run server` command at port 3005).
+If you implement the hook correctly, it can be used for both tasks and phone numbers (start the server with the `npm run server` command at port 3005).
 
-![browser showing notes and persons](../../images/5/21e.png)
+![browser showing tasks and persons](../../images/5/21e.png)
 
 </div>

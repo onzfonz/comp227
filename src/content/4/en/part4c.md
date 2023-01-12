@@ -8,20 +8,20 @@ lang: en
 <div class="content">
 
 We want to add user authentication and authorization to our application.
-Users should be stored in the database and every note should be linked to the user who created it.
-Deleting and editing a note should only be allowed for the user who created it.
+Users should be stored in the database and every task should be linked to the user who created it.
+Deleting and editing a task should only be allowed for the user who created it.
 
 Let's start by adding information about users to the database.
-There is a one-to-many relationship between the user (***User***) and notes (***Note***):
+There is a one-to-many relationship between the user (***User***) and tasks (***Task***):
 
-![diagram linking user and notes](https://yuml.me/a187045b.png)
+![diagram linking user and tasks](https://yuml.me/a187045b.png)
 
 If we were working with a relational database the implementation would be straightforward.
-Both resources would have their separate database tables, and the id of the user who created a note would be stored in the notes table as a foreign key.
+Both resources would have their separate database tables, and the id of the user who created a task would be stored in the tasks table as a foreign key.
 
 When working with document databases the situation is a bit different, as there are many different ways of modeling the situation.
 
-The existing solution saves every note in the *notes collection* in the database.
+The existing solution saves every task in the *tasks collection* in the database.
 If we do not want to change this existing collection, then the natural choice is to save users in their own collection, ***users*** for example.
 
 Like with all document databases, we can use object IDs in Mongo to reference documents in other collections.
@@ -38,7 +38,7 @@ However, even in these situations, Mongoose makes multiple queries to the databa
 
 ### References across collections
 
-If we were using a relational database the note would contain a **reference key** to the user who created it.
+If we were using a relational database the task would contain a **reference key** to the user who created it.
 In document databases, we can do the same thing.
 
 Let's assume that the `users` collection contains two users:
@@ -56,7 +56,7 @@ Let's assume that the `users` collection contains two users:
 ];
 ```
 
-The `notes` collection contains three notes that all have a `user` field that references a user in the `users` collection:
+The `tasks` collection contains three tasks that all have a `user` field that references a user in the `users` collection:
 
 ```js
 [
@@ -81,34 +81,34 @@ The `notes` collection contains three notes that all have a `user` field that re
 ]
 ```
 
-Document databases do not demand the foreign key to be stored in the note resources, it could *also* be stored in the users collection, or even both:
+Document databases do not demand the foreign key to be stored in the task resources, it could *also* be stored in the users collection, or even both:
 
 ```js
 [
   {
     username: 'powercat',
     _id: 123456,
-    notes: [221212, 221255],
+    tasks: [221212, 221255],
   },
   {
     username: 'hellas',
     _id: 141414,
-    notes: [221244],
+    tasks: [221244],
   },
 ]
 ```
 
-Since users can have many notes, the related ids are stored in an array in the `notes` field.
+Since users can have many tasks, the related ids are stored in an array in the `tasks` field.
 
 Document databases also offer a radically different way of organizing the data: In some situations,
-it might be beneficial to nest the entire notes array as a part of the documents in the users collection:
+it might be beneficial to nest the entire tasks array as a part of the documents in the users collection:
 
 ```js
 [
   {
     username: 'powercat',
     _id: 123456,
-    notes: [
+    tasks: [
       {
         content: 'HTML is easy',
         important: false,
@@ -122,7 +122,7 @@ it might be beneficial to nest the entire notes array as a part of the documents
   {
     username: 'hellas',
     _id: 141414,
-    notes: [
+    tasks: [
       {
         content:
           'A proper dinosaur codes with Java',
@@ -133,7 +133,7 @@ it might be beneficial to nest the entire notes array as a part of the documents
 ]
 ```
 
-In this schema, notes would be tightly nested under users and the database would not generate ids for them.
+In this schema, tasks would be tightly nested under users and the database would not generate ids for them.
 
 The structure and schema of the database are not as self-evident as it was with relational databases.
 The chosen schema must support the use cases of the application the best.
@@ -145,7 +145,7 @@ On average, relational databases offer a more or less suitable way of organizing
 
 ### Mongoose schema for users
 
-In this case, we decide to store the ids of the notes created by the user in the user document.
+In this case, we decide to store the ids of the tasks created by the user in the user document.
 Let's define the model for representing a user in the *models/user.js* file:
 
 ```js
@@ -155,10 +155,10 @@ const userSchema = new mongoose.Schema({
   username: String,
   name: String,
   passwordHash: String,
-  notes: [
+  tasks: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Note'
+      ref: 'Task'
     }
   ],
 })
@@ -178,23 +178,23 @@ const User = mongoose.model('User', userSchema)
 module.exports = User
 ```
 
-The ids of the notes are stored within the user document as an array of Mongo ids.
+The ids of the tasks are stored within the user document as an array of Mongo ids.
 The definition is as follows:
 
 ```js
 {
   type: mongoose.Schema.Types.ObjectId,
-  ref: 'Note'
+  ref: 'Task'
 }
 ```
 
-The type of the field is `ObjectId` that references *note*-style documents.
-Mongo does not inherently know that this is a field that references notes, the syntax is purely related to and defined by Mongoose.
+The type of the field is `ObjectId` that references *task*-style documents.
+Mongo does not inherently know that this is a field that references tasks, the syntax is purely related to and defined by Mongoose.
 
-Let's expand the schema of the note defined in the *models/note.js* file so that the note contains information about the user who created it:
+Let's expand the schema of the task defined in the *models/task.js* file so that the task contains information about the user who created it:
 
 ```js
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
@@ -212,7 +212,7 @@ const noteSchema = new mongoose.Schema({
 ```
 
 In stark contrast to the conventions of relational databases, ***references are now stored in both documents***:
-the note references the user who created it, and the user has an array of references to all of the notes created by them.
+the task references the user who created it, and the user has an array of references to all of the tasks created by them.
 
 ### Creating users
 
@@ -274,7 +274,7 @@ The password sent in the request is ***not*** stored in the database.
 We store the **hash** of the password that is generated with the `bcrypt.hash` function.
 
 The fundamentals of [storing passwords](https://codahale.com/how-to-safely-store-a-password/) are outside the scope of this course material.
-We will not discuss what the magic number 10 assigned to the [saltRounds](https://github.com/kelektiv/node.bcrypt.js/#a-note-on-rounds) variable means,
+We will not discuss what the magic number 10 assigned to the [saltRounds](https://github.com/kelektiv/node.bcrypt.js/#a-task-on-rounds) variable means,
 but you can read more about it in the linked material.
 
 Our current code does not contain any error handling or input validation for verifying that the username and password are in the desired format.
@@ -340,9 +340,9 @@ const usersInDb = async () => {
 }
 
 module.exports = {
-  initialNotes,
+  initialTasks,
   nonExistingId,
-  notesInDb,
+  tasksInDb,
   usersInDb,
 }
 ```
@@ -442,80 +442,80 @@ you may send a POST request to ```/api/users/``` via Postman or REST Client in t
 
 The list looks like this:
 
-![browser api/users shows JSON data with notes array](../../images/4/9.png)
+![browser api/users shows JSON data with tasks array](../../images/4/9.png)
 
 You can find the code for our current application in its entirety in the *part4-7* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-7).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-7).
 
-### Creating a new note
+### Creating a new task
 
-The code for creating a new note has to be updated so that the note is assigned to the user who created it.
+The code for creating a new task has to be updated so that the task is assigned to the user who created it.
 
-Let's expand our current implementation so that the information about the user who created a note is sent in the `userId` field of the request body:
+Let's expand our current implementation so that the information about the user who created a task is sent in the `userId` field of the request body:
 
 ```js
 const User = require('../models/user') //highlight-line
 
 //...
 
-notesRouter.post('/', async (request, response, next) => {
+tasksRouter.post('/', async (request, response, next) => {
   const body = request.body
 
   const user = await User.findById(body.userId) //highlight-line
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important === undefined ? false : body.important,
     date: new Date(),
     user: user._id //highlight-line
   })
 
-  const savedNote = await note.save()
-  user.notes = user.notes.concat(savedNote._id) //highlight-line
+  const savedTask = await task.save()
+  user.tasks = user.tasks.concat(savedTask._id) //highlight-line
   await user.save()  //highlight-line
   
-  response.json(savedNote)
+  response.json(savedTask)
 })
 ```
 
 It's worth noting that the `user` object also changes.
-The `id` of the note is stored in the `notes` field:
+The `id` of the task is stored in the `tasks` field:
 
 ```js
 const user = await User.findById(body.userId)
 
 // ...
 
-user.notes = user.notes.concat(savedNote._id)
+user.tasks = user.tasks.concat(savedTask._id)
 await user.save()
 ```
 
-Let's try to create a new note
+Let's try to create a new task
 
-![Postman creating a new note](../../images/4/10e.png)
+![Postman creating a new task](../../images/4/10e.png)
 
 The operation appears to work.
-Let's add one more note and then visit the route for fetching all users:
+Let's add one more task and then visit the route for fetching all users:
 
-![api/users returns JSON with users and their array of notes](../../images/4/11e.png)
+![api/users returns JSON with users and their array of tasks](../../images/4/11e.png)
 
-We can see that the user has two notes.
+We can see that the user has two tasks.
 
-Likewise, the ids of the users who created the notes can be seen when we visit the route for fetching all notes:
+Likewise, the ids of the users who created the tasks can be seen when we visit the route for fetching all tasks:
 
-![api/notes shows ids of numbers in JSON](../../images/4/12e.png)
+![api/tasks shows ids of numbers in JSON](../../images/4/12e.png)
 
 ### Populate
 
 We would like our API to work in such a way, that when an HTTP GET request is made to the ***/api/users*** route,
-the user objects would also contain the contents of the user's notes and not just their id.
+the user objects would also contain the contents of the user's tasks and not just their id.
 In a relational database, this functionality would be implemented with a **join query**.
 
 As previously mentioned, document databases do not properly support join queries between collections, but the Mongoose library can do some of these joins for us.
 Mongoose accomplishes the join by doing multiple queries, which is different from join queries in relational databases which are **transactional**,
 meaning that the state of the database does not change during the time that the query is made.
 With join queries in Mongoose, nothing can guarantee that the state between the collections being joined is consistent,
-meaning that if we make a query that joins the user and notes collections, the state of the collections may change during the query.
+meaning that if we make a query that joins the user and tasks collections, the state of the collections may change during the query.
 
 The Mongoose join is done with the [populate](http://mongoosejs.com/docs/populate.html) method.
 Let's update the route that returns all users first:
@@ -523,19 +523,19 @@ Let's update the route that returns all users first:
 ```js
 usersRouter.get('/', async (request, response) => {
   const users = await User  // highlight-line
-    .find({}).populate('notes') // highlight-line
+    .find({}).populate('tasks') // highlight-line
 
   response.json(users)
 })
 ```
 
 The [populate](http://mongoosejs.com/docs/populate.html) method is chained after the `find` method making the initial query.
-The parameter given to the populate method defines that the ***ids*** referencing `note` objects in the `notes` field of the `user` document
-will be replaced by the referenced `note` documents.
+The parameter given to the populate method defines that the ***ids*** referencing `task` objects in the `tasks` field of the `user` document
+will be replaced by the referenced `task` documents.
 
 The result is almost exactly what we wanted:
 
-![JSON data showing populated notes and users data with repetition](../../images/4/13ea.png)
+![JSON data showing populated tasks and users data with repetition](../../images/4/13ea.png)
 
 We can use the populate parameter for choosing the fields we want to include from the documents.
 The selection of fields is done with the Mongo [syntax](https://docs.mongodb.com/manual/tutorial/project-fields-from-query-results/#return-the-specified-fields-and-the-id-field-only):
@@ -543,7 +543,7 @@ The selection of fields is done with the Mongo [syntax](https://docs.mongodb.com
 ```js
 usersRouter.get('/', async (request, response) => {
   const users = await User
-    .find({}).populate('notes', { content: 1, date: 1 })
+    .find({}).populate('tasks', { content: 1, date: 1 })
 
   response.json(users)
 });
@@ -553,27 +553,27 @@ The result is now exactly like we want it to be:
 
 ![combined data showing no repetition](../../images/4/14ea.png)
 
-Let's also add a suitable population of user information to notes:
+Let's also add a suitable population of user information to tasks:
 
 ```js
-notesRouter.get('/', async (request, response) => {
-  const notes = await Note
+tasksRouter.get('/', async (request, response) => {
+  const tasks = await Task
     .find({}).populate('user', { username: 1, name: 1 })
 
-  response.json(notes)
+  response.json(tasks)
 });
 ```
 
-Now the user's information is added to the `user` field of note objects.
+Now the user's information is added to the `user` field of task objects.
 
-![notes JSON now has user info embedded too](../../images/4/15ea.png)
+![tasks JSON now has user info embedded too](../../images/4/15ea.png)
 
-It's important to understand that the database does not know that the ids stored in the `user` field of notes reference documents in the user collection.
+It's important to understand that the database does not know that the ids stored in the `user` field of tasks reference documents in the user collection.
 
 The functionality of the `populate` method of Mongoose is based on the fact that we have defined "types" to the references in the Mongoose schema with the `ref` option:
 
 ```js
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
@@ -589,6 +589,6 @@ const noteSchema = new mongoose.Schema({
 ```
 
 You can find the code for our current application in its entirety in the *part4-8* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-8).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-8).
 
 </div>

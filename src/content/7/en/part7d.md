@@ -354,7 +354,7 @@ You can test the bundled application by opening the *build/index.html* file with
 
 It's worth noting that if the bundled application's source code uses `async`/`await`, the browser will not render anything on some browsers.
 [Googling the error message in the console](https://stackoverflow.com/questions/33527653/babel-6-regeneratorruntime-is-not-defined) will shed some light on the issue.
-With t he [previous solution](https://babeljs.io/docs/en/babel-polyfill/) being deprecated we now have to install two more missing dependencies,
+With the [previous solution](https://babeljs.io/docs/en/babel-polyfill/) being deprecated we now have to install two more missing dependencies,
 that is [core-js](https://www.npmjs.com/package/core-js) and [regenerator-runtime](https://www.npmjs.com/package/regenerator-runtime):
 
 ```bash
@@ -722,13 +722,13 @@ function h(){if(!d){var e=u(p);d=!0;for(var t=c.length;t;){for(s=c,c=[];++f<t;)s
 
 ### Development and production configuration
 
-Next, let's add a backend to our application by repurposing the now-familiar note application backend.
+Next, let's add a backend to our application by repurposing the now-familiar task application backend.
 
 Let's store the following content in the *db.json* file:
 
 ```json
 {
-  "notes": [
+  "tasks": [
     {
       "important": true,
       "content": "HTML is easy",
@@ -746,34 +746,34 @@ Let's store the following content in the *db.json* file:
 Our goal is to configure the application with webpack in such a way that, when used locally,
 the application uses the json-server available in port 3001 as its backend.
 
-The bundled file will then be configured to use the backend available at the <https://obscure-harbor-49797.herokuapp.com/api/notes> URL.
+The bundled file will then be configured to use the backend available at the <https://obscure-harbor-49797.herokuapp.com/api/tasks> URL.
 
 We will install ***axios***, start the json-server, and then make the necessary changes to the application.
-For the sake of changing things up, we will fetch the notes from the backend with our [custom hook](/part7/custom_hooks) called `useNotes`:
+For the sake of changing things up, we will fetch the tasks from the backend with our [custom hook](/part7/custom_hooks) called `useTasks`:
 
 ```js
 // highlight-start
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const useNotes = (url) => {
-  const [notes, setNotes] = useState([])
+const useTasks = (url) => {
+  const [tasks, setTasks] = useState([])
 
   useEffect(() => {
     axios.get(url).then(response => {
-      setNotes(response.data)
+      setTasks(response.data)
     })
   }, [url])
 
-  return notes
+  return tasks
 }
 // highlight-end
 
 const App = () => {
   const [counter, setCounter] = useState(0)
   const [values, setValues] = useState([])
-  const url = 'https://obscure-harbor-49797.herokuapp.com/api/notes' // highlight-line
-  const notes = useNotes(url) // highlight-line
+  const url = 'https://obscure-harbor-49797.herokuapp.com/api/tasks' // highlight-line
+  const tasks = useTasks(url) // highlight-line
 
   const handleClick = () => {
     setCounter(counter + 1)
@@ -784,7 +784,7 @@ const App = () => {
     <div className="container">
       hello webpack {counter} clicks
       <button onClick={handleClick}>press</button>
-      <div>{notes.length} notes on server {url}</div> // highlight-line
+      <div>{tasks.length} tasks on server {url}</div> // highlight-line
     </div>
   )
 }
@@ -839,8 +839,8 @@ const config = (env, argv) => {
 
   // highlight-start
   const backend_url = argv.mode === 'production'
-    ? 'https://obscure-harbor-49797.herokuapp.com/api/notes'
-    : 'http://localhost:3001/notes'
+    ? 'https://obscure-harbor-49797.herokuapp.com/api/tasks'
+    : 'http://localhost:3001/tasks'
   // highlight-end
 
   return {
@@ -877,14 +877,14 @@ The global constant is used in the following way in the code:
 const App = () => {
   const [counter, setCounter] = useState(0)
   const [values, setValues] = useState([])
-  const notes = useNotes(BACKEND_URL) // highlight-line
+  const tasks = useTasks(BACKEND_URL) // highlight-line
 
   // ...
   return (
     <div className="container">
       hello webpack {counter} clicks
       <button onClick={handleClick} >press</button>
-      <div>{notes.length} notes on server {BACKEND_URL}</div> // highlight-line
+      <div>{tasks.length} tasks on server {BACKEND_URL}</div> // highlight-line
     </div>
   )
 }

@@ -10,9 +10,9 @@ lang: en
 In the last two parts, we have mainly concentrated on the backend.
 The frontend that we developed in [part 2](/part2) does not yet support the user management we implemented to the backend in part 4.
 
-At the moment the frontend shows existing notes and lets users change the state of a note from important to not important and vice versa.
-New notes cannot be added anymore because of the changes made to the backend in part 4:
-the backend now expects that a token verifying a user's identity is sent with the new note.
+At the moment the frontend shows existing tasks and lets users change the state of a task from important to not important and vice versa.
+New tasks cannot be added anymore because of the changes made to the backend in part 4:
+the backend now expects that a token verifying a user's identity is sent with the new task.
 
 We'll now implement a part of the required user management functionality in the frontend.
 Let's begin with the user login.
@@ -21,16 +21,16 @@ Throughout this part, we will assume that new users will not be added from the f
 ### Handling login
 
 A login form has now been added to the top of the page.
-The form for adding new notes has also been moved to the bottom of the list of notes.
+The form for adding new tasks has also been moved to the bottom of the list of tasks.
 
-![browser showing user login for notes](../../images/5/1e.png)
+![browser showing user login for tasks](../../images/5/1e.png)
 
 The code of the `App` component now looks as follows:
 
 ```js
 const App = () => {
-  const [notes, setNotes] = useState([]) 
-  const [newNote, setNewNote] = useState('')
+  const [tasks, setTasks] = useState([]) 
+  const [newTask, setNewTask] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   // highlight-start
@@ -39,9 +39,9 @@ const App = () => {
 // highlight-end
 
   useEffect(() => {
-    noteService
-      .getAll().then(initialNotes => {
-        setNotes(initialNotes)
+    taskService
+      .getAll().then(initialTasks => {
+        setTasks(initialTasks)
       })
   }, [])
 
@@ -56,7 +56,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
 
       <Notification message={errorMessage} />
 
@@ -93,14 +93,14 @@ export default App
 ```
 
 The current application code can be found on
-[Github](https://github.com/comp227/part2-notes/tree/part5-1), branch *part5-1*.
+[Github](https://github.com/comp227/part2-tasks/tree/part5-1), branch *part5-1*.
 If you clone the repo, don't forget to run `npm install` before attempting to run the frontend.
 
-The frontend will not display any notes if it's not connected to the backend.
+The frontend will not display any tasks if it's not connected to the backend.
 You can start the backend with `npm run dev` in its folder from Part 4.
 This will run the backend on port 3001.
 While that is active, in a separate terminal window you can start the frontend with `npm start`,
-and now you can see the notes that are saved in your MongoDB database from Part 4.
+and now you can see the tasks that are saved in your MongoDB database from Part 4.
 
 Keep this in mind from now on.
 
@@ -180,7 +180,7 @@ If the login fails or running the function `loginService.login` results in an er
 
 The user is not notified about a successful login in any way.
 Let's modify the application to show the login form only *if the user is not logged-in* so when `user === null`.
-The form for adding new notes is shown only if the *user is logged-in*, so `user` contains the user details.
+The form for adding new tasks is shown only if the *user is logged-in*, so `user` contains the user details.
 
 Let's add two helper functions to the `App` component for generating the forms:
 
@@ -212,11 +212,11 @@ const App = () => {
     </form>      
   )
 
-  const noteForm = () => (
-    <form onSubmit={addNote}>
+  const taskForm = () => (
+    <form onSubmit={addTask}>
       <input
-        value={newNote}
-        onChange={handleNoteChange}
+        value={newTask}
+        onChange={handleTaskChange}
       />
       <button type="submit">save</button>
     </form>  
@@ -238,18 +238,18 @@ const App = () => {
     // ...
   )
 
-  const noteForm = () => (
+  const taskForm = () => (
     // ...
   )
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
 
       <Notification message={errorMessage} />
 
       {user === null && loginForm()} // highlight-line
-      {user !== null && noteForm()} // highlight-line
+      {user !== null && taskForm()} // highlight-line
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
@@ -257,11 +257,11 @@ const App = () => {
         </button>
       </div>
       <ul>
-        {notesToShow.map((note, i) => 
-          <Note
+        {tasksToShow.map((task, i) => 
+          <Task
             key={i}
-            note={note} 
-            toggleImportance={() => toggleImportanceOf(note.id)}
+            task={task} 
+            toggleImportance={() => toggleImportanceOf(task.id)}
           />
         )}
       </ul>
@@ -290,16 +290,16 @@ We can make this even more straightforward by using the [conditional operator](h
 ```js
 return (
   <div>
-    <h1>Notes</h1>
+    <h1>Tasks</h1>
 
     <Notification message={errorMessage}/>
 
     {user === null ?
       loginForm() :
-      noteForm()
+      taskForm()
     }
 
-    <h2>Notes</h2>
+    <h2>Tasks</h2>
 
     // ...
 
@@ -310,7 +310,7 @@ return (
 If `user === null` is
 [truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy),
 `loginForm()` is executed.
-If not, `noteForm()` is.
+If not, `taskForm()` is.
 
 Let's do one more modification.
 If the user is logged in, their name is shown on the screen:
@@ -318,7 +318,7 @@ If the user is logged in, their name is shown on the screen:
 ```js
 return (
   <div>
-    <h1>Notes</h1>
+    <h1>Tasks</h1>
 
     <Notification message={errorMessage} />
 
@@ -326,11 +326,11 @@ return (
       loginForm() :
       <div>
         <p>{user.name} logged-in</p>
-        {noteForm()}
+        {taskForm()}
       </div>
     }
 
-    <h2>Notes</h2>
+    <h2>Tasks</h2>
 
     // ...
 
@@ -345,9 +345,9 @@ The changes we did now are a clear sign that the forms should be refactored into
 However, we will leave that for an optional exercise.
 
 The current application code can be found on
-[GitHub](https://github.com/comp227/part2-notes/tree/part5-2), branch *part5-2*.
+[GitHub](https://github.com/comp227/part2-tasks/tree/part5-2), branch *part5-2*.
 
-### Creating new notes
+### Creating new tasks
 
 The token returned with a successful login is saved to the application's state - the `user`'s field `token`:
 
@@ -368,14 +368,14 @@ const handleLogin = async (event) => {
 }
 ```
 
-Let's fix creating new notes so it works with the backend.
+Let's fix creating new tasks so it works with the backend.
 This means adding the token of the logged-in user to the Authorization header of the HTTP request.
 
-The *noteService* module changes like so:
+The *taskService* module changes like so:
 
 ```js
 import axios from 'axios'
-const baseUrl = '/api/notes'
+const baseUrl = '/api/tasks'
 
 let token = null // highlight-line
 
@@ -409,12 +409,12 @@ const update = (id, newObject) => {
 export default { getAll, create, update, setToken } // highlight-line
 ```
 
-The noteService module contains a private variable `token`.
+The taskService module contains a private variable `token`.
 Its value can be changed with a function `setToken`, which is exported by the module.
 `create`, now with async/await syntax, sets the token to the `Authorization` header.
 The header is given to axios as the third parameter of the `post` method.
 
-The event handler responsible for login must be changed to call the method `noteService.setToken(user.token)` with a successful login:
+The event handler responsible for login must be changed to call the method `taskService.setToken(user.token)` with a successful login:
 
 ```js
 const handleLogin = async (event) => {
@@ -424,7 +424,7 @@ const handleLogin = async (event) => {
       username, password,
     })
 
-    noteService.setToken(user.token) // highlight-line
+    taskService.setToken(user.token) // highlight-line
     setUser(user)
     setUsername('')
     setPassword('')
@@ -434,13 +434,13 @@ const handleLogin = async (event) => {
 }
 ```
 
-And now adding new notes works again!
+And now adding new tasks works again!
 
 ### Saving the token to the browser's local storage
 
 Our application has a flaw: when the page is rerendered, the user's login information disappears.
 This also slows down development.
-For example, when we test creating new notes, we have to login again every single time.
+For example, when we test creating new tasks, we have to login again every single time.
 
 This problem is easily solved by saving the login details to [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Storage).
 Local Storage is a [key-value](https://en.wikipedia.org/wiki/Key-value_database) database in the browser.
@@ -485,10 +485,10 @@ Changes to the login method are as follows:
 
       // highlight-start
       window.localStorage.setItem(
-        'loggedNoteappUser', JSON.stringify(user)
+        'loggedTaskappUser', JSON.stringify(user)
       ) 
       // highlight-end
-      noteService.setToken(user.token)
+      taskService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -500,7 +500,7 @@ Changes to the login method are as follows:
 
 The details of a logged-in user are now saved to the local storage, and they can be viewed on the console (by typing `window.localStorage` to the console):
 
-![browser showing someone logged into notes](../../images/5/3e.png)
+![browser showing someone logged into tasks](../../images/5/3e.png)
 
 You can also inspect the local storage using the developer tools.
 On Chrome, go to the ***Application*** tab and select ***Local Storage***
@@ -509,18 +509,18 @@ On Firefox go to the ***Storage*** tab and select ***Local Storage*** (details [
 
 We still have to modify our application so that when we enter the page,
 the application checks if user details of a logged-in user can already be found on the local storage.
-If they can, the details are saved to the state of the application and to ***noteService***.
+If they can, the details are saved to the state of the application and to ***taskService***.
 
 The right way to do this is with an [effect hook](https://reactjs.org/docs/hooks-effect.html):
 a mechanism we first encountered in [part 2](/part2/getting_data_from_server#effect-hooks),
-and used to fetch notes from the server.
+and used to fetch tasks from the server.
 
 We can have multiple effect hooks, so let's create a second one to handle the first loading of the page:
 
 ```js
 const App = () => {
-  const [notes, setNotes] = useState([]) 
-  const [newNote, setNewNote] = useState('')
+  const [tasks, setTasks] = useState([]) 
+  const [newTask, setNewTask] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
@@ -528,19 +528,19 @@ const App = () => {
   const [user, setUser] = useState(null) 
 
   useEffect(() => {
-    noteService
-      .getAll().then(initialNotes => {
-        setNotes(initialNotes)
+    taskService
+      .getAll().then(initialTasks => {
+        setTasks(initialTasks)
       })
   }, [])
 
   // highlight-start
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedTaskappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      noteService.setToken(user.token)
+      taskService.setToken(user.token)
     }
   }, [])
   // highlight-end
@@ -560,7 +560,7 @@ It's possible to log out a user using the console, and that is enough for now.
 You can log out with the command:
 
 ```js
-window.localStorage.removeItem('loggedNoteappUser')
+window.localStorage.removeItem('loggedTaskappUser')
 ```
 
 or with the command which empties `localStorage` completely:
@@ -570,7 +570,7 @@ window.localStorage.clear()
 ```
 
 The current application code can be found on
-[GitHub](https://github.com/comp227/part2-notes/tree/part5-3), branch *part5-3*.
+[GitHub](https://github.com/comp227/part2-tasks/tree/part5-3), branch *part5-3*.
 
 </div>
 
@@ -625,7 +625,7 @@ If a user is not logged in, ***only*** the login form is visible.
 
 If the user is logged-in, the name of the user and a list of blogs is shown.
 
-![browser showing notes and who is logged in](../../images/5/5e.png)
+![browser showing tasks and who is logged in](../../images/5/5e.png)
 
 User details of the logged-in user do not have to be saved to the local storage yet.
 
@@ -687,7 +687,7 @@ It is not compulsory to add colors.
 
 <div class="content">
 
-### A note on using local storage
+### A task on using local storage
 
 At the [end](/part4/token_authentication#problems-of-token-based-authentication) of the last part,
 we mentioned that the challenge of token-based authentication is how to cope with the situation when the API access of the token holder to the API needs to be revoked.

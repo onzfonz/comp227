@@ -13,11 +13,11 @@ Nonetheless, we will now take a step in that direction by familiarizing ourselve
 
 Let's use a tool meant to be used during software development called [JSON Server](https://github.com/typicode/json-server) to act as our server.
 
-Create a file named *db.json* in the root directory of the previous notes project with the following content:
+Create a file named *db.json* in the root directory of the previous tasks project with the following content:
 
 ```json
 {
-  "notes": [
+  "tasks": [
     {
       "id": 1,
       "content": "HTML is easy",
@@ -60,17 +60,17 @@ From the root directory of your app, we can run the *json-server* using the comm
 npx json-server --port 3001 --watch db.json
 ```
 
-Let's navigate to the address <http://localhost:3001/notes> in the browser.
-We can see that *json-server* serves the notes we previously wrote to the file in JSON format:
+Let's navigate to the address <http://localhost:3001/tasks> in the browser.
+We can see that *json-server* serves the tasks we previously wrote to the file in JSON format:
 
-![json data of notes](../../images/2/14e.png)
+![json data of tasks](../../images/2/14e.png)
 
 If your browser doesn't have a way to format the display of JSON-data, then install an appropriate plugin,
 e.g. [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) to make your life easier.
 
-Going forward, the idea will be to save the notes to the server, which in this case means saving them to the json-server.
-The React code fetches the notes from the server and renders them to the screen.
-Whenever a new note is added to the application, the React code also sends it to the server to make the new note persist in "memory".
+Going forward, the idea will be to save the tasks to the server, which in this case means saving them to the json-server.
+The React code fetches the tasks from the server and renders them to the screen.
+Whenever a new task is added to the application, the React code also sends it to the server to make the new task persist in "memory".
 
 json-server stores all the data in the *db.json* file, which resides on the server.
 In the real world, data would be stored in some kind of database.
@@ -80,7 +80,7 @@ We will get familiar with the principles of implementing server-side functionali
 
 ### The browser as a runtime environment
 
-Our first task is fetching the already existing notes to our React application from the address <http://localhost:3001/notes>.
+Our first task is fetching the already existing tasks to our React application from the address <http://localhost:3001/tasks>.
 
 In the part0 [example project](/part0/fundamentals_of_web_apps#running-application-logic-on-the-browser),
 we already learned a way to fetch data from a server using JavaScript.
@@ -126,15 +126,15 @@ would play out as follows (NB, this is not actually working Java code):
 HTTPRequest request = new HTTPRequest();
 
 String url = "https://comp227-exampleapp.herokuapp.com/data.json";
-List<Note> notes = request.get(url);
+List<Task> tasks = request.get(url);
 
-notes.forEach(m => {
+tasks.forEach(m => {
   System.out.println(m.content);
 });
 ```
 
 In Java, the code executes line by line and stops to wait for the HTTP request, which means waiting for the command `request.get(...)` to finish.
-The data returned by the command, in this case the notes, are then stored in a variable, and we begin manipulating the data in the desired manner.
+The data returned by the command, in this case the tasks, are then stored in a variable, and we begin manipulating the data in the desired manner.
 
 On the other hand, JavaScript engines, or runtime environments, follow the [asynchronous model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop).
 In principle, this requires all
@@ -200,7 +200,7 @@ A clear indicator that a project uses npm is the *package.json* file located at 
 
 ```json
 {
-  "name": "notes",
+  "name": "tasks",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -254,7 +254,7 @@ Axios is now included among the other dependencies:
 
 ```json
 {
-  "name": "notes",
+  "name": "tasks",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -347,7 +347,7 @@ Add the following to the file *index.js*:
 ```js
 import axios from 'axios'
 
-const promise = axios.get('http://localhost:3001/notes')
+const promise = axios.get('http://localhost:3001/tasks')
 console.log(promise)
 
 const promise2 = axios.get('http://localhost:3001/foobar')
@@ -378,7 +378,7 @@ and the final value is available, which generally is a successful operation.
 This state is sometimes also called **resolved**.
 3. The promise is **rejected**: It means that an error prevented the final value from being determined, which generally represents a failed operation.
 
-The first promise in our example is ***fulfilled***, representing a successful *axios.get('http://localhost:3001/notes')* request.
+The first promise in our example is ***fulfilled***, representing a successful *axios.get('http://localhost:3001/tasks')* request.
 The second one, however, is ***rejected***, and the console tells us the reason.
 It looks like we were trying to make an HTTP GET request to a non-existent address.
 
@@ -386,7 +386,7 @@ If, and when, we want to access the result of the operation represented by the p
 This is achieved using the method `then`:
 
 ```js
-const promise = axios.get('http://localhost:3001/notes')
+const promise = axios.get('http://localhost:3001/tasks')
 
 promise.then(response => {
   console.log(response)
@@ -405,22 +405,22 @@ Storing the promise object in a variable is generally unnecessary,
 and it's instead common to chain the `then` method call to the axios method call, so that it follows it directly:
 
 ```js
-axios.get('http://localhost:3001/notes').then(response => {
-  const notes = response.data
-  console.log(notes)
+axios.get('http://localhost:3001/tasks').then(response => {
+  const tasks = response.data
+  console.log(tasks)
 })
 ```
 
-The callback function now takes the data contained within the response, stores it in a variable, and prints the notes to the console.
+The callback function now takes the data contained within the response, stores it in a variable, and prints the tasks to the console.
 
 A more readable way to format ***chained*** method calls is to place each call on its own line:
 
 ```js
 axios
-  .get('http://localhost:3001/notes')
+  .get('http://localhost:3001/tasks')
   .then(response => {
-    const notes = response.data
-    console.log(notes)
+    const tasks = response.data
+    console.log(tasks)
   })
 ```
 
@@ -430,7 +430,7 @@ since the server has specified that the data format is `application/json; charse
 
 We can finally begin using the data fetched from the server.
 
-Let's try and request the notes from our local server and render them, initially as the App component.
+Let's try and request the tasks from our local server and render them, initially as the App component.
 Consider that this approach has many issues, as we're rendering the entire `App` component only when we successfully retrieve a response:
 
 ```js
@@ -440,9 +440,9 @@ import axios from 'axios' // highlight-line
 
 import App from './App'
 
-axios.get('http://localhost:3001/notes').then(response => {
-  const notes = response.data
-  ReactDOM.createRoot(document.getElementById('root')).render(<App notes={notes} />)
+axios.get('http://localhost:3001/tasks').then(response => {
+  const tasks = response.data
+  ReactDOM.createRoot(document.getElementById('root')).render(<App tasks={tasks} />)
 })
 ```
 
@@ -465,7 +465,7 @@ As per the official docs:
 As such, effect hooks are precisely the right tool to use when fetching data from a server.
 
 Let's remove the fetching of data from *index.js*.
-Since we're gonna be retrieving the notes from the server, there is no longer a need to pass data as props to the `App` component.
+Since we're gonna be retrieving the tasks from the server, there is no longer a need to pass data as props to the `App` component.
 So *index.js* can be simplified to:
 
 ```js
@@ -477,25 +477,25 @@ The `App` component changes as follows:
 ```js
 import { useState, useEffect } from 'react' // highlight-line
 import axios from 'axios' // highlight-line
-import Note from './components/Note'
+import Task from './components/Task'
 
 const App = () => { // highlight-line
-  const [notes, setNotes] = useState([]) // highlight-line
-  const [newNote, setNewNote] = useState('')
+  const [tasks, setTasks] = useState([]) // highlight-line
+  const [newTask, setNewTask] = useState('')
   const [showAll, setShowAll] = useState(true)
 
 // highlight-start
   useEffect(() => {
     console.log('effect')
     axios
-      .get('http://localhost:3001/notes')
+      .get('http://localhost:3001/tasks')
       .then(response => {
         console.log('promise fulfilled')
-        setNotes(response.data)
+        setTasks(response.data)
       })
   }, [])
 
-  console.log('render', notes.length, 'notes')
+  console.log('render', tasks.length, 'tasks')
 // highlight-end
 
   // ...
@@ -507,14 +507,14 @@ We have also added a few helpful prints, which clarify the progression of the ex
 This is printed to the console:
 
 ```shell
-render 0 notes
+render 0 tasks
 effect
 promise fulfilled
-render 3 notes
+render 3 tasks
 ```
 
 First, the body of the function defining the component is executed and the component is rendered for the first time.
-At this point `render 0 notes` is printed, meaning data hasn't been fetched from the server yet.
+At this point `render 0 tasks` is printed, meaning data hasn't been fetched from the server yet.
 
 The following function, or effect in React parlance:
 
@@ -522,10 +522,10 @@ The following function, or effect in React parlance:
 () => {
   console.log('effect')
   axios
-    .get('http://localhost:3001/notes')
+    .get('http://localhost:3001/tasks')
     .then(response => {
       console.log('promise fulfilled')
-      setNotes(response.data)
+      setTasks(response.data)
     })
 }
 ```
@@ -537,15 +537,15 @@ and the command `axios.get` initiates the fetching of data from the server as we
 ```js
 response => {
   console.log('promise fulfilled')
-  setNotes(response.data)
+  setTasks(response.data)
 })
 ```
 
 When data arrives from the server, the JavaScript runtime calls the function registered as the event handler,
-which prints `promise fulfilled` to the console and stores the notes received from the server into the state using the function `setNotes(response.data)`.
+which prints `promise fulfilled` to the console and stores the tasks received from the server into the state using the function `setTasks(response.data)`.
 
 As always, a call to a state-updating function triggers the re-rendering of the component.
-As a result, `render 3 notes` is printed to the console, and the notes fetched from the server are rendered to the screen.
+As a result, `render 3 tasks` is printed to the console, and the tasks fetched from the server are rendered to the screen.
 
 Finally, let's take a look at the definition of the effect hook as a whole:
 
@@ -553,9 +553,9 @@ Finally, let's take a look at the definition of the effect hook as a whole:
 useEffect(() => {
   console.log('effect')
   axios
-    .get('http://localhost:3001/notes').then(response => {
+    .get('http://localhost:3001/tasks').then(response => {
       console.log('promise fulfilled')
-      setNotes(response.data)
+      setTasks(response.data)
     })
 }, [])
 ```
@@ -566,10 +566,10 @@ Let's rewrite the code a bit differently.
 const hook = () => {
   console.log('effect')
   axios
-    .get('http://localhost:3001/notes')
+    .get('http://localhost:3001/tasks')
     .then(response => {
       console.log('promise fulfilled')
-      setNotes(response.data)
+      setTasks(response.data)
     })
 }
 
@@ -603,10 +603,10 @@ useEffect(() => {
 
   const eventHandler = response => {
     console.log('promise fulfilled')
-    setNotes(response.data)
+    setTasks(response.data)
   }
 
-  const promise = axios.get('http://localhost:3001/notes')
+  const promise = axios.get('http://localhost:3001/tasks')
   promise.then(eventHandler)
 }, [])
 ```
@@ -622,19 +622,19 @@ and a more compact way of representing things, as seen further above, is suffici
 useEffect(() => {
   console.log('effect')
   axios
-    .get('http://localhost:3001/notes')
+    .get('http://localhost:3001/tasks')
     .then(response => {
       console.log('promise fulfilled')
-      setNotes(response.data)
+      setTasks(response.data)
     })
 }, [])
 ```
 
 We still have a problem with our application.
-When adding new notes, they are not stored on the server.
+When adding new tasks, they are not stored on the server.
 
 The code for the application, as described so far, can be found in full on
-[github](https://github.com/comp227/part2-notes/tree/part2-4), on branch *part2-4*.
+[github](https://github.com/comp227/part2-tasks/tree/part2-4), on branch *part2-4*.
 
 ### The development runtime environment
 

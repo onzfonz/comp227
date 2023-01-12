@@ -32,12 +32,12 @@ This can be done by choosing ***Add Configuration...*** on the drop-down menu,
 which is located next to the green play button and above ***VARIABLES*** menu, and select ***Run "npm start" in a debug terminal***.
 For more detailed setup instructions, visit Visual Studio Code's [Debugging documentation](https://code.visualstudio.com/docs/editor/debugging).
 
-Below you can see a screenshot where the code execution has been paused in the middle of saving a new note:
+Below you can see a screenshot where the code execution has been paused in the middle of saving a new task:
 
 ![vscode screenshot of execution at a breakpoint](../../images/3/36x.png)
 
 The execution stopped at the **breakpoint** in line 69.
-In the console, you can see the value of the `note` variable.
+In the console, you can see the value of the `task` variable.
 In the top left window, you can see other things related to the state of the application.
 
 The arrows at the top can be used for controlling the flow of the debugger.
@@ -64,7 +64,7 @@ The ***Sources*** tab can be used for setting breakpoints where the execution of
 All of the application's `console.log` messages will appear in the ***Console*** tab of the debugger.
 You can also inspect values of variables and execute your own JavaScript code.
 
-![dev tools console tab showing note object typed in](../../images/3/39ea.png)
+![dev tools console tab showing task object typed in](../../images/3/39ea.png)
 
 #### Question everything
 
@@ -87,7 +87,7 @@ from Toyota Production Systems is very effective in this situation as well.
 
 ### MongoDB
 
-To store our saved notes indefinitely, we need a database.
+To store our saved tasks indefinitely, we need a database.
 Most of the courses taught at the University of Helsinki use relational databases.
 In most parts of this course, we will use [MongoDB](https://www.mongodb.com/)
 which is a so-called [document database](https://en.wikipedia.org/wiki/Document-oriented_database).
@@ -178,31 +178,31 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
-const url = `mongodb+srv://notes-app-full:${password}@cluster1.lvvbt.mongodb.net/?retryWrites=true&w=majority`
+const url = `mongodb+srv://tasks-app-full:${password}@cluster1.lvvbt.mongodb.net/?retryWrites=true&w=majority`
 
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   content: String,
   date: Date,
   important: Boolean,
 })
 
-const Note = mongoose.model('Note', noteSchema)
+const Task = mongoose.model('Task', taskSchema)
 
 mongoose
   .connect(url)
   .then((result) => {
     console.log('connected')
 
-    const note = new Note({
+    const task = new Task({
       content: 'HTML is Easy',
       date: new Date(),
       important: true,
     })
 
-    return note.save()
+    return task.save()
   })
   .then(() => {
-    console.log('note saved!')
+    console.log('task saved!')
     return mongoose.connection.close()
   })
   .catch((err) => console.log(err))
@@ -220,7 +220,7 @@ const password = process.argv[2]
 
 When the code is run with the command `node mongo.js password`, Mongo will add a new document to the database.
 
-**NB:** Please note the password is the password created for the database user, not your MongoDB Atlas password.
+**NB:** Please notice the password is the password created for the database user, not your MongoDB Atlas password.
 Also, if you created a password with special characters,
 then you'll need to [URL encode that password](https://docs.atlas.mongodb.com/troubleshoot-connection/#special-characters-in-connection-string-password).
 
@@ -228,19 +228,19 @@ We can view the current state of the database from the MongoDB Atlas from ***Bro
 
 ![mongodb databases browse collections button](../../images/3/mongo7.png)
 
-As the view states, the *document* matching the note has been added to the ***notes*** collection in the ***myFirstDatabase*** database.
+As the view states, the *document* matching the task has been added to the ***tasks*** collection in the ***myFirstDatabase*** database.
 
-![mongodb collections tab db myfirst app notes](../../images/3/mongo8.png)
+![mongodb collections tab db myfirst app tasks](../../images/3/mongo8.png)
 
-Let's destroy the default database ***myFirstDatabase*** and change the name of the database referenced in our connection string to `noteApp` instead, by modifying the URI:
+Let's destroy the default database ***myFirstDatabase*** and change the name of the database referenced in our connection string to `taskApp` instead, by modifying the URI:
 
 ```bash
-mongodb+srv://comp227:$<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
+mongodb+srv://comp227:$<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority
 ```
 
 Let's run our code again:
 
-![mongodb collections tab noteApp notes](../../images/3/mongo9.png)
+![mongodb collections tab taskApp tasks](../../images/3/mongo9.png)
 
 The data is now stored in the right database.
 The view also offers the ***create database*** functionality, that can be used to create new databases from the website.
@@ -249,24 +249,24 @@ Creating a database like this is not necessary, since MongoDB Atlas automaticall
 ### Schema
 
 After establishing the connection to the database, we define the [schema](http://mongoosejs.com/docs/guide.html)
-for a note and the matching [model](http://mongoosejs.com/docs/models.html):
+for a task and the matching [model](http://mongoosejs.com/docs/models.html):
 
 ```js
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   content: String,
   date: Date,
   important: Boolean,
 })
 
-const Note = mongoose.model('Note', noteSchema)
+const Task = mongoose.model('Task', taskSchema)
 ```
 
-First, we define the [schema](http://mongoosejs.com/docs/guide.html) of a note that is stored in the `noteSchema` variable.
-The schema tells Mongoose how the note objects are to be stored in the database.
+First, we define the [schema](http://mongoosejs.com/docs/guide.html) of a task that is stored in the `taskSchema` variable.
+The schema tells Mongoose how the task objects are to be stored in the database.
 
-In the `Note` model definition, the first `'Note'` parameter is the singular name of the model.
-The name of the collection will be the lowercase plural `notes`, because the [Mongoose convention](http://mongoosejs.com/docs/models.html)
-is to automatically name collections as the plural (e.g. `notes`) when the schema refers to them in the singular (e.g. `Note`).
+In the `Task` model definition, the first `'Task'` parameter is the singular name of the model.
+The name of the collection will be the lowercase plural `tasks`, because the [Mongoose convention](http://mongoosejs.com/docs/models.html)
+is to automatically name collections as the plural (e.g. `tasks`) when the schema refers to them in the singular (e.g. `Task`).
 
 Document databases like Mongo are **schemaless**, meaning that the database itself does not care about the structure of the data that is stored in the database.
 It is possible to store documents with completely different fields in the same collection.
@@ -275,10 +275,10 @@ The idea behind Mongoose is that the data stored in the database is given a *sch
 
 ### Creating and saving objects
 
-Next, the application creates a new note object with the help of the `Note` [model](http://mongoosejs.com/docs/models.html):
+Next, the application creates a new task object with the help of the `Task` [model](http://mongoosejs.com/docs/models.html):
 
 ```js
-const note = new Note({
+const task = new Task({
   content: 'HTML is Easy',
   date: new Date(),
   important: false,
@@ -292,8 +292,8 @@ they have all the properties of the model, which include methods for saving the 
 Saving the object to the database happens with the appropriately named `save` method, which can be provided with an event handler with the `then` method:
 
 ```js
-note.save().then(result => {
-  console.log('note saved!')
+task.save().then(result => {
+  console.log('task saved!')
   mongoose.connection.close()
 })
 ```
@@ -306,7 +306,7 @@ The result of the save operation is in the `result` parameter of the event handl
 The result is not that interesting when we're storing one object in the database.
 You can print the object to the console if you want to take a closer look at it while implementing your application or during debugging.
 
-Let's also save a few more notes by modifying the data in the code and by executing the program again.
+Let's also save a few more tasks by modifying the data in the code and by executing the program again.
 
 **NB:** Unfortunately the Mongoose documentation is not very consistent,
 with parts of it using callbacks in its examples and other parts, other styles,
@@ -315,31 +315,31 @@ Mixing promises with old-school callbacks in the same code is not recommended.
 
 ### Fetching objects from the database
 
-Let's comment out the code for generating new notes and replace it with the following:
+Let's comment out the code for generating new tasks and replace it with the following:
 
 ```js
-Note.find({}).then(result => {
-  result.forEach(note => {
-    console.log(note)
+Task.find({}).then(result => {
+  result.forEach(task => {
+    console.log(task)
   })
   mongoose.connection.close()
 })
 ```
 
-When the code is executed, the program prints all the notes stored in the database:
+When the code is executed, the program prints all the tasks stored in the database:
 
-![node mongo.js outputs notes as JSON](../../images/3/70ea.png)
+![node mongo.js outputs tasks as JSON](../../images/3/70ea.png)
 
-The objects are retrieved from the database with the [find](https://mongoosejs.com/docs/api/model.html#model_Model-find) method of the `Note` model.
+The objects are retrieved from the database with the [find](https://mongoosejs.com/docs/api/model.html#model_Model-find) method of the `Task` model.
 The parameter of the method is an object expressing search conditions.
-Since the parameter is an empty object`{}`, we get all of the notes stored in the ***notes*** collection.
+Since the parameter is an empty object`{}`, we get all of the tasks stored in the ***tasks*** collection.
 
 The search conditions adhere to the Mongo search query [syntax](https://docs.mongodb.com/manual/reference/operator/).
 
-We could restrict our search to only include important notes like this:
+We could restrict our search to only include important tasks like this:
 
 ```js
-Note.find({ important: true }).then(result => {
+Task.find({ important: true }).then(result => {
   // ...
 })
 ```
@@ -440,32 +440,32 @@ const mongoose = require('mongoose')
 
 // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 const url =
-  `mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority`
+  `mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority`
 
 mongoose.connect(url)
 
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   content: String,
   date: Date,
   important: Boolean,
 })
 
-const Note = mongoose.model('Note', noteSchema)
+const Task = mongoose.model('Task', taskSchema)
 ```
 
-Let's change the handler for fetching all notes to the following form:
+Let's change the handler for fetching all tasks to the following form:
 
 ```js
-app.get('/api/notes', (request, response) => {
-  Note.find({}).then(notes => {
-    response.json(notes)
+app.get('/api/tasks', (request, response) => {
+  Task.find({}).then(tasks => {
+    response.json(tasks)
   })
 })
 ```
 
 We can verify in the browser that the backend works for displaying all of the documents:
 
-![api/notes in browser shows notes in JSON](../../images/3/44ea.png)
+![api/tasks in browser shows tasks in JSON](../../images/3/44ea.png)
 
 The application works almost perfectly.
 The frontend assumes that every object has a unique id in the `id` field.
@@ -476,7 +476,7 @@ the `toJSON` method of the schema, which is used on all instances of the models 
 Modifying the method works like this:
 
 ```js
-noteSchema.set('toJSON', {
+taskSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -492,14 +492,14 @@ If we didn't make this change, it would cause more harm to us in the future once
 Let's respond to the HTTP request with a list of objects formatted with the `toJSON` method:
 
 ```js
-app.get('/api/notes', (request, response) => {
-  Note.find({}).then(notes => {
-    response.json(notes)
+app.get('/api/tasks', (request, response) => {
+  Task.find({}).then(tasks => {
+    response.json(tasks)
   })
 })
 ```
 
-Now the `notes` variable is assigned to an array of objects returned by Mongo.
+Now the `tasks` variable is assigned to an array of objects returned by Mongo.
 When the response is sent in the JSON format, the `toJSON` method of each object in the array is called automatically by the
 [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) method.
 
@@ -507,7 +507,7 @@ When the response is sent in the JSON format, the `toJSON` method of each object
 
 Before we refactor the rest of the backend to use the database, let's extract the Mongoose-specific code into its own module.
 
-Let's create a new directory for the module called *models*, and add a file called *note.js*:
+Let's create a new directory for the module called *models*, and add a file called *task.js*:
 
 ```js
 const mongoose = require('mongoose')
@@ -526,13 +526,13 @@ mongoose.connect(url)
   })
 // highlight-end
 
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   content: String,
   date: Date,
   important: Boolean,
 })
 
-noteSchema.set('toJSON', {
+taskSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -540,23 +540,23 @@ noteSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Note', noteSchema) // highlight-line
+module.exports = mongoose.model('Task', taskSchema) // highlight-line
 ```
 
 Defining Node [modules](https://nodejs.org/docs/latest-v8.x/api/modules.html)
 differs slightly from the way of defining [ES6 modules](/part2/rendering_a_collection_modules#refactoring-modules) in part 2.
 
 The public interface of the module is defined by setting a value to the `module.exports` variable.
-We will set the value to be the `Note` model.
+We will set the value to be the `Task` model.
 The other things defined inside of the module, like the variables `mongoose` and `url` will not be accessible or visible to users of the module.
 
 Importing the module happens by adding the following line to *index.js*:
 
 ```js
-const Note = require('./models/note')
+const Task = require('./models/task')
 ```
 
-This way the `Note` variable will be assigned to the same object that the module defines.
+This way the `Task` variable will be assigned to the same object that the module defines.
 
 The way that the connection is made has changed slightly:
 
@@ -600,7 +600,7 @@ To use the library, we create a *.env* file at the root of the project.
 The environment variables are defined inside of the file, and it can look like this:
 
 ```bash
-MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority
 PORT=3001
 ```
 
@@ -619,7 +619,7 @@ Let's change the *index.js* file in the following way:
 require('dotenv').config() // highlight-line
 const express = require('express')
 const app = express()
-const Note = require('./models/note') // highlight-line
+const Task = require('./models/task') // highlight-line
 
 // ..
 
@@ -629,7 +629,7 @@ app.listen(PORT, () => {
 })
 ```
 
-Observe how `dotenv` must be imported before the `note` model.
+Observe how `dotenv` must be imported before the `task` model.
 This ensures that the environment variables from the *.env* file are available globally before the code from the other modules is imported.
 
 Once the file .env has been gitignored, Heroku does not get the database URL from the repository, so you have to set it yourself.
@@ -641,7 +641,7 @@ That can be done through the Heroku dashboard as follows:
 or from the command line with the command:
 
 ```bash
-heroku config:set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
+heroku config:set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority'
 ```
 
 Because GitHub is not used with Fly.io, also the file .env gets to the Fly.io servers when the app is deployed.
@@ -657,53 +657,53 @@ is to prevent .env from being copied to Fly.io by creating to the project root t
 and set the env value from the command line with the command:
 
 ```bash
-fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
+fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority'
 ```
 
 ### Using database in route handlers
 
 Next, let's change the rest of the backend functionality to use the database.
 
-Creating a new note is accomplished like this:
+Creating a new task is accomplished like this:
 
 ```js
-app.post('/api/notes', (request, response) => {
+app.post('/api/tasks', (request, response) => {
   const body = request.body
 
   if (body.content === undefined) {
     return response.status(400).json({ error: 'content missing' })
   }
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important || false,
     date: new Date(),
   })
 
-  note.save().then(savedNote => {
-    response.json(savedNote)
+  task.save().then(savedTask => {
+    response.json(savedTask)
   })
 })
 ```
 
-The note objects are created with the `Note` constructor function.
+The task objects are created with the `Task` constructor function.
 The response is sent inside of the callback function for the `save` operation.
 This ensures that the response is sent only if the operation succeeded.
 We will discuss error handling a little bit later.
 
-The `savedNote` parameter in the callback function is the saved and newly created note.
+The `savedTask` parameter in the callback function is the saved and newly created task.
 The data sent back in the response is the formatted version created with the `toJSON` method:
 
 ```js
-response.json(savedNote)
+response.json(savedTask)
 ```
 
-Using Mongoose's [findById](https://mongoosejs.com/docs/api/model.html#model_Model-findById) method, fetching an individual note gets changed into the following:
+Using Mongoose's [findById](https://mongoosejs.com/docs/api/model.html#model_Model-findById) method, fetching an individual task gets changed into the following:
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
-  Note.findById(request.params.id).then(note => {
-    response.json(note)
+app.get('/api/tasks/:id', (request, response) => {
+  Task.findById(request.params.id).then(task => {
+    response.json(task)
   })
 })
 ```
@@ -711,7 +711,7 @@ app.get('/api/notes/:id', (request, response) => {
 ### Verifying frontend and backend integration
 
 When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the VS Code REST client**.
-Next, let's try creating a new note after taking the database into use:
+Next, let's try creating a new task after taking the database into use:
 
 ![VS code rest client doing a post](../../images/3/46e.png)
 
@@ -719,7 +719,7 @@ Only once everything has been verified to work in the backend, is it a good idea
 It is highly inefficient to test things exclusively through the frontend.
 
 It's probably a good idea to integrate the frontend and backend one functionality at a time.
-First, we could implement fetching all of the notes from the database and test it through the backend endpoint in the browser.
+First, we could implement fetching all of the tasks from the database and test it through the backend endpoint in the browser.
 After this, we could verify that the frontend works with the new backend.
 Once everything seems to be working, we would move on to the next feature.
 
@@ -727,7 +727,7 @@ Once we introduce a database into the mix, it is useful to inspect the state per
 Quite often little Node helper programs like the *mongo.js* program we wrote earlier can be very helpful during development.
 
 You can find the code for our current application in its entirety in the *part3-4* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-4).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-4).
 
 </div>
 
@@ -761,20 +761,20 @@ At this stage, the phonebook can have multiple entries for a person with the sam
 
 ### Error handling
 
-If we try to visit the URL of a note with an id that does not exist e.g. <http://localhost:3001/api/notes/5c41c90e84d891c15dfa3431>
+If we try to visit the URL of a task with an id that does not exist e.g. <http://localhost:3001/api/tasks/5c41c90e84d891c15dfa3431>
 where `5c41c90e84d891c15dfa3431` is not an id stored in the database, then the response will be `null`.
 
-Let's change this behavior so that if a note with the given id doesn't exist,
+Let's change this behavior so that if a task with the given id doesn't exist,
 the server will respond to the request with the HTTP status code 404 not found.
 In addition, let's implement a simple `catch` block to handle cases where the promise returned by the `findById` method is **rejected**:
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
-  Note.findById(request.params.id)
-    .then(note => {
+app.get('/api/tasks/:id', (request, response) => {
+  Task.findById(request.params.id)
+    .then(task => {
       // highlight-start
-      if (note) {
-        response.json(note)
+      if (task) {
+        response.json(task)
       } else {
         response.status(404).end()
       }
@@ -789,24 +789,24 @@ app.get('/api/notes/:id', (request, response) => {
 })
 ```
 
-If no matching object is found in the database, the value of `note` will be `null` and the `else` block is executed.
+If no matching object is found in the database, the value of `task` will be `null` and the `else` block is executed.
 This results in a response with the status code **404 not found**.
 If a promise returned by the `findById` method is rejected, the response will have the status code **500 internal server error**.
 The console displays more detailed information about the error.
 
-On top of the non-existing note, there's one more error situation that needs to be handled.
-In this situation, we are trying to fetch a note with the wrong kind of `id`, meaning an `id` that doesn't match the mongo identifier format.
+On top of the non-existing task, there's one more error situation that needs to be handled.
+In this situation, we are trying to fetch a task with the wrong kind of `id`, meaning an `id` that doesn't match the mongo identifier format.
 
 If we make the following request, we will get the error message shown below:
 
 ```shell
 Method: GET
-Path:   /api/notes/someInvalidId
+Path:   /api/tasks/someInvalidId
 Body:   {}
 ---
 { CastError: Cast to ObjectId failed for value "someInvalidId" at path "_id"
-    at CastError (/Users/powercat/comp227/part3-notes/node_modules/mongoose/lib/error/cast.js:27:11)
-    at ObjectId.cast (/Users/powercat/comp227/part3-notes/node_modules/mongoose/lib/schema/objectid.js:158:13)
+    at CastError (/Users/powercat/comp227/part3-tasks/node_modules/mongoose/lib/error/cast.js:27:11)
+    at ObjectId.cast (/Users/powercat/comp227/part3-tasks/node_modules/mongoose/lib/schema/objectid.js:158:13)
     ...
 ```
 
@@ -816,11 +816,11 @@ This will cause the callback function defined in the `catch` block to be called.
 Let's make some small adjustments to the response in the `catch` block:
 
 ```js
-app.get('/api/notes/:id', (request, response) => {
-  Note.findById(request.params.id)
-    .then(note => {
-      if (note) {
-        response.json(note)
+app.get('/api/tasks/:id', (request, response) => {
+  Task.findById(request.params.id)
+    .then(task => {
+      if (task) {
+        response.json(task)
       } else {
         response.status(404).end() 
       }
@@ -871,15 +871,15 @@ We have written the code for the error handler among the rest of our code.
 This can be a reasonable solution at times, but there are cases where it is better to implement all error handling in a single place.
 This can be particularly useful if we want to report data related to errors to an external error-tracking system like [Sentry](https://sentry.io/welcome/) later on.
 
-Let's change the handler for the ***/api/notes/:id*** route so that it passes the error forward with the `next` function.
+Let's change the handler for the ***/api/tasks/:id*** route so that it passes the error forward with the `next` function.
 The next function is passed to the handler as the third parameter:
 
 ```js
-app.get('/api/notes/:id', (request, response, next) => { // highlight-line
-  Note.findById(request.params.id)
-    .then(note => {
-      if (note) {
-        response.json(note)
+app.get('/api/tasks/:id', (request, response, next) => { // highlight-line
+  Task.findById(request.params.id)
+    .then(task => {
+      if (task) {
+        response.json(task)
       } else {
         response.status(404).end()
       }
@@ -929,7 +929,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(requestLogger)
 
-app.post('/api/notes', (request, response) => {
+app.post('/api/tasks', (request, response) => {
   const body = request.body
   // ...
 })
@@ -955,7 +955,7 @@ If the order was the following:
 ```js
 app.use(requestLogger) // request.body is undefined!
 
-app.post('/api/notes', (request, response) => {
+app.post('/api/tasks', (request, response) => {
   // request.body is undefined!
   const body = request.body
   // ...
@@ -978,7 +978,7 @@ const unknownEndpoint = (request, response) => {
 // handler of requests with unknown endpoint
 app.use(unknownEndpoint)
 
-app.get('/api/notes', (request, response) => {
+app.get('/api/tasks', (request, response) => {
   // ...
 })
 ```
@@ -990,13 +990,13 @@ The only exception to this is the error handler which needs to come at the very 
 
 ### Other operations
 
-Let's add some missing functionality to our application, including deleting and updating an individual note.
+Let's add some missing functionality to our application, including deleting and updating an individual task.
 
-The easiest way to delete a note from the database is with the [findByIdAndRemove](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndRemove) method:
+The easiest way to delete a task from the database is with the [findByIdAndRemove](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndRemove) method:
 
 ```js
-app.delete('/api/notes/:id', (request, response, next) => {
-  Note.findByIdAndRemove(request.params.id)
+app.delete('/api/tasks/:id', (request, response, next) => {
+  Task.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
     })
@@ -1005,38 +1005,38 @@ app.delete('/api/notes/:id', (request, response, next) => {
 ```
 
 In both of the "successful" cases of deleting a resource, the backend responds with the status code **204 no content**.
-The two different cases are deleting a note that exists, and deleting a note that does not exist in the database.
+The two different cases are deleting a task that exists, and deleting a task that does not exist in the database.
 The `result` callback parameter could be used for checking if a resource was actually deleted,
 and we could use that information for returning different status codes for the two cases if we deemed it necessary.
 Any exception that occurs is passed onto the error handler.
 
-The toggling of the importance of a note can be easily accomplished with the [findByIdAndUpdate](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate) method.
+The toggling of the importance of a task can be easily accomplished with the [findByIdAndUpdate](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate) method.
 
 ```js
-app.put('/api/notes/:id', (request, response, next) => {
+app.put('/api/tasks/:id', (request, response, next) => {
   const body = request.body
 
-  const note = {
+  const task = {
     content: body.content,
     important: body.important,
   }
 
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote)
+  Task.findByIdAndUpdate(request.params.id, task, { new: true })
+    .then(updatedTask => {
+      response.json(updatedTask)
     })
     .catch(error => next(error))
 })
 ```
 
-In the code above, we also allow the content of the note to be edited.
+In the code above, we also allow the content of the task to be edited.
 However, we will not support changing the creation date for obvious reasons.
 
 Notice that the `findByIdAndUpdate` method receives a regular JavaScript object as its parameter,
-and not a new note object created with the `Note` constructor function.
+and not a new task object created with the `Task` constructor function.
 
 There is one important detail regarding the use of the `findByIdAndUpdate` method.
-By default, the `updatedNote` parameter of the event handler receives the original document
+By default, the `updatedTask` parameter of the event handler receives the original document
 [without the modifications](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate).
 We added the optional `{ new: true }` parameter, which will cause our event handler to be called with the new modified document instead of the original.
 
@@ -1044,7 +1044,7 @@ After testing the backend directly with Postman and the VS Code REST client, we 
 The frontend also appears to work with the backend using the database.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-5).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-5).
 
 </div>
 

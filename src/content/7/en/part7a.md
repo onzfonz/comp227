@@ -22,11 +22,11 @@ It is very common for web applications to have a navigation bar, which enables s
 
 Our app could have a main page
 
-![browser showing notes app with home nav link](../../images/7/1ea.png)
+![browser showing tasks app with home nav link](../../images/7/1ea.png)
 
-and separate pages for showing information on notes and users:
+and separate pages for showing information on tasks and users:
 
-![browser showing notes app with notes nav link](../../images/7/2ea.png)
+![browser showing tasks app with tasks nav link](../../images/7/2ea.png)
 
 In an [old school web app](/part0/fundamentals_of_web_apps#traditional-web-applications),
 changing the page shown by the application would be accomplished by the browser making an HTTP GET request to the server and rendering the HTML representing the view that was returned.
@@ -44,11 +44,11 @@ import { useState }  from 'react'
 import ReactDOM from 'react-dom/client'
 
 const Home = () => (
-  <div> <h2>TKTL notes app</h2> </div>
+  <div> <h2>TKTL tasks app</h2> </div>
 )
 
-const Notes = () => (
-  <div> <h2>Notes</h2> </div>
+const Tasks = () => (
+  <div> <h2>Tasks</h2> </div>
 )
 
 const Users = () => (
@@ -66,8 +66,8 @@ const App = () => {
   const content = () => {
     if (page === 'home') {
       return <Home />
-    } else if (page === 'notes') {
-      return <Notes />
+    } else if (page === 'tasks') {
+      return <Tasks />
     } else if (page === 'users') {
       return <Users />
     }
@@ -83,8 +83,8 @@ const App = () => {
         <a href="" onClick={toPage('home')} style={padding}>
           home
         </a>
-        <a href="" onClick={toPage('notes')} style={padding}>
-          notes
+        <a href="" onClick={toPage('tasks')} style={padding}>
+          tasks
         </a>
         <a href="" onClick={toPage('users')} style={padding}>
           users
@@ -108,7 +108,7 @@ As we can see from the pictures, the address stays the same even though at times
 Each view should preferably have its own address, e.g. to make bookmarking possible.
 The ***back*** button doesn't work as expected for our application either,
 meaning that *back* doesn't move you to the previously displayed view of the application, but somewhere completely different.
-If the application were to grow even bigger and we wanted to, for example, add separate views for each user and note,
+If the application were to grow even bigger and we wanted to, for example, add separate views for each user and task,
 then this self-made **routing**, which means the navigation management of the application, would get overly complicated.
 
 ### React Router
@@ -141,18 +141,18 @@ const App = () => {
     <Router>
       <div>
         <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
+        <Link style={padding} to="/tasks">tasks</Link>
         <Link style={padding} to="/users">users</Link>
       </div>
 
       <Routes>
-        <Route path="/notes" element={<Notes />} />
+        <Route path="/tasks" element={<Tasks />} />
         <Route path="/users" element={<Users />} />
         <Route path="/" element={<Home />} />
       </Routes>
 
       <div>
-        <em>Note app, Department of Computer Science 2022</em>
+        <em>Task app, Department of Computer Science 2022</em>
       </div>
     </Router>
   )
@@ -188,25 +188,25 @@ Inside the router, we define *links* that modify the address bar with the help o
 For example,
 
 ```js
-<Link to="/notes">notes</Link>
+<Link to="/tasks">tasks</Link>
 ```
 
-creates a link in the application with the text *`notes`*, which when clicked changes the URL in the address bar to ***/notes***.
+creates a link in the application with the text *`tasks`*, which when clicked changes the URL in the address bar to ***/tasks***.
 
 Components rendered based on the URL of the browser are defined with the help of the component [Route](https://reactrouter.com/en/main/route/route).
 For example,
 
 ```js
-<Route path="/notes" element={<Notes />} />
+<Route path="/tasks" element={<Tasks />} />
 ```
 
-defines that, if the browser address is ***/notes***, we render the `Notes` component.
+defines that, if the browser address is ***/tasks***, we render the `Tasks` component.
 
 We wrap the components to be rendered based on the URL with a [Routes](https://reactrouter.com/en/main/components/routes) component
 
 ```js
 <Routes>
-  <Route path="/notes" element={<Notes />} />
+  <Route path="/tasks" element={<Tasks />} />
   <Route path="/users" element={<Users />} />
   <Route path="/" element={<Home />} />
 </Routes>
@@ -220,26 +220,26 @@ Let's examine the slightly modified version from the previous example.
 The complete code for the example can be found [here](https://github.com/comp227/misc/blob/main/router-app-v1.js).
 
 The application now contains five different views whose display is controlled by the router.
-In addition to the components from the previous example (*`Home`*, *`Notes`* and *`Users`*),
-we have `Login` representing the login view and `Note` representing the view of a single note.
+In addition to the components from the previous example (*`Home`*, *`Tasks`* and *`Users`*),
+we have `Login` representing the login view and `Task` representing the view of a single task.
 
 `Home` and `Users` are unchanged from the previous exercise.
-`Notes` is a bit more complicated.
-It renders the list of notes passed to it as props in such a way that the name of each note is clickable.
+`Tasks` is a bit more complicated.
+It renders the list of tasks passed to it as props in such a way that the name of each task is clickable.
 
-![notes app showing notes are clickable](../../images/7/3ea.png)
+![tasks app showing tasks are clickable](../../images/7/3ea.png)
 
 The ability to click a name is implemented with the component `Link`,
-and clicking the name of a note whose id is 3 would trigger an event that changes the address of the browser into ***notes/3***:
+and clicking the name of a task whose id is 3 would trigger an event that changes the address of the browser into ***tasks/3***:
 
 ```js
-const Notes = ({notes}) => (
+const Tasks = ({tasks}) => (
   <div>
-    <h2>Notes</h2>
+    <h2>Tasks</h2>
     <ul>
-      {notes.map(note =>
-        <li key={note.id}>
-          <Link to={`/notes/${note.id}`}>{note.content}</Link>
+      {tasks.map(task =>
+        <li key={task.id}>
+          <Link to={`/tasks/${task.id}`}>{task.content}</Link>
         </li>
       )}
     </ul>
@@ -254,8 +254,8 @@ We define parameterized URLs in the routing in `App` component as follows:
   // ...
 
   <Routes>
-    <Route path="/notes/:id" element={<Note notes={notes} />} /> // highlight-line
-    <Route path="/notes" element={<Notes notes={notes} />} />   
+    <Route path="/tasks/:id" element={<Task tasks={tasks} />} /> // highlight-line
+    <Route path="/tasks" element={<Tasks tasks={tasks} />} />   
     <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
     <Route path="/login" element={<Login onLogin={login} />} />
     <Route path="/" element={<Home />} />      
@@ -263,13 +263,13 @@ We define parameterized URLs in the routing in `App` component as follows:
 </Router>
 ```
 
-We define the route rendering a specific note "express style" by marking the parameter with a colon - `:id`
+We define the route rendering a specific task "express style" by marking the parameter with a colon - `:id`
 
 ```js
-<Route path="/notes/:id" element={<Note notes={notes} />} />
+<Route path="/tasks/:id" element={<Task tasks={tasks} />} />
 ```
 
-When a browser navigates to the URL for a specific note, for example, ***/notes/3***, we render the `Note` component:
+When a browser navigates to the URL for a specific task, for example, ***/tasks/3***, we render the `Task` component:
 
 ```js
 import {
@@ -277,20 +277,20 @@ import {
   useParams  // highlight-line
 } from "react-router-dom"
 
-const Note = ({ notes }) => {
+const Task = ({ tasks }) => {
   const id = useParams().id // highlight-line
-  const note = notes.find(n => n.id === Number(id)) 
+  const task = tasks.find(n => n.id === Number(id)) 
   return (
     <div>
-      <h2>{note.content}</h2>
-      <div>{note.user}</div>
-      <div><strong>{note.important ? 'important' : ''}</strong></div>
+      <h2>{task.content}</h2>
+      <div>{task.user}</div>
+      <div><strong>{task.important ? 'important' : ''}</strong></div>
     </div>
   )
 }
 ```
 
-The `Note` component receives all of the notes as props `notes`, and it can access the URL parameter (the id of the note to be displayed)
+The `Task` component receives all of the tasks as props `tasks`, and it can access the URL parameter (the id of the task to be displayed)
 with the [useParams](https://reactrouter.com/en/main/hooks/use-params) function of the React Router.
 
 ### useNavigate
@@ -304,7 +304,7 @@ The option to navigate to the `Login` view is rendered conditionally in the menu
 <Router>
   <div>
     <Link style={padding} to="/">home</Link>
-    <Link style={padding} to="/notes">notes</Link>
+    <Link style={padding} to="/tasks">tasks</Link>
     <Link style={padding} to="/users">users</Link>
     // highlight-start
     {user
@@ -320,7 +320,7 @@ The option to navigate to the `Login` view is rendered conditionally in the menu
 
 So if the user is already logged in, instead of displaying the link `Login`, we show the username of the user:
 
-![browser notes app showing username logged in](../../images/7/4a.png)
+![browser tasks app showing username logged in](../../images/7/4a.png)
 
 The code of the component handling the login functionality is as follows:
 
@@ -387,7 +387,7 @@ Here is the `App` component in its entirety:
 
 ```js
 const App = () => {
-  const [notes, setNotes] = useState([
+  const [tasks, setTasks] = useState([
     // ...
   ])
 
@@ -406,7 +406,7 @@ const App = () => {
       <Router>
         <div>
           <Link style={padding} to="/">home</Link>
-          <Link style={padding} to="/notes">notes</Link>
+          <Link style={padding} to="/tasks">tasks</Link>
           <Link style={padding} to="/users">users</Link>
           {user
             ? <em>{user} logged in</em>
@@ -415,8 +415,8 @@ const App = () => {
         </div>
 
         <Routes>
-          <Route path="/notes/:id" element={<Note notes={notes} />} />  
-          <Route path="/notes" element={<Notes notes={notes} />} />   
+          <Route path="/tasks/:id" element={<Task tasks={tasks} />} />  
+          <Route path="/tasks" element={<Tasks tasks={tasks} />} />   
           <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
           <Route path="/login" element={<Login onLogin={login} />} />
           <Route path="/" element={<Home />} />      
@@ -424,7 +424,7 @@ const App = () => {
       </Router>      
       <footer>
         <br />
-        <em>Note app, Department of Computer Science 2022</em>
+        <em>Task app, Department of Computer Science 2022</em>
       </footer>
     </div>
   )
@@ -437,32 +437,32 @@ so that it is shown regardless of the component shown in the routed part of the 
 ### Parameterized route revisited
 
 Our application has a flaw.
-The `Note` component receives all of the notes, even though it only displays the one whose id matches the url parameter:
+The `Task` component receives all of the tasks, even though it only displays the one whose id matches the url parameter:
 
 ```js
-const Note = ({ notes }) => { 
+const Task = ({ tasks }) => { 
   const id = useParams().id
-  const note = notes.find(n => n.id === Number(id))
+  const task = tasks.find(n => n.id === Number(id))
   // ...
 }
 ```
 
-Would it be possible to modify the application so that the `Note` component receives only the note that it should display?
+Would it be possible to modify the application so that the `Task` component receives only the task that it should display?
 
 ```js
-const Note = ({ note }) => {
+const Task = ({ task }) => {
   return (
     <div>
-      <h2>{note.content}</h2>
-      <div>{note.user}</div>
-      <div><strong>{note.important ? 'important' : ''}</strong></div>
+      <h2>{task.content}</h2>
+      <div>{task.user}</div>
+      <div><strong>{task.important ? 'important' : ''}</strong></div>
     </div>
   )
 }
 ```
 
 One way to do this would be to use React Router's [useMatch](https://reactrouter.com/en/v6.3.0/api#usematch) hook
-to figure out the id of the note to be displayed in the `App` component.
+to figure out the id of the task to be displayed in the `App` component.
 
 It is not possible to use the `useMatch` hook in the component which defines the routed part of the application.
 Let's move the use of the `Router` components from `App`:
@@ -487,10 +487,10 @@ const App = () => {
   // ...
 
  // highlight-start
-  const match = useMatch('/notes/:id')
+  const match = useMatch('/tasks/:id')
 
-  const note = match 
-    ? notes.find(note => note.id === Number(match.params.id))
+  const task = match 
+    ? tasks.find(task => task.id === Number(match.params.id))
     : null
   // highlight-end
 
@@ -502,15 +502,15 @@ const App = () => {
       </div>
 
       <Routes>
-        <Route path="/notes/:id" element={<Note note={note} />} />   // highlight-line
-        <Route path="/notes" element={<Notes notes={notes} />} />   
+        <Route path="/tasks/:id" element={<Task task={task} />} />   // highlight-line
+        <Route path="/tasks" element={<Tasks tasks={tasks} />} />   
         <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/" element={<Home />} />      
       </Routes>   
 
       <div>
-        <em>Note app, Department of Computer Science 2022</em>
+        <em>Task app, Department of Computer Science 2022</em>
       </div>
     </div>
   )
@@ -520,15 +520,15 @@ const App = () => {
 Every time the component is rendered, so practically every time the browser's URL changes, the following command is executed:
 
 ```js
-const match = useMatch('/notes/:id')
+const match = useMatch('/tasks/:id')
 ```
 
-If the URL matches ***/notes/:id***, the match variable will contain an object from which we can access the parameterized part of the path,
-the id of the note to be displayed, and we can then fetch the correct note to display.
+If the URL matches ***/tasks/:id***, the match variable will contain an object from which we can access the parameterized part of the path,
+the id of the task to be displayed, and we can then fetch the correct task to display.
 
 ```js
-const note = match 
-  ? notes.find(note => note.id === Number(match.params.id))
+const task = match 
+  ? tasks.find(task => task.id === Number(match.params.id))
   : null
 ```
 

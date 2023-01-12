@@ -8,11 +8,11 @@ lang: en
 <div class="content">
 
 There are usually constraints that we want to apply to the data that is stored in our application's database.
-Our application shouldn't accept notes that have a missing or empty `content` property.
-The validity of the note is checked in the route handler:
+Our application shouldn't accept tasks that have a missing or empty `content` property.
+The validity of the task is checked in the route handler:
 
 ```js
-app.post('/api/notes', (request, response) => {
+app.post('/api/tasks', (request, response) => {
   const body = request.body
   // highlight-start
   if (body.content === undefined) {
@@ -24,7 +24,7 @@ app.post('/api/notes', (request, response) => {
 })
 ```
 
-If the note does not have the `content` property, we respond to the request with the status code **400 bad request**.
+If the task does not have the `content` property, we respond to the request with the status code **400 bad request**.
 
 One smarter way of validating the format of the data before it is stored in the database is to use the
 [validation](https://mongoosejs.com/docs/validation.html) functionality available in Mongoose.
@@ -32,7 +32,7 @@ One smarter way of validating the format of the data before it is stored in the 
 We can define specific validation rules for each field in the schema:
 
 ```js
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   // highlight-start
   content: {
     type: String,
@@ -58,21 +58,21 @@ The Mongoose [custom validator](https://mongoosejs.com/docs/validation.html#cust
 allows us to create new validators if none of the built-in ones cover our needs.
 
 If we try to store an object in the database that breaks one of the constraints, the operation will throw an exception.
-Let's change our handler for creating a new note so that it passes any potential exceptions to the error handler middleware:
+Let's change our handler for creating a new task so that it passes any potential exceptions to the error handler middleware:
 
 ```js
-app.post('/api/notes', (request, response, next) => { // highlight-line
+app.post('/api/tasks', (request, response, next) => { // highlight-line
   const body = request.body
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important || false,
     date: new Date(),
   })
 
-  note.save()
-    .then(savedNote => {
-      response.json(savedNote)
+  task.save()
+    .then(savedTask => {
+      response.json(savedTask)
     })
     .catch(error => next(error)) // highlight-line
 })
@@ -98,7 +98,7 @@ When validating an object fails, we return the following default error message f
 
 ![postman showing error message](../../images/3/50.png)
 
-We notice that the backend has now a problem: validations are not done when editing a note.
+We notice that the backend has now a problem: validations are not done when editing a task.
 The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem:
 validations are not run by default when `findOneAndUpdate` is executed.
 
@@ -106,16 +106,16 @@ The fix is easy.
 Let us also reformulate the route code a bit:
 
 ```js
-app.put('/api/notes/:id', (request, response, next) => {
+app.put('/api/tasks/:id', (request, response, next) => {
   const { content, important } = request.body // highlight-line
 
-  Note.findByIdAndUpdate(
+  Task.findByIdAndUpdate(
     request.params.id, 
     { content, important }, // highlight-line
     { new: true, runValidators: true, context: 'query' } // highlight-line
   ) 
-    .then(updatedNote => {
-      response.json(updatedNote)
+    .then(updatedTask => {
+      response.json(updatedTask)
     })
     .catch(error => next(error))
 })
@@ -133,19 +133,19 @@ For production, we have to set the database URL in the service that is hosting o
 In Fly.io that is done via `fly secrets set`:
 
 ```bash
-fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority'
+fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority'
 ```
 
 For Heroku, the same is done with the `heroku config:set` command.
 
 ```bash
-heroku config:set MONGODB_URI=mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/note-app?retryWrites=true
+heroku config:set MONGODB_URI=mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/task-app?retryWrites=true
 ```
 
 **NB:** if the command causes an error, give the value of MONGODB_URI in apostrophes:
 
 ```bash
-heroku config:set MONGODB_URI='mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/note-app?retryWrites=true'
+heroku config:set MONGODB_URI='mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/task-app?retryWrites=true'
 ```
 
 The application should now work.
@@ -160,7 +160,7 @@ For some reason the URL of the database was undefined.
 The `heroku config` command revealed that I had accidentally defined the URL to the `MONGO_URL` environment variable when the code expected it to be in `MONGODB_URI`.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of
-[this GitHub repository](https://github.com/comp227-hy2019/part3-notes-backend/tree/part3-5).
+[this GitHub repository](https://github.com/comp227-hy2019/part3-tasks-backend/tree/part3-5).
 
 </div>
 
@@ -426,7 +426,7 @@ Recently many projects have adopted the Airbnb [Javascript style guide](https://
 by taking Airbnb's [ESlint](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) configuration into use.
 
 You can find the code for our current application in its entirety in the *part3-7* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part3-7).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-7).
 </div>
 
 <div class="tasks">

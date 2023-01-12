@@ -52,18 +52,18 @@ h1 {
 
 There are many ways of matching elements by using [different types of CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
 
-If we wanted to target, let's say, each one of the notes with our styles,
-we could use the selector `li`, as all of the notes are wrapped inside `li` tags:
+If we wanted to target, let's say, each one of the tasks with our styles,
+we could use the selector `li`, as all of the tasks are wrapped inside `li` tags:
 
 ```js
-const Note = ({ note, toggleImportance }) => {
-  const label = note.important 
+const Task = ({ task, toggleImportance }) => {
+  const label = task.important 
     ? 'make not important' 
     : 'make important';
 
   return (
     <li>
-      {note.content} 
+      {task.content} 
       <button onClick={toggleImportance}>{label}</button>
     </li>
   )
@@ -83,27 +83,27 @@ li {
 Using element types for defining CSS rules is slightly problematic.
 If our application contained other `li` tags, the same style rule would also be applied to them.
 
-If we want to apply our style specifically to notes,
+If we want to apply our style specifically to tasks,
 then it is better to use [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
 In regular HTML, classes are defined as the value of the `class` attribute:
 
 ```html
-<li class="note">some text...</li>
+<li class="task">some text...</li>
 ```
 
 In React we have to use the [className](https://reactjs.org/docs/dom-elements.html#classname) attribute instead of the class attribute.
-With this in mind, let's make the following changes to our `Note` component:
+With this in mind, let's make the following changes to our `Task` component:
 
 ```js
-const Note = ({ note, toggleImportance }) => {
-  const label = note.important 
+const Task = ({ task, toggleImportance }) => {
+  const label = task.important 
     ? 'make not important' 
     : 'make important';
 
   return (
-    <li className='note'> // highlight-line
-      {note.content} 
+    <li className='task'> // highlight-line
+      {task.content} 
       <button onClick={toggleImportance}>{label}</button>
     </li>
   )
@@ -113,7 +113,7 @@ const Note = ({ note, toggleImportance }) => {
 Class selectors are defined with the `.classname` syntax:
 
 ```css
-.note {
+.task {
   color: grey;
   padding-top: 5px;
   font-size: 15px;
@@ -124,7 +124,7 @@ If you now add other `li` elements to the application, they will not be affected
 
 ### Improved error message
 
-We previously implemented the error message that was displayed when the user tried to toggle the importance of a deleted note with the `alert` method.
+We previously implemented the error message that was displayed when the user tried to toggle the importance of a deleted task with the `alert` method.
 Let's implement the error message as its own React component.
 
 The component is quite simple:
@@ -151,8 +151,8 @@ Let's initialize it with some error message so that we can immediately test our 
 
 ```js
 const App = () => {
-  const [notes, setNotes] = useState([]) 
-  const [newNote, setNewNote] = useState('')
+  const [tasks, setTasks] = useState([]) 
+  const [newTask, setNewTask] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState('some error happened...') // highlight-line
 
@@ -160,7 +160,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <Notification message={errorMessage} /> // highlight-line
       <div>
         <button onClick={() => setShowAll(!showAll)}>
@@ -192,23 +192,23 @@ Let's change the `toggleImportanceOf` function in the following way:
 
 ```js
   const toggleImportanceOf = id => {
-    const note = notes.find(n => n.id === id)
-    const changedNote = { ...note, important: !note.important }
+    const task = tasks.find(n => n.id === id)
+    const changedTask = { ...task, important: !task.important }
 
-    noteService
-      .update(id, changedNote).then(returnedNote => {
-        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+    taskService
+      .update(id, changedTask).then(returnedTask => {
+        setTasks(tasks.map(task => task.id !== id ? task : returnedTask))
       })
       .catch(error => {
         // highlight-start
         setErrorMessage(
-          `Note '${note.content}' was already removed from server`
+          `Task '${task.content}' was already removed from server`
         )
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
         // highlight-end
-        setNotes(notes.filter(n => n.id !== id))
+        setTasks(tasks.filter(n => n.id !== id))
       })
   }
 ```
@@ -220,7 +220,7 @@ The result looks like this:
 
 ![error removed from server screenshot from app](../../images/2/26e.png)
 
-The code for the current state of our application can be found in the  *part2-7* branch on [GitHub](https://github.com/comp227/part2-notes/tree/part2-7).
+The code for the current state of our application can be found in the  *part2-7* branch on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-7).
 
 ### Inline styles
 
@@ -269,7 +269,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      <em>Note app, Department of Computer Science, University of Helsinki 2022</em>
+      <em>Task app, Department of Computer Science, University of Helsinki 2022</em>
     </div>
   )
 }
@@ -280,7 +280,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
 
       <Notification message={errorMessage} />
 
@@ -308,7 +308,7 @@ A React component defines the HTML for structuring the content,
 the JavaScript functions for determining functionality, and also the component's styling; all in one place.
 This is to create individual components that are as independent and reusable as possible.
 
-The code of the final version of our application can be found in the *part2-8* branch on [GitHub](https://github.com/comp227/part2-notes/tree/part2-8).
+The code of the final version of our application can be found in the *part2-8* branch on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-8).
 
 </div>
 

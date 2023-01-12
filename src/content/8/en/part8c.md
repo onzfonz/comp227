@@ -295,7 +295,7 @@ With this base, we can start creating an app that we could, later on, deploy int
 For this set of exercises, you will be developing a backend for an existing project called **Patientor**,
 which is a simple medical record application for doctors who handle diagnoses and basic health information of their patients.
 
-The [frontend](https://github.com/comp227/patientor) has already been built by outsider experts and your task is to create a backend to support the existing code.
+The [frontend](https://github.com/comp227/patientor) has already been built by outsider experts and your job is to create a backend to support the existing code.
 
 #### 8.8: Patientor backend, step1
 
@@ -1445,7 +1445,7 @@ const toNewDiaryEntry = (object: unknown): NewDiaryEntry => {
 ```
 
 we notice that the code does not compile.
-This is because the [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type) type
+This is because the [unknown](https://www.typescriptlang.org/docs/handbook/release-tasks/typescript-3-0.html#new-unknown-top-type) type
 does not allow any operations, so accessing the fields is not possible.
 
 We can fix this by destructuring the fields to variables of the type unknown as follows:

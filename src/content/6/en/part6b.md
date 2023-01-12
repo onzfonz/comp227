@@ -7,9 +7,9 @@ lang: en
 
 <div class="content">
 
-Let's continue our work with the simplified [redux version](/part6/flux_architecture_and_redux#redux-notes) of our notes application.
+Let's continue our work with the simplified [redux version](/part6/flux_architecture_and_redux#redux-tasks) of our tasks application.
 
-To ease our development, let's change our reducer so that the store gets initialized with a state that contains a couple of notes:
+To ease our development, let's change our reducer so that the store gets initialized with a state that contains a couple of tasks:
 
 ```js
 const initialState = [
@@ -25,17 +25,17 @@ const initialState = [
   },
 ]
 
-const noteReducer = (state = initialState, action) => {
+const taskReducer = (state = initialState, action) => {
   // ...
 }
 
 // ...
-export default noteReducer
+export default taskReducer
 ```
 
 ### Store with complex state
 
-Let's implement filtering for the notes that are displayed to the user.
+Let's implement filtering for the tasks that are displayed to the user.
 The user interface for the filters will be implemented with [radio buttons](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio):
 
 ![browser with important/not radio buttons and list](../../images/6/01e.png)
@@ -43,8 +43,8 @@ The user interface for the filters will be implemented with [radio buttons](http
 Let's start with a very simple and straightforward implementation:
 
 ```js
-import NewNote from './components/NewNote'
-import Notes from './components/Notes'
+import NewTask from './components/NewTask'
+import Tasks from './components/Tasks'
 
 const App = () => {
 //highlight-start
@@ -55,7 +55,7 @@ const App = () => {
 
   return (
     <div>
-      <NewNote />
+      <NewTask />
         //highlight-start
       <div>
         all          <input type="radio" name="filter"
@@ -66,7 +66,7 @@ const App = () => {
           onChange={() => filterSelected('NONIMPORTANT')} />
       </div>
       //highlight-end
-      <Notes />
+      <Tasks />
     </div>
   )
 }
@@ -76,12 +76,12 @@ Since the `name` attribute of all the radio buttons is the same, they form a **b
 
 The buttons have a change handler that currently only prints the string associated with the clicked button to the console.
 
-We decide to implement the filter functionality by storing *the value of the filter* in the redux store in addition to the notes themselves.
+We decide to implement the filter functionality by storing *the value of the filter* in the redux store in addition to the tasks themselves.
 The state of the store should look like this after making these changes:
 
 ```js
 {
-  notes: [
+  tasks: [
     { content: 'reducer defines how redux store works', important: true, id: 1},
     { content: 'state of store can contain any data', important: false, id: 2}
   ],
@@ -89,11 +89,11 @@ The state of the store should look like this after making these changes:
 }
 ```
 
-Only the array of notes is stored in the state of the current implementation of our application.
+Only the array of tasks is stored in the state of the current implementation of our application.
 In the new implementation, the state object has two properties:
 
-- `notes` that contains the array of notes
-- `filter` that contains a string indicating which notes should be displayed to the user.
+- `tasks` that contains the array of tasks
+- `filter` that contains a string indicating which tasks should be displayed to the user.
 
 ### Combined reducers
 
@@ -149,12 +149,12 @@ import { createStore, combineReducers } from 'redux' // highlight-line
 import { Provider } from 'react-redux' 
 import App from './App'
 
-import noteReducer from './reducers/noteReducer'
+import taskReducer from './reducers/taskReducer'
 import filterReducer from './reducers/filterReducer' // highlight-line
 
  // highlight-start
 const reducer = combineReducers({
-  notes: noteReducer,
+  tasks: taskReducer,
   filter: filterReducer
 })
  // highlight-end
@@ -177,7 +177,7 @@ Since our application breaks completely at this point, we render an empty `div` 
 
 The state of the store gets printed to the console:
 
-![devtools console showing notes array data](../../images/6/4e.png)
+![devtools console showing tasks array data](../../images/6/4e.png)
 
 As we can see from the output, the store has the exact shape we wanted it to!
 
@@ -185,31 +185,31 @@ Let's take a closer look at how the combined reducer is created:
 
 ```js
 const reducer = combineReducers({
-  notes: noteReducer,
+  tasks: taskReducer,
   filter: filterReducer,
 })
 ```
 
-The state of the store defined by the reducer above is an object with two properties: `notes` and `filter`.
-The value of the `notes` property is defined by the `noteReducer`, which does not have to deal with the other properties of the state.
+The state of the store defined by the reducer above is an object with two properties: `tasks` and `filter`.
+The value of the `tasks` property is defined by the `taskReducer`, which does not have to deal with the other properties of the state.
 Likewise, the `filter` property is managed by the `filterReducer`.
 
 Before we make more changes to the code, let's take a look at how different actions change the state of the store defined by the combined reducer.
 Let's add the following to the *index.js* file:
 
 ```js
-import { createNote } from './reducers/noteReducer'
+import { createTask } from './reducers/taskReducer'
 import { filterChange } from './reducers/filterReducer'
 //...
 store.subscribe(() => console.log(store.getState()))
 store.dispatch(filterChange('IMPORTANT'))
-store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
+store.dispatch(createTask('combineReducers forms one reducer from many simple reducers'))
 ```
 
-By simulating the creation of a note and changing the state of the filter in this fashion,
+By simulating the creation of a task and changing the state of the filter in this fashion,
 the state of the store gets logged to the console after every change that is made to the store:
 
-![devtools console output showing notes filter and new note](../../images/6/5e.png)
+![devtools console output showing tasks filter and new task](../../images/6/5e.png)
 
 At this point, it is good to become aware of a tiny but important detail.
 If we add a console log statement *to the beginning of both reducers*:
@@ -223,7 +223,7 @@ const filterReducer = (state = 'ALL', action) => {
 
 Based on the console output one might get the impression that every action gets duplicated:
 
-![devtools console output showing dupblicated actions in note and filter reducers](../../images/6/6.png)
+![devtools console output showing dupblicated actions in task and filter reducers](../../images/6/6.png)
 
 Is there a bug in our code? No.
 The combined reducer works in such a way that every `action` gets handled in ***every*** part of the combined reducer.
@@ -243,26 +243,26 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-Next, let's fix a bug that is caused by the code expecting the application store to be an array of notes:
+Next, let's fix a bug that is caused by the code expecting the application store to be an array of tasks:
 
-![browser TypeError: notes.map is not a function](../../images/6/7ea.png)
+![browser TypeError: tasks.map is not a function](../../images/6/7ea.png)
 
 It's an easy fix.
-Because the notes are in the store's field *`notes`*, we only have to make a little change to the selector function:
+Because the tasks are in the store's field *`tasks`*, we only have to make a little change to the selector function:
 
 ```js
-const Notes = () => {
+const Tasks = () => {
   const dispatch = useDispatch()
-  const notes = useSelector(state => state.notes) // highlight-line
+  const tasks = useSelector(state => state.tasks) // highlight-line
 
   return(
     <ul>
-      {notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
+      {tasks.map(task =>
+        <Task
+          key={task.id}
+          task={task}
           handleClick={() => 
-            dispatch(toggleImportanceOf(note.id))
+            dispatch(toggleImportanceOf(task.id))
           }
         />
       )}
@@ -274,13 +274,13 @@ const Notes = () => {
 Previously the selector function returned the whole state of the store:
 
 ```js
-const notes = useSelector(state => state)
+const tasks = useSelector(state => state)
 ```
 
-And now it returns only its field `notes`
+And now it returns only its field `tasks`
 
 ```js
-const notes = useSelector(state => state.notes)
+const tasks = useSelector(state => state.tasks)
 ```
 
 Let's extract the visibility filter into its own *src/components/VisibilityFilter.js* component:
@@ -322,16 +322,16 @@ export default VisibilityFilter
 With the new component `App` can be simplified as follows:
 
 ```js
-import Notes from './components/Notes'
-import NewNote from './components/NewNote'
+import Tasks from './components/Tasks'
+import NewTask from './components/NewTask'
 import VisibilityFilter from './components/VisibilityFilter'
 
 const App = () => {
   return (
     <div>
-      <NewNote />
+      <NewTask />
       <VisibilityFilter />
-      <Notes />
+      <Tasks />
     </div>
   )
 }
@@ -342,30 +342,30 @@ export default App
 The implementation is rather straightforward.
 Clicking the different radio buttons changes the state of the store's `filter` property.
 
-Let's change the `Notes` component to incorporate the filter:
+Let's change the `Tasks` component to incorporate the filter:
 
 ```js
-const Notes = () => {
+const Tasks = () => {
   const dispatch = useDispatch()
   // highlight-start
-  const notes = useSelector(state => {
+  const tasks = useSelector(state => {
     if ( state.filter === 'ALL' ) {
-      return state.notes
+      return state.tasks
     }
     return state.filter  === 'IMPORTANT' 
-      ? state.notes.filter(note => note.important)
-      : state.notes.filter(note => !note.important)
+      ? state.tasks.filter(task => task.important)
+      : state.tasks.filter(task => !task.important)
   })
   // highlight-end
 
   return(
     <ul>
-      {notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
+      {tasks.map(task =>
+        <Task
+          key={task.id}
+          task={task}
           handleClick={() => 
-            dispatch(toggleImportanceOf(note.id))
+            dispatch(toggleImportanceOf(task.id))
           }
         />
       )}
@@ -376,19 +376,19 @@ const Notes = () => {
 We only make changes to the selector function, which used to be
 
 ```js
-useSelector(state => state.notes)
+useSelector(state => state.tasks)
 ```
 
 Let's simplify the selector by destructuring the fields from the state it receives as a parameter:
 
 ```js
-const notes = useSelector(({ filter, notes }) => {
+const tasks = useSelector(({ filter, tasks }) => {
   if ( filter === 'ALL' ) {
-    return notes
+    return tasks
   }
   return filter  === 'IMPORTANT' 
-    ? notes.filter(note => note.important)
-    : notes.filter(note => !note.important)
+    ? tasks.filter(task => task.important)
+    : tasks.filter(task => !task.important)
 })
 ```
 
@@ -420,13 +420,13 @@ import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit' // highlight-line
 import App from './App'
 
-import noteReducer from './reducers/noteReducer'
+import taskReducer from './reducers/taskReducer'
 import filterReducer from './reducers/filterReducer'
 
  // highlight-start
 const store = configureStore({
   reducer: {
-    notes: noteReducer,
+    tasks: taskReducer,
     filter: filterReducer
   }
 })
@@ -447,7 +447,7 @@ and many commonly used libraries without the need for additional configuration.
 
 Let's move on to refactoring the reducers, which brings forth the benefits of the Redux Toolkit.
 With Redux Toolkit, we can easily create reducer and related action creators using the [createSlice](https://redux-toolkit.js.org/api/createSlice) function.
-We can use the `createSlice` function to refactor the reducer and action creators in the *reducers/noteReducer.js* file in the following manner:
+We can use the `createSlice` function to refactor the reducer and action creators in the *reducers/taskReducer.js* file in the following manner:
 
 ```js
 import { createSlice } from '@reduxjs/toolkit' // highlight-line
@@ -469,11 +469,11 @@ const generateId = () =>
   Number((Math.random() * 1000000).toFixed(0))
 
 // highlight-start
-const noteSlice = createSlice({
-  name: 'notes',
+const taskSlice = createSlice({
+  name: 'tasks',
   initialState,
   reducers: {
-    createNote(state, action) {
+    createTask(state, action) {
       const content = action.payload
 
       state.push({
@@ -485,15 +485,15 @@ const noteSlice = createSlice({
     toggleImportanceOf(state, action) {
       const id = action.payload
 
-      const noteToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(n => n.id === id)
 
-      const changedNote = { 
-        ...noteToChange, 
-        important: !noteToChange.important 
+      const changedTask = { 
+        ...taskToChange, 
+        important: !taskToChange.important 
       }
 
-      return state.map(note =>
-        note.id !== id ? note : changedNote 
+      return state.map(task =>
+        task.id !== id ? task : changedTask 
       )     
     }
   },
@@ -502,7 +502,7 @@ const noteSlice = createSlice({
 ```
 
 The `createSlice` function's `name` parameter defines the prefix which is used in the action's type values.
-For example, the `createNote` action defined later will have the type value of `notes/createNote`.
+For example, the `createTask` action defined later will have the type value of `tasks/createTask`.
 It is a good practice to give the parameter a value, which is unique among the reducers.
 This way there won't be unexpected collisions between the application's action type values.
 The `initialState` parameter defines the reducer's initial state.
@@ -510,20 +510,20 @@ The `reducers` parameter takes the reducer itself as an object, of which functio
 Notice that the `action.payload` in the function contains the argument provided by calling the action creator:
 
 ```js
-dispatch(createNote('Redux Toolkit is awesome!'))
+dispatch(createTask('Redux Toolkit is awesome!'))
 ```
 
 This dispatch call responds to dispatching the following object:
 
 ```js
-dispatch({ type: 'notes/createNote', payload: 'Redux Toolkit is awesome!' })
+dispatch({ type: 'tasks/createTask', payload: 'Redux Toolkit is awesome!' })
 ```
 
-If you followed closely, you might have noticed that inside the `createNote` action,
+If you followed closely, you might have noticed that inside the `createTask` action,
 there seems to happen something that violates the reducers' immutability principle mentioned earlier:
 
 ```js
-createNote(state, action) {
+createTask(state, action) {
   const content = action.payload
 
   state.push({
@@ -545,47 +545,47 @@ In this case, the function ***returns*** the new state.
 Nevertheless mutating the state will often come in handy especially when a complex state needs to be updated.
 
 The `createSlice` function returns an object containing the reducer as well as the action creators defined by the `reducers` parameter.
-The reducer can be accessed by the `noteSlice.reducer` property, whereas the action creators by the `noteSlice.actions` property.
+The reducer can be accessed by the `taskSlice.reducer` property, whereas the action creators by the `taskSlice.actions` property.
 We can produce the file's exports in the following way:
 
 ```js
-const noteSlice = createSlice(/* ... */)
+const taskSlice = createSlice(/* ... */)
 
 // highlight-start
-export const { createNote, toggleImportanceOf } = noteSlice.actions
+export const { createTask, toggleImportanceOf } = taskSlice.actions
 
-export default noteSlice.reducer
+export default taskSlice.reducer
 // highlight-end
 ```
 
 The imports in other files will work just as they did before:
 
 ```js
-import noteReducer, { createNote, toggleImportanceOf } from './reducers/noteReducer'
+import taskReducer, { createTask, toggleImportanceOf } from './reducers/taskReducer'
 ```
 
 We need to alter the tests a bit due to the naming conventions of ReduxToolkit:
 
 ```js
-import noteReducer from './noteReducer'
+import taskReducer from './taskReducer'
 import deepFreeze from 'deep-freeze'
 
-describe('noteReducer', () => {
-  test('returns new state with action notes/createNote', () => {
+describe('taskReducer', () => {
+  test('returns new state with action tasks/createTask', () => {
     const state = []
     const action = {
-      type: 'notes/createNote', // highlight-line
+      type: 'tasks/createTask', // highlight-line
       payload: 'the app state is in redux store', // highlight-line
     }
 
     deepFreeze(state)
-    const newState = noteReducer(state, action)
+    const newState = taskReducer(state, action)
 
     expect(newState).toHaveLength(1)
     expect(newState.map(s => s.content)).toContainEqual(action.payload) // highlight-line
   })
 
-  test('returns new state with action notes/toggleImportanceOf', () => {
+  test('returns new state with action tasks/toggleImportanceOf', () => {
     const state = [
       {
         content: 'the app state is in redux store',
@@ -599,12 +599,12 @@ describe('noteReducer', () => {
       }]
   
     const action = {
-      type: 'notes/toggleImportanceOf', // highlight-line
+      type: 'tasks/toggleImportanceOf', // highlight-line
       payload: 2 // highlight-line
     }
   
     deepFreeze(state)
-    const newState = noteReducer(state, action)
+    const newState = taskReducer(state, action)
   
     expect(newState).toHaveLength(2)
   
@@ -631,14 +631,14 @@ Once the addon is installed, clicking the ***Redux*** tab in the browser's conso
 
 You can inspect how dispatching a certain action changes the state by clicking the action:
 
-![devtools inspecting notes tree in redux](../../images/6/12ea.png)
+![devtools inspecting tasks tree in redux](../../images/6/12ea.png)
 
 It is also possible to dispatch actions to the store using the development tools:
 
-![devtools redux dispatching createNote with payload](../../images/6/13ea.png)
+![devtools redux dispatching createTask with payload](../../images/6/13ea.png)
 
 You can find the code for our current application in its entirety in the *part6-2* branch of
-[this GitHub repository](https://github.com/comp227/redux-notes/tree/part6-2).
+[this GitHub repository](https://github.com/comp227/redux-tasks/tree/part6-2).
 
 </div>
 

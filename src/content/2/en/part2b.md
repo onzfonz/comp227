@@ -7,26 +7,26 @@ lang: en
 
 <div class="content">
 
-Let's continue expanding our application by allowing users to add new notes.
-You can find the code for our current application [here](https://github.com/comp227/part2-notes/tree/part2-1).
+Let's continue expanding our application by allowing users to add new tasks.
+You can find the code for our current application [here](https://github.com/comp227/part2-tasks/tree/part2-1).
 
-To get our page to update when new notes are added it's best to store the notes in the `App` component's state.
+To get our page to update when new tasks are added it's best to store the tasks in the `App` component's state.
 Let's import the [useState](https://reactjs.org/docs/hooks-state.html) function
-and use it to define a piece of state that gets initialized with the initial notes array passed in the props.
+and use it to define a piece of state that gets initialized with the initial tasks array passed in the props.
 
 ```js
 import { useState } from 'react' // highlight-line
-import Note from './components/Note'
+import Task from './components/Task'
 
 const App = (props) => { // highlight-line
-  const [notes, setNotes] = useState(props.notes) // highlight-line
+  const [tasks, setTasks] = useState(props.tasks) // highlight-line
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
+        {tasks.map(task => 
+          <Task key={task.id} task={task} />
         )}
       </ul>
     </div>
@@ -36,22 +36,22 @@ const App = (props) => { // highlight-line
 export default App 
 ```
 
-The component uses the `useState` function to initialize the piece of state stored in `notes` with the array of notes passed in the props:
+The component uses the `useState` function to initialize the piece of state stored in `tasks` with the array of tasks passed in the props:
 
 ```js
 const App = (props) => { 
-  const [notes, setNotes] = useState(props.notes) 
+  const [tasks, setTasks] = useState(props.tasks) 
 
   // ...
 }
 ```
 
-If we wanted to start with an empty list of notes, we would set the initial value as an empty array,
+If we wanted to start with an empty list of tasks, we would set the initial value as an empty array,
 and since the props would not be used, we could omit the `props` parameter from the function definition:
 
 ```js
 const App = () => { 
-  const [notes, setNotes] = useState([]) 
+  const [tasks, setTasks] = useState([]) 
 
   // ...
 }  
@@ -59,14 +59,14 @@ const App = () => {
 
 Let's stick with the initial value passed in the props for the time being.
 
-Next, let's add an HTML [form](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms) to the component that will be used for adding new notes.
+Next, let's add an HTML [form](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms) to the component that will be used for adding new tasks.
 
 ```js
 const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
+  const [tasks, setTasks] = useState(props.tasks)
 
 // highlight-start 
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
   }
@@ -74,14 +74,14 @@ const App = (props) => {
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
+        {tasks.map(task => 
+          <Task key={task.id} task={task} />
         )}
       </ul>
       // highlight-start 
-      <form onSubmit={addNote}>
+      <form onSubmit={addTask}>
         <input />
         <button type="submit">save</button>
       </form>   
@@ -91,12 +91,12 @@ const App = (props) => {
 }
 ```
 
-We have added the `addNote` function as an event handler to the form element that will be called when the form is submitted, by clicking the submit button.
+We have added the `addTask` function as an event handler to the form element that will be called when the form is submitted, by clicking the submit button.
 
 We use the method discussed in [part 1](/part1/component_state_event_handlers#event-handling) for defining our event handler:
 
 ```js
-const addNote = (event) => {
+const addTask = (event) => {
   event.preventDefault()
   console.log('button clicked', event.target)
 }
@@ -121,32 +121,32 @@ How do we access the data contained in the form's `input` element?
 There are many ways to accomplish this; the first method we will take a look at is through the use of so-called
 [controlled components](https://reactjs.org/docs/forms.html#controlled-components).
 
-Let's add a new piece of state called `newNote` for storing the user-submitted input **and** let's set it as the `input` element's `value` attribute:
+Let's add a new piece of state called `newTask` for storing the user-submitted input **and** let's set it as the `input` element's `value` attribute:
 
 ```js
 const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
+  const [tasks, setTasks] = useState(props.tasks)
   // highlight-start
-  const [newNote, setNewNote] = useState(
-    'a new note...'
+  const [newTask, setNewTask] = useState(
+    'a new task...'
   ) 
   // highlight-end
 
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
   }
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
+        {tasks.map(task => 
+          <Task key={task.id} task={task} />
         )}
       </ul>
-      <form onSubmit={addNote}>
-        <input value={newNote} /> //highlight-line
+      <form onSubmit={addTask}>
+        <input value={newTask} /> //highlight-line
         <button type="submit">save</button>
       </form>   
     </div>
@@ -154,7 +154,7 @@ const App = (props) => {
 }
 ```
 
-The placeholder text stored as the initial value of the `newNote` state appears in the `input` element, but the input text can't be edited.
+The placeholder text stored as the initial value of the `newTask` state appears in the `input` element, but the input text can't be edited.
 The console displays a warning that gives us a clue as to what might be wrong:
 
 ![provided value to prop without onchange console error](../../images/2/7e.png)
@@ -166,32 +166,32 @@ To enable editing of the input element, we have to register an **event handler**
 
 ```js
 const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
-  const [newNote, setNewNote] = useState(
-    'a new note...'
+  const [tasks, setTasks] = useState(props.tasks)
+  const [newTask, setNewTask] = useState(
+    'a new task...'
   ) 
 
   // ...
 
 // highlight-start
-  const handleNoteChange = (event) => {
+  const handleTaskChange = (event) => {
     console.log(event.target.value)
-    setNewNote(event.target.value)
+    setNewTask(event.target.value)
   }
 // highlight-end
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
+        {tasks.map(task => 
+          <Task key={task.id} task={task} />
         )}
       </ul>
-      <form onSubmit={addNote}>
+      <form onSubmit={addTask}>
         <input
-          value={newNote}
-          onChange={handleNoteChange} // highlight-line
+          value={newTask}
+          onChange={handleTaskChange} // highlight-line
         />
         <button type="submit">save</button>
       </form>   
@@ -204,8 +204,8 @@ We have now registered an event handler to the `onChange` attribute of the form'
 
 ```js
 <input
-  value={newNote}
-  onChange={handleNoteChange}
+  value={newTask}
+  onChange={handleTaskChange}
 />
 ```
 
@@ -213,9 +213,9 @@ The event handler is called every time *a change occurs in the input element*.
 The event handler function receives the event object as its `event` parameter:
 
 ```js
-const handleNoteChange = (event) => {
+const handleTaskChange = (event) => {
   console.log(event.target.value)
-  setNewNote(event.target.value)
+  setNewTask(event.target.value)
 }
 ```
 
@@ -233,91 +233,91 @@ You can directly view how the state changes from the React Devtools tab:
 
 ![state changes in react devtools shows typing too](../../images/2/9ea.png)
 
-Now the `App` component's `newNote` state reflects the current value of the input,
-which means that we can complete the `addNote` function for creating new notes:
+Now the `App` component's `newTask` state reflects the current value of the input,
+which means that we can complete the `addTask` function for creating new tasks:
 
 ```js
-const addNote = (event) => {
+const addTask = (event) => {
   event.preventDefault()
-  const noteObject = {
-    content: newNote,
+  const taskObject = {
+    content: newTask,
     date: new Date().toISOString(),
     important: Math.random() < 0.5,
-    id: notes.length + 1,
+    id: tasks.length + 1,
   }
 
-  setNotes(notes.concat(noteObject))
-  setNewNote('')
+  setTasks(tasks.concat(taskObject))
+  setNewTask('')
 }
 ```
 
-First, we create a new object for the note called `noteObject` that will receive its content from the component's `newNote` state.
-The unique identifier `id` is generated based on the total number of notes.
-This method works for our application since notes are never deleted.
-With the help of the `Math.random()` function, our note has a 50% chance of being marked as important.
+First, we create a new object for the task called `taskObject` that will receive its content from the component's `newTask` state.
+The unique identifier `id` is generated based on the total number of tasks.
+This method works for our application since tasks are never deleted.
+With the help of the `Math.random()` function, our task has a 50% chance of being marked as important.
 
-The new note is added to the list of notes using the
+The new task is added to the list of tasks using the
 [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) array method,
 introduced in [part 1](/part1/java_script#arrays):
 
 ```js
-setNotes(notes.concat(noteObject))
+setTasks(tasks.concat(taskObject))
 ```
 
-The method does not mutate the original `notes` array, but rather creates *a new copy of the array with the new item added to the end*.
+The method does not mutate the original `tasks` array, but rather creates *a new copy of the array with the new item added to the end*.
 This is important since we must [never mutate state directly](https://reactjs.org/docs/state-and-lifecycle.html#using-state-correctly) in React!
 
-The event handler also resets the value of the controlled input element by calling the `setNewNote` function of the `newNote` state:
+The event handler also resets the value of the controlled input element by calling the `setNewTask` function of the `newTask` state:
 
 ```js
-setNewNote('')
+setNewTask('')
 ```
 
 You can find the code for our current application in its entirety in the *part2-2* branch of
-[this GitHub repository](https://github.com/comp227/part2-notes/tree/part2-2).
+[this GitHub repository](https://github.com/comp227/part2-tasks/tree/part2-2).
 
 ### Filtering Displayed Elements
 
-Let's add some new functionality to our application that allows us to only view the important notes.
+Let's add some new functionality to our application that allows us to only view the important tasks.
 
-Let's add a piece of state to the `App` component that keeps track of which notes should be displayed:
+Let's add a piece of state to the `App` component that keeps track of which tasks should be displayed:
 
 ```js
 const App = (props) => {
-  const [notes, setNotes] = useState(props.notes) 
-  const [newNote, setNewNote] = useState('')
+  const [tasks, setTasks] = useState(props.tasks) 
+  const [newTask, setNewTask] = useState('')
   const [showAll, setShowAll] = useState(true) // highlight-line
   
   // ...
 }
 ```
 
-Let's change the component so that it stores a list of all the notes to be displayed in the `notesToShow` variable.
+Let's change the component so that it stores a list of all the tasks to be displayed in the `tasksToShow` variable.
 The items on the list depend on the state of the component:
 
 ```js
 import { useState } from 'react'
-import Note from './components/Note'
+import Task from './components/Task'
 
 const App = (props) => {
-  const [notes, setNotes] = useState(props.notes)
-  const [newNote, setNewNote] = useState('') 
+  const [tasks, setTasks] = useState(props.tasks)
+  const [newTask, setNewTask] = useState('') 
   const [showAll, setShowAll] = useState(true)
 
   // ...
 
 // highlight-start
-  const notesToShow = showAll
-    ? notes
-    : notes.filter(note => note.important === true)
+  const tasksToShow = showAll
+    ? tasks
+    : tasks.filter(task => task.important === true)
 // highlight-end
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notesToShow.map(note => // highlight-line
-          <Note key={note.id} note={note} />
+        {tasksToShow.map(task => // highlight-line
+          <Task key={task.id} task={task} />
         )}
       </ul>
       // ...
@@ -326,12 +326,12 @@ const App = (props) => {
 }
 ```
 
-The definition of the `notesToShow` variable is rather compact:
+The definition of the `tasksToShow` variable is rather compact:
 
 ```js
-const notesToShow = showAll
-  ? notes
-  : notes.filter(note => note.important === true)
+const tasksToShow = showAll
+  ? tasks
+  : tasks.filter(task => task.important === true)
 ```
 
 The definition uses the [conditional](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) operator
@@ -347,17 +347,17 @@ const result = condition ? val1 : val2
 the `result` variable will be set to the value of `val1` if `condition` is `true`.
 If `condition` is `false`, the `result` variable will be set to the value of`val2`.
 
-If the value of `showAll` is false, the `notesToShow` variable will be assigned to a list that only contains notes that have the `important` property set to true.
+If the value of `showAll` is false, the `tasksToShow` variable will be assigned to a list that only contains tasks that have the `important` property set to true.
 Filtering is done with the help of the array [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method:
 
 ```js
-notes.filter(note => note.important === true)
+tasks.filter(task => task.important === true)
 ```
 
-The comparison operator is redundant, since the value of `note.important` is either `true` or `false`, which means that we can simply write:
+The comparison operator is redundant, since the value of `task.important` is either `true` or `false`, which means that we can simply write:
 
 ```js
-notes.filter(note => note.important)
+tasks.filter(task => task.important)
 ```
 
 The reason we showed the comparison operator first was to emphasize an important detail: in JavaScript `val1 == val2` does not work as expected in all situations
@@ -372,18 +372,18 @@ The relevant changes are shown below:
 
 ```js
 import { useState } from 'react' 
-import Note from './components/Note'
+import Task from './components/Task'
 
 const App = (props) => {
-  const [notes, setNotes] = useState(props.notes) 
-  const [newNote, setNewNote] = useState('')
+  const [tasks, setTasks] = useState(props.tasks) 
+  const [newTask, setNewTask] = useState('')
   const [showAll, setShowAll] = useState(true)
 
   // ...
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
 // highlight-start      
       <div>
         <button onClick={() => setShowAll(!showAll)}>
@@ -392,8 +392,8 @@ const App = (props) => {
       </div>
 // highlight-end            
       <ul>
-        {notesToShow.map(note =>
-          <Note key={note.id} note={note} />
+        {tasksToShow.map(task =>
+          <Task key={task.id} task={task} />
         )}
       </ul>
       // ...
@@ -402,7 +402,7 @@ const App = (props) => {
 }
 ```
 
-The displayed notes (all versus important) are controlled with a button.
+The displayed tasks (all versus important) are controlled with a button.
 The event handler for the button is so simple that it has been defined directly in the attribute of the button element.
 The event handler switches the value of `showAll` from true to false and vice versa:
 
@@ -417,7 +417,7 @@ show {showAll ? 'important' : 'all'}
 ```
 
 You can find the code for our current application in its entirety in the *part2-3* branch of
-[this GitHub repository](https://github.com/comp227/part2-notes/tree/part2-3).
+[this GitHub repository](https://github.com/comp227/part2-tasks/tree/part2-3).
 </div>
 
 <div class="tasks">
@@ -497,7 +497,7 @@ Notice the use of the React developer tools extension in the picture above!
 Prevent the user from being able to add names that already exist in the phonebook.
 JavaScript arrays have numerous suitable
 [methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
-for accomplishing this task.
+for accomplishing this job.
 Keep in mind [how object equality works](https://www.joshbritz.co/posts/why-its-so-hard-to-check-object-equality/) in Javascript.
 
 Issue a warning with the [alert](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) command when such an action is attempted:

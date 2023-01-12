@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 Users must be able to log into our application, and when a user is logged in,
-their user information must automatically be attached to any new notes they create.
+their user information must automatically be attached to any new tasks they create.
 
 We will now implement support for [token-based authentication](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works) to the backend.
 
@@ -23,7 +23,7 @@ The principles of token-based authentication are depicted in the following seque
     - The token is signed digitally, making it impossible to falsify (with cryptographic means)
 - The backend responds with a status code indicating the operation was successful and returns the token with the response.
 - The browser saves the token, for example to the state of a React application.
-- When the user creates a new note (or does some other operation requiring identification),
+- When the user creates a new task (or does some other operation requiring identification),
 the React code sends the token to the server with the request.
 - The server uses the token to identify the user
 
@@ -122,8 +122,8 @@ The following is printed to the console:
 
 ```bash
 (node:32911) UnhandledPromiseRejectionWarning: Error: secretOrPrivateKey must have a value
-    at Object.module.exports [as sign] (/Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/sign.js:101:20)
-    at loginRouter.post (/Users/powercat/comp227/part3/notes-backend/controllers/login.js:26:21)
+    at Object.module.exports [as sign] (/Users/powercat/comp227/part3/tasks-backend/node_modules/jsonwebtoken/sign.js:101:20)
+    at loginRouter.post (/Users/powercat/comp227/part3/tasks-backend/controllers/login.js:26:21)
 (node:32911) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 2)
 ```
 
@@ -140,10 +140,10 @@ A wrong username or password returns an error message and the proper status code
 
 ![vs code rest response for incorrect login details](../../images/4/19ea.png)
 
-### Limiting creating new notes to logged-in users
+### Limiting creating new tasks to logged-in users
 
-Let's change creating new notes so that it is only possible if the post request has a valid token attached.
-The note is then saved to the notes list of the user identified by the token.
+Let's change creating new tasks so that it is only possible if the post request has a valid token attached.
+The task is then saved to the tasks list of the user identified by the token.
 
 There are several ways of sending the token from the browser to the server.
 We will use the [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) header.
@@ -160,7 +160,7 @@ the string `eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW`, the Authori
 Bearer eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW
 ```
 
-Creating new notes will change like so:
+Creating new tasks will change like so:
 
 ```js
 const jwt = require('jsonwebtoken') //highlight-line
@@ -176,7 +176,7 @@ const getTokenFrom = request => {
 }
   //highlight-end
 
-notesRouter.post('/', async (request, response) => {
+tasksRouter.post('/', async (request, response) => {
   const body = request.body
 //highlight-start
   const token = getTokenFrom(request)
@@ -189,18 +189,18 @@ notesRouter.post('/', async (request, response) => {
   const user = await User.findById(decodedToken.id)
 //highlight-end
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important === undefined ? false : body.important,
     date: new Date(),
     user: user._id
   })
 
-  const savedNote = await note.save()
-  user.notes = user.notes.concat(savedNote._id)
+  const savedTask = await task.save()
+  user.tasks = user.tasks.concat(savedTask._id)
   await user.save()
 
-  response.json(savedNote)
+  response.json(savedTask)
 })
 ```
 
@@ -229,7 +229,7 @@ if (!decodedToken.id) {
 
 When the identity of the maker of the request is resolved, the execution continues as before.
 
-A new note can now be created using Postman if the ***authorization*** header is given the correct value,
+A new task can now be created using Postman if the ***authorization*** header is given the correct value,
 the string `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ`, where the second value is the token returned by the ***login*** operation.
 
 Using Postman this looks as follows:
@@ -243,14 +243,14 @@ and with Visual Studio Code REST client
 ### Error handling
 
 Token verification can also cause a `JsonWebTokenError`.
-If we for example remove a few characters from the token and try creating a new note, this happens:
+If we for example remove a few characters from the token and try creating a new task, this happens:
 
 ```bash
 JsonWebTokenError: invalid signature
-    at /Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/verify.js:126:19
-    at getSecret (/Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/verify.js:80:14)
-    at Object.module.exports [as verify] (/Users/powercat/comp227/part3/notes-backend/node_modules/jsonwebtoken/verify.js:84:10)
-    at notesRouter.post (/Users/powercat/comp227/part3/notes-backend/controllers/notes.js:40:30)
+    at /Users/powercat/comp227/part3/tasks-backend/node_modules/jsonwebtoken/verify.js:126:19
+    at getSecret (/Users/powercat/comp227/part3/tasks-backend/node_modules/jsonwebtoken/verify.js:80:14)
+    at Object.module.exports [as verify] (/Users/powercat/comp227/part3/tasks-backend/node_modules/jsonwebtoken/verify.js:84:10)
+    at tasksRouter.post (/Users/powercat/comp227/part3/tasks-backend/controllers/tasks.js:40:30)
 ```
 
 There are many possible reasons for a decoding error.
@@ -285,7 +285,7 @@ const errorHandler = (error, request, response, next) => {
 ```
 
 The current application code can be found on
-[GitHub](https://github.com/comp227/part3-notes-backend/tree/part4-9), branch *part4-9*.
+[GitHub](https://github.com/comp227/part3-tasks-backend/tree/part4-9), branch *part4-9*.
 
 If the application has multiple interfaces requiring identification, JWT's validation should be separated into its own middleware.
 An existing library like [express-jwt](https://www.npmjs.com/package/express-jwt) could also be used.
@@ -383,7 +383,7 @@ that does not include any information about the user as it is quite often the ca
 For each API request, the server fetches the relevant information about the identity of the user from the database.
 It is also quite usual that instead of using Authorization-header, **cookies** are used as the mechanism for transferring the token between the client and the server.
 
-### End notes
+### End tasks
 
 There have been many changes to the code which have caused a typical problem for a fast-paced software project: most of the tests have broken.
 Because this part of the course is already jammed with new information, we will leave fixing the tests to a non-compulsory exercise.
@@ -598,28 +598,28 @@ Also, write a new test to ensure adding a blog fails with the proper status code
 This is the last exercise for this part of the course and it's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 
 <!---
-note left of user
+task left of user
   user fills in login form with
   username and password
-end note
+end task
 user -> browser: login button pressed
 
 browser -> backend: HTTP POST /api/login { username, password }
-note left of backend
+task left of backend
   backend generates TOKEN that identifies user 
-end note
+end task
 backend -> browser: TOKEN returned as message body 
-note left of browser
+task left of browser
   browser saves TOKEN
-end note
-note left of user
-  user creates a note
-end note
-user -> browser: create note button pressed
-browser -> backend: HTTP POST /api/notes { content } TOKEN in header
-note left of backend
+end task
+task left of user
+  user creates a task
+end task
+user -> browser: create task button pressed
+browser -> backend: HTTP POST /api/tasks { content } TOKEN in header
+task left of backend
   backend identifies userfrom the TOKEN
-end note
+end task
 
 backend -> browser: 201 created
 

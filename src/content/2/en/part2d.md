@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-When creating notes in our application, we would naturally want to store them in some backend server.
+When creating tasks in our application, we would naturally want to store them in some backend server.
 The [json-server](https://github.com/typicode/json-server) package claims to be a so-called REST or RESTful API in its documentation:
 
 > *Get a full fake REST API with zero coding in less than 30 seconds (seriously)*
@@ -25,18 +25,18 @@ aka URLs and HTTP request types, in REST.
 
 ### REST
 
-In REST terminology, we refer to individual data objects, such as the notes in our application, as **resources**.
+In REST terminology, we refer to individual data objects, such as the tasks in our application, as **resources**.
 Every resource has a unique address associated with it - its URL.
 According to a general convention used by json-server,
-we would be able to locate an individual note at the resource URL ***notes/3***, where 3 is the id of the resource.
-The ***notes*** URL, on the other hand, would point to a resource collection containing all the notes.
+we would be able to locate an individual task at the resource URL ***tasks/3***, where 3 is the id of the resource.
+The ***tasks*** URL, on the other hand, would point to a resource collection containing all the tasks.
 
 Resources are fetched from the server with HTTP GET requests.
-For instance, an HTTP GET request to the URL ***notes/3*** will return the note that has the id number 3.
-An HTTP GET request to the ***notes*** URL would return a list of all notes.
+For instance, an HTTP GET request to the URL ***tasks/3*** will return the task that has the id number 3.
+An HTTP GET request to the ***tasks*** URL would return a list of all tasks.
 
-Creating a new resource for storing a note is done by making an HTTP POST request to the ***notes*** URL according to the REST convention that the json-server adheres to.
-The data for the new note resource is sent in the `body` of the request.
+Creating a new resource for storing a task is done by making an HTTP POST request to the ***tasks*** URL according to the REST convention that the json-server adheres to.
+The data for the new task resource is sent in the `body` of the request.
 
 json-server requires all data to be sent in JSON format.
 What this means in practice is that the data must be a correctly formatted string
@@ -44,20 +44,20 @@ and that the request must contain the `Content-Type` request header with the val
 
 ### Sending Data to the Server
 
-Let's make the following changes to the event handler responsible for creating a new note:
+Let's make the following changes to the event handler responsible for creating a new task:
 
 ```js
-addNote = event => {
+addTask = event => {
   event.preventDefault()
-  const noteObject = {
-    content: newNote,
+  const taskObject = {
+    content: newTask,
     date: new Date(),
     important: Math.random() < 0.5,
   }
 
 // highlight-start
   axios
-    .post('http://localhost:3001/notes', noteObject)
+    .post('http://localhost:3001/tasks', taskObject)
     .then(response => {
       console.log(response)
     })
@@ -65,16 +65,16 @@ addNote = event => {
 }
 ```
 
-We create a new object for the note but omit the `id` property since it's better to let the server generate ids for our resources!
+We create a new object for the task but omit the `id` property since it's better to let the server generate ids for our resources!
 
 The object is sent to the server using the axios `post` method.
 The registered event handler logs the response that is sent back from the server to the console.
 
-When we try to create a new note, the following output pops up in the console:
+When we try to create a new task, the following output pops up in the console:
 
 ![data json output in console](../../images/2/20e.png)
 
-The newly created note resource is stored in the value of the `data` property of the `response` object.
+The newly created task resource is stored in the value of the `data` property of the `response` object.
 
 Sometimes it can be useful to inspect HTTP requests in the ***Network*** tab of Chrome developer tools,
 which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_apps#http-get):
@@ -86,32 +86,32 @@ We can use the inspector to check that the headers sent in the POST request are 
 Since the data we sent in the POST request was a JavaScript object,
 axios automatically knew to set the appropriate `application/json` value for the `Content-Type` header.
 
-The new note is not rendered to the screen yet.
-This is because we did not update the state of the `App` component when we created the new note.
+The new task is not rendered to the screen yet.
+This is because we did not update the state of the `App` component when we created the new task.
 Let's fix this:
 
 ```js
-addNote = event => {
+addTask = event => {
   event.preventDefault()
-  const noteObject = {
-    content: newNote,
+  const taskObject = {
+    content: newTask,
     date: new Date(),
     important: Math.random() > 0.5,
   }
 
   axios
-    .post('http://localhost:3001/notes', noteObject)
+    .post('http://localhost:3001/tasks', taskObject)
     .then(response => {
       // highlight-start
-      setNotes(notes.concat(response.data))
-      setNewNote('')
+      setTasks(tasks.concat(response.data))
+      setNewTask('')
       // highlight-end
     })
 }
 ```
 
-The new note returned by the backend server is added to the list of notes in our application's state
-in the customary way of using the `setNotes` function and then resetting the note creation form.
+The new task returned by the backend server is added to the list of tasks in our application's state
+in the customary way of using the `setTasks` function and then resetting the task creation form.
 An [important detail](/part1/a_more_complex_state_debugging_react_apps#handling-arrays)
 to remember is that the `concat` method does not change the component's original state,
 but instead creates a new copy of the list.
@@ -132,27 +132,27 @@ In the next part of the course, we will learn to implement our own logic in the 
 We will then take a closer look at tools like [Postman](https://www.postman.com/downloads/) that helps us to debug our server applications.
 However, inspecting the state of the json-server through the browser is sufficient for our current needs.
 
-> **NB:** In the current version of our application, the browser adds the creation date property to the note.
+> **NB:** In the current version of our application, the browser adds the creation date property to the task.
 Since the clock of the machine running the browser can be wrongly configured,
 it's much wiser to let the backend server generate this timestamp for us.
 This is in fact what we will do in the next part of the course.
 
-The code for the current state of our application can be found in the  *part2-5* branch on [GitHub](https://github.com/comp227/part2-notes/tree/part2-5).
+The code for the current state of our application can be found in the  *part2-5* branch on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-5).
 
-### Changing the Importance of Notes
+### Changing the Importance of Tasks
 
-Let's add a button to every note that can be used for toggling its importance.
+Let's add a button to every task that can be used for toggling its importance.
 
-We make the following changes to the `Note` component:
+We make the following changes to the `Task` component:
 
 ```js
-const Note = ({ note, toggleImportance }) => {
-  const label = note.important
+const Task = ({ task, toggleImportance }) => {
+  const label = task.important
     ? 'make not important' : 'make important'
 
   return (
     <li>
-      {note.content} 
+      {task.content} 
       <button onClick={toggleImportance}>{label}</button>
     </li>
   )
@@ -161,12 +161,12 @@ const Note = ({ note, toggleImportance }) => {
 
 We add a button to the component and assign its event handler as the `toggleImportance` function passed in the component's props.
 
-The `App` component defines an initial version of the `toggleImportanceOf` event handler function and passes it to every `Note` component:
+The `App` component defines an initial version of the `toggleImportanceOf` event handler function and passes it to every `Task` component:
 
 ```js
 const App = () => {
-  const [notes, setNotes] = useState([]) 
-  const [newNote, setNewNote] = useState('')
+  const [tasks, setTasks] = useState([]) 
+  const [newTask, setNewTask] = useState('')
   const [showAll, setShowAll] = useState(true)
 
   // ...
@@ -181,18 +181,18 @@ const App = () => {
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all' }
         </button>
       </div>      
       <ul>
-        {notesToShow.map(note => 
-          <Note
-            key={note.id}
-            note={note} 
-            toggleImportance={() => toggleImportanceOf(note.id)} // highlight-line
+        {tasksToShow.map(task => 
+          <Task
+            key={task.id}
+            task={task} 
+            toggleImportance={() => toggleImportanceOf(task.id)} // highlight-line
           />
         )}
       </ul>
@@ -202,9 +202,9 @@ const App = () => {
 }
 ```
 
-Notice how every note receives its own ***unique*** event handler function since the `id` of every note is unique.
+Notice how every task receives its own ***unique*** event handler function since the `id` of every task is unique.
 
-E.g., if `note.id` is 3, the event handler function returned by `toggleImportance(note.id)` will be:
+E.g., if `task.id` is 3, the event handler function returned by `toggleImportance(task.id)` will be:
 
 ```js
 () => { console.log('importance of 3 needs to be toggled') }
@@ -227,84 +227,84 @@ console.log(`importance of ${id} needs to be toggled`)
 We can now use the "dollar-bracket"-syntax to add parts to the string that will evaluate JavaScript expressions, e.g. the value of a variable.
 Notice that we use backticks in template strings instead of quotation marks used in regular JavaScript strings.
 
-Individual notes stored in the json-server backend can be modified in two different ways by making HTTP requests to the note's unique URL.
-We can either ***replace*** the entire note with an HTTP PUT request or only change some of the note's properties with an HTTP PATCH request.
+Individual tasks stored in the json-server backend can be modified in two different ways by making HTTP requests to the task's unique URL.
+We can either ***replace*** the entire task with an HTTP PUT request or only change some of the task's properties with an HTTP PATCH request.
 
 The final form of the event handler function is the following:
 
 ```js
 const toggleImportanceOf = id => {
-  const url = `http://localhost:3001/notes/${id}`
-  const note = notes.find(n => n.id === id)
-  const changedNote = { ...note, important: !note.important }
+  const url = `http://localhost:3001/tasks/${id}`
+  const task = tasks.find(n => n.id === id)
+  const changedTask = { ...task, important: !task.important }
 
-  axios.put(url, changedNote).then(response => {
-    setNotes(notes.map(n => n.id !== id ? n : response.data))
+  axios.put(url, changedTask).then(response => {
+    setTasks(tasks.map(n => n.id !== id ? n : response.data))
   })
 }
 ```
 
 Almost every line of code in the function body contains important details.
-The first line defines the unique URL for each note resource based on its id.
+The first line defines the unique URL for each task resource based on its id.
 
 The array [find method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
-is used to find the note we want to modify, and we then assign it to the `note` variable.
+is used to find the task we want to modify, and we then assign it to the `task` variable.
 
-After this, we create a **new object** that is an exact copy of the old note, apart from the important property.
+After this, we create a **new object** that is an exact copy of the old task, apart from the important property.
 
 The code for creating the new object that uses the
 [object spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
 may seem a bit strange at first:
 
 ```js
-const changedNote = { ...note, important: !note.important }
+const changedTask = { ...task, important: !task.important }
 ```
 
-In practice, `{ ...note }` creates a new object with copies of all the properties from the `note` object.
+In practice, `{ ...task }` creates a new object with copies of all the properties from the `task` object.
 When we add properties inside the curly braces after the spread object,
-e.g. `{ ...note, important: true }`, then the value of the `important` property of the new object will be `true`.
+e.g. `{ ...task, important: true }`, then the value of the `important` property of the new object will be `true`.
 In our example, the `important` property gets the negation of its previous value in the original object.
 
 There are a few things to point out.
-Why did we make a copy of the note object we wanted to modify when the following code also appears to work?
+Why did we make a copy of the task object we wanted to modify when the following code also appears to work?
 
 ```js
-const note = notes.find(n => n.id === id)
-note.important = !note.important
+const task = tasks.find(n => n.id === id)
+task.important = !task.important
 
-axios.put(url, note).then(response => {
+axios.put(url, task).then(response => {
   // ...
 ```
 
-This is not recommended because the variable `note` is a reference to an item in the `notes` array in the component's state,
+This is not recommended because the variable `task` is a reference to an item in the `tasks` array in the component's state,
 and as we recall we must never mutate state directly in React.
 
-It's also worth noting that the new object `changedNote` is only a so-called
+It's also worth noting that the new object `changedTask` is only a so-called
 [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
 meaning that the values of the new object are the same as the values of the old object.
 If the values of the old object were objects themselves,
 then the copied values in the new object would reference the same objects that were in the old object.
 
-The new note is then sent with a PUT request to the backend where it will replace the old object.
+The new task is then sent with a PUT request to the backend where it will replace the old object.
 
-The callback function sets the component's `notes` state to a new array that contains all the items from the previous `notes` array,
-except for the old note which is replaced by the updated version of it returned by the server:
+The callback function sets the component's `tasks` state to a new array that contains all the items from the previous `tasks` array,
+except for the old task which is replaced by the updated version of it returned by the server:
 
 ```js
-axios.put(url, changedNote).then(response => {
-  setNotes(notes.map(note => note.id !== id ? note : response.data))
+axios.put(url, changedTask).then(response => {
+  setTasks(tasks.map(task => task.id !== id ? task : response.data))
 })
 ```
 
 This is accomplished with the `map` method:
 
 ```js
-notes.map(note => note.id !== id ? note : response.data)
+tasks.map(task => task.id !== id ? task : response.data)
 ```
 
 The map method creates a new array by mapping every item from the old array into an item in the new array.
-In our example, the new array is created conditionally so that if `note.id !== id` is true; we simply copy the item from the old array into the new array.
-If the condition is false, then the note object returned by the server is added to the array instead.
+In our example, the new array is created conditionally so that if `task.id !== id` is true; we simply copy the item from the old array into the new array.
+If the condition is false, then the task object returned by the server is added to the array instead.
 
 This `map` trick may seem a bit strange at first, but it's worth spending some time wrapping your head around it.
 We will be using this method many times throughout the course.
@@ -315,11 +315,11 @@ The `App` component has become somewhat bloated after adding the code for commun
 In the spirit of the [single responsibility principle](https://en.wikipedia.org/wiki/Single_responsibility_principle),
 we deem it wise to extract this communication into its own [module](/part2/rendering_a_collection_modules#refactoring-modules).
 
-Let's create a *src/services* directory and add a file there called *notes.js*:
+Let's create a *src/services* directory and add a file there called *tasks.js*:
 
 ```js
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/notes'
+const baseUrl = 'http://localhost:3001/tasks'
 
 const getAll = () => {
   return axios.get(baseUrl)
@@ -340,18 +340,18 @@ export default {
 }
 ```
 
-The module returns an object that has three functions (`getAll`, `create`, and `update`) as its properties that deal with notes.
+The module returns an object that has three functions (`getAll`, `create`, and `update`) as its properties that deal with tasks.
 The functions directly return the promises returned by the axios methods.
 
 The `App` component uses `import` to get access to the module:
 
 ```js
-import noteService from './services/notes' // highlight-line
+import taskService from './services/tasks' // highlight-line
 
 const App = () => {
 ```
 
-The functions of the module can be used directly with the imported variable `noteService` as follows:
+The functions of the module can be used directly with the imported variable `taskService` as follows:
 
 ```js
 const App = () => {
@@ -359,41 +359,41 @@ const App = () => {
 
   useEffect(() => {
     // highlight-start
-    noteService
+    taskService
       .getAll()
       .then(response => {
-        setNotes(response.data)
+        setTasks(response.data)
       })
     // highlight-end
   }, [])
 
   const toggleImportanceOf = id => {
-    const note = notes.find(n => n.id === id)
-    const changedNote = { ...note, important: !note.important }
+    const task = tasks.find(n => n.id === id)
+    const changedTask = { ...task, important: !task.important }
 
     // highlight-start
-    noteService
-      .update(id, changedNote)
+    taskService
+      .update(id, changedTask)
       .then(response => {
-        setNotes(notes.map(note => note.id !== id ? note : response.data))
+        setTasks(tasks.map(task => task.id !== id ? task : response.data))
       })
     // highlight-end
   }
 
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
-    const noteObject = {
-      content: newNote,
+    const taskObject = {
+      content: newTask,
       date: new Date().toISOString(),
       important: Math.random() > 0.5
     }
 
 // highlight-start
-    noteService
-      .create(noteObject)
+    taskService
+      .create(taskObject)
       .then(response => {
-        setNotes(notes.concat(response.data))
-        setNewNote('')
+        setTasks(tasks.concat(response.data))
+        setNewTask('')
       })
 // highlight-end
   }
@@ -408,10 +408,10 @@ We could take our implementation a step further.
 When the `App` component uses the functions, it receives an object that contains the entire response for the HTTP request:
 
 ```js
-noteService
+taskService
   .getAll()
   .then(response => {
-    setNotes(response.data)
+    setTasks(response.data)
   })
 ```
 
@@ -421,10 +421,10 @@ The module would be much nicer to use if, instead of the entire HTTP response, w
 Using the module would then look like this:
 
 ```js
-noteService
+taskService
   .getAll()
-  .then(initialNotes => {
-    setNotes(initialNotes)
+  .then(initialTasks => {
+    setTasks(initialTasks)
   })
 ```
 
@@ -432,7 +432,7 @@ We can achieve this by changing the code in the module as follows (the current c
 
 ```js
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/notes'
+const baseUrl = 'http://localhost:3001/tasks'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -486,50 +486,50 @@ After defining the parameter of the `then` method to directly return `response.d
 When the HTTP request is successful, the promise returns the data sent back in the response from the backend.
 
 We have to update the `App` component to work with the changes made to our module.
-We have to fix the callback functions given as parameters to the `noteService` object's methods so that they use the directly returned response data:
+We have to fix the callback functions given as parameters to the `taskService` object's methods so that they use the directly returned response data:
 
 ```js
 const App = () => {
   // ...
 
   useEffect(() => {
-    noteService
+    taskService
       .getAll()
       // highlight-start      
-      .then(initialNotes => {
-        setNotes(initialNotes)
+      .then(initialTasks => {
+        setTasks(initialTasks)
       // highlight-end
       })
   }, [])
 
   const toggleImportanceOf = id => {
-    const note = notes.find(n => n.id === id)
-    const changedNote = { ...note, important: !note.important }
+    const task = tasks.find(n => n.id === id)
+    const changedTask = { ...task, important: !task.important }
 
-    noteService
-      .update(id, changedNote)
+    taskService
+      .update(id, changedTask)
       // highlight-start      
-      .then(returnedNote => {
-        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      .then(returnedTask => {
+        setTasks(tasks.map(task => task.id !== id ? task : returnedTask))
       // highlight-end
       })
   }
 
-  const addNote = (event) => {
+  const addTask = (event) => {
     event.preventDefault()
-    const noteObject = {
-      content: newNote,
+    const taskObject = {
+      content: newTask,
       date: new Date().toISOString(),
       important: Math.random() > 0.5
     }
 
-    noteService
-      .create(noteObject)
+    taskService
+      .create(taskObject)
       // highlight-start      
-      .then(returnedNote => {
-        setNotes(notes.concat(returnedNote))
+      .then(returnedTask => {
+        setTasks(tasks.concat(returnedTask))
       // highlight-end
-        setNewNote('')
+        setNewTask('')
       })
   }
 
@@ -549,14 +549,14 @@ Promises are central to modern JavaScript development and it is highly recommend
 
 ### Cleaner Syntax for Defining Object Literals
 
-The module defining note-related services currently exports an object
-with the properties `getAll`, `create`, and `update` that are assigned to functions for handling notes.
+The module defining task-related services currently exports an object
+with the properties `getAll`, `create`, and `update` that are assigned to functions for handling tasks.
 
 The module definition was:
 
 ```js
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/notes'
+const baseUrl = 'http://localhost:3001/tasks'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -607,7 +607,7 @@ As a result, the module definition gets simplified into the following form:
 
 ```js
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/notes'
+const baseUrl = 'http://localhost:3001/tasks'
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -658,16 +658,16 @@ They both create an object with a `name` property with the value `Leevi` and an 
 
 ### Promises and Errors
 
-If our application allowed users to delete notes, we could end up in a situation where a user tries to change the importance of a note that has already been deleted from the system.
+If our application allowed users to delete tasks, we could end up in a situation where a user tries to change the importance of a task that has already been deleted from the system.
 
-Let's simulate this situation by making the `getAll` function of the note service return a "hardcoded" note that does not actually exist on the backend server:
+Let's simulate this situation by making the `getAll` function of the task service return a "hardcoded" task that does not actually exist on the backend server:
 
 ```js
 const getAll = () => {
   const request = axios.get(baseUrl)
   const nonExisting = {
     id: 10000,
-    content: 'This note is not saved to server',
+    content: 'This task is not saved to server',
     date: '2019-05-30T17:30:31.098Z',
     important: true,
   }
@@ -675,14 +675,14 @@ const getAll = () => {
 }
 ```
 
-When we try to change the importance of the hardcoded note, we see the following error message in the console.
+When we try to change the importance of the hardcoded task, we see the following error message in the console.
 The error says that the backend server responded to our HTTP PUT request with a status code 404 *not found*.
 
 ![404 not found error in dev tools](../../images/2/23e.png)
 
 The application should be able to handle these types of error situations gracefully.
 Users won't be able to tell that an error has occurred unless they happen to have their console open.
-The only way the error can be seen in the application is that clicking the button does not affect the note's importance.
+The only way the error can be seen in the application is that clicking the button does not affect the task's importance.
 
 We had [previously](/part2/getting_data_from_server#axios-and-promises) mentioned that a promise can be in one of three different states.
 When an HTTP request fails, the associated promise is ***rejected***.
@@ -716,7 +716,7 @@ When our application makes an HTTP request, we are in fact creating a [promise c
 axios
   .put(`${baseUrl}/${id}`, newObject)
   .then(response => response.data)
-  .then(changedNote => {
+  .then(changedTask => {
     // ...
   })
 ```
@@ -728,7 +728,7 @@ which is called once any promise in the chain throws an error and the promise be
 axios
   .put(`${baseUrl}/${id}`, newObject)
   .then(response => response.data)
-  .then(changedNote => {
+  .then(changedTask => {
     // ...
   })
   .catch(error => {
@@ -740,19 +740,19 @@ Let's use this feature and register an error handler in the `App` component:
 
 ```js
 const toggleImportanceOf = id => {
-  const note = notes.find(n => n.id === id)
-  const changedNote = { ...note, important: !note.important }
+  const task = tasks.find(n => n.id === id)
+  const changedTask = { ...task, important: !task.important }
 
-  noteService
-    .update(id, changedNote).then(returnedNote => {
-      setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+  taskService
+    .update(id, changedTask).then(returnedTask => {
+      setTasks(tasks.map(task => task.id !== id ? task : returnedTask))
     })
     // highlight-start
     .catch(error => {
       alert(
-        `the note '${note.content}' was already deleted from server`
+        `the task '${task.content}' was already deleted from server`
       )
-      setNotes(notes.filter(n => n.id !== id))
+      setTasks(tasks.filter(n => n.id !== id))
     })
     // highlight-end
 }
@@ -760,14 +760,14 @@ const toggleImportanceOf = id => {
 
 The error message is displayed to the user with the trusty old
 [alert](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) dialog popup,
-and the deleted note gets filtered out from the state.
+and the deleted task gets filtered out from the state.
 
-Removing an already deleted note from the application's state is done with the array
+Removing an already deleted task from the application's state is done with the array
 [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method,
 which returns a new array comprising only the items from the list for which the function that was passed as a parameter returns true for:
 
 ```js
-notes.filter(n => n.id !== id)
+tasks.filter(n => n.id !== id)
 ```
 
 It's probably not a good idea to use alert in more serious React applications.
@@ -775,7 +775,7 @@ We will soon learn a more advanced way of displaying messages and notifications 
 There are situations, however, where a simple, battle-tested method like `alert` can function as a starting point.
 A more advanced method could always be added in later, given that there's time and energy for it.
 
-The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/comp227/part2-notes/tree/part2-6).
+The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-6).
 
 </div>
 

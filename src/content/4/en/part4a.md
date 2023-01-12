@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-Let's continue our work on the backend of the notes application we started in [part 3](/part3).
+Let's continue our work on the backend of the tasks application we started in [part 3](/part3).
 
 ### Project structure
 
@@ -21,9 +21,9 @@ After making the changes to the directory structure of our project, we end up wi
 ├── build
 │   └── ...
 ├── controllers
-│   └── notes.js
+│   └── tasks.js
 ├── models
-│   └── note.js
+│   └── task.js
 ├── package-lock.json
 ├── package.json
 ├── utils
@@ -98,25 +98,25 @@ logger.info(`Server running on port ${config.PORT}`)
 
 The route handlers have also been moved into a dedicated module.
 The event handlers of routes are commonly referred to as **controllers**, and for this reason we have created a new *controllers* directory.
-All of the routes related to notes are now in the *notes.js* module under the *controllers* directory.
+All of the routes related to tasks are now in the *tasks.js* module under the *controllers* directory.
 
-The contents of the *notes.js* module are the following:
+The contents of the *tasks.js* module are the following:
 
 ```js
-const notesRouter = require('express').Router()
-const Note = require('../models/note')
+const tasksRouter = require('express').Router()
+const Task = require('../models/task')
 
-notesRouter.get('/', (request, response) => {
-  Note.find({}).then(notes => {
-    response.json(notes)
+tasksRouter.get('/', (request, response) => {
+  Task.find({}).then(tasks => {
+    response.json(tasks)
   })
 })
 
-notesRouter.get('/:id', (request, response, next) => {
-  Note.findById(request.params.id)
-    .then(note => {
-      if (note) {
-        response.json(note)
+tasksRouter.get('/:id', (request, response, next) => {
+  Task.findById(request.params.id)
+    .then(task => {
+      if (task) {
+        response.json(task)
       } else {
         response.status(404).end()
       }
@@ -124,46 +124,46 @@ notesRouter.get('/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-notesRouter.post('/', (request, response, next) => {
+tasksRouter.post('/', (request, response, next) => {
   const body = request.body
 
-  const note = new Note({
+  const task = new Task({
     content: body.content,
     important: body.important || false,
     date: new Date()
   })
 
-  note.save()
-    .then(savedNote => {
-      response.json(savedNote)
+  task.save()
+    .then(savedTask => {
+      response.json(savedTask)
     })
     .catch(error => next(error))
 })
 
-notesRouter.delete('/:id', (request, response, next) => {
-  Note.findByIdAndRemove(request.params.id)
+tasksRouter.delete('/:id', (request, response, next) => {
+  Task.findByIdAndRemove(request.params.id)
     .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
 })
 
-notesRouter.put('/:id', (request, response, next) => {
+tasksRouter.put('/:id', (request, response, next) => {
   const body = request.body
 
-  const note = {
+  const task = {
     content: body.content,
     important: body.important,
   }
 
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote)
+  Task.findByIdAndUpdate(request.params.id, task, { new: true })
+    .then(updatedTask => {
+      response.json(updatedTask)
     })
     .catch(error => next(error))
 })
 
-module.exports = notesRouter
+module.exports = tasksRouter
 ```
 
 This is almost an exact copy-paste of our previous *index.js* file.
@@ -172,11 +172,11 @@ However, there are a few significant changes.
 At the very beginning of the file we create a new [router](http://expressjs.com/en/api.html#router) object:
 
 ```js
-const notesRouter = require('express').Router()
+const tasksRouter = require('express').Router()
 
 //...
 
-module.exports = notesRouter
+module.exports = tasksRouter
 ```
 
 The module exports the router to be available for all consumers of the module.
@@ -187,13 +187,13 @@ It's worth noting that the paths in the route handlers have shortened.
 In the previous version, we had:
 
 ```js
-app.delete('/api/notes/:id', (request, response) => {
+app.delete('/api/tasks/:id', (request, response) => {
 ```
 
 And in the current version, we have:
 
 ```js
-notesRouter.delete('/:id', (request, response) => {
+tasksRouter.delete('/:id', (request, response) => {
 ```
 
 So what are these router objects exactly?
@@ -208,12 +208,12 @@ The router is in fact a **middleware**, that can be used for defining "related r
 The *app.js* file that creates the actual application takes the router into use as shown below:
 
 ```js
-const notesRouter = require('./controllers/notes')
-app.use('/api/notes', notesRouter)
+const tasksRouter = require('./controllers/tasks')
+app.use('/api/tasks', tasksRouter)
 ```
 
-The router we defined earlier is used *if* the URL of the request starts with ***/api/notes***.
-For this reason, the notesRouter object must only define the relative parts of the routes, i.e. the empty path `/` or just the parameter `/:id`.
+The router we defined earlier is used *if* the URL of the request starts with ***/api/tasks***.
+For this reason, the tasksRouter object must only define the relative parts of the routes, i.e. the empty path `/` or just the parameter `/:id`.
 
 After making these changes, our *app.js* file looks like this:
 
@@ -222,7 +222,7 @@ const config = require('./utils/config')
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const notesRouter = require('./controllers/notes')
+const tasksRouter = require('./controllers/tasks')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
@@ -242,7 +242,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/api/notes', notesRouter)
+app.use('/api/tasks', tasksRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
@@ -250,7 +250,7 @@ app.use(middleware.errorHandler)
 module.exports = app
 ```
 
-The file takes different middleware into use, and one of these is the `notesRouter` that is attached to the `/api/notes` route.
+The file takes different middleware into use, and one of these is the `tasksRouter` that is attached to the `/api/tasks` route.
 
 Our custom middleware has been moved to a new *utils/middleware.js* module:
 
@@ -289,12 +289,12 @@ module.exports = {
 ```
 
 The responsibility of establishing the connection to the database has been given to the  *app.js* module.
-The *note.js* file under the *models* directory only defines the Mongoose schema for notes.
+The *task.js* file under the *models* directory only defines the Mongoose schema for tasks.
 
 ```js
 const mongoose = require('mongoose')
 
-const noteSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
@@ -307,7 +307,7 @@ const noteSchema = new mongoose.Schema({
   important: Boolean,
 })
 
-noteSchema.set('toJSON', {
+taskSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -315,7 +315,7 @@ noteSchema.set('toJSON', {
   }
 })
 
-module.exports = mongoose.model('Note', noteSchema)
+module.exports = mongoose.model('Task', taskSchema)
 ```
 
 To recap, the directory structure looks like this after the changes have been made:
@@ -326,9 +326,9 @@ To recap, the directory structure looks like this after the changes have been ma
 ├── build
 │   └── ...
 ├── controllers
-│   └── notes.js
+│   └── tasks.js
 ├── models
-│   └── note.js
+│   └── task.js
 ├── package-lock.json
 ├── package.json
 ├── utils
@@ -347,7 +347,7 @@ In contrast, Ruby on Rails does require a specific structure.
 Our current structure simply follows some of the best practices you can come across on the internet.
 
 You can find the code for our current application in its entirety in the *part4-1* branch of
-[this GitHub repository](https://github.com/comp227/part3-notes-backend/tree/part4-1).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-1).
 
 If you clone the project for yourself, run the `npm install` command before starting the application with `npm start`.
 
@@ -395,25 +395,25 @@ error('error message')
 
 The latter way may be preferable if only a small portion of the exported functions are used in a file.
 
-e.g. in file *controller/notes.js* exporting happens as follows:
+e.g. in file *controller/tasks.js* exporting happens as follows:
 
 ```js
-const notesRouter = require('express').Router()
-const Note = require('../models/note')
+const tasksRouter = require('express').Router()
+const Task = require('../models/task')
 
 // ...
 
-module.exports = notesRouter // highlight-line
+module.exports = tasksRouter // highlight-line
 ```
 
 In this case, there is just one "thing" exported, so the only way to use it is the following:
 
 ```js
-const notesRouter = require('./controllers/notes')
+const tasksRouter = require('./controllers/tasks')
 
 // ...
 
-app.use('/api/notes', notesRouter)
+app.use('/api/tasks', tasksRouter)
 ```
 
 Now the exported "thing" (in this case a router object) is assigned to a variable and used as such.
@@ -557,7 +557,7 @@ Let's define the *npm script `test`* to execute tests with Jest and to report ab
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui": "rm -rf build && cd ../../../2/luento/notes && npm run build && cp -r build ../../../3/luento/notes-backend",
+    "build:ui": "rm -rf build && cd ../../../2/luento/tasks && npm run build && cp -r build ../../../3/luento/tasks-backend",
     "deploy": "git push heroku master",
     "deploy:full": "npm run build:ui && git add .
 && git commit -m uibuild && git push && npm run deploy",

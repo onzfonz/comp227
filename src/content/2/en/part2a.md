@@ -112,15 +112,15 @@ Let's start with the following (the file *App.js*):
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        <li>{notes[0].content}</li>
-        <li>{notes[1].content}</li>
-        <li>{notes[2].content}</li>
+        <li>{tasks[0].content}</li>
+        <li>{tasks[1].content}</li>
+        <li>{tasks[2].content}</li>
       </ul>
     </div>
   )
@@ -137,7 +137,7 @@ import ReactDOM from 'react-dom/client'
 
 import App from './App'
 
-const notes = [
+const tasks = [
   {
     id: 1,
     content: 'HTML is easy',
@@ -159,19 +159,19 @@ const notes = [
 ]
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <App notes={notes} />
+  <App tasks={tasks} />
 )
 ```
 
-Every note contains its textual content and a timestamp,
-as well as a `boolean` value for marking whether the note has been categorized as important or not, and also a unique `id`.
+Every task contains its textual content and a timestamp,
+as well as a `boolean` value for marking whether the task has been categorized as important or not, and also a unique `id`.
 
-The example above works because there are exactly three notes in the array.
+The example above works because there are exactly three tasks in the array.
 
-A single note is rendered by accessing the objects in the array by referring to a hard-coded index number:
+A single task is rendered by accessing the objects in the array by referring to a hard-coded index number:
 
 ```js
-<li>{notes[1].content}</li>
+<li>{tasks[1].content}</li>
 ```
 
 This is, of course, not practical.
@@ -179,7 +179,7 @@ We can improve on this by generating React elements from the array objects using
 [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
 
 ```js
-notes.map(note => <li>{note.content}</li>)
+tasks.map(task => <li>{task.content}</li>)
 ```
 
 The result is an array of `li` elements.
@@ -196,14 +196,14 @@ Which can then be placed inside `ul` tags:
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
 // highlight-start
       <ul>
-        {notes.map(note => <li>{note.content}</li>)}
+        {tasks.map(task => <li>{task.content}</li>)}
       </ul>
 // highlight-end      
     </div>
@@ -217,16 +217,16 @@ We will also make the code more readable by separating the arrow function's decl
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
+        {tasks.map(task => 
         // highlight-start
           <li>
-            {note.content}
+            {task.content}
           </li>
         // highlight-end   
         )}
@@ -249,15 +249,15 @@ Let's add the keys:
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <li key={note.id}> // highlight-line
-            {note.content}
+        {tasks.map(task => 
+          <li key={task.id}> // highlight-line
+            {task.content}
           </li>
         )}
       </ul>
@@ -277,10 +277,10 @@ Understanding how the array method
 [`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
 works is crucial for the rest of the course.
 
-The application contains an array called `notes`:
+The application contains an array called `tasks`:
 
 ```js
-const notes = [
+const tasks = [
   {
     id: 1,
     content: 'HTML is easy',
@@ -307,7 +307,7 @@ Let's pause for a moment and examine how `map` works.
 If the following code is added to, let's say, the end of the file:
 
 ```js
-const result = notes.map(note => note.id)
+const result = tasks.map(task => task.id)
 console.log(result)
 ```
 
@@ -318,42 +318,42 @@ console.log(result)
 The function is
 
 ```js
-note => note.id
+task => task.id
 ```
 
 Which is an arrow function written in compact form.
 The full form would be:
 
 ```js
-(note) => {
-  return note.id
+(task) => {
+  return task.id
 }
 ```
 
-The function gets a note object as a parameter and ***returns*** the value of its `id` field.
+The function gets a task object as a parameter and ***returns*** the value of its `id` field.
 
 Changing the command to:
 
 ```js
-const result = notes.map(note => note.content)
+const result = tasks.map(task => task.content)
 ```
 
-results in an array containing the contents of the notes.
+results in an array containing the contents of the tasks.
 
 This is already pretty close to the React code we used:
 
 ```js
-notes.map(note =>
-  <li key={note.id}>{note.content}</li>
+tasks.map(task =>
+  <li key={task.id}>{task.content}</li>
 )
 ```
 
-which generates a `li` tag containing the contents of the note from each note object.
+which generates a `li` tag containing the contents of the task from each task object.
 
 Because the function parameter passed to the `map` method -
 
 ```js
-note => <li key={note.id}>{note.content}</li>
+task => <li key={task.id}>{task.content}</li>
 ```
 
 &nbsp;- is used to create view elements, the value of the variable must be rendered inside curly braces.
@@ -368,18 +368,18 @@ We could have made the error message on our console disappear by using the array
 The indexes can be retrieved by passing a second parameter to the callback function of the `map` method:
 
 ```js
-notes.map((note, i) => ...)
+tasks.map((task, i) => ...)
 ```
 
-When called like this, `i` is assigned the value of the index of the position in the array where the note resides.
+When called like this, `i` is assigned the value of the index of the position in the array where the task resides.
 
 As such, one way to define the row generation without getting errors is:
 
 ```js
 <ul>
-  {notes.map((note, i) => 
+  {tasks.map((task, i) => 
     <li key={i}>
-      {note.content}
+      {task.content}
     </li>
   )}
 </ul>
@@ -392,18 +392,18 @@ Read more about this in [this article](https://robinpokorny.medium.com/index-as-
 ### Refactoring Modules
 
 Let's tidy the code up a bit.
-We are only interested in the field `notes` of the props, so let's retrieve that directly using
+We are only interested in the field `tasks` of the props, so let's retrieve that directly using
 [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
 
 ```js
-const App = ({ notes }) => { //highlight-line
+const App = ({ tasks }) => { //highlight-line
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <li key={note.id}>
-            {note.content}
+        {tasks.map(task => 
+          <li key={task.id}>
+            {task.content}
           </li>
         )}
       </ul>
@@ -414,25 +414,25 @@ const App = ({ notes }) => { //highlight-line
 
 If you have forgotten what destructuring means and how it works, please review the [section on destructuring](/part1/component_state_event_handlers#destructuring).
 
-We'll separate displaying a single note into its own component `Note`:
+We'll separate displaying a single task into its own component `Task`:
 
 ```js
 // highlight-start
-const Note = ({ note }) => {
+const Task = ({ task }) => {
   return (
-    <li>{note.content}</li>
+    <li>{task.content}</li>
   )
 }
 // highlight-end
 
-const App = ({ notes }) => {
+const App = ({ tasks }) => {
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
         // highlight-start
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
+        {tasks.map(task => 
+          <Task key={task.id} task={task} />
         )}
          // highlight-end
       </ul>
@@ -441,7 +441,7 @@ const App = ({ notes }) => {
 }
 ```
 
-Notice that the `key` attribute must now be defined for the `Note` components, and not in the `li` tags like before.
+Notice that the `key` attribute must now be defined for the `Task` components, and not in the `li` tags like before.
 
 A whole React application can be written in a single file.
 Although that is, of course, not very practical.
@@ -461,57 +461,57 @@ import App from './App'
 The module ***react*** is placed into the variable `React`, the module ***react-dom*** into the variable `ReactDOM`,
 and the module that defines the main component of the app is placed into the variable `App`
 
-Let's move our `Note` component into its own module.
+Let's move our `Task` component into its own module.
 
 In smaller applications, components are usually placed in a directory called *components*, which is in turn placed within the *src* directory.
 The convention is to name the file after the component.
 
-Now, we'll create a directory called ***components*** for our application and place a file named ***Note.js*** inside.
-The contents of the Note.js file are as follows:
+Now, we'll create a directory called ***components*** for our application and place a file named ***Task.js*** inside.
+The contents of the Task.js file are as follows:
 
 ```js
-const Note = ({ note }) => {
+const Task = ({ task }) => {
   return (
-    <li>{note.content}</li>
+    <li>{task.content}</li>
   )
 }
 
-export default Note
+export default Task
 ```
 
 The last line of the module
 [exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)
-the declared module, the variable `Note`.
+the declared module, the variable `Task`.
 
 Now the file that is using the component - *App.js* - can [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) the module:
 
 ```js
-import Note from './components/Note' // highlight-line
+import Task from './components/Task' // highlight-line
 
-const App = ({ notes }) => {
+const App = ({ tasks }) => {
   // ...
 }
 ```
 
-The component exported by the module is now available for use in the variable `Note`, just as it was earlier.
+The component exported by the module is now available for use in the variable `Task`, just as it was earlier.
 
 Notice that when importing our own components, their location must be given *in relation to the importing file*:
 
 ```js
-'./components/Note'
+'./components/Task'
 ```
 
 The period - `.` - in the beginning refers to the current directory,
-so the module's location is a file called *Note.js* in the *components* sub-directory of the current directory.
+so the module's location is a file called *Task.js* in the *components* sub-directory of the current directory.
 The filename extension *.js* can be omitted.
 
 Modules have plenty of other uses other than enabling component declarations to be separated into their own files.
 We will get back to them later in this course.
 
-The current code of the application can be found on [GitHub](https://github.com/comp227/part2-notes/tree/part2-1).
+The current code of the application can be found on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-1).
 
 Notice that the *main* branch of the repository contains the code for a later version of the application.
-The current code is in the branch [part2-1](https://github.com/comp227/part2-notes/tree/part2-1):
+The current code is in the branch [part2-1](https://github.com/comp227/part2-tasks/tree/part2-1):
 
 ![GitHub branch screenshot](../../images/2/2e.png)
 

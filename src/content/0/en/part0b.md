@@ -77,8 +77,8 @@ The **body** section determines the structure of the page rendered to the screen
 The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element which in turn contains:
 
 - a heading (`h1`)
-- the number of notes created.
-- a link to the page ***notes***
+- the number of tasks created.
+- a link to the page ***tasks***
 - an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag
 
 Because of the `img` tag, the browser does a second *HTTP request* to fetch the image *kuva.png* from the server.
@@ -111,12 +111,12 @@ When entering the page, the browser fetches the HTML document detailing the stru
 The server has formed this document somehow.
 The document can be a *static* text file saved into the server's directory.
 The server can also form the HTML documents *dynamically* according to the application code, using, for example, data from a database.
-The HTML code of the example application has been formed dynamically because it contains information on the number of created notes.
+The HTML code of the example application has been formed dynamically because it contains information on the number of created tasks.
 
 The HTML code of the homepage is as follows:
 
 ```js
-const getFrontPageHtml = (noteCount) => {
+const getFrontPageHtml = (taskCount) => {
   return(`
     <!DOCTYPE html>
     <html>
@@ -125,8 +125,8 @@ const getFrontPageHtml = (noteCount) => {
       <body>
         <div class='container'>
           <h1>Full stack example app</h1>
-          <p>number of notes created ${noteCount}</p>
-          <a href='/notes'>notes</a>
+          <p>number of tasks created ${taskCount}</p>
+          <a href='/tasks'>tasks</a>
           <img src='kuva.png' width='200' />
         </div>
       </body>
@@ -135,7 +135,7 @@ const getFrontPageHtml = (noteCount) => {
 } 
 
 app.get('/', (req, res) => {
-  const page = getFrontPageHtml(notes.length)
+  const page = getFrontPageHtml(tasks.length)
   res.send(page)
 })
 ```
@@ -143,8 +143,8 @@ app.get('/', (req, res) => {
 You don't have to understand the code just yet.
 
 The content of the HTML page has been saved as a template string or a string that allows for evaluating, for example, variables in the midst of it.
-The dynamically changing part of the homepage, the number of saved notes (in the code `noteCount`),
-is replaced by the current number of notes (in the code `notes.length`) in the template string.
+The dynamically changing part of the homepage, the number of saved tasks (in the code `taskCount`),
+is replaced by the current number of tasks (in the code `tasks.length`) in the template string.
 
 Writing HTML amid the code is of course not smart, but for old-school PHP programmers, it was a normal practice.
 
@@ -163,7 +163,7 @@ This course will use Node.js and Express to create web servers.
 
 Keep the Developer Console open.
 Empty the console by clicking the 🚫 symbol, or by typing `clear()` in the console.
-Now when you go to the [notes](https://studies.cs.helsinki.fi/exampleapp/notes) page, the browser does 4 HTTP requests:
+Now when you go to the [tasks](https://studies.cs.helsinki.fi/exampleapp/tasks) page, the browser does 4 HTTP requests:
 
 ![Screenshot of the developer console with the 4 requests visible](../../images/0/8e.png)
 
@@ -173,7 +173,7 @@ It is the HTML code of the page, and it looks as follows:
 
 ![Detailed view of the first request](../../images/0/9e.png)
 
-When we compare the page shown on the browser and the HTML code returned by the server, we notice that the code does not contain the list of notes.
+When we compare the page shown on the browser and the HTML code returned by the server, we notice that the code does not contain the list of tasks.
 The [`head`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) section of the HTML contains a
 [`script`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag.
 `script` causes the browser to fetch a JavaScript file called *main.js*.
@@ -189,16 +189,16 @@ xhttp.onreadystatechange = function() {
     console.log(data)
 
     var ul = document.createElement('ul')
-    ul.setAttribute('class', 'notes')
+    ul.setAttribute('class', 'tasks')
 
-    data.forEach(function(note) {
+    data.forEach(function(task) {
       var li = document.createElement('li')
 
       ul.appendChild(li)
-      li.appendChild(document.createTextNode(note.content))
+      li.appendChild(document.createTextNode(task.content))
     })
 
-    document.getElementsByClassName('notes').appendChild(ul)
+    document.getElementsByClassName('tasks').appendChild(ul)
   }
 }
 
@@ -229,7 +229,7 @@ We can try going to the address <https://studies.cs.helsinki.fi/exampleapp/data.
 
 ![Raw JSON Data](../../images/0/10e.png)
 
-There we find the notes in [JSON](https://en.wikipedia.org/wiki/JSON) "raw data".
+There we find the tasks in [JSON](https://en.wikipedia.org/wiki/JSON) "raw data".
 By default, Chromium-based browsers are not too good at displaying JSON data.
 Plugins can be used to handle the formatting.
 Install, for example, [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) on Chrome, and reload the page.
@@ -237,7 +237,7 @@ The data is now nicely formatted:
 
 ![Formatted JSON output](../../images/0/11e.png)
 
-So, the JavaScript code of the notes page above downloads the JSON data containing the notes, and forms a bullet-point list from the note contents:
+So, the JavaScript code of the tasks page above downloads the JSON data containing the tasks, and forms a bullet-point list from the task contents:
 
 This is done by the following code:
 
@@ -246,35 +246,35 @@ const data = JSON.parse(this.responseText)
 console.log(data)
 
 var ul = document.createElement('ul')
-ul.setAttribute('class', 'notes')
+ul.setAttribute('class', 'tasks')
 
-data.forEach(function(note) {
+data.forEach(function(task) {
   var li = document.createElement('li')
 
   ul.appendChild(li)
-  li.appendChild(document.createTextNode(note.content))
+  li.appendChild(document.createTextNode(task.content))
 })
 
-document.getElementById('notes').appendChild(ul)
+document.getElementById('tasks').appendChild(ul)
 ```
 
 The code first creates an unordered list with a [ul](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul)-tag...
 
 ```js
 var ul = document.createElement('ul')
-ul.setAttribute('class', 'notes')
+ul.setAttribute('class', 'tasks')
 ```
 
-...and then adds one [li](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li)-tag for each note.
-Only the `content` field of each note becomes the contents of the `li` tag.
+...and then adds one [li](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li)-tag for each task.
+Only the `content` field of each task becomes the contents of the `li` tag.
 The timestamps found in the raw data are not used for anything here.
 
 ```js
-data.forEach(function(note) {
+data.forEach(function(task) {
   var li = document.createElement('li')
 
   ul.appendChild(li)
-  li.appendChild(document.createTextNode(note.content))
+  li.appendChild(document.createTextNode(task.content))
 })
 ```
 
@@ -372,25 +372,25 @@ Document Object Model, or [DOM](https://en.wikipedia.org/wiki/Document_Object_Mo
 is an Application Programming Interface (**API**).
 The DOM enables programmatic modification of the **element trees** corresponding to web pages.
 
-The JavaScript code introduced in the previous chapter used the DOM-API to add a list of notes to the page.
+The JavaScript code introduced in the previous chapter used the DOM-API to add a list of tasks to the page.
 
 The following code creates a new node to the variable `ul`, and adds some child nodes to it:
 
 ```js
 var ul = document.createElement('ul')
 
-data.forEach(function(note) {
+data.forEach(function(task) {
   var li = document.createElement('li')
 
   ul.appendChild(li)
-  li.appendChild(document.createTextNode(note.content))
+  li.appendChild(document.createTextNode(task.content))
 })
 ```
 
 Finally, the tree branch of the `ul` variable is connected to its proper place in the HTML tree of the whole page:
 
 ```js
-document.getElementsByClassName('notes').appendChild(ul)
+document.getElementsByClassName('tasks').appendChild(ul)
 ```
 
 ### Manipulating the document object from console
@@ -401,9 +401,9 @@ You can access the `document` object by typing `document` into the Console tab:
 
 ![document in console tab of developer tools](../../images/0/15e.png)
 
-Let's add a new note to the page from the console.
+Let's add a new task to the page from the console.
 
-First, we'll get the list of notes from the page.
+First, we'll get the list of tasks from the page.
 The list is in the first `ul` element of the page:
 
 ```js
@@ -423,15 +423,15 @@ And add the new `li` element to the list:
 list.appendChild(newElement)
 ```
 
-![Screenshot of the page with the new note added to the list](../../images/0/16e.png)
+![Screenshot of the page with the new task added to the list](../../images/0/16e.png)
 
 Even though the page updates on your browser, the changes are not permanent.
-If the page is reloaded, the new note will disappear, because the changes were not pushed to the server.
-The JavaScript code the browser fetches will always create the list of notes based on JSON data from the address <https://studies.cs.helsinki.fi/exampleapp/data.json>.
+If the page is reloaded, the new task will disappear, because the changes were not pushed to the server.
+The JavaScript code the browser fetches will always create the list of tasks based on JSON data from the address <https://studies.cs.helsinki.fi/exampleapp/data.json>.
 
 ### CSS
 
-The `head` element of the HTML code of the Notes page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag.
+The `head` element of the HTML code of the Tasks page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag.
 This `link` tag determines that the browser must fetch a [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
 style sheet from the address [main.css](https://studies.cs.helsinki.fi/exampleapp/main.css).
 
@@ -445,7 +445,7 @@ The fetched CSS file looks as follows:
   border: 1px solid; 
 }
 
-.notes {
+.tasks {
   color: blue;
 }
 ```
@@ -463,16 +463,16 @@ CSS attributes can be examined on the ***elements*** tab of the console:
 ![Screenshot of the Elements tab on the developer console](../../images/0/17e.png)
 
 The outermost `div` element has the class `container`.
-The `ul` element containing the list of notes has the class `notes`.
+The `ul` element containing the list of tasks has the class `tasks`.
 
 The CSS rule defines that elements with the `container` class will be outlined with a one-pixel wide [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border).
 It also sets 10-pixel [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding) on the element.
 This adds some empty space between the element's content and the border.
 
-The second CSS rule sets the text color of the notes as blue.
+The second CSS rule sets the text color of the tasks as blue.
 
 HTML elements can also have other attributes apart from classes.
-The `div` element containing the notes has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
+The `div` element containing the tasks has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
 JavaScript code uses the id to find the element.
 
 The ***Elements*** tab of the console can be used to change the styles of the elements.
@@ -484,7 +484,7 @@ If you want to make lasting changes, they must be saved to the CSS style sheet o
 
 ### Loading a page containing JavaScript - review
 
-Let's review what happens when the page <https://studies.cs.helsinki.fi/exampleapp/notes> is opened on the browser.
+Let's review what happens when the page <https://studies.cs.helsinki.fi/exampleapp/tasks> is opened on the browser.
 
 ![sequence diagram of browser/server interaction](../../images/0/19e.png)
 
@@ -493,14 +493,14 @@ Let's review what happens when the page <https://studies.cs.helsinki.fi/examplea
 - ...and a JavaScript code file *main.js*
 - The browser executes the JavaScript code.
   The code makes an HTTP GET request to the address <https://studies.cs.helsinki.fi/exampleapp/data.json>, which
-  returns the notes as JSON  data.
-- When the data has been fetched, the browser executes an *event handler*, which renders the notes to the page using the DOM-API.
+  returns the tasks as JSON  data.
+- When the data has been fetched, the browser executes an *event handler*, which renders the tasks to the page using the DOM-API.
 
 ### Forms and HTTP POST
 
-Next, let's examine how adding a new note is done.
+Next, let's examine how adding a new task is done.
 
-The Notes page contains a [form element](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
+The Tasks page contains a [form element](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
 
 ![form element highlight in webpage and developer tools](../../images/0/20e.png)
 
@@ -515,14 +515,14 @@ Let's zoom into it:
 
 ![Detailed view of the first request](../../images/0/22e.png)
 
-It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address ***new_note***.
+It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address ***new_task***.
 The server responds with HTTP status code 302.
 This is a [URL redirect](https://en.wikipedia.org/wiki/URL_redirection),
-with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `notes`.
+with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `tasks`.
 
-So, the browser reloads the Notes page.
+So, the browser reloads the Tasks page.
 The reload causes three more HTTP requests: fetching the style sheet (main.css),
-the JavaScript code (main.js), and the raw data of the notes (data.json).
+the JavaScript code (main.js), and the raw data of the tasks (data.json).
 
 The network tab also shows the data submitted with the form:
 
@@ -530,20 +530,20 @@ NB: On newer Chrome, the Form Data dropdown is within the new Payload tab, locat
 
 ![form data dropdown in developer tools](../../images/0/23e.png)
 
-The Form tag has attributes `action` and `method`, which define that submitting the form is done as an HTTP POST request to the address ***new_note***.
+The Form tag has attributes `action` and `method`, which define that submitting the form is done as an HTTP POST request to the address ***new_task***.
 
 ![action and method highlight](../../images/0/24e.png)
 
 The code on the server responsible for the POST request is quite simple (NB: this code is on the server, and not on the JavaScript code fetched by the browser):
 
 ```js
-app.post('/new_note', (req, res) => {
-  notes.push({
-    content: req.body.note,
+app.post('/new_task', (req, res) => {
+  tasks.push({
+    content: req.body.task,
     date: new Date(),
   })
 
-  return res.redirect('/notes')
+  return res.redirect('/tasks')
 })
 ```
 
@@ -551,22 +551,22 @@ Data is sent as the [body](https://developer.mozilla.org/en-US/docs/Web/HTTP/Met
 
 The server can access the data by accessing the `req.body` field of the request object `req`.
 
-The server creates a new note object, and adds it to an array called `notes`.
+The server creates a new task object, and adds it to an array called `tasks`.
 
 ```js
-notes.push({
-  content: req.body.note,
+tasks.push({
+  content: req.body.task,
   date: new Date(),
 })
 ```
 
-The Note objects have two fields: `content` containing the actual content of the note, and `date` containing the date and time the note was created.
+The Task objects have two fields: `content` containing the actual content of the task, and `date` containing the date and time the task was created.
 
-The server does not save new notes to a database, so new notes disappear when the server is restarted.
+The server does not save new tasks to a database, so new tasks disappear when the server is restarted.
 
 ### AJAX
 
-The Notes page of the application follows an early-nineties style of web development and uses "Ajax".
+The Tasks page of the application follows an early-nineties style of web development and uses "Ajax".
 As such, it's on the crest of the wave of early 2000s web technology.
 
 [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML)
@@ -578,12 +578,12 @@ Before the AJAX era, all web pages worked like the
 we saw earlier in this chapter.
 All of the data shown on the page was fetched with the HTML code generated by the server.
 
-The Notes page uses AJAX to fetch the notes data.
+The Tasks page uses AJAX to fetch the tasks data.
 Submitting the form still uses the traditional mechanism of submitting web forms.
 
 The application URLs reflect the old, carefree times.
 JSON data is fetched from the URL <https://studies.cs.helsinki.fi/exampleapp/data.json>
-and new notes are sent to the URL <https://studies.cs.helsinki.fi/exampleapp/new_note>.
+and new tasks are sent to the URL <https://studies.cs.helsinki.fi/exampleapp/new_task>.
 Nowadays URLs like these would not be considered acceptable,
 as they don't follow the generally acknowledged conventions of [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) APIs,
 which we'll look into more in [part 3](/part3).
@@ -595,18 +595,18 @@ The term has faded into oblivion, and the new generation has not even heard of i
 
 In our example app, the home page works like a traditional webpage: All of the logic is on the server, and the browser only renders the HTML as instructed.
 
-The Notes page gives some of the responsibility, generating the HTML code for existing notes, to the browser.
-The browser tackles this task by executing the JavaScript code it fetched from the server.
-The code fetches the notes from the server as JSON data and adds HTML elements for displaying the notes to the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
+The Tasks page gives some of the responsibility, generating the HTML code for existing tasks, to the browser.
+The browser tackles this job by executing the JavaScript code it fetched from the server.
+The code fetches the tasks from the server as JSON data and adds HTML elements for displaying the tasks to the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
 
 In recent years, the [Single-page application](https://en.wikipedia.org/wiki/Single-page_application) (SPA) style of creating web applications has emerged.
 SPA-style websites don't fetch all of their pages separately from the server like our sample application does,
 but instead comprise only one HTML page fetched from the server,
 the contents of which are manipulated with JavaScript that executes in the browser.
 
-The Notes page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
-Even though the logic for rendering the notes is run on the browser, the page still uses the traditional way of adding new notes.
-The data is sent to the server via the form's submit, and the server instructs the browser to reload the Notes page with a *redirect*.
+The Tasks page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
+Even though the logic for rendering the tasks is run on the browser, the page still uses the traditional way of adding new tasks.
+The data is sent to the server via the form's submit, and the server instructs the browser to reload the Tasks page with a *redirect*.
 
 A single-page app version of our example application can be found at <https://studies.cs.helsinki.fi/exampleapp/spa>.
 At first glance, the application looks exactly the same as the previous one.
@@ -617,11 +617,11 @@ The HTML code is almost identical, but the JavaScript file is different (*spa.js
 The form has no `action` or `method` attributes to define how and where to send the input data.
 
 Open the ***Network*** tab and empty it.
-When you now create a new note, you'll notice that the browser sends only one request to the server.
+When you now create a new task, you'll notice that the browser sends only one request to the server.
 
 ![Network tab in developer tools](../../images/0/26e.png)
 
-The POST request to the address `new_note_spa` contains the new note as JSON data containing both the content of the note (`content`) and the timestamp (`date`):
+The POST request to the address `new_task_spa` contains the new task as JSON data containing both the content of the task (`content`) and the timestamp (`date`):
 
 ```js
 {
@@ -643,41 +643,41 @@ The SPA version of the app does not traditionally send the form data, but instea
 We'll look into this code a bit, even though understanding all the details of it is not important just yet.
 
 ```js
-var form = document.getElementById('notes_form')
+var form = document.getElementById('tasks_form')
 form.onsubmit = function(e) {
   e.preventDefault()
 
-  var note = {
+  var task = {
     content: e.target.elements[0].value,
     date: new Date(),
   }
 
-  notes.push(note)
+  tasks.push(task)
   e.target.elements[0].value = ''
-  redrawNotes()
-  sendToServer(note)
+  redrawTasks()
+  sendToServer(task)
 }
 ```
 
-The command `document.getElementById('notes_form')` instructs the code to fetch the form element from the page and to register an *event handler* to handle the form's submit event.
+The command `document.getElementById('tasks_form')` instructs the code to fetch the form element from the page and to register an *event handler* to handle the form's submit event.
 The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of form's submit.
 The default method would send the data to the server and cause a new GET request, which we don't want to happen.
 
-Then the event handler creates a new note, adds it to the notes list with the command `notes.push(note)`,
-rerenders the note list on the page and sends the new note to the server.
+Then the event handler creates a new task, adds it to the tasks list with the command `tasks.push(task)`,
+rerenders the task list on the page and sends the new task to the server.
 
-The code for sending the note to the server is as follows:
+The code for sending the task to the server is as follows:
 
 ```js
-var sendToServer = function(note) {
+var sendToServer = function(task) {
   var xhttpForPost = new XMLHttpRequest()
   // ...
 
-  xhttpForPost.open('POST', '/new_note_spa', true)
+  xhttpForPost.open('POST', '/new_task_spa', true)
   xhttpForPost.setRequestHeader(
     'Content-type', 'application/json'
   )
-  xhttpForPost.send(JSON.stringify(note))
+  xhttpForPost.send(JSON.stringify(task))
 }
 ```
 
@@ -689,7 +689,7 @@ The application code is available at <https://github.com/comp227/example_app>.
 It's worth remembering that the application is only meant to demonstrate the concepts of the course.
 The code follows a poor style of development in some measures, and should not be used as an example when creating your applications.
 The same is true for the URLs used.
-The URL `new_note_spa` that new notes are sent to, does not adhere to current best practices.
+The URL `new_task_spa` that new tasks are sent to, does not adhere to current best practices.
 
 ### JavaScript libraries
 
@@ -816,37 +816,37 @@ Learn about the basics of HTML forms by reading Mozilla's tutorial [Your first f
 
 This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-#### 0.4: New note diagram
+#### 0.4: New task diagram
 
 In the section [Loading a page containing JavaScript - review](/part0/fundamentals_of_web_apps#loading-a-page-containing-java-script-review),
-the chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp/notes>
+the chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp/tasks>
 is depicted as a [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/)
 
 The diagram was made using the [web sequence diagrams](https://www.websequencediagrams.com) service as follows:
 
 ```plantUML
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/tasks
 server-->browser: HTML-code
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
 server-->browser: main.css
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
 server-->browser: main.js
 
-note over browser:
+task over browser:
 browser starts executing js-code
 that requests JSON data from server 
-end note
+end task
 
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
 server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
 
-note over browser:
+task over browser:
 browser executes the event handler
-that renders notes to display
-end note
+that renders tasks to display
+end task
 ```
 
-**Create a similar diagram** depicting the situation where the user creates a new note on page <https://studies.cs.helsinki.fi/exampleapp/notes>
+**Create a similar diagram** depicting the situation where the user creates a new task on page <https://studies.cs.helsinki.fi/exampleapp/tasks>
 when writing something into the text field and clicking the ***submit*** button.
 
 If necessary, show operations on the browser or on the server as comments on the diagram.
@@ -864,11 +864,11 @@ syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-includ
 #### 0.5: Single-page app diagram
 
 Create a diagram depicting the situation where the user goes to the [single-page app](/part0/fundamentals_of_web_apps#single-page-app)
-version of the notes app at <https://studies.cs.helsinki.fi/exampleapp/spa>.
+version of the tasks app at <https://studies.cs.helsinki.fi/exampleapp/spa>.
 
-#### 0.6: New note in Single-page app diagram
+#### 0.6: New task in Single-page app diagram
 
-Create a diagram depicting the situation where the user creates a new note using the single-page version of the app.
+Create a diagram depicting the situation where the user creates a new task using the single-page version of the app.
 
 This was the last exercise, and it's time to push your answers to GitHub and follow the additional directions posted on Canvas.
 

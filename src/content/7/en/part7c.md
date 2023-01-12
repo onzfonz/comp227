@@ -56,7 +56,7 @@ Then let's add a link for loading the CSS stylesheet for Bootstrap inside of the
 
 When we reload the application, we notice that it already looks a bit more stylish:
 
-![browser notes app with bootstrap](../../images/7/5ea.png)
+![browser tasks app with bootstrap](../../images/7/5ea.png)
 
 In Bootstrap, all of the contents of the application are typically rendered inside a [container](https://getbootstrap.com/docs/4.1/layout/overview/#containers).
 In practice this is accomplished by giving the root `div` element of the application the `container` class attribute:
@@ -76,27 +76,27 @@ const App = () => {
 We notice that this already affected the appearance of the application.
 The content is no longer as close to the edges of the browser as it was earlier:
 
-![browser notes app with margin spacing](../../images/7/6ea.png)
+![browser tasks app with margin spacing](../../images/7/6ea.png)
 
-Next, let's make some changes to the `Notes` component so that it renders the list of notes as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
+Next, let's make some changes to the `Tasks` component so that it renders the list of tasks as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
 React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose,
 so there is no need to define CSS classes separately.
 
 ```js
-const Notes = ({ notes }) => (
+const Tasks = ({ tasks }) => (
   <div>
-    <h2>Notes</h2>
+    <h2>Tasks</h2>
     <Table striped> // highlight-line
       <tbody>
-        {notes.map(note =>
-          <tr key={note.id}>
+        {tasks.map(task =>
+          <tr key={task.id}>
             <td>
-              <Link to={`/notes/${note.id}`}>
-                {note.content}
+              <Link to={`/tasks/${task.id}`}>
+                {task.content}
               </Link>
             </td>
             <td>
-              {note.user}
+              {task.user}
             </td>
           </tr>
         )}
@@ -108,7 +108,7 @@ const Notes = ({ notes }) => (
 
 The appearance of the application is quite stylish:
 
-![browser notes tab with built-in table](../../images/7/7e.png)
+![browser tasks tab with built-in table](../../images/7/7e.png)
 
 Notice that the React Bootstrap components have to be imported separately from the library as shown below:
 
@@ -157,20 +157,20 @@ import { Table, Form, Button } from 'react-bootstrap'
 
 After switching over to the Bootstrap form, our improved application looks like this:
 
-![browser notes app with bootstrap login](../../images/7/8ea.png)
+![browser tasks app with bootstrap login](../../images/7/8ea.png)
 
 #### Notification in Bootstrap
 
 Now that the login form is in better shape, let's take a look at improving our application's notifications:
 
-![browser notes app with bootstrap notification](../../images/7/9ea.png)
+![browser tasks app with bootstrap notification](../../images/7/9ea.png)
 
 Let's add a message for the notification when a user logs into the application.
 We will store it in the `message` variable in the `App` component's state:
 
 ```js
 const App = () => {
-  const [notes, setNotes] = useState([
+  const [tasks, setTasks] = useState([
     // ...
   ])
 
@@ -221,7 +221,7 @@ Through trial and error, we end up with a working solution despite the cryptic d
         <Link style={padding} to="/">home</Link>
       </Nav.Link>
       <Nav.Link href="#" as="span">
-        <Link style={padding} to="/notes">notes</Link>
+        <Link style={padding} to="/tasks">tasks</Link>
       </Nav.Link>
       <Nav.Link href="#" as="span">
         <Link style={padding} to="/users">users</Link>
@@ -239,20 +239,20 @@ Through trial and error, we end up with a working solution despite the cryptic d
 
 The resulting layout has a very clean and pleasing appearance:
 
-![browser notes app bootstrap black navigation bar](../../images/7/10ea.png)
+![browser tasks app bootstrap black navigation bar](../../images/7/10ea.png)
 
 If the viewport of the browser is narrowed, we notice that the menu "collapses" and it can be expanded by clicking the "hamburger" button:
 
-![browser notes app with hamburger menu](../../images/7/11ea.png)
+![browser tasks app with hamburger menu](../../images/7/11ea.png)
 
 Bootstrap and a large majority of existing UI frameworks produce [responsive](https://en.wikipedia.org/wiki/Responsive_web_design) designs,
 meaning that the resulting applications render well on a variety of different screen sizes.
 
 Chrome's developer tools make it possible to simulate using our application in the browser of different mobile clients:
 
-![chrome devtools with mobile browser preview of notes app](../../images/7/12ea.png)
+![chrome devtools with mobile browser preview of tasks app](../../images/7/12ea.png)
 
-You can find the complete code for the application [here](https://github.com/comp227/misc/blob/main/notes-bootstrap.js).
+You can find the complete code for the application [here](https://github.com/comp227/misc/blob/main/tasks-bootstrap.js).
 
 ### Material UI
 
@@ -292,24 +292,24 @@ const App = () => {
 }
 ```
 
-Let's start with the `Notes` component.
-We'll render the list of notes as a [table](https://mui.com/material-ui/react-table/#simple-table):
+Let's start with the `Tasks` component.
+We'll render the list of tasks as a [table](https://mui.com/material-ui/react-table/#simple-table):
 
 ```js
-const Notes = ({ notes }) => (
+const Tasks = ({ tasks }) => (
   <div>
-    <h2>Notes</h2>
+    <h2>Tasks</h2>
 
     <TableContainer component={Paper}>
       <Table>
         <TableBody>
-          {notes.map(note => (
-            <TableRow key={note.id}>
+          {tasks.map(task => (
+            <TableRow key={task.id}>
               <TableCell>
-                <Link to={`/notes/${note.id}`}>{note.content}</Link>
+                <Link to={`/tasks/${task.id}`}>{task.content}</Link>
               </TableCell>
               <TableCell>
-                {note.user}
+                {task.user}
               </TableCell>
             </TableRow>
           ))}
@@ -322,10 +322,10 @@ const Notes = ({ notes }) => (
 
 The table looks like so:
 
-![browser notes materialUI table](../../images/7/63eb.png)
+![browser tasks materialUI table](../../images/7/63eb.png)
 
 One less pleasant feature of Material UI is that each component has to be imported separately.
-The import list for the notes page is quite long:
+The import list for the tasks page is quite long:
 
 ```js
 import {
@@ -377,7 +377,7 @@ const Login = (props) => {
 
 The result is:
 
-![browser notes app materialUI login form](../../images/7/64ea.png)
+![browser tasks app materialUI login form](../../images/7/64ea.png)
 
 MaterialUI, unlike Bootstrap, does not provide a component for the form itself.
 The form here is an ordinary HTML [form](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) element.
@@ -403,7 +403,7 @@ which is quite similar to Bootstrap's equivalent component:
 
 Alert is quite stylish:
 
-![browser notes app materialUI notifications](../../images/7/65ea.png)
+![browser tasks app materialUI notifications](../../images/7/65ea.png)
 
 #### Navigation structure in Material UI
 
@@ -420,7 +420,7 @@ If we use the example code from the documentation
       <Link to="/">home</Link>
     </Button>
     <Button color="inherit">
-      <Link to="/notes">notes</Link>
+      <Link to="/tasks">tasks</Link>
     </Button>
     <Button color="inherit">
       <Link to="/users">users</Link>
@@ -437,7 +437,7 @@ If we use the example code from the documentation
 
 we do get working navigation, but it could look better
 
-![browser notes app materialUI blue navbar](../../images/7/66ea.png)
+![browser tasks app materialUI blue navbar](../../images/7/66ea.png)
 
 We can find a better way from the [documentation](https://mui.com/material-ui/guides/composition/#routing-libraries).
 We can use [component props](https://mui.com/material-ui/guides/composition/#component-prop) to define how the root element of a MaterialUI component is rendered.
@@ -460,8 +460,8 @@ The code for the navigation bar is the following:
     <Button color="inherit" component={Link} to="/">
       home
     </Button>
-    <Button color="inherit" component={Link} to="/notes">
-      notes
+    <Button color="inherit" component={Link} to="/tasks">
+      tasks
     </Button>
     <Button color="inherit" component={Link} to="/users">
       users
@@ -478,9 +478,9 @@ The code for the navigation bar is the following:
 
 and it looks like we want it to:
 
-![browser notes app MaterialUI blue nav bar white text](../../images/7/67ea.png)
+![browser tasks app MaterialUI blue nav bar white text](../../images/7/67ea.png)
 
-The code of the application can be found [here](https://github.com/comp227/misc/blob/main/notes-materialui.js).
+The code of the application can be found [here](https://github.com/comp227/misc/blob/main/tasks-materialui.js).
 
 ### Closing thoughts
 
@@ -640,7 +640,7 @@ const App = () => {
      <Page> // highlight-line
       <Navigation> // highlight-line
         <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
+        <Link style={padding} to="/tasks">tasks</Link>
         <Link style={padding} to="/users">users</Link>
         {user
           ? <em>{user} logged in</em>
@@ -649,15 +649,15 @@ const App = () => {
       </Navigation> // highlight-line
       
       <Routes>
-        <Route path="/notes/:id" element={<Note note={note} />} />  
-        <Route path="/notes" element={<Notes notes={notes} />} />   
+        <Route path="/tasks/:id" element={<Task task={task} />} />  
+        <Route path="/tasks" element={<Tasks tasks={tasks} />} />   
         <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/" element={<Home />} />      
       </Routes>
 
       <Footer> // highlight-line
-        <em>Note app, Department of Computer Science 2022</em>
+        <em>Task app, Department of Computer Science 2022</em>
       </Footer> // highlight-line
     </Page> // highlight-line
   )
@@ -666,7 +666,7 @@ const App = () => {
 
 The appearance of the resulting application is shown below:
 
-![browser notes app styled components](../../images/7/18ea.png)
+![browser tasks app styled components](../../images/7/18ea.png)
 
 Styled components have seen consistent growth in popularity in recent times,
 and quite a lot of people consider it to be the best way of defining styles in React applications.
