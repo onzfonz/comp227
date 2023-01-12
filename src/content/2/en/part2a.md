@@ -44,44 +44,49 @@ On the contrary, when you pass objects as distinct arguments separated by commas
 like in our second example above, the content of the object is printed to the developer console as strings that are insightful.
 If necessary, read more about [debugging React applications](/part1/a_more_complex_state_debugging_react_apps#debugging-react-applications).
 
-### Protip: Visual Studio Code snippets
+### Protip: Webstorm Live Templates
 
-With Visual Studio Code it's easy to create 'snippets', i.e., shortcuts
-for quickly generating commonly re-used portions of code, much like how 'sout' works in Netbeans.
+With WebStorm it's easy to create and 'live templates', i.e., shortcuts/snippets
+for quickly generating commonly re-used portions of code, much like how `sout` works in Netbeans and `psvm` works in IntelliJ.
 
-Instructions for creating snippets can be found [here](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets).
+**Try typing `rsc` and then hitting *Tab* and see the magic that appears!**
 
-Useful, ready-made snippets can also be found as VS Code plugins,
-in the [marketplace](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets).
+Instructions for working with live templates can be found [here](https://blog.jetbrains.com/webstorm/2018/01/using-and-creating-code-snippets/#work_with_live_templates).
 
-The most important snippet is the one for the `console.log()` command, for example, **clog**.
-This can be created like so:
+There are already lots of live templates that are available for you to review in ***Settings->Editor->Live Templates***.
 
-```js
-{
-  "console.log": {
-    "prefix": "clog",
-    "body": [
-      "console.log('$1')",
-    ],
-    "description": "Log output to console"
-  }
-}
-```
+Another live template for the `console.log()` command, which is, **log**.
 
-Debugging your code using `console.log()` is so common that Visual Studio Code has that snippet built in.
 To use it, type `log` and hit Tab to autocomplete.
-More fully featured `console.log()` snippet extensions can be found in the [marketplace](https://marketplace.visualstudio.com/search?term=console.log&target=VSCode&category=All%20categories&sortBy=Relevance).
+
+Though it doesn't stop there, as you can make custom live templates.
+
+For example, I'm going to taken
+[this tutorial](https://betterprogramming.pub/intellij-live-template-for-console-log-that-will-improve-your-daily-development-life-ef1320a8fe81)
+and boil it down to its essence.
+
+Let's setup a custom `clog` live template.
+
+1. Go to ***Settings->Editor->Live Templates***
+2. With Javascript Selected, click on the `+` icon.
+3. Type `clog` for the Abbreviation and `More detailed console.log` for the Description
+4. Paste this in the template text: `console.log('Class: $CLASS$, Function: $FUNCTION$, Line $LINE$ $PARAM_TEXT$($EXPECTED$): ', $PARAM$);$END$`
+5. Select ***Reformat according to style***
+6. Click the Define linke below the template text and select ***Javascript & Typescript***.
+7. Finally click edit variables and make it looks like this, make sure you have the order of the variables as well.
+
+![image showing the variables and values](../../images/2/custom/live_template_variables.png)
+
+Click ***OK*** twice and then try it out by typing `clog` and then ***Tab***.
+You'll notice that you have this template that will provide you with a function name and line number
+as well as other neat values to make it easier to debug!
 
 ### JavaScript Arrays
 
 From here on out, we will be using the functional programming methods of the JavaScript
 [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array),
 such as `find`, `filter`, and `map` - all of the time.
-They operate on the same general principles as streams do in Java 8,
-which have been used during the last few years in both the 'Ohjelmoinnin perusteet'
-and 'Ohjelmoinnin jatkokurssi' courses at the university's department of Computer Science,
-and also in the programming MOOC.
+They operate on the same general principles as their equivalents in other languages and as streams in Java.
 
 If functional programming with arrays feels foreign to you, it is worth watching at least the first three parts of the YouTube video series
 [Functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84):
@@ -92,14 +97,12 @@ If functional programming with arrays feels foreign to you, it is worth watching
 
 ### Event Handlers Revisited
 
-Based on last year's course, event handling has proved to be difficult.
+Event handling is complex.
 
-It's worth reading the revision chapter at the end of the previous part -
-[event handlers revisited](/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited) -
-if it feels like your own knowledge on the topic needs some brushing up.
+It's worth reviewing the
+[previous section on event handlers](/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited).
 
-Passing event handlers to the child components of the `App` component has raised some questions.
-A small revision on the topic can be found [here](/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
+Passing event handlers to the child components of the `App` component can also be complex, so you may want to revisit [the material that was provided about the topic here](/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
 
 ### Rendering Collections
 
@@ -438,7 +441,7 @@ const App = ({ notes }) => {
 }
 ```
 
-Note that the `key` attribute must now be defined for the `Note` components, and not in the `li` tags like before.
+Notice that the `key` attribute must now be defined for the `Note` components, and not in the `li` tags like before.
 
 A whole React application can be written in a single file.
 Although that is, of course, not very practical.
@@ -492,7 +495,7 @@ const App = ({ notes }) => {
 
 The component exported by the module is now available for use in the variable `Note`, just as it was earlier.
 
-Note that when importing our own components, their location must be given *in relation to the importing file*:
+Notice that when importing our own components, their location must be given *in relation to the importing file*:
 
 ```js
 './components/Note'
@@ -507,7 +510,7 @@ We will get back to them later in this course.
 
 The current code of the application can be found on [GitHub](https://github.com/comp227/part2-notes/tree/part2-1).
 
-Note that the *main* branch of the repository contains the code for a later version of the application.
+Notice that the *main* branch of the repository contains the code for a later version of the application.
 The current code is in the branch [part2-1](https://github.com/comp227/part2-notes/tree/part2-1):
 
 ![GitHub branch screenshot](../../images/2/2e.png)
@@ -632,7 +635,7 @@ Please make sure that you commit often, as that will be the way you show your wo
 Let's finish the code for rendering companies' handheld arcade games and systems from exercises 1.1 - 1.5.
 If you need help getting your solution to a good state, please let me know, but I'd like you to copy the code from that repo and paste it into this one.
 
-**Note that if you copy a project from one place to another, you might have to delete the *node_modules* directory
+**Notice that if you copy a project from one place to another, you might have to delete the *node_modules* directory
 and install the dependencies again with the command `npm install` before you can start the application.**
 
 You only need to copy the **code**!
