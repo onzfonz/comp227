@@ -22,9 +22,12 @@ is that in step 3 we need to do is say ***File->New Project from Version Control
 I would also make sure to check **trust projects** that is presented in the first window so that you don't have to keep doing so.
 ![clicking trust projects](../../images/1/custom/trust_projects.png)
 
-Lastly, I would choose the option ***Attach*** and check ***don't ask again*** in the next window.
-Attaching the project will provide you with one window where all of your projects would be.
-![attach and don't ask again](../../images/1/custom/attach_dont_ask.png)
+Lastly, I would choose the option ***New Window*** and check ***don't ask again*** in the next window.
+Using a new window with the project will provide you with a new window for every project.
+Having a new window is nice for having a separate area but not being confined to having only one project open at a time.
+I liked using attach, which puts all the repos in a single folder.
+However, this creates more issues in particular views like the git view as it shows you all the same files and you have to keep making sure you have the right path.
+![new window and don't ask again](../../images/1/custom/attach_dont_ask.png)
 
 You can click on the [project bar in the upper right](../../images/1/custom/webstorm_project.png) to return to see that you should now have two sets of folders: *lab0* and *lab1*.
 
