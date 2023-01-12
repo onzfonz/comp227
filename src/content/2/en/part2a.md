@@ -70,7 +70,12 @@ Let's setup a custom `clog` live template.
 1. Go to ***Settings->Editor->Live Templates***
 2. With Javascript Selected, click on the `+` icon.
 3. Type `clog` for the Abbreviation and `More detailed console.log` for the Description
-4. Paste this in the template text: `console.log('Class: $CLASS$, Function: $FUNCTION$, Line $LINE$ $PARAM_TEXT$($EXPECTED$): ', $PARAM$);$END$`
+4. Paste this in the template text:
+
+    ```js
+    console.log('File: $FILE$, Function: $FUNCTION$, Line $LINE$ - Is $PARAM_TEXT$ ($EXPECTED$)?: ', $PARAM$);$END$
+    ```
+
 5. Select ***Reformat according to style***
 6. Click the Define linke below the template text and select ***Javascript & Typescript***.
 7. Finally click edit variables and make it looks like this, make sure you have the order of the variables as well.
@@ -140,20 +145,20 @@ import App from './App'
 const tasks = [
   {
     id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
+    content: 'Wash the dishes',
+    date: '2023-01-10T17:30:31.098Z',
     important: true
   },
   {
     id: 2,
-    content: 'Browser can execute only JavaScript',
-    date: '2019-05-30T18:39:34.091Z',
+    content: 'Take out the trash',
+    date: '2023-01-10T18:39:34.091Z',
     important: false
   },
   {
     id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2019-05-30T19:20:14.298Z',
+    content: 'Buy salty snacks',
+    date: '2023-01-10T19:20:14.298Z',
     important: true
   }
 ]
@@ -186,9 +191,9 @@ The result is an array of `li` elements.
 
 ```js
 [
-  <li>HTML is easy</li>,
-  <li>Browser can execute only JavaScript</li>,
-  <li>GET and POST are the most important methods of HTTP protocol</li>,
+  <li>Wash the dishes</li>,
+  <li>Take out the trash</li>,
+  <li>Buy salty snacks</li>,
 ]
 ```
 
@@ -283,20 +288,20 @@ The application contains an array called `tasks`:
 const tasks = [
   {
     id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
+    content: 'Wash the dishes',
+    date: '2023-01-10T17:30:31.098Z',
     important: true
   },
   {
     id: 2,
-    content: 'Browser can execute only JavaScript',
-    date: '2019-05-30T18:39:34.091Z',
+    content: 'Take out the trash',
+    date: '2023-01-10T18:39:34.091Z',
     important: false
   },
   {
     id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2019-05-30T19:20:14.298Z',
+    content: 'Buy salty snacks',
+    date: '2023-01-10T19:20:14.298Z',
     important: true
   }
 ]
@@ -510,7 +515,7 @@ We will get back to them later in this course.
 
 The current code of the application can be found on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-1).
 
-Notice that the *main* branch of the repository contains the code for a later version of the application.
+Notice that the *main* branch of the repository is largely empty.
 The current code is in the branch [part2-1](https://github.com/comp227/part2-tasks/tree/part2-1):
 
 ![GitHub branch screenshot](../../images/2/2e.png)
@@ -519,7 +524,7 @@ If you clone the project, run the command `npm install` before starting the appl
 
 ### When the Application Breaks
 
-Early in your programming career (and even after 30 years of coding like yours truly),
+Early in your programming career (and even after 25 years of coding like yours truly),
 what often happens is that the application just completely breaks down.
 This is even moreso the case with dynamically typed languages, such as JavaScript, where the compiler does not check the data type.
 For instance, function variables or return values.
@@ -553,7 +558,11 @@ const App = () => {
 ```
 
 We'll hone in on the reason for the breakdown by adding `console.log` commands to the code.
-Because the first thing to be rendered is the `App` component, it's worth putting the first `console.log` there:
+Because the first thing to be rendered is the `App` component, it's worth putting a `console.log` in there.
+Use your `clog` live template that we created above to get some easy information in, since `clog` wants variables,
+type `company` and then ***Enter*** to type what you expect it to have.
+Then, press ***Enter*** again.
+For me, I did something like this.
 
 ```js
 const App = () => {
@@ -561,7 +570,7 @@ const App = () => {
     // ...
   }
 
-  console.log('App works...') // highlight-line
+  console.log('File: App.js, Function: App, Line 24 - Is company (JS Object)?: ', company); // highlight-line
 
   return (
     // ..
@@ -616,7 +625,7 @@ const Company = (props) => { // highlight-line
 If the problem has still not been resolved, sadly there isn't much to do apart from continuing to bug-hunt by sprinkling more `console.log` statements around your code.
 
 The original author added this chapter to the material after the model answer for the next question exploded completely
-(due to props being of the wrong type), and I had to debug it using `console.log`.
+(due to props being of the wrong type), and it had to be debuggged using `console.log`.
 
 </div>
 
@@ -633,10 +642,12 @@ Please make sure that you commit often, as that will be the way you show your wo
 #### 2.1: handheld arcade info step6
 
 Let's finish the code for rendering companies' handheld arcade games and systems from exercises 1.1 - 1.5.
-If you need help getting your solution to a good state, please let me know, but I'd like you to copy the code from that repo and paste it into this one.
+If you need help getting your solution to a good state, please let me know.
+I would recommend that you use `create-react-app` from the base directory and then just copy over the *src* folder.
 
-**Notice that if you copy a project from one place to another, you might have to delete the *node_modules* directory
+**Notice that if you copy the entire project from one place to another, you would have to delete the *node_modules* directory
 and install the dependencies again with the command `npm install` before you can start the application.**
+Later on we may use this method, but realize that node_modules is often huge and highly dependent on your system, so I think it's easier to let npm and create-react-app do those portions.
 
 You only need to copy the **code**!
 
@@ -730,10 +741,12 @@ const total = handhelds.reduce((s, p) => {
 
 **Not working?** Use your search engine to look up how `reduce` is used in an **Object Array**.
 
-**Pro tip 2:** There is a [plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer)
-that automatically changes the short-form arrow functions into their longer form and vice versa.
+**Pro tip 2:** If you right click and show context actions (or use the keyboard shortcut, for me it ***Ctrl-1***),
+you should see the ability for the IDE to make a variety of changes.
+For example, JetBrains will automatically change the short-form arrow functions into their longer form and vice versa,
+showing you a preview of what that would look like.
 
-![vscode sample suggestion for arrow function](../../images/2/5b.png)
+![webstorm sample suggestion for arrow function](../../images/2/5b.png)
 
 #### 2.4: handheld arcade info step9
 
