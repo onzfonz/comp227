@@ -337,7 +337,7 @@ const tasksToShow = showAll
   : tasks.filter(task => task.important === true)
 ```
 
-The definition uses the [conditional](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) operator
+The definition uses the [conditional AKA ternary AKA ?:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) operator
 also found in many other programming languages.
 
 The operator functions as follows.
@@ -357,7 +357,7 @@ Filtering is done with the help of the array [filter](https://developer.mozilla.
 tasks.filter(task => task.important === true)
 ```
 
-The comparison operator is redundant, since the value of `task.important` is either `true` or `false`, which means that we can simply write:
+The comparison operator is redundant, since the value of `task.important` is either `true` or `false`, which means that we can should instead write:
 
 ```js
 tasks.filter(task => task.important)
@@ -427,19 +427,20 @@ You can find the code for our current application in its entirety in the *part2-
 
 ### Exercises 2.6-2.10
 
-In the first exercise, we will start working on an application that will be further developed in the later exercises.
+In the first exercise, we will start working on an application that will be further developed in the later exercises, so you'll need to create another application.
 In related sets of exercises, it is sufficient to return the final version of your application.
-You may also make a separate commit after you have finished each part of the exercise set, but doing so is not required.
 
-**WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
-You likely **do not want** your project to be a repository, so simply run the `rm -rf .git` command at the root of your application.
+The exercises are submitted through GitHub and marking them as done on Canvas.
 
-#### 2.6: The Phonebook Step1
+Please make sure **that you commit often**, as that will be the way you show your work and progress through the course.
 
-Let's create a simple phonebook.
-***In this part, we will only be adding names to the phonebook.***
+**WARNING** make sure you are in the correct location before calling `create-react-app`
 
-Let us start by implementing the addition of a person to the phonebook.
+#### 2.6: The Communities Step1
+
+Let's create a simple community directory, which will be a list of communities that we may want to join.
+
+Let us start by implementing the addition of a single community to this directory.
 
 You can use the code below as a starting point for the `App` component of your application:
 
@@ -447,14 +448,14 @@ You can use the code below as a starting point for the `App` component of your a
 import { useState } from 'react'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+  const [groups, setGroups] = useState([
+    { name: 'COMP 227 Students' }
   ]) 
   const [newName, setNewName] = useState('')
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2>Community Directory</h2>
       <form>
         <div>
           name: <input />
@@ -463,8 +464,9 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
-      ...     </div>
+      <h2>URLs</h2>
+      ...     
+    </div>
   )
 }
 
@@ -492,12 +494,12 @@ Notice the use of the React developer tools extension in the picture above!
 
 **NB:**
 
-- you can use the person's name as a value of the `key` property
+- you can use the group's name as a value of the `key` property
 - remember to prevent the default action of submitting HTML forms!
 
-#### 2.7: The Phonebook Step2
+#### 2.7: The Communities Step2
 
-Prevent the user from being able to add names that already exist in the phonebook.
+Prevent the user from being able to add names that already exist in the list.
 JavaScript arrays have numerous suitable
 [methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 for accomplishing this job.
@@ -511,32 +513,33 @@ Issue a warning with the [alert](https://developer.mozilla.org/en-US/docs/Web/AP
 [template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals):
 
 ```js
-`${newName} is already added to phonebook`
+`${newName} has already been added to the community directory`
 ```
 
 If the `newName` variable holds the value `Arto Hellas`, the template string expression returns the string
 
 ```js
-`Arto Hellas is already added to phonebook`
+`Arto Hellas has already been added to the community directory`
 ```
 
 The same could be done in a more Java-like fashion by using the plus operator:
 
 ```js
-newName + ' is already added to phonebook'
+newName + ' has already been added to the community directory'
 ```
 
 Using template strings is the more idiomatic option and the sign of a true JavaScript professional.
 
-#### 2.8: The Phonebook Step3
+#### 2.8: The Communities Step3
 
-Expand your application by allowing users to add phone numbers to the phone book.
+Expand your application by allowing users to add URLs to the community directory.
+The URL will be an invitation link to that communities' discord or slack group.
 You will need to add a second ***input*** element to the form (along with its own event handler):
 
 ```js
 <form>
   <div>name: <input /></div>
-  <div>number: <input /></div>
+  <div>URL: <input /></div>
   <div><button type="submit">add</button></div>
 </form>
 ```
@@ -546,24 +549,24 @@ The image also displays the application's state with the help of [React develope
 
 ![2.8 sample screenshot](../../images/2/12e.png)
 
-#### 2.9*: The Phonebook Step4
+#### 2.9*: The Communities Step4
 
-Implement a search field that can be used to filter the list of people by name:
+Implement a search field that can be used to filter the list of communities by name:
 
 ![2.9 sample screenshot](../../images/2/13e.png)
 
 You can implement the search field as an ***input*** element that is placed outside the HTML form.
-The filtering logic shown in the image is **case insensitive**, meaning that the search term `arto` also returns results that contain Arto with an uppercase A.
+The filtering logic shown in the image is **case insensitive**, meaning that the search term `comp` also returns results that contain Comp with an uppercase C.
 
 **NB:** When you are working on new functionality, it's often useful to "hardcode" some dummy data into your application, e.g.
 
 ```js
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+  const [groups, setGroups] = useState([
+    { name: 'COMP 227', url: 'https://discord.gg/VRUKRxCJ95', id: 1 },
+    { name: 'PySlackers', url: 'https://pythondev.slack.com', id: 2 },
+    { name: 'Code Support', url: 'https://discord.gg/XQ9C3sY', id: 3 },
+    { name: 'Front End Developers', url: 'https://discord.gg/XHsumw2C39', id: 4 }
   ])
 
   // ...
@@ -572,14 +575,14 @@ const App = () => {
 
 This saves you from having to manually input data into your application for testing out your new functionality.
 
-#### 2.10: The Phonebook Step5
+#### 2.10: The Communities Step5
 
 If you have implemented your application in a single component, refactor it by extracting suitable parts into new components.
 Maintain the application's state and all event handlers in the `App` root component.
 
 It is sufficient to extract ***three*** components from the application.
-Good candidates for separate components are, for example, the search filter, the form for adding new people to the phonebook,
-a component that renders all people from the phonebook, and a component that renders a single person's details.
+Good candidates for separate components are, for example, the search filter, the form for adding a group,
+a component that renders all communities, and a component that renders a single group's details.
 
 The application's root component could look similar to this after the refactoring.
 The refactored root component below only renders titles and lets the extracted components take care of the rest.
@@ -590,19 +593,19 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2>Community Directory</h2>
 
       <Filter ... />
 
       <h3>Add a new</h3>
 
-      <PersonForm 
+      <GroupForm 
         ...
       />
 
-      <h3>Numbers</h3>
+      <h3>URLs</h3>
 
-      <Persons ... />
+      <Groups ... />
     </div>
   )
 }
