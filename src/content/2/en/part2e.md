@@ -40,12 +40,12 @@ The selector above is `h1`, which will match all of the `h1` header tags in our 
 
 The declaration sets the `color` property to the value `green`.
 
-One CSS rule can contain an arbitrary number of properties.
+One CSS rule can contain an arbitrary number of declarations.
 Let's modify the previous rule to make the text cursive, by defining the font style as `italic`:
 
 ```css
 h1 {
-  color: green;
+  color: navy;
   font-style: italic;  // highlight-line
 }
 ```
@@ -70,13 +70,13 @@ const Task = ({ task, toggleImportance }) => {
 }
 ```
 
-Let's add the following rule to our style sheet (since my knowledge of elegant web design is close to zero, the styles don't make much sense):
+Let's add the following rule to our style sheet (relying on my non-existent knowledge of color theory and design):
 
 ```css
 li {
-  color: grey;
+  color: saddlebrown;
   padding-top: 3px;
-  font-size: 15px;
+  font-size: 18px;
 }
 ```
 
@@ -114,9 +114,9 @@ Class selectors are defined with the `.classname` syntax:
 
 ```css
 .task {
-  color: grey;
+  color: saddlebrown;
   padding-top: 5px;
-  font-size: 15px;
+  font-size: 18px;
 }
 ```
 
@@ -178,8 +178,8 @@ Then let's add a style rule that suits an error message:
 ```css
 .error {
   color: red;
-  background: lightgrey;
-  font-size: 20px;
+  background: antiquewhite;
+  font-size: 22px;
   border-style: solid;
   border-radius: 5px;
   padding: 10px;
@@ -202,7 +202,7 @@ Let's change the `toggleImportanceOf` function in the following way:
       .catch(error => {
         // highlight-start
         setErrorMessage(
-          `Task '${task.content}' was already removed from server`
+          `Task '${task.content}' was already deleted from server`
         )
         setTimeout(() => {
           setErrorMessage(null)
@@ -261,7 +261,10 @@ Next, we could add a "bottom block" to our application by creating a `Footer` co
 // highlight-start
 const Footer = () => {
   const footerStyle = {
-    color: 'green',
+    marginTop: 30,
+    paddingBottom: 15,
+    backgroundColor: 'black',
+    color: 'orange',
     fontStyle: 'italic',
     fontSize: 16
   }
@@ -269,7 +272,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      <em>Task app, Department of Computer Science, University of Helsinki 2022</em>
+      <em>Task app, Department of Computer Science, University of the Pacific 2023</em>
     </div>
   )
 }
@@ -319,14 +322,15 @@ The code of the final version of our application can be found in the *part2-8* b
 #### 2.19: Communities step11
 
 Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message)
-example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a group is added or a number is changed):
+example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a group is added or a number is changed).
+In these examples, use the gray and green colors.
 
 ![successful green added screenshot](../../images/2/27e.png)
 
 #### 2.20*: Communities step12
 
 Open your application in two browsers.
-**If you delete a group in browser 1** a short while before attempting to ***change the group's phone number*** in browser 2, you will get the following error message:
+**If you delete a group in browser 1** a short while before attempting to ***change the group's URL*** in browser 2, you will get the following error message:
 
 ![error message 404 not found when changing multiple browsers](../../images/2/29b.png)
 
