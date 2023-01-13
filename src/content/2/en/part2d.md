@@ -790,7 +790,7 @@ The code for the current state of our application can be found in the *part2-6* 
 Let's return to our communities application.
 
 Currently, any community that is added is not saved to a backend server.
-Fix this situation.
+Fix this situation.  Use ***<http://localhost:3001/groups>*** as your backend URL.
 
 #### 2.16: Communities step8
 
@@ -805,7 +805,7 @@ You can confirm the action from the user by using the [window.confirm](https://d
 ![2.17 window confirm feature screeshot](../../images/2/24e.png)
 
 The associated resource for a group in the backend can be deleted by making an HTTP DELETE request to the resource's URL.
-If we are deleting e.g. a group who has the `id` 2, we would have to make an HTTP DELETE request to the URL ***localhost:3001/groups/2***.
+If we are deleting e.g. a group that has the `id` 2, we would have to make an HTTP DELETE request to the URL ***localhost:3001/groups/2***.
 No data is sent with the request.
 
 You can make an HTTP DELETE request with the [axios](https://github.com/axios/axios) library in the same way that we make all of the other requests.
