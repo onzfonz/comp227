@@ -789,7 +789,7 @@ part1
   jokes
 part2
   arcadeinfo
-  phonebook
+  communities
   countries
 ```
 

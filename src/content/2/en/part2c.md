@@ -663,14 +663,14 @@ We will do this in part 3.
 
 ### Exercises 2.11-2.14
 
-#### 2.11: The Phonebook Step6
+#### 2.11: The Communities Step6
 
-We continue with developing the phonebook.
+We continue with developing the communities.
 Store the initial state of the application in the file *db.json*, which should be placed in the root of the project.
 
 ```json
 {
-  "persons":[
+  "groups":[
     { 
       "name": "Arto Hellas", 
       "number": "040-123456",
@@ -695,7 +695,7 @@ Store the initial state of the application in the file *db.json*, which should b
 }
 ```
 
-Start json-server on port 3001 and make sure that the server returns the list of people by going to the address <http://localhost:3001/persons> in the browser.
+Start json-server on port 3001 and make sure that the server returns the list of people by going to the address <http://localhost:3001/groups> in the browser.
 
 If you receive the following error message:
 

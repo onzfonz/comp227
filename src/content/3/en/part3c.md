@@ -352,9 +352,9 @@ Task.find({ important: true }).then(result => {
 
 #### 3.12: Command-line database
 
-Create a cloud-based MongoDB database for the phonebook application with MongoDB Atlas.
+Create a cloud-based MongoDB database for the communities application with MongoDB Atlas.
 
-Create a *mongo.js* file in the project directory, that can be used for adding entries to the phonebook, and for listing all of the existing entries in the phonebook.
+Create a *mongo.js* file in the project directory, that can be used for adding a community, and for listing all of the communities.
 
 **NB:** Do not include the password in the file that you commit and push to GitHub!
 
@@ -368,10 +368,10 @@ node mongo.js yourpassword Anna 040-1234556
 As a result, the application will print:
 
 ```bash
-added Anna number 040-1234556 to phonebook
+added Anna number 040-1234556 to communities
 ```
 
-The new entry to the phonebook will be saved to the database.
+The new community entry will be saved to the database.
 Notice that if the name contains whitespace characters, it must be enclosed in quotes:
 
 ```bash
@@ -384,10 +384,10 @@ If the password is the only parameter given to the program, meaning that it is i
 node mongo.js yourpassword
 ```
 
-Then the program should display all of the entries in the phonebook:
+Then the program should display all of the communities:
 
 ```shell
-phonebook:
+communities:
 Anna 040-1234556
 Arto Vihavainen 045-1232456
 Ada Lovelace 040-1231236
@@ -399,31 +399,31 @@ You can get the command-line parameters from the [process.argv](https://nodejs.o
 E.g. the following code will not work:
 
 ```js
-Person
+Group
   .find({})
-  .then(persons=> {
+  .then(groups=> {
     // ...
   })
 
 mongoose.connection.close()
 ```
 
-In the code above the `mongoose.connection.close()` command will get executed immediately after the `Person.find` operation is started.
+In the code above the `mongoose.connection.close()` command will get executed immediately after the `Group.find` operation is started.
 This means that the database connection will be closed immediately,
-and the execution will never get to the point where `Person.find` operation finishes and the `callback` function gets called.
+and the execution will never get to the point where `Group.find` operation finishes and the `callback` function gets called.
 
 The correct place for closing the database connection is at the end of the callback function:
 
 ```js
-Person
+Group
   .find({})
-  .then(persons=> {
+  .then(groups=> {
     // ...
     mongoose.connection.close()
   })
 ```
 
-**NB:** If you define a model with the name `Person`, mongoose will automatically name the associated collection as `people`.
+**NB:** If you define a model with the name `Group`, mongoose will automatically name the associated collection as `people`.
 
 </div>
 
@@ -738,22 +738,22 @@ You can find the code for our current application in its entirety in the *part3-
 The following exercises are pretty straightforward,
 but if your frontend stops working with the backend, then finding and fixing the bugs can be quite interesting.
 
-#### 3.13: Phonebook database, step1
+#### 3.13: Communities database, step1
 
-Change the fetching of all phonebook entries so that the data is **fetched from the database**.
+Change the fetching of all communities so that the data is **fetched from the database**.
 
 Verify that the frontend works after the changes have been made.
 
 In the following exercises, write all Mongoose-specific code into its own module,
 just like we did in the chapter [Database configuration into its own module](/part3/saving_data_to_mongo_db#database-configuration-into-its-own-module).
 
-#### 3.14: Phonebook database, step2
+#### 3.14: Communities database, step2
 
 Change the backend so that new numbers are **saved to the database**.
 Verify that your frontend still works after the changes.
 
-At this point, you can choose to simply allow users to create all phonebook entries.
-At this stage, the phonebook can have multiple entries for a person with the same name.
+At this point, you can choose to simply allow users to create all communities.
+At this stage, the communities application can have multiple entries for a group with the same name.
 
 </div>
 
@@ -1052,32 +1052,32 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.15-3.18
 
-#### 3.15: Phonebook database, step3
+#### 3.15: Communities database, step3
 
-Change the backend so that deleting phonebook entries is reflected in the database.
+Change the backend so that deleting communities are reflected in the database.
 
 Verify that the frontend still works after making the changes.
 
-#### 3.16: Phonebook database, step4
+#### 3.16: Communities database, step4
 
 Move the error handling of the application to a new error handler middleware.
 
-#### 3.17*: Phonebook database, step5
+#### 3.17*: Communities database, step5
 
-If the user tries to create a new phonebook entry for a person whose name is already in the phonebook,
+If the user tries to create a new community for one whose name is already in the communities application,
 the frontend will try to update the phone number of the existing entry by making an HTTP PUT request to the entry's unique URL.
 
 Modify the backend to support this request.
 
 Verify that the frontend works after making your changes.
 
-#### 3.18*: Phonebook database step6
+#### 3.18*: Communities database step6
 
-Also update the handling of the ***api/persons/:id*** and ***info*** routes to use the database,
+Also update the handling of the ***api/groups/:id*** and ***info*** routes to use the database,
 and verify that they work directly with the browser, Postman, or VS Code REST client.
 
-Inspecting an individual phonebook entry from the browser should look like this:
+Inspecting an individual community from the browser should look like this:
 
-![screenshot of browser showing one person with api/persons/their_id](../../images/3/49.png)
+![screenshot of browser showing one group with api/groups/their_id](../../images/3/49.png)
 
 </div>

@@ -546,9 +546,9 @@ The changes in frontend code are in *part3-1* branch of the [frontend repository
 The following exercises don't require many lines of code.
 They can however be challenging, because you must understand exactly what is happening and where, and the configurations must be just right.
 
-#### 3.9 phonebook backend step9
+#### 3.9 communities backend step9
 
-Make the backend work with the phonebook frontend from the exercises of the previous part.
+Make the backend work with the communities frontend from the exercises of the previous part.
 Do not implement the functionality for making changes to the phone numbers yet, that will be implemented in exercise 3.17.
 
 You will probably have to do some small changes to the frontend, at least to the URLs for the backend.
@@ -557,7 +557,7 @@ If some HTTP requests fail, you should check from the ***Network*** tab what is 
 Keep an eye on the backend's console as well.
 If you did not do the previous exercise, it is worth it to print the request data or `request.body` to the console in the event handler responsible for POST requests.
 
-#### 3.10 phonebook backend step10
+#### 3.10 communities backend step10
 
 Deploy the backend to the internet, for example to Heroku.
 
@@ -584,7 +584,7 @@ Another typical problem is that the application is not configured to use the por
 
 Create a README.md at the root of your repository, and add a link to your online application to it.
 
-#### 3.11 phonebook full stack
+#### 3.11 Communities full stack
 
 Generate a production build of your frontend, and add it to the internet application using the method introduced in this part.
 

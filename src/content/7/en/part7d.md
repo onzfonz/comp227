@@ -736,7 +736,7 @@ Let's store the following content in the *db.json* file:
     },
     {
       "important": false,
-      "content": "Mongo can save js objects",
+      "content": "Catch up with a family member",
       "id": "5a3b920a61e8c8d3f484bdd0"
     }
   ]

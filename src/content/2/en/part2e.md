@@ -316,17 +316,17 @@ The code of the final version of our application can be found in the *part2-8* b
 
 ### Exercises 2.19-2.20
 
-#### 2.19: Phonebook step11
+#### 2.19: Communities step11
 
 Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message)
-example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a person is added or a number is changed):
+example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a group is added or a number is changed):
 
 ![successful green added screenshot](../../images/2/27e.png)
 
-#### 2.20*: Phonebook step12
+#### 2.20*: Communities step12
 
 Open your application in two browsers.
-**If you delete a person in browser 1** a short while before attempting to ***change the person's phone number*** in browser 2, you will get the following error message:
+**If you delete a group in browser 1** a short while before attempting to ***change the group's phone number*** in browser 2, you will get the following error message:
 
 ![error message 404 not found when changing multiple browsers](../../images/2/29b.png)
 

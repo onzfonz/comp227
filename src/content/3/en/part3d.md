@@ -168,7 +168,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.19-3.21
 
-#### 3.19*: Phonebook database, step7
+#### 3.19*: Communities database, step7
 
 Expand the validation so that the name stored in the database has to be at least three characters long.
 
@@ -176,10 +176,10 @@ Expand the frontend so that it displays some form of error message when a valida
 Error handling can be implemented by adding a `catch` block as shown below:
 
 ```js
-personService
+groupService
     .create({ ...
 })
-    .then(createdPerson => {
+    .then(createdGroup => {
       // ...
     })
     .catch(error => {
@@ -190,14 +190,14 @@ personService
 
 You can display the default error message returned by Mongoose, even though they are not as readable as they could be:
 
-![phonebook screenshot showing person validation failure](../../images/3/56e.png)
+![communities screenshot showing group validation failure](../../images/3/56e.png)
 
 **NB:** On update operations, mongoose validators are off by default.
 [Read the documentation](https://mongoosejs.com/docs/validation.html) to determine how to enable them.
 
-#### 3.20*: Phonebook database, step8
+#### 3.20*: Communities database, step8
 
-Add validation to your phonebook application, which will make sure that phone numbers are of the correct form.
+Add validation to your communities application, which will make sure that phone numbers are of the correct form.
 A phone number must
 
 - have a length of 8 or more digits
@@ -207,7 +207,7 @@ A phone number must
 
 Use a [Custom validator](https://mongoosejs.com/docs/validation.html#custom-validators) to implement the second part of the validation.
 
-If an HTTP POST request tries to add a name that is already in the phonebook,
+If an HTTP POST request tries to add a name that is already in the communities app,
 the server must respond with an appropriate status code and error message.
 
 #### 3.21 Deploying the database backend to production
