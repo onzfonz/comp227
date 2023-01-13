@@ -44,8 +44,8 @@ and the result will be an automatically generated *package.json* file at the roo
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Matti Luukkainen",
-  "license": "MIT"
+  "author": "Osvaldo Jiménez",
+  "license": "ISC"
 }
 ```
 
@@ -67,7 +67,7 @@ Let's make a small change to the `scripts` object:
 Next, let's create the first version of our application by adding an *index.js* file to the root of the project with the following code:
 
 ```js
-console.log('hello world')
+console.log('hello comp227')
 ```
 
 We can run the program directly with Node from the command line:
@@ -113,7 +113,7 @@ const http = require('http')
 
 const app = http.createServer((request, response) => {
   response.writeHead(200, { 'Content-Type': 'text/plain' })
-  response.end('Hello World')
+  response.end('Hello COMP227!')
 })
 
 const PORT = 3001
@@ -131,6 +131,7 @@ We can open our humble application in the browser by visiting the address <http:
 
 ![hello world screen capture](../../images/3/1.png)
 
+The text is rendered in black and white because my system is in dark mode.
 The server works the same way regardless of the latter part of the URL.
 Also the address <http://localhost:3001/foo/bar> will display the same content.
 
@@ -241,7 +242,7 @@ app.listen(PORT)
 console.log(`Server running on port ${PORT}`)
 ```
 
-Let's restart the server (you can shut the server down by pressing *Ctrl+C* in the console) and let's refresh the browser.
+Let's restart the server (you can shut the server down by pressing ***Ctrl+C*** in the console) and let's refresh the browser.
 
 The `application/json` value in the `Content-Type` header informs the receiver that the data is in the JSON format.
 The `tasks` array gets transformed into JSON with the `JSON.stringify(tasks)` method.
@@ -334,7 +335,7 @@ let tasks = [
 ]
 
 app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>')
+  response.send('<h1>Hello COMP227!</h1>')
 })
 
 app.get('/api/tasks', (request, response) => {
@@ -408,11 +409,11 @@ It's worth noting that [JSON](https://en.wikipedia.org/wiki/JSON) is a string an
 
 The experiment shown below illustrates this point:
 
-![node terminal demonstrating json is of type string](../../assets/3/5.png)
+![node terminal demonstrating json is of type string](../../images/3/custom/node_demo.png)
 
 The experiment above was done in the interactive [node-repl](https://nodejs.org/docs/latest-v8.x/api/repl.html).
 You can start the interactive node-repl by typing in `node` in the command line.
-The repl is particularly useful for testing how commands work while you're writing application code.
+The repl is particularly useful for testing how commands work while you're writing application code.  To get out of node-repl, type `.exit`.
 I highly recommend this!
 
 ### nodemon
@@ -492,9 +493,9 @@ Unlike with the ***start*** and ***test*** scripts, we also have to add `run` to
 
 ### REST
 
-Let's expand our application so that it provides the same RESTful HTTP API as [json-server](https://github.com/typicode/json-server#routes).
+Let's expand our application so that it mimics [json-server's](https://github.com/typicode/json-server#routes) RESTful HTTP API.
 
-Representational State Transfer, aka REST, was introduced in 2000 in Roy Fielding's
+Representational State Transfer, aka **REST**, was introduced in 2000 in Roy Fielding's
 [dissertation](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm).
 REST is an architectural style meant for building scalable web applications.
 
@@ -576,14 +577,22 @@ When we test our application by going to <http://localhost:3001/api/tasks/1> in 
 we notice that it does not appear to work, as the browser displays an empty page.
 This comes as no surprise to us as software developers, and it's time to debug.
 
-Adding `console.log` commands into our code is a time-proven trick:
+As I've been doing more with live templates, I decided to modify JetBrains `log` live template.
+Here's the text that I used.
+`console.log('$PARAM_TEXT$ =', $PARAM$)$END$`
+Afterwards, I decided to edit the variables in the live template so they look like this:
+
+![log template variables](../../images/3/custom/log_template.png)
+
+Now we can add `log` commands to our code for id and task. So type `log`, ***Enter***, `id`, ***Enter***(2x), and you get the console.log statement that shows below.
+You could also add the line numbers and file names, but since I have clog already, I'll use that as well.
 
 ```js
 app.get('/api/tasks/:id', (request, response) => {
   const id = request.params.id
-  console.log(id)
+  console.log('id =', id)
   const task = tasks.find(task => task.id === id)
-  console.log(task)
+  console.log('task =', task)
   response.json(task)
 })
 ```
@@ -595,7 +604,7 @@ the console - which is the terminal (in this case) - will display the following:
 
 The id parameter from the route is passed to our application but the `find` method does not find a matching task.
 
-To further our investigation, we also add a console log inside the comparison function passed to the `find` method.
+To further our investigation, we also add a `console.log` inside the comparison function passed to the `find` method.
 To do this, we have to get rid of the compact arrow function syntax `task => task.id === id`, and use the syntax with an explicit return statement:
 
 ```js
@@ -611,12 +620,14 @@ app.get('/api/tasks/:id', (request, response) => {
 ```
 
 When we visit the URL again in the browser, each call to the comparison function prints a few different things to the console.
-The console output is the following:
+Here is the first part of that console output:
 
 ```shell
-1 'number' '1' 'string' false
-2 'number' '1' 'string' false
-3 'number' '1' 'string' false
+task.id = 1
+typeof task.id = number
+id = 1
+typeof id = string
+task.id === id = false
 ```
 
 The cause of the bug becomes clear.
@@ -713,41 +724,43 @@ Many tools exist for making the testing of backends easier.
 One of these is a command line program [curl](https://curl.haxx.se).
 However, instead of curl, we will take a look at using [Postman](https://www.postman.com) for testing the application.
 
-Let's install the Postman desktop client [from here](https://www.postman.com/downloads/)  and try it out:
+Let's install the Postman desktop client and try it out:
+
+| Windows | Mac |
+| :--- | :--- |
+|`winget install -e postman` | `brew install --cask postman` |
+
+Create an account, then a personal workspace and then create a collection.
+I named my collection ***COMP 227***.
+You'll then ***add a request***, which is a link provided on the side of postman.
+
+![how to add a request in postman](../../images/3/custom/postman_quickstart.png)
+
+While there is a lot of lingo and terminology to sift through, once you get to the request page, it becomes much more manageable.
+
+It's enough to define the URL and then select the correct request type (DELETE).
 
 ![postman screenshot on api/tasks/2](../../images/3/11x.png)
 
-Using Postman is quite easy in this situation.
-It's enough to define the URL and then select the correct request type (DELETE).
-
 The backend server appears to respond correctly.
-By making an HTTP GET request to <http://localhost:3001/api/tasks> we see that the task with the id 2 is no longer in the list, which indicates that the deletion was successful.
+By making an HTTP GET request to, or just visiting <http://localhost:3001/api/tasks>,
+we see that the task with the id 2 is no longer in the list, which indicates that the deletion was successful.
 
 Because the tasks in the application are only saved to memory, the list of tasks will return to its original state when we restart the application.
 
-### The Visual Studio Code REST client
+### WebStorm REST client
 
-If you use Visual Studio Code,
-you can use the VS Code [REST client plugin](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
-instead of Postman.
+While Postman has become fairly popular due to all of it's options, in our case we can also use Webstorm's REST client instead of Postman.
 
-Once the plugin is installed, using it is very simple.
-We make a directory at the root of the application named ***requests***.
-We save all the REST client requests in the directory as files that end with the *.rest* extension.
-
-Let's create a new *all_tasks.rest* file and define the request that fetches all tasks.
+To use the rest client, right-click on the project and select ***New->HTTP Request***.
+Give it the name `all_tasks` and then you'll see a file named ***all_tasks.http***.
+We'll use that file to define a request that fetches all tasks.
 
 ![get all tasks rest file with get request on tasks](../../images/3/12ea.png)
 
-By clicking the ***Send Request*** text, the REST client will execute the HTTP request and the response from the server is opened in the editor.
+By clicking the highlighted play button, the REST client will execute the HTTP request and the response from the server is opened in the editor.
 
 ![response from vs code from get request](../../images/3/13ea.png)
-
-### The WebStorm HTTP Client
-
-If you use ***IntelliJ WebStorm*** instead, you can use a similar procedure with its built-in HTTP Client.
-Create a new file with extension `.rest` and the editor will display your options to create and run your requests.
-You can learn more about it by following [this guide](https://www.jetbrains.com/help/webstorm/http-client-in-product-code-editor.html).
 
 ### Receiving data
 
@@ -755,7 +768,8 @@ Next, let's make it possible to add new tasks to the server.
 Adding a task happens by making an HTTP POST request to the address <http://localhost:3001/api/tasks>,
 and by sending all the information for the new task in the request [body](https://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7) in JSON format.
 
-To access the data easily, we need the help of the express [json-parser](https://expressjs.com/en/api.html) that is taken to use with command `app.use(express.json())`.
+To access the data easily, we need the help of the express [json-parser](https://expressjs.com/en/api.html).
+We can use the parser by adding in that the command **`app.use(express.json())`**.
 
 Let's activate the json-parser and implement an initial handler for dealing with the HTTP POST requests:
 
@@ -770,7 +784,7 @@ app.use(express.json())  // highlight-line
 // highlight-start
 app.post('/api/tasks', (request, response) => {
   const task = request.body
-  console.log(task)
+  console.log('task =', task)
 
   response.json(task)
 })
@@ -779,9 +793,14 @@ app.post('/api/tasks', (request, response) => {
 
 The event handler function can access the data from the `body` property of the `request` object.
 
-Without the json-parser, the `body` property would be undefined.
-The json-parser functions so that it takes the JSON data of a request,
-transforms it into a JavaScript object and then attaches it to the `body` property of the `request` object before the route handler is called.
+Without the json-parser, the `body` property would be `undefined`.
+The json-parser:
+
+1. takes the JSON data of a request,
+2. transforms it into a JavaScript object and
+3. attaches it to the `body` property of the `request` object
+
+before the route handler is called.
 
 For the time being, the application does not do anything with the received data besides printing it to the console and sending it back in the response.
 
@@ -796,7 +815,7 @@ The application prints the data that we sent in the request to the console:
 
 **NB** *Keep the terminal running the application visible at all times* when you are working on the backend.
 Thanks to Nodemon any changes we make to the code will restart the application.
-If you pay attention to the console, you will immediately be able to pick up on errors that occur in the application:
+If you pay attention to the console, you will immediately be able to pick up on errors that could occur:
 
 ![nodemon error as typing requre not defined](../../images/3/16.png)
 
@@ -820,17 +839,13 @@ The server will not be able to parse the data correctly without the correct valu
 It won't even try to guess the format of the data since
 there's a [massive amount](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of potential *Content-Types*.
 
-If you are using VS Code, then you should install the REST client from the previous chapter *now, if you haven't already*.
-The POST request can be sent with the REST client like this:
+With WebStorm, the POST request can be sent with the REST client like this:
 
 ![sample post request in vscode with JSON data](../../images/3/20eb.png)
 
-We created a new *create_task.rest* file for the request.
-The request is formatted according to the [instructions in the documentation](https://github.com/Huachao/vscode-restclient/blob/master/README.md#usage).
-
 One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository,
 and they can be distributed to everyone in the development team.
-You can also add multiple requests in the same file using `###` separators:
+Notice in the picture that we are also able to add the POST request in same file using `###` separators:
 
 ```text
 GET http://localhost:3001/api/tasks/
@@ -845,21 +860,22 @@ content-type: application/json
 }
 ```
 
+You can use the play button next to the line numbers to run the request you'd like.
 Postman also allows users to save requests, but the situation can get quite chaotic especially when you're working on multiple unrelated projects.
 
-> **Important sidetask**
+> **About debugging and using requests**
 >
 > Sometimes when you're debugging, you may want to find out what headers have been set in the HTTP request.
 > One way of accomplishing this is through the [get](http://expressjs.com/en/4x/api.html#req.get) method of the `request` object,
 > that can be used for getting the value of a single header.
 > The `request` object also has the *headers* property, that contains all of the headers of a specific request.
 >
-> Problems can occur with the VS REST client if you accidentally add an empty line between the top row and the row specifying the HTTP headers.
+> Problems can occur with the Webstorm REST client if you accidentally add an empty line between the top row and the row specifying the HTTP headers.
 > In this situation, the REST client interprets this to mean that all headers are left empty,
 > which leads to the backend server not knowing that the data it has received is in the JSON format.
 >
-
-You will be able to spot this missing *Content-Type* header if at some point in your code you print all of the request headers with the `console.log(request.headers)` command.
+> You will be able to spot this missing *Content-Type* header if at some point in your code
+> you print all of the request headers with the `console.log('request.headers=', request.headers)` command.
 
 Let's return to the application.
 Once we know that the application receives data correctly, it's time to finalize the handling of the request:
@@ -909,7 +925,7 @@ app.post('/api/tasks', (request, response) => {
   const task = {
     content: body.content,
     important: body.important || false,
-    date: new Date(),
+    date: new Date().toISOString(),
     id: generateId(),
   }
 
@@ -991,8 +1007,9 @@ The array can be transformed into individual numbers by using the
 
 ### Exercises 3.1-3.6
 
-**NB:** It's recommended to do all of the exercises from this part into a new dedicated git repository, and place your source code right at the root of the repository.
-Otherwise, you will run into problems in exercise 3.10.
+Please use this new repo link to build your new repository.
+
+**<http://go.djosv.com/227lab3>**
 
 **NB:** Because this is not a frontend project and we are not working with React, the application **is not created** with create-react-app.
 You initialize this project with the `npm init` command that was demonstrated earlier in this part of the material.
@@ -1009,30 +1026,30 @@ Data:
 [
     { 
       "id": 1,
-      "name": "Arto Hellas", 
-      "number": "040-123456"
+      "name": "COMP 227 Students", 
+      "url": "https://discord.gg/VRUKRxCJ95"
     },
     { 
       "id": 2,
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
+      "name": "PySlackers", 
+      "url": "https://pythondev.slack.com"
     },
     { 
       "id": 3,
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
+      "name": "Code Support", 
+      "url": "https://discord.gg/XQ9C3sY"
     },
     { 
       "id": 4,
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
+      "name": "Front End Developers", 
+      "url": "https://discord.gg/XHsumw2C39"
     }
 ]
 ```
 
 Output in the browser after GET request:
   
-![JSON data of 4 poeple in browser from api/groups](../../images/3/22e.png)
+![JSON data of 4 groups in browser from api/groups](../../images/3/22e.png)
 
 Notice that the forward slash in the route ***api/groups*** is not a special character, and is just like any other character in the string.
 
@@ -1134,15 +1151,18 @@ The express [json-parser](https://expressjs.com/en/api.html) we took into use ea
 
 Middleware are functions that can be used for handling `request` and `response` objects.
 
-The json-parser we used earlier takes the raw data from the requests that are stored in the `request` object,
-parses it into a JavaScript object and assigns it to the `request` object as a new property `body`.
+As a reminder, the json-parser we used earlier:
+
+- takes the raw data from the requests that are stored in the `request` object
+- parses it into a JavaScript object and
+- assigns it to the `request` object as a new property `body`.
 
 In practice, you can use several middlewares at the same time.
 When you have more than one, they're executed one by one in the order that they were taken into use in express.
 
-Let's implement our own middleware that prints information about every request that is sent to the server.
+Let's *implement our own middleware* that prints information about every request that is sent to the server.
 
-Middleware is a function that receives three parameters:
+For a function to be **middleware** it needs to receives three parameters:
 
 ```js
 const requestLogger = (request, response, next) => {
@@ -1167,8 +1187,8 @@ Middleware functions are called in the order that they're taken into use with th
 Notice that json-parser is taken into use before the `requestLogger` middleware,
 because otherwise `request.body` will not be initialized when the logger is executed!
 
-Middleware functions have to be taken into use before routes if we want them to be executed before the route event handlers are called.
-There are also situations where we want to define middleware functions after routes.
+Middleware functions have to be taken into use before routes *if we want them to be executed before the route event handlers* are called.
+There are also situations where we want to define middleware functions *after routes*.
 In practice, this means that we are defining middleware functions that are only called if no route handles the HTTP request.
 
 Let's add the following middleware after our routes.
@@ -1176,8 +1196,9 @@ This middleware will be used for catching requests made to non-existent routes.
 For these requests, the middleware will return an error message in the JSON format.
 
 ```js
-const unknownEndpoint = (request, response) => {
+const unknownEndpoint = (request, response, next) => {
   response.status(404).send({ error: 'unknown endpoint' })
+  next()
 }
 
 app.use(unknownEndpoint)
@@ -1194,7 +1215,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 #### 3.7: Communities backend step7
 
-Add the [morgan](https://github.com/expressjs/morgan) middleware to your application for logging.
+Add the [**morgan**](https://github.com/expressjs/morgan) middleware to your application for logging.
 Configure it to log messages to your console based on the `tiny` configuration.
 
 The documentation for Morgan is not the best, and you may have to spend some time figuring out how to configure it correctly.
@@ -1211,8 +1232,8 @@ Configure morgan so that it also shows the data sent in HTTP POST requests:
 ![terminal showing post data being sent](../../images/3/24.png)
 
 Notice that logging data even in the console can be dangerous since it can contain sensitive data
-and may violate local privacy law (e.g. GDPR in EU) or business-standard.
-In this exercise, you don't have to worry about privacy issues, but in practice, try not to log any sensitive data.
+and may violate local privacy law (e.g. GDPR in EU) or business standards.
+In this exercise, you don't have to worry about privacy issues, but in practice, do not to log any sensitive data.
 
 This exercise can be quite challenging, even though the solution does not require a lot of code.
 
