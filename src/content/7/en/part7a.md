@@ -279,7 +279,7 @@ import {
 
 const Task = ({ tasks }) => {
   const id = useParams().id // highlight-line
-  const task = tasks.find(n => n.id === Number(id)) 
+  const task = tasks.find(t => t.id === Number(id)) 
   return (
     <div>
       <h2>{task.content}</h2>
@@ -442,7 +442,7 @@ The `Task` component receives all of the tasks, even though it only displays the
 ```js
 const Task = ({ tasks }) => { 
   const id = useParams().id
-  const task = tasks.find(n => n.id === Number(id))
+  const task = tasks.find(t => t.id === Number(id))
   // ...
 }
 ```

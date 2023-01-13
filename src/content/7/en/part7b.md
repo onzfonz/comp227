@@ -524,7 +524,7 @@ const App = () => {
         <input {...content} />
         <button>create</button>
       </form>
-      {tasks.map(n => <p key={n.id}>{n.content}</p>)}
+      {tasks.map(t => <p key={t.id}>{t.content}</p>)}
 
       <h2>persons</h2>
       <form onSubmit={handlePersonSubmit}>
@@ -532,7 +532,7 @@ const App = () => {
         number <input {...number} />
         <button>create</button>
       </form>
-      {persons.map(n => <p key={n.id}>{n.name} {n.number}</p>)}
+      {persons.map(t => <p key={t.id}>{t.name} {t.number}</p>)}
     </div>
   )
 }

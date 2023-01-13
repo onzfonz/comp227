@@ -726,7 +726,7 @@ test('a valid task can be added ', async () => {
   const tasksAtEnd = await helper.tasksInDb() // highlight-line
   expect(tasksAtEnd).toHaveLength(helper.initialTasks.length + 1) // highlight-line
 
-  const contents = tasksAtEnd.map(n => n.content) // highlight-line
+  const contents = tasksAtEnd.map(t => t.content) // highlight-line
   expect(contents).toContain(
     'async/await simplifies making async calls'
   )
@@ -1287,7 +1287,7 @@ describe('addition of a new task', () => {
     const tasksAtEnd = await helper.tasksInDb()
     expect(tasksAtEnd).toHaveLength(helper.initialTasks.length + 1)
 
-    const contents = tasksAtEnd.map(n => n.content)
+    const contents = tasksAtEnd.map(t => t.content)
     expect(contents).toContain(
       'async/await simplifies making async calls'
     )

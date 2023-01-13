@@ -192,7 +192,7 @@ Let's change the `toggleImportanceOf` function in the following way:
 
 ```js
   const toggleImportanceOf = id => {
-    const task = tasks.find(n => n.id === id)
+    const task = tasks.find(t => t.id === id)
     const changedTask = { ...task, important: !task.important }
 
     taskService
@@ -208,7 +208,7 @@ Let's change the `toggleImportanceOf` function in the following way:
           setErrorMessage(null)
         }, 5000)
         // highlight-end
-        setTasks(tasks.filter(n => n.id !== id))
+        setTasks(tasks.filter(t => t.id !== id))
       })
   }
 ```

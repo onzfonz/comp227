@@ -97,7 +97,7 @@ const taskSlice = createSlice({
     toggleImportanceOf(state, action) {
       const id = action.payload
 
-      const taskToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(t => t.id === id)
 
       const changedTask = { 
         ...taskToChange, 
@@ -170,7 +170,7 @@ const taskSlice = createSlice({
     toggleImportanceOf(state, action) {
       const id = action.payload
 
-      const taskToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(t => t.id === id)
 
       const changedTask = { 
         ...taskToChange, 
@@ -503,7 +503,7 @@ const taskSlice = createSlice({
     toggleImportanceOf(state, action) {
       const id = action.payload
 
-      const taskToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(t => t.id === id)
 
       const changedTask = { 
         ...taskToChange, 

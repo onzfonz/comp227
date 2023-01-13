@@ -490,7 +490,7 @@ const taskReducer = (state = [], action) => {
       return state.concat(action.data)
     case 'TOGGLE_IMPORTANCE': {
       const id = action.data.id
-      const taskToChange = state.find(n => n.id === id)
+      const taskToChange = state.find(t => t.id === id)
       const changedTask = { 
         ...taskToChange, 
         important: !taskToChange.important 
@@ -512,7 +512,7 @@ Let's recap what goes on in the code.
 First, we search for a specific task object, the importance of which we want to change:
 
 ```js
-const taskToChange = state.find(n => n.id === id)
+const taskToChange = state.find(t => t.id === id)
 ```
 
 then we create a new object, which is a *copy* of the original task, only the value of the ***important*** field has been changed to the opposite of what it was:

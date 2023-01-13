@@ -867,7 +867,7 @@ Once we know that the application receives data correctly, it's time to finalize
 ```js
 app.post('/api/tasks', (request, response) => {
   const maxId = tasks.length > 0
-    ? Math.max(...tasks.map(n => n.id)) 
+    ? Math.max(...tasks.map(t => t.id)) 
     : 0
 
   const task = request.body
@@ -892,7 +892,7 @@ All other properties are discarded:
 ```js
 const generateId = () => {
   const maxId = tasks.length > 0
-    ? Math.max(...tasks.map(n => n.id))
+    ? Math.max(...tasks.map(t => t.id))
     : 0
   return maxId + 1
 }
@@ -967,7 +967,7 @@ The function for generating IDs looks currently like this:
 ```js
 const generateId = () => {
   const maxId = tasks.length > 0
-    ? Math.max(...tasks.map(n => n.id))
+    ? Math.max(...tasks.map(t => t.id))
     : 0
   return maxId + 1
 }
@@ -976,12 +976,12 @@ const generateId = () => {
 The function body contains a row that looks a bit intriguing:
 
 ```js
-Math.max(...tasks.map(n => n.id))
+Math.max(...tasks.map(t => t.id))
 ```
 
-What exactly is happening in that line of code? `tasks.map(n => n.id)` creates a new array that contains all the ids of the tasks.
+What exactly is happening in that line of code? `tasks.map(t => t.id)` creates a new array that contains all the ids of the tasks.
 [Math.max](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) returns the maximum value of the numbers that are passed to it.
-However, `tasks.map(n => n.id)` is an *array* so it can't directly be given as a parameter to `Math.max`.
+However, `tasks.map(t => t.id)` is an *array* so it can't directly be given as a parameter to `Math.max`.
 The array can be transformed into individual numbers by using the
 "three dot" [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax `...`.
 
