@@ -51,7 +51,7 @@ addTask = event => {
   event.preventDefault()
   const taskObject = {
     content: newTask,
-    date: new Date(),
+    date: new Date().toISOString(),
     important: Math.random() < 0.5,
   }
 
@@ -79,7 +79,9 @@ The newly created task resource is stored in the value of the `data` property of
 Sometimes it can be useful to inspect HTTP requests in the ***Network*** tab of Chrome developer tools,
 which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_apps#http-get):
 
-![content-type and request payload data in dev tools](../../images/2/21e.png)
+![content-type data in dev tools](../../images/2/21e1.png)
+
+![request payload in dev tools](../../images/2/21e2.png)
 
 We can use the inspector to check that the headers sent in the POST request are what we expected them to be and that their values are correct.
 
@@ -95,7 +97,7 @@ addTask = event => {
   event.preventDefault()
   const taskObject = {
     content: newTask,
-    date: new Date(),
+    date: new Date().toISOString(),
     important: Math.random() > 0.5,
   }
 
@@ -116,9 +118,9 @@ An [important detail](/part1/a_more_complex_state_debugging_react_apps#handling-
 to remember is that the `concat` method does not change the component's original state,
 but instead creates a new copy of the list.
 
-Once the data returned by the server starts to have an effect on the behavior of our web applications,
+Once the data returned by the server starts affecting the behavior of our web applications,
 we are immediately faced with a whole new set of challenges arising from, for instance, the asynchronicity of communication.
-This necessitates new debugging strategies, console logging and other means of debugging become increasingly more important.
+New debugging strategies, console logging, and other means of debugging become increasingly important.
 We must also develop a sufficient understanding of the principles of both the JavaScript runtime and React components.
 Guessing won't be enough.
 
@@ -235,11 +237,11 @@ The final form of the event handler function is the following:
 ```js
 const toggleImportanceOf = id => {
   const url = `http://localhost:3001/tasks/${id}`
-  const task = tasks.find(n => n.id === id)
+  const task = tasks.find(t => t.id === id)
   const changedTask = { ...task, important: !task.important }
 
   axios.put(url, changedTask).then(response => {
-    setTasks(tasks.map(n => n.id !== id ? n : response.data))
+    setTasks(tasks.map(t => t.id !== id ? t : response.data))
   })
 }
 ```
@@ -269,7 +271,7 @@ There are a few things to point out.
 Why did we make a copy of the task object we wanted to modify when the following code also appears to work?
 
 ```js
-const task = tasks.find(n => n.id === id)
+const task = tasks.find(t => t.id === id)
 task.important = !task.important
 
 axios.put(url, task).then(response => {
@@ -277,7 +279,7 @@ axios.put(url, task).then(response => {
 ```
 
 This is not recommended because the variable `task` is a reference to an item in the `tasks` array in the component's state,
-and as we recall we must never mutate state directly in React.
+and as we recall ***we must never mutate state directly in React***.
 
 It's also worth noting that the new object `changedTask` is only a so-called
 [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
@@ -368,7 +370,7 @@ const App = () => {
   }, [])
 
   const toggleImportanceOf = id => {
-    const task = tasks.find(n => n.id === id)
+    const task = tasks.find(t => t.id === id)
     const changedTask = { ...task, important: !task.important }
 
     // highlight-start
@@ -503,7 +505,7 @@ const App = () => {
   }, [])
 
   const toggleImportanceOf = id => {
-    const task = tasks.find(n => n.id === id)
+    const task = tasks.find(t => t.id === id)
     const changedTask = { ...task, important: !task.important }
 
     taskService
@@ -634,7 +636,7 @@ that was introduced to JavaScript through ES6, enabling a slightly more compact 
 To demonstrate this feature, let's consider a situation where we have the following values assigned to variables:
 
 ```js
-const name = 'Leevi'
+const name = 'Paloma'
 const age = 0
 ```
 
@@ -710,7 +712,7 @@ If the request fails, the event handler registered with the `catch` method gets 
 
 The `catch` method is often utilized by placing it deeper within the promise chain.
 
-When our application makes an HTTP request, we are in fact creating a [promise chain](https://javascript.info/promise-chaining):
+When our application makes an HTTP request, we are **creating a [promise chain](https://javascript.info/promise-chaining)**:
 
 ```js
 axios
@@ -740,7 +742,7 @@ Let's use this feature and register an error handler in the `App` component:
 
 ```js
 const toggleImportanceOf = id => {
-  const task = tasks.find(n => n.id === id)
+  const task = tasks.find(t => t.id === id)
   const changedTask = { ...task, important: !task.important }
 
   taskService
@@ -752,7 +754,7 @@ const toggleImportanceOf = id => {
       alert(
         `the task '${task.content}' was already deleted from server`
       )
-      setTasks(tasks.filter(n => n.id !== id))
+      setTasks(tasks.filter(t => t.id !== id))
     })
     // highlight-end
 }
@@ -767,7 +769,7 @@ Removing an already deleted task from the application's state is done with the a
 which returns a new array comprising only the items from the list for which the function that was passed as a parameter returns true for:
 
 ```js
-tasks.filter(n => n.id !== id)
+tasks.filter(t => t.id !== id)
 ```
 
 It's probably not a good idea to use alert in more serious React applications.

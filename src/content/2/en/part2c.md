@@ -41,7 +41,7 @@ Create a file named *db.json* in the root directory of the previous tasks projec
 ```
 
 You can [install](https://github.com/typicode/json-server#getting-started) a JSON server globally on your machine using the command `npm install -g json-server`.
-A global installation requires administrative privileges, which means that it is not possible on faculty computers or freshman laptops.
+A global installation requires administrative privileges, which means that it is not possible on school computers.
 
 After installing run the following command to run the json-server.
 The *json-server* starts running on port 3000 by default;
@@ -65,8 +65,8 @@ We can see that *json-server* serves the tasks we previously wrote to the file i
 
 ![json data of tasks](../../images/2/14e.png)
 
-If your browser doesn't have a way to format the display of JSON-data, then install an appropriate plugin,
-e.g. [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) to make your life easier.
+If your browser doesn't display the data as nicely as you see above, install an appropriate plugin,
+like [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) to make your life easier.
 
 Going forward, the idea will be to save the tasks to the server, which in this case means saving them to the json-server.
 The React code fetches the tasks from the server and renders them to the screen.
@@ -82,7 +82,7 @@ We will get familiar with the principles of implementing server-side functionali
 
 Our first task is fetching the already existing tasks to our React application from the address <http://localhost:3001/tasks>.
 
-In the part0 [example project](/part0/fundamentals_of_web_apps#running-application-logic-on-the-browser),
+In the part0 [example project](part0/fundamentals_of_web_apps#running-application-logic-in-the-browser),
 we already learned a way to fetch data from a server using JavaScript.
 The code in the example was fetching the data using [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest),
 otherwise known as an HTTP request made using an XHR object.
@@ -90,7 +90,7 @@ This is a technique introduced in 1999, which every browser has supported for a 
 
 The use of XHR is no longer recommended, and browsers already widely support the
 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch) method,
-which is based on so-called [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise),
+which is based on [*promises*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise),
 instead of the event-driven model used by XHR.
 
 As a reminder from part0 (which one should **remember to not use `xhr`** without a pressing reason),
@@ -140,7 +140,7 @@ On the other hand, JavaScript engines, or runtime environments, follow the [asyn
 In principle, this requires all
 [IO operations](https://en.wikipedia.org/wiki/Input/output)
 (with some exceptions) to be executed as non-blocking.
-This means that code execution continues immediately after calling an IO function, without waiting for it to return.
+This means that code execution continues immediately after calling an IO function, ***without waiting for it to return***.
 
 When an asynchronous operation is completed, or, more specifically, at some point after its completion,
 the JavaScript engine calls the event handlers registered to the operation.
@@ -187,7 +187,7 @@ Let's get back to the topic of fetching data from the server.
 We could use the previously mentioned promise-based function
 [fetch](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch)
 to pull the data from the server.
-Fetch is a great tool.
+Fetch is a wonderful tool.
 It is standardized and supported by all modern browsers (excluding IE).
 
 That being said, we will be using the [axios](https://github.com/axios/axios) library instead for communication between the browser and server.
@@ -304,8 +304,6 @@ We can now conveniently, without parameter definitions, start the json-server fr
 npm run server
 ```
 
-We will get more familiar with the *npm* tool in the [third part of the course](/part3).
-
 **NB** The previously started json-server must be terminated before starting a new one; otherwise, there will be trouble:
 
 ![cannot bind to port 3001 error](../../images/2/15b.png)
@@ -318,6 +316,8 @@ Please specify another port number either through --port argument or through the
 As we can see, the application is not able to bind itself to the [port](https://en.wikipedia.org/wiki/Port_(computer_networking)).
 The reason being that port 3001 is already occupied by the previously started json-server.
 
+#### The nuances of npm
+
 We used the command `npm install` twice, but with slight differences:
 
 ```js
@@ -325,20 +325,22 @@ npm install axios
 npm install json-server --save-dev
 ```
 
-There is a fine difference in the parameters.
-*axios* is installed as a runtime dependency of the application because the execution of the program requires the existence of the library.
-On the other hand, *json-server* was installed as a development dependency (`--save-dev`),
+There is a slight difference in the parameters.
+*axios* is installed as a **runtime dependency** of the application because the execution of the program requires the existence of the library.
+On the other hand, *json-server* was installed as a **development dependency** (`--save-dev`),
 since the program itself doesn't require it.
-It is used for assistance during software development.
-There will be more on different dependencies in the next part of the course.
+Development dependencies are used for assistance during software development.
+
+We will get more familiar with the *npm* tool and additional dependency nuances in the [third part of the course](/part3).
 
 ### Axios and promises
 
 Now we are ready to use axios.
 Going forward, json-server is assumed to be running on port 3001.
 
-NB: To run json-server and your react app simultaneously, you may need to use two terminal windows.
+NB: To run json-server and your react app simultaneously, you will need to use two terminal windows.
 One to keep json-server running and the other to run react-app.
+Normally I have a third terminal window open as well to work with git if you are not using WebStorms built-in tools.
 
 The library can be brought into use the same way other libraries, e.g. React, are, i.e., by using an appropriate `import` statement.
 
@@ -361,6 +363,7 @@ If you open <http://localhost:3000> in the browser, this should be printed to th
 **Notice** when the content of the file *index.js* changes,
 React does not always notice that automatically, so you might need to refresh the browser to see your changes!
 A simple workaround to make React notice the change automatically is to create a file named *.env* in the root directory of the project and add this line `FAST_REFRESH=false`.
+While you are at it, you can also add the following line `BROWSER=none` if you don't want a browser to be launched every time you run `npm start`.
 Restart the app for the applied changes to take effect.
 
 Axios' method `get` returns a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises).
@@ -402,7 +405,7 @@ The `response` object contains all the essential data related to the response of
 which would include the returned ***data***, ***status code***, and ***headers***.
 
 Storing the promise object in a variable is generally unnecessary,
-and it's instead common to chain the `then` method call to the axios method call, so that it follows it directly:
+and it's instead common to chain the `then` method call to the `axios` method call, so that it follows it directly:
 
 ```js
 axios.get('http://localhost:3001/tasks').then(response => {
@@ -486,7 +489,7 @@ const App = () => { // highlight-line
 
 // highlight-start
   useEffect(() => {
-    console.log('effect')
+    console.log('use effect')
     axios
       .get('http://localhost:3001/tasks')
       .then(response => {
@@ -495,7 +498,7 @@ const App = () => { // highlight-line
       })
   }, [])
 
-  console.log('render', tasks.length, 'tasks')
+  console.log('rendered', tasks.length, 'tasks')
 // highlight-end
 
   // ...
@@ -507,10 +510,10 @@ We have also added a few helpful prints, which clarify the progression of the ex
 This is printed to the console:
 
 ```shell
-render 0 tasks
-effect
+rendered 0 tasks
+use effect
 promise fulfilled
-render 3 tasks
+rendered 3 tasks
 ```
 
 First, the body of the function defining the component is executed and the component is rendered for the first time.
@@ -520,7 +523,7 @@ The following function, or effect in React parlance:
 
 ```js
 () => {
-  console.log('effect')
+  console.log('use effect')
   axios
     .get('http://localhost:3001/tasks')
     .then(response => {
@@ -551,7 +554,7 @@ Finally, let's take a look at the definition of the effect hook as a whole:
 
 ```js
 useEffect(() => {
-  console.log('effect')
+  console.log('use effect')
   axios
     .get('http://localhost:3001/tasks').then(response => {
       console.log('promise fulfilled')
@@ -620,7 +623,7 @@ and a more compact way of representing things, as seen further above, is suffici
 
 ```js
 useEffect(() => {
-  console.log('effect')
+  console.log('use effect')
   axios
     .get('http://localhost:3001/tasks')
     .then(response => {
@@ -648,14 +651,14 @@ The JavaScript code making up our React application is run in the browser.
 The browser gets the JavaScript from the *React dev server*, which is the application that runs after running the command `npm start`.
 The dev-server transforms the JavaScript into a format understood by the browser.
 Among other things, it stitches together JavaScript from different files into one file.
-We'll discuss the dev-server in more detail in part 7 of the course.
+We'll discuss the dev-server in more detail in [part 7](/part7) of the course.
 
 The React application running in the browser fetches the JSON formatted data from *json-server* running on port 3001 on the machine.
 The server we query the data from - *json-server* - gets its data from the file *db.json*.
 
 At this point in development, all the parts of the application happen to reside on the software developer's machine, otherwise known as localhost.
 The situation changes when the application is deployed to the internet.
-We will do this in part 3.
+We will do this in [part 3](/part3).
 
 </div>
 
@@ -665,30 +668,30 @@ We will do this in part 3.
 
 #### 2.11: The Communities Step6
 
-We continue with developing the communities.
+We continue with developing our community directory.
 Store the initial state of the application in the file *db.json*, which should be placed in the root of the project.
 
 ```json
 {
   "groups":[
     { 
-      "name": "Arto Hellas", 
-      "number": "040-123456",
+      "name": "COMP 227 Students", 
+      "url": "https://discord.gg/VRUKRxCJ95",
       "id": 1
     },
     { 
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523",
+      "name": "PySlackers", 
+      "url": "https://pythondev.slack.com",
       "id": 2
     },
     { 
-      "name": "Dan Abramov", 
-      "number": "12-43-234345",
+      "name": "Code Support", 
+      "url": "https://discord.gg/XQ9C3sY",
       "id": 3
     },
     { 
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122",
+      "name": "Front End Developers", 
+      "url": "https://discord.gg/XHsumw2C39",
       "id": 4
     }
   ]
@@ -722,6 +725,8 @@ The API [https://restcountries.com](https://restcountries.com) provides data for
 Create an application, in which one can look at data from various countries.
 The application should probably get the data from the endpoint [all](https://restcountries.com/v3.1/all).
 
+**NOTICE** make sure again that you are careful to call `create-react-app` in your base directory when you make your new application, which you can call *countries*.
+
 The user interface is very simple.
 The country to be shown is found by typing a search query into the search field.
 
@@ -736,15 +741,11 @@ If there are ten or fewer countries, but more than one, then all countries match
 When there is only one country matching the query, then the basic data of the country (e.g. capital and area),
 its flag and the languages spoken are shown:
 
-![flag and additional attributes screenshot](../../images/2/19c3.png)
+![flag and additional attributes screenshot](../../images/2/19b3.png)
 
 **NB**: It is enough that your application works for most countries.
 Some countries, like ***Sudan***, can be hard to support since the name of the country is part of the name of another country, ***South Sudan***.
 You don't need to worry about these edge cases.
-
-**WARNING** create-react-app will automatically turn your project into a git-repository unless you create your application inside of an existing git repository.
-**Most likely you do not want each of your projects to be a separate repository**,
-so simply run the `rm -rf .git` command at the root of your application.
 
 #### 2.13*: Data for countries, step2
 
