@@ -823,7 +823,7 @@ const delete = (id) => {
 #### 2.18*: Communities step10
 
 Change the functionality so that if a URL is added to an already existing community, the new URL will replace the old URL.
-It's recommended to use the HTTP PUT method for updating the phone number.
+It's recommended to use the HTTP PUT method for updating the URL.
 
 If a community already exists, the application can confirm the action from the user:
 

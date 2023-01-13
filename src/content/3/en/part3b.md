@@ -549,7 +549,7 @@ They can however be challenging, because you must understand exactly what is hap
 #### 3.9 communities backend step9
 
 Make the backend work with the communities frontend from the exercises of the previous part.
-Do not implement the functionality for making changes to the phone numbers yet, that will be implemented in exercise 3.17.
+Do not implement the functionality for making changes to the URLs yet, that will be implemented in exercise 3.17.
 
 You will probably have to do some small changes to the frontend, at least to the URLs for the backend.
 Remember to keep the developer console open in your browser.

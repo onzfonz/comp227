@@ -197,13 +197,14 @@ You can display the default error message returned by Mongoose, even though they
 
 #### 3.20*: Communities database, step8
 
-Add validation to your communities application, which will make sure that phone numbers are of the correct form.
-A phone number must
+Add validation to your communities application, which will make sure that community links are of the correct form.
 
-- have a length of 8 or more digits
-- if formed of two parts that are separated by -, the first part has two or three numbers and the second part also consists of numbers
-    - e.g. 09-1234556 and 040-22334455 are valid phone numbers
-    - e.g. 1234556, 1-22334455 and 10-22-334455 are invalid
+A community link must
+
+- start with https:// and then either have slack.com or discord.gg as part of its URL. The rest of the URL (or subdomain in slack's case) must consist only of letters, numbers or underscores.
+    - e.g. <https://pyslackers.slack.com> and and <https://discord.gg/9BXyDG> are valid community links
+    - e.g. discord.gg/9BXyDG, <https://reddit.com> and <https://something.discord.gg/9BXyDG> are invalid
+- have a unique property that is 6 or more characters.
 
 Use a [Custom validator](https://mongoosejs.com/docs/validation.html#custom-validators) to implement the second part of the validation.
 

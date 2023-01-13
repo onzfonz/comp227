@@ -1065,7 +1065,7 @@ Move the error handling of the application to a new error handler middleware.
 #### 3.17*: Communities database, step5
 
 If the user tries to create a new community for one whose name is already in the communities application,
-the frontend will try to update the phone number of the existing entry by making an HTTP PUT request to the entry's unique URL.
+the frontend will try to update the community's invite location by making an HTTP PUT request to the entry's unique backend URL.
 
 Modify the backend to support this request.
 
