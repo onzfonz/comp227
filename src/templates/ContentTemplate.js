@@ -87,15 +87,14 @@ export default class ContentTemplate extends Component {
         if (window.scrollY > 300 && !this.state.showArrowUp) {
             this.setState({
                 showArrowUp: true,
+                isDark: document.documentElement.dataset.theme === 'dark',
             });
         } else if (window.scrollY <= 300 && this.state.showArrowUp) {
             this.setState({
                 showArrowUp: false,
+                isDark: document.documentElement.dataset.theme === 'dark'
             });
         }
-        this.setState({
-            isDark: document.documentElement.dataset.theme === 'dark',
-        })
     };
 
     render() {
