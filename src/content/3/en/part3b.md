@@ -226,8 +226,8 @@ Click the connect button for your forked repo.
 You'll then be taken to a page to place all of your options to deploy the page.
 Here's the changes I made, since the Branch should be main, and environment should be node.
 
-```text
-name: 227-osvaldo-part3
+```js
+name: comp227-osvaldo-part3
 
 Build Command: npm install
 Start Command: npm start
@@ -239,6 +239,9 @@ Once it's deployed, you'll see your link for your live site.
 
 Render recently changed their pricing model, but has a limit on the number of build minutes,
 so it will be important not to keep deploying every time you make a change and to treat it like many web servers do (thoroughly checking and testing things)
+
+Also, you are given build minutes ***to have one web service up at a time***.
+There is an option to suspend a web service by clicking on it from the dashboard.
 
 For many PaaS services, we need to change the definition of the port our application uses at the bottom of the *index.js* file like so:
 
