@@ -75,7 +75,7 @@ They are universal principles regarding the safe operation of web applications.
 
 We can allow requests from other **origins** by using Node's [cors](https://github.com/expressjs/cors) middleware.
 
-In your backend repository, install **cors** with the command
+In your ***backend*** repository, install **cors** with the command
 
 ```bash
 npm install cors
@@ -294,31 +294,6 @@ or a version of the application which is optimized for production.
 A production build of applications created with *create-react-app* can be created with the command
 [npm run build](https://github.com/facebookincubator/create-react-app#npm-run-build-or-yarn-build).
 
-**NOTE:** at the time of writing (20th January 2022) create-react-app had a bug that causes the following error `TypeError: MiniCssExtractPlugin is not a constructor`
-
-A possible fix is found [here](https://github.com/facebook/create-react-app/issues/11930).
-Add the following to the file *package.json*
-
-```json
-{
-  // ...
-  "resolutions": {
-    "mini-css-extract-plugin": "2.4.5"
-  }
-}
-```
-
-and run commands
-
-```bash
-rm -rf package-lock.json
-rm -rf node_modules
-npm cache clean --force
-npm install
-```
-
-After these `npm run build` should work.
-
 Let's run this command from the ***root of the frontend project***.
 
 This creates a directory called *build* (which contains the only HTML file of our application, *index.html* ) which contains the directory *static*.
@@ -335,18 +310,20 @@ The beginning of the code looks like this:
 
 ### Serving static files from the backend
 
-One option for deploying the frontend is to copy the production build (the *build* directory)
-to the root of the backend repository and configure the backend to show the frontend's ***main page*** (the file *build/index.html*) as its main page.
+There are many options for deploying the frontend.
+We will:
+
+1. copy the production build (that *build* directory) from frontend
+2. paste it in the root of the backend repository and
+3. configure the backend to show the frontend's ***main page*** (the file *build/index.html*) as the **backend's main page**.
 
 We begin by copying the production build of the frontend to the root of the backend.
-With a Mac or Linux computer, the copying can be done from the frontend directory with the command
+The copying can be done from the frontend directory by opening up the terminal in Webstorm from the frontend's project and then typing:
 
 ```bash
-cp -r build ../tasks-backend
+cp -r build ../tasks-backend_OR_NAME_OF_YOUR_BACKEND_DIR
 ```
 
-If you are using a Windows computer, you may use either [copy](https://www.windows-commandline.com/windows-copy-command-syntax-examples/)
-or [xcopy](https://www.windows-commandline.com/xcopy-command-syntax-examples/) command instead.
 Otherwise, simply copy and paste.
 
 The backend directory should now look as follows:
@@ -356,7 +333,7 @@ The backend directory should now look as follows:
 To make express show **static content**, the page *index.html* and the JavaScript, etc., it fetches,
 we need a built-in middleware from express called [static](http://expressjs.com/en/starter/static-files.html).
 
-When we add the following amidst the declarations of middlewares
+Then we add the following amidst the declarations of middlewares
 
 ```js
 app.use(express.static('build'))
@@ -369,7 +346,7 @@ Now HTTP GET requests to the address ***www.serversaddress.com/index.html*** or 
 GET requests to the address ***www.serversaddress.com/api/tasks*** will be handled by the backend's code.
 
 Because of our situation, both the frontend and the backend are at the same address,
-we can declare `baseUrl` as a [relative](https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2) URL.
+we can declare `baseUrl` in frontend's *services/tasks* as a [relative](https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2) URL.
 This means we can leave out the part declaring the server.
 
 ```js
@@ -384,7 +361,7 @@ const getAll = () => {
 // ...
 ```
 
-After the change, we have to create a new production build and copy it to the root of the backend repository.
+After the change, we have to ***create a new production build and copy it to the root of the backend repository***.
 
 The application can now be used from the *backend* address <http://localhost:3001>:
 
@@ -430,14 +407,10 @@ Once it starts to run, it fetches the json-data from the address [localhost:3001
 ### The whole app to the internet
 
 After ensuring that the production version of the application works locally,
-commit the production build of the frontend to the backend repository, and push the code to Heroku again.
-In the case of Fly.io the new deployment is done with the command
+add and commit the production build of the frontend to the backend repository, and push the code to GitHub.
+To then deploy, go back to your personal fork of the repo, and click the Sync Fork button.
 
-```bash
-fly deploy
-```
-
-[The application](https://obscure-harbor-49797.herokuapp.com/) works perfectly,
+[The application](https://comp227-osvaldo-lab3.onrender.com/) works perfectly,
 except we haven't added the functionality for changing the importance of a task to the backend yet.
 
 ![screenshot of tasks application](../../images/3/30ea.png)
@@ -450,81 +423,40 @@ Before we introduce one, let's go through a few things.
 
 The setup looks like now as follows:
 
-![diagram of react app on heroku with a database](../../images/3/102.png)
+![diagram of react app on render with a database](../../images/3/102.png)
 
-The node/express-backend now resides in the Fly.io/Heroku server.
-When the root address that is of the form <https://glacial-ravine-74819.herokuapp.com/> is accessed,
-the browser loads and executes the React app that fetches the json-data from the Heroku server.
+The node/express-backend now resides in the Render server.
+When the root address that is of the form <https://comp227-osvaldo-lab3.onrender.com/> is accessed,
+the browser loads and executes the React app that fetches the json-data from the Render server.
 
 ### Streamlining deploying of the frontend
 
-To create a new production build of the frontend without extra manual work,
-let's add some npm-scripts to the *package.json* of the backend repository.
-
-#### Fly.io script
-
-The script looks like this
+To create a new production build of the frontend without some of the extra manual work,
+let's add some npm-scripts to the ***backend's package.json***.
 
 ```json
 {
-  "scripts": {
-    // ...
+    "scripts": {
+        //...
     "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../tasks-backend",
-    "deploy": "fly deploy",
-    "deploy:full": "npm run build:ui && npm run deploy",    
-    "logs:prod": "fly logs"
+    "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
   }
 }
 ```
 
-The script `npm run build:ui` builds the frontend and copies the production version under the backend repository.
-`npm run deploy` releases the current backend to Fly.io.
-
-`npm run deploy:full` combines these two scripts.
-
-There is also a script `npm run logs:prod` to show the Fly.io logs.
-
-Notice that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
-
-#### Heroku script
-
-In case of Heroku, the script looks like the following
-
-```json
-{
-  "scripts": {
-    //...
-    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../tasks-backend",
-    "deploy": "git push heroku main",
-    "deploy:full": "npm run build:ui && git add .
-&& git commit -m uibuild && npm run deploy",    
-    "logs:prod": "heroku logs --tail"
-  }
-}
-```
+Re-examine the text above. Make sure to modify the names of your directories to match your repos.
 
 The script `npm run build:ui` builds the frontend and copies the production version under the backend repository.
-`npm run deploy` releases the current backend to Heroku.
-
-`npm run deploy:full` combines these two and contains the necessary *git* commands to update the backend repository.
-
-There is also a script `npm run logs:prod` to show the Heroku logs.
+`npm run deploy` releases the current backend and pushes it to GitHub.
+You'll just need the final step of syncing your personal fork with what is in COMP 227 to get it to upload to Render.
 
 Notice that the directory paths in the script `build:ui` depend on the location of repositories in the file system.
-
->**NB**  On Windows, npm scripts are executed in cmd.exe as the default shell which does not support bash commands.
-For the above bash commands to work, you can change the default shell to Bash (in the default Git for Windows installation) as follows:
-
-```md
-npm config set script-shell "C:\\Program Files\\git\\bin\\bash.exe"
-```
-
-Another option is the use of [shx](https://www.npmjs.com/package/shx).
 
 ### Proxy
 
 Changes on the frontend have caused it to no longer work in development mode (when started with command `npm start`),
-as the connection to the backend does not work.
+as the connection to the backend does not work,
+which you'll also have to start as well.
 
 ![Network dev tools showing a 404 on getting tasks](../../images/3/32ea.png)
 
@@ -539,7 +471,7 @@ the requests to the backend go to the wrong address [localhost:3000/api/tasks](h
 The backend is at [localhost:3001](http://localhost:3001).
 
 If the project was created with create-react-app, this problem is easy to solve.
-It is enough to add the following declaration to the *package.json* file of the frontend repository.
+It is enough to add the following declaration to the ***frontend's*** *package.json* file.
 
 ```bash
 {
@@ -562,18 +494,18 @@ Now the frontend is also fine, working with the server both in development- and 
 
 A negative aspect of our approach is how complicated it is to deploy the frontend.
 Deploying a new version requires generating a new production build of the frontend and copying it to the backend repository.
-This makes creating an automated [deployment pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) more difficult.
-Deployment pipeline means an automated and controlled way to move the code from the computer of the developer through different tests and quality checks to the production environment.
+This makes creating an automated [**deployment pipeline**](https://martinfowler.com/bliki/DeploymentPipeline.html) more difficult.
+A deployment pipeline is an automated and controlled way to move the code from the computer of the developer through different tests and quality checks to the production environment.
 
-There are multiple ways to achieve this (for example placing both backend and frontend code
-[in the same repository](https://github.com/mars/heroku-cra-node) ) but we will not go into those now.
+There are multiple ways to achieve this - for example placing both backend and frontend code
+[in the same repository](https://github.com/mars/heroku-cra-node) - but we will not go into those now.
 
 In some situations, it may be sensible to deploy the frontend code as its own application.
 With apps created with create-react-app it is [straightforward](https://github.com/mars/create-react-app-buildpack).
 
 The current backend code can be found on [Github](https://github.com/comp227/part3-tasks-backend/tree/part3-3),
 in the branch *part3-3*.
-The changes in frontend code are in *part3-1* branch of the [frontend repository](https://github.com/comp227/part2-tasks/tree/part3-1).
+The changes in frontend code are in *part3-3* branch of the [frontend repository](https://github.com/comp227/part2-tasks/tree/part3-3).
 
 </div>
 
@@ -597,28 +529,19 @@ If you did not do the previous exercise, it is worth it to print the request dat
 
 #### 3.10 communities backend step10
 
-Deploy the backend to the internet, for example to Heroku.
-
-**NB** the command `heroku` works on the department's computers and the freshman laptops.
-If for some reason you cannot [install](https://devcenter.heroku.com/articles/heroku-cli) Heroku on your computer,
-you can use the command [npx heroku](https://www.npmjs.com/package/heroku).
+Deploy the backend to the internet.
 
 Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
 
 **PRO TIP:** When you deploy your application to Heroku,
-it is worth it to at least in the beginning keep an eye on the logs of the heroku application **AT ALL TIMES** with the command `heroku logs -t`.
+it is worth it to at least in the beginning keep an eye on the logs in render.
 
-The following is a log of one typical problem.
-Heroku cannot find application dependency *express*:
+One such problemt that you'll see arises is that npm will complain that it cannot find application dependency *express*:
 
-![terminal screenshot of heroku with error on finding express module](../../images/3/33.png)
-
-The reason is that the *express* package has not been installed with the `npm install express` command,
+The reason would be that the *express* package has not been installed with the `npm install express` command,
 so information about the dependency was not saved to the file *package.json*.
 
-Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`:
-
-![terminal showing error about failing to bind to port](../../images/3/34.png)
+Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`.
 
 Create a README.md at the root of your repository, and add a link to your online application to it.
 
@@ -626,7 +549,7 @@ Create a README.md at the root of your repository, and add a link to your online
 
 Generate a production build of your frontend, and add it to the internet application using the method introduced in this part.
 
-**NB** If you use Heroku, make sure the directory *build* is not gitignored
+**NB** Make sure the directory *build* is not gitignored
 
 Also, make sure that the frontend still works locally (in development mode when started with command `npm start`).
 

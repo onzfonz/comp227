@@ -453,7 +453,7 @@ then manually change the contents of *package.json* to match what is shown above
 By development dependencies, we are referring to tools that are needed only during the development of the application,
 e.g. for testing or automatically restarting the application, like *nodemon*.
 
-These development dependencies are not needed when the application is run in production mode on the production server (e.g. Heroku).
+These development dependencies are not needed when the application is run in production mode on the production server (e.g. Render).
 
 We can start our application with *nodemon* like this:
 
