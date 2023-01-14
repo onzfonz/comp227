@@ -275,7 +275,7 @@ There are two ways to reference the function via the old way.
 
 |[function declaration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)|[function expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)|
 | :--- | :--- |
-|<pre>function product(a, b) {<br/>  return a * b<br/>}<br/><br/>const result = product(2, 6)<br>// result is now 12|<pre>const product = function(a, b) {<br/>  return a * b<br/>}<br/><br/>const result = product(2, 6)<br>// result is now 12|
+|<pre>function subtract(a, b) {<br/>  return a - b<br/>}<br/><br/>const result = subtract(6, 2)<br>// result is now 4|<pre>const subtract = function(a, b) {<br/>  return a - b<br/>}<br/><br/>const result = subtract(6, 2)<br>// result is now 4|
 
 In the function expression case, there is no need to give the function a name and the definition may reside among the rest of the code:
 

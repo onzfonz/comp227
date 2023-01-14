@@ -1299,8 +1299,8 @@ Your finished application could look something like this:
 
 ![random joke with next button](../../images/1/18a.png)
 
-
 **WARNING** Make sure that when you call create-react-app that you are inside of your repo's base folder - not inside of your other folders (like *reading*!)!
+
 #### 1.13*: jokes step2
 
 Expand your application so that you can vote for the displayed joke.
