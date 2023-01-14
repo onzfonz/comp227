@@ -102,6 +102,81 @@ The react app running in the browser now fetches the data from node/express-serv
 ### Application to the Internet
 
 Now that the whole stack is ready, let's move our application to the internet.
+Before we can do that though, we'll need to do a few things to set ourselves up.
+
+#### Some backstory
+
+So one thing that most businesses look for is to separate working on the code
+and sharing what you are working on with **deploying** or sending the changes to a live web server.
+For us to have a separate place that is *"live"*,
+we will need to create a separate **deploy staging area** between uploading changes to a shared repository that everyone can see.
+To better illustrate this, let me present to you this awful drawing of what we have so far.
+
+![drawing of git diagram](../../images/3/custom/fork_step_1.png)
+
+In this diagram, the term "`You`" represents the work that is on your computer in vs code,
+while `comp227/git` is your lab repo on GitHub that has your handle name.
+When you click `Sync changes`, in VSCode, that causes your changes to be synced with this repository that is on comp 127.
+That repo can be shared across different folks and devices.
+Think of a shared repository as something that ends up storing your work, like a google drive,
+but with a way of better keeping track of different versions of your code.
+
+What we need then, is a way of uploading that code to an actual server that will serve web pages.
+Something that is accessible by the rest of the internet, so that other folks can see the actual webpage,
+rather than just the assortment of files that are in your repo.
+So what we need to figure out is something like this.
+
+![diagram of deployment server](../../images/3/custom/fork_step_2.png)
+
+While we could create something that auto-magically will upload our changes from git to the web server (which would be awesome),
+we run into another small issue.
+How do we differentiate between sharing code with folks (or even with ourselves as we are working on it
+versus having something that we want to deploy to the outside world?)  
+
+![drawing with team members with git and a webserver](../../images/3/custom/fork_step_3.png)
+
+We can't just have an automatic link between the GitHub server and the web server,
+since we may want to share something on the GitHub server with our team members but do not want to share it with the world just yet.
+Instead, we'll need to have a separate **deploy** step that involves us deploying the code to the web.
+While there are many ways of having this be separated,
+we are going to follow a workflow that fits with our permissions and circumstances.  
+What we are going to do is to have a **fork** of our comp227 repo that we will place into our personal account.
+This fork will merely exist to connect to a web server.
+**We should not push any code to our personal repo.**
+We will only use our personal fork for deployment.
+That way, we can still share code and yet have a "one-click" way of deploying our code to the web.
+So what our final diagram will look like is something like this.
+
+![full drawing of a deployment pipeline with git and cloud](../../images/3/custom/fork_step_4.png)
+
+So that is what we are going to set up next.
+
+## Setting up the fork of our project
+
+Here we are going to go to GitHub to set up a fork.
+Remember that the fork's job is merely to interact with the web server.
+We will never commit code directly to this fork.
+The fork though can sync with the your commit repo in 227 and when it does sync, the web server will be updated magically.
+Up until this point we have not talked about forks or your repos, as we want to make sure that you setup and commit code to the 227 repo from Webstorm.
+
+To set up a fork, merely go to the comp227 webpage from your repo.  This can be accessed if you go to `github.com/comp227/lab3-yourusername`
+
+Once there, you will see a fork button at the upper right, with a picture similar to this:
+![fork repo](https://i.imgur.com/1M86XYR.png)
+
+Once you click **Fork**, you'll be presented with another intermediate page.
+I would change the name of the repo to so that it has the word deploy and confirm the fork will be in your personal account.
+Once you're ready, click the **Create fork** button at the bottom.
+
+![create fork options](https://i.imgur.com/ZYOJCHc.png)
+
+Notice that your fork will be out of your own GitHub handle and not be from 227.
+Remember that when you make changes to your repo, if you'd like to deploy thme,
+you'll only ever to your fork and sync the changes once everything is connected.
+
+![showing sync fork on GitHub](https://i.imgur.com/xlnsalk.png)
+
+### Our rationale for using Render
 
 There are an ever-growing number of services that can be used to host an app on the internet.
 The developer-friendly services like PaaS (i.e. Platform as a Service) take care of installing the execution environment (e.g. Node.js)
@@ -111,22 +186,61 @@ For a decade already, [Heroku](http://heroku.com) has been dominating the PaaS s
 In August 2022 Heroku announced that they will end their free tier on 27th November 2022.
 This is very unfortunate for many developers, especially students.
 
-One of the most promising replacements for Heroku is [Fly.io](https://fly.io/) which has a free plan,
-so we have selected Fly.io as the second "official" hosting platform of this course.
-You are of course allowed to use another service if you wish.
+While there are replacements for Heroku that could work with this course like:
 
-There are also some other free options for Heroku replacements besides Fly.io, eg. [Render](https://render.com/) that works well for this course.
-
-Some course participants have also used the following
-
+- [Fly.io](https://fly.io)
 - [Railway](https://railway.app/)
 - [Cyclic](https://www.cyclic.sh/)
 - [Replit](https://replit.com)
 - [CodeSandBox](https://codesandbox.io)
 
-If you know some other good and easy-to-use services for hosting NodeJS, please let us know!
+We will be using [Render](https://render.com/) in this class, because:
 
-For both Fly.io and Heroku, we need to change the definition of the port our application uses at the bottom of the *index.js* file like so:
+- They have a free option
+- They do not require a credit card
+
+One downside that we have with Render is that we'll need to create an extra step to make it work.
+
+So let's get ourselves started in using Render
+
+### Using Render
+
+To start, go to the [Render website](https://render.com/) and create an account.
+When creating an account you can either connect it automatically to your GitHub or you can provide them with an email.
+Connecting an account that is linked to your GitHub profile removes one step later on about authenticating.
+For now, I'll assume you are using an email - in that case you'll need to confirm your email address.
+
+Once you confirm and successfully create your account, go to <http://dashboard.render.com>.
+
+From the dashboard, you'll create a ***New Web Service***.
+
+![screenshot of render dashboard and clicking on new web service](../../images/3/custom/render_dashboard.png)
+
+If you created your account with an email, at this point, you'll select the option to **connect a GitHub account**.
+You'll then go through a series of pages that prompt you to authorize Render to access your GitHub account, including entering your GitHub password.
+Once you get back to Render, if you linked your account correctly, you should see your repos with purple connect button to the side of each one.
+
+![screenshot of connnected render dashboard to GitHub](../../images/3/custom/render_dashboard_connected.png)
+
+Click the connect button for your forked repo.
+You'll then be taken to a page to place all of your options to deploy the page.
+Here's the changes I made, since the Branch should be main, and environment should be node.
+
+```text
+name: 227-osvaldo-part3
+
+Build Command: npm install
+Start Command: npm start
+```
+
+Then scroll all the way down to the bottom and click ***Create Web Service***.
+At that point, go take a walk outside and then come back.
+Once it's deployed, you'll see your link for your live site.
+
+Render recently changed their pricing model, but has a limit on the number of build minutes,
+so it will be important not to keep deploying every time you make a change and to treat it like many web servers do (thoroughly checking and testing things)
+
+For many PaaS services, we need to change the definition of the port our application uses at the bottom of the *index.js* file like so:
 
 ```js
 const PORT = process.env.PORT || 3001  // highlight-line
@@ -136,17 +250,12 @@ app.listen(PORT, () => {
 ```
 
 Now we are using the port defined in the [environment variable](https://en.wikipedia.org/wiki/Environment_variable) `PORT` or port 3001 if the environment variable `PORT` is undefined.
-Fly.io and Heroku configure the application port based on that environment variable.
+Many cloud services configure the application port based on that environment variable.
 
-#### Fly.io
+Realize that this part of the course is the most unstable at this point.
+If you run into problems, please ask for help on Discord!
 
-If you decide to use [Fly.io](https://fly.io/) begin by installing their flyctl executable following [this guide](https://fly.io/docs/hands-on/install-flyctl/).
-After that, you should [create a Fly.io account](https://fly.io/docs/hands-on/sign-up/).
-
-By default, everyone gets two free virtual machines that can be used for running two apps at the same time.
-
-Notice that the Fly.io instructions have only been added to this course on the 28th of August 2022.
-If you run into problems, please ask for help on Discord! If your build keeps failing due to unhealthy checks,
+If your build keeps failing due to unhealthy checks,
 make sure that you have changed the bottom of the *index.js* file like so:
 
 ```js
@@ -159,108 +268,13 @@ app.listen(PORT, () => {
 Don't forget to add your *cors* package to `dependencies` in *package.json*
 and you might need to remove the `morgan` code from the server application.
 
-Start by [authenticating](https://fly.io/docs/hands-on/sign-in/) via the command line with the command
-
-```bash
-fly auth login
-```
-
-*Notice* if the command `fly` does not work on your machine, you can try the longer version `flyctl`.
-E.g. on MacOS, both forms of the command work.
-
-Initializing an app happens by running the following command in the root directory of the app
-
-```bash
-fly launch
-```
-
-Give the app a name or let Fly.io auto-generate one.
-Pick a region where the app will be run.
-Do not create a Postgres database for the app since it is not needed.
-
-The last question is "Would you like to deploy now?", answer yes and your app is also deployed to the Fly.io servers.
-
-If all goes well, the app should now be up and running.
-You can open it in the browser with the command
-
-```bash
-fly open
-```
-
-After the initial setup, when the app code has been updated, it can be deployed to production with the command
-
-```bash
-fly deploy
-```
-
-A particularly important command is `fly logs`.
-This command can be used to view server logs.
-It is best to keep logs always visible!
-
-Fly.io creates a file *fly.toml* in the root of your app.
-The file contains all the configuration of your server.
-In this course we can mostly ignore the contents of the file.
-
-**Notice** In some cases (the cause is so far unknown) running Fly.io commands especially on Windows WSL has caused problems.
-If the following command just hangs
-
-```bash
-flyctl ping -o personal
-```
-
-your computer can not for some reason connect to Fly.io.
-If this happens to you, [this](https://github.com/comp227/misc/blob/main/fly_io_problem.md) describes one possible way to proceed.
-
-If the output of the below command looks like this:
-
-```bash
-$ flyctl ping -o personal
-35 bytes from fdaa:0:8a3d::3 (gateway), seq=0 time=65.1ms
-35 bytes from fdaa:0:8a3d::3 (gateway), seq=1 time=28.5ms
-35 bytes from fdaa:0:8a3d::3 (gateway), seq=2 time=29.3ms
-...
-```
-
-then there are no connection problems!
-
-#### Heroku
-
-Let us also look at how we would use the good old [Heroku](https://www.heroku.com) for hosting an app.
-
->If you have never used Heroku before, you can find instructions from [Heroku documentation](https://devcenter.heroku.com/articles/getting-started-with-nodejs) or by Googling.
-
-Add a file called  *Procfile* to the backend project's root to tell Heroku how to start the application.
-
-```bash
-web: node index.js
-```
-
-Create a Git repository in the project directory, and add *.gitignore* with the following contents
-
-```bash
-node_modules
-```
-
-Create a Heroku account at <https://devcenter.heroku.com/>.
-Install the Heroku package using the command: `npm install -g heroku`.
-Create a Heroku application with the command `heroku create`, commit your code to the repository and move it to Heroku with the command `git push heroku main`.
-
 If everything went well, the application works:
 
 ![live site screenshot of api/tasks showing JSON](../../images/3/25ea.png)
 
-If not, the issue can be found by reading the heroku logs with the command `heroku logs`.
+The frontend can also work with the backend on Render!
 
->**NB** At least in the beginning it's good to keep an eye on the heroku logs at all times.
-The best way to do this is with command `heroku logs -t` which prints the logs to console whenever something happens on the server.
->
->**NB** If you are deploying from a git repository where your code is not on the main branch
-(i.e. if you are altering the [tasks repo](https://github.com/comp227/part3-tasks-backend/tree/part3-2) from the last lesson)
-you will need to run `git push heroku HEAD:master`.
-If you have already done a push to heroku, you may need to run `git push heroku HEAD:main --force`.
-
-The frontend also works with the backend on Fly.io or Heroku.
-You can check this by changing the backend's address on the frontend to be the backend's address in Fly.io/Heroku instead of [localhost:3001](http://localhost:3001).
+You can check this by changing the backend's address on the frontend to be the backend's address in Render instead of [localhost:3001](http://localhost:3001).
 
 The next question is, how do we deploy the frontend to the Internet?
 We have multiple options.
