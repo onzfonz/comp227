@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-Before we start programming, we will go through some principles of web development by examining an example application at <https://studies.cs.helsinki.fi/exampleapp>.
+Before we start programming, we will go through some principles of web development by examining an example application at **<https://studies.cs.helsinki.fi/exampleapp>**.
 
 The application exists only to demonstrate some basic concepts of the course,
 and is, by no means, an example of *how* a modern web application should be made.
@@ -800,7 +800,7 @@ When you have submitted the exercises for a part, you can no longer submit any m
 
 #### 0.1: HTML
 
-Review the basics of HTML by reading this tutorial from Mozilla: [HTML tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics).
+Review the basics of HTML by reading this tutorial from Mozilla: [**HTML tutorial**](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics).
 
 This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
