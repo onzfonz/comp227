@@ -115,14 +115,15 @@ const plugins = [
     },
   },
   {
-    resolve: `gatsby-plugin-google-analytics`,
+    resolve: `gatsby-plugin-google-gtag`,
     options: {
-      trackingId: 'G-47G19EZV14',
-      head: true,
-      respectDNT: true,
-      exclude: [],
-      cookieDomain: 'comp227.djosv.com',
-      enableWebVitalsTracking: true
+      trackingIds: [
+        'G-47G19EZV14',
+      ],
+      pluginConfig: {
+        head: true,
+        anonymize_ip: true,
+      },
     },
   },
   {
