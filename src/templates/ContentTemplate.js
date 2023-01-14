@@ -32,6 +32,7 @@ export default class ContentTemplate extends Component {
             h1Title: '',
             otherTitles: '',
             showArrowUp: false,
+            isDark: false,
         };
     }
 
@@ -39,9 +40,7 @@ export default class ContentTemplate extends Component {
         const links = Array.from(
             document.querySelectorAll('a:not(.skip-to-content')
         );
-        const strongs = Array.from(
-            document.querySelectorAll('strong')
-        );
+        
         const h1 = document.querySelector('h1');
         const h3 = document.querySelectorAll('h3');
         const h3Arr = Array.from(h3).map(t => t.innerText);
@@ -74,6 +73,7 @@ export default class ContentTemplate extends Component {
         this.setState({
             h1Title: h1.innerText,
             otherTitles: [...h3Arr],
+            isDark: document.documentElement.dataset.theme === 'dark',
         });
 
         window.addEventListener('scroll', this.handleScroll);
@@ -93,14 +93,17 @@ export default class ContentTemplate extends Component {
                 showArrowUp: false,
             });
         }
+        this.setState({
+            isDark: document.documentElement.dataset.theme === 'dark',
+        })
     };
 
     render() {
         const { markdownRemark } = this.props.data;
         const { frontmatter, html } = markdownRemark;
         const { mainImage, letter, part, lang } = frontmatter;
-        const switchingColorCode = colors[partColors[part]+ (document.documentElement.dataset.theme === 'dark' ? '-dark' : '')]
-        const boldColorCode = colors[partColors[part]+ (document.documentElement.dataset.theme === 'light' ? '-dark' : '')]
+        const switchingColorCode = colors[partColors[part]+ (this.state.isDark ? '-dark' : '')]
+        const boldColorCode = colors[partColors[part]+ (this.state.isDark ? '' : '-dark')]
         const colorCode = colors[partColors[part]];
 
         const parserOptions = {
