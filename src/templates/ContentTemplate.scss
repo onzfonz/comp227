@@ -140,16 +140,16 @@
 .tasks {
   // Replace colored tasks section background in dark theme w/ colored border due to contrast issues
   // TODO: alternative set of darker part colors that work behind a white text?
-  html[data-theme='dark'] & {
-    background-color: var(--color-background) !important;
-    border-left: 5px solid;
-    border-top: 1px dotted;
-    border-bottom: 1px dotted;
+//   html[data-theme='dark'] & {
+    // // background-color: var(--color-background) !important;
+    // border-left: 5px solid;
+    // border-top: 1px dotted;
+    // border-bottom: 1px dotted;
 
-    @include from($desktop) {
-      border-left: 15px solid;
-    }
-  }
+    // @include from($desktop) {
+    //   border-left: 15px solid;
+    // }
+//   }
 
   a {
     border-color: var(--color-text) !important;

@@ -71,11 +71,6 @@ export default class ContentTemplate extends Component {
             return null;
         });
 
-        strongs.map(i => {
-            i.style = `color: ${colors[partColors[frontmatter.part] + (document.documentElement.dataset.theme === 'light' ? '-alt' : '')]}`;
-            return null;
-        })
-
         this.setState({
             h1Title: h1.innerText,
             otherTitles: [...h3Arr],
@@ -104,6 +99,8 @@ export default class ContentTemplate extends Component {
         const { markdownRemark } = this.props.data;
         const { frontmatter, html } = markdownRemark;
         const { mainImage, letter, part, lang } = frontmatter;
+        const switchingColorCode = colors[partColors[part]+ (document.documentElement.dataset.theme === 'dark' ? '-dark' : '')]
+        const boldColorCode = colors[partColors[part]+ (document.documentElement.dataset.theme === 'light' ? '-dark' : '')]
         const colorCode = colors[partColors[part]];
 
         const parserOptions = {
@@ -136,7 +133,7 @@ export default class ContentTemplate extends Component {
                     return (
                         <Banner
                             style={{
-                                backgroundColor: colorCode,
+                                backgroundColor: switchingColorCode,
                                 borderColor: colorCode,
                             }}
                             className="spacing tasks content-banner"
@@ -158,6 +155,16 @@ export default class ContentTemplate extends Component {
                             </Element>
                         </Banner>
                     );
+                } else if (type === 'tag' && name === 'strong') {
+                    return (
+                        <strong
+                            style={{
+                                color: boldColorCode
+                            }}
+                        >
+                            {domToReact(children, parserOptions)}
+                        </strong>
+                    )
                 }
                 return;
             },
