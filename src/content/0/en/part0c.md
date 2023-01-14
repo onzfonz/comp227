@@ -339,6 +339,7 @@ While installing the eclipse keymap is optional, what I would like you to do is 
 Just like with the gif from below, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
 Navigate to the ***Tools*** on the left sidebar and select the dropdown for the Shell path.
 There you should see bash.exe with a path for git.
+**Make sure you add the arguments `-i` and `-l` to load your settings correctly**.
 
 ![webstorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
 
