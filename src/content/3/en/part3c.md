@@ -12,41 +12,69 @@ Before we move into the main topic of persisting data in a database, we will tak
 ### Debugging Node applications
 
 Debugging Node applications is slightly more difficult than debugging JavaScript running in your browser.
-Printing to the console is a tried and true method, and it's always worth doing.
-Some people think that more sophisticated methods should be used instead, but I disagree.
-Even the world's elite open-source developers [use](https://tenderlovemaking.com/2016/02/05/i-am-a-puts-debuggerer.html)
-this [method](https://swizec.com/blog/javascript-debugging-slightly-beyond-consolelog/).
+Printing to the console is simple and works, and can be quickly elaborated via our live templates.
+Sometimes though, using console.log everywhere just makes things messy.
+While some people disagree, I believe that if you take the time to learn to use the debugger, it can greatly help your abilities as a student in the future.
 
-#### Visual Studio Code
+#### WebStorm
 
-The Visual Studio Code debugger can be useful in some situations.
-You can launch the application in debugging mode like this:
+To use the WebStorm debugger, you'll need to tell WebStorm where node is.
+You can start this by going to ***Run->Debug*** in the top menu.
+You'll then see a tiny Debug window in the middle of the screen that looks like this:
 
-![screenshot showing how to launch debugger in vscode](../../images/3/35x.png)
+![debug window](../../images/3/custom/debug_option.png)
 
-Notice that the application shouldn't be running in another console, otherwise the port will already be in use.
+Once you select, Edit configurations..., you'll then arrive at this window:
 
-**NB** A newer version of Visual Studio Code may have ***Run*** instead of ***Debug***.
-Furthermore, you may have to configure your *launch.json* file to start debugging.
-This can be done by choosing ***Add Configuration...*** on the drop-down menu,
-which is located next to the green play button and above ***VARIABLES*** menu, and select ***Run "npm start" in a debug terminal***.
-For more detailed setup instructions, visit Visual Studio Code's [Debugging documentation](https://code.visualstudio.com/docs/editor/debugging).
+![node configuration in Webstorm](../../images/3/35x.png)
+
+After clicking on npm, you'll see a variety of options.
+You'll then:
+
+1. Select the *Command* dropdown and pick ***Start***.
+2. Select the *Node interpreter* dropdown and choose the nvm path that you [added in back in our initial configuration](/part0/configuring_your_machine_for_this_course#link-webstorm-to-nvm).
+3. Click ***Debug***
+
+At that point click ***Debug***.
+
+At this point you'll see that webstorm starts up by running npm start, by looking at the output in the process console.
+The output in red is similar to the `npm start` output from the terminal, with some additional messages about webstorm attaching a debugger.
+
+![Webstorm process console](../../images/3/custom/process_console.png)
+
+Remember that the application shouldn't be running in another console, otherwise the port will already be in use.
 
 Below you can see a screenshot where the code execution has been paused in the middle of saving a new task:
 
-![vscode screenshot of execution at a breakpoint](../../images/3/36x.png)
+![webstorm screenshot of execution at a breakpoint](../../images/3/36x.png)
 
-The execution stopped at the **breakpoint** in line 69.
-In the console, you can see the value of the `task` variable.
-In the top left window, you can see other things related to the state of the application.
+The execution stopped at the **breakpoint** in line 81.
+On the line itself and in the code, you see in light gray some of the values of different variables, like the value of the task variable.
+In the window below you can see the value of the `tasks` variable, as well as the value of all of the variables and objects that you can inspect.
 
-The arrows at the top can be used for controlling the flow of the debugger.
+In the Debugger Console, you can type in values just like you did before in the developer tools console.
+The Debugger Console is great as you can type out code to see what values would be as you are writing the code.
+See here my example of checking to see if I am parsing a string correctly.
 
-For some reason, I don't use the Visual Studio Code debugger a whole lot.
+![webstorm screenshot of debugger console](../../images/3/custom/webstorm_debugger_console.png)
+
+The arrows at the top of the debugger window can be used for controlling the flow of control.
+For example, step over, executes one line of the code, while step into if you are on say a function, will jump into that function to start executing inside.
+Finally the inspector is like the debugger console that I showed,
+but is a feature that is available across all Jetbrains IDEs for evaluating expressions while debugging during the state of control.
+
+Lastly, look at some of the icons on the right.
+
+- The play button resumes execution of the program
+- The red square stop sign will stop debugging
+- the red octagon stop signs allow you to see all breakpoints or to muste breakpoints from executing for a while.
+- the lightning bolt allows your program to break on an exception, which can be very handy when trying to find out why an exception is being thrown.
+
+I encourage you to learn to use the debugger as it can be quite useful!
 
 #### Chrome dev tools
 
-Debugging is also possible with the Chrome developer console by starting your application with the command:
+Debugging backend applications is also possible with the Chrome developer console by starting your application with the command:
 
 ```bash
 node --inspect index.js
@@ -76,7 +104,7 @@ When the application "does not work", we have to first figure out where the prob
 It's very common for the problem to exist in a place where you didn't expect it to,
 and it can take minutes, hours, or even days before you find the source of the problem.
 
-The key is to be systematic.
+The key is to be systematic so that you can divide and conquer.
 Since the problem can exist anywhere, *you must question everything*, and eliminate all possibilities one by one.
 Logging to the console, Postman, debuggers, and experience will help.
 

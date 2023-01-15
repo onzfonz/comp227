@@ -170,6 +170,15 @@ nvm use 16
 
 After this, you should be able to type `node -v` and you'll notice that it should print out `v16.3.0`.
 
+To get use ready to use webstorm we'll follow a couple more commands here:
+
+One is to type the following lines, which creates a sybmolic link where WebStorm can find the version of node we are using.
+
+```bash
+export NVM_SYMLINK_CURRENT=true
+nvm use default
+```
+
 #### 4 Alternate: Installing node directly
 
 Alternatively, you can try to just install node without using a version manager.
@@ -179,7 +188,7 @@ I've taken the [installation instructions](https://nodejs.org/en/download/packag
 |:---|:--|
 |`winget install -e OpenJS.NodeJS`|`brew install node`|
 
-You should only use this option if you have trouble doing anything with nvm..
+*You should only use this option if you have trouble doing anything with nvm.*
 
 ---
 
@@ -345,10 +354,17 @@ There you should see bash.exe with a path for git.
 
 #### Enabling autosave
 
-This last one I find to be incredibly useful, but it's a double edged sword, as sometimes tends to break whatever I am working on.
+This one I find to be incredibly useful, but it's a double edged sword, as sometimes tends to break whatever I am working on.
 On the flipside, it allows me to not have to worry about saving all the time, which is key nowadays.
 Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
 check the option which says to ***Save files if the IDE is idle for 15 seconds***.
+
+#### Link webstorm to nvm
+
+This last one is important as it tells Webstorm where our node version in, which helps with IDE integration.
+Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
+Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
+Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both windows.
 
 ### 9: Make changes
 
