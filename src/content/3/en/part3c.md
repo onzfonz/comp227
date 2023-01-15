@@ -116,27 +116,29 @@ from Toyota Production Systems is very effective in this situation as well.
 ### MongoDB
 
 To store our saved tasks indefinitely, we need a database.
-Most of the courses taught at the University of Helsinki use relational databases.
+Most of college courses use relational databases.
 In most parts of this course, we will use [MongoDB](https://www.mongodb.com/)
-which is a so-called [document database](https://en.wikipedia.org/wiki/Document-oriented_database).
+which is a [**document database**](https://en.wikipedia.org/wiki/Document-oriented_database).
 
 The reason for using Mongo as the database is its lower complexity compared to a relational database.
 
 Document databases differ from relational databases in how they organize data as well as in the query languages they support.
 Document databases are usually categorized under the [NoSQL](https://en.wikipedia.org/wiki/NoSQL) umbrella term.
 
-You can read more about document databases and NoSQL from the course material for
-[week 7](https://tikape-s18.mooc.fi/part7/) of the Introduction to Databases course.
-Unfortunately, the material is currently only available in Finnish.
-
-Read now the chapters on [collections](https://docs.mongodb.com/manual/core/databases-and-collections/) and [documents](https://docs.mongodb.com/manual/core/document/)
+Please read the chapters on [collections](https://docs.mongodb.com/manual/core/databases-and-collections/) and [documents](https://docs.mongodb.com/manual/core/document/)
 from the MongoDB manual to get a basic idea of how a document database stores data.
 
 Naturally, you can install and run MongoDB on your computer.
-However, the internet is also full of Mongo database services that you can use.
-Our preferred MongoDB provider in this course will be [MongoDB Atlas](https://www.mongodb.com/atlas/database).
+However, the internet is also full of Mongo database services that you can use that are always available in the cloud.
+Our preferred MongoDB provider in this course will be [**MongoDB Atlas**](https://www.mongodb.com/atlas/database).
 
-Once you've created and logged into your account, let us start by selecting the free option:
+Once you've created, verified, and logged into your account with Atlas, you're first presented with a survey.
+These are the options to choose.
+
+![mongodb survey first time user](../../images/3/custom/mongo_survey.png)
+
+After clicking ***Finish***, you're given a choice for a deployment option.
+Choose the shared option.
 
 ![mongodb deploy a cloud database free shared](../../images/3/mongo1.png)
 
@@ -145,27 +147,32 @@ Pick the cloud provider and location and create the cluster:
 ![mongodb picking shared, aws and region](../../images/3/mongo2.png)
 
 Let's wait for the cluster to be ready for use.
-This can take some minutes.
+This may take some minutes, but for me it was pretty quick.
 
-**NB** do not continue before the cluster is ready.
+Now let's answer the questions from the Security Quickstart.
+Because you are handling data, you need to create a user and password that can connect and access your database.
+***These are not the same credentials that you use for logging into MongoDB Atlas.***
+For me, I used comp227 as the user, and then clicked ***Autogenerate the password*** and clicked ***Copy***.
+Store that password somewhere that you can access it, as you'll need it in files we'll modify soon.
+Finally, once you've store the password in a secure location, click ***Create User***.
 
-Let's use the ***security*** tab for creating user credentials for the database.
-*These are not the same credentials you use for logging into MongoDB Atlas.*
-These will be used for your application to connect to the database.
+**Note** if you do ever lose that password, you'll be able to edit the user and set a new password.
 
 ![mongodb security quickstart](../../images/3/mongo3.png)
 
 Next, we have to define the IP addresses that are allowed access to the database.
-For the sake of simplicity we will allow access from all IP addresses:
+For the sake of simplicity we will allow access from all IP addresses, scroll down and type `0.0.0.0/0`, and then click ***Add Entry*** and then ***Finish and Close***.
 
 ![mongodb network access/add ip access list](../../images/3/mongo4.png)
 
-Finally, we are ready to connect to our database.
-Start by clicking ***connect***:
+At this point you may get two more popups.
+I liked the wizard so unchecked it before closing, and I also skipped the Termination Protection feature.
+After closing the popups, we are finally ready to connect to our database.
+Click ***Connect***:
 
 ![mongodb database deployment connect](../../images/3/mongo5.png)
 
-and choose: ***Connect your application***:
+Choose: ***Connect your application*** out of the options listed, and then you'll see this screen.
 
 ![mongodb connect application](../../images/3/mongo6.png)
 
@@ -174,7 +181,7 @@ The view displays the *MongoDB URI*, which is the address of the database that w
 The address looks like this:
 
 ```bash
-mongodb+srv://comp227:$<password>@cluster0.o1opl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+mongodb+srv://comp227:$<password>@cluster0.gb6u3el.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 ```
 
 We are now ready to use the database.
@@ -187,7 +194,7 @@ We will instead use the [Mongoose](http://mongoosejs.com/index.html) library tha
 Mongoose could be described as an **object document mapper** (ODM),
 and saving JavaScript objects as Mongo documents is straightforward with this library.
 
-Let's install Mongoose:
+Let's install Mongoose on our backend:
 
 ```bash
 npm install mongoose
@@ -197,7 +204,7 @@ Let's not add any code dealing with Mongo to our backend just yet.
 Instead, let's make a practice application by creating a new file, *mongo.js*:
 
 ```js
-const mongoose = require('mongoose')
+const mongoose = require('mongoose').set('strictQuery', true)
 
 if (process.argv.length < 3) {
   console.log('Please provide the password as an argument: node mongo.js <password>')
@@ -206,7 +213,7 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
-const url = `mongodb+srv://tasks-app-full:${password}@cluster1.lvvbt.mongodb.net/?retryWrites=true&w=majority`
+const url = `mongodb+srv://comp227:${password}@cluster0.gb6u3el.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 const taskSchema = new mongoose.Schema({
   content: String,
@@ -222,7 +229,7 @@ mongoose
     console.log('connected')
 
     const task = new Task({
-      content: 'HTML is Easy',
+      content: 'Practice coding interview problems',
       date: new Date(),
       important: true,
     })
@@ -240,15 +247,15 @@ mongoose
 You should verify and use the correct URI that was generated from MongoDB Atlas.
 
 The code also assumes that it will be passed the password from the credentials we created in MongoDB Atlas, as a command line parameter.
-We can access the command line parameter like this:
+In the code above, we access the command line parameter like this:
 
 ```js
 const password = process.argv[2]
 ```
 
-When the code is run with the command `node mongo.js password`, Mongo will add a new document to the database.
+When the code is run with the command `node mongo.js YOUR_PASSWORD_HERE`, Mongo will add a new document to the database.
 
-**NB:** Please notice the password is the password created for the database user, not your MongoDB Atlas password.
+**Remember** the password needed is the password created for the database user, not your MongoDB Atlas password.
 Also, if you created a password with special characters,
 then you'll need to [URL encode that password](https://docs.atlas.mongodb.com/troubleshoot-connection/#special-characters-in-connection-string-password).
 
@@ -263,7 +270,7 @@ As the view states, the *document* matching the task has been added to the ***ta
 Let's destroy the default database ***myFirstDatabase*** and change the name of the database referenced in our connection string to `taskApp` instead, by modifying the URI:
 
 ```bash
-mongodb+srv://comp227:$<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority
+mongodb+srv://comp227:$<password>@cluster0.gb6u3el.mongodb.net/taskApp?retryWrites=true&w=majority
 ```
 
 Let's run our code again:
@@ -384,41 +391,42 @@ Create a cloud-based MongoDB database for the communities application with Mongo
 
 Create a *mongo.js* file in the project directory, that can be used for adding a community, and for listing all of the communities.
 
-**NB:** Do not include the password in the file that you commit and push to GitHub!
+***Do not include the password in the file that you commit and push to GitHub!***
 
 The application should work as follows.
 You use the program by passing three command-line arguments (the first is the password), e.g.:
 
 ```bash
-node mongo.js yourpassword Anna 040-1234556
+node mongo.js your_mongo_password_here "Meaningful Conversation" https://discord.com/invite/PHrdsnKa
 ```
 
 As a result, the application will print:
 
 ```bash
-added Anna number 040-1234556 to communities
+added Meaningful Conversation and invite URL https://discord.com/invite/PHrdsnKa to communities
 ```
 
 The new community entry will be saved to the database.
-Notice that if the name contains whitespace characters, it must be enclosed in quotes:
+Notice that because the community name in this example contains whitespace characters, it is enclosed in quotes.
+If it is one word, then it is not necessary.
 
 ```bash
-node mongo.js yourpassword "Arto Vihavainen" 045-1232456
+node mongo.js your_mongo_password_here MeditationMind https://discord.com/invite/XT9xqwv9
 ```
 
 If the password is the only parameter given to the program, meaning that it is invoked like this:
 
 ```bash
-node mongo.js yourpassword
+node mongo.js your_mongo_password_here
 ```
 
 Then the program should display all of the communities:
 
 ```shell
 communities:
-Anna 040-1234556
-Arto Vihavainen 045-1232456
-Ada Lovelace 040-1231236
+Meaningful Conversation https://discord.com/invite/PHrdsnKa
+MeditationMind https://discord.com/invite/XT9xqwv9
+PySlackers https://pythondev.slack.com
 ```
 
 You can get the command-line parameters from the [process.argv](https://nodejs.org/docs/latest-v8.x/api/process.html#process_process_argv) variable.
@@ -451,8 +459,6 @@ Group
   })
 ```
 
-**NB:** If you define a model with the name `Group`, mongoose will automatically name the associated collection as `people`.
-
 </div>
 
 <div class="content">
@@ -461,14 +467,15 @@ Group
 
 Now we have enough knowledge to start using Mongo in our application.
 
-Let's get a quick start by copy-pasting the Mongoose definitions to the *index.js* file:
+Let's get a quick start by copy-pasting the Mongoose definitions to the backend's *index.js* file:
 
 ```js
-const mongoose = require('mongoose')
+const mongoose = require('mongoose').set('strictQuery', true)
+const password = process.argv[2]
 
-// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
-const url =
-  `mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority`
+// DO NOT SAVE YOUR PASSWORD ANYWHERE THAT WOULD UPLOAD IT TO GITHUB
+const url = `mongodb+srv://comp227:${password}@cluster0.gb6u3el.mongodb.net/taskApp?retryWrites=true&w=majority`
+// LET ME REPEAT - DO NOT SAVE YOUR PASSWORD IN YOUR CODE!
 
 mongoose.connect(url)
 
@@ -499,7 +506,7 @@ The application works almost perfectly.
 The frontend assumes that every object has a unique id in the `id` field.
 We also don't want to return the mongo versioning field `__v` to the frontend.
 
-One way to format the objects returned by Mongoose is to [modify](https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id)
+One way to format the objects returned by Mongoose is to [*modify*](https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id)
 the `toJSON` method of the schema, which is used on all instances of the models produced with that schema.
 Modifying the method works like this:
 
@@ -538,7 +545,7 @@ Before we refactor the rest of the backend to use the database, let's extract th
 Let's create a new directory for the module called *models*, and add a file called *task.js*:
 
 ```js
-const mongoose = require('mongoose')
+const mongoose = require('mongoose').set('strictQuery', true)
 
 const url = process.env.MONGODB_URI // highlight-line
 
@@ -604,8 +611,9 @@ mongoose.connect(url)
 
 It's not a good idea to hardcode the address of the database into the code,
 so instead the address of the database is passed to the application via the `MONGODB_URI` environment variable.
+We'll discuss where to store this variable shortly.
 
-The method for establishing the connection is now given functions for dealing with a successful and unsuccessful connection attempt.
+Now, our code for establishing a connection has handlers for dealing with a successful and unsuccessful connection attempt.
 Both functions just log a message to the console about the success status:
 
 ![node output when wrong username/password](../../images/3/45e.png)
@@ -628,13 +636,14 @@ To use the library, we create a *.env* file at the root of the project.
 The environment variables are defined inside of the file, and it can look like this:
 
 ```bash
-MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://comp227:your_DB_password@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority
 PORT=3001
 ```
 
 We also added the hardcoded port of the server into the `PORT` environment variable.
 
-**The *.env* file should be gitignored right away since we do not want to publish any confidential information publicly online!**
+Our repos already ignore the *.env* file by default.
+If you ever make a new repo, **make sure that you immediately add `.env` so you do not publish any confidential information publicly online!**
 
 ![.gitignore in vscode with .env line added](../../images/3/45ae.png)
 
@@ -660,33 +669,16 @@ app.listen(PORT, () => {
 Observe how `dotenv` must be imported before the `task` model.
 This ensures that the environment variables from the *.env* file are available globally before the code from the other modules is imported.
 
-Once the file .env has been gitignored, Heroku does not get the database URL from the repository, so you have to set it yourself.
+Once the file .env has been gitignored, Render does not get the database URL from the repository, so you have to set it yourself.
 
-That can be done through the Heroku dashboard as follows:
+That can be done by visiting the [Render dashboard](http://dashboard.render.com).
+Once you are there, click on your web service and then select ***Environment*** from the left hand nav menu.
+Scroll down until you can click on ***Add Secret File.**
+From there, name the file .env and then click the contents section.
+There you will paste all of the contents of your .env file, making sure you put your db password from mongo in there.
+Next click ***Done*** and then Finally ***Save Changes***.
 
-![Heroku dashboard showing config vars](../../images/3/herokuConfig.png)
-
-or from the command line with the command:
-
-```bash
-heroku config:set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority'
-```
-
-Because GitHub is not used with Fly.io, also the file .env gets to the Fly.io servers when the app is deployed.
-Because of this also the env variables defined in the file will be available there.
-
-However, a [better option](https://community.fly.io/t/clarification-on-environment-variables/6309)
-is to prevent .env from being copied to Fly.io by creating to the project root the file *.dockerignore*, with the following contents
-
-```bash
-.env
-```
-
-and set the env value from the command line with the command:
-
-```bash
-fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority'
-```
+![Heroku dashboard showing config vars](../../images/3/cloudConfig.png)
 
 ### Using database in route handlers
 
@@ -738,13 +730,13 @@ app.get('/api/tasks/:id', (request, response) => {
 
 ### Verifying frontend and backend integration
 
-When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the VS Code REST client**.
+When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the Webstorm REST client**.
 Next, let's try creating a new task after taking the database into use:
 
 ![VS code rest client doing a post](../../images/3/46e.png)
 
 Only once everything has been verified to work in the backend, is it a good idea to test that the frontend works with the backend.
-It is highly inefficient to test things exclusively through the frontend.
+***It is highly inefficient to test things exclusively through the frontend.***
 
 It's probably a good idea to integrate the frontend and backend one functionality at a time.
 First, we could implement fetching all of the tasks from the database and test it through the backend endpoint in the browser.
@@ -777,7 +769,7 @@ just like we did in the chapter [Database configuration into its own module](/pa
 
 #### 3.14: Communities database, step2
 
-Change the backend so that new numbers are **saved to the database**.
+Change the backend so that new URLs are **saved to the database**.
 Verify that your frontend still works after the changes.
 
 At this point, you can choose to simply allow users to create all communities.
@@ -825,14 +817,14 @@ The console displays more detailed information about the error.
 On top of the non-existing task, there's one more error situation that needs to be handled.
 In this situation, we are trying to fetch a task with the wrong kind of `id`, meaning an `id` that doesn't match the mongo identifier format.
 
-If we make the following request, we will get the error message shown below:
+If we make the following request, we will get the error message like the one shown below:
 
 ```shell
 Method: GET
 Path:   /api/tasks/someInvalidId
 Body:   {}
 ---
-{ CastError: Cast to ObjectId failed for value "someInvalidId" at path "_id"
+{ CastError: Cast to ObjectId failed for value "someInvalidId" at path "_id" for model "Task"
     at CastError (/Users/powercat/comp227/part3-tasks/node_modules/mongoose/lib/error/cast.js:27:11)
     at ObjectId.cast (/Users/powercat/comp227/part3-tasks/node_modules/mongoose/lib/schema/objectid.js:158:13)
     ...
@@ -885,13 +877,16 @@ It's never a bad idea to print the object that caused the exception to the conso
 The reason the error handler gets called might be something completely different than what you had anticipated.
 If you log the error to the console, you may save yourself from long and frustrating debugging sessions.
 Moreover, most modern services where you deploy your application support some form of logging system that you can use to check these logs.
-As mentioned, Heroku is one.
 
 Every time you're working on a project with a backend, **it is critical to keep an eye on the console output of the backend**.
 If you are working on a small screen, it is enough to just see a tiny slice of the output in the background.
 Any error messages will catch your attention even when the console is far back in the background:
 
 ![sample screenshot showing tiny slice of output](../../images/3/15b.png)
+
+You can do this even if you are using the webstorm terminal by changing the terminal to be a window instead of a dock by right clicking on the terminal's tab.
+
+![changing the terminal to be a window](../../images/3/custom/changing_terminal_to_window.png)
 
 ### Moving error handling into middleware
 
@@ -1068,7 +1063,7 @@ By default, the `updatedTask` parameter of the event handler receives the origin
 [without the modifications](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate).
 We added the optional `{ new: true }` parameter, which will cause our event handler to be called with the new modified document instead of the original.
 
-After testing the backend directly with Postman and the VS Code REST client, we can verify that it seems to work.
+After testing the backend directly with Postman and the Webstorm REST client, we can verify that it seems to work.
 The frontend also appears to work with the backend using the database.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of
