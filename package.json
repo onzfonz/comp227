@@ -52,9 +52,9 @@
   "scripts": {
     "build": "gatsby build",
     "gatsby": "gatsby build",
-    "develop": "gatsby develop",
+    "dev": "gatsby develop",
     "clean": "gatsby clean",
-    "start": "npm run develop",
+    "start": "npm run dev",
     "format": "prettier --write \"src/**/*.js\"",
     "deploy": "gatsby build && gh-pages -d public -b master",
     "publish": "gh-pages -u 'Osvaldo Jimenez <ojimenez@pacific.edu>' -d public -b master"
