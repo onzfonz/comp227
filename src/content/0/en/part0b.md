@@ -7,15 +7,15 @@ lang: en
 
 <div class="content">
 
-Before we start programming, we will go through some principles of web development by examining an example application at **<https://studies.cs.helsinki.fi/exampleapp>**.
+Before we start programming, we will go through some principles of web development by examining an example application at **<https://227demo.djosv.com>**.
 
 The application exists only to demonstrate some basic concepts of the course,
 and is, by no means, an example of *how* a modern web application should be made.
 On the contrary, it demonstrates some old techniques of web development, which could even be considered *bad practices* nowadays.
 
-Code will conform to contemporary best practices from [part 1](/part1) onwards.
+We will try to conform to contemporary best practices starting with [part 1](/part1).
 
-Open the [example application](https://studies.cs.helsinki.fi/exampleapp) in your browser.
+Open the [example application](https://227demo.djosv.com) in your browser.
 Sometimes this takes a while.
 
 **The 1st rule of web development**: Always keep the Developer Console open on your web browser.
@@ -41,10 +41,11 @@ The server and the web browser communicate with each other using the [HTTP](http
 The *Network* tab shows how the browser and the server communicate.
 
 When you reload the page (press the ***F5*** key or the &#8635; symbol on your browser),
-the console will show that two events have happened:
+the console will show that a few events have happened.
 
-- The browser has fetched the contents of the page *studies.cs.helsinki.fi/exampleapp* from the server
-- And has downloaded the image *kuva.png*
+- The browser has fetched the contents of the page *comp227demo.pages.dev* from the server
+- And has downloaded the image *travel.jpg*
+- It also asked for the little icon that normally shows up next to your website's title in the tabs (favicon.ico).
 
 ![Screenshot of the developer console showing these two events](../../images/0/2e.png)
 
@@ -54,17 +55,16 @@ Clicking the first event reveals more information on what's happening:
 
 ![Detailed view of a single event](../../images/0/3e.png)
 
-The upper part, ***General***, shows that the browser requested the address *<https://studies.cs.helsinki.fi/exampleapp>*
-(though the address has changed slightly since this picture was taken)
+The upper part, ***General***, shows that the browser requested the address *<http://227demo.djosv.com>*
 using the [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method,
 and that the request was successful,
 because the server response had the [Status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) 200.
 
-The request and the server response have several [headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields):
+The request and server response have several [headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields):
 
 ![Screenshot of response headers](../../images/0/4e.png)
 
-The **Response headers** on top tell us e.g. the size of the response in bytes and the exact time of the response.
+The **Response headers** on top tell us details like the true server and  the exact time of the response.
 An important header [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
 tells us that the response is a text file in [utf-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
 This way the browser knows the response to be a regular [HTML](https://en.wikipedia.org/wiki/HTML) page and to render it to the browser 'like a web page'.
@@ -77,28 +77,28 @@ The **body** section determines the structure of the page rendered to the screen
 The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element which in turn contains:
 
 - a heading (`h1`)
-- the number of tasks created.
-- a link to the page ***tasks***
+- A paragraph with text.
+- a link to our ***actual demo***
 - an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag
 
-Because of the `img` tag, the browser does a second *HTTP request* to fetch the image *kuva.png* from the server.
+Because of the `img` tag, the browser does a second *HTTP request* to fetch the image *travel.jpg* from the server.
 The details of the request are as follows:
 
 ![Detailed view of the second event](../../images/0/6e.png)
 
-The request was made to the address <https://studies.cs.helsinki.fi/exampleapp/kuva.png> and its type is *HTTP GET*.
-The response headers tell us that the response size is 89350 bytes,
-and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is *image/png*,
+The request was made to the address <https://227demo.djosv.com/travel.jpg> and its type is *HTTP GET*.
+The response headers tell us that the response size is 1396589 bytes (fairly large!),
+and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is *image/jpeg*,
 so it is a png image.
 The browser uses this information to render the image correctly to the screen.
 
-The chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp>
+The chain of events caused by opening the page <https://227demo.djosv.com>
 on a browser from the following [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/):
 
 ![Sequence diagram of the flow covered above](../../images/0/7e.png)
 
 First, the browser sends an HTTP GET request to the server to fetch the HTML code of the page.
-The ***img*** tag in the HTML prompts the browser to fetch the image *kuva.png*.
+The ***img*** tag in the HTML prompts the browser to fetch the image *travel.jpg*.
 The browser renders the HTML page and the image to the screen.
 
 Even though it is difficult to notice, the HTML page begins to render before the image has been fetched from the server.
@@ -111,12 +111,12 @@ When entering the page, the browser fetches the HTML document detailing the stru
 The server has formed this document somehow.
 The document can be a *static* text file saved into the server's directory.
 The server can also form the HTML documents *dynamically* according to the application code, using, for example, data from a database.
-The HTML code of the example application has been formed dynamically because it contains information on the number of created tasks.
+The HTML code of the example application has been formed dynamically because it contains information on the number of created places.
 
-The HTML code of the homepage is as follows:
+A simplified version of the HTML page is below:
 
 ```js
-const getFrontPageHtml = (taskCount) => {
+const getFrontPageHtml = (placeCount) => {
   return(`
     <!DOCTYPE html>
     <html>
@@ -124,10 +124,10 @@ const getFrontPageHtml = (taskCount) => {
       </head>
       <body>
         <div class='container'>
-          <h1>Full stack example app</h1>
-          <p>number of tasks created ${taskCount}</p>
-          <a href='/tasks'>tasks</a>
-          <img src='kuva.png' width='200' />
+          <h1>Go Places with COMP 227</h1>
+          <p>We have ${placeCount} places for you.</p>
+          <a href='/places'>Places</a>
+          <img src='travel.jpg' width='450' />
         </div>
       </body>
     </html>
@@ -135,7 +135,7 @@ const getFrontPageHtml = (taskCount) => {
 } 
 
 app.get('/', (req, res) => {
-  const page = getFrontPageHtml(tasks.length)
+  const page = getFrontPageHtml(places.length)
   res.send(page)
 })
 ```
@@ -143,27 +143,27 @@ app.get('/', (req, res) => {
 You don't have to understand the code just yet.
 
 The content of the HTML page has been saved as a template string or a string that allows for evaluating, for example, variables in the midst of it.
-The dynamically changing part of the homepage, the number of saved tasks (in the code `taskCount`),
-is replaced by the current number of tasks (in the code `tasks.length`) in the template string.
+The dynamically changing part of the homepage, the number of saved places (in the code `placeCount`),
+is replaced by the current number of places (in the code `places.length`) in the template string.
 
-Writing HTML amid the code is of course not smart, but for old-school PHP programmers, it was a normal practice.
+Writing HTML amid the code is of course not smart, but for PHP programmers, it was a normal practice.
 
 In traditional web applications, the browser is "dumb".
 It only fetches HTML data from the server, and all application logic is on the server.
 A server can be created using many different technologies such as:
 
-- Java Spring (like in the University of Helsinki course [Web-palvelinohjelmointi](https://courses.helsinki.fi/fi/tkt21007/119558639))
-- Python Flask (like the courses [database applications](https://materiaalit.github.io/tsoha-18/))
+- [Java Spring](https://spring.io/learn)
+- [Python Flask](https://www.fullstackpython.com/flask.html)
 - [Ruby on Rails](http://rubyonrails.org/)
 
-The example uses [Express](https://expressjs.com/) library with Node.js.
+Our example uses the [Express](https://expressjs.com/) library with Node.js.
 This course will use Node.js and Express to create web servers.
 
 ### Running application logic in the browser
 
 Keep the Developer Console open.
 Empty the console by clicking the 🚫 symbol, or by typing `clear()` in the console.
-Now when you go to the [tasks](https://studies.cs.helsinki.fi/exampleapp/tasks) page, the browser does 4 HTTP requests:
+Now when you go to the [places](https://227demo.djosv.com/places) page, the browser does 4 HTTP requests:
 
 ![Screenshot of the developer console with the 4 requests visible](../../images/0/8e.png)
 
@@ -173,7 +173,7 @@ It is the HTML code of the page, and it looks as follows:
 
 ![Detailed view of the first request](../../images/0/9e.png)
 
-When we compare the page shown on the browser and the HTML code returned by the server, we notice that the code does not contain the list of tasks.
+When we compare the page shown on the browser and the HTML code returned by the server, we notice that the code does not contain the list of places.
 The [`head`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) section of the HTML contains a
 [`script`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag.
 `script` causes the browser to fetch a JavaScript file called *main.js*.
@@ -189,16 +189,16 @@ xhttp.onreadystatechange = function() {
     console.log(data)
 
     var ul = document.createElement('ul')
-    ul.setAttribute('class', 'tasks')
+    ul.setAttribute('class', 'places')
 
-    data.forEach(function(task) {
+    data.forEach(function(place) {
       var li = document.createElement('li')
 
       ul.appendChild(li)
-      li.appendChild(document.createTextNode(task.content))
+      li.appendChild(document.createTextNode(place.name))
     })
 
-    document.getElementsByClassName('tasks').appendChild(ul)
+    document.getElementsByClassName('places').appendChild(ul)
   }
 }
 
@@ -211,8 +211,8 @@ We will properly start coding in [part 1](/part1).
 The sample code in this part is actually not relevant at all to the coding techniques of this course.
 
 > Some might wonder why `xhttp` object is used instead of the modern `fetch`.
-  This is due to not wanting to go into promises at all yet, and the code having a secondary role in this part.
-  We will return to modern ways to make requests to the server in part 2.
+  This is because we don't want to get into promises at all yet, and the code having a secondary role in this part.
+  We'll discuss savvier ways to make requests to the server in part 2.
 
 Immediately after fetching the `script` tag, the browser begins to execute the code.
 
@@ -225,11 +225,11 @@ xhttp.send()
 
 This is the bottom-most request shown on the Network tab.
 
-We can try going to the address <https://studies.cs.helsinki.fi/exampleapp/data.json> straight from the browser:
+We can try going to the address <https://227demo.djosv.com/data.json> straight from the browser:
 
 ![Raw JSON Data](../../images/0/10e.png)
 
-There we find the tasks in [JSON](https://en.wikipedia.org/wiki/JSON) "raw data".
+There we find the places in [JSON](https://en.wikipedia.org/wiki/JSON) "raw data".
 By default, Chromium-based browsers are not too good at displaying JSON data.
 Plugins can be used to handle the formatting.
 Install, for example, [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) on Chrome, and reload the page.
@@ -237,7 +237,7 @@ The data is now nicely formatted:
 
 ![Formatted JSON output](../../images/0/11e.png)
 
-So, the JavaScript code of the tasks page above downloads the JSON data containing the tasks, and forms a bullet-point list from the task contents:
+So, the JavaScript code of the places page above downloads the JSON data containing the places, and forms a bullet-point list from the names of places:
 
 This is done by the following code:
 
@@ -246,35 +246,35 @@ const data = JSON.parse(this.responseText)
 console.log(data)
 
 var ul = document.createElement('ul')
-ul.setAttribute('class', 'tasks')
+ul.setAttribute('class', 'places')
 
-data.forEach(function(task) {
+data.forEach(function(place) {
   var li = document.createElement('li')
 
   ul.appendChild(li)
-  li.appendChild(document.createTextNode(task.content))
+  li.appendChild(document.createTextNode(place.name))
 })
 
-document.getElementById('tasks').appendChild(ul)
+document.getElementById('places').appendChild(ul)
 ```
 
-The code first creates an unordered list with a [ul](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul)-tag...
+The code first creates an unordered list with a [ul](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul) tag...
 
 ```js
 var ul = document.createElement('ul')
-ul.setAttribute('class', 'tasks')
+ul.setAttribute('class', 'places')
 ```
 
-...and then adds one [li](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li)-tag for each task.
-Only the `content` field of each task becomes the contents of the `li` tag.
+...and then adds one [li](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li) tag for each place.
+Only the `name` field of each place becomes the contents of the `li` tag.
 The timestamps found in the raw data are not used for anything here.
 
 ```js
-data.forEach(function(task) {
+data.forEach(function(place) {
   var li = document.createElement('li')
 
   ul.appendChild(li)
-  li.appendChild(document.createTextNode(task.content))
+  li.appendChild(document.createTextNode(place.name))
 })
 ```
 
@@ -372,25 +372,25 @@ Document Object Model, or [DOM](https://en.wikipedia.org/wiki/Document_Object_Mo
 is an Application Programming Interface (**API**).
 The DOM enables programmatic modification of the **element trees** corresponding to web pages.
 
-The JavaScript code introduced in the previous chapter used the DOM-API to add a list of tasks to the page.
+The JavaScript code introduced in the previous chapter used the DOM-API to add a list of places to the page.
 
 The following code creates a new node to the variable `ul`, and adds some child nodes to it:
 
 ```js
 var ul = document.createElement('ul')
 
-data.forEach(function(task) {
+data.forEach(function(place) {
   var li = document.createElement('li')
 
   ul.appendChild(li)
-  li.appendChild(document.createTextNode(task.content))
+  li.appendChild(document.createTextNode(place.name))
 })
 ```
 
 Finally, the tree branch of the `ul` variable is connected to its proper place in the HTML tree of the whole page:
 
 ```js
-document.getElementsByClassName('tasks').appendChild(ul)
+document.getElementsByClassName('places').appendChild(ul)
 ```
 
 ### Manipulating the document object from console
@@ -401,9 +401,9 @@ You can access the `document` object by typing `document` into the Console tab:
 
 ![document in console tab of developer tools](../../images/0/15e.png)
 
-Let's add a new task to the page from the console.
+Let's add a new place to the page ***directly from the console***.
 
-First, we'll get the list of tasks from the page.
+First, we'll get the list of places from the page.
 The list is in the first `ul` element of the page:
 
 ```js
@@ -414,7 +414,7 @@ Then create a new `li` element and add some text content to it:
 
 ```js
 newElement = document.createElement('li')
-newElement.textContent = 'Page manipulation from console is easy'
+newElement.textContent = 'Page manipulation straight from the console is easy'
 ```
 
 And add the new `li` element to the list:
@@ -423,17 +423,21 @@ And add the new `li` element to the list:
 list.appendChild(newElement)
 ```
 
-![Screenshot of the page with the new task added to the list](../../images/0/16e.png)
+![Screenshot of the page with the new place added to the list](../../images/0/16e.png)
+
+> *Side note (optional)* - If you are studying the pictures closely you may see that there is this additional `::marker` that got placed into the li tag.
+> This is a pseudo-marker generated by chrome to represent the bullet next to the list item and is present because we are styling the bullet list.
+> It has no bearing and does not appear in the html tag, but it's present to help us understand how items are being styled in the developer tools.
 
 Even though the page updates on your browser, the changes are not permanent.
-If the page is reloaded, the new task will disappear, because the changes were not pushed to the server.
-The JavaScript code the browser fetches will always create the list of tasks based on JSON data from the address <https://studies.cs.helsinki.fi/exampleapp/data.json>.
+If the page is reloaded, the new place will disappear, because the changes were not pushed to the server.
+The JavaScript code the browser fetches will always create the list of places based on JSON data from the address <https://227demo.djosv.com/data.json>.
 
 ### CSS
 
-The `head` element of the HTML code of the Tasks page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag.
+The `head` element of the HTML code of the Places page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag.
 This `link` tag determines that the browser must fetch a [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
-style sheet from the address [main.css](https://studies.cs.helsinki.fi/exampleapp/main.css).
+style sheet from the address [main.css](https://227demo.djosv.com/main.css).
 
 Cascading Style Sheets, or CSS, is a style sheet language used to determine the appearance of web pages.
 
@@ -442,37 +446,43 @@ The fetched CSS file looks as follows:
 ```css
 .container {
   padding: 10px;
-  border: 1px solid; 
+  border: 1px solid
 }
 
-.tasks {
-  color: blue;
+body {
+  background-color: black;
+  font-family: sans-serif;
+  color: white;
+}
+
+.places {
+  color: lightgreen;
 }
 ```
 
-The file defines two [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
-These are used to select certain parts of the page and to define styling rules to style them.
+The file defines one [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)(*`body`*) and two [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
+The type selector is merely present to switch the component to look closer to a dark mode equivalent (and to make it .1% more stylish).
+The **class selectors** are used to select certain parts of the page and to define styling rules to style them.
 
 A class selector definition always starts with a period and contains the name of the class.
 
-The classes are [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class),
-which can be added to HTML elements.
+The classes can be applied to HTML elements as [**attributes**](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class).
 
-CSS attributes can be examined on the ***elements*** tab of the console:  
+CSS attributes can be examined on the ***Elements*** tab of the console:  
 
 ![Screenshot of the Elements tab on the developer console](../../images/0/17e.png)
 
 The outermost `div` element has the class `container`.
-The `ul` element containing the list of tasks has the class `tasks`.
+The `ul` element containing the list of places has the class `places`.
 
 The CSS rule defines that elements with the `container` class will be outlined with a one-pixel wide [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border).
 It also sets 10-pixel [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding) on the element.
 This adds some empty space between the element's content and the border.
 
-The second CSS rule sets the text color of the tasks as blue.
+The `.places` CSS rule sets the text color as lightgreen.
 
 HTML elements can also have other attributes apart from classes.
-The `div` element containing the tasks has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
+The `div` element containing the places has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
 JavaScript code uses the id to find the element.
 
 The ***Elements*** tab of the console can be used to change the styles of the elements.
@@ -484,7 +494,7 @@ If you want to make lasting changes, they must be saved to the CSS style sheet o
 
 ### Loading a page containing JavaScript - review
 
-Let's review what happens when the page <https://studies.cs.helsinki.fi/exampleapp/tasks> is opened on the browser.
+Let's review what happens when the page <https://227demo.djosv.com/places> is opened on the browser.
 
 ![sequence diagram of browser/server interaction](../../images/0/19e.png)
 
@@ -492,15 +502,15 @@ Let's review what happens when the page <https://studies.cs.helsinki.fi/examplea
 - Links in the HTML code cause the browser to also fetch the CSS style sheet *main.css*...
 - ...and a JavaScript code file *main.js*
 - The browser executes the JavaScript code.
-  The code makes an HTTP GET request to the address <https://studies.cs.helsinki.fi/exampleapp/data.json>, which
-  returns the tasks as JSON  data.
-- When the data has been fetched, the browser executes an *event handler*, which renders the tasks to the page using the DOM-API.
+  The code makes an HTTP GET request to the address <https://227demo.djosv.com/data.json>, which
+  returns the places as JSON  data.
+- When the data has been fetched, the browser executes an *event handler*, which renders the places to the page using the DOM-API.
 
 ### Forms and HTTP POST
 
-Next, let's examine how adding a new task is done.
+Next, let's examine how adding a new place is done.
 
-The Tasks page contains a [form element](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
+The Places page contains a [form element](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
 
 ![form element highlight in webpage and developer tools](../../images/0/20e.png)
 
@@ -515,35 +525,34 @@ Let's zoom into it:
 
 ![Detailed view of the first request](../../images/0/22e.png)
 
-It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address ***new_task***.
+It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address ***new_place***.
 The server responds with HTTP status code 302.
 This is a [URL redirect](https://en.wikipedia.org/wiki/URL_redirection),
-with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `tasks`.
+with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `places`.
 
-So, the browser reloads the Tasks page.
-The reload causes three more HTTP requests: fetching the style sheet (main.css),
-the JavaScript code (main.js), and the raw data of the tasks (data.json).
+So, the browser reloads the *places* page.
+The reload causes three more HTTP requests: fetching the style sheet (*main.css*),
+the JavaScript code (*main.js*), and the raw data of the places (*data.json*).
 
-The network tab also shows the data submitted with the form:
-
-NB: On newer Chrome, the Form Data dropdown is within the new Payload tab, located to the right of the Headers tab.
+We can also see the data submitted in the Network tab.
+The Form Data dropdown is within the new Payload tab, located to the right of the Headers tab.
 
 ![form data dropdown in developer tools](../../images/0/23e.png)
 
-The Form tag has attributes `action` and `method`, which define that submitting the form is done as an HTTP POST request to the address ***new_task***.
+The Form tag has attributes `action` and `method`, which define that submitting the form is done as an HTTP POST request to the address ***new_place***.
 
 ![action and method highlight](../../images/0/24e.png)
 
 The code on the server responsible for the POST request is quite simple (NB: this code is on the server, and not on the JavaScript code fetched by the browser):
 
 ```js
-app.post('/new_task', (req, res) => {
-  tasks.push({
-    content: req.body.task,
+app.post('/new_place', (req, res) => {
+  places.push({
+    name: req.body.place,
     date: new Date(),
   })
 
-  return res.redirect('/tasks')
+  return res.redirect('/places')
 })
 ```
 
@@ -551,25 +560,25 @@ Data is sent as the [body](https://developer.mozilla.org/en-US/docs/Web/HTTP/Met
 
 The server can access the data by accessing the `req.body` field of the request object `req`.
 
-The server creates a new task object, and adds it to an array called `tasks`.
+The server creates a new `place` object, and adds it to an array called `places`.
 
 ```js
-tasks.push({
-  content: req.body.task,
+places.push({
+  name: req.body.place,
   date: new Date(),
 })
 ```
 
-The Task objects have two fields: `content` containing the actual content of the task, and `date` containing the date and time the task was created.
+The `place` objects have two fields: `name` containing the actual name of the place, and `date` containing the date and time the place was created.
 
-The server does not save new tasks to a database, so new tasks disappear when the server is restarted.
+*The server does not save new places to a database, so new places disappear when the server is restarted.*
 
 ### AJAX
 
-The Tasks page of the application follows an early-nineties style of web development and uses "Ajax".
+The places page of the application follows an early-nineties style of web development and uses "Ajax".
 As such, it's on the crest of the wave of early 2000s web technology.
 
-[AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML)
+[**AJAX**](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML)
 is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach.
 AJAX enables the fetching of content to web pages using JavaScript included within the HTML, without the need to rerender the page.
 
@@ -578,37 +587,37 @@ Before the AJAX era, all web pages worked like the
 we saw earlier in this chapter.
 All of the data shown on the page was fetched with the HTML code generated by the server.
 
-The Tasks page uses AJAX to fetch the tasks data.
+The *places* page uses AJAX to fetch the `places` data.
 Submitting the form still uses the traditional mechanism of submitting web forms.
 
-The application URLs reflect the old, carefree times.
-JSON data is fetched from the URL <https://studies.cs.helsinki.fi/exampleapp/data.json>
-and new tasks are sent to the URL <https://studies.cs.helsinki.fi/exampleapp/new_task>.
+The application URLs reflect the [old, carefree times](https://www.youtube.com/watch?v=GA8z7f7a2Pk).
+JSON data is fetched from the URL <https://227demo.djosv.com/data.json>
+and new places are sent to the URL <https://227demo.djosv.com/new_place>.
 Nowadays URLs like these would not be considered acceptable,
 as they don't follow the generally acknowledged conventions of [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) APIs,
 which we'll look into more in [part 3](/part3).
 
-The thing termed AJAX is now so commonplace that it's taken for granted.
-The term has faded into oblivion, and the new generation has not even heard of it.
+The term AJAX is now so commonplace that it's taken for granted.
+The term, like *shindig* and *home skillet*, has faded out of our collective conciousness.
 
 ### Single page app
 
 In our example app, the home page works like a traditional webpage: All of the logic is on the server, and the browser only renders the HTML as instructed.
 
-The Tasks page gives some of the responsibility, generating the HTML code for existing tasks, to the browser.
+The *places* page gives some of the responsibility, generating the HTML code for existing places, to the browser.
 The browser tackles this job by executing the JavaScript code it fetched from the server.
-The code fetches the tasks from the server as JSON data and adds HTML elements for displaying the tasks to the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
+The code fetches the places from the server as JSON data and adds HTML elements for displaying the `places` to the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
 
 In recent years, the [Single-page application](https://en.wikipedia.org/wiki/Single-page_application) (SPA) style of creating web applications has emerged.
 SPA-style websites don't fetch all of their pages separately from the server like our sample application does,
 but instead comprise only one HTML page fetched from the server,
 the contents of which are manipulated with JavaScript that executes in the browser.
 
-The Tasks page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
-Even though the logic for rendering the tasks is run on the browser, the page still uses the traditional way of adding new tasks.
-The data is sent to the server via the form's submit, and the server instructs the browser to reload the Tasks page with a *redirect*.
+The Places page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
+Even though the logic for rendering the places is run on the browser, the page still uses the traditional way of adding new places.
+The data is sent to the server via the form's submit, and the server instructs the browser to reload the Places page with a *redirect*.
 
-A single-page app version of our example application can be found at <https://studies.cs.helsinki.fi/exampleapp/spa>.
+A single-page app version of our example application can be found at <https://227demo.djosv.com/spa>.
 At first glance, the application looks exactly the same as the previous one.
 The HTML code is almost identical, but the JavaScript file is different (*spa.js*) and there is a small change in how the form-tag is defined:
 
@@ -617,16 +626,16 @@ The HTML code is almost identical, but the JavaScript file is different (*spa.js
 The form has no `action` or `method` attributes to define how and where to send the input data.
 
 Open the ***Network*** tab and empty it.
-When you now create a new task, you'll notice that the browser sends only one request to the server.
+When you now create a new place, you'll notice that the browser sends only one request to the server.
 
 ![Network tab in developer tools](../../images/0/26e.png)
 
-The POST request to the address `new_task_spa` contains the new task as JSON data containing both the content of the task (`content`) and the timestamp (`date`):
+The POST request to the address `new_place_spa` contains the new place as JSON data containing both the name of the place (`name`) and the timestamp (`date`):
 
 ```js
 {
-  content: "study for comp227",
-  date: "2022-05-25T15:15:59.905Z"
+  name: "Papa Urb's Grill",
+  date: "2023-01-15T15:15:59.905Z"
 }
 ```
 
@@ -643,41 +652,41 @@ The SPA version of the app does not traditionally send the form data, but instea
 We'll look into this code a bit, even though understanding all the details of it is not important just yet.
 
 ```js
-var form = document.getElementById('tasks_form')
+var form = document.getElementById('places_form')
 form.onsubmit = function(e) {
   e.preventDefault()
 
-  var task = {
-    content: e.target.elements[0].value,
+  var place = {
+    name: e.target.elements[0].value,
     date: new Date(),
   }
 
-  tasks.push(task)
+  places.push(place)
   e.target.elements[0].value = ''
-  redrawTasks()
-  sendToServer(task)
+  redrawPlaces()
+  sendToServer(place)
 }
 ```
 
-The command `document.getElementById('tasks_form')` instructs the code to fetch the form element from the page and to register an *event handler* to handle the form's submit event.
+The command `document.getElementById('places_form')` instructs the code to fetch the form element from the page and to register an ***event handler*** to handle the form's submit event.
 The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of form's submit.
 The default method would send the data to the server and cause a new GET request, which we don't want to happen.
 
-Then the event handler creates a new task, adds it to the tasks list with the command `tasks.push(task)`,
-rerenders the task list on the page and sends the new task to the server.
+Then the event handler creates a new place, adds it to the places list with the command `places.push(place)`,
+rerenders the place list on the page and sends the new place to the server.
 
-The code for sending the task to the server is as follows:
+The code for sending the place to the server is as follows:
 
 ```js
-var sendToServer = function(task) {
+var sendToServer = function(place) {
   var xhttpForPost = new XMLHttpRequest()
   // ...
 
-  xhttpForPost.open('POST', '/new_task_spa', true)
+  xhttpForPost.open('POST', '/new_place_spa', true)
   xhttpForPost.setRequestHeader(
     'Content-type', 'application/json'
   )
-  xhttpForPost.send(JSON.stringify(task))
+  xhttpForPost.send(JSON.stringify(place))
 }
 ```
 
@@ -689,18 +698,18 @@ The application code is available at <https://github.com/comp227/example_app>.
 It's worth remembering that the application is only meant to demonstrate the concepts of the course.
 The code follows a poor style of development in some measures, and should not be used as an example when creating your applications.
 The same is true for the URLs used.
-The URL `new_task_spa` that new tasks are sent to, does not adhere to current best practices.
+The URL `new_place_spa` that new places are sent to, does not adhere to current best practices.
 
 ### JavaScript libraries
 
-The sample app is done with so-called [vanilla JavaScript](https://www.freecodecamp.org/news/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34/),
+The sample app is done with so-called [**vanilla JavaScript**](https://www.freecodecamp.org/news/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34/),
 using only the DOM-API and JavaScript to manipulate the structure of the pages.
 
-Instead of using JavaScript and the DOM-API only, different libraries containing tools that are easier to work with compared to the DOM-API are often used to manipulate pages.
-One of these libraries is the ever-so-popular [jQuery](https://jquery.com/).
+Instead of using JavaScript and the DOM-API only, many popular libraries provide tools that make it easier to manipulate pages compared to the DOM-API.
+One of these libraries is the *ever-so-popular* [**jQuery**](https://jquery.com/).
 
-jQuery was developed back when web applications mainly followed the traditional style of the server generating HTML pages,
-the functionality of which was enhanced on the browser side using JavaScript written with jQuery.
+A long time ago, web applications traditionally generated HTML pages on the server side when they wanted to add functionality.
+Instead, jQuery built itself on top of Javascript to enhance the functionality on the browser side.
 One of the reasons for the success of jQuery was its so-called cross-browser compatibility.
 The library worked regardless of the browser or the company that made it, so there was no need for browser-specific solutions.
 Nowadays using jQuery is not as justified given the advancement of JavaScript,
@@ -716,20 +725,24 @@ However, the popularity of Angular plummeted in October 2014 after the
 and Angular 2 will not be backwards compatible with the first version.
 Angular 2 and the newer versions have not gotten too warm of a welcome.
 
-Currently, the most popular tool for implementing the browser-side logic of web applications is Facebook's [React](https://reactjs.org/) library.
-During this course, we will get familiar with React and the [Redux](https://github.com/reactjs/redux) library, which are frequently used together.
+Currently, one of the most popular tool for implementing the browser-side logic of web applications is Facebook's [React](https://reactjs.org/) library.
+During this course, we will get familiar with React and other technologies which are frequently used together.
 
 The status of React seems strong, but the world of JavaScript is ever-changing.
-For example, recently a newcomer - [VueJS](https://vuejs.org/) - has been capturing some interest.
+For example, while [VueJS](https://vuejs.org/) has been around a while as an "up and comer",
+there are other frameworks like [Svelte](https://svelte.dev/) and [Qwik](https://qwik.build.io) that have recently started generating buzz.
+While we have been talking about SPA, there is also talk about [returning more components back to the server](https://dev.to/this-is-learning/the-return-of-server-side-routing-b05).
 
 ### Full-stack web development
 
-What does the name of the course, *Full-stack web development*, mean?
-Full stack is a buzzword that everyone talks about, but no one knows what it means.
-Or at least, there is no agreed-upon definition for the term.
+What does the the term, *Full-stack web development*, mean?
+**Full stack** is a buzzword that everyone talks about, but is used in multiple ways.
 
 Practically all web applications have (at least) two "layers":
-the browser, being closer to the end-user, is the top layer, and the server the bottom one.
+
+1. the browser, which is closer to the end-user (AKA the top layer, and
+2. the server, whose layer is typically below the browser's
+
 There is often also a database layer below the server.
 We can therefore think of the **architecture** of a web application as a kind of **stack** of layers.
 
@@ -766,8 +779,10 @@ See [How to Manage JavaScript Fatigue on auth0](https://auth0.com/blog/how-to-ma
 [JavaScript fatigue on Medium](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4).
 
 You will suffer from JavaScript fatigue yourself during this course.
-Fortunately for us, there are a few ways to smooth the learning curve, and we can start with coding instead of configuration.
-We can't avoid configuration completely, but we can merrily push ahead in the next few weeks while avoiding the worst of configuration hells.
+Fortunately for us, there are a few ways to smooth the learning curve, and we will concentrate on the coding instead of the configuration.
+We can't avoid configuration completely
+(and we'll be doing some of that in part c),
+but after that, we can merrily push ahead in the next few weeks while hopefully avoiding the worst of it.
 
 </div>
 
@@ -777,26 +792,10 @@ We can't avoid configuration completely, but we can merrily push ahead in the ne
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
-You will submit all of the exercises into the repository that you were given in GitHub.
+You will submit all of the exercises into the repository that you will be provided in part C GitHub.
+While we wait to do those parts, though, **please start doing these exercises first**.
 
-Name the directories in your submission repository as follows:
-
-```text
-part0
-part1
-  arcadeinfo
-  studytracker
-  jokes
-part2
-  arcadeinfo
-  communities
-  countries
-```
-
-So, each part has its own directory, which contains a directory for each exercise set (like the studytracker exercises in part 1).
-
-The exercises are submitted **one part at a time**.
-When you have submitted the exercises for a part, you can no longer submit any missed exercises for that part.
+For now, *create a folder called part0 and put all of your  work in there until you have the tools that we'll go over in the next section*.
 
 #### 0.1: HTML
 
@@ -816,37 +815,37 @@ Learn about the basics of HTML forms by reading Mozilla's tutorial [Your first f
 
 This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-#### 0.4: New task diagram
+#### 0.4: New place diagram
 
 In the section [Loading a page containing JavaScript - review](/part0/fundamentals_of_web_apps#loading-a-page-containing-java-script-review),
-the chain of events caused by opening the page <https://studies.cs.helsinki.fi/exampleapp/tasks>
-is depicted as a [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/)
+the chain of events caused by opening the page <https://227demo.djosv.com/places>
+is depicted as a [sequence diagram](https://developer.ibm.com/articles/the-sequence-diagram/)
 
-The diagram was made using the [web sequence diagrams](https://www.websequencediagrams.com) service as follows:
+The diagram was made using the [web sequence diagrams](https://plantuml.com/sequence-diagram) service as follows:
 
 ```plantUML
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/tasks
+browser->server: HTTP GET https://227demo.djosv.com/places
 server-->browser: HTML-code
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+browser->server: HTTP GET https://227demo.djosv.com/main.css
 server-->browser: main.css
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+browser->server: HTTP GET https://227demo.djosv.com/main.js
 server-->browser: main.js
 
-task over browser:
+place over browser:
 browser starts executing js-code
 that requests JSON data from server 
-end task
+end place
 
-browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: [{ content: "Wash the dishes", date: "2022-05-23" }, ...]
+browser->server: HTTP GET https://227demo.djosv.com/data.json
+server-->browser: [{ name: "El Pazcifico", date: "2023-01-13" }, ...]
 
-task over browser:
+place over browser:
 browser executes the event handler
-that renders tasks to display
-end task
+that renders places to display
+end place
 ```
 
-**Create a similar diagram** depicting the situation where the user creates a new task on page <https://studies.cs.helsinki.fi/exampleapp/tasks>
+**Create a similar diagram** depicting the situation where the user creates a new place on page <https://227demo.djosv.com/places>
 when writing something into the text field and clicking the ***submit*** button.
 
 If necessary, show operations on the browser or on the server as comments on the diagram.
@@ -855,7 +854,7 @@ The diagram does not have to be a sequence diagram.
 Any sensible way of presenting the events is fine.
 
 All necessary information for doing this, and the next two exercises, can be found in the text of [this part](/part0/fundamentals_of_web_apps#forms-and-http-post).
-The idea of these exercises is to read the text through once more and to think through what is going on there.
+The idea of these exercises is to ***read the text through once more and to think through what is going on there***.
 Reading the application [code](https://github.com/comp227/example_app) is not necessary, but it is of course possible.
 
 **Notice** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor)
@@ -864,12 +863,12 @@ syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-includ
 #### 0.5: Single-page app diagram
 
 Create a diagram depicting the situation where the user goes to the [single-page app](/part0/fundamentals_of_web_apps#single-page-app)
-version of the tasks app at <https://studies.cs.helsinki.fi/exampleapp/spa>.
+version of the places app at <https://227demo.djosv.com/spa>.
 
-#### 0.6: New task in Single-page app diagram
+#### 0.6: New place in Single-page app diagram
 
-Create a diagram depicting the situation where the user creates a new task using the single-page version of the app.
+Create a diagram depicting the situation where the user creates a new place using the single-page version of the app.
 
-This was the last exercise, and it's time to push your answers to GitHub and follow the additional directions posted on Canvas.
+This was the last exercise, so please hold on to them until we reach part c and then you can submit your answers there.
 
 </div>
