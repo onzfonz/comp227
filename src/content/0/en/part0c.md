@@ -366,6 +366,8 @@ Back in the Settings window, type ***Node interpreter*** in the search box, whic
 Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
 Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both windows.
 
+***Remember that you'll have to do all of these steps (including the token generation if you don't save the token somewhere) for each computer that you use.***
+
 ### 9: Make changes
 
 By this point, your project should be open.
@@ -390,16 +392,57 @@ As you are toying around, you may get a popup like this in webstorm.
 Like the picture shows, I would check ***Don't ask again*** and then click ***Cancel***.
 I like to be purposeful in my commits in git, so I do not like adding in files to be tracked that may not be necessary.
 
-### 10: Submit the Assignment
+### 10: Understand the process
 
 For every project that we have thereafter, there will most likely be a new repo that you'll need to add to Webstorm using some of the steps that we've highlighted here.
 For every repo you'll need to accept the assignment and open up a new project from VCS.
 You won't need to generate a new token, however.
 The process that we follow here is merely to get you to understand the workflow for checking out projects from GitHub.
 
-To submit the assignment I would like you to edit the file via Webstorm to add your name.
-You should also upload a screenshot of your project open in WebStorm to the repo as well.
-You can [verify that your changes appear on GitHub in the readme file](#verifying-changes-made-it-to-github).
+Feel free to make as many changes as you'd like to the repo, just make sure you include the information from the exercises below.
+There you'll also see how you can [verify that your changes appear on GitHub](#07---verifying-changes-made-it-to-github).
+
+</div>
+
+<div class="tasks">
+
+### Exercises 0.7-0.9
+
+To submit the assignment you'll be making changes that will appear in your GitHub repo.
+For one, I would like you to edit the file that we created via Webstorm and add your name to the markdown file.
+
+#### 0.7 - Verifying changes made it to GitHub
+
+You should have been following along here with the reading.
+Once you completed the steps above and push, verify that you have finished by visiting **github.com** and clicking on your repository.
+Once there, you can click to see [this gif animation that helps you verify that the commits were made on GitHub](https://imgur.com/fpaI9XK)
+
+Like the image, you should see your changes on github.com and you should see your profile and link as well.
+
+Like the gif above click on the text that has your commit message and you'll see the
+changes that you committed and how your commit changed the file, which
+you can immediately identify.
+If you see your custom picture and your
+name or id, then you'll get the rest of the credit.
+If you don't, then
+simply make an additional change to one of the files (adding a line or a
+space) while [editing the user preferences as outlined earlier](#3-configure-git).
+
+#### 0.8 - Upload exercises from previous part
+
+Now that GitHub has been setup correctly,
+please upload the materials from the previous section
+[Exercises 0.1-0.6](/part0/fundamentals_of_web_apps#exercises-0-1-0-6) into your github repo.
+Make sure you put them in a folder and provide them with names that match the exercise that you had.
+
+#### 0.9 - Final upload screenshot
+
+Finally, upload a screenshot of your webstorm IDE showing the embedded git bash terminal and having typed `nvm` list.  
+Please name the screenshot file as `09` with whatever extension the image is.
+
+</div>
+
+<div class="content">
 
 ### Recommended: Learn to use git via the command line
 
@@ -442,9 +485,9 @@ Once you are inside the correct place that you want to be, then you can move on.
 Lastly, one of the last ways to do this is merely via Webstorm.
 You can right click on your project and say ***Open In->Terminal***, and the terminal will open down below.
 
-### Some git command line tools
+### Learning the git commands in bash
 
-While we will use gitstorms's git integration and tools to help us commit regularly,
+While we will use webstorms's git integration and tools to help us commit regularly,
 knowing a little bit about how to use the command line will be important for this course.
 One of the most important parts of knowing how to use the command line is being able to navigate through your folders.
 
@@ -468,6 +511,8 @@ So make sure that any projects that you clone have no nested or cloned projects 
 For this part, we were only interested in getting you used to the
 mechanics of adding, committing and pushing changes up to GitHub.
 So here’s what I’m going to ask you to do.
+
+### `git status` is your friend
 
 1. With the terminal open,
 type ```git status``` to see what’s changed.
@@ -514,6 +559,8 @@ git add .
 
 Once you do a ```git status``` again, you'll now see that all of the files are staged to be committed (lots of green files), while nothing is red anymore.
 This means that the next time you say commit via git all of the files will be placed into and tracked by the repository.
+
+### Committing via the command line
 
 In this case, let's write this line
 
@@ -568,39 +615,11 @@ git add NAME_OF_FILE_OR_DIR
 
 Again, **you only need to do this last part when you have new files**.
 
-### Pushing the changes
+### Pushing the changes via the command line
 
 Once you have committed, go ahead and push the files to the server.
 Type
 ```git push origin main``` and read the messages that are given to make sure that the
 push was indeed successful.
-
-### Verifying changes made it to GitHub
-
-Once you completed the steps and push, verify that you have finished by visiting **github.com** and clicking on your repository.
-Once there, you can click to see [this gif animation that helps you verify that the commits were made on GitHub](https://imgur.com/fpaI9XK)
-
-Like the image, you should see your changes.
-If github.com
-has the change you pushed that's part of the credit.
-The other part of
-the credit will come from the settings.
-In github.com you can go to your
-repository and click on the **commits**, where you'll see a list of the changes that you've made to
-the project.
-You should see a commit that has your picture and name on
-it at the top.
-
-Like the gif above click on the text that has your commit message and you'll see the
-changes that you committed and how your commit changed the file, which
-you can immediately identify.
-If you see your custom picture and your
-name or id, then you'll get the rest of the credit.
-If you don't, then
-simply make an additional change to one of the files (adding a line or a
-space) while [editing the user preferences as outlined earlier](#3-configure-git).
-There's no need to upload anything to canvas as all your changes will be
-stored on GitHub.
-Hooray!  Now you can go move on to the next parts!
 
 </div>
