@@ -72,9 +72,9 @@ Part of your grade for the course will be based on the total number of submitted
 
 **Do not assume this is where your grade will come from**.
 
-We will be having other exercises and assignment as well that will be just as important to your grade.
+We will be having other exercises and assignments as well that will be just as important to your grade.
 
-A rough calculation for for this portion is as follows:
+A rough calculation for this portion is as follows:
 
 | exercises    | rough grade for exercise portion    |
 | ------------ | :------: |
@@ -110,7 +110,7 @@ How to study the course – instructions in a nutshell:
 
 - Do the exercises. The exercises are submitted through GitHub and marking them as done on Canvas.
 - You need to work regularly.
-  The easiest way to fall behind in the course is to not work on this on a daily basis.
+  The easiest way to fall behind in the course is to not work on it every couple of days.
   Set yourself an alarm...do anything! But make it a habit of working on it at least 3 times a week for a little bit of time.
 
 ### Submitting exercises
@@ -141,11 +141,13 @@ More information about the project will be released via Canvas
 
 ### Before you start
 
-Using the [Chrome browser](https://www.google.com/chrome/) is recommended for this course because it provides the best tools for web development.
+Using a Chromium-based browser like [Chrome](https://www.google.com/chrome/) is recommended while developing because 
+it provides great tools for web development.
+I will be showing you and providing screenshots of those tools.
 Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/),
-which provides the same range of features.
+which provides a similar range of features.
 
-In [part c](part0c.md) we'll provide detailed instructions for installing some of the tools that we will be using extensively:
+In [part 0c](/part0/configuring_your_machine_for_this_course) we'll provide detailed instructions for installing some of the tools that we will be using extensively:
 [Git](https://git-scm.org) (via GitHub),
 [Webstorm](https://www.jetbrains.com/webstorm/download/)
 and [Node.js](https://nodejs.org/en/).
