@@ -56,17 +56,17 @@ Clicking the first event reveals more information on what's happening:
 ![Detailed view of a single event](../../images/0/3e.png)
 
 The upper part, ***General***, shows that the browser requested the address *<http://227demo.djosv.com>*
-using the [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method,
-and that the request was successful,
+using the [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method.
+That the request was successful
 because the server response had the [Status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) 200.
 
 The request and server response have several [headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields):
 
 ![Screenshot of response headers](../../images/0/4e.png)
 
-The **Response headers** on top tell us details like the true server and  the exact time of the response.
+The **Response headers** on top tell us details like the true server and the exact time of the response.
 An important header [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
-tells us that the response is a text file in [utf-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
+tells us that the response is a text file in [UTF-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
 This way the browser knows the response to be a regular [HTML](https://en.wikipedia.org/wiki/HTML) page and to render it to the browser 'like a web page'.
 
 The **Response** tab shows the response data, a regular HTML page.
@@ -168,7 +168,7 @@ Now when you go to the [places](https://227demo.djosv.com/places) page, the brow
 ![Screenshot of the developer console with the 4 requests visible](../../images/0/8e.png)
 
 All of the requests have *different* types.
-The first request's type is **document**.
+The first request type is of type **document**.
 It is the HTML code of the page, and it looks as follows:
 
 ![Detailed view of the first request](../../images/0/9e.png)
@@ -208,7 +208,7 @@ xhttp.send()
 
 The details of the code are not important right now, but some code has been included to spice up the images and the text.
 We will properly start coding in [part 1](/part1).
-The sample code in this part is actually not relevant at all to the coding techniques of this course.
+The sample code in this part is *not relevant at all* to the coding techniques of this course.
 
 > Some might wonder why `xhttp` object is used instead of the modern `fetch`.
   This is because we don't want to get into promises at all yet, and the code having a secondary role in this part.
@@ -284,7 +284,7 @@ Now open the ***Console*** tab on your Developer Console:
 
 By clicking the little triangle at the beginning of the line, you can expand the text on the console.
 
-![Screenshot of one of the previously collapsed entries expanded](../../images/0/13e.png)
+![Screenshot of one of the previously collapsed entries; now expanded](../../images/0/13e.png)
 
 This output on the console is caused by the `console.log` command in the code:
 
@@ -477,9 +477,9 @@ The `ul` element containing the list of places has the class `places`.
 
 The CSS rule defines that elements with the `container` class will be outlined with a one-pixel wide [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border).
 It also sets 10-pixel [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding) on the element.
-This adds some empty space between the element's content and the border.
+This adds some space between the element's content and the border.
 
-The `.places` CSS rule sets the text color as lightgreen.
+The `.places` CSS rule sets the text color as `lightgreen`.
 
 HTML elements can also have other attributes apart from classes.
 The `div` element containing the places has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
@@ -520,7 +520,7 @@ Let's open the ***Network*** tab and see what submitting the form looks like:
 ![Screenshot of the Network tab where the events for submitting the form are shown](../../images/0/21e.png)
 
 Surprisingly, submitting the form causes no less than **five** HTTP requests.
-The first one is the form submit event.
+The first one is the ***form submit event***.
 Let's zoom into it:
 
 ![Detailed view of the first request](../../images/0/22e.png)
@@ -560,7 +560,7 @@ Data is sent as the [body](https://developer.mozilla.org/en-US/docs/Web/HTTP/Met
 
 The server can access the data by accessing the `req.body` field of the request object `req`.
 
-The server creates a new `place` object, and adds it to an array called `places`.
+The server creates a new `place` object and adds it to an array called `places`.
 
 ```js
 places.push({
@@ -569,7 +569,10 @@ places.push({
 })
 ```
 
-The `place` objects have two fields: `name` containing the actual name of the place, and `date` containing the date and time the place was created.
+The `place` objects have two fields:
+
+1. a `name` containing the actual name of the place, and
+2. a `date` containing the date and time the place was created.
 
 *The server does not save new places to a database, so new places disappear when the server is restarted.*
 
@@ -598,7 +601,7 @@ as they don't follow the generally acknowledged conventions of [RESTful](https:/
 which we'll look into more in [part 3](/part3).
 
 The term AJAX is now so commonplace that it's taken for granted.
-The term, like *shindig* and *home skillet*, has faded out of our collective conciousness.
+The term, like *shindig* and *home skillet*, has faded out of our collective consciousness.
 
 ### Single page app
 
@@ -606,7 +609,7 @@ In our example app, the home page works like a traditional webpage: All of the l
 
 The *places* page gives some of the responsibility, generating the HTML code for existing places, to the browser.
 The browser tackles this job by executing the JavaScript code it fetched from the server.
-The code fetches the places from the server as JSON data and adds HTML elements for displaying the `places` to the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
+The code fetches the places from the server as JSON data and adds HTML elements for displaying the `places` on the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
 
 In recent years, the [Single-page application](https://en.wikipedia.org/wiki/Single-page_application) (SPA) style of creating web applications has emerged.
 SPA-style websites don't fetch all of their pages separately from the server like our sample application does,
@@ -615,11 +618,11 @@ the contents of which are manipulated with JavaScript that executes in the brows
 
 The Places page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
 Even though the logic for rendering the places is run on the browser, the page still uses the traditional way of adding new places.
-The data is sent to the server via the form's submit, and the server instructs the browser to reload the Places page with a *redirect*.
+The data is sent to the server via the form's *submit*, and the server instructs the browser to reload the Places page with a *redirect*.
 
 A single-page app version of our example application can be found at <https://227demo.djosv.com/spa>.
-At first glance, the application looks exactly the same as the previous one.
-The HTML code is almost identical, but the JavaScript file is different (*spa.js*) and there is a small change in how the form-tag is defined:
+At first glance, the application looks the same as the previous one.
+The HTML code is almost identical, but the JavaScript file is different (*spa.js*) and there is a small change in how the form tag is defined:
 
 ![form with missing action and method](../../images/0/25e.png)
 
@@ -648,7 +651,8 @@ Without this header, the server would not know how to correctly parse the data.
 The server responds with status code [201 created](https://httpstatuses.com/201).
 This time the server does not ask for a redirect, the browser stays on the same page, and it sends no further HTTP requests.
 
-The SPA version of the app does not traditionally send the form data, but instead uses the JavaScript code it fetched from the server.
+The SPA version of the app does not traditionally send the form data.
+Instead, it uses the JavaScript code it fetched from the server.
 We'll look into this code a bit, even though understanding all the details of it is not important just yet.
 
 ```js
@@ -669,11 +673,15 @@ form.onsubmit = function(e) {
 ```
 
 The command `document.getElementById('places_form')` instructs the code to fetch the form element from the page and to register an ***event handler*** to handle the form's submit event.
-The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of form's submit.
+The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of the form's submit.
 The default method would send the data to the server and cause a new GET request, which we don't want to happen.
 
-Then the event handler creates a new place, adds it to the places list with the command `places.push(place)`,
-rerenders the place list on the page and sends the new place to the server.
+Then the event handler:
+
+1. creates a new place
+2. adds it to `places` with the command `places.push(place)`
+3. rerenders the webpage's list and
+4. sends the new place to the server.
 
 The code for sending the place to the server is as follows:
 
@@ -692,7 +700,7 @@ var sendToServer = function(place) {
 
 The code determines that the data is to be sent with an HTTP POST request and the data type is to be JSON.
 The data type is determined with a *Content-type* header.
-Then the data is sent as JSON string.
+Then the data is sent as a JSON string.
 
 The application code is available at <https://github.com/comp227/example_app>.
 It's worth remembering that the application is only meant to demonstrate the concepts of the course.
@@ -700,7 +708,7 @@ The code follows a poor style of development in some measures, and should not be
 The same is true for the URLs used.
 The URL `new_place_spa` that new places are sent to, does not adhere to current best practices.
 
-### JavaScript libraries
+### JavaScript Libraries
 
 The sample app is done with so-called [**vanilla JavaScript**](https://www.freecodecamp.org/news/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34/),
 using only the DOM-API and JavaScript to manipulate the structure of the pages.
@@ -725,18 +733,20 @@ However, the popularity of Angular plummeted in October 2014 after the
 and Angular 2 will not be backwards compatible with the first version.
 Angular 2 and the newer versions have not gotten too warm of a welcome.
 
-Currently, one of the most popular tool for implementing the browser-side logic of web applications is Facebook's [React](https://reactjs.org/) library.
+Currently, one of the most popular tools for implementing the browser-side logic of web applications is Facebook's [React](https://reactjs.org/) library.
 During this course, we will get familiar with React and other technologies which are frequently used together.
 
 The status of React seems strong, but the world of JavaScript is ever-changing.
-For example, while [VueJS](https://vuejs.org/) has been around a while as an "up and comer",
+For example, while [VueJS](https://vuejs.org/) has been around a while as an "up-and-comer",
 there are other frameworks like [Svelte](https://svelte.dev/) and [Qwik](https://qwik.build.io) that have recently started generating buzz.
 While we have been talking about SPA, there is also talk about [returning more components back to the server](https://dev.to/this-is-learning/the-return-of-server-side-routing-b05).
 
 ### Full-stack web development
 
-What does the the term, *Full-stack web development*, mean?
-**Full stack** is a buzzword that everyone talks about, but is used in multiple ways.
+What does the term - *Full-stack web development* - mean?
+**Full stack** is a buzzword.
+It's ubiquitous yet devoid of any meaning.
+Let's try to provide some context for how the word ends up relating to the term stack.
 
 Practically all web applications have (at least) two "layers":
 
@@ -795,7 +805,7 @@ The exercises are submitted through GitHub and marking them as done on Canvas.
 You will submit all of the exercises into the repository that you will be provided in part C GitHub.
 While we wait to do those parts, though, **please start doing these exercises first**.
 
-For now, *create a folder called part0 and put all of your  work in there until you have the tools that we'll go over in the next section*.
+For now, *create a folder called part0 and put all of your work in there until you have the tools that we'll go over in the next section*.
 
 #### 0.1: HTML
 
@@ -848,7 +858,7 @@ end place
 **Create a similar diagram** depicting the situation where the user creates a new place on page <https://227demo.djosv.com/places>
 when writing something into the text field and clicking the ***submit*** button.
 
-If necessary, show operations on the browser or on the server as comments on the diagram.
+If necessary, show operations on the browser or the server as comments on the diagram.
 
 The diagram does not have to be a sequence diagram.
 Any sensible way of presenting the events is fine.
