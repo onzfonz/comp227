@@ -13,8 +13,8 @@ Before we move into the main topic of persisting data in a database, we will tak
 
 Debugging Node applications is slightly more difficult than debugging JavaScript running in your browser.
 Printing to the console is simple and works, and can be quickly elaborated via our live templates.
-Sometimes though, using console.log everywhere just makes things messy.
-While some people disagree, I believe that if you take the time to learn to use the debugger, it can greatly help your abilities as a student in the future.
+Sometimes though, using `console.log` everywhere just makes things messy.
+While some people disagree, I believe that *if you take the time to learn to use the debugger, it can greatly help your abilities as a software dev in the future*.
 
 #### WebStorm
 
