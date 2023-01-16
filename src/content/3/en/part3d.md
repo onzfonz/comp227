@@ -126,7 +126,7 @@ app.put('/api/tasks/:id', (request, response, next) => {
 The application should work almost as-is in Render.
 We do have to generate a new production build of the frontend since changes thus far were only on our backend.
 
-Render does a nice job in allowing us to keep the environment variables that we want to pull in from production so that it keeps the same structure as our dev environment.
+Render does a nice job of allowing us to keep the environment variables that we want to pull in from production so that it keeps the same structure as our dev environment.
 With the secret file, the environment variables we define will be used, so we can try our best to mirror both what is on Render and what we have on our machine.
 
 **The application should now work.**
@@ -140,6 +140,7 @@ Here's what render's logs showed:
 
 In my case, after scrolling through the logs, I noticed that my URL was not defined.
 Then I realized that I forgot to save the secret file that I took screenshots of from earlier in this part. 😔
+
 With many of our problems, when we are learning material we sometimes get to problems that feel catastrophic.
 Do not despair and stay cool.
 Most of the time,
@@ -188,11 +189,10 @@ Add validation to your communities application, which will make sure that commun
 
 A community link must
 
-- start with `https://` and then either have slack.com or discord.gg as part of its URL.
-  The rest of the URL (or subdomain in slack's case) must consist only of letters, numbers or underscores.
-    - e.g. <https://pyslackers.slack.com> and and <https://discord.gg/9BXyDG> are valid community links
+- start with `https://` and then either have **discord.com/invite** or **discord.gg** as part of its URL. (I was going to have you add slack, but decided against it)
+- end with 6-10 more letters (both upper case and lowercase) or numbers, but not more than 10 of them.
+    - e.g. <https://discord.com/invite/yNhmmsPBT8> and and <https://discord.gg/9BXyDG> are valid community links
     - e.g. discord.gg/9BXyDG, <https://reddit.com> and <https://something.discord.gg/9BXyDG> are invalid
-- have a unique property that is 6 or more characters.
 
 Use a [Custom validator](https://mongoosejs.com/docs/validation.html#custom-validators) to implement the second part of the validation.
 
@@ -204,7 +204,7 @@ the server must respond with an appropriate status code and error message.
 Generate a new "comp227" version of the application by creating a new production build of the frontend, and copying it to the backend repository.
 Verify that everything works locally by using the entire application from the address <http://localhost:3001/>.
 
-Push the latest version to Heroku and verify that everything works there as well.
+Push the latest version to Render and verify that everything works there as well.
 
 </div>
 
@@ -212,7 +212,7 @@ Push the latest version to Heroku and verify that everything works there as well
 
 ### Lint
 
-Before we move on to the next part, we will take a look at an important tool called [lint](<https://en.wikipedia.org/wiki/Lint_(software)>).
+Before we move on to the next part, we will take a look at an important tool called [**lint**](<https://en.wikipedia.org/wiki/Lint_(software)>).
 Wikipedia says the following about lint:
 
 > *Generically, lint or a linter is any tool that detects and flags errors in programming languages, including stylistic errors.
@@ -246,42 +246,45 @@ The configuration will be saved in the *.eslintrc.js* file:
 
 ```js
 module.exports = {
-    'env': {
-        'commonjs': true,
-        'es2021': true,
-        'node': true
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
     },
-    'extends': 'eslint:recommended',
-    'parserOptions': {
-        'ecmaVersion': 'latest'
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": "latest"
     },
-    'rules': {
-        'indent': [
-            'error',
+    "rules": {
+        "indent": [
+            "error",
             4
         ],
-        'linebreak-style': [
-            'error',
-            'unix'
+        "linebreak-style": [
+            "error",
+            "unix"
         ],
-        'quotes': [
-            'error',
-            'single'
+        "quotes": [
+            "error",
+            "double"
         ],
-        'semi': [
-            'error',
-            'never'
+        "semi": [
+            "error",
+            "always"
         ]
     }
-}
+};
 ```
 
-Let's immediately change the rule concerning indentation, so that the indentation level is two spaces.
+Let's change the rule concerning semicolons so that it only raises a warning and not an error.
+You can also change the rule regarding indentation or others like the linebreak style if you are using windows.
+I had to change my configuration a little bit this first time around, and that's fine.
+The point is to be consistent.
 
 ```js
-"indent": [
-    "error",
-    2
+"semi": [
+    "warn",
+    "always"
 ],
 ```
 
@@ -291,7 +294,7 @@ Inspecting and validating a file like *index.js* can be done with the following 
 npx eslint index.js
 ```
 
-It is recommended to create a separate `npm script` for linting:
+It is recommended to create some separate `npm script` for linting:
 
 ```json
 {
@@ -300,13 +303,14 @@ It is recommended to create a separate `npm script` for linting:
     "start": "node index.js",
     "dev": "nodemon index.js",
     // ...
-    "lint": "eslint ." // highlight-line
+    "lint": "eslint .", // highlight-line
+    "lint:fix": "nprum run lint -- --fix" // highlight-line
   },
   // ...
 }
 ```
 
-Now the `npm run lint` command will check every file in the project.
+Now the `npm run lint` command will check every file in the project, while `npm run lint:fix` can automatically go through and fix all of the errors.
 
 Also, the files in the *build* directory get checked when the command is run.
 We do not want this to happen, and we can accomplish this by creating a [.eslintignore](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories)
@@ -318,25 +322,34 @@ build
 
 This causes the entire *build* directory to not be checked by ESlint.
 
-Lint has quite a lot to say about our code:
+Lint has quite a lot to say about our code, much of which can be easily fixed.
 
 ![terminal output of ESlint errors](../../images/3/53ea.png)
 
 Let's not fix these issues just yet.
 
-A better alternative to executing the linter from the command line is to configure an ***eslint-plugin*** to the editor, that runs the linter continuously.
-By using the plugin you will see errors in your code immediately.
-You can find more information about the Visual Studio ESLint plugin [here](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
+I like having the `lint:fix` option to go through and problems ESlint can fix by itself (like semicolons, line endings and spacing),
+but a convenient alternative to the command line is to configure WebStorm to use ESLint so that you run the linter continuously.
+By using WebStorm you will see errors in your code immediately.
+Let's turn that on now by going to Settings (***Ctrl-Alt-S***) and typing `lint`,
+which should take you to the Page ***Languages & Frameworks->JavaScript->Code Quality Tools->ESLint***
+Once you are in the ESLint setting select the ***Automatic ESLint configuration*** option and mark the checkbox below that says ***Run eslint --fix on save***.
 
-The VS Code ESlint plugin will underline style violations with a red line:
+Once you click OK, Webstorm will underline style violations with a red line and will highlight other problems as well.
 
 ![Screenshot of vscode ESlint plugin showing errors](../../images/3/54a.png)
 
-This makes errors easy to spot and fix right away.
+Some of those can be solved merely by saving the file (if we checked the ***Run eslint --fix on save*** option).
+Here's how it looks after I added I pressed ***Spacebar*** and then saved via ***Ctrl-S***.
+
+Any errors like the missing semicolon will be applied by ESlint.
+This makes the other errors easy to spot and fix right away.
+
+![Screenshot of webstorm ESlint plugin showing less errors after save](../../images/3/custom/eslint_after_save.png)
 
 ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the *.eslintrc.js* file.
 
-Let's add the [eqeqeq](https://eslint.org/docs/rules/eqeqeq) rule that warns us, if equality is checked with anything but the triple equals operator.
+Let's add the [eqeqeq](https://eslint.org/docs/rules/eqeqeq) rule that warns us if equality is checked with anything other than `===` (like `==`).
 The rule is added under the `rules` field in the configuration file.
 
 ```js
@@ -381,9 +394,10 @@ Our default configuration takes a bunch of predetermined rules into use from `es
 This includes a rule that warns about *console.log* commands.
 [Disabling](https://eslint.org/docs/user-guide/configuring#configuring-rules) a rule can be accomplished by
 defining its "value" as 0 in the configuration file.
-Let's do this for the `no-console` rule in the meantime.
+Let's do this for the `no-console` and `no-debugger` rules in the meantime,
+since we are learning and not intending to ship anything just yet.
 
-```js
+```json
 {
   // ...
   'rules': {
@@ -397,16 +411,55 @@ Let's do this for the `no-console` rule in the meantime.
         'error', { 'before': true, 'after': true }
     ],
     'no-console': 0 // highlight-line
+    'no-debugger': 0 // highlight-line
   },
 }
 ```
 
-**NB** when you make changes to the *.eslintrc.js* file, it is recommended to run the linter from the command line.
-This will verify that the configuration file is correctly formatted:
+To fix the remaining issues in the code, you can leverage WebStorm's support by clicking at the ***more actions*** link in the error.
+You can also use the keyboard shortcut shown to see a list of options for fixing the error.
+
+![showing ide's options when you have an error](../../images/3/custom/eslint_more_actions.png)
+
+Just pay careful attention as you go through and fix some of the errors to ensure that your program still works.
+
+#### Supressing warnings and other tweaks
+
+While ESlint and Webstorm are great, sometimes Webstorm or ESlint may not have a good solution for you either, as it has with us complaining about using the variable **`process`**.
+
+![eslint complaining about process](../../images/3/custom/eslint_process.png)
+
+In those cases, you may be tempted to use ***Suppress  'no-undef' for current line***.
+Doing so leads to having a line for ESlint that looks like this just above the line.
+
+```js
+// eslint-disable-next-line no-undef // highlight-line
+
+const password = process.argv[2];
+```
+
+If you use that suppression a lot, you'll end up for the file if it ends up generating too many comments for your file that deal with disabling ESlint rules.
+At this point, you may end up thinking that you should use ESLint's rule to suppress the errors for the entire file to remove all those comments,
+but now that could also leave you more exposed.
+It's important with ESlint (and other tests) to be mindful of the errors so that you continue to have faith in seeing them as informative, instead of a hindrance.
+You also want to make sure you have faith that ESlint will catch errors for you.
+You need to keep a close balance between seeing it as being a hindrance and improving your code by maintaining a consistent style.
+In this case, a better option than suppressing error messages (which you really should avoid at this point in your learning journey) is to search for any potential ways to resolve this.
+It turns out that the best solution is not to do any suppression but to add this line to the top of your *eslintrc.js* file.
+
+```json
+'env': {
+        'node': true, // highlight-line
+        'browser': true,
+```
+
+Enabling node means that ESlint knows that we can use the `process` variable,
+and allows you to rely on a system that has helped countless developers with similar situations who have come before you.
+
+**NB** when you make changes to the *.eslintrc.js* file, play close attention to errors in there as well! Webstorm will highlight issues.
+If there are, Webstorm will report the issues to you, and you can look at the terminal output to see more details about it.
 
 ![terminal output from npm run lint](../../images/3/55.png)
-
-If there is something wrong in your configuration file, the lint plugin can behave quite erratically.
 
 Many companies define coding standards that are enforced throughout the organization through the ESlint configuration file.
 It is not recommended to keep reinventing the wheel over and over again,
