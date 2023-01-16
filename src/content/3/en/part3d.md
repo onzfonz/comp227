@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 There are usually constraints that we want to apply to the data that is stored in our application's database.
-Our application shouldn't accept tasks that have a missing or empty `content` property.
+As an example, our application shouldn't accept tasks that have a missing or empty `content` property.
 The validity of the task is checked in the route handler:
 
 ```js
@@ -98,7 +98,7 @@ When validating an object fails, we return the following default error message f
 
 ![postman showing error message](../../images/3/50.png)
 
-We notice that the backend has now a problem: validations are not done when editing a task.
+We may notice that the backend has now a problem: ***validations are not done when editing a task***.
 The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem:
 validations are not run by default when `findOneAndUpdate` is executed.
 
@@ -123,44 +123,31 @@ app.put('/api/tasks/:id', (request, response, next) => {
 
 ### Deploying the database backend to production
 
-The application should work almost as-is in Fly.io/Heroku.
+The application should work almost as-is in Render.
 We do have to generate a new production build of the frontend since changes thus far were only on our backend.
 
-The environment variables defined in dotenv will only be used when the backend is not in **production mode**, i.e. Fly.io or Heroku.
+Render does a nice job in allowing us to keep the environment variables that we want to pull in from production so that it keeps the same structure as our dev environment.
+With the secret file, the environment variables we define will be used, so we can try our best to mirror both what is on Render and what we have on our machine.
 
-For production, we have to set the database URL in the service that is hosting our app.
+**The application should now work.**
 
-In Fly.io that is done via `fly secrets set`:
-
-```bash
-fly secrets set MONGODB_URI='mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority'
-```
-
-For Heroku, the same is done with the `heroku config:set` command.
-
-```bash
-heroku config:set MONGODB_URI=mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/task-app?retryWrites=true
-```
-
-**NB:** if the command causes an error, give the value of MONGODB_URI in apostrophes:
-
-```bash
-heroku config:set MONGODB_URI='mongodb+srv://comp227:secretpasswordhere@cluster0-ostce.mongodb.net/task-app?retryWrites=true'
-```
-
-The application should now work.
 Sometimes things don't go according to plan.
-If there are problems, `fly logs` or `heroku logs` will be there to help.
-My own application did not work after making the changes.
-The logs showed the following:
+If there are problems, looking at Render's logs, which are in the left-hand navigation of your web service will help.
+As I was going through and working on this, my own application didn't work after making some changes.
+Here's what render's logs showed:
 
 ![node output showing connecting to undefined](../../images/3/51a.png)
 
-For some reason the URL of the database was undefined.
-The `heroku config` command revealed that I had accidentally defined the URL to the `MONGO_URL` environment variable when the code expected it to be in `MONGODB_URI`.
+In my case, after scrolling through the logs, I noticed that my URL was not defined.
+Then I realized that I forgot to save the secret file that I took screenshots of from earlier in this part. 😔
+With many of our problems, when we are learning material we sometimes get to problems that feel catastrophic.
+Do not despair and stay cool.
+Most of the time,
+there are simple reasons for our programs behaving in ways that we were hoping wouldn't occur.
+Your logs are vital to helping you analyze what could potentially be awry.
 
-You can find the code for our current application in its entirety in the *part3-5* branch of
-[this GitHub repository](https://github.com/comp227-hy2019/part3-tasks-backend/tree/part3-5).
+You can find the code for our current application in its entirety in the *part3-6* branch of
+[this GitHub repository](https://github.com/comp227-hy2019/part3-tasks-backend/tree/part3-6).
 
 </div>
 
@@ -201,7 +188,8 @@ Add validation to your communities application, which will make sure that commun
 
 A community link must
 
-- start with https:// and then either have slack.com or discord.gg as part of its URL. The rest of the URL (or subdomain in slack's case) must consist only of letters, numbers or underscores.
+- start with `https://` and then either have slack.com or discord.gg as part of its URL.
+  The rest of the URL (or subdomain in slack's case) must consist only of letters, numbers or underscores.
     - e.g. <https://pyslackers.slack.com> and and <https://discord.gg/9BXyDG> are valid community links
     - e.g. discord.gg/9BXyDG, <https://reddit.com> and <https://something.discord.gg/9BXyDG> are invalid
 - have a unique property that is 6 or more characters.
