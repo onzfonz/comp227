@@ -43,8 +43,8 @@ git config --list
 If by doing that you get a list of options, two of them being your correct `user.name` and `user.email` (that you have in GitHub),
 If you do see the options, I'd also like you to verify that you have:
 
-- git bash - (a command-line/terminal program) that comes with the git package we'll install
-- a package manager - (something like winget, choco, scoop or brew)
+- *git bash* - (a command-line/terminal program) that comes with the git package we'll install
+- a package manager - (something like *winget*, *choco*, *scoop* or *brew*)
 
 If you have all of that then you can [move on to step 4](#4-install-node).
 
@@ -53,7 +53,7 @@ If this is all foreign to you, then please read on.
 #### Using a package manager  
 
 If you saw something like: *command not found*, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
-***We will install git using package manager.***
+***We will install git using a package manager.***
 A **package manager** is a piece of software that keeps track of what you've installed and allows you to easily install and uninstall entire programs.
 Many can (when you ask them to) also upgrade to new versions when those become available.  
 Just make sure your terminal program is open and type (or copy)
@@ -69,7 +69,7 @@ Once it finishes, you may need to restart your terminal, but then we'll get to t
 ---
 ***Please leave your terminal of choice open as we'll be using it shortly again to install other applications.***
 
-Successfully installing git via the package manager means that you can skip to the [next section and move to configuring git](#3-configure-git).
+Successfully installing git via the package manager means that you can skip to the [next section and move to configure git](#3-configure-git).
 
 ### 2 Alternative: Traditional git directions
 
@@ -170,9 +170,9 @@ nvm use 16
 
 After this, you should be able to type `node -v` and you'll notice that it should print out `v16.3.0`.
 
-To get use ready to use webstorm we'll follow a couple more commands here:
+To prepare you to use webstorm we'll follow a couple more commands here:
 
-One is to type the following lines, which creates a sybmolic link where WebStorm can find the version of node we are using.
+One is to type the following lines, which creates a ***symbolic link*** where WebStorm can find the version of node we are using.
 
 ```bash
 export NVM_SYMLINK_CURRENT=true
@@ -286,7 +286,7 @@ then click on your profile icon in the upper right,
 and then go to [*Settings->Developer settings->Personal Access Tokens->Tokens (classic)->Generate new token->Generate new token (classic)*](https://imgur.com/S1E0tQc).
 Then give the token a name,
 set expiration to *Custom* (providing a date up to 1 year from now) and select the ```repo, workflow, read:org and gist``` checkboxes for the scopes.
-Once you do that, scroll all the way down and click the green Generate new Token.
+Once you do that, scroll to the bottom and click the green Generate new Token.
 [I did another short animation of this as well.](https://imgur.com/LUAt5DU)
 You'll then see a page that has the token that says to copy it because you won't be able to see it again.
 
@@ -300,12 +300,12 @@ You may also want to consider deleting the old one, which prevents it from being
 
 Now what we will do is:
 
-1. Take the GitHub repo that we generated from classroom
+1. Take the GitHub repo that we generated from GitHub classroom
 2. Copy the link for it
 3. Switch to WebStorm and select ***Get From VCS***, using the copied URL from GitHub.
 4. After clicking OK, select ***Use Token*** from the authentication options
 5. Switch back to the token page that we just generated and copy that token
-6. Paste that token back in WebStorm
+6. Paste that token back into WebStorm
 7. Trust and open the project.  
 
 Following all of these steps would result in the project opening up, with it opening up the *README.md* file.
@@ -327,7 +327,7 @@ When you have a new dev environment, it often is beneficial to spend a little bi
 I'll go over a few different settings that I've found useful:
 
 - [Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
-- [Changing your default terminal](#changing-default-terminal-app)
+- [Changing your default terminal](#changing-our-default-terminal-app)
 - [Enabling autosave](#enabling-autosave)
 
 #### Changing keyboard shortcuts
@@ -342,7 +342,7 @@ To switch your keyboard shortcuts, open settings by selecting *File->Settings* (
 Pick the file that will work best for you in navigating using keyboard shortcuts.
 This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
 
-#### Changing default terminal app
+#### Changing our default terminal app
 
 While installing the eclipse keymap is optional, what I would like you to do is to change your terminal of choice to git bash.
 Just like with the gif from below, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
@@ -350,18 +350,18 @@ Navigate to the ***Tools*** on the left sidebar and select the dropdown for the 
 There you should see bash.exe with a path for git.
 **Make sure you add the arguments `-i` and `-l` to load your settings correctly**.
 
-![webstorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
+![WebStorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
 
 #### Enabling autosave
 
-This one I find to be incredibly useful, but it's a double edged sword, as sometimes tends to break whatever I am working on.
-On the flipside, it allows me to not have to worry about saving all the time, which is key nowadays.
+This one I find to be incredibly useful, but it's a double-edged sword, as sometimes tends to break whatever I am working on.
+On the other hand, it allows me to not have to worry about saving all the time, which is key nowadays.
 Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
 check the option which says to ***Save files if the IDE is idle for 15 seconds***.
 
 #### Link webstorm to nvm
 
-This last one is important as it tells Webstorm where our node version in, which helps with IDE integration.
+This last one is important as it tells Webstorm where our node version is, which helps with IDE integration.
 Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
 Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
 Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both windows.
@@ -428,17 +428,18 @@ If you don't, then
 simply make an additional change to one of the files (adding a line or a
 space) while [editing the user preferences as outlined earlier](#3-configure-git).
 
-#### 0.8 - Upload exercises from previous part
+#### 0.8 - Upload exercises from exercises 0.1-0.6
 
 Now that GitHub has been setup correctly,
 please upload the materials from the previous section
-[Exercises 0.1-0.6](/part0/fundamentals_of_web_apps#exercises-0-1-0-6) into your github repo.
+[Exercises 0.1-0.6](/part0/fundamentals_of_web_apps#exercises-0-1-0-6) into your GitHub repo.
 Make sure you put them in a folder and provide them with names that match the exercise that you had.
 
 #### 0.9 - Final upload screenshot
 
-Finally, upload a screenshot of your webstorm IDE showing the embedded git bash terminal and having typed `nvm` list.  
-Please name the screenshot file as `09` with whatever extension the image is.
+Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.  
+Please name the screenshot file with the name `09`.
+Make sure the file has the correct extension.
 
 </div>
 
@@ -457,7 +458,7 @@ While the workflow in JetBrains is fairly good for what we want,
 at some point you are going to want to do something that is beyond what's available.
 The best thing that you can do to help yourself is to begin to practice using git on the command line.
 It is harder to use.
-However, there are many more resources out there (like with stackoverflow) that give you the keyboard combination or command to do some neat things,
+However, there are many more resources out there (like stackoverflow) that give you a git command to do some neat things,
 like amend your last commit, or go back a couple of commits, among other things.
 
 For this, we'll continue getting comfortable with git bash.
@@ -483,19 +484,20 @@ If you are on windows and using the new [Terminal](https://github.com/microsoft/
 you can also click the folder from explorer and drag the folder from windows into Terminal to have it automatically type the path for you.
 Once you are inside the correct place that you want to be, then you can move on.
 Lastly, one of the last ways to do this is merely via Webstorm.
-You can right click on your project and say ***Open In->Terminal***, and the terminal will open down below.
+You can right-click on your project and say ***Open In->Terminal***, and the terminal will open down below.
 
 ### Learning the git commands in bash
 
-While we will use webstorms's git integration and tools to help us commit regularly,
+While we will use WebStorms's git integration and tools to help us commit regularly,
 knowing a little bit about how to use the command line will be important for this course.
 One of the most important parts of knowing how to use the command line is being able to navigate through your folders.
 
 Anytime you make any changes or commands, it's important to understand where you are.
 Let's verify that you are in fact in the correct place.
-When using git bash, you know you have entered a git repository when you see  that the command line shows ***`(name_of_branch)`*** in a different color.
+When using git bash, you know you have entered a git repository when you see that the command line shows ***`(name_of_branch)`*** in a different color.
 In our case, notice how the end of the prompt ends with
-`main`, that lets you know that you are on the main branch of a git
+`main`.
+That lets you know that you are on the main branch of a git
 project.  I will move up a directory and down just so you can see the difference.
 
 ![git terminal showing main as repo](../../images/0/partc/image5.png)
@@ -526,11 +528,12 @@ which means that git is not monitoring them for any changes.
 When untracked files change, *git knows nothing about them*.
 So let's add a set of files so that git starts tracking them for any changes.
 Let's practice adding one set of files to what will be our next commit.
-Part of what you need to do is add a picture or screenshot to the repo, which can you can drag into webstorm on top of the your lab0 folder.
-You'll see a move window pop up that you can click ***Refactor***.
-Go ahead and do that, and typing `git status` again you'll now see the file appear as an untracked file.
+Part of what you need to do is add a picture or screenshot to the repo, which can you can drag into WebStorm on top of your *lab0* folder.
+You'll see a *move* window pop up that you can click ***Refactor***.
+Go ahead and do that.
+Type `git status` again and you'll now see the file appear as an untracked file.
 
-![git status again shows new file](../../images/0/partc/git_status_2.png)
+![git status again shows a new file](../../images/0/partc/git_status_2.png)
 
 To get git to start tracking a file, you can say:
 
@@ -579,7 +582,7 @@ Once you do, you'll see something like this (except yours will be for readme):
 ![git status showing modified files that haven't been staged](../../images/0/partc/gitmodifiednotstaged.png)
 
 Notice that the red text does not say it is untracked,
-instead it is saying it has been modified.
+but rather that it has been modified.
 Furthermore, if we were to commit right now, nothing would happen.
 In git when you save a file, git merely tells you that the file that you have saved differs from what you had before.
 If you want that file to become part of the record, you'll need to stage the changes, which you can do again by calling this ambiguous term `add`.
