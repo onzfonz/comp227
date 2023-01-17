@@ -40,7 +40,7 @@ const NotFoundPage = () => {
           className="col-10 arrow__container--with-link"
           bold
           thickBorder
-          link={getTranslationPath(siteLanguage, '/')}
+          link="/"
           content={[{ backgroundColor: colors['main'], text: 'Go back home' }]}
         />
       </Element>
