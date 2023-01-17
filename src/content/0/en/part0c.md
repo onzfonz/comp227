@@ -444,15 +444,17 @@ Cascading Style Sheets, or CSS, is a style sheet language used to determine the 
 The fetched CSS file looks as follows:
 
 ```css
+:root {
+  color-scheme: dark;
+}
+
 .container {
   padding: 10px;
   border: 1px solid
 }
 
 body {
-  background-color: black;
   font-family: sans-serif;
-  color: white;
 }
 
 .places {
@@ -460,9 +462,15 @@ body {
 }
 ```
 
-The file defines one [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)(*`body`*) and two [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
-The type selector is merely present to switch the component to look closer to a dark mode equivalent (and to make it .1% more stylish).
+The file defines:
+
+- two [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors) (*`.container`* and *`.places`*)
+- one [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)(*`body`*)
+- one [pseudo-class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) (*`:root`*)
+
 The **class selectors** are used to select certain parts of the page and to define styling rules to style them.
+The type and pseudo-class selectors are merely present to switch the component to look closer to a dark mode equivalent (and to make it .1% more stylish).
+Those two are not as important to our current discussion.
 
 A class selector definition always starts with a period and contains the name of the class.
 
@@ -631,7 +639,7 @@ The form has no `action` or `method` attributes to define how and where to send 
 Open the ***Network*** tab and empty it.
 When you now create a new place, you'll notice that the browser sends only one request to the server.
 
-![Network tab in developer tools](../../images/0/26e.png)
+![Network tab in developer tools for spa shows just one request](../../images/0/26e.png)
 
 The POST request to the address `new_place_spa` contains the new place as JSON data containing both the name of the place (`name`) and the timestamp (`date`):
 
