@@ -38,8 +38,9 @@ This has been taken into account with respect to coursework.
 For parts 0-5, You should not study part *n+1* without enough know-how of the topics in part *n*.
 In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning).
 
-In parts 1-4 you are expected to do *at least* all of the exercises that are not marked with an asterisk(*).
+In parts 0-4 you are expected to do *at least* all of the exercises that are not marked with an asterisk(*).
 You should only proceed to the next part after doing enough of the previous part's exercises.
+***Once you mark or open up the next section of exercises, we will not grade any additional exercises from the previous part.***
 Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts.
 Other parts do not have asterisk-marked exercises since there is no similar dependency on previous parts.
 
