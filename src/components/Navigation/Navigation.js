@@ -21,17 +21,17 @@ export const getNavigation = (language, t) => {
       path: getTranslationPath('/about', language),
     },
     {
-      text: t('navigation:courseContents'),
-      path: getTranslationPath('/#course-contents', language),
+        text: t('navigation:courseContents'),
+        path: getTranslationPath('/#course-contents', language),
+    },
+    {
+      text: t('navigation:Syllabus'),
+      path: getTranslationPath('/part0/syllabus', language),
     },
     { text: t('navigation:faq'), path: getTranslationPath('/faq', language) },
     {
       text: t('navigation:Acknowledgements'),
       path: getTranslationPath('/thanks', language),
-    },
-    {
-      text: t('navigation:challenge'),
-      path: getTranslationPath('/challenge', language),
     },
   ];
 };

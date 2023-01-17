@@ -61,7 +61,7 @@ const ChallengePage = ({
             text={joinContent}
           />
 
-          <Form lang={lang} />
+          {/* <Form lang={lang} /> */}
         </Element>
       </Element>
 

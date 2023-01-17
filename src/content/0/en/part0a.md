@@ -39,10 +39,11 @@ Therefore, you are expected to have:
 
 - good programming skills
 
-It is also strongly recommended that you have:
+It is also strongly recommended that you have some basic knowledge of:
 
-- some basic knowledge of web programming and databases and
-- some basic understanding of the Git version control system.
+- web programming
+- databases and...
+- git or a similar version control system.
   
 You are also expected to have perseverance and a capacity for solving problems and seeking information independently.
 
