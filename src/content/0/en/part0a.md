@@ -207,9 +207,9 @@ The grading will come from these areas, however, the percentages are tentative a
 
 |   |   |
 | - | - |
-| Individual Exercises |  50%  |
+| Individual Exercises |  45%  |
 | Social Learning Exercises & Attendance | 20% |
-| Final Project | 20% |
+| Final Project | 25% |
 | Other Activities | 10% |
 
 ### Major Assignments and Examinations
@@ -279,7 +279,7 @@ If you complete the assignments and you work through the material in earnest, yo
 The only acceptable excuses for missing an assignment due date are serious illness, death in the immediate family or important professional activities.
 Illness or death in the family may require documentation.
 Excuses for professional activities must be approved by the instructor in advance.
-Late assignments will be deducted 15% per day and will not be accepted beyond 1 week late.
+Late assignments that are not the individual exercises will be deducted 15% per day and will not be accepted beyond 1 week late.
 
 #### Individual Work and Collaboration
 
