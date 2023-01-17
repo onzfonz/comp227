@@ -74,7 +74,7 @@ It is the equivalent of showing your work in class.
 
 For the project, an application is implemented in React and/or Node, though implementing a mobile application in React Native is also possible.
 
-You will be expected to work on the project either as a pair or as a group.
+Most of you will be working in pairs or in groups on the final project.
 
 More information about the project will be released via Canvas
 
@@ -86,7 +86,7 @@ I will be showing you and providing screenshots of those tools.
 Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/),
 which provides a similar range of features.
 
-In [part 0c](/part0/configuring_your_machine_for_this_course) we'll provide detailed instructions for installing some of the tools that we will be using extensively:
+In [part 0d](/part0/configuring_your_machine_for_this_course) we'll provide detailed instructions for installing some of the tools that we will be using extensively:
 [Git](https://git-scm.org) (via GitHub),
 [Webstorm](https://www.jetbrains.com/webstorm/download/)
 and [Node.js](https://nodejs.org/en/).
