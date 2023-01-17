@@ -37,6 +37,7 @@
 
   li {
     list-style-type: none;
+    font-family: $font-heading;
 
     &:hover,
     &.selected {
