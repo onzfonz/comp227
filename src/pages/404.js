@@ -5,6 +5,8 @@ import Arrow from '../components/Arrow/Arrow';
 import Element from '../components/Element/Element';
 import Layout from '../components/layout';
 import SEO from '../components/seo';
+import { Image } from '../components/Image/Image';
+import teddy from '../images/ohnodalle.png'
 import colors from '../colors';
 import getTranslationPath from '../utils/getPartTranslationPath';
 
@@ -20,10 +22,19 @@ const NotFoundPage = () => {
 
       <Element className="container spacing--large spacing--after">
         <h1>404 - {title}</h1>
-
         <p className="col-10 spacing--small spacing--after">
-          Uncaught ReferenceError: unknown is not defined
+        <Image 
+            // contain
+            style={{ margin: 0 }}
+            alt="Classic 404 Image"
+            src={teddy}
+        />
         </p>
+        <h4 className="col-10 spacing--none spacing--after">
+          Oh no! You have the wrong URL.  Did I mistype something, or did you? 🕵️‍♀️
+        </h4>
+
+
 
         <Arrow
           className="col-10 arrow__container--with-link"
