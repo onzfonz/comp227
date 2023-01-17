@@ -7,622 +7,881 @@ lang: en
 
 <div class="content">
 
-These next couple of steps are a mishmash of steps that need to be
-completed individually to get us ready technically for this course.
-These steps allow you to share your work across computers and with me.
-Most of you have done some of these things already, so if you have, just make
-sure to read through the step to ensure you did all the steps that are here.
-*Some of the images that are here are taken directly from or sourced directly from GitHub itself.*
+Before we start programming, we will go through some principles of web development by examining an example application at **<https://227demo.djosv.com>**.
 
-### 1: Setup a GitHub account
+The application exists only to demonstrate some basic concepts of the course,
+and is, by no means, an example of *how* a modern web application should be made.
+On the contrary, it demonstrates some old techniques of web development, which could even be considered *bad practices* nowadays.
 
-The easiest way to do this is by going here:
+We will try to conform to contemporary best practices starting with [part 1](/part1).
 
-**<http://education.github.com/pack>**
+Open the [example application](https://227demo.djosv.com) in your browser.
+Sometimes this takes a while.
 
-Verify that you have a student GitHub account.
-Even if you have a GitHub account, you need to make sure that your email address is [verified](https://docs.github.com/en/github/getting-started-with-github/verifying-your-email-address)
+**The 1st rule of web development**: Always keep the Developer Console open on your web browser.
+On macOS, open the console by pressing ***F12*** or ***option(⌥)-cmd(⌘)-I*** simultaneously.
+On Windows or Linux, open the console by pressing ***F12*** or ***Ctrl-Shift-I***.
+The console can also be opened via the [context menu](https://en.wikipedia.org/wiki/Menu_key).
 
-You can check to see if your email is verified by checking the **Emails** tab of your account settings in GitHub.
-If you have a warning icon like this picture, then you’ll want to ask to resend the verification email and verify your email with them.
+Remember to ***always*** keep the Developer Console open when developing web applications.
 
-![resend verification button](https://docs.github.com/assets/images/help/settings/email-verify-button.png)
+The console looks like this:
 
-The other thing you should do is to give yourself an icon picture, which is always fun to do and can be done from the profile option in settings.
+![A screenshot of the developer tools open in a browser](../../images/0/1e.png)
 
-### 2: Making sure Git is installed
+Make sure that the ***Network*** tab is open, and check the ***Disable cache*** option as shown.
+*Preserve log* can also be useful: it saves the logs printed by the application when the page is reloaded.
 
-Now we are going to make sure that you have a version of git on your computer
+**NB:** The most important tab is the ***Console*** tab.
+However, in this introduction, we will be using the ***Network*** tab quite a bit.
 
-Some of you may already have git setup.  To check, I would type in Terminal:
+### HTTP GET
 
-```bash
-git config --list
+The server and the web browser communicate with each other using the [HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) protocol.
+The *Network* tab shows how the browser and the server communicate.
+
+When you reload the page (press the ***F5*** key or the &#8635; symbol on your browser),
+the console will show that a few events have happened.
+
+- The browser has fetched the contents of the page *comp227demo.pages.dev* from the server
+- And has downloaded the image *travel.jpg*
+- It also asked for the little icon that normally shows up next to your website's title in the tabs (favicon.ico).
+
+![Screenshot of the developer console showing these two events](../../images/0/2e.png)
+
+On a small screen, you might have to widen the console window to see these.
+
+Clicking the first event reveals more information on what's happening:
+
+![Detailed view of a single event](../../images/0/3e.png)
+
+The upper part, ***General***, shows that the browser requested the address *<http://227demo.djosv.com>*
+using the [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method.
+That the request was successful
+because the server response had the [Status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) 200.
+
+The request and server response have several [headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields):
+
+![Screenshot of response headers](../../images/0/4e.png)
+
+The **Response headers** on top tell us details like the true server and the exact time of the response.
+An important header [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
+tells us that the response is a text file in [UTF-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
+This way the browser knows the response to be a regular [HTML](https://en.wikipedia.org/wiki/HTML) page and to render it to the browser 'like a web page'.
+
+The **Response** tab shows the response data, a regular HTML page.
+The **body** section determines the structure of the page rendered to the screen:
+
+![Screenshot of the response tab](../../images/0/5e.png)
+
+The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element which in turn contains:
+
+- a heading (`h1`)
+- A paragraph with text.
+- a link to our ***actual demo***
+- an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag
+
+Because of the `img` tag, the browser does a second *HTTP request* to fetch the image *travel.jpg* from the server.
+The details of the request are as follows:
+
+![Detailed view of the second event](../../images/0/6e.png)
+
+The request was made to the address <https://227demo.djosv.com/travel.jpg> and its type is *HTTP GET*.
+The response headers tell us that the response size is 1396589 bytes (fairly large!),
+and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is *image/jpeg*,
+so it is a png image.
+The browser uses this information to render the image correctly to the screen.
+
+The chain of events caused by opening the page <https://227demo.djosv.com>
+on a browser from the following [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/):
+
+![Sequence diagram of the flow covered above](../../images/0/7e.png)
+
+First, the browser sends an HTTP GET request to the server to fetch the HTML code of the page.
+The ***img*** tag in the HTML prompts the browser to fetch the image *travel.jpg*.
+The browser renders the HTML page and the image to the screen.
+
+Even though it is difficult to notice, the HTML page begins to render before the image has been fetched from the server.
+
+### Traditional web applications
+
+The homepage of the example application works like a **traditional web application**.
+When entering the page, the browser fetches the HTML document detailing the structure and the textual content of the page from the server.
+
+The server has formed this document somehow.
+The document can be a *static* text file saved into the server's directory.
+The server can also form the HTML documents *dynamically* according to the application code, using, for example, data from a database.
+The HTML code of the example application has been formed dynamically because it contains information on the number of created places.
+
+A simplified version of the HTML page is below:
+
+```js
+const getFrontPageHtml = (placeCount) => {
+  return(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+      </head>
+      <body>
+        <div class='container'>
+          <h1>Go Places with COMP 227</h1>
+          <p>We have ${placeCount} places for you.</p>
+          <a href='/places'>Places</a>
+          <img src='travel.jpg' width='450' />
+        </div>
+      </body>
+    </html>
+`)
+} 
+
+app.get('/', (req, res) => {
+  const page = getFrontPageHtml(places.length)
+  res.send(page)
+})
 ```
 
-If by doing that you get a list of options, two of them being your correct `user.name` and `user.email` (that you have in GitHub),
-If you do see the options, I'd also like you to verify that you have:
+You don't have to understand the code just yet.
 
-- *git bash* - (a command-line/terminal program) that comes with the git package we'll install
-- a package manager - (something like *winget*, *choco*, *scoop* or *brew*)
+The content of the HTML page has been saved as a template string or a string that allows for evaluating, for example, variables in the midst of it.
+The dynamically changing part of the homepage, the number of saved places (in the code `placeCount`),
+is replaced by the current number of places (in the code `places.length`) in the template string.
 
-If you have all of that then you can [move on to step 4](#4-install-node).
+Writing HTML amid the code is of course not smart, but for PHP programmers, it was a normal practice.
 
-If this is all foreign to you, then please read on.
+In traditional web applications, the browser is "dumb".
+It only fetches HTML data from the server, and all application logic is on the server.
+A server can be created using many different technologies such as:
 
-#### Using a package manager  
+- [Java Spring](https://spring.io/learn)
+- [Python Flask](https://www.fullstackpython.com/flask.html)
+- [Ruby on Rails](http://rubyonrails.org/)
 
-If you saw something like: *command not found*, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
-***We will install git using a package manager.***
-A **package manager** is a piece of software that keeps track of what you've installed and allows you to easily install and uninstall entire programs.
-Many can (when you ask them to) also upgrade to new versions when those become available.  
-Just make sure your terminal program is open and type (or copy)
+Our example uses the [Express](https://expressjs.com/) library with Node.js.
+This course will use Node.js and Express to create web servers.
 
-|Windows|Mac|
-|:---|:--|
-|`winget install --id Git.Git -e --source winget`|`brew install git`|
+### Running application logic in the browser
 
-Press enter and wait.  It's not too bad.  If it complains, you may need administrative privileges, but just let it do its work.
+Keep the Developer Console open.
+Empty the console by clicking the 🚫 symbol, or by typing `clear()` in the console.
+Now when you go to the [places](https://227demo.djosv.com/places) page, the browser does 4 HTTP requests:
 
-Once it finishes, you may need to restart your terminal, but then we'll get to this
+![Screenshot of the developer console with the 4 requests visible](../../images/0/8e.png)
 
----
-***Please leave your terminal of choice open as we'll be using it shortly again to install other applications.***
+All of the requests have *different* types.
+The first request type is of type **document**.
+It is the HTML code of the page, and it looks as follows:
 
-Successfully installing git via the package manager means that you can skip to the [next section and move to configure git](#3-configure-git).
+![Detailed view of the first request](../../images/0/9e.png)
 
-### 2 Alternative: Traditional git directions
+When we compare the page shown on the browser and the HTML code returned by the server, we notice that the code does not contain the list of places.
+The [`head`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head) section of the HTML contains a
+[`script`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) tag.
+`script` causes the browser to fetch a JavaScript file called *main.js*.
 
-You should *really* learn [to use a package manager](#2-making-sure-git-is-installed)!
-However, if that makes you queasy or you are running into major issues, here's how to install git the regular way.
-Go to <https://git-scm.com/downloads> (or search “download git” via
-google) Pick your operating system of choice.
-If you are on a lab
-computer, you may need to select the portable version once you get to
-the windows page.
+The JavaScript code looks as follows:
 
-![git-scm download link](../../images/0/partc/gitportable.png)
+```js
+var xhttp = new XMLHttpRequest()
 
-#### Get Git Installed
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    const data = JSON.parse(this.responseText)
+    console.log(data)
 
-After downloading the installer open it up and install it on your
-computer.
-All of the default options should be fine in this situation,
-though you can change some options if you feel necessary.
-Make sure
-though that the **option to commit in Unix Line Endings is enabled**.
-Keep that preference.
-That will help sure that your files will play nice
-with everyone else.
-Once you have it installed, go ahead and open it,
-and let’s change some user preferences in git.
+    var ul = document.createElement('ul')
+    ul.setAttribute('class', 'places')
 
-### 3: Configure Git
+    data.forEach(function(place) {
+      var li = document.createElement('li')
 
-To streamline your git activity, let’s add some of your credentials to
-git preferences.
-I took most of this from the [git-scm book](https://git-scm.com/book/en/v2), but you’ll
-want to **set the git preferences on all the computers that you use.**  Let me say that again in big letters
+      ul.appendChild(li)
+      li.appendChild(document.createTextNode(place.name))
+    })
 
-#### Set your git preferences on all computers that you will work on
+    document.getElementsByClassName('places').appendChild(ul)
+  }
+}
 
-In addition to installing git, we need to make sure that we outline or configure our setup so that git knows who you are.
-With your terminal open, setup the git user email id and username by typing these commands,
-making sure to replace the sections with your actual email and username
-
-```bash
-git config --global user.email your_github_email@u.pacific.edu
-git config --global user.name your_github_username
+xhttp.open('GET', '/data.json', true)
+xhttp.send()
 ```
 
-Make sure you press enter after each command.
+The details of the code are not important right now, but some code has been included to spice up the images and the text.
+We will properly start coding in [part 1](/part1).
+The sample code in this part is *not relevant at all* to the coding techniques of this course.
 
-Vim is the default text editor that is used in the command line.
-If you aren’t comfortable or have never used vim, you can set up other Unix text
-editors instead.
-So if you'd like to use emacs you’d write:
+> Some might wonder why `xhttp` object is used instead of the modern `fetch`.
+  This is because we don't want to get into promises at all yet, and the code having a secondary role in this part.
+  We'll discuss savvier ways to make requests to the server in part 2.
 
-```bash
-git config --global core.editor emacs
+Immediately after fetching the `script` tag, the browser begins to execute the code.
+
+The last two lines instruct the browser to do an HTTP GET request to the server's address */data.json*:
+
+```js
+xhttp.open('GET', '/data.json', true)
+xhttp.send()
 ```
 
-If you’re like me, you’ll want to use something like [notepad++](https://notepad-plus-plus.org/downloads/) or
-possibly some other text editor that you love.
-In those cases, you’d have to provide the entire path.
+This is the bottom-most request shown on the Network tab.
 
-```bash
-git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
+We can try going to the address <https://227demo.djosv.com/data.json> straight from the browser:
+
+![Raw JSON Data](../../images/0/10e.png)
+
+There we find the places in [JSON](https://en.wikipedia.org/wiki/JSON) "raw data".
+By default, Chromium-based browsers are not too good at displaying JSON data.
+Plugins can be used to handle the formatting.
+Install, for example, [JSONVue](https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc) on Chrome, and reload the page.
+The data is now nicely formatted:
+
+![Formatted JSON output](../../images/0/11e.png)
+
+So, the JavaScript code of the places page above downloads the JSON data containing the places, and forms a bullet-point list from the names of places:
+
+This is done by the following code:
+
+```js
+const data = JSON.parse(this.responseText)
+console.log(data)
+
+var ul = document.createElement('ul')
+ul.setAttribute('class', 'places')
+
+data.forEach(function(place) {
+  var li = document.createElement('li')
+
+  ul.appendChild(li)
+  li.appendChild(document.createTextNode(place.name))
+})
+
+document.getElementById('places').appendChild(ul)
 ```
 
-Now to check your preferences, enter the command
+The code first creates an unordered list with a [ul](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul) tag...
 
-```bash
-git config --list
+```js
+var ul = document.createElement('ul')
+ul.setAttribute('class', 'places')
 ```
 
-You should now see your username and email displayed among lots of other options.
+...and then adds one [li](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/li) tag for each place.
+Only the `name` field of each place becomes the contents of the `li` tag.
+The timestamps found in the raw data are not used for anything here.
 
-### 4: Install Node
+```js
+data.forEach(function(place) {
+  var li = document.createElement('li')
 
-Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
-If you already have node installed,
-make sure it is at least version 16.13.2.
-We will discuss node.js further in [part 1](../../1/en/part1.md).
-
-For this class, I'm going to install nvm first so that we can use a specific version of node,
-since the bulk of this course was written and tested with Node 16.13.2.
-If that is the case, you could also install **[NVM](https://github.com/nvm-sh/nvm)**,
-which allows us to have different versions of node.js on our computer and switch between them.
-
-This can be done via one of these commands.
-
-|Windows|Mac|
-|:---|:--|
-|`winget install -e CoreyButler.NVMforWindows`|`brew install nvm`|
-
-After installing nvm, you can use the nvm's help to install a version (like 16.3.2, which is what I'll do).
-Type nvm to navigate through, and you'll notice that you need to these two commands separately.
-
-```bash
-nvm install 16.3
-nvm use 16
+  ul.appendChild(li)
+  li.appendChild(document.createTextNode(place.name))
+})
 ```
 
-After this, you should be able to type `node -v` and you'll notice that it should print out `v16.3.0`.
+Now open the ***Console*** tab on your Developer Console:
 
-To prepare you to use webstorm we'll follow a couple more commands here:
+![Screenshot of the console tab on the developer console](../../images/0/12e.png)
 
-One is to type the following lines, which creates a ***symbolic link*** where WebStorm can find the version of node we are using.
+By clicking the little triangle at the beginning of the line, you can expand the text on the console.
 
-```bash
-export NVM_SYMLINK_CURRENT=true
-nvm use default
+![Screenshot of one of the previously collapsed entries; now expanded](../../images/0/13e.png)
+
+This output on the console is caused by the `console.log` command in the code:
+
+```js
+const data = JSON.parse(this.responseText)
+console.log(data)
 ```
 
-#### 4 Alternate: Installing node directly
+So, after receiving data from the server, the code prints it to the console.
 
-Alternatively, you can try to just install node without using a version manager.
-I've taken the [installation instructions](https://nodejs.org/en/download/package-manager/) for node and provided the most popular options here.
+The ***Console*** tab and the `console.log` command will become very familiar to you during the course.
 
-|Windows|Mac|
-|:---|:--|
-|`winget install -e OpenJS.NodeJS`|`brew install node`|
+### Event handlers and Callback functions
 
-*You should only use this option if you have trouble doing anything with nvm.*
+The structure of this code is a bit odd:
 
----
+```js
+var xhttp = new XMLHttpRequest()
 
-Regardless of which option you choose,
-Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically installed with Node.js.
-We will be actively using npm throughout the course.
-Node also comes with [npx](https://www.npmjs.com/package/npx),
-which we'll need a few times.
+xhttp.onreadystatechange = function() {
+  // code that takes care of the server response
+}
 
-### 5: Join our GitHub Classroom
+xhttp.open('GET', '/data.json', true)
+xhttp.send()
+```
 
-At this point, you have made sure that your git configuration is correct.
+The request to the server is sent on the last line, but the code to handle the response can be found further up.
+What's going on?
 
-Then, you'll visit this URL:
+```js
+xhttp.onreadystatechange = function () {
+```
 
-**<http://go.djosv.com/227start>**
+On this line, an **event handler** for the event `onreadystatechange` is defined for the `xhttp` object doing the request.
+When the state of the object changes, the browser calls the event handler function.
+The function code checks:
 
-Make sure you log in and accept any of the authorizations that are present.
-Next, Accept the assignment.
+- that the [readyState](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState) equals 4
+    - which depicts the situation *The operation is complete*
+- that the HTTP status code of the response is 200.
 
-![GitHub classroom Accept assignment](../../images/0/partc/classroomaccept.png)
+```js
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    // code that takes care of the server response
+  }
+}
+```
 
-This is going to have you enter the comp227
-organization.
-If you have already signed up for an account it may ask
-you to re-enter your credentials.
-Once accepted you'll be greeted with this image asking you to refresh.
+The mechanism of invoking event handlers is very common in JavaScript.
+Event handler functions are called [callback](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function) functions.
+The application code does not invoke the functions itself, but the runtime environment.
+The *browser invokes* the function at an appropriate time when the **event** has occurred.
 
-![GitHub accepted lab](../../images/0/partc/classroomaccepted.png)
+### Document Object Model or DOM
 
-Wait a minute or two, and then follow the lead given by GitHub, refresh the page, then click on the repo name, which will have your own GitHub handle on it as part of the link.
-That will take you to the GitHub site where you will see your repository, with your handle at the end of the repository name.
-Click on the green code button ![green code button icon](../../images/0/partc/greencode.png)
-and then the copy button ![copy button icon](../../images/0/partc/image8.png) to copy the URL,
-as shown via this [animation accepting and clicking on the assignment](https://imgur.com/5Tv7mVM)
+We can think of HTML pages as implicit tree structures.
 
-Make sure to save this URL that was just created specifically for you.
-You will need it in the next step, so please also just keep this page open.
-Otherwise, if you close it, you'll need to navigate back through it by going to <classroom.github.com> and logging in.
+```text
+html
+  head
+    link
+    script
+  body
+    div
+      h1
+      div
+        ul
+          li
+          li
+          li
+      form
+        input
+        input
+```
 
-### 6: Install WebStorm
+The same treelike structure can be seen on the console tab ***Elements***.
 
-For this course, I will be asking that you use [Webstorm](https://www.jetbrains.com/webstorm/download/) from JetBrains.
-You can do this with the package manager by merely typing `winget install JetBrains.WebStorm` or `brew install --cask webstorm` in your Terminal depending on your configuration.
-While I am OK if you decide to use [VS Code](http://code.visualstudio.com) instead,
-please be aware that I will only be supporting or answering questions about Webstorm.
-*Some of the pictures below may be from PHPStorm, which is just like WebStorm, except it's designed for PHP.
-If you see pictures below that have PHPStorm, pretend they say Webstorm, they behave similarly.*
-This also goes for anything that mentions COMP 127 (Assume it's 227).
+![A screenshot of the Elements tab of the developer console](../../images/0/14e.png)
 
-[WebStorm](https://www.jetbrains.com/webstorm/download/) is a web development editor from JetBrains
-(*Make sure that you activate an [educational license](https://www.jetbrains.com/shop/eform/students) from them*).
+The functioning of the browser is based on the idea of depicting HTML elements as a tree.
 
-If you haven't already, use the command line to download WebStorm.
+Document Object Model, or [DOM](https://en.wikipedia.org/wiki/Document_Object_Model),
+is an Application Programming Interface (**API**).
+The DOM enables programmatic modification of the **element trees** corresponding to web pages.
 
-|Windows|Mac|
-|:--|:--|
-|`winget install -e JetBrains.WebStorm`|`brew install --cask webstorm`|
+The JavaScript code introduced in the previous chapter used the DOM-API to add a list of places to the page.
 
-As you are downloading the product, make sure that you fill out the [student application](https://www.jetbrains.com/shop/eform/students).
-While WebStorm offers a 30-day free trial, we want to start the application process early to avoid any hiccups.
-Jetbrains provides free access to all Jetbrains products while you're a student.
+The following code creates a new node to the variable `ul`, and adds some child nodes to it:
 
-Once it finishes installing and you pass all the permissions, you can open it up.
+```js
+var ul = document.createElement('ul')
 
-You'll be greeted with a simple window.
+data.forEach(function(place) {
+  var li = document.createElement('li')
 
-![import settings](../../images/0/partc/import_settings.png)
+  ul.appendChild(li)
+  li.appendChild(document.createTextNode(place.name))
+})
+```
 
-Most of you will choose not to import settings and click **OK**.
+Finally, the tree branch of the `ul` variable is connected to its proper place in the HTML tree of the whole page:
 
-At this point, you'll now move on to the project page, where you'll need a project.
-**Leave Webstorm open for now.**
+```js
+document.getElementsByClassName('places').appendChild(ul)
+```
 
-![Select VCS from the opening page](../../images/0/partc/webstorm_first_time.png)
+### Manipulating the document object from console
 
-Before moving on, make sure that you have generated the repository from the GitHub classroom assignment.
+The topmost node of the DOM tree of an HTML document is called the `document` object.
+We can perform various operations on a webpage using the DOM-API.
+You can access the `document` object by typing `document` into the Console tab:
 
-Now that we have WebStorm and a GitHub repo, we are almost ready to connect WebStorm to our GitHub profile and to the repo we created via GitHub classroom.
+![document in console tab of developer tools](../../images/0/15e.png)
 
-Before we can do that though, we need to generate credentials that the computer can use to login to GitHub via Webstorm.
-Let's do that now.  
+Let's add a new place to the page ***directly from the console***.
 
-### 7: Generate a GitHub token
+First, we'll get the list of places from the page.
+The list is in the first `ul` element of the page:
 
-In the past two years, with even more threats to security,
-GitHub has moved to have us use tokens to access our projects from our computers.
-**Tokens** act like credentials but have much more fine-grained controls on what they can and cannot access.
-Tokens are slightly analogous to using a temporary credit card number for purchases,
-instead of giving everyone access to your bank account.
-Because Webstorm will be constantly communicating with GitHub, let's generate a token that will be stored on our computer.
+```js
+list = document.getElementsByTagName('ul')[0]
+```
 
-Go back to [GitHub](http://github.com) and log in,
-then click on your profile icon in the upper right,
-and then go to [*Settings->Developer settings->Personal Access Tokens->Tokens (classic)->Generate new token->Generate new token (classic)*](https://imgur.com/S1E0tQc).
-Then give the token a name,
-set expiration to *Custom* (providing a date up to 1 year from now) and select the ```repo, workflow, read:org and gist``` checkboxes for the scopes.
-Once you do that, scroll to the bottom and click the green Generate new Token.
-[I did another short animation of this as well.](https://imgur.com/LUAt5DU)
-You'll then see a page that has the token that says to copy it because you won't be able to see it again.
+Then create a new `li` element and add some text content to it:
 
-![token about to expire](../../images/0/partc/github_token_ready.png)
+```js
+newElement = document.createElement('li')
+newElement.textContent = 'Page manipulation straight from the console is easy'
+```
 
-Make sure to copy it someplace safe or leave the page open for now.
-If you do lose the token, you can safely generate a new one.
-You may also want to consider deleting the old one, which prevents it from being used anymore.
+And add the new `li` element to the list:
 
-### 8: Connect Webstorm with GitHub
+```js
+list.appendChild(newElement)
+```
 
-Now what we will do is:
+![Screenshot of the page with the new place added to the list](../../images/0/16e.png)
 
-1. Take the GitHub repo that we generated from GitHub classroom
-2. Copy the link for it
-3. Switch to WebStorm and select ***Get From VCS***, using the copied URL from GitHub.
-4. After clicking OK, select ***Use Token*** from the authentication options
-5. Switch back to the token page that we just generated and copy that token
-6. Paste that token back into WebStorm
-7. Trust and open the project.  
+> *Side note (optional)* - If you are studying the pictures closely you may see that there is this additional `::marker` that got placed into the li tag.
+> This is a pseudo-marker generated by chrome to represent the bullet next to the list item and is present because we are styling the bullet list.
+> It has no bearing and does not appear in the html tag, but it's present to help us understand how items are being styled in the developer tools.
 
-Following all of these steps would result in the project opening up, with it opening up the *README.md* file.
+Even though the page updates on your browser, the changes are not permanent.
+If the page is reloaded, the new place will disappear, because the changes were not pushed to the server.
+The JavaScript code the browser fetches will always create the list of places based on JSON data from the address <https://227demo.djosv.com/data.json>.
 
-Here's a recap in a [re-looping gif of all of these steps that you should see](https://imgur.com/UDQXB6V)
+### CSS
 
-#### Other permissions
+The `head` element of the HTML code of the Places page contains a [link](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link) tag.
+This `link` tag determines that the browser must fetch a [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+style sheet from the address [main.css](https://227demo.djosv.com/main.css).
 
-The other permission you may have to set is to allow JetBrains access to comp227's organizational space.
-You can do this by [visiting GitHub's apps settings](https://github.com/settings/applications#authorized) and then clicking on **JetBrains IDE Integration**.
-Click on that and then you should be able to see the heading ***Organization Access***.
-Click on the ***Grant*** button next to comp227, and now try cloning the project again.
+Cascading Style Sheets, or CSS, is a style sheet language used to determine the appearance of web pages.
 
-#### Configure your settings
+The fetched CSS file looks as follows:
 
-When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
-(but not too much initially, spend no more than 10-15 minutes).
+```css
+.container {
+  padding: 10px;
+  border: 1px solid
+}
 
-I'll go over a few different settings that I've found useful:
+body {
+  background-color: black;
+  font-family: sans-serif;
+  color: white;
+}
 
-- [Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
-- [Changing your default terminal](#changing-our-default-terminal-app)
-- [Enabling autosave](#enabling-autosave)
+.places {
+  color: lightgreen;
+}
+```
 
-#### Changing keyboard shortcuts
+The file defines one [type selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)(*`body`*) and two [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
+The type selector is merely present to switch the component to look closer to a dark mode equivalent (and to make it .1% more stylish).
+The **class selectors** are used to select certain parts of the page and to define styling rules to style them.
 
-Since by this point I have become accustomed to eclipse keyboard shortcuts, WebStorm provides an ability in its settings to use an Eclipse keymap.
-They also have other keymaps as well.
-For me this allows me to not have to worry about learning new keyboard shortcuts,
-I can continue using handy shortcuts from eclipse like:
-(***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Ctrl-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
+A class selector definition always starts with a period and contains the name of the class.
 
-To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
-Pick the file that will work best for you in navigating using keyboard shortcuts.
-This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
+The classes can be applied to HTML elements as [**attributes**](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class).
 
-#### Changing our default terminal app
+CSS attributes can be examined on the ***Elements*** tab of the console:  
 
-While installing the eclipse keymap is optional, what I would like you to do is to change your terminal of choice to git bash.
-Just like with the gif from below, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
-Navigate to the ***Tools*** on the left sidebar and select the dropdown for the Shell path.
-There you should see bash.exe with a path for git.
-**Make sure you add the arguments `-i` and `-l` to load your settings correctly**.
+![Screenshot of the Elements tab on the developer console](../../images/0/17e.png)
 
-![WebStorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
+The outermost `div` element has the class `container`.
+The `ul` element containing the list of places has the class `places`.
 
-#### Enabling autosave
+The CSS rule defines that elements with the `container` class will be outlined with a one-pixel wide [border](https://developer.mozilla.org/en-US/docs/Web/CSS/border).
+It also sets 10-pixel [padding](https://developer.mozilla.org/en-US/docs/Web/CSS/padding) on the element.
+This adds some space between the element's content and the border.
 
-This one I find to be incredibly useful, but it's a double-edged sword, as sometimes tends to break whatever I am working on.
-On the other hand, it allows me to not have to worry about saving all the time, which is key nowadays.
-Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
-check the option which says to ***Save files if the IDE is idle for 15 seconds***.
+The `.places` CSS rule sets the text color as `lightgreen`.
 
-#### Link webstorm to nvm
+HTML elements can also have other attributes apart from classes.
+The `div` element containing the places has an [id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id) attribute.
+JavaScript code uses the id to find the element.
 
-This last one is important as it tells Webstorm where our node version is, which helps with IDE integration.
-Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
-Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
-Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both windows.
+The ***Elements*** tab of the console can be used to change the styles of the elements.
 
-***Remember that you'll have to do all of these steps (including the token generation if you don't save the token somewhere) for each computer that you use.***
+![developer tools elements tab](../../images/0/18e.png)
 
-### 9: Make changes
+Changes made on the console will not be permanent.
+If you want to make lasting changes, they must be saved to the CSS style sheet on the server.
 
-By this point, your project should be open.
+### Loading a page containing JavaScript - review
 
-What you should do is watch
-[this animation a few times to see how to make changes to the markdown file](https://imgur.com/blj5aGh)
-and how to send those changes so that they are recorded on GitHub.
+Let's review what happens when the page <https://227demo.djosv.com/places> is opened on the browser.
 
-Because we are editing a markdown file, Webstorm defaults for it to be in preview mode,
-but if I were to have clicked the middle button it would have shown a split preview between the raw text and what it looks like. (instead of flipping back and forth)
+![sequence diagram of browser/server interaction](../../images/0/19e.png)
 
-Also, notice the green button at the top - ![green commit button](../../images/0/partc/git_green_button.png).
-That is used to create a commit, which is a record of the changes that you have made.
-**You'll want to get in the habit of committing often**.
-Committing small changes is a good idea because then you can more easily keep track of (and potentially revert changes).
-It's also a good way to document what has been added or changed as well.
+- The browser fetches the HTML code defining the content and the structure of the page from the server using an HTTP GET request.
+- Links in the HTML code cause the browser to also fetch the CSS style sheet *main.css*...
+- ...and a JavaScript code file *main.js*
+- The browser executes the JavaScript code.
+  The code makes an HTTP GET request to the address <https://227demo.djosv.com/data.json>, which
+  returns the places as JSON  data.
+- When the data has been fetched, the browser executes an *event handler*, which renders the places to the page using the DOM-API.
 
-As you are toying around, you may get a popup like this in webstorm.
+### Forms and HTTP POST
 
-![popup asking if you want to add files to git](../../images/0/partc/add_file_to_git.png)
+Next, let's examine how adding a new place is done.
 
-Like the picture shows, I would check ***Don't ask again*** and then click ***Cancel***.
-I like to be purposeful in my commits in git, so I do not like adding in files to be tracked that may not be necessary.
+The Places page contains a [form element](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
 
-### 10: Understand the process
+![form element highlight in webpage and developer tools](../../images/0/20e.png)
 
-For every project that we have thereafter, there will most likely be a new repo that you'll need to add to Webstorm using some of the steps that we've highlighted here.
-For every repo you'll need to accept the assignment and open up a new project from VCS.
-You won't need to generate a new token, however.
-The process that we follow here is merely to get you to understand the workflow for checking out projects from GitHub.
+When the button on the form is clicked, the browser will send the user input to the server.
+Let's open the ***Network*** tab and see what submitting the form looks like:
 
-Feel free to make as many changes as you'd like to the repo, just make sure you include the information from the exercises below.
-There you'll also see how you can [verify that your changes appear on GitHub](#07---verifying-changes-made-it-to-github).
+![Screenshot of the Network tab where the events for submitting the form are shown](../../images/0/21e.png)
+
+Surprisingly, submitting the form causes no less than **five** HTTP requests.
+The first one is the ***form submit event***.
+Let's zoom into it:
+
+![Detailed view of the first request](../../images/0/22e.png)
+
+It is an [HTTP POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) request to the server address ***new_place***.
+The server responds with HTTP status code 302.
+This is a [URL redirect](https://en.wikipedia.org/wiki/URL_redirection),
+with which the server asks the browser to do a new HTTP GET request to the address defined in the header's *Location* - the address `places`.
+
+So, the browser reloads the *places* page.
+The reload causes three more HTTP requests: fetching the style sheet (*main.css*),
+the JavaScript code (*main.js*), and the raw data of the places (*data.json*).
+
+We can also see the data submitted in the Network tab.
+The Form Data dropdown is within the new Payload tab, located to the right of the Headers tab.
+
+![form data dropdown in developer tools](../../images/0/23e.png)
+
+The Form tag has attributes `action` and `method`, which define that submitting the form is done as an HTTP POST request to the address ***new_place***.
+
+![action and method highlight](../../images/0/24e.png)
+
+The code on the server responsible for the POST request is quite simple (NB: this code is on the server, and not on the JavaScript code fetched by the browser):
+
+```js
+app.post('/new_place', (req, res) => {
+  places.push({
+    name: req.body.place,
+    date: new Date(),
+  })
+
+  return res.redirect('/places')
+})
+```
+
+Data is sent as the [body](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) of the POST request.
+
+The server can access the data by accessing the `req.body` field of the request object `req`.
+
+The server creates a new `place` object and adds it to an array called `places`.
+
+```js
+places.push({
+  name: req.body.place,
+  date: new Date(),
+})
+```
+
+The `place` objects have two fields:
+
+1. a `name` containing the actual name of the place, and
+2. a `date` containing the date and time the place was created.
+
+*The server does not save new places to a database, so new places disappear when the server is restarted.*
+
+### AJAX
+
+The places page of the application follows an early-nineties style of web development and uses "Ajax".
+As such, it's on the crest of the wave of early 2000s web technology.
+
+[**AJAX**](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML)
+is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach.
+AJAX enables the fetching of content to web pages using JavaScript included within the HTML, without the need to rerender the page.
+
+Before the AJAX era, all web pages worked like the
+[traditional web application](/part0/fundamentals_of_web_apps#traditional-web-applications)
+we saw earlier in this chapter.
+All of the data shown on the page was fetched with the HTML code generated by the server.
+
+The *places* page uses AJAX to fetch the `places` data.
+Submitting the form still uses the traditional mechanism of submitting web forms.
+
+The application URLs reflect the [old, carefree times](https://www.youtube.com/watch?v=GA8z7f7a2Pk).
+JSON data is fetched from the URL <https://227demo.djosv.com/data.json>
+and new places are sent to the URL <https://227demo.djosv.com/new_place>.
+Nowadays URLs like these would not be considered acceptable,
+as they don't follow the generally acknowledged conventions of [RESTful](https://en.wikipedia.org/wiki/Representational_state_transfer#Applied_to_web_services) APIs,
+which we'll look into more in [part 3](/part3).
+
+The term AJAX is now so commonplace that it's taken for granted.
+The term, like *shindig* and *home skillet*, has faded out of our collective consciousness.
+
+### Single page app
+
+In our example app, the home page works like a traditional webpage: All of the logic is on the server, and the browser only renders the HTML as instructed.
+
+The *places* page gives some of the responsibility, generating the HTML code for existing places, to the browser.
+The browser tackles this job by executing the JavaScript code it fetched from the server.
+The code fetches the places from the server as JSON data and adds HTML elements for displaying the `places` on the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
+
+In recent years, the [Single-page application](https://en.wikipedia.org/wiki/Single-page_application) (SPA) style of creating web applications has emerged.
+SPA-style websites don't fetch all of their pages separately from the server like our sample application does,
+but instead comprise only one HTML page fetched from the server,
+the contents of which are manipulated with JavaScript that executes in the browser.
+
+The Places page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
+Even though the logic for rendering the places is run on the browser, the page still uses the traditional way of adding new places.
+The data is sent to the server via the form's *submit*, and the server instructs the browser to reload the Places page with a *redirect*.
+
+A single-page app version of our example application can be found at <https://227demo.djosv.com/spa>.
+At first glance, the application looks the same as the previous one.
+The HTML code is almost identical, but the JavaScript file is different (*spa.js*) and there is a small change in how the form tag is defined:
+
+![form with missing action and method](../../images/0/25e.png)
+
+The form has no `action` or `method` attributes to define how and where to send the input data.
+
+Open the ***Network*** tab and empty it.
+When you now create a new place, you'll notice that the browser sends only one request to the server.
+
+![Network tab in developer tools](../../images/0/26e.png)
+
+The POST request to the address `new_place_spa` contains the new place as JSON data containing both the name of the place (`name`) and the timestamp (`date`):
+
+```js
+{
+  name: "Papa Urb's Grill",
+  date: "2023-01-15T15:15:59.905Z"
+}
+```
+
+The **Content-Type** header of the request tells the server that the included data is represented in JSON format.
+
+![Content-type header in developer tools](../../images/0/27e.png)
+
+Without this header, the server would not know how to correctly parse the data.
+
+The server responds with status code [201 created](https://httpstatuses.com/201).
+This time the server does not ask for a redirect, the browser stays on the same page, and it sends no further HTTP requests.
+
+The SPA version of the app does not traditionally send the form data.
+Instead, it uses the JavaScript code it fetched from the server.
+We'll look into this code a bit, even though understanding all the details of it is not important just yet.
+
+```js
+var form = document.getElementById('places_form')
+form.onsubmit = function(e) {
+  e.preventDefault()
+
+  var place = {
+    name: e.target.elements[0].value,
+    date: new Date(),
+  }
+
+  places.push(place)
+  e.target.elements[0].value = ''
+  redrawPlaces()
+  sendToServer(place)
+}
+```
+
+The command `document.getElementById('places_form')` instructs the code to fetch the form element from the page and to register an ***event handler*** to handle the form's submit event.
+The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of the form's submit.
+The default method would send the data to the server and cause a new GET request, which we don't want to happen.
+
+Then the event handler:
+
+1. creates a new place
+2. adds it to `places` with the command `places.push(place)`
+3. rerenders the webpage's list and
+4. sends the new place to the server.
+
+The code for sending the place to the server is as follows:
+
+```js
+var sendToServer = function(place) {
+  var xhttpForPost = new XMLHttpRequest()
+  // ...
+
+  xhttpForPost.open('POST', '/new_place_spa', true)
+  xhttpForPost.setRequestHeader(
+    'Content-type', 'application/json'
+  )
+  xhttpForPost.send(JSON.stringify(place))
+}
+```
+
+The code determines that the data is to be sent with an HTTP POST request and the data type is to be JSON.
+The data type is determined with a *Content-type* header.
+Then the data is sent as a JSON string.
+
+The application code is available at <https://github.com/comp227/example_app>.
+It's worth remembering that the application is only meant to demonstrate the concepts of the course.
+The code follows a poor style of development in some measures, and should not be used as an example when creating your applications.
+The same is true for the URLs used.
+The URL `new_place_spa` that new places are sent to, does not adhere to current best practices.
+
+### JavaScript Libraries
+
+The sample app is done with so-called [**vanilla JavaScript**](https://www.freecodecamp.org/news/is-vanilla-javascript-worth-learning-absolutely-c2c67140ac34/),
+using only the DOM-API and JavaScript to manipulate the structure of the pages.
+
+Instead of using JavaScript and the DOM-API only, many popular libraries provide tools that make it easier to manipulate pages compared to the DOM-API.
+One of these libraries is the *ever-so-popular* [**jQuery**](https://jquery.com/).
+
+A long time ago, web applications traditionally generated HTML pages on the server side when they wanted to add functionality.
+Instead, jQuery built itself on top of Javascript to enhance the functionality on the browser side.
+One of the reasons for the success of jQuery was its so-called cross-browser compatibility.
+The library worked regardless of the browser or the company that made it, so there was no need for browser-specific solutions.
+Nowadays using jQuery is not as justified given the advancement of JavaScript,
+and the most popular browsers generally support basic functionalities well.
+
+The rise of the single-page app brought several more "modern" ways of web development than jQuery.
+The favorite of the first wave of developers was [BackboneJS](http://backbonejs.org/).
+After its [launch](https://github.com/angular/angular.js/blob/master/CHANGELOG.md#100-temporal-domination-2012-06-13) in 2012,
+Google's [AngularJS](https://angularjs.org/) quickly became almost the de facto standard of modern web development.
+
+However, the popularity of Angular plummeted in October 2014 after the
+[Angular team announced that support for version 1 will end](https://web.archive.org/web/20151208002550/https://jaxenter.com/angular-2-0-announcement-backfires-112127.html),
+and Angular 2 will not be backwards compatible with the first version.
+Angular 2 and the newer versions have not gotten too warm of a welcome.
+
+Currently, one of the most popular tools for implementing the browser-side logic of web applications is Facebook's [React](https://reactjs.org/) library.
+During this course, we will get familiar with React and other technologies which are frequently used together.
+
+The status of React seems strong, but the world of JavaScript is ever-changing.
+For example, while [VueJS](https://vuejs.org/) has been around a while as an "up-and-comer",
+there are other frameworks like [Svelte](https://svelte.dev/) and [Qwik](https://qwik.build.io) that have recently started generating buzz.
+While we have been talking about SPA, there is also talk about [returning more components back to the server](https://dev.to/this-is-learning/the-return-of-server-side-routing-b05).
+
+### Full-stack web development
+
+What does the term - *Full-stack web development* - mean?
+**Full stack** is a buzzword.
+It's ubiquitous yet devoid of any meaning.
+Let's try to provide some context for how the word ends up relating to the term stack.
+
+Practically all web applications have (at least) two "layers":
+
+1. the browser, which is closer to the end-user (AKA the top layer, and
+2. the server, whose layer is typically below the browser's
+
+There is often also a database layer below the server.
+We can therefore think of the **architecture** of a web application as a kind of **stack** of layers.
+
+Often, we also talk about the [frontend and the backend](https://en.wikipedia.org/wiki/Front_and_back_ends).
+The browser is the frontend, and JavaScript that runs on the browser is frontend code.
+The server on the other hand is the backend.
+
+In the context of this course, full-stack web development means that we focus on all parts of the application: the frontend, the backend, and the database.
+Sometimes the software on the server and its operating system are seen as parts of the stack, but we won't go into those.
+
+We will code the backend with JavaScript, using the [Node.js](https://nodejs.org/en/) runtime environment.
+Using the same programming language on multiple layers of the stack gives full-stack web development a whole new dimension.
+However, it's not a requirement of full-stack web development to use the same programming language (JavaScript) for all layers of the stack.
+
+It used to be more common for developers to specialize in one layer of the stack, for example, the backend.
+Technologies on the backend and the frontend were quite different.
+With the Full stack trend, it has become common for developers to be proficient in all layers of the application and the database.
+Oftentimes, full-stack developers must also have enough configuration and administration skills to operate their applications, for example, in the cloud.
+
+### JavaScript fatigue
+
+Full-stack web development is challenging in many ways.
+Things are happening in many places at once, and debugging is quite a bit harder than with regular desktop applications.
+JavaScript does not always work as you'd expect it to (compared to many other languages),
+and the asynchronous way its runtime environments work causes all sorts of challenges.
+Communicating on the web requires knowledge of the HTTP protocol.
+One must also handle databases and server administration and configuration.
+It would also be good to know enough CSS to make applications at least somewhat presentable.
+
+The world of JavaScript develops fast, which brings its own set of challenges.
+Tools, libraries and the language itself are under constant development.
+Some are starting to get tired of the constant change, and have coined a term for it: **JavaScript fatigue**.
+See [How to Manage JavaScript Fatigue on auth0](https://auth0.com/blog/how-to-manage-javascript-fatigue/) or
+[JavaScript fatigue on Medium](https://medium.com/@ericclemmons/javascript-fatigue-48d4011b6fc4).
+
+You will suffer from JavaScript fatigue yourself during this course.
+Fortunately for us, there are a few ways to smooth the learning curve, and we will concentrate on the coding instead of the configuration.
+We can't avoid configuration completely
+(and we'll be doing some of that in part c),
+but after that, we can merrily push ahead in the next few weeks while hopefully avoiding the worst of it.
 
 </div>
 
 <div class="tasks">
 
-### Exercises 0.7-0.9
+### Exercises 0.1-0.6
 
-To submit the assignment you'll be making changes that will appear in your GitHub repo.
-For one, I would like you to edit the file that we created via Webstorm and add your name to the markdown file.
+The exercises are submitted through GitHub and marking them as done on Canvas.
 
-#### 0.7 - Verifying changes made it to GitHub
+You will submit all of the exercises into the repository that you will be provided in part C GitHub.
+While we wait to do those parts, though, **please start doing these exercises first**.
 
-You should have been following along here with the reading.
-Once you completed the steps above and push, verify that you have finished by visiting **github.com** and clicking on your repository.
-Once there, you can click to see [this gif animation that helps you verify that the commits were made on GitHub](https://imgur.com/fpaI9XK)
+For now, *create a folder called part0 and put all of your work in there until you have the tools that we'll go over in the next section*.
 
-Like the image, you should see your changes on github.com and you should see your profile and link as well.
+#### 0.1: HTML
 
-Like the gif above click on the text that has your commit message and you'll see the
-changes that you committed and how your commit changed the file, which
-you can immediately identify.
-If you see your custom picture and your
-name or id, then you'll get the rest of the credit.
-If you don't, then
-simply make an additional change to one of the files (adding a line or a
-space) while [editing the user preferences as outlined earlier](#3-configure-git).
+Review the basics of HTML by reading this tutorial from Mozilla: [**HTML tutorial**](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics).
 
-#### 0.8 - Upload exercises from exercises 0.1-0.6
+This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-Now that GitHub has been setup correctly,
-please upload the materials from the previous section
-[Exercises 0.1-0.6](/part0/fundamentals_of_web_apps#exercises-0-1-0-6) into your GitHub repo.
-Make sure you put them in a folder and provide them with names that match the exercise that you had.
+#### 0.2: CSS
 
-#### 0.9 - Final upload screenshot
+Review the basics of CSS by reading this tutorial from Mozilla: [CSS tutorial](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/CSS_basics).
 
-Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.  
-Please name the screenshot file with the name `09`.
-Make sure the file has the correct extension.
+This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-</div>
+#### 0.3: HTML forms
 
-<div class="content">
+Learn about the basics of HTML forms by reading Mozilla's tutorial [Your first form](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
 
-### Recommended: Learn to use git via the command line
+This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
-**It's vital that you feel comfortable using git.**
+#### 0.4: New place diagram
 
-If you have not worked with Git or GitHub at all and/or still feel uneasy about using it,
-please follow along with the tutorial below.
-For further reinforcement, you may also want to see this [Git and GitHub tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
+In the section [Loading a page containing JavaScript - review](/part0/fundamentals_of_web_apps#loading-a-page-containing-java-script-review),
+the chain of events caused by opening the page <https://227demo.djosv.com/places>
+is depicted as a [sequence diagram](https://developer.ibm.com/articles/the-sequence-diagram/)
 
-While the workflow in JetBrains is fairly good for what we want,
-(especially if you start leaning into keyboard shortcuts),
-at some point you are going to want to do something that is beyond what's available.
-The best thing that you can do to help yourself is to begin to practice using git on the command line.
-It is harder to use.
-However, there are many more resources out there (like stackoverflow) that give you a git command to do some neat things,
-like amend your last commit, or go back a couple of commits, among other things.
-
-For this, we'll continue getting comfortable with git bash.
-The first thing that you'll need to do is to ensure that you can navigate to the location of where your project is located.
-If you’re not sure how to
-use the command line, feel free to ask in the discord, but the easiest commands to learn
-are:
-
-- ```cd``` (changes the directory to the one specified afterward, to go up use
-```cd ..```)
-
-- ```ls``` (list the files in a directory, if you want to see all files, say ```ls –a```)
-
-- ```mkdir``` (makes a directory with the name you specify afterward)
-
-And press the tab key to autocomplete any folders and folder paths as
-you type so that you don’t misspell things as you go along.
-Another
-other option you have is, if you are on your computer, to use windows
-explorer to get to the directory where you want to download the project,
-and then right-click and select *Git Bash Here*.
-If you are on windows and using the new [Terminal](https://github.com/microsoft/terminal),
-you can also click the folder from explorer and drag the folder from windows into Terminal to have it automatically type the path for you.
-Once you are inside the correct place that you want to be, then you can move on.
-Lastly, one of the last ways to do this is merely via Webstorm.
-You can right-click on your project and say ***Open In->Terminal***, and the terminal will open down below.
-
-### Learning the git commands in bash
-
-While we will use WebStorms's git integration and tools to help us commit regularly,
-knowing a little bit about how to use the command line will be important for this course.
-One of the most important parts of knowing how to use the command line is being able to navigate through your folders.
-
-Anytime you make any changes or commands, it's important to understand where you are.
-Let's verify that you are in fact in the correct place.
-When using git bash, you know you have entered a git repository when you see that the command line shows ***`(name_of_branch)`*** in a different color.
-In our case, notice how the end of the prompt ends with
-`main`.
-That lets you know that you are on the main branch of a git
-project.  I will move up a directory and down just so you can see the difference.
-
-![git terminal showing main as repo](../../images/0/partc/image5.png)
-
-You'll also notice that for this lab you should see a file ```.gitignore``` and a folder called ```.git```.
-You may not see those files if you type `ls`.
-
-**You do not want to play around or modify the .git folder.**
-
-You also want to be careful not to create repositories with git inside of other repositories that have a git folder.
-So make sure that any projects that you clone have no nested or cloned projects inside.
-
-For this part, we were only interested in getting you used to the
-mechanics of adding, committing and pushing changes up to GitHub.
-So here’s what I’m going to ask you to do.
-
-### `git status` is your friend
-
-1. With the terminal open,
-type ```git status``` to see what’s changed.
-If nothing has changed, you can add a file or make a new file in the directory.
-
-![git status showing lots of untracked files](../../images/0/partc/image7.png)
-
-Once you add something, notice the red text and the message that git gives us.
-It tells us that we have a file (or in this case a folder) that is **untracked**,
-which means that git is not monitoring them for any changes.
-When untracked files change, *git knows nothing about them*.
-So let's add a set of files so that git starts tracking them for any changes.
-Let's practice adding one set of files to what will be our next commit.
-Part of what you need to do is add a picture or screenshot to the repo, which can you can drag into WebStorm on top of your *lab0* folder.
-You'll see a *move* window pop up that you can click ***Refactor***.
-Go ahead and do that.
-Type `git status` again and you'll now see the file appear as an untracked file.
-
-![git status again shows a new file](../../images/0/partc/git_status_2.png)
-
-To get git to start tracking a file, you can say:
+The diagram was made using the [web sequence diagrams](https://plantuml.com/sequence-diagram) service as follows:
 
 ```bash
-git add path/to/name_of_file.extension
+@startuml
+skinparam sequenceMessageAlign center
+Browser -> Server : HTTP GET https://227demo.djosv.com/places
+Browser <-- Server : HTML-code
+Browser -> Server : HTTP GET https://227demo.djosv.com/main.css
+Browser <-- Server : main.css
+Browser -> Server : HTTP GET https://227demo.djosv.com/main.js
+Browser <-- Server : main.js
+
+note over Browser
+ browser starts executing js-code
+ that requests JSON data from server
+end note
+
+Browser -> Server : HTTP GET https://227demo.djosv.com/data.json
+Browser <-- Server : [{ name: "El Pazcifico", date: "2023-01-13"}, ...]
+
+note over Browser
+ browser executes the event handler
+ that renders the places to display
+end note
+@enduml
 ```
 
-***Don't forget about Tab completion!***
-I seldom type anything out anymore.
-After I type a few letters, I press ***Tab*** to have the shell give its best suggestion and make sure I have the right location and no typos.
-You can even press Tab again if you get no further completions to see the list of everything available for files.
+**Create a similar diagram** depicting the situation where the user creates a new place on page <https://227demo.djosv.com/places>
+when writing something into the text field and clicking the ***submit*** button.
 
-If you type ```git status``` again, you'll notice that now you have a file that is staged, while the other files and folders would still be unstaged.
-In the example above, if instead had added the .idea folder (and not the png), it would look like this:
+If necessary, show operations on the browser or the server as comments on the diagram.
 
-![git status showing staged and unstaged files](../../images/0/partc/usersettingsadded.png)
+The diagram does not have to be a sequence diagram.
+Any sensible way of presenting the events is fine.
 
-The files in green are what are called **staged changes**.
-What this means is that not only is git going to track them, but they are different than what is currently in the repo,
-and so if you **commit**, you would be placing those changes and additions formally into the git record/history.
-If you'd like, please add the remaining file, which you can do by writing
+All necessary information for doing this, and the next two exercises, can be found in the text of [this part](/part0/fundamentals_of_web_apps#forms-and-http-post).
+The idea of these exercises is to ***read the text through once more and to think through what is going on there***.
+Reading the application [code](https://github.com/comp227/example_app) is not necessary, but it is of course possible.
 
-```bash
-git add .
-```
+**Notice** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor)
+syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/) markdown pages!
 
-Once you do a ```git status``` again, you'll now see that all of the files are staged to be committed (lots of green files), while nothing is red anymore.
-This means that the next time you say commit via git all of the files will be placed into and tracked by the repository.
+#### 0.5: Single-page app diagram
 
-### Committing via the command line
+Create a diagram depicting the situation where the user goes to the [single-page app](/part0/fundamentals_of_web_apps#single-page-app)
+version of the places app at <https://227demo.djosv.com/spa>.
 
-In this case, let's write this line
+#### 0.6: New place in Single-page app diagram
 
-```bash
-git commit -m "Adding screenshot and other repo files from webstorm"
-```
+Create a diagram depicting the situation where the user creates a new place using the single-page version of the app.
 
-By having the `-m`, we are providing the commit message that we would like to have to help us know what we did in this particular commit.
-
-Let's make one more change to the file so that we can dive a little bit deeper into staged vs unstaged.
-Go ahead and open up your README.md and move over to Line 3 or so, where you have the description.
-Modify the description one more time, or add another comment to the file.
-Save the file and then back at the command prompt, do a `git status` again.
-Once you do, you'll see something like this (except yours will be for readme):
-
-![git status showing modified files that haven't been staged](../../images/0/partc/gitmodifiednotstaged.png)
-
-Notice that the red text does not say it is untracked,
-but rather that it has been modified.
-Furthermore, if we were to commit right now, nothing would happen.
-In git when you save a file, git merely tells you that the file that you have saved differs from what you had before.
-If you want that file to become part of the record, you'll need to stage the changes, which you can do again by calling this ambiguous term `add`.
-If you were to add the file, then it would show in green again to let you know that it will be committed.
-However, there is a way to automatically commit any of your tracked files into your repository, which is to use the flag -a, so typically when I commit, I do something like this:
-
-```bash
-git commit -am "Personalized the readme with my name Osvaldo"
-```
-
-While
-I typically use the ```-a``` flag to automatically add all my changes to the next commit, one reason for not
-automatically adding (or staging) all changes is to make multiple commits so that you split
-apart multiple changes that you’ve made.
- Leaving files unstaged won’t
-make them a part of the commit, so you can commit multiple times and add
-the appropriate files to address each bug or feature for example and to provide an appropriate message for each.
-Therefore, if you made multiple changes, each commit will have just the files related to that change or improvement instead of a bunch of unrelated things.
-
-However, because I advocate for committing often, I will mostly have you use the -a option so that git commits all changes to tracked files.
-
-Committing will save the changes to the local repository.
-The ```–a``` switch
-will commit all modified files, both staged and unstaged, while the ```–m```
-allows you to type your message as part of the commit, instead of
-opening up that text editor option that we had before.
-If you have new
-files that git has yet to keep track of, then you must say:
-
-```bash
-git add NAME_OF_FILE_OR_DIR
-```
-
-Again, **you only need to do this last part when you have new files**.
-
-### Pushing the changes via the command line
-
-Once you have committed, go ahead and push the files to the server.
-Type
-```git push origin main``` and read the messages that are given to make sure that the
-push was indeed successful.
+This was the last exercise, so please hold on to them until we reach part c and then you can submit your answers there.
 
 </div>

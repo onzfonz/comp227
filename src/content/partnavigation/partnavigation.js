@@ -1,9 +1,10 @@
 module.exports = {
   en: {
     '0': {
-      a: 'General info',
-      b: 'Fundamentals of Web apps',
-      c: 'Configuring your machine for this course'
+      a: 'Syllabus',
+      b: 'General info',
+      c: 'Fundamentals of Web apps',
+      d: 'Configuring your machine for this course'
     },
     '1': {
       a: 'Introduction to React',

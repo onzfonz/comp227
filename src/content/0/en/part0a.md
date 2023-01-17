@@ -7,93 +7,244 @@ lang: en
 
 <div class="content">
 
-This course is an introduction to modern web development with JavaScript.
-The main focus is on single-page applications implemented with React and supporting them with RESTful web services implemented with Node.js.
-The course also has parts on TypeScript, Redux, and React Native.
+  | | |
+| --- | --- |
+| COURSE NAME| Web Development
+| SEMESTER|  Spring 2023
+| NUMBER AND TYPE OF UNITS|  3
+| COURSE TIME AND LOCATION|  Online (Meetings will be asynchronous)
+| INSTRUCTOR NAME| Osvaldo Jiménez
 
-Other topics include debugging applications, container technology, configuration, managing runtime environments, and databases.
+### Course Description
+
+This course is about the principles and techniques for designing and developing web applications.
+Topics include web application design, client-side web programming, and server-side web programming.
+Students are expected to read online resources and apply techniques to develop a website from scratch.
+
+### Contact Information
+
+| | |
+| --- | --- |
+Email | ojimenez AT pacific.edu
+Discord |  <https://discord.gg/M6UCXvTwFV>
+Virtual Office Hours| TTh 5pm-7pm
+Other meetings | by email/discord appointment
 
 ### Prerequisites
 
-Participants are expected to have:
+COMP 141 with a "C" or better and graduate or blended students in the School of Engineering and Computer Science or instructor approval.
+
+This is a graduate course in computer science.
+Therefore, you are expected to have:
 
 - good programming skills
-- basic knowledge of web programming and databases and
-- know the basics of the Git version control system.
+
+It is also strongly recommended that you have:
+
+- some basic knowledge of web programming and databases and
+- some basic understanding of the Git version control system.
   
 You are also expected to have perseverance and a capacity for solving problems and seeking information independently.
 
 Previous knowledge of JavaScript or other course topics is not required.
+If you do not have the strongly recommended skills, then realize that ***you will need to put extra time in at the beginning of the course***.
 
-### Course material
+### Course Objectives
 
-The course material is meant to be read one part at a time and in order.
+After successfully completing this course, students will be able to:
 
-The material contains exercises, which are placed so that the preceding material provides enough information for solving each exercise.
-You can do the exercises as you encounter them in the material,
-but it can also be beneficial to read all of the material in the part before starting with the exercises.
+1. Identify the basic components of a client-server system.
+2. Apply client-side programming techniques to improve the interface of web-based applications.
+3. Build dynamic websites using modern programming techniques.
+4. Build a functional web-based application across a variety of technologies.
 
-In many parts of the course, the exercises build one larger application one small piece at a time.
-Some of the exercise applications are developed through multiple parts.
+### Computer Science Program Learning Outcomes
 
-The course material is based on incrementally expanding example applications, which change from part to part.
-It's best to follow the code along while making small modifications independently.
-The code of the example applications for each step of each part can be found on GitHub.
+This course helps students meet the following Computer Science Program Learning Outcomes:
 
-### Taking the course
+1. Analyze a complex computing problem and apply principles of computing and other relevant disciplines to identify solutions.
+2. Design, implement, and evaluate a computing-based solution to meet a given set of computing requirements in the context of the program’s discipline.
+3. Communicate effectively in a variety of professional contexts.
+4. Recognize professional responsibilities and make informed judgments in computing practice based on legal and ethical principles.
+5. Function effectively as a member or leader of a team engaged in activities appropriate to the program’s discipline.
+6. Apply computer science theory and software development fundamentals to produce computing-based solutions.
 
-The course contains 10 parts, the first of which is numbered 0 for consistency with past iterations.
-One part corresponds loosely to one week (averaging 15-20 hours) of studying,
-but this varies as has been taken into account with respect to coursework.
+### Learning Resources
 
-For parts 0-5, Proceeding from part *n* to part *n+1* is not sensible before enough know-how of the topics in part *n*  has been achieved.
-In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning).
-You should only proceed to the next part after doing enough of the previous part's exercises.
+- [canvas.pacific.edu](https://pacific.instructure.com)
+- [Discord](https://discord.gg/VRUKRxCJ95)
+- [Class website](http://comp227.djosv.com)
 
-In parts 1-4 you are expected to do *at least* all of the exercises that are not marked with an asterisk(*).
-Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts.
-Other parts do not have asterisk-marked exercises since there is no similar dependency on previous parts.
+### Other Responsibilities
 
-You will need to complete the course and the course parts as specified on Canvas and based on those due dates, as some of the course parts are optional.
+You will find that the following attitude will significantly contribute to your success in this online class:
 
-### Course channel in Discord
+- A positive attitude toward technology
+- An open mind toward online education
+- Willingness to share your experiences with others
+- Strong writing skills for expressing yourself in the discussion area
+- Strong analytical and critical thinking skills for when you "get stuck"
+- Resourcefulness - don't be afraid to click on links and explore and ask questions that give you just enough information to get unstuck
+- Time management
+
+The next [reading](/part0/general_info) in the course will discuss more information about the course in general and what is necessary.
+
+### Technical Assistance
+
+It's crucial to seek help when you can't access Canvas or class materials.
+It's up to you to ask questions!
+
+1. We will be using [discord](https://discord.gg/VRUKRxCJ95).
+2. Canvas has live help that will assist you with any technical issues.
+    To access help, click the question mark at the far left side of the screen.
+    You can also email the Pacific Helpdesk for guidance at helpdesk@pacific.edu.
+3. For assistance with course materials contact your instructor or ask in the #help channel of discord
+
+An overview of available Canvas help resources can be found here: <https://community.canvaslms.com/videos/1687-canvas-help-resources-all-users>
+
+Further in-depth information can be accessed in The Canvas Student Guide which can be found here:
+<https://community.canvaslms.com/docs/DOC-10701>
+
+#### Important Tips for Success as an Online Learner
+
+- Begin planning now for private, uninterrupted time in your schedule to go through course materials and complete the assignments
+    - preferably in at least two-hours blocks and at least five times a week.
+It can be easy to fall behind!
+- Check your email account and the class [discord](https://discord.gg/VRUKRxCJ95) regularly for updated information.
+- Use discord for private messages to the instructor.
+The discord is a great place to ask questions in the correct categories (make sure you read the rules there).
+- If you have questions or are confused about an assignment, act promptly! Check #announcements, #help or #sos to see if your concern has been addressed already.
+If not, post your question to this discussion.
+- We may use Canvas tools such as WebEx for Q&A sessions and please follow the instruction the instructor sends out through Canvas Announcement.
+- Read directions carefully.
+
+For posts to online discussions, conventions of online etiquette ("netiquette") which include courtesy to all users, will be observed.
+Please see Guidelines for Online Discussion for detail.
+
+### Discord & Course Netiquette
 
 You can discuss the course and related topics in our [Discord](https://discord.gg/VRUKRxCJ95).
 Discord will have different channels for both your learning partners as well as course-related conversations.
 You will be expected to be active on Discord!
 
-### Parts and completion
+For those of you who are new to online learning and online discussion, there are some important differences between how you communicate online and in the classroom.
+These differences are frequently the cause of misunderstandings in courses that have an online component.
+The following guidelines are intended to help you understand the differences and communicate in a way that minimizes the chances of misunderstandings.
 
-The COMP 227 course consists of the core course and multiple extensions.
+#### Remember you cannot see each other
 
-#### Parts 0-5 (core course) - Full Stack Web Development
+The most important difference between face-to-face communication and using an online discussion is that you cannot see each other.
+For the most part, humans rely on visual and audio cues when talking to each other.
+When we speak face to face we can interpret what the other person is saying through their posture, tone of voice, and expression.
+All of this is missing when communicating through discussion forums.
+You can’t easily tell what the intent is when reading a response to a message in a discussion board.
+There are no visual cues.
+There is no tone of voice to convey emotion.
+There is only text.
+It is easy to make assumptions about a person’s intent when you are lacking the cues that you would take for granted otherwise.
+Below are some guidelines for communication in online courses that will help you make the most out of your online interactions.
 
-Part of your grade for the course will be based on the total number of submitted exercises for parts 0-5 (including exercises marked with an asterisk).
+#### Keep a positive tone
 
-**Do not assume this is where your grade will come from**.
+Everyone in your class is there to learn, just as you are.
+Discussions are a great way to understand different perspectives.
+If a conversation remains positive, then it is a lot more likely that everyone will get something useful out of it.
+Avoid any language that can be construed as angry, sarcastic, or even humorous.
+
+#### Don’t take things personally
+
+As mentioned above, there is no way for you to know for sure what that person writing intends.
+Given that the discussions are supposed to be a community building experience, assume that the responses are meant to be helpful.
+If you have questions about a post, contact your instructor.
+
+#### When in doubt, take a break before posting
+
+If you do find yourself becoming emotionally involved in the discussion, take a break for a half hour.
+Then revisit what you were about to post with an eye to how others would interpret it.
+Once you post a message there is no deleting or taking it back.
+
+#### Be patient, few are online 24/7
+
+Remember that all the people in your course have lives outside of the class they are taking.
+If you ask a question or need clarification, it may be a day or two before you get a response.
+As for me, I vow that I'll respond to you as quickly as I can, but I am not always available immediately.
+
+#### Help others
+
+You are all in this together.
+If someone in the course has a problem with the system or needs help in another way, feel free.
+Many of you will have more experience and your assistance will be appreciated.
+
+### Attendance policies
+
+Even though this is an asynchronous online course, attendance will be counted by how responsive you are on discord.
+You will be expected to respond to any discussion via discord in a reasonable timeframe (24-48 hours).
+After having to contact you via other methods or bringing responsiveness in discord to your attention,
+any subsequent attempts to contact you will lower part of your social learning exercises grade by two percentage points.
+In addition to me reaching out, you will be expected to be in contact with others during the course and will be placed into learning pairs or triads.
+You will be expected to communicate in those discord channels with your learning groups on a regular basis as well
+and will be expected to meet with them on a regular basis to go over the material.
+This means that you'll be expected to meet online with those groups either over Discord or via Zoom (or in person if you prefer).
+**Chatting privately via DMs will not count towards your expectations of regular communication.**
+Those meetings are crucial to your learning and your peers, and so you will be expected to make them up if you cannot make it, or forfeit your ability to pass the course.
+
+### Pronouns
+
+Knowing and applying the names and pronouns that students use is a crucial part of developing a productive learning environment
+that fosters safety, inclusion, personal dignity, and a sense of belonging across campus.
+Please let me know your preferred name and pronoun anytime throughout the semester.
+
+### Grading Scale
+
+The following minimum percentages are required to achieve the corresponding grades:
+
+| A | A- | B+ | B | B- | C+ | C | C- | D |
+| - | - | - | - | - | - | - | - | - |
+| 93 | 90 | 87 | 83 | 80 | 77 | 73 | 70 | 63 |
+
+The grading will come from these areas, however, the percentages are tentative and subject to change.
+
+|   |   |
+| - | - |
+| Individual Exercises |  50%  |
+| Social Learning Exercises & Attendance | 20% |
+| Final Project | 20% |
+| Other Activities | 10% |
+
+### Major Assignments and Examinations
+
+The course is composed of a few parts
+
+- Individual Exercises
+- Social Learning Exercises
+- Final Project
+- Other Activities
+- Course Exam
+
+#### Individual Exercises
+
+Part of your grade for the course will be based on the total number of submitted exercises for the required parts (including exercises marked with an asterisk).
+
+**Your grade will not completely come from these exercises**.
 
 We will be having other exercises and assignments as well that will be just as important to your grade.
 
-A rough calculation for this portion is as follows:
+Assume that if there are 138 exercises **(there are not 138 exercises; that count is not final)**, a rough calculation for this portion is as follows:
 
-| exercises    | rough grade for exercise portion    |
+| exercises    | approx grade for exercises    |
 | ------------ | :------: |
-| 138          | A        |
-| 127          | B+        |
-| 116          | B        |
-| 105          | C        |
-| 94           | C-       |
-| 83           | D        |
-| 72           | F        |
+| 138          | A?        |
+| 127          | B+?        |
+| 116          | B?        |
+| 105          | C?        |
+| 94           | C-?       |
+| 83           | D?        |
+| 72           | F?        |
 
+Why did I put it this way? Because this is a guideline, not a contract.
+I don't even know if there are 138 exercises to begin with!
+Nevertheless, I wanted to provide this approximation to you so that you have a better understanding of what the expectations look like.
 If you wish to pass the course, you will need to submit the assignments as listed in Canvas.
-You must also complete the course exam.
-The exam does not count towards your final grade, but you must pass it.
-More info about the exam will be discussed via canvas and discord.
-
-You can only take the exam after submitting a sufficient number of exercises.
-It is not wise in practice to take the exam immediately after submitting the critical number of exercises.
-The exam is the same and does not count toward your grade (you just need to pass it).
 
 For the other modules, we will determine at a later date which ones will be completed, but these may be done in a different order sequence.
 
@@ -104,67 +255,123 @@ For the other modules, we will determine at a later date which ones will be comp
 | 8  | TypeScript | 24 | 1 |
 | 9 | React Native | 10 | 1 |
 
-### Studying the course in a nutshell
+With all submissions requested, please follow submission guidelines carefully.
 
-How to study the course – instructions in a nutshell:
+Students are responsible for reading course material and following instructions posts on Canvas.
+Students are also responsible for being aware of any announcements the instructor makes through Canvas.
 
-- Do the exercises. The exercises are submitted through GitHub and marking them as done on Canvas.
-- You need to work regularly.
-  The easiest way to fall behind in the course is to not work on it every couple of days.
-  Set yourself an alarm...do anything! But make it a habit of working on it at least 3 times a week for a little bit of time.
+#### Course Exam
 
-### Submitting exercises
+You must also complete the course exam.
+Notice though that the exam is not listed in your grade breakdown.
+The exam does not count towards your final grade, but you must pass it to pass the course.
+More info about the exam will be discussed via canvas and discord in the middle of the semester.
 
-You will be submitting exercises via the GitHub classroom repos that will be provided on Canvas.
-**All of the exercises from this website must be submitted through GitHub.**
-You will also be expected to submit your progress for exercises regularly, even if it is not finished.
+You can only take the exam after submitting a sufficient number of exercises.
+It is not wise in practice to take the exam immediately after submitting the critical number of exercises.
+The exam is the same and does not count toward your grade (you just need to pass it).
 
-Exercises are submitted **one part at a time**.
-Once you have submitted exercises for a part, you can no longer submit any more exercises for that part.
+If you complete the assignments and you work through the material in earnest, you will be fine on the exam.
 
-A system for detecting plagiarism is used to check exercises submitted to GitHub.
-If code is found from model answers or multiple students hand in the same code,
-the situation is handled according to the policy on plagiarism as outlined in the syllabus.
+#### Late Assignments and Make-up Work
 
-Many of the exercises build a larger application bit by bit.
-You will be expected to commit often so that you show your work as you move through the course.
-You will need to practice committing early and often.
-It is the equivalent of showing your work in class.
+The only acceptable excuses for missing an assignment due date are serious illness, death in the immediate family or important professional activities.
+Illness or death in the family may require documentation.
+Excuses for professional activities must be approved by the instructor in advance.
+Late assignments will be deducted 15% per day and will not be accepted beyond 1 week late.
 
-### Full stack project
+#### Individual Work and Collaboration
 
-For the project, an application is implemented in React and/or Node, though implementing a mobile application in React Native is also possible.
+Computer professionals usually work in a cooperative environment, yet proper assessment requires that work be done by individuals.
+To alleviate confusion, the following policy will be followed:
 
-You will be expected to work on the project either as a pair or as a group.
+Collaborative work is encouraged.
+This includes students working together on problem sets, planning solution strategies, and helping each other to debug programs.
+Collaboration must stop short of the writing of program code or English that represents your work.
+You may not directly copy the work of another student.
+It is your responsibility to ensure that the work you submit is an honest representation of your own understanding of the material.
 
-More information about the project will be released via Canvas
+Marginal cases will be resolved by oral examination of the students involved.
+If they understand the material in the assignment, it will be considered honest collaboration.
+If they do not, then it will be considered academic dishonesty.
 
-### Before you start
+### Collection of Work for Assessment
 
-Using a Chromium-based browser like [Chrome](https://www.google.com/chrome/) is recommended while developing because 
-it provides great tools for web development.
-I will be showing you and providing screenshots of those tools.
-Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/),
-which provides a similar range of features.
+Student work may be retained to assess how course learning objectives are being met and for accreditation purposes.
+Copies of student work may be retained to assess how the learning objectives of the course are being met.
 
-In [part 0c](/part0/configuring_your_machine_for_this_course) we'll provide detailed instructions for installing some of the tools that we will be using extensively:
-[Git](https://git-scm.org) (via GitHub),
-[Webstorm](https://www.jetbrains.com/webstorm/download/)
-and [Node.js](https://nodejs.org/en/).
+### Honor Code
 
-The course exercises will be submitted to GitHub, so Git must be installed and you should know how to use it.
+The Honor Code at the University of the Pacific calls upon each student to exhibit a high degree of maturity, responsibility, and personal integrity.
+Students are expected to:
 
-### Typos in the material
+- act honestly in all matters
+- actively encourage academic integrity
+- discourage any form of cheating or dishonesty by others
+- inform the instructor and appropriate university administrator
+  if they have a reasonable and good faith belief and substantial evidence that a violation of the Academic Honesty Policy has occurred.
 
-If you find a typo in the material, or something has been expressed unclearly or is simply bad grammar,
-submit a *pull request* to the course material in the [repository](https://github.com/comp227/comp227).
-For example, the markdown source code of this page can be found in the repository at <https://github.com/comp227/comp227/edit/source/src/content/0/en/part0a.md>
+Violations will be referred to and investigated by the Office of Student Conduct and Community Standards.
+If a student is found responsible, it will be documented as part of her or his permanent academic record.
+A student may receive a range of penalties, including failure of an assignment, failure of the course, suspension, or dismissal from the University.
+The Academic Honesty Policy is located in Tiger Lore and online at <http://www.pacific.edu/Campus-Life/Safety-and-Conduct/Student-Conduct/Tiger-LoreStudent-Handbook-.html>
+Accommodations for Students with Disabilities:
+If you are a student with a disability who requires accommodations,
+please contact the Director of the Office of Services for Students with Disabilities (SSD) for information on how to obtain an Accommodations Request Letter.
 
-At the bottom of each part of the material is a link to **propose changes to the material**.
-You can edit the source code of the page by clicking on the link.
+### 3-Step Accommodation Process
 
-There are also lots of links in the material for many kinds of background material.
-If you notice that a link is broken (that happens too often...),
-propose a change or ping us in Discord if you do not find a replacement for the broken link.
+1. Student meets with the SSD Director and provides documentation and completes registration forms.
+2. Student requests accommodation(s) each semester by completing the Request for Accommodations Form.
+3. Student arranges to meet with his/her professors to discuss the accommodation(s) and to sign the Accommodation Request Letter
+To ensure timeliness of services, it is preferable that you obtain the accommodation letter(s) from the Office of SSD as early as possible in each term.
+After the instructor receives the accommodation letter, please schedule a meeting with the instructor during office hours or some other mutually convenient time to arrange the accommodation(s).
+The Office of Services for Students with Disabilities is located in the McCaffrey Center, Rm. 137.
+Phone: 209-946-3221.
+Email: ssd@pacific.edu.
+Online: <http://www.pacific.edu/disabilities>
+NOTE: The preceding information is the minimal information required in this section of the course syllabus,
+instructors are free to expand on the information above and/or add any additional information below.
+See the requirements below for Program Objectives and Course Schedule.
+
+### Academic Support Services
+
+Students at University of the Pacific have access to many free support services to help them thrive academically.
+These services can benefit all students and are designed to help reinforce, extend, enrich and support students’ learning in the classroom.
+Both students who simply want to improve their performance and those struggling with understanding the material in a course can benefit.
+Come to the academic support center on the second floor of the library for one-on-one or group tutoring appointments,
+drop-in or by-appointment writing help, math skills lab open hours, research help from academic support librarians, or to sign up for study hall, a study pal or study group.
+Click on the link to schedule an appointment: [Academic Support Services Appointments](https://pacific.mywconline.com/index.php?msgLOG=YES).
+
+Additional resources can also be searched for on the [student success resources website](https://www.pacific.edu/academics/academic-support).
+
+Family Educational Rights and Privacy Act (FERPA)
+FERPA is a federal law designed to protect the privacy of educational records by limiting access to these records,
+to establish the right of students to inspect and review their educational records
+and to provide guidelines for the correction of inaccurate and misleading data through informal and formal hearings.
+The University of Pacific complies with FERPA and has placed the most updated version of FERPA in our
+Academic Catalog.
+If you wish to view FERPA, or locate the Non-Release of Directory Information Form,  Please click the following link to [view the University's FERPA Policy](http://catalog.pacific.edu/stocktongeneral/generalinformation/universitypolicyondisclosureofstudentrecords/).
+NOTE: Items that can never be identified as public information are a student’s social security number, citizenship, gender, grades, GPR or class schedule.
+All efforts will be made in this class to protect your privacy and to ensure confidential treatment of information associated with or generated by your participation in the class.
+
+| Week | Date | Hours, Topics, and Activities |
+| - | - | - | - |
+| 1 | Jan 16 | 0 - General course info & Setup<br>1a-1c: React, Javascript, State & Handlers |
+|2  | Jan 23 | 1d - Debugging React<br>2a - Rendering collections |
+|3  | Jan 30 | 2b-2d - Forms and working with data on a server|
+|4 | Feb 6 | 2e - Adding styles to React<br>3a-3b Express and Deploying an app to the internet |
+|5  | Feb 13 | 3c-3d - Saving data to MongoDB and Validation |
+|6  |  Feb 20 | 4a-4b - Testing the backend |
+|7 | Feb 27 | 4c-4d - User administration & Token Authentication |
+|8  | Mar 6 | 5a-5b - Frontend logins and props|
+|9 | Mar 13 | 🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎 |
+|10 | Mar 20 | 5c-5d - Testing React and end-to-end|
+|11  | Mar 27 | 7a-7b - React Router & Custom Hooks |
+|12  | Apr 3 | 8a-8b - Typescript |
+|13 | Apr 10 | 8c-8d - More Typescript (Final Project) |
+|14  | Apr 17 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
+|15 |  Apr 24 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
+|16 | May 2 | Final Project |
 
 </div>
