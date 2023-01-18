@@ -895,7 +895,7 @@ The return value also contains the number of shows the top genre has:
 
 ```js
 {
-  genre: "Reality",
+  genre: "Drama",
   shows: 3
 }
 ```
