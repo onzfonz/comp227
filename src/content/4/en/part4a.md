@@ -13,7 +13,8 @@ Let's continue our work on the backend of the tasks application we started in [p
 
 Before we move into the topic of testing, we will modify the structure of our project to adhere to Node.js best practices.
 
-After making the changes to the directory structure of our project, we end up with the following structure:
+The following section will be devoted to walking us through restructuring our project.
+By the time we reach the [recap section](#directory-structure-recap), the directory structure of our project will look like this:
 
 ```bash
 ├── index.js
@@ -32,9 +33,13 @@ After making the changes to the directory structure of our project, we end up wi
 │   └── middleware.js  
 ```
 
-So far we have been using `console.log` and `console.error` to print different information from the code.
-However, this is not a very good way to do things.
-Let's separate all printing to the console to its own module *utils/logger.js*:
+Let's get started
+
+#### utils/logger.js
+
+So far we have been using `console.log` and we gently introduced `console.error` to print different information from the code.
+However, there are better tricks we can use to [go beyond `console.log`](https://dev.to/stefirosca/7-tips-tricks-to-make-your-console-log-output-stand-out-389g).
+Let's go one step closer to best practices and **separate all console printing to the module *utils/logger.js***
 
 ```js
 const info = (...params) => {
@@ -56,6 +61,8 @@ Extracting logging into its own module is a good idea in more ways than one.
 If we wanted to start writing logs to a file or send them to an external logging service like [graylog](https://www.graylog.org/)
 or [papertrail](https://papertrailapp.com) we would only have to make changes in one place.
 
+#### index.js
+
 The contents of the *index.js* file used for starting the application gets simplified as follows:
 
 ```js
@@ -72,7 +79,9 @@ server.listen(config.PORT, () => {
 ```
 
 The *index.js* file only imports the actual application from the *app.js* file and then starts the application.
-The function `info` of the logger-module is used for the console printout telling that the application is running.
+The function `info` of the logger module is used for the console printout telling that the application is running.
+
+#### utils/config.js
 
 The handling of environment variables is extracted into a separate *utils/config.js* file:
 
@@ -96,8 +105,10 @@ const config = require('./utils/config')
 logger.info(`Server running on port ${config.PORT}`)
 ```
 
+#### controllers/tasks.js
+
 The route handlers have also been moved into a dedicated module.
-The event handlers of routes are commonly referred to as **controllers**, and for this reason we have created a new *controllers* directory.
+The event handlers of routes are commonly referred to as **controllers**, and for this reason, we have created a new *controllers* directory.
 All of the routes related to tasks are now in the *tasks.js* module under the *controllers* directory.
 
 The contents of the *tasks.js* module are the following:
@@ -169,7 +180,7 @@ module.exports = tasksRouter
 This is almost an exact copy-paste of our previous *index.js* file.
 
 However, there are a few significant changes.
-At the very beginning of the file we create a new [router](http://expressjs.com/en/api.html#router) object:
+At the very beginning of the file, we create a new [router](http://expressjs.com/en/api.html#router) object:
 
 ```js
 const tasksRouter = require('express').Router()
@@ -203,9 +214,11 @@ The Express manual provides the following explanation:
   You can think of it as a “mini-application,” capable only of performing middleware and routing functions.
   Every Express application has a built-in app router.*
 
-The router is in fact a **middleware**, that can be used for defining "related routes" in a single place, which is typically placed in its own module.
+The router *is a* **middleware**, that can be used for defining "related routes" in a single place, which is typically placed in its own module.
 
-The *app.js* file that creates the actual application takes the router into use as shown below:
+#### app.js
+
+The *app.js* file that creates the actual application takes the router into use as shown in this code snippet:
 
 ```js
 const tasksRouter = require('./controllers/tasks')
@@ -225,7 +238,7 @@ const cors = require('cors')
 const tasksRouter = require('./controllers/tasks')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
-const mongoose = require('mongoose')
+const mongoose = require('mongoose').set('strictQuery', true)
 
 logger.info('connecting to', config.MONGODB_URI)
 
@@ -251,6 +264,8 @@ module.exports = app
 ```
 
 The file takes different middleware into use, and one of these is the `tasksRouter` that is attached to the `/api/tasks` route.
+
+#### utils/middleware.js
 
 Our custom middleware has been moved to a new *utils/middleware.js* module:
 
@@ -288,7 +303,10 @@ module.exports = {
 }
 ```
 
-The responsibility of establishing the connection to the database has been given to the  *app.js* module.
+The responsibility of establishing the connection to the database has been given to the *app.js* module.
+
+#### models/task.js
+
 The *task.js* file under the *models* directory only defines the Mongoose schema for tasks.
 
 ```js
@@ -318,6 +336,8 @@ taskSchema.set('toJSON', {
 module.exports = mongoose.model('Task', taskSchema)
 ```
 
+### Directory Structure Recap
+
 To recap, the directory structure looks like this after the changes have been made:
 
 ```bash
@@ -338,13 +358,13 @@ To recap, the directory structure looks like this after the changes have been ma
 ```
 
 For smaller applications, the structure does not matter that much.
-Once the application starts to grow in size, you are going to have to establish some kind of structure
+Once the application starts to grow in size, you must establish a structure
 and separate the different responsibilities of the application into separate modules.
 This will make developing the application much easier.
 
 There is no strict directory structure or file naming convention that is required for Express applications.
-In contrast, Ruby on Rails does require a specific structure.
-Our current structure simply follows some of the best practices you can come across on the internet.
+In contrast, other frameworks like Ruby on Rails do require a specific structure.
+Our current structure merely tries to adhere to best practices (according to the internet).
 
 You can find the code for our current application in its entirety in the *part4-1* branch of
 [this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-1).
@@ -372,6 +392,8 @@ module.exports = {
 // highlight-end
 ```
 
+#### Exporting a bundled object
+
 The file exports ***an object*** that has two fields, both of which are functions.
 The functions can be used in two different ways.
 The first option is to require the whole object and refer to functions through the object using the dot notation:
@@ -393,9 +415,11 @@ info('message')
 error('error message')
 ```
 
-The latter way may be preferable if only a small portion of the exported functions are used in a file.
+I would recommend using the latter option when only a small portion of those exported functions would be needed.
 
-e.g. in file *controller/tasks.js* exporting happens as follows:
+#### Exporting a single value
+
+In file *controller/tasks.js*, exporting happens differently:
 
 ```js
 const tasksRouter = require('express').Router()
@@ -406,7 +430,7 @@ const Task = require('../models/task')
 module.exports = tasksRouter // highlight-line
 ```
 
-In this case, there is just one "thing" exported, so the only way to use it is the following:
+In this case, there is just one *thing* exported, so the only way to use it is the following:
 
 ```js
 const tasksRouter = require('./controllers/tasks')
@@ -416,7 +440,7 @@ const tasksRouter = require('./controllers/tasks')
 app.use('/api/tasks', tasksRouter)
 ```
 
-Now the exported "thing" (in this case a router object) is assigned to a variable and used as such.
+Now the exported *thing* (in this case a router object) is assigned to a variable and used as such.
 
 </div>
 
