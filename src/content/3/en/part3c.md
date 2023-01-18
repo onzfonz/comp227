@@ -934,7 +934,7 @@ const errorHandler = (error, request, response, next) => {
 app.use(errorHandler)
 ```
 
-The error handler checks if the error is a `CastError` exception, in which case we know that the error was caused by an invalid object id for Mongo.
+After printing the error message, the error handler checks if the error is a `CastError` exception, in which case we know that the error was caused by an invalid object id for Mongo.
 In this situation, the error handler will send a response to the browser with the response object passed as a parameter.
 In all other error situations, the middleware passes the error forward to the default Express error handler.
 

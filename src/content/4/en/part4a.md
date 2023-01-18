@@ -33,6 +33,8 @@ By the time we reach the [recap section](#directory-structure-recap), the direct
 │   └── middleware.js  
 ```
 
+Before we get started, know that when you ask Webstorm to make a file, and if type *`dir/file`*, Webstorm will automatically create the directory if it doesn't exist.
+You just need to make sure the correct directory is selected before you begin.
 Let's get started
 
 #### utils/logger.js
@@ -448,11 +450,12 @@ Now the exported *thing* (in this case a router object) is assigned to a variabl
 
 ### Exercises 4.1-4.2
 
-In the exercises for this part, we will be building a **blog list application**,
-which allows users to save information about interesting blogs they have stumbled across on the internet.
-For each listed blog we will save the author, title, URL, and amount of upvotes from users of the application.
+In the exercises for this part, we will be building a **Streaming Show list application**,
+which allows users to save information about interesting shows they have stumbled across on the internet.
+For each listed show we will save the title, genre, Streaming Service URL, and amount of upvotes from users of the application.
+From here on, I will refer to a streaming show as a **show**.
 
-#### 4.1 Blog list, step1
+#### 4.1 Show list, step1
 
 Let's imagine a situation, where you receive an email that contains the following application body:
 
@@ -463,33 +466,33 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-const blogSchema = new mongoose.Schema({
+const showSchema = new mongoose.Schema({
   title: String,
-  author: String,
+  genre: String,
   url: String,
   likes: Number
 })
 
-const Blog = mongoose.model('Blog', blogSchema)
+const Show = mongoose.model('Show', showSchema)
 
-const mongoUrl = 'mongodb://localhost/bloglist'
+const mongoUrl = 'mongodb://localhost/showlist'
 mongoose.connect(mongoUrl)
 
 app.use(cors())
 app.use(express.json())
 
-app.get('/api/blogs', (request, response) => {
-  Blog
+app.get('/api/shows', (request, response) => {
+  Show
     .find({})
-    .then(blogs => {
-      response.json(blogs)
+    .then(shows => {
+      response.json(shows)
     })
 })
 
-app.post('/api/blogs', (request, response) => {
-  const blog = new Blog(request.body)
+app.post('/api/shows', (request, response) => {
+  const show = new Show(request.body)
 
-  blog
+  show
     .save()
     .then(result => {
       response.status(201).json(result)
@@ -506,10 +509,10 @@ Turn the application into a functioning ***npm*** project.
 To keep your development productive, configure the application to be executed with ***nodemon***.
 You can create a new database for your application with MongoDB Atlas, or use the same database from the previous part's exercises.
 
-Verify that it is possible to add blogs to the list with Postman or the VS Code REST client
-and that the application returns the added blogs at the correct endpoint.
+Verify that it is possible to add shows to the list with Postman or the WebStorm REST client
+and that the application returns the added shows at the correct endpoint.
 
-#### 4.2 Blog list, step2
+#### 4.2 Show list, step2
 
 Refactor the application into separate modules as shown earlier in this part of the course material.
 
@@ -518,7 +521,8 @@ If you try to take a "shortcut" by refactoring many things at once, then [Murphy
 will kick in and it is almost certain that something will break in your application.
 The "shortcut" will end up taking more time than moving forward slowly and systematically.
 
-One best practice is to commit your code every time it is in a stable state.
+This is part of why I keep enforcing you all to commit your code every time it is in a stable state.
+It makes it easier to find what error caused your mistake.
 This makes it easy to rollback to a situation where the application still works.
 
 </div>
@@ -575,18 +579,17 @@ npm install jest --save-dev
 
 Let's define the *npm script `test`* to execute tests with Jest and to report about the test execution with the `verbose` style:
 
-```bash
+```json
 {
   //...
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui": "rm -rf build && cd ../../../2/luento/tasks && npm run build && cp -r build ../../../3/luento/tasks-backend",
-    "deploy": "git push heroku master",
-    "deploy:full": "npm run build:ui && git add .
-&& git commit -m uibuild && git push && npm run deploy",
-    "logs:prod": "heroku logs --tail",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../part3-tasks-backend",
+    "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
     "lint": "eslint .",
+    "fixlint": "eslint . --fix",
     "test": "jest --verbose" // highlight-line
   },
   //...
@@ -613,7 +616,7 @@ module.exports = {
 }
 ```
 
-Let's create a separate directory for our tests called *tests* and create a new file called *reverse.test.js* with the following contents:
+Let's create a new file called *tests/reverse.test.js* with the following contents:
 
 ```js
 const reverse = require('../utils/for_testing').reverse
@@ -646,6 +649,7 @@ module.exports = {
   'env': {
     'commonjs': true,
     'es2021': true,
+    'browser': true,
     'node': true,
     'jest': true, // highlight-line
   },
@@ -688,21 +692,19 @@ As expected, all of the tests pass:
 ![terminal output from npm test](../../images/4/1x.png)
 
 Jest expects by default that the names of test files contain *.test*.
-In this course, we will follow the convention of naming our tests files with the extension *.test.js*.
+In this course, we will follow the convention of naming our test files with the extension *.test.js*.
 
-Jest has excellent error messages, let's break the test to demonstrate this:
+Jest has excellent error messages, let's break our `reverse of react` test to demonstrate this by changing the expected result from `tcaer` to the incorrect `8caer` (line 12).
 
 ```js
-test('palindrome of react', () => {
-  const result = reverse('react')
-
-  expect(result).toBe('tkaer')
-})
+  expect(result).toBe('8caer')
 ```
 
 Running the tests above results in the following error message:
 
 ![terminal output shows failure from npm test](../../images/4/2x.png)
+
+Change the test back.
 
 Let's add a few tests for the `average` function, into a new file *tests/average.test.js*.
 
@@ -726,7 +728,7 @@ describe('average', () => {
 
 The test reveals that the function does not work correctly with an empty array (this is because in JavaScript dividing by zero results in `NaN`):
 
-![terminal output showing empty array fails with jest](../../images/4/3.png)
+![terminal output showing that an empty array fails with jest](../../images/4/3.png)
 
 Fixing the function is quite easy:
 
@@ -742,7 +744,7 @@ const average = array => {
 }
 ```
 
-If the length of the array is 0 then we return 0, and in all other cases, we use the `reduce` method to calculate the average.
+If the length of the array is `0` then we *`return 0`*, and in all other cases, we use the `reduce` method to calculate the average.
 
 There are a few things to notice about the tests that we just wrote.
 We defined a `describe` block around the tests that were given the name `average`:
@@ -754,9 +756,9 @@ describe('average', () => {
 ```
 
 Describe blocks can be used for grouping tests into logical collections.
-The test output of Jest also uses the name of the describe block:
+The test output of Jest also uses the name of the `describe` block:
 
-![screenshot of npm test shwoing describe blocks](../../images/4/4x.png)
+![screenshot of npm test showing describe blocks](../../images/4/4x.png)
 
 As we will see later on `describe` blocks are necessary when we want to run some shared setup or teardown operations for a group of tests.
 
@@ -775,17 +777,17 @@ test('of empty array is zero', () => {
 
 ### Exercises 4.3-4.7
 
-Let's create a collection of helper functions that are meant to assist in dealing with the blog list.
+Let's create a collection of helper functions that are meant to assist in dealing with the show list.
 Create the functions into a file called *utils/list_helper.js*.
 Write your tests into an appropriately named test file under the *tests* directory.
 
 #### 4.3: helper functions and unit tests, step1
 
-First, define a `dummy` function that receives an array of blog posts as a parameter and always returns the value 1.
+First, define a `dummy` function that receives an array of shows as a parameter and always returns the value 1.
 The contents of the *list_helper.js* file at this point should be the following:
 
 ```js
-const dummy = (blogs) => {
+const dummy = (shows) => {
   // ...
 }
 
@@ -800,17 +802,17 @@ Verify that your test configuration works with the following test:
 const listHelper = require('../utils/list_helper')
 
 test('dummy returns one', () => {
-  const blogs = []
+  const shows = []
 
-  const result = listHelper.dummy(blogs)
+  const result = listHelper.dummy(shows)
   expect(result).toBe(1)
 })
 ```
 
 #### 4.4: helper functions and unit tests, step2
 
-Define a new `totalLikes` function that receives a list of blog posts as a parameter.
-The function returns the total sum of ***likes*** in all of the blog posts.
+Define a new `totalLikes` function that receives a list of shows as a parameter.
+The function returns the total sum of ***likes*** in all of the shows.
 
 Write appropriate tests for the function.
 It's recommended to put the tests inside of a `describe` block so that the test report output gets grouped nicely:
@@ -821,31 +823,30 @@ Defining test inputs for the function can be done like this:
 
 ```js
 describe('total likes', () => {
-  const listWithOneBlog = [
+  const listWithOneShow = [
     {
       _id: '5a422aa71b54a676234d17f8',
-      title: 'Go To Statement Considered Harmful',
-      author: 'Edsger W.
-Dijkstra',
-      url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      title: 'Arrested Development',
+      genre: 'Comedy',
+      url: 'https://www.netflix.com/title/70140358',
       likes: 5,
       __v: 0
     }
   ]
 
-  test('when list has only one blog, equals the likes of that', () => {
-    const result = listHelper.totalLikes(listWithOneBlog)
+  test('when list has only one show, equals the likes of that', () => {
+    const result = listHelper.totalLikes(listWithOneShow)
     expect(result).toBe(5)
   })
 })
 ```
 
-If defining your own test input list of blogs is too much work,
-you can use the ready-made list [here](https://raw.githubusercontent.com/comp227/misc/main/blogs_for_test.md).
+If defining your own test input list of shows is too much work,
+you can use the ready-made list [here](https://raw.githubusercontent.com/comp227/misc/main/shows_for_test.md).
 
 You are bound to run into problems while writing tests.
 Remember the things that we learned about [debugging](/part3/saving_data_to_mongo_db#debugging-node-applications) in part 3.
-You can print things to the console with `console.log` even during test execution.
+You can print things to the console with `console.log ` even during test execution.
 It is even possible to use the debugger while running tests, you can find instructions for that [here](https://jestjs.io/docs/en/troubleshooting).
 
 **NB:** if some test is failing, then it is recommended to only run that test while you are fixing the issue.
@@ -854,22 +855,21 @@ You can run a single test with the [only](https://jestjs.io/docs/api#testonlynam
 Another way of running a single test (or describe block) is to specify the name of the test to be run with the [-t](https://jestjs.io/docs/en/cli.html) flag:
 
 ```js
-npm test -- -t 'when list has only one blog, equals the likes of that'
+npm test -- -t 'when list has only one show, equals the likes of that'
 ```
 
 #### 4.5*: helper functions and unit tests, step3
 
-Define a new `favoriteBlog` function that receives a list of blogs as a parameter.
-The function finds out which blog has the most likes.
+Define a new `favoriteShow` function that receives a list of shows as a parameter.
+The function finds out which show has the most likes.
 If there are many top favorites, it is enough to return one of them.
 
 The value returned by the function could be in the following format:
 
 ```js
 {
-  title: "Canonical string reduction",
-  author: "Edsger W.
-Dijkstra",
+  title: "Community",
+  genre: "Comedy",
   likes: 12
 }
 ```
@@ -883,40 +883,38 @@ Do the same for the remaining exercises as well.
 #### 4.6*: helper functions and unit tests, step4
 
 This and the next exercise are a little bit more challenging.
-Finishing these two exercises is not required in to advance in the course material,
+Finishing these two exercises is not required to advance in the course material,
 so it may be a good idea to return to these once you're done going through the material for this part in its entirety.
 
 Finishing this exercise can be done without the use of additional libraries.
 However, this exercise is a great opportunity to learn how to use the [Lodash](https://lodash.com/) library.
 
-Define a function called `mostBlogs` that receives an array of blogs as a parameter.
-The function returns the ***author*** who has the largest amount of blogs.
-The return value also contains the number of blogs the top author has:
+Define a function called `mostShows` that receives an array of shows as a parameter.
+The function returns the ***genre*** that has the largest amount of shows.
+The return value also contains the number of shows the top genre has:
 
 ```js
 {
-  author: "Robert C.
-Martin",
-  blogs: 3
+  genre: "Reality",
+  shows: 3
 }
 ```
 
-If there are many top bloggers, then it is enough to return any one of them.
+If there are many top genres, then it is enough to return any one of them.
 
 #### 4.7*: helper functions and unit tests, step5
 
-Define a function called `mostLikes` that receives an array of blogs as its parameter.
-The function returns the author, whose blog posts have the largest amount of likes.
-The return value also contains the total number of likes that the author has received:
+Define a function called `mostLikes` that receives an array of shows as its parameter.
+The function returns the genre, whose shows collectively have the largest amount of likes.
+The return value also contains the total number of likes that the genre has received:
 
 ```js
 {
-  author: "Edsger W.
-Dijkstra",
+  genre: "Comedy",
   likes: 17
 }
 ```
 
-If there are many top bloggers, then it is enough to show any one of them.
+If there are many top genres, then it is enough to show any one of them.
 
 </div>
