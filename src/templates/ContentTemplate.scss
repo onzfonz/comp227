@@ -63,6 +63,12 @@
     }
   }
 
+  a {
+    html[data-theme='light'] & {
+        font-family: $font-heading;
+    }
+  }
+
   h2:not(:first-of-type) {
     margin-top: 2rem;
   }
