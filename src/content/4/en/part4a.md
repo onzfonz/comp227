@@ -585,12 +585,11 @@ Let's define the *npm script `test`* to execute tests with Jest and to report ab
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose", // highlight-line
     "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../part3-tasks-backend",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
     "lint": "eslint .",
-    "fixlint": "eslint . --fix",
-    "test": "jest --verbose" // highlight-line
+    "fixlint": "eslint . --fix"
   },
   //...
 }
@@ -640,6 +639,8 @@ test('reverse of releveler', () => {
 })
 ```
 
+#### Handling complaints about jest
+
 The ESLint configuration we added to the project in the previous part complains about the `test` and `expect` commands in our test file
 since the configuration does not allow *globals*.
 Let's get rid of the complaints by adding `"jest": true` to the `env` property in the *.eslintrc.js* file.
@@ -661,6 +662,13 @@ module.exports = {
     // ...
   },
 }
+```
+
+Webstorm also seems to complain with warnings for not knowing about test and expect.
+To get rid of these errors, you can simply type this command so that your project is also aware of the jest's types.
+
+```bash
+npm install @types/jest --save-dev
 ```
 
 In the first row, the test file imports the function to be tested and assigns it to a variable called `reverse`:
@@ -846,7 +854,7 @@ you can use the ready-made list [here](https://raw.githubusercontent.com/comp227
 
 You are bound to run into problems while writing tests.
 Remember the things that we learned about [debugging](/part3/saving_data_to_mongo_db#debugging-node-applications) in part 3.
-You can print things to the console with `console.log ` even during test execution.
+You can print things to the console with `console.log` even during test execution.
 It is even possible to use the debugger while running tests, you can find instructions for that [here](https://jestjs.io/docs/en/troubleshooting).
 
 **NB:** if some test is failing, then it is recommended to only run that test while you are fixing the issue.

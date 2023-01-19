@@ -15,46 +15,48 @@ In some situations, it can be beneficial to implement some of the backend tests 
 One library that could be used for this is [mongodb-memory-server](https://github.com/nodkz/mongodb-memory-server).
 
 Since our application's backend is still relatively simple,
-we will decide to test the entire application through its REST API, so that the database is also included.
-This kind of testing where multiple components of the system are being tested as a group is called [integration testing](https://en.wikipedia.org/wiki/Integration_testing).
+we will decide to test the entire application through its REST API, so that it also tests the database at the same time.
+This kind of testing where multiple components are combined and tested as a unit is called [integration testing](https://en.wikipedia.org/wiki/Integration_testing).
 
-### Test environment
+### Specifying Application modes
 
-In one of the previous chapters of the course material, we mentioned that when your backend server is running in Heroku, it is in **production** mode.
+In one of the previous chapters of the course material, we mentioned that when your backend server is running in Render, it is in **production** mode.
 
 The convention in Node is to define the execution mode of the application with the `NODE_ENV` environment variable.
-In our current application, we only load the environment variables defined in the *.env* file if the application is ***not*** in production mode.
+In using Render, we were lucky enough that we were able to use the same *.env* file that we had in our development environemnt.
+Other services only allow you to set variables manually through their site,
+which means that the environment variables defined in the *.env* file would not be loaded if the application is ***not*** in production mode.
 
-It is common practice to define separate modes for development and testing.
+Because of tiny nuances like this, it is common practice to define separate modes for development and testing.
 
-Next, let's change the scripts in our *package.json* so that when tests are run, `NODE_ENV` gets the value `test`:
+To do that, let's change the scripts in our *package.json* so that when tests are run, `NODE_ENV` gets the value `test`:
 
 ```json
 {
-  // ...
+  //...
   "scripts": {
-    "start": "NODE_ENV=production node index.js",// highlight-line
-    "dev": "NODE_ENV=development nodemon index.js",// highlight-line
-    "build:ui": "rm -rf build && cd ../../../2/luento/tasks && npm run build && cp -r build ../../../3/luento/tasks-backend",
-    "deploy": "git push heroku master",
-    "deploy:full": "npm run build:ui && git add .
-&& git commit -m uibuild && git push && npm run deploy",
-    "logs:prod": "heroku logs --tail",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand", // highlight-line
+    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../part3-tasks-backend",
+    "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest --verbose --runInBand"// highlight-line
+    "fixlint": "eslint . --fix"
   },
-  // ...
+  //...
 }
 ```
 
 We also added the [runInBand](https://jestjs.io/docs/cli#--runinband) option to the npm script that executes the tests.
 This option will prevent Jest from running tests in parallel; we will discuss its significance once our tests start using the database.
 
-We specified the mode of the application to be ***development*** in the `npm run dev` script that uses nodemon.
-We also specified that the default `npm start` command will define the mode as ***production***.
+We also specified the application mode (`NODE_ENV`) as:
 
-There is a slight issue in the way that we have specified the mode of the application in our scripts: it will not work on Windows.
-We can correct this by installing the [cross-env](https://www.npmjs.com/package/cross-env) package as a development dependency with the command:
+- ***development*** in the `npm run dev` script that uses nodemon.
+- ***production*** in the default `npm start` command.
+
+There is a slight issue in how we have setup the application mode in our scripts: it will not work on Windows 😔.
+We can correct this by installing the [cross-env](https://www.npmjs.com/package/cross-env) package:
 
 ```bash
 npm install cross-env --save-dev
@@ -68,20 +70,22 @@ We can then achieve cross-platform compatibility by using the cross-env library 
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    // ...
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    // ...
   },
   // ...
 }
 ```
 
-**NB**: If you are deploying this application to heroku,
-keep in mind that if cross-env is saved as a development dependency, it would cause an application error on your web server.
-To fix this, change cross-env to a production dependency by running this in the command line:
+**NB**: If you are deploying this application to a cloud service,
+keep in mind that if cross-env is saved as a development dependency, it may cause an application error on your web server.
+To fix this, ***change cross-env to a production dependency*** by running this in the command line:
 
 ```bash
 npm i cross-env -P
 ```
+
+#### Leveraging Application Modes in Code
 
 Now we can modify the way that our application runs in different modes.
 As an example of this, we could define the application to use a separate test database when it is running tests.
@@ -93,9 +97,9 @@ Test execution in particular typically requires a single database instance that 
 It would be better to run our tests using a database that is installed and running on the developer's local machine.
 The optimal solution would be to have every test execution use a separate database.
 This is "relatively simple" to achieve by [running Mongo in-memory](https://docs.mongodb.com/manual/core/inmemory/) or by using [Docker](https://www.docker.com) containers.
-We will not complicate things and will instead continue to use the MongoDB Atlas database.
+Nonetheless, to reduce complexity at this point we will instead continue to use the MongoDB Atlas database.
 
-Let's make some changes to the module that defines the application's configuration:
+Let's make some changes to the module that defines the application's configuration, *utils/config.js*:
 
 ```js
 require('dotenv').config()
@@ -117,11 +121,11 @@ module.exports = {
 The *.env* file has ***separate variables*** for the database addresses of the development and test databases:
 
 ```bash
-MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/taskApp?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.gb6u3el.mongodb.net/taskApp?retryWrites=true&w=majority
 PORT=3001
 
 // highlight-start
-TEST_MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.o1opl.mongodb.net/testTaskApp?retryWrites=true&w=majority
+TEST_MONGODB_URI=mongodb+srv://comp227:<password>@cluster0.gb6u3el.mongodb.net/testTaskApp?retryWrites=true&w=majority
 // highlight-end
 ```
 
@@ -170,8 +174,11 @@ This object is assigned to the `api` variable and tests can use it for making HT
 
 Our test makes an HTTP GET request to the ***api/tasks*** URL and verifies that the request is responded to with the status code 200.
 The test also verifies that the `Content-Type` header is set to `application/json`, indicating that the data is in the desired format.
-(If you're not familiar with the RegEx syntax of `/application\/json/`,
-you can learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).)
+
+>If you're not familiar with the RegEx syntax of `/application\/json/`,
+you can learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).  
+I would strongly encourage you all to practice working more with regular expressions!
+If you're just plain rusty with regex and need practice, then there many sites that can help you test your regex as well, like [regex101](https://regex101.com/).
 
 The test contains some details that we will explore [a bit later on](/part4/testing_the_backend#async-await).
 The arrow function that defines the test is preceded by the `async` keyword
@@ -190,7 +197,32 @@ afterAll(() => {
 })
 ```
 
-When running your tests you may run across the following console warning:
+#### Dealing with some supertest and jest warnings
+
+At this point you may end up noticing that WebStorm will flag some false positive warnings in your code.
+Particularly you may see an error like this:
+
+![jest supertest is having issues](../../images/4/custom/supertest_get_call.png)
+
+Your code still runs, but we want to prevent as many of these false positives from causing us to lose confidence in Webstorm's excellent warning system.
+So to remove this, we can do something similar to what we did [for removing jest errors](/part4/#handling-complaints-about-jest) and issuing an npm command.
+
+This time, I'll show you how to do this from Webstorm.
+Open *package.json* and locate the `supertest` dependency.
+Then either right click (or use your keyboard shortcut) to open up the context actions and select ***install @types/supertest*** option and you should be set.
+
+![install supertest option from package.json](../../images/4/custom/install_types_supertest.png)
+
+For many of the libraries we'll be able to download those types to have more information that Webstorm can provide us, and I think it's prudent to install as many as they allow as devDependencies.
+
+#### Mongoose related warnings
+
+While mongoose is a very popular library, there are some intricacies that we end up dealing with.
+
+For one, you may still see a warning for the connect method for mongoose..
+Webstorm looks like they are still [working on a fix](https://youtrack.jetbrains.com/issue/WEB-22317/Support-autocompletion-for-Mongoose-npm-module-MongoDB-very-popular-module)
+
+When running your tests you may also run across the following console warning:
 
 ![jest console warning about not exiting](../../images/4/8.png)
 
@@ -205,12 +237,17 @@ One way to get rid of this is to run tests with option `--forceExit`:
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "lint": "eslint .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit" // highlight-line
+    // ..
   },
   // ...
 }
 ```
+
+You'll still see a message about using *--forceExit*;
+ignore the message for now.
+
+#### Tests taking a long time
 
 Another error you may come across is your test takes longer than the default Jest test timeout of 5000 ms.
 This can be solved by adding a third parameter to the test function:
@@ -221,47 +258,47 @@ test('tasks are returned as json', async () => {
     .get('/api/tasks')
     .expect(200)
     .expect('Content-Type', /application\/json/)
-}, 100000)
+}, 100000) //highlight-line
 ```
   
 This third parameter sets the timeout to 100000 ms.
 A long timeout ensures that our test won't fail due to the time it takes to run.
 (A long timeout may not be what you want for tests based on performance or speed, but this is fine for our example tests).
 
-One tiny but important detail: at the [beginning](/part4/structure_of_backend_application_introduction_to_testing#project-structure)
+> One tiny but important detail: at the [beginning](/part4/structure_of_backend_application_introduction_to_testing#project-structure)
 of this part we extracted the Express application into the *app.js* file,
 and the role of the *index.js* file was changed to launch the application at the specified port with Node's built-in `http` object:
-
-```js
-const app = require('./app') // the actual Express app
-const http = require('http')
-const config = require('./utils/config')
-const logger = require('./utils/logger')
-
-const server = http.createServer(app)
-
-server.listen(config.PORT, () => {
-  logger.info(`Server running on port ${config.PORT}`)
-})
-```
-
-The tests only use the express application defined in the *app.js* file:
-
-```js
-const mongoose = require('mongoose')
-const supertest = require('supertest')
-const app = require('../app') // highlight-line
-
-const api = supertest(app) // highlight-line
-
-// ...
-```
-
-The documentation for supertest says the following:
-
-> *if the server is not already listening for connections then it is bound to an ephemeral port for you so there is no need to keep track of ports.*
-
-In other words, supertest takes care that the application being tested is started at the port that it uses internally.
+>
+> ```js
+> const app = require('./app') // the actual Express app
+> const http = require('http')
+> const config = require('./utils/config')
+> const logger = require('./utils/logger')
+> 
+> const server = http.createServer(app)
+> 
+> server.listen(config.PORT, () => {
+>   logger.info(`Server running on port ${config.PORT}`)
+> })
+> ```
+>
+> The tests only use the express application defined in the *app.js* file:
+>
+> ```js
+> const mongoose = require('mongoose')
+> const supertest = require('supertest')
+> const app = require('../app') // highlight-line
+>
+> const api = supertest(app) // highlight-line
+>
+> // ...
+> ```
+>
+> The documentation for supertest says the following:
+>
+>> *if the server is not already listening for connections then it is bound to an ephemeral port for you so there is no need to keep track of ports.*
+>
+> In other words, ***supertest makes sure that the application being tested is started at the port that it uses internally***.
 
 Let's write a few more tests:
 
@@ -374,7 +411,7 @@ beforeEach(async () => {
 The database is cleared out at the beginning, and after that, we save the two tasks stored in the `initialTasks` array to the database.
 By doing this, we ensure that the database is in the same state before every test is run.
 
-Let's also make the following changes to the last two tests:
+Let's also make the following changes to our last two tests:
 
 ```js
 test('all tasks are returned', async () => {
@@ -396,7 +433,7 @@ test('a specific task is within the returned tasks', async () => {
 })
 ```
 
-Pay special attention to the expect in the latter test.
+*Pay special attention to the expect in the latter test.*
 The `response.body.map(r => r.content)` command is used to create an array containing the content of every task returned by the API.
 The [toContain](https://jestjs.io/docs/expect#tocontainitem) method is used for checking that the task given to it as a parameter is in the list of tasks returned by the API.
 
@@ -422,14 +459,14 @@ npm test -- -t "a specific task is within the returned tasks"
 ```
 
 The provided parameter can refer to the name of the test or the describe block.
-The parameter can also contain just a part of the name.
+***The parameter can also contain just a part of the name.***
 The following command will run all of the tests that contain `tasks` in their name:
 
 ```js
 npm test -- -t 'tasks'
 ```
 
-**NB**: When running a single test, the mongoose connection might stay open if no tests using the connection are run.
+**P.S.** When running a single test, the mongoose connection might stay open if no tests using the connection are run.
 The problem might be because supertest primes the connection, but Jest does not run the afterAll portion of the code.
 
 ### async/await
@@ -464,7 +501,7 @@ Task.find({})
     return tasks[0].remove()
   })
   .then(response => {
-    console.log('the first task is removed')
+    console.log('the 1st task is removed')
     // more code here
   })
 ```
@@ -496,19 +533,25 @@ The slightly complicated example presented above could be implemented by using a
 const tasks = await Task.find({})
 const response = await tasks[0].remove()
 
-console.log('the first task is removed')
+console.log('the 1st task is removed')
 ```
+
+Let's see them side-by-side:
+
+| .then | .now |
+| :--- | :--- |
+|<pre>Task.find({})<br/>  .then(tasks => {<br/>  })<br/>  .then(response => {<br/>    console.log('the 1st task is removed')<br/>    // more code here<br/>  })<br/>|<pre>const tasks = await Task.find({})<br/>const response = await tasks[0].remove()<br/><br>console.log('the 1st task is removed')<br/>|
 
 Thanks to the new syntax, the code is a lot simpler than the previous then-chain.
 
 There are a few important details to pay attention to when using async/await syntax.
-To use the await operator with asynchronous operations, they have to return a promise.
+To use the `await` operator with asynchronous operations, they have to return a promise.
 This is not a problem as such, as regular asynchronous functions using callbacks are easy to wrap around promises.
 
-The await keyword can't be used just anywhere in JavaScript code.
-Using await is possible only inside of an [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) function.
+The `await` keyword can't be used just anywhere in JavaScript code.
+Using `await` is possible only inside of an [async](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) function.
 
-This means that in order for the previous examples to work, they have to be using async functions.
+This means that in order for the previous examples to work, they have to be using `async` functions.
 Notice the first line in the arrow function definition:
 
 ```js
