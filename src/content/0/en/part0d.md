@@ -285,7 +285,7 @@ Go back to [GitHub](http://github.com) and log in,
 then click on your profile icon in the upper right,
 and then go to [*Settings->Developer settings->Personal Access Tokens->Tokens (classic)->Generate new token->Generate new token (classic)*](https://imgur.com/S1E0tQc).
 Then give the token a name,
-set expiration to *Custom* (providing a date up to 1 year from now) and select the ```repo, workflow, read:org and gist``` checkboxes for the scopes.
+set expiration to *Custom* (providing a date up to 1 year from now) and select the `repo, workflow, read:org and gist` checkboxes for the scopes.
 Once you do that, scroll to the bottom and click the green Generate new Token.
 [I did another short animation of this as well.](https://imgur.com/LUAt5DU)
 You'll then see a page that has the token that says to copy it because you won't be able to see it again.
@@ -467,12 +467,12 @@ If you’re not sure how to
 use the command line, feel free to ask in the discord, but the easiest commands to learn
 are:
 
-- ```cd``` (changes the directory to the one specified afterward, to go up use
-```cd ..```)
+- `cd` (changes the directory to the one specified afterward, to go up use
+`cd ..`)
 
-- ```ls``` (list the files in a directory, if you want to see all files, say ```ls –a```)
+- `ls` (list the files in a directory, if you want to see all files, say `ls –a`)
 
-- ```mkdir``` (makes a directory with the name you specify afterward)
+- `mkdir` (makes a directory with the name you specify afterward)
 
 And press the tab key to autocomplete any folders and folder paths as
 you type so that you don’t misspell things as you go along.
@@ -502,7 +502,7 @@ project.  I will move up a directory and down just so you can see the difference
 
 ![git terminal showing main as repo](../../images/0/partc/image5.png)
 
-You'll also notice that for this lab you should see a file ```.gitignore``` and a folder called ```.git```.
+You'll also notice that for this lab you should see a file `.gitignore` and a folder called `.git`.
 You may not see those files if you type `ls`.
 
 **You do not want to play around or modify the .git folder.**
@@ -517,7 +517,7 @@ So here’s what I’m going to ask you to do.
 ### `git status` is your friend
 
 1. With the terminal open,
-type ```git status``` to see what’s changed.
+type `git status` to see what’s changed.
 If nothing has changed, you can add a file or make a new file in the directory.
 
 ![git status showing lots of untracked files](../../images/0/partc/image7.png)
@@ -546,7 +546,7 @@ I seldom type anything out anymore.
 After I type a few letters, I press ***Tab*** to have the shell give its best suggestion and make sure I have the right location and no typos.
 You can even press Tab again if you get no further completions to see the list of everything available for files.
 
-If you type ```git status``` again, you'll notice that now you have a file that is staged, while the other files and folders would still be unstaged.
+If you type `git status` again, you'll notice that now you have a file that is staged, while the other files and folders would still be unstaged.
 In the example above, if instead had added the .idea folder (and not the png), it would look like this:
 
 ![git status showing staged and unstaged files](../../images/0/partc/usersettingsadded.png)
@@ -560,7 +560,7 @@ If you'd like, please add the remaining file, which you can do by writing
 git add .
 ```
 
-Once you do a ```git status``` again, you'll now see that all of the files are staged to be committed (lots of green files), while nothing is red anymore.
+Once you do a `git status` again, you'll now see that all of the files are staged to be committed (lots of green files), while nothing is red anymore.
 This means that the next time you say commit via git all of the files will be placed into and tracked by the repository.
 
 ### Committing via the command line
@@ -594,7 +594,7 @@ git commit -am "Personalized the readme with my name Osvaldo"
 ```
 
 While
-I typically use the ```-a``` flag to automatically add all my changes to the next commit, one reason for not
+I typically use the `-a` flag to automatically add all my changes to the next commit, one reason for not
 automatically adding (or staging) all changes is to make multiple commits so that you split
 apart multiple changes that you’ve made.
  Leaving files unstaged won’t
@@ -605,8 +605,8 @@ Therefore, if you made multiple changes, each commit will have just the files re
 However, because I advocate for committing often, I will mostly have you use the -a option so that git commits all changes to tracked files.
 
 Committing will save the changes to the local repository.
-The ```–a``` switch
-will commit all modified files, both staged and unstaged, while the ```–m```
+The `–a` switch
+will commit all modified files, both staged and unstaged, while the `–m`
 allows you to type your message as part of the commit, instead of
 opening up that text editor option that we had before.
 If you have new
@@ -622,7 +622,7 @@ Again, **you only need to do this last part when you have new files**.
 
 Once you have committed, go ahead and push the files to the server.
 Type
-```git push origin main``` and read the messages that are given to make sure that the
+`git push origin main` and read the messages that are given to make sure that the
 push was indeed successful.
 
 </div>
