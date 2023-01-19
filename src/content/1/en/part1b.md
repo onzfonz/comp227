@@ -292,6 +292,7 @@ const result = product(2, 6)
 </div>
 
 <div class="tasks">
+
 ### Exercises 1.3-1.5
 
 *We continue building the application that we started working on in the previous exercises.
