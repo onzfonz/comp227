@@ -14,7 +14,7 @@ Deleting and editing a task should only be allowed for the user who created it.
 Let's start by adding information about users to the database.
 There is a one-to-many relationship between the user (***User***) and tasks (***Task***):
 
-![diagram linking user and tasks](https://yuml.me/a187045b.png)
+![diagram linking user and tasks](../../images/4/custom/user_task_diagram.png)
 
 If we were working with a relational database the implementation would be straightforward.
 Both resources would have their separate database tables, and the id of the user who created a task would be stored in the tasks table as a foreign key.
@@ -27,7 +27,7 @@ If we do not want to change this existing collection, then the natural choice is
 Like with all document databases, we can use object IDs in Mongo to reference documents in other collections.
 This is similar to using foreign keys in relational databases.
 
-Traditionally document databases like Mongo do not support **join queries** that are available in relational databases,  used for aggregating data from multiple tables.
+Traditionally document databases like Mongo do not support **join queries** that are available in relational databases, used for aggregating data from multiple tables.
 However, starting from version 3.2.
 Mongo has supported [lookup aggregation queries](https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/).
 We will not be taking a look at this functionality in this course.
@@ -38,7 +38,7 @@ However, even in these situations, Mongoose makes multiple queries to the databa
 
 ### References across collections
 
-If we were using a relational database the task would contain a **reference key** to the user who created it.
+If we were using a relational database, the *task* would contain a **reference key** to the *user* who created it.
 In document databases, we can do the same thing.
 
 Let's assume that the `users` collection contains two users:
@@ -50,7 +50,7 @@ Let's assume that the `users` collection contains two users:
     _id: 123456,
   },
   {
-    username: 'hellas',
+    username: 'randy',
     _id: 141414,
   },
 ];
@@ -67,13 +67,13 @@ The `tasks` collection contains three tasks that all have a `user` field that re
     user: 123456,
   },
   {
-    content: 'The most important operations of HTTP protocol are GET and POST',
+    content: 'Attend university events',
     important: true,
     _id: 221255,
     user: 123456,
   },
   {
-    content: 'A proper dinosaur codes with Java',
+    content: 'Work on personal React project',
     important: false,
     _id: 221244,
     user: 141414,
@@ -81,7 +81,7 @@ The `tasks` collection contains three tasks that all have a `user` field that re
 ]
 ```
 
-Document databases do not demand the foreign key to be stored in the task resources, it could *also* be stored in the users collection, or even both:
+Document databases do not demand the foreign key to be stored in the `task` resources, it could *also* be stored in the `users` collection, or even both:
 
 ```js
 [
@@ -91,7 +91,7 @@ Document databases do not demand the foreign key to be stored in the task resour
     tasks: [221212, 221255],
   },
   {
-    username: 'hellas',
+    username: 'randy',
     _id: 141414,
     tasks: [221244],
   },
@@ -101,7 +101,7 @@ Document databases do not demand the foreign key to be stored in the task resour
 Since users can have many tasks, the related ids are stored in an array in the `tasks` field.
 
 Document databases also offer a radically different way of organizing the data: In some situations,
-it might be beneficial to nest the entire tasks array as a part of the documents in the users collection:
+it might be beneficial to nest the entire `tasks` array as a part of the documents in the `users` collection:
 
 ```js
 [
@@ -114,18 +114,18 @@ it might be beneficial to nest the entire tasks array as a part of the documents
         important: false,
       },
       {
-        content: 'The most important operations of HTTP protocol are GET and POST',
+        content: 'Attend university events',
         important: true,
       },
     ],
   },
   {
-    username: 'hellas',
+    username: 'randy',
     _id: 141414,
     tasks: [
       {
         content:
-          'A proper dinosaur codes with Java',
+          'Work on personal React project',
         important: false,
       },
     ],
@@ -133,20 +133,20 @@ it might be beneficial to nest the entire tasks array as a part of the documents
 ]
 ```
 
-In this schema, tasks would be tightly nested under users and the database would not generate ids for them.
+In this schema, `tasks` would be tightly nested under `users` and the database would not generate ids for them.
 
 The structure and schema of the database are not as self-evident as it was with relational databases.
 The chosen schema must support the use cases of the application the best.
 This is not a simple design decision to make, as all use cases of the applications are not known when the design decision is made.
 
-Paradoxically, schema-less databases like Mongo require developers to make far more radical design decisions about data organization at the beginning of the project
+Paradoxically, schema-less databases like ***Mongo require developers to make far more radical design decisions about data organization*** at the beginning of the project
 than relational databases with schemas.
 On average, relational databases offer a more or less suitable way of organizing data for many applications.
 
 ### Mongoose schema for users
 
-In this case, we decide to store the ids of the tasks created by the user in the user document.
-Let's define the model for representing a user in the *models/user.js* file:
+In this case, we decide to store the ids of the `tasks` created by the user in the `user` document.
+Let's define the model for representing a `User` in the *models/user.js* file:
 
 ```js
 const mongoose = require('mongoose')
@@ -155,12 +155,14 @@ const userSchema = new mongoose.Schema({
   username: String,
   name: String,
   passwordHash: String,
+  // highlight-start
   tasks: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Task'
     }
   ],
+  // highlight-end
 })
 
 userSchema.set('toJSON', {
@@ -178,20 +180,12 @@ const User = mongoose.model('User', userSchema)
 module.exports = User
 ```
 
-The ids of the tasks are stored within the user document as an array of Mongo ids.
-The definition is as follows:
-
-```js
-{
-  type: mongoose.Schema.Types.ObjectId,
-  ref: 'Task'
-}
-```
+The highlighted text above helps us conceptualize that the ids of the `tasks` are stored within the user document as an *array of Mongo ids*.
 
 The type of the field is `ObjectId` that references *task*-style documents.
-Mongo does not inherently know that this is a field that references tasks, the syntax is purely related to and defined by Mongoose.
+Mongo does not inherently know that this is a field that references `tasks`, the syntax is purely related to and defined by Mongoose.
 
-Let's expand the schema of the task defined in the *models/task.js* file so that the task contains information about the user who created it:
+Let's **expand the schema of the task defined in the *models/task.js*** file so that the task contains information about the user who created it:
 
 ```js
 const taskSchema = new mongoose.Schema({
@@ -212,7 +206,9 @@ const taskSchema = new mongoose.Schema({
 ```
 
 In stark contrast to the conventions of relational databases, ***references are now stored in both documents***:
-the task references the user who created it, and the user has an array of references to all of the tasks created by them.
+
+- the `task` references the `user` who created it, and
+- the `user` has an array of references to all of the `tasks` created by them.
 
 ### Creating users
 
@@ -221,7 +217,7 @@ Users have a unique `username`, a `name` and something called a `passwordHash`.
 The password hash is the output of a
 [one-way hash function](https://en.wikipedia.org/wiki/Cryptographic_hash_function)
 applied to the user's password.
-It is never wise to store unencrypted plain text passwords in the database!
+**It is never wise to store unencrypted plain text passwords in the database!**
 
 Let's install the [bcrypt](https://github.com/kelektiv/node.bcrypt.js) package for generating the password hashes:
 
@@ -232,8 +228,8 @@ npm install bcrypt
 Creating new users happens in compliance with the RESTful conventions discussed in [part 3](/part3/node_js_and_express#rest),
 by making an HTTP POST request to the ***users*** path.
 
-Let's define a separate ***router*** for dealing with users in a new *controllers/users.js* file.
-Let's take the router into use in our application in the *app.js* file, so that it handles requests made to the ***/api/users*** URL:
+Let's define a separate **router** for dealing with users in a new *controllers/users.js* file.
+Let's use this new router in our application via the *app.js* file, so that it handles requests made to the ***/api/users*** URL:
 
 ```js
 const usersRouter = require('./controllers/users')
@@ -243,7 +239,7 @@ const usersRouter = require('./controllers/users')
 app.use('/api/users', usersRouter)
 ```
 
-The contents of the file that defines the router are as follows:
+The contents of our new router (*controllers/users.js*) is as follows:
 
 ```js
 const bcrypt = require('bcrypt')
