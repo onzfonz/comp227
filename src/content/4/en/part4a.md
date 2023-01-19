@@ -450,12 +450,12 @@ Now the exported *thing* (in this case a router object) is assigned to a variabl
 
 ### Exercises 4.1-4.2
 
-In the exercises for this part, we will be building a **Streaming Show list application**,
+In the exercises for this part, we will be building a **Streaming Watchlist application**,
 which allows users to save information about interesting shows they have stumbled across on the internet.
 For each listed show we will save the title, genre, Streaming Service URL, and amount of upvotes from users of the application.
 From here on, I will refer to a streaming show as a **show**.
 
-#### 4.1 Show list, step1
+#### 4.1 Watchlist, step1
 
 Let's imagine a situation, where you receive an email that contains the following application body:
 
@@ -475,7 +475,7 @@ const showSchema = new mongoose.Schema({
 
 const Show = mongoose.model('Show', showSchema)
 
-const mongoUrl = 'mongodb://localhost/showlist'
+const mongoUrl = 'mongodb://localhost/watchlist'
 mongoose.connect(mongoUrl)
 
 app.use(cors())
@@ -512,7 +512,7 @@ You can create a new database for your application with MongoDB Atlas, or use th
 Verify that it is possible to add shows to the list with Postman or the WebStorm REST client
 and that the application returns the added shows at the correct endpoint.
 
-#### 4.2 Show list, step2
+#### 4.2 Watchlist, step2
 
 Refactor the application into separate modules as shown earlier in this part of the course material.
 
@@ -785,7 +785,7 @@ test('of empty array is zero', () => {
 
 ### Exercises 4.3-4.7
 
-Let's create a collection of helper functions that are meant to assist in dealing with the show list.
+Let's create a collection of helper functions that are meant to assist in dealing with the show watchlist.
 Create the functions into a file called *utils/list_helper.js*.
 Write your tests into an appropriately named test file under the *tests* directory.
 

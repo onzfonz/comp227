@@ -591,12 +591,12 @@ You can find the code for our current application in its entirety in the *part4-
 
 ### More tests and refactoring the backend
 
-When code gets refactored, there is always the risk of [regression](https://en.wikipedia.org/wiki/Regression_testing),
+When code gets refactored, there is always the risk of [**regression**](https://en.wikipedia.org/wiki/Regression_testing),
 meaning that existing functionality may break.
 Let's refactor the remaining operations by first writing a test for each route of the API.
 
 Let's start with the operation for adding a new task.
-Let's write a test that adds a new task and verifies that the number of tasks returned by the API increases and that the newly added task is in the list.
+Let's *write a new test* that adds a new task and verifies that the number of tasks returned by the API increases and that the newly added task is in the list.
 
 ```js
 test('a valid task can be added', async () => {
@@ -623,7 +623,7 @@ test('a valid task can be added', async () => {
 ```
 
 Our test fails since we are by accident returning the status code ***200 OK*** when a new task is created.
-Let us change that to ***201 CREATED***:
+Let us change that to ***201 CREATED*** in *controllers/tasks.js*:
 
 ```js
 tasksRouter.post('/', (request, response, next) => {
@@ -643,7 +643,7 @@ tasksRouter.post('/', (request, response, next) => {
 })
 ```
 
-Let's also write a test that verifies that a task without content will not be saved into the database.
+Let's also add a test that verifies that a task without content will not be saved into the database.
 
 ```js
 test('task without content is not added', async () => {
@@ -820,11 +820,16 @@ How should we deal with them?
 
 ### Error handling and async/await
 
-If there's an exception while handling the POST request we end up in a familiar situation:
+Luckily, we've built enough tests at this point that if we try to run our tests, jest will let us know that something is wrong as our test fails.
 
-![terminal showing unhandled promise rejection warning](../../images/4/6.png)
+![test failing saying content is required](../../images/4/6.png)
 
-In other words, we end up with an unhandled promise rejection, and the request never receives a response.
+While this should be enough of an alarm, you could also manually test this, by running the program and merely pressing save without any content.
+Once you do this, you'll get a nice stack trace and the server will even crash afterwards.
+
+![terminal showing unhandled promise rejection warning](../../images/4/custom/exception_from_6.png)
+
+What is happening? Well, we end up with an unhandled promise rejection, and the request never receives a response.
 
 With async/await the recommended way of dealing with exceptions is the old and familiar *try/catch* mechanism:
 
@@ -896,7 +901,7 @@ test('a task can be deleted', async () => {
 
 Both tests share a similar structure.
 In the initialization phase, they fetch a task from the database.
-After this, the tests call the actual operation being tested, which is highlighted in the code block.
+After this, the tests call the actual operation being tested.
 Lastly, the tests verify that the outcome of the operation is as expected.
 
 In the first test, the task object we receive as the response body goes through JSON serialization and parsing.
@@ -904,7 +909,7 @@ This processing will turn the task object's `date` property value's type from `D
 Because of this we can't directly compare the equality of the `resultTask.body` and `taskToView` that is read from the database.
 Instead, we must first perform similar JSON serialization and parsing for the `taskToView` as the server is performing for the task object.
 
-The tests pass and we can safely refactor the tested routes to use async/await:
+The tests pass and now that we have some coverage for that code, we can refactor the tested routes to use async/await:
 
 ```js
 tasksRouter.get('/:id', async (request, response, next) => {
@@ -956,7 +961,6 @@ Let's install the library
 npm install express-async-errors
 ```
 
- Kirjaston koodi otetaan käyttöön tiedostossa <i>src/app.js</i>: -->
 Using the library is *very* easy.
 You introduce the library in *app.js*:
 
@@ -976,9 +980,8 @@ const mongoose = require('mongoose')
 module.exports = app
 ```
 
-Muistiinpanon poistamisesta huolehtiva route -->
 The 'magic' of the library allows us to eliminate the try-catch blocks completely.
-For example the route for deleting a task
+For example, the current routing code for deleting a task
 
 ```js
 tasksRouter.delete('/:id', async (request, response, next) => {
@@ -991,7 +994,7 @@ tasksRouter.delete('/:id', async (request, response, next) => {
 })
 ```
 
-becomes
+transforms into
 
 ```js
 tasksRouter.delete('/:id', async (request, response) => {
@@ -1069,7 +1072,7 @@ test('tasks are returned as json', async () => {
 ```
 
 We save the tasks stored in the array into the database inside of a `forEach` loop.
-The tests don't quite seem to work however, so we have added some console logs to help us find the problem.
+The tests don't quite seem to work however. Imagine someone else added some console logs and wants your help to find the problem.
 
 The console displays the following output:
 
@@ -1081,11 +1084,12 @@ saved
 saved
 ```
 
+Aside from sharing with them our clog template, we look closer at the issue.
 Despite our use of the async/await syntax, our solution does not work as we expected it to.
-The test execution begins before the database is initialized!
+From the logs we notice the test execution begins before the database is initialized!
 
-The problem is that every iteration of the forEach loop generates an asynchronous operation, and `beforeEach` won't wait for them to finish executing.
-In other words, the `await` commands defined inside of the `forEach` loop are not in the `beforeEach` function, but in separate functions that `beforeEach` will not wait for.
+The problem is that ***every iteration of the forEach loop generates an asynchronous operation***, and `beforeEach` won't wait for them to finish executing.
+In other words, the `await` commands defined inside of the `forEach` loop are not in the `beforeEach` function, but in ***separate functions that `beforeEach` will not wait for***.
 
 Since the execution of tests begins immediately after `beforeEach` has finished executing,
 the execution of tests begins before the database state is initialized.
@@ -1156,18 +1160,18 @@ It's worth noting that the method uses the === operator for comparing and matchi
 In most cases, the appropriate method for verifying objects in arrays is the [toContainEqual](https://jestjs.io/docs/expect#tocontainequalitem) matcher.
 However, the model solutions don't check for objects in arrays with matchers, so using the method is not required for solving the exercises.
 
-**Warning:** If you find yourself using `async`/`await` and *then* methods in the same code, it is almost guaranteed that you are doing something wrong.
+**Warning:** If you find yourself ***using `async`/`await` and `then` methods*** in the same code, it is almost guaranteed that **you are doing something wrong**.
 Use one or the other and don't mix the two.
 
-#### 4.8: Blog list tests, step1
+#### 4.8: Watchlist tests, step1
 
-Use the supertest package for writing a test that makes an HTTP GET request to the ***/api/blogs*** URL.
-Verify that the blog list application returns the correct amount of blog posts in the JSON format.
+Use the supertest package for writing a test that makes an HTTP GET request to the ***/api/show*** URL.
+Verify that the watchlist application returns the correct amount of streaming shows in the JSON format.
 
 Once the test is finished, refactor the route handler to use the async/await syntax instead of promises.
 
 Notice that you will have to make similar changes to the code that were made
-[in the material](/part4/testing_the_backend#test-environment),
+[in the material](#specifying-application-modes),
 like defining the test environment so that you can write tests that use separate databases.
 
 **NB:** When running the tests, you may run into the following warning:
@@ -1177,7 +1181,7 @@ like defining the test environment so that you can write tests that use separate
 The problem is quite likely caused by the Mongoose version 6.x, the problem does not appear when version 5.x is used.
 [Mongoose documentation](https://mongoosejs.com/docs/jest.html) does not recommend testing Mongoose applications with Jest.
 
-One way to get rid of this is to run tests with option `--forceExit`:
+One way to get rid of [like we mentioned before](#mongoose-related-warnings) is to run tests with option `--forceExit`:
 
 ```json
 {
@@ -1185,43 +1189,43 @@ One way to get rid of this is to run tests with option `--forceExit`:
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "lint": "eslint .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit" // highlight-line
+    // ...
   },
   // ...
 }
 ```
 
 **NB:** when you are writing your tests ***it is better to not execute all of your tests***, only execute the ones you are working on.
-Read more about this [here](/part4/testing_the_backend#running-tests-one-by-one).
+Read more about this [here](#running-tests-one-by-one).
 
-#### 4.9*: Blog list tests, step2
+#### 4.9*: Watchlist tests, step2
 
-Write a test that verifies that the unique identifier property of the blog posts is named `id`, by default the database names the property `_id`.
+Write a test that verifies that the unique identifier property of the shows is named `id`, by default the database names the property `_id`.
 Verifying the existence of a property is easily done with Jest's [toBeDefined](https://jestjs.io/docs/en/expect#tobedefined) matcher.
 
 Make the required changes to the code so that it passes the test.
 The [toJSON](/part3/saving_data_to_mongo_db#backend-connected-to-a-database) method discussed in part 3
 is an appropriate place for defining the `id` parameter.
 
-#### 4.10: Blog list tests, step3
+#### 4.10: Watchlist tests, step3
 
-Write a test that verifies that making an HTTP POST request to the ***/api/blogs*** URL successfully creates a new blog post.
-At the very least, verify that the total number of blogs in the system is increased by one.
-You can also verify that the content of the blog post is saved correctly to the database.
+Write a test that verifies that making an HTTP POST request to the ***/api/shows*** URL successfully creates a new show onto the list.
+At the very least, verify that the total number of shows in the system is increased by one.
+You can also verify that the show JSON object is saved correctly to the database.
 
 Once the test is finished, refactor the operation to use async/await instead of promises.
 
-#### 4.11*: Blog list tests, step4
+#### 4.11*: Watchlist tests, step4
 
 Write a test that verifies that if the `likes` property is missing from the request, it will default to the value 0.
-Do not test the other properties of the created blogs yet.
+Do not test the other properties of the created shows yet.
 
 Make the required changes to the code so that it passes the test.
 
-#### 4.12*: Blog list tests, step5
+#### 4.12*: Watchlist tests, step5
 
-Write a test related to creating new blogs via the ***/api/blogs*** endpoint,
+Write a test related to creating new shows via the ***/api/shows*** endpoint,
 that verifies that if the `title` or `url` properties are missing from the request data,
 the backend responds to the request with the status code **400 Bad Request**.
 
@@ -1397,22 +1401,22 @@ You can find the code for our current application in its entirety in the *part4-
 
 ### Exercises 4.13-4.14
 
-#### 4.13 Blog list expansions, step1
+#### 4.13 Watchlist expansions, step1
 
-Implement functionality for deleting a single blog post resource.
+Implement functionality for deleting a single show.
 
 Use the async/await syntax.
 Follow [RESTful](/part3/node_js_and_express#rest) conventions when defining the HTTP API.
 
 Implement tests for the functionality.
 
-#### 4.14 Blog list expansions, step2
+#### 4.14 Watchlist expansions, step2
 
-Implement functionality for updating the information of an individual blog post.
+Implement functionality for updating the information of an individual show.
 
 Use `async`/`await`.
 
-The application mostly needs to update the number of ***likes*** for a blog post.
+The application mostly needs to update the number of ***likes*** for a show.
 You can implement this functionality the same way that we implemented updating tasks in [part 3](/part3/saving_data_to_mongo_db#other-operations).
 
 Implement tests for the functionality.
