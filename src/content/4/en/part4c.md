@@ -228,8 +228,7 @@ npm install bcrypt
 Creating new users happens in compliance with the RESTful conventions discussed in [part 3](/part3/node_js_and_express#rest),
 by making an HTTP POST request to the ***users*** path.
 
-Let's define a separate **router** for dealing with users in a new *controllers/users.js* file.
-Let's use this new router in our application via the *app.js* file, so that it handles requests made to the ***/api/users*** URL:
+**Let's first add this new router handler in our application via the *app.js* file**, so that it handles requests made to the ***/api/users*** URL:
 
 ```js
 const usersRouter = require('./controllers/users')
@@ -239,6 +238,7 @@ const usersRouter = require('./controllers/users')
 app.use('/api/users', usersRouter)
 ```
 
+Then, let's define a separate **router** for dealing with users in a new *controllers/users.js* file.
 The contents of our new router (*controllers/users.js*) is as follows:
 
 ```js
@@ -266,8 +266,8 @@ usersRouter.post('/', async (request, response) => {
 module.exports = usersRouter
 ```
 
+**We store the *hash* of the password that is generated with the `bcrypt.hash` function**.
 The password sent in the request is ***not*** stored in the database.
-We store the **hash** of the password that is generated with the `bcrypt.hash` function.
 
 The fundamentals of [storing passwords](https://codahale.com/how-to-safely-store-a-password/) are outside the scope of this course material.
 We will not discuss what the magic number 10 assigned to the [saltRounds](https://github.com/kelektiv/node.bcrypt.js/#a-task-on-rounds) variable means,
@@ -292,7 +292,7 @@ describe('when there is initially one user in db', () => {
   beforeEach(async () => {
     await User.deleteMany({})
 
-    const passwordHash = await bcrypt.hash('sekret', 10)
+    const passwordHash = await bcrypt.hash('secreto', 10)
     const user = new User({ username: 'root', passwordHash })
 
     await user.save()
@@ -303,8 +303,8 @@ describe('when there is initially one user in db', () => {
 
     const newUser = {
       username: 'powercat',
-      name: 'Matti Luukkainen',
-      password: 'tigers',
+      name: 'Tommy Tiger Jr.',
+      password: 'pacificrox',
     }
 
     await api
@@ -322,7 +322,7 @@ describe('when there is initially one user in db', () => {
 })
 ```
 
-The tests use the `usersInDb()` helper function that we implemented in the *tests/test_helper.js* file.
+The tests use the `usersInDb()` helper function that we will implement in the *tests/test_helper.js* file.
 The function is used to help us verify the state of the database after a user is created:
 
 ```js
@@ -374,14 +374,14 @@ describe('when there is initially one user in db', () => {
 ```
 
 The test case obviously will not pass at this point.
-We are essentially practicing [test-driven development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development),
+We are essentially practicing [**test-driven development** (TDD)](https://en.wikipedia.org/wiki/Test-driven_development),
 where tests for new functionality are written before the functionality is implemented.
 
 Mongoose does not have a built-in validator for checking the uniqueness of a field.
 In principle we could find a ready-made solution for this from the
 [mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator)
-npm package but unfortunately at the time of writing (24th Jan 2022)
-mongoose-unique-validator does not work with Mongoose version 6.x, so we have to implement the uniqueness check by ourselves in the controller:
+npm package, but as of Jan 15, 2023 it looks like the project is not being actively developed.
+So let's implement the uniqueness check by ourselves in the controller:
 
 ```js
 usersRouter.post('/', async (request, response) => {
@@ -433,12 +433,21 @@ you may send a POST request to ```/api/users/``` via Postman or REST Client in t
     "name": "Superuser",
     "password": "tigers"
 }
+```
 
+I ended up adding this other user as well.
+
+```js
+{
+    "username": "pacrock",
+    "name": "Khoury Graffiti Rock",
+    "password": "ilikepaint"
+}
 ```
 
 The list looks like this:
 
-![browser api/users shows JSON data with tasks array](../../images/4/9.png)
+![browser api/users shows JSON data with 1 user array](../../images/4/9.png)
 
 You can find the code for our current application in its entirety in the *part4-7* branch of
 [this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-7).
@@ -461,7 +470,7 @@ tasksRouter.post('/', async (request, response, next) => {
 
   const task = new Task({
     content: body.content,
-    important: body.important === undefined ? false : body.important,
+    important: body.important || false,
     date: new Date(),
     user: user._id //highlight-line
   })
@@ -470,7 +479,7 @@ tasksRouter.post('/', async (request, response, next) => {
   user.tasks = user.tasks.concat(savedTask._id) //highlight-line
   await user.save()  //highlight-line
   
-  response.json(savedTask)
+  response.status(201).json(savedTask)
 })
 ```
 
@@ -507,19 +516,20 @@ We would like our API to work in such a way, that when an HTTP GET request is ma
 the user objects would also contain the contents of the user's tasks and not just their id.
 In a relational database, this functionality would be implemented with a **join query**.
 
-As previously mentioned, document databases do not properly support join queries between collections, but the Mongoose library can do some of these joins for us.
+As previously mentioned, *document databases do not properly support join queries between collections*, but the Mongoose library can do some of these joins for us.
 Mongoose accomplishes the join by doing multiple queries, which is different from join queries in relational databases which are **transactional**,
 meaning that the state of the database does not change during the time that the query is made.
-With join queries in Mongoose, nothing can guarantee that the state between the collections being joined is consistent,
-meaning that if we make a query that joins the user and tasks collections, the state of the collections may change during the query.
+With join queries in Mongoose, *nothing can guarantee that the state between the collections being joined is consistent*,
+meaning that if we make a query that joins the user and tasks collections, the **state of the collections may change during the query**.
 
-The Mongoose join is done with the [populate](http://mongoosejs.com/docs/populate.html) method.
+The Mongoose join is done with the [`populate`](http://mongoosejs.com/docs/populate.html) method.
 Let's update the route that returns all users first:
 
 ```js
 usersRouter.get('/', async (request, response) => {
-  const users = await User  // highlight-line
-    .find({}).populate('tasks') // highlight-line
+  const users = await User
+    .find({}) // highlight-line
+    .populate('tasks') // highlight-line
 
   response.json(users)
 })
@@ -539,7 +549,8 @@ The selection of fields is done with the Mongo [syntax](https://docs.mongodb.com
 ```js
 usersRouter.get('/', async (request, response) => {
   const users = await User
-    .find({}).populate('tasks', { content: 1, date: 1 })
+    .find({})
+    .populate('tasks', { content: 1, date: 1 }) // highlight-line
 
   response.json(users)
 });
@@ -554,7 +565,8 @@ Let's also add a suitable population of user information to tasks:
 ```js
 tasksRouter.get('/', async (request, response) => {
   const tasks = await Task
-    .find({}).populate('user', { username: 1, name: 1 })
+    .find({})
+    .populate('user', { username: 1, name: 1 })
 
   response.json(tasks)
 });
@@ -579,7 +591,7 @@ const taskSchema = new mongoose.Schema({
   important: Boolean,
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User' // highlight-line
   }
 })
 ```
