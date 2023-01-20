@@ -10,7 +10,7 @@ lang: en
 Users must be able to log into our application, and when a user is logged in,
 their user information must automatically be attached to any new tasks they create.
 
-We will now implement support for [token-based authentication](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works) to the backend.
+We will now implement support for [**token-based authentication**](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works) to the backend.
 
 The principles of token-based authentication are depicted in the following sequence diagram:
 
@@ -20,7 +20,7 @@ The principles of token-based authentication are depicted in the following seque
     - We will add the login form to the frontend in [part 5](/part5)
 - This causes the React code to send the username and the password to the server address ***/api/login*** as a HTTP POST request.
 - If the username and the password are correct, the server generates a **token** that somehow identifies the logged-in user.
-    - The token is signed digitally, making it impossible to falsify (with cryptographic means)
+    - The token is signed digitally, making it highly impracticable to falsify cryptographically
 - The backend responds with a status code indicating the operation was successful and returns the token with the response.
 - The browser saves the token, for example to the state of a React application.
 - When the user creates a new task (or does some other operation requiring identification),
@@ -113,24 +113,27 @@ const loginRouter = require('./controllers/login')
 app.use('/api/login', loginRouter)
 ```
 
-Let's try logging in using VS Code REST-client:
+Let's try logging in using the Webstorm REST-client:
 
-![vscode rest post with username/password](../../images/4/17e.png)
+![webstorm rest post with username/password](../../images/4/17e.png)
 
 It does not work.
 The following is printed to the console:
 
-```bash
-(node:32911) UnhandledPromiseRejectionWarning: Error: secretOrPrivateKey must have a value
-    at Object.module.exports [as sign] (/Users/powercat/comp227/part3/tasks-backend/node_modules/jsonwebtoken/sign.js:101:20)
-    at loginRouter.post (/Users/powercat/comp227/part3/tasks-backend/controllers/login.js:26:21)
-(node:32911) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 2)
+```html
+<body>
+<pre>Error: secretOrPrivateKey must have a value<br> &nbsp; &nbsp;at module.exports [as sign] (C:\Users\Osvaldo\git\part3-tasks-backend\node_modules\jsonwebtoken\sign.js:105:20)<br> &nbsp; &nbsp;at C:\Users\Osvaldo\git\part3-tasks-backend\controllers\login.js:25:23</pre>
+</body>
+
+...
+
+Response code: 500 (Internal Server Error); Time: 235ms (235 ms); Content length: 387 bytes (387 B)
 ```
 
 The command `jwt.sign(userForToken, process.env.SECRET)` fails.
 We forgot to set a value to the environment variable `SECRET`.
 It can be any string.
-When we set the value in file *.env*, the login works.
+When we set the value in file *.env*, and stop and start the npm process, the login works.
 
 A successful login returns the user details and the token:
 
@@ -139,6 +142,9 @@ A successful login returns the user details and the token:
 A wrong username or password returns an error message and the proper status code:
 
 ![vs code rest response for incorrect login details](../../images/4/19ea.png)
+
+Notice here that I placed a comment after the `###` syntax.
+This is helpful when you start having a larger test file where you have different scenarios so you can more easily find what you are looking for.
 
 ### Limiting creating new tasks to logged-in users
 
@@ -154,13 +160,13 @@ Identifying the scheme tells the server how the attached credentials should be i
 The **Bearer** scheme is suitable for our needs.
 
 In practice, this means that if the token is, for example,
-the string `eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW`, the Authorization header will have the value:
+the string `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`, the Authorization header will have the value:
 
 ```text
-Bearer eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW
+Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ```
 
-Creating new tasks will change like so:
+Creating new *tasks* will change like so:
 
 ```js
 const jwt = require('jsonwebtoken') //highlight-line
@@ -200,7 +206,7 @@ tasksRouter.post('/', async (request, response) => {
   user.tasks = user.tasks.concat(savedTask._id)
   await user.save()
 
-  response.json(savedTask)
+  response.status(201).json(savedTask)
 })
 ```
 
@@ -230,13 +236,13 @@ if (!decodedToken.id) {
 When the identity of the maker of the request is resolved, the execution continues as before.
 
 A new task can now be created using Postman if the ***authorization*** header is given the correct value,
-the string `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ`, where the second value is the token returned by the ***login*** operation.
+something like the string `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`, where the second value is the token returned by the ***login*** operation.
 
 Using Postman this looks as follows:
 
 ![postman adding bearer token](../../images/4/20e.png)
 
-and with Visual Studio Code REST client
+and with the WebStorm REST client
 
 ![vscode adding bearer token example](../../images/4/21e.png)
 
@@ -253,10 +259,13 @@ JsonWebTokenError: invalid signature
     at tasksRouter.post (/Users/powercat/comp227/part3/tasks-backend/controllers/tasks.js:40:30)
 ```
 
+Once we get an exception, if we are not running nodemon, we would may have to restart our program,
+as any subsequent bad reqeusts could be met with an *Internal Server Error (500)*.
+
 There are many possible reasons for a decoding error.
 The token can be faulty (like in our example),
 falsified, or expired.
-Let's extend our errorHandler middleware to take into account the different decoding errors.
+Let's extend our errorHandler *middleware* to take into account the different decoding errors.
 
 ```js
 const unknownEndpoint = (request, response) => {
@@ -264,6 +273,8 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
+  logger.error(error.message)
+  
   if (error.name === 'CastError') {
     return response.status(400).send({
       error: 'malformatted id'
@@ -277,8 +288,6 @@ const errorHandler = (error, request, response, next) => {
       error: 'invalid token' // highlight-line
     }) // highlight-line
   }
-
-  logger.error(error.message)
 
   next(error)
 }
@@ -378,8 +387,8 @@ A database access is considerably slower compared to checking the validity of th
 That is why it is quite common to save the session corresponding to a token to a **key-value database** such as [Redis](https://redis.io/)
 that is limited in functionality compared to a MongoDB or relational database but extremely fast in some usage scenarios.
 
-When server-side sessions are used, the token is quite often just a random string,
-that does not include any information about the user as it is quite often the case when jwt-tokens are used.
+When server-side sessions are used, the ***token is a random string*** (quite often).
+The token does not include any information about the user as it is quite often the case when jwt-tokens are used.
 For each API request, the server fetches the relevant information about the identity of the user from the database.
 It is also quite usual that instead of using Authorization-header, **cookies** are used as the mechanism for transferring the token between the client and the server.
 
@@ -391,8 +400,8 @@ Because this part of the course is already jammed with new information, we will 
 Usernames, passwords and applications using token authentication must always be used over [HTTPS](https://en.wikipedia.org/wiki/HTTPS).
 We could use a Node [HTTPS](https://nodejs.org/api/https.html) server in our application instead of the
 [HTTP](https://nodejs.org/docs/latest-v8.x/api/http.html) server (it requires more configuration).
-On the other hand, the production version of our application is in Heroku, so our application stays secure.
-Heroku routes all traffic between a browser and the Heroku server over HTTPS.
+On the other hand, the production version of our application is on Render, so our application stays secure.
+Render routes all traffic between a browser and the Render server over HTTPS.
 
 We will implement login to the frontend in the [next part](/part5).
 
@@ -402,7 +411,7 @@ We will implement login to the frontend in the [next part](/part5).
 
 ### Exercises 4.15-4.23
 
-In the next exercises, the basics of user management will be implemented for the Bloglist application.
+In the next exercises, the basics of user management will be implemented for the Watchlist application.
 The safest way is to follow the story from part 4 chapter [User administration](/part4/user_administration)
 to the chapter [Token-based authentication](/part4/token_authentication).
 You can of course also use your creativity.
@@ -410,7 +419,7 @@ You can of course also use your creativity.
 **One more warning:** If you notice you are mixing `async`/`await` and `then` calls, it is 99% certain you are doing something wrong.
 Use either or, never both.
 
-#### 4.15: bloglist expansion, step3
+#### 4.15: watchlist expansion, step3
 
 Implement a way to create new users by doing an HTTP POST request to address ***api/users***.
 Users have a *username, password and name*.
@@ -433,7 +442,7 @@ The list of users can, for example, look as follows:
 
 ![browser api/users shows JSON data of two users](../../images/4/22.png)
 
-#### 4.16*: bloglist expansion, step4
+#### 4.16*: watchlist expansion, step4
 
 Add a feature which adds the following restrictions to creating new users: Both username and password must be given.
 Both username and password must be at least 3 characters long.
@@ -447,33 +456,33 @@ The password length should be validated in the controller as we did in [part 3](
 
 Also, implement tests that ensure invalid users are not created and that an invalid add user operation returns a suitable status code and error message.
 
-#### 4.17: bloglist expansion, step5
+#### 4.17: watchlist expansion, step5
 
-Expand blogs so that each blog contains information on the creator of the blog.
+Expand `show` so that each show contains information on the recommender of that show.
 
-Modify adding new blogs so that when a new blog is created, ***any*** user from the database is designated as its creator (for example the one found first).
+Modify adding new shows so that when a new show is created, ***any*** user from the database is designated as its recommender (for example the one found first).
 Implement this according to part 4 chapter [populate](/part4/user_administration#populate).
-Which user is designated as the creator does not matter just yet.
+Which user is designated as the recommender does not matter just yet.
 The functionality is finished in exercise 4.19.
 
-Modify listing all blogs so that the creator's user information is displayed with the blog:
+Modify listing all shows so that the recommender's user information is displayed with the show:
 
-![api/blogs embeds creators user information in JSON data](../../images/4/23e.png)
+![api/shows embeds creators user information in JSON data](../../images/4/23e.png)
 
-and listing all users also displays the blogs created by each user:
+and listing all users also displays the shows they recommended:
 
-![api/users embeds blogs in JSON data](../../images/4/24e.png)
+![api/users embeds shows in JSON data](../../images/4/24e.png)
 
-#### 4.18: bloglist expansion, step6
+#### 4.18: watchlist expansion, step6
 
 Implement token-based authentication according to part 4 chapter [Token authentication](/part4/token_authentication).
 
-#### 4.19: bloglist expansion, step7
+#### 4.19: watchlist expansion, step7
 
-Modify adding new blogs so that it is only possible if a valid token is sent with the HTTP POST request.
-The user identified by the token is designated as the creator of the blog.
+Modify adding new shows so that it is only possible if a valid token is sent with the HTTP POST request.
+The user identified by the token is designated as the recommender of that show.
 
-#### 4.20*: bloglist expansion, step8
+#### 4.20*: watchlist expansion, step8
 
 [This example](/part4/token_authentication) from part 4 shows taking the token from the header with the `getTokenFrom` helper function.
 
@@ -489,7 +498,7 @@ app.use(middleware.tokenExtractor)
 Routes can access the token with `request.token`:
 
 ```js
-blogsRouter.post('/', async (request, response) => {
+showsRouter.post('/', async (request, response) => {
   // ..
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
   // ..
@@ -507,30 +516,30 @@ const tokenExtractor = (request, response, next) => {
 }
 ```
 
-#### 4.21*: bloglist expansion, step9
+#### 4.21*: watchlist expansion, step9
 
-Change the delete blog operation so that a blog can be deleted only by the user who added the blog.
-Therefore, deleting a blog is possible only if the token sent with the request is the same as that of the blog's creator.
+***Change the delete show operation*** so that a show can be deleted only by the user who added the show.
+Therefore, deleting a show is possible only if the token sent with the request is the same as that of the show's recommender.
 
-If deleting a blog is attempted without a token or by an invalid user, the operation should return a suitable status code.
+If deleting a show is attempted without a token or by an invalid user, the operation should return a suitable status code.
 
-Notice that if you fetch a blog from the database,
+Notice that if you fetch a show from the database,
 
 ```js
-const blog = await Blog.findById(...)
+const show = await Show.findById(...)
 ```
 
-the field `blog.user` does not contain a string, but an Object.
+the field `show.user` does not contain a string, but an Object.
 So if you want to compare the id of the object fetched from the database and a string id, a normal comparison operation does not work.
 The id fetched from the database must be parsed into a string first.
 
 ```js
-if ( blog.user.toString() === userid.toString() ) // ...
+if ( show.user.toString() === userid.toString() ) // ...
 ```
 
-#### 4.22*:  bloglist expansion, step10
+#### 4.22*:  watchlist expansion, step10
 
-Both the new blog creation and blog deletion need to find out the identity of the user who is doing the operation.
+Both the new show recommendation and show deletion need to find out the identity of the user who is doing the operation.
 The middleware `tokenExtractor` that we did in exercise 4.20 helps
 but still both the handlers of *post* and *delete* operations need to find out who the user holding a specific token is.
 
@@ -544,13 +553,13 @@ app.use(middleware.userExtractor)
 the user will be set in the field `request.user`:
 
 ```js
-blogsRouter.post('/', async (request, response) => {
+showsRouter.post('/', async (request, response) => {
   // get user from request object
   const user = request.user
   // ..
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+showsRouter.delete('/:id', async (request, response) => {
   // get user from request object
   const user = request.user
   // ..
@@ -564,16 +573,16 @@ So instead of using `userExtractor` with all the routes,
 // use the middleware in all routes
 app.use(userExtractor) // highlight-line
 
-app.use('/api/blogs', blogsRouter)  
+app.use('/api/shows', showsRouter)  
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 ```
 
-we could register it to be only executed with path ***/api/blogs*** routes:
+we could register it to be only executed with path ***/api/shows*** routes:
 
 ```js
-// use the middleware only in /api/blogs routes
-app.use('/api/blogs', userExtractor, blogsRouter) // highlight-line
+// use the middleware only in /api/shows routes
+app.use('/api/shows', userExtractor, showsRouter) // highlight-line
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 ```
@@ -587,43 +596,46 @@ router.post('/', userExtractor, async (request, response) => {
 }
 ```
 
-#### 4.23*:  bloglist expansion, step11
+#### 4.23*:  watchlist expansion, step11
 
-After adding token-based authentication the tests for adding a new blog broke down.
+After adding token-based authentication the tests for adding a new show broke down.
 Fix the tests.
-Also, write a new test to ensure adding a blog fails with the proper status code **401 Unauthorized** if a token is not provided.
+Also, write a new test to ensure adding a show fails with the proper status code **401 Unauthorized** if a token is not provided.
 
 [This](https://github.com/visionmedia/supertest/issues/398) is most likely useful when doing the fix.
 
 This is the last exercise for this part of the course and it's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 
 <!---
-task left of user
-  user fills in login form with
-  username and password
-end task
-user -> browser: login button pressed
+@startuml
+skinparam defaultTextAlignment center
+note left of user
+  //user fills in login form// with
+  ""username"" and ""password""
+end note
+user -> browser: **Login** button pressed
 
-browser -> backend: HTTP POST /api/login { username, password }
-task left of backend
-  backend generates TOKEN that identifies user 
-end task
-backend -> browser: TOKEN returned as message body 
-task left of browser
-  browser saves TOKEN
-end task
-task left of user
-  user creates a task
-end task
-user -> browser: create task button pressed
-browser -> backend: HTTP POST /api/tasks { content } TOKEN in header
-task left of backend
-  backend identifies userfrom the TOKEN
-end task
+browser -> backend: HTTP POST ///api/login// ""{ username, password }""
+note left of backend
+  backend //**generates**// ""TOKEN"" that identifies ""user"" 
+end note
+backend -> browser: ""TOKEN"" //**returned**// as //message body//
+note left of browser
+  browser //**saves**// ""TOKEN""
+end note
+note left of user
+  user //creates a task//
+end note
+user -> browser: **Create task** button pressed
+browser -> backend: HTTP POST ///api/tasks// ""{ content }"" & ""TOKEN"" in header
+note left of backend
+  backend //**identifies**// ""user"" from the TOKEN
+end note
 
-backend -> browser: 201 created
+backend -> browser: **201 created**
 
 user -> user:
+@enduml
 -->
 
 </div>
