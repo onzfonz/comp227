@@ -890,6 +890,6 @@ version of the places app at <https://227demo.djosv.com/spa>.
 
 Create a diagram depicting the situation where the user creates a new place using the single-page version of the app.
 
-This was the last exercise, so please hold on to them until we reach part c and then you can submit your answers there.
+This was the last exercise, so please hold on to them until we reach part d and then you can submit your answers there.
 
 </div>
