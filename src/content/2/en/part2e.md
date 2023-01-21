@@ -27,7 +27,7 @@ Let's add the following CSS rule to the *index.css* file:
 
 ```css
 h1 {
-  color: green;
+  color: chocolate;
 }
 ```
 
@@ -38,14 +38,14 @@ CSS rules comprise of **selectors** and **declarations**.
 The selector defines which elements the rule should be applied to.
 The selector above is `h1`, which will match all of the `h1` header tags in our application.
 
-The declaration sets the `color` property to the value `green`.
+The declaration sets the `color` property to the value `chocolate` (*all this work is making me hungry!*).
 
 One CSS rule can contain an arbitrary number of declarations.
 Let's modify the previous rule to make the text cursive, by defining the font style as `italic`:
 
 ```css
 h1 {
-  color: navy;
+  color: chocolate;
   font-style: italic;  // highlight-line
 }
 ```
@@ -74,8 +74,8 @@ Let's add the following rule to our style sheet (relying on my non-existent know
 
 ```css
 li {
-  color: saddlebrown;
-  padding-top: 3px;
+  color: #f4b223;
+  padding-top: 8px;
   font-size: 18px;
 }
 ```
@@ -114,13 +114,24 @@ Class selectors are defined with the `.classname` syntax:
 
 ```css
 .task {
-  color: saddlebrown;
-  padding-top: 5px;
+  color: #f4b223;
+  padding-top: 8px;
   font-size: 18px;
 }
 ```
 
+Notice this time that instead of a named color, I used a [**hex color value**](https://www.w3schools.com/colors/colors_hexadecimal.asp) to specify a color in the RGB space.
 If you now add other `li` elements to the application, they will not be affected by the style rule above.
+
+One final note that we are going to make is to use what is called a **pseudo-class selector**, which is not an actual class, but something that is defined by most browsers.
+In our case, since we've been doing a lot websites with dark mode, we'll jump on the bandwagon and add this as well here.
+
+:root {
+    color-scheme:dark;
+}
+
+Once you save, you'll immediately notice that the entire page has inverted, including the colors for button controls and textboxes.
+You can apply this to any of the future assignments if you prefer all things dark.
 
 ### Improved error message
 
@@ -177,10 +188,10 @@ Then let's add a style rule that suits an error message:
 
 ```css
 .error {
-  color: red;
-  background: antiquewhite;
+  background: #9c2b2e;
   font-size: 22px;
   border-style: solid;
+  border-width: 1px;
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
@@ -263,7 +274,6 @@ const Footer = () => {
   const footerStyle = {
     marginTop: 30,
     paddingBottom: 15,
-    backgroundColor: 'black',
     color: 'orange',
     fontStyle: 'italic',
     fontSize: 16
@@ -272,7 +282,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      <em>Task app, Department of Computer Science, University of the Pacific 2023</em>
+      Task app, Department of Computer Science, University of the Pacific 2023
     </div>
   )
 }

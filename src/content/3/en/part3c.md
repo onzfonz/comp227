@@ -645,8 +645,6 @@ We also added the hardcoded port of the server into the `PORT` environment varia
 Our repos already ignore the *.env* file by default.
 If you ever make a new repo, **make sure that you immediately add `.env` so you do not publish any confidential information publicly online!**
 
-![.gitignore in vscode with .env line added](../../images/3/45ae.png)
-
 The environment variables defined in the *.env* file can be taken into use with the expression `require('dotenv').config()`
 and you can reference them in your code just like you would reference normal environment variables, with the familiar `process.env.MONGODB_URI` syntax.
 
