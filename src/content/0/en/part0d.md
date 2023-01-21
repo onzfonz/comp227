@@ -173,11 +173,15 @@ After this, you should be able to type `node -v` and you'll notice that it shoul
 To prepare you to use webstorm we'll follow a couple more commands here:
 
 One is to type the following lines, which creates a ***symbolic link*** where WebStorm can find the version of node we are using.
+***Remember, all of your terminal commands should be done in git bash at this point!***
 
 ```bash
 export NVM_SYMLINK_CURRENT=true
 nvm use default
 ```
+
+If, after typing the second line, you get an error like `panic: runtime error: slice bounds out of range`, this is mostly likely due to you already having node installed.
+If you type `nvm list` and you just type the number of one of the versions installed, like say `nvm use 16`, that will also work.
 
 #### 4 Alternate: Installing node directly
 
