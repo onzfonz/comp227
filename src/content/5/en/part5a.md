@@ -11,8 +11,8 @@ In the last two parts, we have mainly concentrated on the backend.
 The frontend that we developed in [part 2](/part2) does not yet support the user management we implemented to the backend in part 4.
 
 At the moment the frontend shows existing tasks and lets users change the state of a task from important to not important and vice versa.
-New tasks cannot be added anymore because of the changes made to the backend in part 4:
-the backend now expects that a token verifying a user's identity is sent with the new task.
+Unfortunately, new tasks can't be added anymore
+because our backend expects that [a token verifying a user's identity be sent with new tasks](/part4/token_authentication#limiting-creating-new-notes-to-logged-in-users).
 
 We'll now implement a part of the required user management functionality in the frontend.
 Let's begin with the user login.
@@ -20,12 +20,14 @@ Throughout this part, we will assume that new users will not be added from the f
 
 ### Handling login
 
-A login form has now been added to the top of the page.
-The form for adding new tasks has also been moved to the bottom of the list of tasks.
+Let's add a login form to the top of the page.
+That code will be shown below.
+**Let's also move the form for adding notes above the form.**
+We'll task you with doing this.
 
 ![browser showing user login for tasks](../../images/5/1e.png)
 
-The code of the `App` component now looks as follows:
+Below are the changes needed to add the login form in *App.js*:
 
 ```js
 const App = () => {
@@ -82,6 +84,7 @@ const App = () => {
         </div>
         <button type="submit">login</button>
       </form>
+      <hr/>
     // highlight-end
 
       // ...
@@ -94,20 +97,25 @@ export default App
 
 The current application code can be found on
 [Github](https://github.com/comp227/part2-tasks/tree/part5-1), branch *part5-1*.
-If you clone the repo, don't forget to run `npm install` before attempting to run the frontend.
 
-The frontend will not display any tasks if it's not connected to the backend.
-You can start the backend with `npm run dev` in its folder from Part 4.
-This will run the backend on port 3001.
-While that is active, in a separate terminal window you can start the frontend with `npm start`,
-and now you can see the tasks that are saved in your MongoDB database from Part 4.
-
-Keep this in mind from now on.
+> **Notice** If you clone the repo, don't forget to run `npm install` before attempting to run the frontend.
+>
+> The frontend will not display any tasks if it's not connected to the backend.
+> You'll need to open up both repositories and start them both.
+>
+> | repository | command | port |
+> | :-- | :-- | :-- |
+> | backend | `npm run dev` | 3001 |
+> | frontend | `npm start` | 3000 |
+>
+> After starting both, you will see the tasks that are saved in your MongoDB database from Part 4.
+>
+> ***You'll need to start both from now on if you want full functionality***
 
 The login form is handled the same way we handled forms in
 [part 2](/part2/forms).
 The app state has fields for `username` and `password` to store the data from the form.
-The form fields have event handlers, which synchronize changes in the field to the state of the `App` component.
+The form fields have *event handlers*, which synchronize changes in the field to the state of the `App` component.
 The event handlers are simple:
 An object is given to them as a parameter,
 and they destructure the field `target` from the object and save its value to the state.
@@ -135,7 +143,7 @@ const login = async credentials => {
 export default { login }
 ```
 
-The method for handling the login can be implemented as follows:
+The `handleLogin` function and the other parts of *App.js* can be changed as follows:
 
 ```js
 import loginService from './services/login' // highlight-line
@@ -148,10 +156,10 @@ const App = () => {
   const [user, setUser] = useState(null)
 // highlight-end
   
-  // highlight-start
-  const handleLogin = async (event) => {
+  const handleLogin = async (event) => { // higlight-line
     event.preventDefault()
     
+    // highlight-start
     try {
       const user = await loginService.login({
         username, password,
@@ -176,7 +184,7 @@ const App = () => {
 If the login is successful, the form fields are emptied ***and*** the server response
 (including a *token* and the user details) is saved to the `user` field of the application's state.
 
-If the login fails or running the function `loginService.login` results in an error, the user is notified.
+If the login fails or function `loginService.login` throws an error, the user is notified.
 
 The user is not notified about a successful login in any way.
 Let's modify the application to show the login form only *if the user is not logged-in* so when `user === null`.
@@ -282,10 +290,10 @@ is used to render the forms conditionally:
 }
 ```
 
-If the first statement evaluates to false or is [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy),
+If the first statement evaluates to `false` or is [**falsy**](https://developer.mozilla.org/en-US/docs/Glossary/Falsy),
 the second statement (generating the form) is not executed at all.
 
-We can make this even more straightforward by using the [conditional operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator):
+We can make this even more straightforward by using the [**conditional operator**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator):
 
 ```js
 return (
@@ -293,14 +301,12 @@ return (
     <h1>Tasks</h1>
 
     <Notification message={errorMessage}/>
-
+    // higlight-start
     {user === null ?
       loginForm() :
       taskForm()
     }
-
-    <h2>Tasks</h2>
-
+    // highlight-end
     // ...
 
   </div>
@@ -308,7 +314,7 @@ return (
 ```
 
 If `user === null` is
-[truthy](https://developer.mozilla.org/en-US/docs/Glossary/Truthy),
+[**truthy**](https://developer.mozilla.org/en-US/docs/Glossary/Truthy),
 `loginForm()` is executed.
 If not, `taskForm()` is.
 
@@ -324,13 +330,13 @@ return (
 
     {user === null ?
       loginForm() :
+      // highlight-start
       <div>
         <p>{user.name} logged-in</p>
         {taskForm()}
       </div>
+      // highlight-end
     }
-
-    <h2>Tasks</h2>
 
     // ...
 
@@ -411,7 +417,7 @@ export default { getAll, create, update, setToken } // highlight-line
 
 The taskService module contains a private variable `token`.
 Its value can be changed with a function `setToken`, which is exported by the module.
-`create`, now with async/await syntax, sets the token to the `Authorization` header.
+`create`, now with `async`/`await` syntax, sets the token to the `Authorization` header.
 The header is given to axios as the third parameter of the `post` method.
 
 The event handler responsible for login must be changed to call the method `taskService.setToken(user.token)` with a successful login:
@@ -442,7 +448,7 @@ Our application has a flaw: when the page is rerendered, the user's login inform
 This also slows down development.
 For example, when we test creating new tasks, we have to login again every single time.
 
-This problem is easily solved by saving the login details to [local storage](https://developer.mozilla.org/en-US/docs/Web/API/Storage).
+This problem is easily solved by saving the login details to [**local storage**](https://developer.mozilla.org/en-US/docs/Web/API/Storage).
 Local Storage is a [key-value](https://en.wikipedia.org/wiki/Key-value_database) database in the browser.
 
 It is very easy to use.
@@ -450,7 +456,7 @@ A *value* corresponding to a certain *key* is saved to the database with the met
 For example:
 
 ```js
-window.localStorage.setItem('name', 'juha tauriainen')
+window.localStorage.setItem('name', 'slim shady')
 ```
 
 saves the string given as the second parameter as the value of the key `name`.
@@ -468,10 +474,10 @@ The storage is [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin
 
 Let's extend our application so that it saves the details of a logged-in user to the local storage.
 
-Values saved to the storage are [DOMstrings](https://docs.w3cub.com/dom/domstring),
+Values saved to the storage are [**DOMstrings**](https://docs.w3cub.com/dom/domstring),
 so we cannot save a JavaScript object as it is.
 The object has to be parsed to JSON first, with the method `JSON.stringify`.
-Correspondingly, when a JSON object is read from the local storage, it has to be parsed back to JavaScript with `JSON.parse`.
+Correspondingly, when a JSON object is read from the local storage, *it has to be parsed back to JavaScript with `JSON.parse`*.
 
 Changes to the login method are as follows:
 
@@ -498,7 +504,7 @@ Changes to the login method are as follows:
   }
 ```
 
-The details of a logged-in user are now saved to the local storage, and they can be viewed on the console (by typing `window.localStorage` to the console):
+The details of a logged-in user are now saved to the local storage, and they can be viewed on the console (*by typing `window.localStorage` to the console*):
 
 ![browser showing someone logged into tasks](../../images/5/3e.png)
 
@@ -508,10 +514,10 @@ On Chrome, go to the ***Application*** tab and select ***Local Storage***
 On Firefox go to the ***Storage*** tab and select ***Local Storage*** (details [here](https://developer.mozilla.org/en-US/docs/Tools/Storage_Inspector)).
 
 We still have to modify our application so that when we enter the page,
-the application checks if user details of a logged-in user can already be found on the local storage.
-If they can, the details are saved to the state of the application and to ***taskService***.
+the application checks if local storage has details for a logged-in user.
+If there is, the details are saved to the state of the application and to ***taskService***.
 
-The right way to do this is with an [effect hook](https://reactjs.org/docs/hooks-effect.html):
+The right way to do this is with an [*effect hook*](https://reactjs.org/docs/hooks-effect.html):
 a mechanism we first encountered in [part 2](/part2/getting_data_from_server#effect-hooks),
 and used to fetch tasks from the server.
 
@@ -549,21 +555,21 @@ const App = () => {
 }
 ```
 
-The empty array as the parameter of the effect ensures that the effect is executed only when the component is rendered
+The empty array `[]` as the parameter of the effect ensures that the effect is executed only when the component is rendered
 [for the first time](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect).
 
 Now a user stays logged in to the application forever.
 We should probably add a ***logout*** functionality, which removes the login details from the local storage.
-We will however leave it as an exercise.
+*We will leave it as an exercise, as it builds character* 🧐.
 
-It's possible to log out a user using the console, and that is enough for now.
+***It's possible to log out a user using the console***, and that is enough for now.
 You can log out with the command:
 
 ```js
 window.localStorage.removeItem('loggedTaskappUser')
 ```
 
-or with the command which empties `localStorage` completely:
+or with the command which empties `localStorage`:
 
 ```js
 window.localStorage.clear()
@@ -578,36 +584,12 @@ The current application code can be found on
 
 ### Exercises 5.1-5.4
 
-We will now create a frontend for the bloglist backend we created in the last part.
-You can use [this application](https://github.com/comp227/bloglist-frontend) from GitHub as the base of your solution.
+We will now create a frontend for the watchlist backend we created in the previous section.
+You will be using a new repo for this part that you will be able to obtain by vising the URL below.
+This new repo/application has a small amount of code to get you started.
 The application expects your backend to be running on port 3003.
 
-It is enough to submit your finished solution.
-You can do a commit after each exercise, but that is not necessary.
-
-The first few exercises revise everything we have learned about React so far.
-They can be challenging, especially if your backend is incomplete.
-It might be best to use the backend that we marked as the answer for part 4.
-
-While doing the exercises, remember all of the debugging methods we have talked about, especially keeping an eye on the console.
-
-**Warning:** If you notice you are mixing in the functions `async`/`await` and `then` commands, it's 99.9%  certain you are doing something wrong.
-Use either or, never both.
-
-#### 5.1: bloglist frontend, step1
-
-Clone the application from [GitHub](https://github.com/comp227/bloglist-frontend) with the command:
-
-```bash
-git clone https://github.com/comp227/bloglist-frontend
-```
-
-> *Remove the git configuration of the cloned application.*
-
-```bash
-cd bloglist-frontend   // go to cloned repository
-rm -rf .git
-```
+Visit <http://go.djosv.com/227lab5> to start the process of cloning the frontend repo into Webstorm.
 
 The application is started the usual way, but you have to install its dependencies first:
 
@@ -615,6 +597,20 @@ The application is started the usual way, but you have to install its dependenci
 npm install
 npm start
 ```
+
+Following what we have mentioned before about committing regularly, your commits should be providing context on the small changes that you are doing as you write your code.
+This way you think about your code as you move through, which has an [increasing following](https://conventionalcommits.org).
+
+The first few exercises revise everything we have learned about React so far.
+They can be challenging, especially if your backend is incomplete.
+Please **ensure part4 is working first** before moving onto this.
+
+While doing the exercises, remember all of the debugging methods we have talked about, especially keeping an eye on the console.
+
+**Warning:** If you notice you are mixing in the functions `async`/`await` and `then` commands, it's 99.9%  certain you are doing something wrong.
+Use either or, never both.
+
+#### 5.1: watchlist frontend, step1
 
 Implement login functionality to the frontend.
 The token returned with a successful login is saved to the application's state `user`.
@@ -645,16 +641,16 @@ User details of the logged-in user do not have to be saved to the local storage 
 
   return (
     <div>
-      <h2>blogs</h2>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      <h2>What to watch</h2>
+      {shows.map(show =>
+        <Show key={show.id} show={show} />
       )}
     </div>
   )
 }
 ```
 
-#### 5.2: bloglist frontend, step2
+#### 5.2: watchlist frontend, step2
 
 Make the login 'permanent' by using the local storage.
 Also, implement a way to log out.
@@ -663,16 +659,16 @@ Also, implement a way to log out.
 
 Ensure the browser does not remember the details of the user after logging out.
 
-#### 5.3: bloglist frontend, step3
+#### 5.3: watchlist frontend, step3
 
-Expand your application to allow a logged-in user to add new blogs:
+Expand your application to allow a logged-in user to add new shows:
 
 ![browser showing new blog form](../../images/5/7e.png)
 
-#### 5.4: bloglist frontend, step4
+#### 5.4: watchlist frontend, step4
 
 Implement notifications that inform the user about successful and unsuccessful operations at the top of the page.
-For example, when a new blog is added, the following notification can be shown:
+For example, when a new show is added, the following notification can be shown:
 
 ![browser showing successful operation](../../images/5/8e.png)
 
@@ -687,7 +683,7 @@ It is not compulsory to add colors.
 
 <div class="content">
 
-### A task on using local storage
+### A notice about using local storage
 
 At the [end](/part4/token_authentication#problems-of-token-based-authentication) of the last part,
 we mentioned that the challenge of token-based authentication is how to cope with the situation when the API access of the token holder to the API needs to be revoked.
@@ -708,7 +704,7 @@ all text that it renders, meaning that it is not executing the rendered content 
 If one wants to play safe, the best option is to not store a token in local storage.
 This might be an option in situations where leaking a token might have tragic consequences.
 
-It has been suggested that the identity of a signed-in user should be saved as [httpOnly cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies),
+It has been suggested that the identity of a signed-in user should be saved as [**httpOnly cookies**](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#restrict_access_to_cookies),
 so that JavaScript code could not have any access to the token.
 The drawback of this solution is that it would make implementing SPA applications a bit more complex.
 One would need at least to implement a separate page for logging in.
