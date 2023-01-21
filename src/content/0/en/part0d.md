@@ -318,7 +318,7 @@ Here's a recap in a [re-looping gif of all of these steps that you should see](h
 
 #### Other permissions
 
-The other permission you may have to set is to allow JetBrains access to comp227's organizational space.
+The other permission you may have to set (if you are running into issues) is to allow JetBrains access to comp227's organizational space.
 You can do this by [visiting GitHub's apps settings](https://github.com/settings/applications#authorized) and then clicking on **JetBrains IDE Integration**.
 Click on that and then you should be able to see the heading ***Organization Access***.
 Click on the ***Grant*** button next to comp227, and now try cloning the project again.
