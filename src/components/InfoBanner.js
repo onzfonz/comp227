@@ -48,6 +48,7 @@ const InfoBanner = ({ visible, onHide }) => {
         <a href="/en/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
           <span style={linkStyle}>here</span>!
         </a> */}
+        Part 2 will be released soon!
       </div>
       <div style={buttonDiv}>
         <button style={buttonStyle} onClick={onHide}>
