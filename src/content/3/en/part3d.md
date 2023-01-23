@@ -236,7 +236,7 @@ npx eslint --init
 
 We will answer all of the questions:
 
-![terminal output from ESlint init](../../images/3/52new.png)
+![terminal output from ESlint init](../../images/3/52be.png)
 
 The configuration will be saved in the *.eslintrc.js* file:
 

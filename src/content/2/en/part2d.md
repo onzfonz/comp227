@@ -72,7 +72,7 @@ The registered event handler logs the response that is sent back from the server
 
 When we try to create a new task, the following output pops up in the console:
 
-![data json output in console](../../images/2/20new.png)
+![data json output in console](../../images/2/20e.png)
 
 The newly created task resource is stored in the value of the `data` property of the `response` object.
 

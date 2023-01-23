@@ -727,7 +727,7 @@ app.get('/api/tasks/:id', (request, response) => {
 When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the Webstorm REST client**.
 Next, let's try creating a new task after taking the database into use:
 
-![VS code rest client doing a post](../../images/3/46new.png)
+![Webstorm rest client doing a post](../../images/3/46e.png)
 
 Only once everything has been verified to work in the backend, is it a good idea to test that the frontend works with the backend.
 ***It is highly inefficient to test things exclusively through the frontend.***

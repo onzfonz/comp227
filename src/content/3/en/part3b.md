@@ -329,7 +329,7 @@ Otherwise, simply copy and paste.
 
 The backend directory should now look as follows:
 
-![bash screenshot of ls showing build directory](../../images/3/27new.png)
+![bash screenshot of ls showing build directory](../../images/3/27ea.png)
 
 To make express show **static content**, the page *index.html* and the JavaScript, etc., it fetches,
 we need a built-in middleware from express called [static](http://expressjs.com/en/starter/static-files.html).

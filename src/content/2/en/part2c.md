@@ -172,7 +172,7 @@ For the browser to remain **responsive**, i.e., to be able to continuously react
 the code logic needs to be such that no single computation can take too long.
 
 There is a host of additional material on the subject to be found on the internet.
-One particularly clear presentation of the topic is the keynote by Philip Roberts called
+One particularly clear presentation of the topic is the presentation by Philip Roberts called
 [What the heck is the event loop anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 
 In today's browsers, it is possible to run parallelized code with the help of so-called
@@ -398,7 +398,7 @@ promise.then(response => {
 
 The following is printed to the console:
 
-![json object data printed to console](../../images/2/17new.png)
+![json object data printed to console](../../images/2/17e.png)
 
 The JavaScript runtime environment calls the callback function registered by the `then` method providing it with a `response` object as a parameter.
 The `response` object contains all the essential data related to the response of an HTTP GET request,

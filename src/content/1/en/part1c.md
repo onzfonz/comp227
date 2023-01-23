@@ -726,15 +726,15 @@ const App = () => {
   return (
     <div>
       <Display counter={counter} />
-      <Button handleClick={increaseByOne} text="plus" />
-      <Button handleClick={setToZero} text="zero" />
-      <Button handleClick={decreaseByOne} text="minus" />
+      <Button onClick={increaseByOne} text="plus" />
+      <Button onClick={setToZero} text="zero" />
+      <Button onClick={decreaseByOne} text="minus" />
     </div>
   )
 } 
 ```
 
-Let us now see what gets rendered to the console when the buttons plus, plus, zero and minus are pressed:
+Let us now see what gets rendered to the console when the buttons ***plus***, ***plus***, ***zero*** and ***minus*** are pressed:
 
 ![browser showing plus plus zero and minus being pressed](../../images/1/31.png)
 

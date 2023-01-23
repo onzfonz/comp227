@@ -376,7 +376,7 @@ const App = () => {
 This is a reasonable initial value for `tasks` since we will be storing multiple tasks in that state.
 
 If the state were to hold a "single thing",
-a better initial value would be `null` since it denotes that there is *nothing* in the state initially.
+a better initial value would be `null` since it indicates that there is *nothing* in the state initially.
 Let us try what happens if we use this initial value:
 
 ```js

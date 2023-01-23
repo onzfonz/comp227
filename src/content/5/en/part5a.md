@@ -12,7 +12,7 @@ The frontend that we developed in [part 2](/part2) does not yet support the user
 
 At the moment the frontend shows existing tasks and lets users change the state of a task from important to not important and vice versa.
 Unfortunately, new tasks can't be added anymore
-because our backend expects that [a token verifying a user's identity be sent with new tasks](/part4/token_authentication#limiting-creating-new-notes-to-logged-in-users).
+because our backend expects that [a token verifying a user's identity be sent with new tasks](/part4/token_authentication#limiting-creating-new-tasks-to-logged-in-users).
 
 We'll now implement a part of the required user management functionality in the frontend.
 Let's begin with the user login.
@@ -22,7 +22,7 @@ Throughout this part, we will assume that new users will not be added from the f
 
 Let's add a login form to the top of the page.
 That code will be shown below.
-**Let's also move the form for adding notes above the form.**
+**Let's also move the form for adding tasks above the form.**
 We'll task you with doing this.
 
 ![browser showing user login for tasks](../../images/5/1e.png)

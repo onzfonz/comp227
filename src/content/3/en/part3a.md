@@ -763,7 +763,7 @@ We'll use that file to define a request that fetches all tasks.
 
 By clicking the highlighted play button, the REST client will execute the HTTP request and the response from the server is opened in the editor.
 
-![response from vs code from get request](../../images/3/13new.png)
+![response from webstorm from get request](../../images/3/13ea.png)
 
 ### Receiving data
 
@@ -828,11 +828,11 @@ Naturally, it's a good idea to add lots of `console.log` commands to the code wh
 A potential cause for issues is an incorrectly set `Content-Type` header in requests.
 This can happen with Postman if the type of body is not defined correctly:
 
-![postman having text as content-type](../../images/3/17new.png)
+![postman having text as content-type](../../images/3/17x.png)
 
 The `Content-Type` header is set to `text/plain`:
 
-![postman showing headers and content-type as text/plain](../../images/3/18new.png)
+![postman showing headers and content-type as text/plain](../../images/3/18x.png)
 
 The server appears to only receive an empty object:
 
@@ -844,7 +844,7 @@ there's a [massive amount](https://developer.mozilla.org/en-US/docs/Web/HTTP/Bas
 
 With WebStorm, the POST request can be sent with the REST client like this:
 
-![sample post request in vscode with JSON data](../../images/3/20new.png)
+![sample post request in webstorm with JSON data](../../images/3/20eb.png)
 
 One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository,
 and they can be distributed to everyone in the development team.
