@@ -17,6 +17,7 @@ const InfoBanner = ({ visible, onHide }) => {
     flexDirection: 'row',
     alignContent: 'space-between',
     backgroundColor: '#E8E8E8',
+    color: '#212121',
     zIndex: 2147483647,
   };
 
@@ -48,7 +49,7 @@ const InfoBanner = ({ visible, onHide }) => {
         <a href="/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
           <span style={linkStyle}>here</span>!
         </a> */}
-        Part 2 will be released soon!
+        Part 2 will be added soon. Look for more updates via Discord/Canvas!
       </div>
       <div style={buttonDiv}>
         <button style={buttonStyle} onClick={onHide}>
