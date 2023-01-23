@@ -399,7 +399,7 @@ It's easy to follow and track the calls made to the `App` component's render fun
 
 Was your browser console open?
 If it wasn't, do yourself a favor and keep it open.
-Make it a habit (***Ctrl-Shift-I***) as soon as you start going to localhost.
+Make it a habit to type (***Ctrl-Shift-I***) while your localhost is loading.
 Or keep using the same web browser.
 
 ### Event handling

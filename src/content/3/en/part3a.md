@@ -12,11 +12,13 @@ In this part, our focus shifts towards the backend: that is, towards implementin
 We will be building our backend on top of [NodeJS](https://nodejs.org/en/),
 which is a JavaScript runtime based on Google's [Chrome V8](https://developers.google.com/v8/) JavaScript engine.
 
-This course material was originally written with version *16.13.2* of Node.js, but you can try to use v18.13.0 as, it parts have been adapted to use that version.
+This course material was originally written with version *16.13.2* of Node.js,
+but you can try to use v18.13.0 as, it parts have been adapted to use that version.
 If you are using NVM, you can switch.
 For the rest of you, please stay on 16.13.2.
 Just know that some of the library versions may change, as most the material is still in 16.13.2.
-Please make sure that your version of Node is at least as new as the version used in the material (you can check the version by running `node -v` in the command line).
+Please make sure that your version of Node is at least as new as the version used in the material
+(you can check the version by running `node -v` in the command line).
 
 As mentioned in [part 1](/part1/java_script),
 browsers don't yet support the newest features of JavaScript,

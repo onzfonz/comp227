@@ -779,7 +779,9 @@ A more advanced method could always be added in later, given that there's time a
 
 The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-6).
 
-We will continue with [our web developer pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge) but will also add two more items:
+We will continue with
+[our web developer pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge)
+but will also add two more items:
 
 > I pledge to:
 >

@@ -1113,7 +1113,8 @@ Also, everything related to class-based components is irrelevant to us;
 
 As you are learning material, there are a lot of moving parts.
 With this being mostly text, that means that getting examples and exercises to work can take a lot of time.
-Because of this, we're going to introduce this *pledge* that you can take so that you make sure that you are on the correct path in your journey to becoming a better web developer.
+Because of this, we're going to introduce this *pledge* that you can take
+so that you make sure that you are on the correct path in your journey to becoming a better web developer.
 
 Here it is:
 

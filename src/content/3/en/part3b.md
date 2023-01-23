@@ -183,10 +183,9 @@ The developer-friendly services like PaaS (i.e. Platform as a Service) take care
 and could also provide various services such as databases.
 
 For a decade, [Heroku](http://heroku.com) was dominating the PaaS scene.
-Unfortunately the Heroku's free tier ended at 27th November 2022.
+Unfortunately, Heroku's free tier ended at 27th November 2022.
 This is very unfortunate for many developers, especially students.
-Heroku is still very much a viable option if you are willing to spend some money.
-They also have [a student program](https://www.heroku.com/students) that provides some free credits.
+They do have [a student program](https://www.heroku.com/students) that provides some free credits, but I would advise against it.
 
 While there are replacements for Heroku that could work with this course like:
 

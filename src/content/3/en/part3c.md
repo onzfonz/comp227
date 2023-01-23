@@ -477,7 +477,6 @@ const password = process.argv[2]
 const url = `mongodb+srv://comp227:${password}@cluster0.gb6u3el.mongodb.net/taskApp?retryWrites=true&w=majority`
 // LET ME REPEAT - DO NOT SAVE YOUR PASSWORD IN YOUR CODE!
 
-mongoose.set('strictQuery',false)
 mongoose.connect(url)
 
 const taskSchema = new mongoose.Schema({

@@ -629,7 +629,9 @@ If the problem has still not been resolved, sadly there isn't much to do apart f
 The original author added this chapter to the material after the model answer for the next question exploded completely
 (due to props being of the wrong type), and it had to be debuggged using `console.log`.
 
-***As you continue through, please remember the [pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge) you took to help you improve as a web developer***.
+***As you continue through, please remember the
+[pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge)
+you took to help you improve as a web developer***.
 
 </div>
 

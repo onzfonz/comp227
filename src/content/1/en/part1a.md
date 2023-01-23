@@ -621,6 +621,6 @@ const Content = ... {
 ```
 
 Our application passes on information in quite a primitive way at the moment, since it is based on individual variables.
-We shall fix that in the [part 2](/part2).
+We shall fix that in [part 2](/part2).
 
 </div>
