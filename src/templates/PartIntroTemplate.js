@@ -44,7 +44,7 @@ export default function PartIntroTemplate({ data }) {
     <Layout>
       <SEO
         lang={lang}
-        title={`Fullstack ${'part'}${part}`}
+        title={`COMP227 ${'part'}${part}`}
         description={mainSEOdescription[lang]}
         keywords={[
           ...mainSEOtags,
@@ -66,7 +66,7 @@ export default function PartIntroTemplate({ data }) {
               content={[
                 {
                   backgroundColor: colors[partColors[part]],
-                  text: 'Fullstack',
+                  text: 'COMP 227',
                   link: `/${lang === 'en' ? '' : `${lang}/`}#course-contents`,
                 },
                 {

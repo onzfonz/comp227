@@ -1,0 +1,49 @@
+{
+    "httpHeaders": [
+        {
+          "urls": ["https://github.com/", "https://guides.github.com/", "https://help.github.com/", "https://docs.github.com/"],
+          "headers": {
+            "Accept-Encoding": "zstd, br, gzip, deflate"
+          }
+        }
+      ],
+      "ignorePatterns": [
+        {
+            "pattern": "//localhost"
+        },
+        {
+            "pattern": "example.com"
+        },
+        {
+            "pattern": "^/part[0-9]+"
+        },
+        {
+            "pattern": "serversaddress.com"
+        },
+        {
+            "pattern": "herokuapp.com"
+        },
+        {
+            "pattern": "You-Dont-Know-JS/blob"
+        },
+        {
+            "pattern": "https://studies.cs.helsinki.fi/exampleapp/new_note"
+        },
+        {
+            "pattern": "web.archive.org"
+        },
+        {
+            "pattern": "recharts.org"
+        }
+
+    ],
+    "retryOn429": true,
+    "aliveStatusCodes": [
+        200,
+        403,
+        429,
+        503,
+        520,
+        999
+    ]
+}

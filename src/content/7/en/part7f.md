@@ -7,16 +7,20 @@ lang: en
 
 <div class="content">
 
-In addition to the eight exercises in the [React router](/en/part7/react_router) and [custom hooks](en/part7/custom_hooks) sections of this seventh part of the course material, 13 exercises continue our work on the Bloglist application that we worked on in parts four and five of the course material.
-Some of the following exercises are "features" that are independent of one another, meaning that there is no need to finish the exercises in any particular order.
+In addition to the eight exercises in the [React router](/part7/react_router)
+and [custom hooks](/part7/custom_hooks) sections of this seventh part of the course material,
+13 exercises continue our work on the Bloglist application that we worked on in parts four and five of the course material.
+Some of the following exercises are "features" that are independent of one another,
+meaning that there is no need to finish the exercises in any particular order.
 You are free to skip over a part of the exercises if you wish to do so.
 
 If you do not want to use your Bloglist application, you are free to use the code from the model solution as a starting point for these exercises.
 
 Many of the exercises in this part of the course material will require the refactoring of existing code.
-This is a common reality of extending existing applications, meaning that refactoring is an important and necessary skill even if it may feel difficult and unpleasant at times.
+This is a common reality of extending existing applications,
+meaning that refactoring is an important and necessary skill even if it may feel difficult and unpleasant at times.
 
-One good piece of advice for both refactoring and writing new code is to take <i>baby steps</i>.
+One good piece of advice for both refactoring and writing new code is to take ***baby steps***.
 Losing your sanity is almost guaranteed if you leave the application in a completely broken state for long periods while refactoring.
 
 </div>
@@ -29,7 +33,8 @@ Losing your sanity is almost guaranteed if you leave the application in a comple
 
 In the previous parts, we used ESLint to ensure that code follows the defined conventions.
 [Prettier](https://prettier.io/) is yet another approach for the same.
-According to the documentation, Prettier is <i>an opinionated code formatter</i>, that is, Prettier not only controls the code style but also formats the code according to the definition.
+According to the documentation, Prettier is *an opinionated code formatter*, that is,
+Prettier not only controls the code style but also formats the code according to the definition.
 
 Prettier is easy to integrate into the code editor so that when the code is saved, it is automatically formatted correctly.
 
@@ -43,7 +48,7 @@ Change the application's notifications to use Redux at this point of the exercis
 
 #### 7.11: redux, step2
 
-<i>Note</i> that this and the next two exercises are quite laborious but incredibly educational.
+***Notice*** that this and the next two exercises are quite laborious but incredibly educational.
 
 Store the information about blog posts in the Redux store.
 In this exercise, it is enough that you can see the blogs in the backend and create a new blog.
@@ -74,7 +79,7 @@ You can access the view by clicking the name of the user in the view that lists 
 
 ![browser blogs showing clickable users](../../images/7/43.png)
 
-<i>**NB:**</i> you will almost certainly stumble across the following error message during this exercise:
+**NB:** you will almost certainly stumble across the following error message during this exercise:
 
 ![browser TypeError cannot read property name of undefined](../../images/7/42ea.png)
 
@@ -130,7 +135,7 @@ Comments should be anonymous, meaning that they are not associated with the user
 
 In this exercise, it is enough for the frontend to only display the comments that the application receives from the backend.
 
-An appropriate mechanism for adding comments to a blog post would be an HTTP POST request to the <i>api/blogs/:id/comments</i> endpoint.
+An appropriate mechanism for adding comments to a blog post would be an HTTP POST request to the ***api/blogs/:id/comments*** endpoint.
 
 #### 7.19: comments, step2
 

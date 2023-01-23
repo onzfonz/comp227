@@ -13,11 +13,15 @@
 
   p {
     font-family: $font-heading;
+    html[data-theme='light'] & {
+        font-family: $font-heading--light;
+    }
 
     @include from($tablet) {
       margin-left: 1rem;
     }
   }
+
 
   p:not(:last-of-type) {
     margin-bottom: $vertical-spacing;
@@ -39,16 +43,29 @@
   }
 
   table {
+    font-family: $font-heading;
+    html[data-theme='light'] & {
+        font-family: $font-heading--light;
+    }
     @include from($tablet) {
       margin-left: 1rem;
     }
   }
 
-  ul {
+  ul, ol {
     font-family: $font-heading;
+    html[data-theme='light'] & {
+        font-family: $font-heading--light;
+    }
 
     @include from($tablet) {
       margin-left: 2.2rem;
+    }
+  }
+
+  a {
+    html[data-theme='light'] & {
+        font-family: $font-heading;
     }
   }
 
@@ -57,20 +74,23 @@
   }
 
   pre {
-    margin: 2rem 0;
+    margin-left: 1rem;
     background-color: var(--color-pre-background);
     color: $white;
   }
 
-  em {
-    font-family: Courier;
-    font-style: normal;
+  code.language-text {
     background-color: rgba(var(--color-main), 0.6);
-    padding: 1px 5px 2px;
+    color: rgba(var(--color-main), 0.6);
+    font-family: 'SFMono-Regular', Consolas, 'Roboto Mono', 'Droid Sans Mono',
+    'Liberation Mono', Menlo, Courier, monospace;
+    font-weight: bold;
+    padding: 2px 0px 0px 5px;
   }
 
   img {
-    border-width: 11px;
+    margin-left: 1rem;
+    border-width: 0px;
     border-style: solid;
     border-color: transparent;
   }
@@ -137,16 +157,16 @@
 .tasks {
   // Replace colored tasks section background in dark theme w/ colored border due to contrast issues
   // TODO: alternative set of darker part colors that work behind a white text?
-  html[data-theme='dark'] & {
-    background-color: var(--color-background) !important;
-    border-left: 5px solid;
-    border-top: 1px dotted;
-    border-bottom: 1px dotted;
+//   html[data-theme='dark'] & {
+    // // background-color: var(--color-background) !important;
+    // border-left: 5px solid;
+    // border-top: 1px dotted;
+    // border-bottom: 1px dotted;
 
-    @include from($desktop) {
-      border-left: 15px solid;
-    }
-  }
+    // @include from($desktop) {
+    //   border-left: 15px solid;
+    // }
+//   }
 
   a {
     border-color: var(--color-text) !important;
@@ -159,7 +179,7 @@
 }
 
 .gatsby-highlight-code-line {
-  background-color: rgba(var(--color-main), 0.3);
+  background-color: #291e2a;
   display: block;
   margin-right: -1em;
   margin-left: -1em;

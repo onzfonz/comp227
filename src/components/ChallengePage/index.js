@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Banner } from '../Banner/Banner';
 import { BodyText } from '../BodyText/BodyText';
 import Element from '../Element/Element';
-import Form from '../Form/Form';
+// import Form from '../Form/Form';
 import { Image } from '../Image/Image';
 import Layout from '../layout';
 import SEO from '../seo';
@@ -61,7 +61,7 @@ const ChallengePage = ({
             text={joinContent}
           />
 
-          <Form lang={lang} />
+          {/* <Form lang={lang} /> */}
         </Element>
       </Element>
 

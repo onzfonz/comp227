@@ -7,14 +7,16 @@ lang: en
 
 <div class="content">
 
-In part 2, we examined two different ways of adding styles to our application: the old-school [single CSS](/en/part2/adding_styles_to_react_app) file and [inline styles](/en/part2/adding_styles_to_react_app#inline_styles).
+In part 2, we examined two different ways of adding styles to our application:
+the old-school [single CSS](/part2/adding_styles_to_react_app) file and [inline styles](/part2/adding_styles_to_react_app#inline_styles).
 In this part, we will take a look at a few other ways.
 
 ### Ready-made UI libraries
 
 One approach to defining styles for an application is to use a ready-made "UI framework".
 
-One of the first widely popular UI frameworks was the [Bootstrap](https://getbootstrap.com/) toolkit created by Twitter which may still be the most popular framework.
+One of the first widely popular UI frameworks was the [Bootstrap](https://getbootstrap.com/) toolkit
+created by Twitter which may still be the most popular framework.
 Recently, there has been an explosion in the number of new UI frameworks that have entered the arena.
 The selection is so vast that there is little hope of creating an exhaustive list of options.
 
@@ -26,7 +28,7 @@ Many UI frameworks have React-friendly versions where the framework's "component
 There are a few different React versions of Bootstrap like [reactstrap](http://reactstrap.github.io/) and [react-bootstrap](https://react-bootstrap.github.io/).
 
 Next, we will take a closer look at two UI frameworks, Bootstrap and [MaterialUI](https://mui.com/).
-We will use both frameworks to add similar styles to the application we made in the [React-router](/en/part7/react_router) section of the course material.
+We will use both frameworks to add similar styles to the application we made in the [React-router](/part7/react_router) section of the course material.
 
 ### React Bootstrap
 
@@ -38,7 +40,7 @@ Let's install the package with the command:
 npm install react-bootstrap
 ```
 
-Then let's add a link for loading the CSS stylesheet for Bootstrap inside of the <i>head</i> tag in the <i>public/index.html</i> file of the application:
+Then let's add a link for loading the CSS stylesheet for Bootstrap inside of the *`head`* tag in the *public/index.html* file of the application:
 
 ```js
 <head>
@@ -54,10 +56,10 @@ Then let's add a link for loading the CSS stylesheet for Bootstrap inside of the
 
 When we reload the application, we notice that it already looks a bit more stylish:
 
-![browser notes app with bootstrap](../../images/7/5ea.png)
+![browser tasks app with bootstrap](../../images/7/5ea.png)
 
-In Bootstrap, all of the contents of the application are typically rendered inside a [container](https://getbootstrap.com/docs/4.1/layout/overview/#containers) (https://getbootstrap.com/docs/4.1/layout/overview/#containers).
-In practice this is accomplished by giving the root *div* element of the application the *container* class attribute:
+In Bootstrap, all of the contents of the application are typically rendered inside a [container](https://getbootstrap.com/docs/4.1/layout/overview/#containers).
+In practice this is accomplished by giving the root `div` element of the application the `container` class attribute:
 
 ```js
 const App = () => {
@@ -74,26 +76,27 @@ const App = () => {
 We notice that this already affected the appearance of the application.
 The content is no longer as close to the edges of the browser as it was earlier:
 
-![browser notes app with margin spacing](../../images/7/6ea.png)
+![browser tasks app with margin spacing](../../images/7/6ea.png)
 
-Next, let's make some changes to the <i>Notes</i> component so that it renders the list of notes as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
-React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose, so there is no need to define CSS classes separately.
+Next, let's make some changes to the `Tasks` component so that it renders the list of tasks as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
+React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose,
+so there is no need to define CSS classes separately.
 
 ```js
-const Notes = ({ notes }) => (
+const Tasks = ({ tasks }) => (
   <div>
-    <h2>Notes</h2>
+    <h2>Tasks</h2>
     <Table striped> // highlight-line
       <tbody>
-        {notes.map(note =>
-          <tr key={note.id}>
+        {tasks.map(task =>
+          <tr key={task.id}>
             <td>
-              <Link to={`/notes/${note.id}`}>
-                {note.content}
+              <Link to={`/tasks/${task.id}`}>
+                {task.content}
               </Link>
             </td>
             <td>
-              {note.user}
+              {task.user}
             </td>
           </tr>
         )}
@@ -105,7 +108,7 @@ const Notes = ({ notes }) => (
 
 The appearance of the application is quite stylish:
 
-![browser notes tab with built-in table](../../images/7/7e.png)
+![browser tasks tab with built-in table](../../images/7/7e.png)
 
 Notice that the React Bootstrap components have to be imported separately from the library as shown below:
 
@@ -115,9 +118,10 @@ import { Table } from 'react-bootstrap'
 
 #### Form in Bootstrap
 
-Let's improve the form in the <i>Login</i> view with the help of Bootstrap [forms](https://getbootstrap.com/docs/4.1/components/forms/).
+Let's improve the form in the `Login` view with the help of Bootstrap [forms](https://getbootstrap.com/docs/4.1/components/forms/).
 
-React Bootstrap provides built-in [components](https://react-bootstrap.github.io/forms/overview/) for creating forms (although the documentation for them is slightly lacking):
+React Bootstrap provides built-in [components](https://react-bootstrap.github.io/forms/overview/)
+for creating forms (although the documentation for them is slightly lacking):
 
 ```js
 let Login = (props) => {
@@ -153,20 +157,20 @@ import { Table, Form, Button } from 'react-bootstrap'
 
 After switching over to the Bootstrap form, our improved application looks like this:
 
-![browser notes app with bootstrap login](../../images/7/8ea.png)
+![browser tasks app with bootstrap login](../../images/7/8ea.png)
 
 #### Notification in Bootstrap
 
 Now that the login form is in better shape, let's take a look at improving our application's notifications:
 
-![browser notes app with bootstrap notification](../../images/7/9ea.png)
+![browser tasks app with bootstrap notification](../../images/7/9ea.png)
 
 Let's add a message for the notification when a user logs into the application.
-We will store it in the *message* variable in the <i>App</i> component's state:
+We will store it in the `message` variable in the `App` component's state:
 
 ```js
 const App = () => {
-  const [notes, setNotes] = useState([
+  const [tasks, setTasks] = useState([
     // ...
   ])
 
@@ -217,7 +221,7 @@ Through trial and error, we end up with a working solution despite the cryptic d
         <Link style={padding} to="/">home</Link>
       </Nav.Link>
       <Nav.Link href="#" as="span">
-        <Link style={padding} to="/notes">notes</Link>
+        <Link style={padding} to="/tasks">tasks</Link>
       </Nav.Link>
       <Nav.Link href="#" as="span">
         <Link style={padding} to="/users">users</Link>
@@ -235,23 +239,25 @@ Through trial and error, we end up with a working solution despite the cryptic d
 
 The resulting layout has a very clean and pleasing appearance:
 
-![browser notes app bootstrap black navigation bar](../../images/7/10ea.png)
+![browser tasks app bootstrap black navigation bar](../../images/7/10ea.png)
 
 If the viewport of the browser is narrowed, we notice that the menu "collapses" and it can be expanded by clicking the "hamburger" button:
 
-![browser notes app with hamburger menu](../../images/7/11ea.png)
+![browser tasks app with hamburger menu](../../images/7/11ea.png)
 
-Bootstrap and a large majority of existing UI frameworks produce [responsive](https://en.wikipedia.org/wiki/Responsive_web_design) designs, meaning that the resulting applications render well on a variety of different screen sizes.
+Bootstrap and a large majority of existing UI frameworks produce [responsive](https://en.wikipedia.org/wiki/Responsive_web_design) designs,
+meaning that the resulting applications render well on a variety of different screen sizes.
 
 Chrome's developer tools make it possible to simulate using our application in the browser of different mobile clients:
 
-![chrome devtools with mobile browser preview of notes app](../../images/7/12ea.png)
+![chrome devtools with mobile browser preview of tasks app](../../images/7/12ea.png)
 
-You can find the complete code for the application [here](https://github.com/fullstack-hy2020/misc/blob/master/notes-bootstrap.js).
+You can find the complete code for the application [here](https://github.com/comp227/misc/blob/main/tasks-bootstrap.js).
 
 ### Material UI
 
-As our second example, we will look into the [MaterialUI](https://mui.com/) React library, which implements the [Material Design](https://material.io/) visual language developed by Google.
+As our second example, we will look into the [MaterialUI](https://mui.com/) React library,
+which implements the [Material Design](https://material.io/) visual language developed by Google.
 
 Install the library with the command
 
@@ -259,7 +265,7 @@ Install the library with the command
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
-Then add the following line to the <i>head</i> tag in the <i>public/index.html</i> file.
+Then add the following line to the *`head`* tag in the *public/index.html* file.
 The line loads Google's font Roboto.
 
 ```js
@@ -286,24 +292,24 @@ const App = () => {
 }
 ```
 
-Let's start with the <i>Notes</i> component.
-We'll render the list of notes as a [table](https://mui.com/material-ui/react-table/#simple-table):
+Let's start with the `Tasks` component.
+We'll render the list of tasks as a [table](https://mui.com/material-ui/react-table/#simple-table):
 
 ```js
-const Notes = ({ notes }) => (
+const Tasks = ({ tasks }) => (
   <div>
-    <h2>Notes</h2>
+    <h2>Tasks</h2>
 
     <TableContainer component={Paper}>
       <Table>
         <TableBody>
-          {notes.map(note => (
-            <TableRow key={note.id}>
+          {tasks.map(task => (
+            <TableRow key={task.id}>
               <TableCell>
-                <Link to={`/notes/${note.id}`}>{note.content}</Link>
+                <Link to={`/tasks/${task.id}`}>{task.content}</Link>
               </TableCell>
               <TableCell>
-                {note.user}
+                {task.user}
               </TableCell>
             </TableRow>
           ))}
@@ -316,10 +322,10 @@ const Notes = ({ notes }) => (
 
 The table looks like so:
 
-![browser notes materialUI table](../../images/7/63eb.png)
+![browser tasks materialUI table](../../images/7/63eb.png)
 
 One less pleasant feature of Material UI is that each component has to be imported separately.
-The import list for the notes page is quite long:
+The import list for the tasks page is quite long:
 
 ```js
 import {
@@ -335,7 +341,8 @@ import {
 
 #### Form in Material UI
 
-Next, let's make the login form in the <i>Login</i> view better using the [TextField](https://mui.com/material-ui/react-text-field/) and [Button](https://mui.com/material-ui/api/button/) components:
+Next, let's make the login form in the `Login` view better using the [TextField](https://mui.com/material-ui/react-text-field/)
+and [Button](https://mui.com/material-ui/api/button/) components:
 
 ```js
 const Login = (props) => {
@@ -343,7 +350,7 @@ const Login = (props) => {
 
   const onSubmit = (event) => {
     event.preventDefault()
-    props.onLogin('mluukkai')
+    props.onLogin('powercat')
     navigate('/')
   }
 
@@ -370,7 +377,7 @@ const Login = (props) => {
 
 The result is:
 
-![browser notes app materialUI login form](../../images/7/64ea.png)
+![browser tasks app materialUI login form](../../images/7/64ea.png)
 
 MaterialUI, unlike Bootstrap, does not provide a component for the form itself.
 The form here is an ordinary HTML [form](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) element.
@@ -379,7 +386,8 @@ Remember to import all the components used in the form.
 
 #### Notification in Material UI
 
-The notification displayed on login can be done using the [Alert](https://mui.com/material-ui/react-alert/) component, which is quite similar to Bootstrap's equivalent component:
+The notification displayed on login can be done using the [Alert](https://mui.com/material-ui/react-alert/) component,
+which is quite similar to Bootstrap's equivalent component:
 
 ```js
 <div>
@@ -395,7 +403,7 @@ The notification displayed on login can be done using the [Alert](https://mui.co
 
 Alert is quite stylish:
 
-![browser notes app materialUI notifications](../../images/7/65ea.png)
+![browser tasks app materialUI notifications](../../images/7/65ea.png)
 
 #### Navigation structure in Material UI
 
@@ -412,7 +420,7 @@ If we use the example code from the documentation
       <Link to="/">home</Link>
     </Button>
     <Button color="inherit">
-      <Link to="/notes">notes</Link>
+      <Link to="/tasks">tasks</Link>
     </Button>
     <Button color="inherit">
       <Link to="/users">users</Link>
@@ -429,7 +437,7 @@ If we use the example code from the documentation
 
 we do get working navigation, but it could look better
 
-![browser notes app materialUI blue navbar](../../images/7/66ea.png)
+![browser tasks app materialUI blue navbar](../../images/7/66ea.png)
 
 We can find a better way from the [documentation](https://mui.com/material-ui/guides/composition/#routing-libraries).
 We can use [component props](https://mui.com/material-ui/guides/composition/#component-prop) to define how the root element of a MaterialUI component is rendered.
@@ -442,7 +450,7 @@ By defining
 </Button>
 ```
 
-the *Button* component is rendered so that its root component is react-router-dom's *Link* which receives its path as the prop field *to*.
+the `Button` component is rendered so that its root component is react-router-dom's `Link` which receives its path as the prop field `to`.
 
 The code for the navigation bar is the following:
 
@@ -452,8 +460,8 @@ The code for the navigation bar is the following:
     <Button color="inherit" component={Link} to="/">
       home
     </Button>
-    <Button color="inherit" component={Link} to="/notes">
-      notes
+    <Button color="inherit" component={Link} to="/tasks">
+      tasks
     </Button>
     <Button color="inherit" component={Link} to="/users">
       users
@@ -470,9 +478,9 @@ The code for the navigation bar is the following:
 
 and it looks like we want it to:
 
-![browser notes app MaterialUI blue nav bar white text](../../images/7/67ea.png)
+![browser tasks app MaterialUI blue nav bar white text](../../images/7/67ea.png)
 
-The code of the application can be found [here](https://github.com/fullstack-hy2020/misc/blob/master/notes-materialui.js).
+The code of the application can be found [here](https://github.com/comp227/misc/blob/main/tasks-materialui.js).
 
 ### Closing thoughts
 
@@ -486,8 +494,9 @@ According to <https://www.npmtrends.com/> which tracks the popularity of differe
 
 In the two previous examples, we used the UI frameworks with the help of React-integration libraries.
 
-Instead of using the [React Bootstrap](https://react-bootstrap.github.io/) library, we could have just as well used Bootstrap directly by defining CSS classes for our application's HTML elements.
-Instead of defining the table with the <i>Table</i> component:
+Instead of using the [React Bootstrap](https://react-bootstrap.github.io/) library,
+we could have just as well used Bootstrap directly by defining CSS classes for our application's HTML elements.
+Instead of defining the table with the `Table` component:
 
 ```js
 <Table striped>
@@ -495,7 +504,7 @@ Instead of defining the table with the <i>Table</i> component:
 </Table>
 ```
 
-We could have used a regular HTML <i>table</i> and added the required CSS class:
+We could have used a regular HTML *`table`* and added the required CSS class:
 
 ```js
 <table className="table striped">
@@ -505,8 +514,11 @@ We could have used a regular HTML <i>table</i> and added the required CSS class:
 
 The benefit of using the React Bootstrap library is not that evident from this example.
 
-In addition to making the frontend code more compact and readable, another benefit of using React UI framework libraries is that they include the JavaScript that is needed to make specific components work.
-Some Bootstrap components require a few unpleasant [JavaScript dependencies](https://getbootstrap.com/docs/4.1/getting-started/introduction/#js) that we would prefer not to include in our React applications.
+In addition to making the frontend code more compact and readable,
+another benefit of using React UI framework libraries is that they include the JavaScript that is needed to make specific components work.
+Some Bootstrap components require a few unpleasant
+[JavaScript dependencies](https://getbootstrap.com/docs/4.1/getting-started/introduction/#js)
+that we would prefer not to include in our React applications.
 
 Some potential downsides to using UI frameworks through integration libraries instead of using them "directly" are that integration libraries may have unstable APIs and poor documentation.
 The situation with [Semantic UI React](https://react.semantic-ui.com) is a lot better than with many other UI frameworks, as it is an official React integration library.
@@ -541,7 +553,8 @@ If you do not see your favorite UI framework in the list, please make a pull req
 
 There are also [other ways](https://blog.bitsrc.io/5-ways-to-style-react-components-in-2019-30f1ccc2b5b) of styling React applications that we have not yet taken a look at.
 
-The [styled components](https://www.styled-components.com/) library offers an interesting approach for defining styles through [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) that were introduced in ES6.
+The [styled components](https://www.styled-components.com/) library offers an interesting approach for defining styles
+through [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) that were introduced in ES6.
 
 Let's make a few changes to the styles of our application with the help of styled components.
 First, install the package with the command:
@@ -569,11 +582,11 @@ const Input = styled.input`
 `
 ```
 
-The code above creates styled versions of the <i>button</i> and <i>input</i> HTML elements and then assigns them to the <i>Button</i> and <i>Input</i> variables.
+The code above creates styled versions of the *`button`* and *`input`* HTML elements and then assigns them to the `Button` and `Input` variables.
 
 The syntax for defining the styles is quite interesting, as the CSS rules are defined inside of backticks.
 
-The styled components that we defined work exactly like regular <i>button</i> and <i>input</i> elements, and they can be used in the same way:
+The styled components that we defined work exactly like regular *`button`* and *`input`* elements, and they can be used in the same way:
 
 ```js
 const Login = (props) => {
@@ -597,7 +610,7 @@ const Login = (props) => {
 }
 ```
 
-Let's create a few more components for styling that application which will be styled versions of <i>div</i> elements:
+Let's create a few more components for styling that application which will be styled versions of *`div`* elements:
 
 ```js
 const Page = styled.div`
@@ -627,7 +640,7 @@ const App = () => {
      <Page> // highlight-line
       <Navigation> // highlight-line
         <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
+        <Link style={padding} to="/tasks">tasks</Link>
         <Link style={padding} to="/users">users</Link>
         {user
           ? <em>{user} logged in</em>
@@ -636,15 +649,15 @@ const App = () => {
       </Navigation> // highlight-line
       
       <Routes>
-        <Route path="/notes/:id" element={<Note note={note} />} />  
-        <Route path="/notes" element={<Notes notes={notes} />} />   
+        <Route path="/tasks/:id" element={<Task task={task} />} />  
+        <Route path="/tasks" element={<Tasks tasks={tasks} />} />   
         <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<Login onLogin={login} />} />
         <Route path="/" element={<Home />} />      
       </Routes>
 
       <Footer> // highlight-line
-        <em>Note app, Department of Computer Science 2022</em>
+        <em>Task app, Department of Computer Science 2022</em>
       </Footer> // highlight-line
     </Page> // highlight-line
   )
@@ -653,9 +666,10 @@ const App = () => {
 
 The appearance of the resulting application is shown below:
 
-![browser notes app styled components](../../images/7/18ea.png)
+![browser tasks app styled components](../../images/7/18ea.png)
 
-Styled components have seen consistent growth in popularity in recent times, and quite a lot of people consider it to be the best way of defining styles in React applications.
+Styled components have seen consistent growth in popularity in recent times,
+and quite a lot of people consider it to be the best way of defining styles in React applications.
 
 </div>
 
@@ -663,6 +677,7 @@ Styled components have seen consistent growth in popularity in recent times, and
 
 ### Exercises
 
-The exercises related to the topics presented here can be found at the end of this course material section in the exercise set [for extending the blog list application](/en/part7/exercises_extending_the_bloglist).
+The exercises related to the topics presented here can be found at the end of this course material section in the exercise set
+[for extending the blog list application](/part7/exercises_extending_the_bloglist).
 
 </div>

@@ -1,0 +1,22 @@
+name: Documentation Linter
+
+on:
+  push:
+    paths: 
+      - '**.md'
+  pull_request:
+    branches: [ "main" ]
+    
+  workflow_dispatch:
+  
+jobs:
+  build: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Markdown Linting Action
+        uses: avto-dev/markdown-lint@v1.5.0
+        with: 
+          config: '.github/workflows/.markdown_lint_config.json'
+          args: '**/*.md'
+          ignore: './README.md ./CONTRIBUTING.md'
