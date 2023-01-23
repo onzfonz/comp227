@@ -397,6 +397,11 @@ It's easy to follow and track the calls made to the `App` component's render fun
 
 ![screenshot of render function with dev tools](../../images/1/4e.png)
 
+Was your browser console open?
+If it wasn't, do yourself a favor and keep it open.
+Make it a habit to type (***Ctrl-Shift-I***) while your localhost is loading.
+Or keep using the same web browser.
+
 ### Event handling
 
 We have already mentioned **event handlers** that are registered to be called when specific events occur a few times in [part 0](/part0).
@@ -698,6 +703,46 @@ So, if a user clicks the ***plus*** button, the button's event handler changes t
 This causes its subcomponents `Display` and `Button` to also be re-rendered.
 `Display` receives the new value of the counter, 1, as props.
 The `Button` components receive event handlers which can be used to change the state of the counter.
+
+To be sure to understand how the program works, let us add some `console.log` statements to it
+
+```js
+const App = () => {
+  const [counter, setCounter] = useState(0)
+  console.log('rendering with counter value', counter) // highlight-line
+
+  const increaseByOne = () => {
+    console.log('increasing, value before', counter) // highlight-line
+    setCounter(counter + 1)
+  }
+
+  const decreaseByOne = () => { 
+    console.log('decreasing, value before', counter) // highlight-line
+    setCounter(counter - 1)
+  }
+
+  const setToZero = () => {
+    console.log('resetting to zero, value before', counter) // highlight-line
+    setCounter(0)
+  }
+
+  return (
+    <div>
+      <Display counter={counter} />
+      <Button onClick={increaseByOne} text="plus" />
+      <Button onClick={setToZero} text="zero" />
+      <Button onClick={decreaseByOne} text="minus" />
+    </div>
+  )
+} 
+```
+
+Let us now see what gets rendered to the console when the buttons ***plus***, ***plus***, ***zero*** and ***minus*** are pressed:
+
+![browser showing plus plus zero and minus being pressed](../../images/1/31.png)
+
+Do not try to guess what your code does.
+Use the debugger and `console.log` to observe what it does.
 
 ### Refactoring the components
 

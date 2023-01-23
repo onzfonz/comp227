@@ -93,7 +93,7 @@ From here on out, we will be using the functional programming methods of the Jav
 such as `find`, `filter`, and `map` - all of the time.
 They operate on the same general principles as their equivalents in other languages and as streams in Java.
 
-If functional programming with arrays feels foreign to you, it is worth watching at least the first three parts of the YouTube video series
+If operating arrays with functional operators makes you feel uneasy, it is worth watching at least the first three parts of the YouTube video series
 [Functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84):
 
 - [Higher-order functions](https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84)
@@ -349,7 +349,9 @@ This is already pretty close to the React code we used:
 
 ```js
 tasks.map(task =>
-  <li key={task.id}>{task.content}</li>
+  <li key={task.id}>
+    {task.content}
+  </li>
 )
 ```
 
@@ -627,6 +629,10 @@ If the problem has still not been resolved, sadly there isn't much to do apart f
 The original author added this chapter to the material after the model answer for the next question exploded completely
 (due to props being of the wrong type), and it had to be debuggged using `console.log`.
 
+***As you continue through, please remember the
+[pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge)
+you took to help you improve as a web developer***.
+
 </div>
 
 <div class="tasks">
@@ -647,7 +653,8 @@ I would recommend that you use `create-react-app` from the base directory and th
 
 **Notice that if you copy the entire project from one place to another, you would have to delete the *node_modules* directory
 and install the dependencies again with the command `npm install` before you can start the application.**
-Later on we may use this method, but realize that node_modules is often huge and highly dependent on your system, so I think it's easier to let npm and create-react-app do those portions.
+Later on, we may use this method, but realize that *node_modules* is often huge and highly dependent on your system,
+so I think it's easier to let npm and create-react-app do those portions.
 
 You only need to copy the **code**!
 

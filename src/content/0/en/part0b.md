@@ -53,6 +53,40 @@ How to study the course – instructions in a nutshell:
   The easiest way to fall behind in the course is to not work on it every couple of days.
   Set yourself an alarm...do anything! But make it a habit of working on it at least 3 times a week for a little bit of time.
 
+### How to ask help in Discord
+
+When you ask for help on a problem in our Discord group your question should be as informative and precise as possible. If your question looks like this
+
+> *Adding a new person does not work, could you help me with that?*
+
+People will be reluctant to help because the bug can be *anywhere*!
+
+A better question would be:
+
+> *In the exercise 2.15 when I try to add a new person to the app, server responds with a 403, despite the request looking OK to me.
+>
+> The code looks like this
+>
+> ```js
+>   // the relevant part of code is pasted here
+>   // code should contain several console.log statements for helping the debuging
+> ```
+>
+> When I run it, following gets printed to the console
+>
+> ```bash
+>   // data printed to console
+> ```
+>
+> The network tab looks like the following
+>
+> [screen shot from the network console]
+>
+> All the code can be found here (a link to GitHub)*
+
+Notice the details in the second response and a plan of action for what you've tried.
+Both help you narrow down the possibilities.
+
 ### Submitting exercises
 
 You will be submitting exercises via the GitHub classroom repos that will be provided on Canvas.

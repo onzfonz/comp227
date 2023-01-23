@@ -279,7 +279,7 @@ axios.put(url, task).then(response => {
 ```
 
 This is not recommended because the variable `task` is a reference to an item in the `tasks` array in the component's state,
-and as we recall ***we must never mutate state directly in React***.
+and as we recall ***we must [never mutate state directly](https://reactjs.org/docs/state-and-lifecycle.html#using-state-correctly) in React***.
 
 It's also worth noting that the new object `changedTask` is only a so-called
 [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
@@ -779,24 +779,34 @@ A more advanced method could always be added in later, given that there's time a
 
 The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-6).
 
+We will continue with
+[our web developer pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge)
+but will also add two more items:
+
+> I pledge to:
+>
+> - *Use the network tab in the dev tools to ensure that the frontend and backend are communicating as expected*
+> - *Keep an eye on the state of the server to make sure that the data sent there by the frontend is handled as expected*
+
 </div>
 
 <div class="tasks">
 
-### Exercises 2.15-2.18
+### Exercises 2.12-2.15
 
-#### 2.15: Communities step7
+#### 2.12: Communities step7
 
 Let's return to our communities application.
 
 Currently, any community that is added is not saved to a backend server.
-Fix this situation.  Use ***<http://localhost:3001/groups>*** as your backend URL.
+Fix this situation.
+Use ***<http://localhost:3001/groups>*** as your backend URL.
 
-#### 2.16: Communities step8
+#### 2.13: Communities step8
 
 Extract the code that handles the communication with the backend into its own module by following the example shown earlier in this part of the course material.
 
-#### 2.17: Communities step9
+#### 2.14: Communities step9
 
 Make it possible for users to delete entries from the communities application.
 The deletion can be done through a dedicated button for each community listed.
@@ -820,7 +830,9 @@ const delete = (id) => {
 }
 ```
 
-#### 2.18*: Communities step10
+#### 2.15*: Communities step10
+
+*Why is there a star in the exercise? See [here](/en/part0/general_info#taking-the-course) for the explanation.*
 
 Change the functionality so that if a URL is added to an already existing community, the new URL will replace the old URL.
 It's recommended to use the HTTP PUT method for updating the URL.

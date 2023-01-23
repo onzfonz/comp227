@@ -49,6 +49,10 @@ const App = (props) => {
 }
 ```
 
+We can also use React Developer Tools to see that this really happens:
+
+![browser showing react dev tools with both props and hooks](../../images/2/30.png)
+
 If we wanted to start with an empty list of tasks, we would set the initial value as an empty array,
 and since the props would not be used, we could omit the `props` parameter from the function definition:
 

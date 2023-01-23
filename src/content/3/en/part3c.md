@@ -207,7 +207,7 @@ Instead, let's make a practice application by creating a new file, *mongo.js*:
 const mongoose = require('mongoose').set('strictQuery', true)
 
 if (process.argv.length < 3) {
-  console.log('Please provide the password as an argument: node mongo.js <password>')
+  console.log('give password as an argument')
   process.exit(1)
 }
 
@@ -314,7 +314,7 @@ Next, the application creates a new task object with the help of the `Task` [mod
 
 ```js
 const task = new Task({
-  content: 'HTML is Easy',
+  content: 'Study for 227',
   date: new Date(),
   important: false,
 })
@@ -731,7 +731,7 @@ app.get('/api/tasks/:id', (request, response) => {
 When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the Webstorm REST client**.
 Next, let's try creating a new task after taking the database into use:
 
-![VS code rest client doing a post](../../images/3/46e.png)
+![Webstorm rest client doing a post](../../images/3/46e.png)
 
 Only once everything has been verified to work in the backend, is it a good idea to test that the frontend works with the backend.
 ***It is highly inefficient to test things exclusively through the frontend.***

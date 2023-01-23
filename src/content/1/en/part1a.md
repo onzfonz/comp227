@@ -161,14 +161,26 @@ Modify your component to be as follows and observe what happens in the developer
 
 ```js
 const App = () => {
-  console.log('Hello from component')
+  console.log('Hello from the App component')
   return (
     <div>
       <p>Hola COMP 227!</p>
     </div>
   )
 }
+
+export default App
 ```
+
+and observe what happens in the browser console
+
+![code showing ide, browser and console dev tools](../../images/1/30.png)
+
+The first rule of frontend web development:
+
+> *keep the console open all the time*
+
+Let us repeat this together: *I promise to keep the console open all the time* when you are doing web development.
 
 It is also possible to render dynamic content inside of a component.
 
@@ -192,6 +204,17 @@ const App = () => {
 ```
 
 Any JavaScript code within the curly braces is evaluated and the result of this evaluation is embedded into the defined place in the HTML produced by the component.
+
+Note that you should not remove the line at the bottom of the component
+
+```js
+export default App
+```
+
+The export is not shown in most of the examples of the course material.
+Without the export, the component and the whole app breaks down.
+
+Did you remember your promise to keep the console open? What was printed out there?
 
 ### JSX
 
@@ -577,6 +600,9 @@ const App = () => {
 Calling it from inside our repo will do what we want.
 If we call it outside of our repo it will automatically make the project a git repository, which we don't want!
 
+Also, do not try to program all the components at the same time.
+You need to go in small steps, like first make the component *Header* and when that works, **commit** the change and then ***then*** proceed to the next component.
+
 #### 1.2: handheld arcade info, step2
 
 Refactor the `Content` component so that it does not render any names of handhelds or their number of games by itself.
@@ -595,6 +621,6 @@ const Content = ... {
 ```
 
 Our application passes on information in quite a primitive way at the moment, since it is based on individual variables.
-This situation will improve soon.
+We shall fix that in [part 2](/part2).
 
 </div>

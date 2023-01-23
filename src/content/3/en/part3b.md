@@ -182,9 +182,10 @@ There are an ever-growing number of services that can be used to host an app on 
 The developer-friendly services like PaaS (i.e. Platform as a Service) take care of installing the execution environment (e.g. Node.js)
 and could also provide various services such as databases.
 
-For a decade already, [Heroku](http://heroku.com) has been dominating the PaaS scene.
-In August 2022 Heroku announced that they will end their free tier on 27th November 2022.
+For a decade, [Heroku](http://heroku.com) was dominating the PaaS scene.
+Unfortunately, Heroku's free tier ended at 27th November 2022.
 This is very unfortunate for many developers, especially students.
+They do have [a student program](https://www.heroku.com/students) that provides some free credits, but I would advise against it.
 
 While there are replacements for Heroku that could work with this course like:
 
@@ -255,8 +256,9 @@ app.listen(PORT, () => {
 Now we are using the port defined in the [environment variable](https://en.wikipedia.org/wiki/Environment_variable) `PORT` or port 3001 if the environment variable `PORT` is undefined.
 Many cloud services configure the application port based on that environment variable.
 
+If you run into problems with the first run through, you may have to select ***Manual Deploy*** and try it again.
 Realize that this part of the course is the most unstable at this point.
-If you run into problems, please ask for help on Discord!
+Please ask for help on Discord!
 
 If your build keeps failing due to unhealthy checks,
 make sure that you have changed the bottom of the *index.js* file like so:
@@ -410,6 +412,8 @@ After ensuring that the production version of the application works locally,
 add and commit the production build of the frontend to the backend repository, and push the code to GitHub.
 To then deploy, go back to your personal fork of the repo, and click the Sync Fork button.
 
+Remember, if the automatic deployment does not work, you may need to select the ***Manual Deploy*** from the Render dashboard.
+
 [The application](https://comp227-osvaldo-lab3.onrender.com/) works perfectly,
 except we haven't added the functionality for changing the importance of a task to the backend yet.
 
@@ -533,10 +537,10 @@ Deploy the backend to the internet.
 
 Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
 
-**PRO TIP:** When you deploy your application to Heroku,
+**PRO TIP:** When you deploy your application to the cloud,
 it is worth it to at least in the beginning keep an eye on the logs in render.
 
-One such problemt that you'll see arises is that npm will complain that it cannot find application dependency *express*:
+One such problem that you'll see arises is that npm will complain that it cannot find application dependency *express*:
 
 The reason would be that the *express* package has not been installed with the `npm install express` command,
 so information about the dependency was not saved to the file *package.json*.

@@ -136,7 +136,7 @@ If there are problems, looking at Render's logs, which are in the left-hand navi
 As I was going through and working on this, my own application didn't work after making some changes.
 Here's what render's logs showed:
 
-![node output showing connecting to undefined](../../images/3/51a.png)
+![render logs showing connecting to undefined](../../images/3/51a.png)
 
 In my case, after scrolling through the logs, I noticed that my URL was not defined.
 Then I realized that I forgot to save the secret file that I took screenshots of from earlier in this part. 😔

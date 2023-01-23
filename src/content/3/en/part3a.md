@@ -12,8 +12,13 @@ In this part, our focus shifts towards the backend: that is, towards implementin
 We will be building our backend on top of [NodeJS](https://nodejs.org/en/),
 which is a JavaScript runtime based on Google's [Chrome V8](https://developers.google.com/v8/) JavaScript engine.
 
-This course material was written with version *16.13.2* of Node.js.
-Please make sure that your version of Node is at least as new as the version used in the material (you can check the version by running `node -v` in the command line).
+This course material was originally written with version *16.13.2* of Node.js,
+but you can try to use v18.13.0 as, it parts have been adapted to use that version.
+If you are using NVM, you can switch.
+For the rest of you, please stay on 16.13.2.
+Just know that some of the library versions may change, as most the material is still in 16.13.2.
+Please make sure that your version of Node is at least as new as the version used in the material
+(you can check the version by running `node -v` in the command line).
 
 As mentioned in [part 1](/part1/java_script),
 browsers don't yet support the newest features of JavaScript,
@@ -277,7 +282,6 @@ The dependency is also added to our *package.json* file:
     "express": "^4.17.2"
   }
 }
-
 ```
 
 The source code for the dependency is installed in the *node_modules* directory located at the root of the project.
@@ -289,6 +293,7 @@ These are the dependencies of the express library and the dependencies of all of
 These are called the [transitive dependencies](https://lexi-lambda.github.io/blog/2016/08/24/understanding-the-npm-dependency-model/) of our project.
 
 The version 4.17.2 of express was installed in our project.
+(*Version 4.18.2 if using node 18*)
 What does the caret in front of the version number in *package.json* mean?
 
 ```json
@@ -297,8 +302,8 @@ What does the caret in front of the version number in *package.json* mean?
 
 The versioning model used in npm is called [semantic versioning](https://docs.npmjs.com/getting-started/semantic-versioning).
 
-The caret in the front of `^4.17.2` means that if and when the dependencies of a project are updated,
-the version of express that is installed will be at least ***4.17.2***.
+The caret in the front of `^4.X.Y` means that if and when the dependencies of a project are updated,
+the version of express that is installed will be at least ***4.X.Y***.
 However, the installed version of express can also have a larger **patch** number (the last number),
 or a larger **minor** number (the middle number).
 The major version of the library indicated by the first **major** number must be the same.
@@ -439,7 +444,7 @@ The contents of *package.json* have also changed:
 {
   //...
   "dependencies": {
-    "express": "^4.17.2",
+    "express": "^4.17.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
@@ -760,7 +765,7 @@ We'll use that file to define a request that fetches all tasks.
 
 By clicking the highlighted play button, the REST client will execute the HTTP request and the response from the server is opened in the editor.
 
-![response from vs code from get request](../../images/3/13ea.png)
+![response from webstorm from get request](../../images/3/13ea.png)
 
 ### Receiving data
 
@@ -841,7 +846,7 @@ there's a [massive amount](https://developer.mozilla.org/en-US/docs/Web/HTTP/Bas
 
 With WebStorm, the POST request can be sent with the REST client like this:
 
-![sample post request in vscode with JSON data](../../images/3/20eb.png)
+![sample post request in webstorm with JSON data](../../images/3/20eb.png)
 
 One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository,
 and they can be distributed to everyone in the development team.

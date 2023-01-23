@@ -1003,6 +1003,21 @@ const Button = (props) => (
 ```
 
 The component gets the event handler function from the `handleClick` prop, and the text of the button from the `text` prop.
+Let's use the new component:
+
+```js
+const App = (props) => {
+  // ...
+  return (
+    <div>
+      {value}
+      <Button handleClick={setToValue(1000)} text="thousand" /> // highlight-line
+      <Button handleClick={setToValue(0)} text="reset" /> // highlight-line
+      <Button handleClick={setToValue(value + 1)} text="increment" /> // highlight-line
+    </div>
+  )
+}
+```
 
 Using the `Button` component is simple, although we have to make sure that we use the correct attribute names when passing props to the component.
 
@@ -1093,6 +1108,26 @@ Also, everything related to class-based components is irrelevant to us;
   and the recently updated [Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-reactjs) is also relatively good;
   both courses introduce concepts that will also be introduced later on in this course.
 **NB** The first one uses class components but the latter uses the new functional ones.
+
+### Web developers pledge
+
+As you are learning material, there are a lot of moving parts.
+With this being mostly text, that means that getting examples and exercises to work can take a lot of time.
+Because of this, we're going to introduce this *pledge* that you can take
+so that you make sure that you are on the correct path in your journey to becoming a better web developer.
+
+Here it is:
+
+> *Web Development is tricky, which is why I will use all the possible means to make it easier.
+>
+> I pledge to:
+>
+> - Keep my browser's dev tools open all the time
+> - Progress in small steps and commit each of those steps
+> - Use the debugger or use `console.log` to help me better understand my code
+> - Stop adding features if my code is broken.
+> - Consider that I can rollback my changes when I go in small steps if I cannot find an issue.
+> - Formulate my questions properly on Discord see [here](/part0/general_info#how-to-ask-help-in-discord)*
 
 </div>
 
