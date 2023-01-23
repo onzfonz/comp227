@@ -182,8 +182,10 @@ There are an ever-growing number of services that can be used to host an app on 
 The developer-friendly services like PaaS (i.e. Platform as a Service) take care of installing the execution environment (e.g. Node.js)
 and could also provide various services such as databases.
 
-For a decade, [Heroku](http://heroku.com) was dominating the PaaS scene. Unfortunately the free tier Heroku ended at 27th November 2022.
-This is very unfortunate for many developers, especially students. Heroku is still very much a viable option if you are willing to spend some money.
+For a decade, [Heroku](http://heroku.com) was dominating the PaaS scene.
+Unfortunately the Heroku's free tier ended at 27th November 2022.
+This is very unfortunate for many developers, especially students.
+Heroku is still very much a viable option if you are willing to spend some money.
 They also have [a student program](https://www.heroku.com/students) that provides some free credits.
 
 While there are replacements for Heroku that could work with this course like:
@@ -411,7 +413,7 @@ After ensuring that the production version of the application works locally,
 add and commit the production build of the frontend to the backend repository, and push the code to GitHub.
 To then deploy, go back to your personal fork of the repo, and click the Sync Fork button.
 
-If the automatic deployment does not work, you may need to select the "manual deploy" from the Render dashboard.
+Remember, if the automatic deployment does not work, you may need to select the ***Manual Deploy*** from the Render dashboard.
 
 [The application](https://comp227-osvaldo-lab3.onrender.com/) works perfectly,
 except we haven't added the functionality for changing the importance of a task to the backend yet.

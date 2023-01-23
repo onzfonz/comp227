@@ -39,6 +39,10 @@ const taskSchema = new mongoose.Schema({
     minLength: 5,
     required: true
   },
+  date: { 
+    type: Date,
+    required: true
+  },
   // highlight-end
   important: Boolean
 })

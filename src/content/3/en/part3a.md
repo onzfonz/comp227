@@ -277,7 +277,7 @@ The dependency is also added to our *package.json* file:
 {
   // ...
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.17.2"
   }
 }
 ```
@@ -295,7 +295,7 @@ The version 4.17.2 of express was installed in our project.
 What does the caret in front of the version number in *package.json* mean?
 
 ```json
-"express": "^4.18.2"
+"express": "^4.17.2"
 ```
 
 The versioning model used in npm is called [semantic versioning](https://docs.npmjs.com/getting-started/semantic-versioning).
@@ -442,10 +442,10 @@ The contents of *package.json* have also changed:
 {
   //...
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.17.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.15"
   }
 }
 ```

@@ -458,9 +458,10 @@ We have been using modules the whole time.
 The first few lines of the file *index.js*:
 
 ```js
-import ReactDOM from "react-dom/client"
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 
-import App from "./App"
+import App from './App'
 ```
 
 [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) three modules, enabling them to be used in that file.
@@ -628,17 +629,7 @@ If the problem has still not been resolved, sadly there isn't much to do apart f
 The original author added this chapter to the material after the model answer for the next question exploded completely
 (due to props being of the wrong type), and it had to be debuggged using `console.log`.
 
-### Web programmers oath
-
-Programming is tricky, which is why I will use all the possible means to make it easier.
-I pledge to:
-
-- Keep my browser's dev tools open all the time
-- Progress in small steps and commit each of those steps
-- Use the debugger or use `console.log` to help me better understand my code
-- Stop adding features if my code is broken.
-- Consider that I can rollback my changes when I go in small steps if I cannot find an issue.
-- Formulate my questions properly on Discord see [here](/part0/general_info#how-to-ask-help-in-discord)
+***As you continue through, please remember the [pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge) you took to help you improve as a web developer***.
 
 </div>
 
@@ -660,7 +651,8 @@ I would recommend that you use `create-react-app` from the base directory and th
 
 **Notice that if you copy the entire project from one place to another, you would have to delete the *node_modules* directory
 and install the dependencies again with the command `npm install` before you can start the application.**
-Later on, we may use this method, but realize that node_modules is often huge and highly dependent on your system, so I think it's easier to let npm and create-react-app do those portions.
+Later on, we may use this method, but realize that *node_modules* is often huge and highly dependent on your system,
+so I think it's easier to let npm and create-react-app do those portions.
 
 You only need to copy the **code**!
 

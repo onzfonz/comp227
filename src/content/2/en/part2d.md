@@ -83,6 +83,8 @@ which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_a
 
 ![request payload in dev tools](../../images/2/21e2.png)
 
+We can use the inspector to check that the headers sent in the POST request are what we expected them to be and that their values are correct.
+
 Since the data we sent in the POST request was a JavaScript object,
 axios automatically knew to set the appropriate `application/json` value for the `Content-Type` header.
 
@@ -777,19 +779,12 @@ A more advanced method could always be added in later, given that there's time a
 
 The code for the current state of our application can be found in the *part2-6* branch on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-6).
 
-### Full stack devloper's oath
+We will continue with [our web developer pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge) but will also add two more items:
 
-Full-stack development is *very tricky*, which is why I will use all the possible means to make it easier.
-I pledge to:
-
-- Keep my browser's dev tools open all the time
-- Progress in small steps and commit each of those steps
-- Use the debugger or use `console.log` to help me better understand my code
-- Stop adding features if my code is broken.
-- Consider that I can rollback my changes when I go in small steps if I cannot find an issue.
-- Formulate my questions properly on Discord see [here](/part0/general_info#how-to-ask-help-in-discord)
-- *Use the network tab in the dev tools to ensure that the frontend and backend are communicating as expected*
-- *Keep an eye on the state of the server to make sure that the data sent there by the frontend is handled as expected*
+> I pledge to:
+>
+> - *Use the network tab in the dev tools to ensure that the frontend and backend are communicating as expected*
+> - *Keep an eye on the state of the server to make sure that the data sent there by the frontend is handled as expected*
 
 </div>
 

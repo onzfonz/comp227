@@ -180,7 +180,7 @@ The first rule of frontend web development:
 
 > *keep the console open all the time*
 
-Let us repeat this together: *I promise to keep the console open all the time* during this course, and the for the rest of my life when I'm doing web development.
+Let us repeat this together: *I promise to keep the console open all the time* when you are doing web development.
 
 It is also possible to render dynamic content inside of a component.
 
@@ -211,7 +211,8 @@ Note that you should not remove the line at the bottom of the component
 export default App
 ```
 
-The export is not shown in most of the examples of the course material. Without the export, the component and the whole app breaks down.
+The export is not shown in most of the examples of the course material.
+Without the export, the component and the whole app breaks down.
 
 Did you remember your promise to keep the console open? What was printed out there?
 

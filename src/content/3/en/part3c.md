@@ -217,6 +217,7 @@ const url = `mongodb+srv://comp227:${password}@cluster0.gb6u3el.mongodb.net/myFi
 
 const taskSchema = new mongoose.Schema({
   content: String,
+  date: Date,
   important: Boolean,
 })
 
@@ -288,6 +289,7 @@ for a task and the matching [model](http://mongoosejs.com/docs/models.html):
 ```js
 const taskSchema = new mongoose.Schema({
   content: String,
+  date: Date,
   important: Boolean,
 })
 
@@ -312,7 +314,8 @@ Next, the application creates a new task object with the help of the `Task` [mod
 
 ```js
 const task = new Task({
-  content: 'HTML is Easy',
+  content: 'Study for 227',
+  date: new Date(),
   important: false,
 })
 ```
@@ -479,6 +482,7 @@ mongoose.connect(url)
 
 const taskSchema = new mongoose.Schema({
   content: String,
+  date: Date,
   important: Boolean,
 })
 
@@ -560,6 +564,7 @@ mongoose.connect(url)
 
 const taskSchema = new mongoose.Schema({
   content: String,
+  date: Date,
   important: Boolean,
 })
 

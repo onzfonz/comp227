@@ -172,7 +172,7 @@ For the browser to remain **responsive**, i.e., to be able to continuously react
 the code logic needs to be such that no single computation can take too long.
 
 There is a host of additional material on the subject to be found on the internet.
-One particularly clear presentation of the topic is the presentation by Philip Roberts called
+For example, Philip Roberts clearly explains event loops in his presentation,
 [What the heck is the event loop anyway?](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 
 In today's browsers, it is possible to run parallelized code with the help of so-called
@@ -204,13 +204,13 @@ A clear indicator that a project uses npm is the *package.json* file located at 
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "web-vitals": "^2.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -258,14 +258,14 @@ Axios is now included among the other dependencies:
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.2.2", // highlight-line
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "axios": "^0.24.0", // highlight-line
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "web-vitals": "^2.1.3"
   },
   // ...
 }
@@ -437,8 +437,10 @@ Let's try and request the tasks from our local server and render them, initially
 Consider that this approach has many issues, as we're rendering the entire `App` component only when we successfully retrieve a response:
 
 ```js
+import React from 'react'
 import ReactDOM from 'react-dom/client'
-import axios from 'axios'
+import axios from 'axios' // highlight-line
+
 import App from './App'
 
 axios.get('http://localhost:3001/tasks').then(response => {

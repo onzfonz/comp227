@@ -397,7 +397,10 @@ It's easy to follow and track the calls made to the `App` component's render fun
 
 ![screenshot of render function with dev tools](../../images/1/4e.png)
 
-Was your browser console open? If it wasn't, then promise that this was the last time you need to be reminded about it.
+Was your browser console open?
+If it wasn't, do yourself a favor and keep it open.
+Make it a habit (***Ctrl-Shift-I***) as soon as you start going to localhost.
+Or keep using the same web browser.
 
 ### Event handling
 
@@ -738,7 +741,8 @@ Let us now see what gets rendered to the console when the buttons ***plus***, **
 
 ![browser showing plus plus zero and minus being pressed](../../images/1/31.png)
 
-Do not ever try to guess what your code does. It is just better to use `console.log` and observe what it does.
+Do not try to guess what your code does.
+Use the debugger and `console.log` to observe what it does.
 
 ### Refactoring the components
 

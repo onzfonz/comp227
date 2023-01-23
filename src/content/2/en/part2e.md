@@ -31,7 +31,8 @@ h1 {
 }
 ```
 
-**Notice:** when the content of the file *index.css* changes, React might not notice that automatically, so you may need to refresh the browser to see your changes!
+**Notice:** when the content of the file *index.css* changes,
+React might not notice that automatically, so you may need to refresh the browser to see your changes!
 
 CSS rules comprise of **selectors** and **declarations**.
 The selector defines which elements the rule should be applied to.
@@ -122,8 +123,8 @@ Class selectors are defined with the `.classname` syntax:
 Notice this time that instead of a named color, I used a [**hex color value**](https://www.w3schools.com/colors/colors_hexadecimal.asp) to specify a color in the RGB space.
 If you now add other `li` elements to the application, they will not be affected by the style rule above.
 
-One final task that we are going to make is to use what is called a **pseudo-class selector**, which is not an actual class, but something that is defined by most browsers.
-In our case, since we've been doing a lot websites with dark mode, we'll jump on the bandwagon and add this as well here.
+One final selector that we are going to use is called a **pseudo-class selector**, which is not an actual class, but something that is defined by most browsers.
+In our case, since we've been doing a lot websites with dark mode, we'll jump on the bandwagon and add this:
 
 :root {
     color-scheme:dark;
@@ -328,7 +329,7 @@ The code of the final version of our application can be found in the *part2-8* b
 
 ### Exercises 2.16-2.17
 
-#### 2.16: Phonebook step11
+#### 2.16: Communities step11
 
 Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message)
 example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a group is added or a number is changed).
@@ -336,7 +337,7 @@ In these examples, use the gray and green colors.
 
 ![successful green added screenshot](../../images/2/27e.png)
 
-<h4>2.17*: Phonebook step12</h4>
+#### 2.17*: Communities step12
 
 Open your application in two browsers.
 **If you delete a group in browser 1** a short while before attempting to ***change the group's URL*** in browser 2, you will get the following error message:
