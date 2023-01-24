@@ -554,13 +554,13 @@ const App = () => {
     <div>
       <h1>{company}</h1>
       <p>
-        {part1} {games1}
+        {handheld1} {games1}
       </p>
       <p>
-        {part2} {games2}
+        {handheld2} {games2}
       </p>
       <p>
-        {part3} {games3}
+        {handheld3} {games3}
       </p>
       <p>Number of games {games1 + games2 + games3}</p>
     </div>
