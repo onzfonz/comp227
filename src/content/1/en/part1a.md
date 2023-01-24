@@ -29,7 +29,11 @@ I liked using attach, which puts all the repos in a single folder.
 However, this creates more issues in particular views like the git view as it shows you all the same files and you have to keep making sure you have the right path.
 ![new window and don't ask again](../../images/1/custom/attach_dont_ask.png)
 
-You can click on the [project bar in the upper right](../../images/1/custom/webstorm_project.png) to return to see that you should now have two sets of folders: *lab0* and *lab1*.
+You can click on the project bar in the upper right
+
+![project bar in the upper right](../../images/1/custom/webstorm_project.png)
+
+to return to see that you should now have two sets of folders: *lab0* and *lab1*.
 
 You can now right-click on lab1 and select **Open in->Terminal**.
 If you did not review the [part 0c's coverage of git commands and the terminal](/part0/configuring_your_machine_for_this_course#some-git-command-line-tools),
