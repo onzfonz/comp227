@@ -67,12 +67,12 @@ const LoginForm = (props) => {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={props.handleSubmit}> // highlight-line
         <div>
           username
           <input
-            value={props.username}
-            onChange={props.handleChange}
+            value={props.username} // highlight-line
+            onChange={props.handleChange} // highlight-line
             name="username"
           />
         </div>
@@ -84,7 +84,8 @@ const LoginForm = (props) => {
 }
 ```
 
-where the properties of the `props` object are accessed through e.g. `props.handleSubmit`, the properties are assigned directly to their own variables.
+where the properties are accessed through the `prop` object like `props.handleSubmit`.
+Instead, the properties are assigned directly to their own variables.
 
 One fast way of implementing the functionality is to change the `loginForm` function of the `App` component like so:
 
@@ -121,6 +122,8 @@ const App = () => {
 }
 ```
 
+You'll see that there will be a warning with LoginForm because we did not import it.
+Use webstorm's context actions (hopefully using the keyboard shortcut) to select the option to *add the import statement*.
 The `App` components state now contains the boolean `loginVisible`, which defines if the login form should be shown to the user or not.
 
 The value of `loginVisible` is toggled with two buttons.
@@ -148,7 +151,7 @@ const showWhenVisible = { display: loginVisible ? '' : 'none' }
 </div>
 ```
 
-We are once again using the "question mark" ternary operator.
+We are once again using the ***`?:` ternary operator***.
 If `loginVisible` is `true`, then the CSS rule of the component will be:
 
 ```css
@@ -165,7 +168,7 @@ and for this reason, it would be good to extract it from the `App` component int
 Our goal is to implement a new `Togglable` component that can be used in the following way:
 
 ```js
-<Togglable buttonLabel='login'>
+<Togglable buttonLabel='login'> // highlight-line
   <LoginForm
     username={username}
     password={password}
@@ -173,19 +176,19 @@ Our goal is to implement a new `Togglable` component that can be used in the fol
     handlePasswordChange={({ target }) => setPassword(target.value)}
     handleSubmit={handleLogin}
   />
-</Togglable>
+</Togglable> // highlight-line
 ```
 
 The way that the component is used is slightly different from our previous components.
 The component has both opening and closing tags that surround a `LoginForm` component.
-In React terminology `LoginForm` is a child component of `Togglable`.
+In React terminology, *`LoginForm` is a **child component** of `Togglable`*.
 
-We can add any React elements we want between the opening and closing tags of `Togglable`, like this for example:
+We can add any React elements within `Togglable`'s tags, like this for example:
 
 ```js
 <Togglable buttonLabel="reveal">
-  <p>this line is at start hidden</p>
-  <p>also this is hidden</p>
+  <p>this line is hidden at the start</p> // highlight-line
+  <p>also this is hidden</p> // highlight-line
 </Togglable>
 ```
 
@@ -210,7 +213,7 @@ const Togglable = (props) => {
         <button onClick={toggleVisibility}>{props.buttonLabel}</button>
       </div>
       <div style={showWhenVisible}>
-        {props.children}
+        {props.children} // highlight-line
         <button onClick={toggleVisibility}>cancel</button>
       </div>
     </div>
@@ -220,11 +223,11 @@ const Togglable = (props) => {
 export default Togglable
 ```
 
-The new and interesting part of the code is [props.children](https://reactjs.org/docs/glossary.html#propschildren),
+The new and interesting part of the code is [**`props.children`**](https://reactjs.org/docs/glossary.html#propschildren),
 which is used for referencing the child components of the component.
-The child components are the React elements that we define between the opening and closing tags of a component.
+The **child components** are the React elements that we define between the opening and closing tags of a component.
 
-This time the children are rendered in the code that is used for rendering the component itself:
+This time the *children are rendered from within the parent component*:
 
 ```js
 <div style={showWhenVisible}>
@@ -233,7 +236,7 @@ This time the children are rendered in the code that is used for rendering the c
 </div>
 ```
 
-Unlike the "normal" props we've seen before, ***children*** is automatically added by React and always exists.
+Unlike the normal props we've seen before, ***`children`*** is automatically added by React and *always exists*.
 If a component is defined with an automatically closing `/>` tag, like this:
 
 ```js
@@ -244,9 +247,9 @@ If a component is defined with an automatically closing `/>` tag, like this:
 />
 ```
 
-Then `props.children` is an empty array.
+Then `props.children` still exists, it's just an empty array.
 
-The `Togglable` component is reusable and we can use it to add similar visibility toggling functionality to the form that is used for creating new tasks.
+The `Togglable` component is **reusable** and we can use it to add similar functionality to the form that creates tasks.
 
 Before we do that, let's extract the form for creating tasks into a component:
 
