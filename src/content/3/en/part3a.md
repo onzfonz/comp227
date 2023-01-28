@@ -30,7 +30,7 @@ so we can use the latest features without having to transpile our code.
 Our goal is to implement a backend that will work with the tasks application from [part 2](/part2/).
 However, let's start with the basics by implementing a classic "hello world" application.
 
-**Notice** that the applications and exercises in this part are not all React applications,
+> **Notice** that the applications and exercises in this part are not all React applications,
 and we will not use the *create-react-app* utility for initializing the project for this application.
 
 We had already mentioned [npm](/part2/getting_data_from_server#npm) back in part 2, which is a tool used for managing JavaScript packages.
@@ -140,25 +140,25 @@ The text is rendered in black and white because my system is in dark mode.
 The server works the same way regardless of the latter part of the URL.
 Also the address <http://localhost:3001/foo/bar> will display the same content.
 
-**NB** if port 3001 is already in use by some other application, then starting the server will result in the following error message:
-
-```bash
-➜  hello npm start
-
-> hello@1.0.0 start /Users/powercat/comp227/part3/hello
-> node index.js
-
-Server running on port 3001
-events.js:167
-      throw er; // Unhandled 'error' event
-      ^
-
-Error: listen EADDRINUSE :::3001
-    at Server.setupListenHandle [as _listen2] (net.js:1330:14)
-    at listenInCluster (net.js:1378:12)
-```
-
-You have two options.
+> **NB** if port 3001 is already in use by some other application, then starting the server will result in the following error message:
+>
+> ```bash
+> ➜  hello npm start
+>
+> > hello@1.0.0 start /Users/powercat/comp227/part3/hello<br/>
+> > node index.js
+>
+> Server running on port 3001
+> events.js:167
+>       throw er; // Unhandled 'error' event
+>       ^
+>
+> Error: listen EADDRINUSE :::3001
+>     at Server.setupListenHandle [as _listen2] (net.js:1330:14)
+>     at listenInCluster (net.js:1378:12)
+> ```
+>
+> You have two options.
 Either shut down the application using port 3001 (the json-server in the last part of the material was using port 3001),
 or use a different port for this application.
 
@@ -818,29 +818,29 @@ The application prints the data that we sent in the request to the console:
 
 ![terminal printing content provided in postman](../../images/3/15e.png)
 
-**NB** *Keep the terminal running the application visible at all times* when you are working on the backend.
+> **NB** *Keep the terminal running the application visible at all times* when you are working on the backend.
 Thanks to Nodemon any changes we make to the code will restart the application.
 If you pay attention to the console, you will immediately be able to pick up on errors that could occur:
-
-![nodemon error as typing requre not defined](../../images/3/16.png)
-
-Similarly, it is useful to check the console for making sure that the backend behaves as we expect it to in different situations, like when we send data with an HTTP POST request.
-Naturally, it's a good idea to add lots of `console.log` commands to the code while the application is still being developed.
-
-A potential cause for issues is an incorrectly set `Content-Type` header in requests.
+>
+> ![nodemon error as typing requre not defined](../../images/3/16.png)
+>
+> Similarly, it is useful to check the console for making sure that the backend behaves as we expect it to in different situations, like when we send data with an HTTP POST request.
+Naturally, it's OK to add lots of `console.log` commands to the code while the application is still being developed.
+>
+> A potential cause for issues is an incorrectly set `Content-Type` header in requests.
 This can happen with Postman if the type of body is not defined correctly:
-
-![postman having text as content-type](../../images/3/17x.png)
-
-The `Content-Type` header is set to `text/plain`:
-
-![postman showing headers and content-type as text/plain](../../images/3/18x.png)
-
-The server appears to only receive an empty object:
-
-![nodemon output showing empty curly braces](../../images/3/19.png)
-
-The server will not be able to parse the data correctly without the correct value in the header.
+>
+> ![postman having text as content-type](../../images/3/17x.png)
+>
+> The `Content-Type` header is set to `text/plain`:
+>
+> ![postman showing headers and content-type as text/plain](../../images/3/18x.png)
+>
+> The server appears to only receive an empty object:
+>
+> ![nodemon output showing empty curly braces](../../images/3/19.png)
+>
+> The server will not be able to parse the data correctly without the correct value in the header.
 It won't even try to guess the format of the data since
 there's a [massive amount](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of potential *Content-Types*.
 

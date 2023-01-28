@@ -48,7 +48,7 @@ Change the application's notifications to use Redux at this point of the exercis
 
 #### 7.11: redux, step2
 
-***Notice*** that this and the next two exercises are quite laborious but incredibly educational.
+> The next two exercises are quite laborious but incredibly educational.
 
 Store the information about blog posts in the Redux store.
 In this exercise, it is enough that you can see the blogs in the backend and create a new blog.

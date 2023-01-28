@@ -350,7 +350,7 @@ The messages shown for successful and unsuccessful events should look different:
 
 ![error message shown on screen instead of in console feature add-on](../../images/2/28e.png)
 
-**Notice** that even if you handle the exception, the error message is printed to the console.
+> **Notice** that even if you handle the exception, the error message is printed to the console.
 
 </div>
 
@@ -669,7 +669,7 @@ its flag and the languages spoken are shown:
 
 ![flag and additional attributes screenshot](../../images/2/19b3.png)
 
-**NB**: It is enough that your application works for most countries.
+> **NB**: It is enough that your application works for most countries.
 Some countries, like ***Sudan***, can be hard to support since the name of the country is part of the name of another country, ***South Sudan***.
 You don't need to worry about these edge cases.
 

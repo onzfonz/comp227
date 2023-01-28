@@ -1029,11 +1029,11 @@ The result could look like this:
 
 Example uses [Material UI Icons](https://mui.com/components/material-icons/) to represent genders.
 
-**Notice** that to access the id in the URL, you need to give [useParams](https://reactrouter.com/en/main/hooks/use-params) a proper type argument:
-
-```js
-const { id } = useParams<{ id: string }>();
-```
+> **Notice** that to access the id in the URL, you need to give [useParams](https://reactrouter.com/en/main/hooks/use-params) a proper type argument:
+>
+> ```js
+> const { id } = useParams<{ id: string }>();
+> ```
 
 #### 9.18: Patientor, step3
 

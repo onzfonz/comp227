@@ -458,10 +458,10 @@ It turns out that the best solution is not to do any suppression but to add this
 Enabling node means that ESlint knows that we can use the `process` variable,
 and allows you to rely on a system that has helped countless developers with similar situations who have come before you.
 
-**NB** when you make changes to the *.eslintrc.js* file, play close attention to errors in there as well! Webstorm will highlight issues.
+> **NB** when you make changes to the *.eslintrc.js* file, play close attention to errors in there as well! Webstorm will highlight issues.
 If there are, Webstorm will report the issues to you, and you can look at the terminal output to see more details about it.
-
-![terminal output from npm run lint](../../images/3/55.png)
+>
+> ![terminal output from npm run lint](../../images/3/55.png)
 
 Many companies define coding standards that are enforced throughout the organization through the ESlint configuration file.
 It is not recommended to keep reinventing the wheel over and over again,

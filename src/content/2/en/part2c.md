@@ -304,17 +304,17 @@ We can now conveniently, without parameter definitions, start the json-server fr
 npm run server
 ```
 
-**NB** The previously started json-server must be terminated before starting a new one; otherwise, there will be trouble:
-
-![cannot bind to port 3001 error](../../images/2/15b.png)
-
-The red print in the error message informs us about the issue:
-
-*Cannot bind to port 3001.
+> **NB** The previously started json-server must be terminated before starting a new one; otherwise, there will be trouble:
+>
+> ![cannot bind to port 3001 error](../../images/2/15b.png)
+>
+> The red print in the error message informs us about the issue:
+>
+> *Cannot bind to port 3001.
 Please specify another port number either through --port argument or through the json-server.json configuration file*
-
-As we can see, the application is not able to bind itself to the [port](https://en.wikipedia.org/wiki/Port_(computer_networking)).
-The reason being that port 3001 is already occupied by the previously started json-server.
+>
+> As we can see, the application is not able to bind itself to the [port](https://en.wikipedia.org/wiki/Port_(computer_networking)),
+because **port 3001 is already occupied by the previously started json-server**.
 
 #### The nuances of npm
 
@@ -360,8 +360,8 @@ If you open <http://localhost:3000> in the browser, this should be printed to th
 
 ![promises printed to console](../../images/2/16b.png)
 
-**Notice** when the content of the file *index.js* changes,
-React does not always notice that automatically, so you might need to refresh the browser to see your changes!
+Notice when the content of the file *index.js* changes,
+React does not always notice that automatically, **so you might need to refresh the browser to see your changes!**
 A simple workaround to make React notice the change automatically is to create a file named *.env* in the root directory of the project and add this line `FAST_REFRESH=false`.
 While you are at it, you can also add the following line `BROWSER=none` if you don't want a browser to be launched every time you run `npm start`.
 Restart the app for the applied changes to take effect.

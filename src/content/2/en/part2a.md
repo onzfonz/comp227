@@ -19,30 +19,10 @@ Paradoxically, this seems to be true even though a rookie programmer would need 
 When something does not work, don't just guess what's wrong.
 Instead, log or use some other way of debugging.
 
-**NB** As explained in part 1, when you use the command `console.log` for debugging, don't concatenate things 'the Java way' with a plus.
-Use a comma instead!
-Instead of writing:
-
-```js
-console.log('props value is ' + props)
-```
-
-separate the things to be printed with a comma:
-
-```js
-console.log('props value is', props)
-```
-
-If you concatenate an object with a string and log it to the console (like in our first example),
-the result will be pretty useless:
-
-```js
-props value is [object Object]
-```
-
-On the contrary, when you pass objects as distinct arguments separated by commas to `console.log`,
-like in our second example above, the content of the object is printed to the developer console as strings that are insightful.
-If necessary, read more about [debugging React applications](/part1/a_more_complex_state_debugging_react_apps#debugging-react-applications).
+> **NB** As [fully explained in part 1](/part1/a_more_complex_state_debugging_react_apps#a-quick-word-about-logging),
+when you use the command `console.log` for debugging,
+don't concatenate things 'the Java way' with a plus.
+**Use a comma instead!**
 
 ### Protip: Webstorm Live Templates
 
@@ -753,7 +733,7 @@ you should see the ability for the IDE to make a variety of changes.
 For example, JetBrains will automatically change the short-form arrow functions into their longer form and vice versa,
 showing you a preview of what that would look like.
 
-![webstorm sample suggestion for arrow function](../../images/2/5b.png)
+![WebStorm sample suggestion for arrow function](../../images/2/5b.png)
 
 #### 2.4: handheld arcade info step9
 

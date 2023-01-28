@@ -878,7 +878,7 @@ All necessary information for doing this, and the next two exercises, can be fou
 The idea of these exercises is to ***read the text through once more and to think through what is going on there***.
 Reading the application [code](https://github.com/comp227/example_app) is not necessary, but it is of course possible.
 
-**Notice** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor)
+> **Notice** perhaps the best way to do diagrams is the [Mermaid](https://github.com/mermaid-js/mermaid#sequence-diagram-docs---live-editor)
 syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-include-diagrams-markdown-files-mermaid/) markdown pages!
 
 #### 0.5: Single-page app diagram

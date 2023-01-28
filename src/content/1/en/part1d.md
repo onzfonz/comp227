@@ -455,26 +455,28 @@ const Button = (props) => {
 
 This will immediately reveal if, for instance, one of the attributes has been misspelled when using the component.
 
-**NB** When you use `console.log` for debugging, **don't combine objects** in a Java-like fashion by using the plus operator.
+##### A quick aside about logging
+
+> **NB** When you use `console.log` for debugging, **don't combine objects** in a Java-like fashion by using the plus operator.
 Instead of writing:
-
-```js
-console.log('props value is ' + props)
-```
-
-Separate the things you want to log to the console with a comma:
-
-```js
-console.log('props value is', props)
-```
-
-If you use the Java-like way of concatenating a string with an object, you will end up with a rather uninformative log message:
-
-```js
-props value is [object Object]
-```
-
-Whereas the items separated by a comma will all be available in the browser console for further inspection.
+>
+> ```js
+> console.log('props value is ' + props)
+> ```
+>
+> Separate the things you want to log to the console with a comma:
+>
+> ```js
+> console.log('props value is', props)
+> ```
+>
+> If you use the Java-like way of concatenating a string with an object, you will end up with a rather uninformative log message:
+>
+> ```js
+> props value is [object Object]
+> ```
+>
+> Whereas the items separated by a comma will all be available in the browser console for further inspection.
 
 Logging output to the console is by no means the only way of debugging our applications.
 You can pause the execution of your application code in the Chrome developer console's *debugger*,
@@ -1107,7 +1109,7 @@ Also, everything related to class-based components is irrelevant to us;
 - Some courses on [Egghead.io](https://egghead.io) like [Start learning React](https://egghead.io/courses/start-learning-react) are of high quality,
   and the recently updated [Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-reactjs) is also relatively good;
   both courses introduce concepts that will also be introduced later on in this course.
-**NB** The first one uses class components but the latter uses the new functional ones.
+    - **NB** The first one uses class components but the latter uses the new functional ones.
 
 ### Web developers pledge
 
@@ -1342,31 +1344,32 @@ Expand your application so that you can vote for the displayed joke.
 
 ![joke app with votes button added](../../images/1/19a.png)
 
-**NB** store the votes of each joke into an array or object in the component's state.
+> **NB** store the votes of each joke into an array or object in the component's state.
 Remember that the correct way of updating state stored in complex data structures like objects and arrays is to make a copy of the state.
-
-You can create a copy of an object like this:
-
-```js
-const points = { 0: 1, 1: 3, 2: 4, 3: 2 }
-
-const copy = { ...points }
-// increment the property 2 value by one
-copy[2] += 1     
-```
-
-OR a copy of an array like this:
-
-```js
-const points = [1, 4, 6, 3]
-
-const copy = [...points]
-// increment the value in position 2 by one
-copy[2] += 1     
-```
-
-Using an array might be the simpler choice in this case.
-Searching the Internet will provide you with lots of hints on how to [create a zero-filled array of the desired length](https://stackoverflow.com/questions/20222501/how-to-create-a-zero-filled-javascript-array-of-arbitrary-length/22209781).
+>
+> You can create a copy of an object like this:
+>
+> ```js
+> const points = { 0: 1, 1: 3, 2: 4, 3: 2 }
+> 
+> const copy = { ...points }
+> // increment the property 2 value by one
+> copy[2] += 1     
+> ```
+>
+> OR a copy of an array like this:
+>
+> ```js
+> const points = [1, 4, 6, 3]
+> 
+> const copy = [...points]
+> // increment the value in position 2 by one
+> copy[2] += 1     
+> ```
+>
+> Using an array might be the simpler choice in this case.
+Searching the Internet will provide you with lots of hints on how to
+[create a zero-filled array of the desired length](https://stackoverflow.com/questions/20222501/how-to-create-a-zero-filled-javascript-array-of-arbitrary-length/22209781).
 
 #### 1.14*: jokes step3
 

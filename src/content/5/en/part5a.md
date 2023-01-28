@@ -625,30 +625,30 @@ If the user is logged-in, the name of the user and a list of blogs is shown.
 
 User details of the logged-in user do not have to be saved to the local storage yet.
 
-**NB** You can implement the conditional rendering of the login form like this for example:
-
-```js
-  if (user === null) {
-    return (
-      <div>
-        <h2>Log in to application</h2>
-        <form>
-          //...
-        </form>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <h2>What to watch</h2>
-      {shows.map(show =>
-        <Show key={show.id} show={show} />
-      )}
-    </div>
-  )
-}
-```
+> **NB** You can implement the conditional rendering of the login form like this for example:
+>
+> ```js
+>   if (user === null) {
+>     return (
+>       <div>
+>         <h2>Log in to application</h2>
+>         <form>
+>           //...
+>         </form>
+>       </div>
+>     )
+>   }
+> 
+>   return (
+>     <div>
+>       <h2>What to watch</h2>
+>       {shows.map(show =>
+>         <Show key={show.id} show={show} />
+>       )}
+>     </div>
+>   )
+> }
+> ```
 
 #### 5.2: watchlist frontend, step2
 

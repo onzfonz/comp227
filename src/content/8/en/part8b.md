@@ -698,7 +698,7 @@ Let us follow the advice and write the import as follows:
 import express from 'express';
 ```
 
-**NB**: VSCode offers you the possibility to fix the issues automatically by clicking the ***Quick Fix...*** button.
+> **NB**: VSCode offers you the possibility to fix the issues automatically by clicking the ***Quick Fix...*** button.
 Keep your eyes open for these helpers/quick fixes; listening to your editor usually makes your code better and easier to read.
 The automatic fixes for issues can be a major time saver as well.
 

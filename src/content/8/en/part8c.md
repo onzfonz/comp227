@@ -54,7 +54,7 @@ We can now initialize our tsconfig.json settings by running:
  npm run tsc -- --init
 ```
 
-**Notice** the extra `--` before the actual argument! Arguments before `--` are interpreted as being for the ***npm*** command,
+> **Notice** the extra `--` before the actual argument! Arguments before `--` are interpreted as being for the ***npm*** command,
 while the ones after that are meant for the command that is run through the script (i.e. *tsc* in this case).
 
 The *tsconfig.json* file we just created contains a lengthy list of every configuration available to us.
@@ -875,7 +875,7 @@ Create a type `Diagnose` and use it to create endpoint ***/api/diagnoses*** for 
 
 Structure your code properly by using meaningfully-named directories and files.
 
-**Notice** that *diagnoses* may or may not contain the field `latin`.
+> **Notice** that *diagnoses* may or may not contain the field `latin`.
 You might want to use [optional properties](https://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties) in the type definition.
 
 #### 8.11: Patientor backend, step4

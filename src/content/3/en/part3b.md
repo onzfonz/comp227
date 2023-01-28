@@ -553,7 +553,7 @@ Create a README.md at the root of your repository, and add a link to your online
 
 Generate a production build of your frontend, and add it to the internet application using the method introduced in this part.
 
-**NB** Make sure the directory *build* is not gitignored
+> **NB** Make sure the directory *build* is not gitignored
 
 Also, make sure that the frontend still works locally (in development mode when started with command `npm start`).
 

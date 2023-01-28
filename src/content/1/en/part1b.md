@@ -368,7 +368,7 @@ const App = () => {
 }
 ```
 
-**NB** at this point *you can assume that there are always three items*, so there is no need to go through the arrays using loops.
+> **Notice** at this point *you can assume that there are always three items*, so there is no need to go through the arrays using loops.
 We will come back to the topic of rendering components based on items in arrays with a more thorough exploration in the [next part of the course](/part2).
 
 However, do not pass different objects as separate props from the `App` component to the components `Content` and `Total`.
