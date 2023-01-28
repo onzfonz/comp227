@@ -31,7 +31,9 @@ const SearchResults = ({ query, results = [] }) => {
 
         <ol>
           {results.map(({ part, letter }) => (
-              <li key={`${part}${letter}`}>
+              <>
+              {navigation[lang][part] && navigation[lang][part][letter]?
+                <li key={`${part}${letter}`}>
                 {console.log(navigation)}
               <Link
                 to={getPartTranslationPath(
@@ -44,7 +46,9 @@ const SearchResults = ({ query, results = [] }) => {
                   {`part ${part}, ${letter}: ${navigation[lang][part][letter]}`}
                 </div>
               </Link>
-            </li>
+            </li>:<></>
+            }
+            </>
           ))}
         </ol>
       </Element>
