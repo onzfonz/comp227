@@ -15,6 +15,7 @@ const SearchResults = ({ query, results = [] }) => {
   if (results.length === 0) {
     return (
       <Element>
+        
         <SubHeader text={t('searchPage:noMatches')} headingLevel="h2" />
       </Element>
     );
@@ -30,7 +31,8 @@ const SearchResults = ({ query, results = [] }) => {
 
         <ol>
           {results.map(({ part, letter }) => (
-            <li key={`${part}${letter}`}>
+              <li key={`${part}${letter}`}>
+                {console.log(navigation)}
               <Link
                 to={getPartTranslationPath(
                   lang,

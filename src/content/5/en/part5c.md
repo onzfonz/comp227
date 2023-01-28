@@ -8,13 +8,13 @@ lang: en
 <div class="content">
 
 There are many different ways of testing React applications.
-Let's take a look at them next.
+Let's take a look at few of those next.
 
-Tests will be implemented with the same [Jest](http://jestjs.io/) testing library developed by Facebook that was used in the previous part.
+Tests can be implemented with the same [Jest](http://jestjs.io/) testing library developed by Facebook that was used in the previous part.
 Jest is configured by default to applications created with create-react-app.
 
 In addition to Jest, we also need another testing library that will help us render components for testing purposes.
-The current best option for this is [react-testing-library](https://github.com/testing-library/react-testing-library) which has seen rapid growth in popularity in recent times.
+The current best option for this is [**react-testing-library**](https://github.com/testing-library/react-testing-library) which has seen rapid growth in popularity in recent times.
 
 Let's install the library with the command:
 
@@ -22,7 +22,7 @@ Let's install the library with the command:
 npm install @testing-library/react @testing-library/jest-dom --save-dev
 ```
 
-We also installed [jest-dom](https://testing-library.com/docs/ecosystem-jest-dom/) which provides some nice Jest-related helper methods.
+We also installed [**jest-dom**](https://testing-library.com/docs/ecosystem-jest-dom/) which provides some nice Jest-related helper methods.
 
 Let's first write tests for the component that is responsible for rendering a task:
 
@@ -42,7 +42,7 @@ const Task = ({ task, toggleImportance }) => {
 ```
 
 Notice that the `li` element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname `task`,
-that could be used to access the component in our tests.
+which could be used to access the component in our tests.
 
 ### Rendering the component for tests
 
@@ -78,8 +78,8 @@ render(<Task task={task} />)
 Normally React components are rendered to the ***DOM***.
 The `render` method we used renders the components in a format that is suitable for tests without rendering them to the DOM.
 
-We can use the object [screen](https://testing-library.com/docs/queries/about#screen) to access the rendered component.
-We use screen's method [getByText](https://testing-library.com/docs/queries/bytext)
+We can use the object [`screen`](https://testing-library.com/docs/queries/about#screen) to access the rendered component.
+We use `screen`'s method [getByText](https://testing-library.com/docs/queries/bytext)
 to search for an element that has the task content and ensure that it exists:
 
 ```js
@@ -152,7 +152,7 @@ test('renders content', () => {
 
 The test fails if `getByText` does not find the element it is looking for.
 
-We could also use [CSS-selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
+We could also use [CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
 to find rendered elements by using the method [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
 of the object [container](https://testing-library.com/docs/react-testing-library/api/#container-1) that is one of the fields returned by the render:
 
@@ -186,7 +186,7 @@ that look for elements based on id-attributes that are inserted into the code sp
 
 We typically run into many different kinds of problems when writing our tests.
 
-Object `screen` has method [debug](https://testing-library.com/docs/queries/about/#screendebug) that can be used to print the HTML of a component to the terminal.
+Object `screen` has the method [`debug`](https://testing-library.com/docs/queries/about/#screendebug) that can be used to print the HTML of a component to the terminal.
 If we change the test as follows:
 
 ```js
@@ -228,7 +228,7 @@ console.log
   </body>
 ```
 
-It is also possible to use the same method to print a wanted element to console:
+It is also possible to use the same method to print a wanted element to the console:
 
 ```js
 import React from 'react'
@@ -270,7 +270,7 @@ Now the HTML of the wanted element gets printed:
 In addition to displaying content, the `Task` component also makes sure that when the button associated with the task is pressed,
 the `toggleImportance` event handler function gets called.
 
-Let us install a library [user-event](https://testing-library.com/docs/user-event/intro) that makes simulating user input a bit easier:
+Let us install a library [**user-event**](https://testing-library.com/docs/user-event/intro) that makes simulating user input a bit easier:
 
 ```bash
 npm install @testing-library/user-event --save-dev
