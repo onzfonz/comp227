@@ -100,6 +100,10 @@
     position: static;
   }
 
+  blockquote {
+    border-left-style: solid;
+  }
+
   .letter {
     width: 4rem;
     height: 4rem;
@@ -139,6 +143,7 @@
       color: $black;
     }
   }
+
 }
 
 .course-content {
