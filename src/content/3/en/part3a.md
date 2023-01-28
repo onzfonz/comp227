@@ -1016,10 +1016,10 @@ Please use this new repo link to build your new repository.
 
 **<http://go.djosv.com/227lab3>**
 
-**NB:** Because this is not a frontend project and we are not working with React, the application **is not created** with create-react-app.
+> **NB:** Because this is not a frontend project and we are not working with React, the application **is not created** with create-react-app.
 You initialize this project with the `npm init` command that was demonstrated earlier in this part of the material.
-
-**Strong recommendation:** When you are working on backend code, always keep an eye on what's going on in the terminal that is running your application.
+>
+> **Strong recommendation:** When you are working on backend code, always keep an eye on what's going on in the terminal that is running your application.
 
 #### 3.1: Communities backend step1
 

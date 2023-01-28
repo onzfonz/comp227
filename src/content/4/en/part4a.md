@@ -857,14 +857,14 @@ Remember the things that we learned about [debugging](/part3/saving_data_to_mong
 You can print things to the console with `console.log` even during test execution.
 It is even possible to use the debugger while running tests, you can find instructions for that [here](https://jestjs.io/docs/en/troubleshooting).
 
-**NB:** if some test is failing, then it is recommended to only run that test while you are fixing the issue.
+> **NB:** if some test is failing, then it is recommended to only run that test while you are fixing the issue.
 You can run a single test with the [only](https://jestjs.io/docs/api#testonlyname-fn-timeout) method.
-
-Another way of running a single test (or describe block) is to specify the name of the test to be run with the [-t](https://jestjs.io/docs/en/cli.html) flag:
-
-```js
-npm test -- -t 'when list has only one show, equals the likes of that'
-```
+>
+> Another way of running a single test (or describe block) is to specify the name of the test to be run with the [-t](https://jestjs.io/docs/en/cli.html) flag:
+>
+> ```js
+> npm test -- -t 'when list has only one show, equals the likes of that'
+> ```
 
 #### 4.5*: helper functions and unit tests, step3
 

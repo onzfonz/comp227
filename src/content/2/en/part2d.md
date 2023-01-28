@@ -822,15 +822,15 @@ No data is sent with the request.
 
 You can make an HTTP DELETE request with the [axios](https://github.com/axios/axios) library in the same way that we make all of the other requests.
 
-**NB:** You can't use the name `delete` for a variable because it's a reserved word in JavaScript.
+> **NB:** You can't use the name `delete` for a variable because it's a reserved word in JavaScript.
 E.g. the following is not possible:
-
-```js
-// use some other name for variable!
-const delete = (id) => {
-  // ...
-}
-```
+>
+> ```js
+> // use some other name for variable!
+> const delete = (id) => {
+>   // ...
+> }
+> ```
 
 #### 2.15*: Communities step10
 

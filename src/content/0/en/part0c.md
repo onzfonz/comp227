@@ -32,7 +32,7 @@ The console looks like this:
 Make sure that the ***Network*** tab is open, and check the ***Disable cache*** option as shown.
 *Preserve log* can also be useful: it saves the logs printed by the application when the page is reloaded.
 
-**NB:** The most important tab is the ***Console*** tab.
+> **NB:** The most important tab is the ***Console*** tab.
 However, in this introduction, we will be using the ***Network*** tab quite a bit.
 
 ### HTTP GET

@@ -243,7 +243,7 @@ mongoose
   .catch((err) => console.log(err))
 ```
 
-**NB:** Depending on which region you selected when building your cluster, the *MongoDB URI* may be different from the example provided above.
+> **NB:** Depending on which region you selected when building your cluster, the *MongoDB URI* may be different from the example provided above.
 You should verify and use the correct URI that was generated from MongoDB Atlas.
 
 The code also assumes that it will be passed the password from the credentials we created in MongoDB Atlas, as a command line parameter.
@@ -343,7 +343,7 @@ You can print the object to the console if you want to take a closer look at it 
 
 Let's also save a few more tasks by modifying the data in the code and by executing the program again.
 
-**NB:** Unfortunately the Mongoose documentation is not very consistent,
+> **NB:** Unfortunately the Mongoose documentation is not very consistent,
 with parts of it using callbacks in its examples and other parts, other styles,
 so it is not recommended to copy and paste code directly from there.
 Mixing promises with old-school callbacks in the same code is not recommended.
@@ -431,33 +431,33 @@ PySlackers https://pythondev.slack.com
 
 You can get the command-line parameters from the [process.argv](https://nodejs.org/docs/latest-v8.x/api/process.html#process_process_argv) variable.
 
-**NB: do not close the connection in the wrong place**.
+> **NB: do not close the connection in the wrong place**.
 E.g. the following code will not work:
-
-```js
-Group
-  .find({})
-  .then(groups=> {
-    // ...
-  })
-
-mongoose.connection.close()
-```
-
-In the code above the `mongoose.connection.close()` command will get executed immediately after the `Group.find` operation is started.
+>
+> ```js
+> Group
+>   .find({})
+>   .then(groups=> {
+>     // ...
+>   })
+> 
+> mongoose.connection.close()
+> ```
+>
+> In the code above the `mongoose.connection.close()` command will get executed immediately after the `Group.find` operation is started.
 This means that the database connection will be closed immediately,
 and the execution will never get to the point where `Group.find` operation finishes and the `callback` function gets called.
-
-The correct place for closing the database connection is at the end of the callback function:
-
-```js
-Group
-  .find({})
-  .then(groups=> {
-    // ...
-    mongoose.connection.close()
-  })
-```
+>
+> The correct place for closing the database connection is at the end of the callback function:
+>
+> ```js
+> Group
+>   .find({})
+>   .then(groups=> {
+>     // ...
+>     mongoose.connection.close()
+>   })
+> ```
 
 </div>
 

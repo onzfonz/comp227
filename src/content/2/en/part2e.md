@@ -699,12 +699,12 @@ Notice that it might take some minutes until a generated API key is valid.
 
 If you use Open weather map, [here](https://openweathermap.org/weather-conditions#Icon-list) is the description for how to get weather icons.
 
-**NB:** In some browsers (such as Firefox) the chosen API might send an error response,
+> **NB:** In some browsers (such as Firefox) the chosen API might send an error response,
 which indicates that HTTPS encryption is not supported, although the request URL starts with `http://`.
 This issue can be fixed by completing the exercise using Chrome.
 
-**NB:** You need an api-key to use almost every weather service.
-Do not save the api-key to source control! Nor hardcode the api-key to your source code.
+*You will need an api-key to use almost every weather service.*
+**Do not save the api-key to source control!** Nor hardcode the api-key to your source code.
 Instead use an [environment variable](https://create-react-app.dev/docs/adding-custom-environment-variables/) to save the key.
 
 Assuming the api-key is `t0p53cr3t4p1k3yv4lu3`, when the application is started like so:

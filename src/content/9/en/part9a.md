@@ -289,7 +289,7 @@ and download the binary suitable for your operating system (for example *.dmg* f
 Once the installation is complete, start the React Native Debugger, open a new debugger window (shortcuts: ***Command+T*** on macOS,
 ***Ctrl+T*** on Linux/Windows) and set the React Native packager port to `19000`.
 
-**NB:** If the debugger can't connect to the application and you see the error message "Another debugger is already connected",
+> **NB:** If the debugger can't connect to the application and you see the error message "Another debugger is already connected",
 make sure that *<http://localhost:19000/debugger-ui>* is not open in some browser tab.
   
 Next, we need to start our application and connect to the debugger.

@@ -596,7 +596,7 @@ const Show = ({ show }) => {
 )}
 ```
 
-**NB:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component,
+> **NB:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component,
 the component can not be used directly to achieve the desired behavior.
 The easiest solution will be ***to add a state to the blog post that controls the displayed form of the blog post***.
 

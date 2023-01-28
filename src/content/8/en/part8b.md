@@ -71,7 +71,7 @@ It is worth mentioning that TypeScript also provides an online playground,
 where you can quickly try out TypeScript code and instantly see the resulting JavaScript and possible compilation errors.
 You can access TypeScript's official playground [here](https://www.typescriptlang.org/play/index.html).
 
-**NB:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment,
+> **NB:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment,
 which is why you might see different warnings there compared to your local environment.
 The playground's tsconfig is modifiable through the config dropdown menu.
 

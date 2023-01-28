@@ -79,31 +79,31 @@ You can access the view by clicking the name of the user in the view that lists 
 
 ![browser blogs showing clickable users](../../images/7/43.png)
 
-**NB:** you will almost certainly stumble across the following error message during this exercise:
-
-![browser TypeError cannot read property name of undefined](../../images/7/42ea.png)
-
-The error message will occur if you refresh the page for an individual user.
-
-The cause of the issue is that, when we navigate directly to the page of an individual user, the React application has not yet received the data from the backend.
+> **NB:** you will almost certainly stumble across the following error message during this exercise:
+>
+> ![browser TypeError cannot read property name of undefined](../../images/7/42ea.png)
+>
+> The error message will occur if you refresh the page for an individual user.
+>
+> The cause of the issue is that, when we navigate directly to the page of an individual user, the React application has not yet received the data from the backend.
 One solution for fixing the problem is to use conditional rendering:
-
-```js
-const User = () => {
-  const user = ...
-  // highlight-start
-  if (!user) {
-    return null
-  }
-  // highlight-end
-
-  return (
-    <div>
-      // ...
-    </div>
-  )
-}
-```
+>
+> ```js
+> const User = () => {
+>   const user = ...
+>   // highlight-start
+>   if (!user) {
+>     return null
+>   }
+>   // highlight-end
+> 
+>   return (
+>     <div>
+>       // ...
+>     </div>
+>   )
+> }
+> ```
 
 #### 7.16: Blog view
 

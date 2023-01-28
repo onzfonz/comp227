@@ -496,10 +496,10 @@ After finishing this exercise your application should look something like this:
 
 Notice the use of the React developer tools extension in the picture above!
 
-**NB:**
-
-- you can use the group's name as a value of the `key` property
-- remember to prevent the default action of submitting HTML forms!
+> **NB:**
+>
+> - you can use the group's name as a value of the `key` property
+> - remember to prevent the default action of submitting HTML forms!
 
 #### 2.7: The Communities Step2
 
@@ -562,22 +562,22 @@ Implement a search field that can be used to filter the list of communities by n
 You can implement the search field as an ***input*** element that is placed outside the HTML form.
 The filtering logic shown in the image is **case insensitive**, meaning that the search term `comp` also returns results that contain Comp with an uppercase C.
 
-**NB:** When you are working on new functionality, it's often useful to "hardcode" some dummy data into your application, e.g.
-
-```js
-const App = () => {
-  const [groups, setGroups] = useState([
-    { name: 'COMP 227 Students', url: 'https://discord.gg/VRUKRxCJ95', id: 1 },
-    { name: 'PySlackers', url: 'https://pythondev.slack.com', id: 2 },
-    { name: 'Code Support', url: 'https://discord.gg/XQ9C3sY', id: 3 },
-    { name: 'Front End Developers', url: 'https://discord.gg/XHsumw2C39', id: 4 }
-  ])
-
-  // ...
-}
-```
-
-This saves you from having to manually input data into your application for testing out your new functionality.
+> **NB:** When you are working on new functionality, it's often useful to "hardcode" some dummy data into your application, e.g.
+>
+> ```js
+> const App = () => {
+>   const [groups, setGroups] = useState([
+>     { name: 'COMP 227 Students', url: 'https://discord.gg/VRUKRxCJ95', id: 1 },
+>     { name: 'PySlackers', url: 'https://pythondev.slack.com', id: 2 },
+>     { name: 'Code Support', url: 'https://discord.gg/XQ9C3sY', id: 3 },
+>     { name: 'Front End Developers', url: 'https://discord.gg/XHsumw2C39', id: 4 }
+>   ])
+> 
+>   // ...
+> }
+> ```
+>
+> This saves you from having to manually input data into your application for testing out your new functionality.
 
 #### 2.10: The Communities Step5
 

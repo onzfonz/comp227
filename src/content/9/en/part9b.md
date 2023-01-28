@@ -578,7 +578,7 @@ It is also a good idea to play around with the flexbox properties in the [Flexbo
 Remember that in React Native the property names are the same as the ones in CSS except for the ***camelCase*** naming.
 However, the **property values** such as *`flex-start`* and *`space-between`* are exactly the same.
 
-**NB:** React Native and CSS has some differences regarding the flexbox.
+> **NB:** React Native and CSS has some differences regarding the flexbox.
 The most important difference is that in React Native the default value for the `flexDirection` property is *`column`*.
 It is also worth noting that the *`flex`* shorthand doesn't accept multiple values in React Native.
 More on React Native's flexbox implementation can be read in the [documentation](https://reactnative.dev/docs/flexbox).
