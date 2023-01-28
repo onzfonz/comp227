@@ -170,7 +170,7 @@ nvm use 16
 
 After this, you should be able to type `node -v` and you'll notice that it should print out `v16.3.0`.
 
-To prepare you to use webstorm we'll follow a couple more commands here:
+To prepare you to use WebStorm we'll follow a couple more commands here:
 
 One is to type the following lines, which creates a ***symbolic link*** where WebStorm can find the version of node we are using.
 ***Remember, all of your terminal commands should be done in git bash at this point!***
@@ -363,7 +363,7 @@ On the other hand, it allows me to not have to worry about saving all the time, 
 Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
 check the option which says to ***Save files if the IDE is idle for 15 seconds***.
 
-#### Link webstorm to nvm
+#### Link WebStorm to nvm
 
 This last one is important as it tells Webstorm where our node version is, which helps with IDE integration.
 Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
@@ -389,7 +389,7 @@ That is used to create a commit, which is a record of the changes that you have 
 Committing small changes is a good idea because then you can more easily keep track of (and potentially revert changes).
 It's also a good way to document what has been added or changed as well.
 
-As you are toying around, you may get a popup like this in webstorm.
+As you are toying around, you may get a popup like this in WebStorm.
 
 ![popup asking if you want to add files to git](../../images/0/partc/add_file_to_git.png)
 

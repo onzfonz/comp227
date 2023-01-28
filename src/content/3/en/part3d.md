@@ -347,7 +347,7 @@ Here's how it looks after I added I pressed ***Spacebar*** and then saved via **
 Any errors like the missing semicolon will be applied by ESlint.
 This makes the other errors easy to spot and fix right away.
 
-![Screenshot of webstorm ESlint plugin showing less errors after save](../../images/3/custom/eslint_after_save.png)
+![Screenshot of WebStorm ESlint plugin showing less errors after save](../../images/3/custom/eslint_after_save.png)
 
 ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the *.eslintrc.js* file.
 

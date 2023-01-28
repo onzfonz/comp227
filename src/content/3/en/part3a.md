@@ -765,7 +765,7 @@ We'll use that file to define a request that fetches all tasks.
 
 By clicking the highlighted play button, the REST client will execute the HTTP request and the response from the server is opened in the editor.
 
-![response from webstorm from get request](../../images/3/13ea.png)
+![response from WebStorm from get request](../../images/3/13ea.png)
 
 ### Receiving data
 
@@ -846,7 +846,7 @@ there's a [massive amount](https://developer.mozilla.org/en-US/docs/Web/HTTP/Bas
 
 With WebStorm, the POST request can be sent with the REST client like this:
 
-![sample post request in webstorm with JSON data](../../images/3/20eb.png)
+![sample post request in WebStorm with JSON data](../../images/3/20eb.png)
 
 One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository,
 and they can be distributed to everyone in the development team.
