@@ -25,7 +25,7 @@ const SearchResults = ({ query, results = [] }) => {
     return (
       <Element>
         <SubHeader
-          text={t('searchPage:matchesTitle', { count: results.length, query })}
+          text={t('searchPage:matchesTitle', { count: results.filter(({part, letter}) => (navigation[lang][part])).length, query })}
           headingLevel="h2"
         />
 
@@ -34,7 +34,6 @@ const SearchResults = ({ query, results = [] }) => {
               <>
               {navigation[lang][part] && navigation[lang][part][letter]?
                 <li key={`${part}${letter}`}>
-                {console.log(navigation)}
               <Link
                 to={getPartTranslationPath(
                   lang,
