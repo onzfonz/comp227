@@ -566,11 +566,11 @@ It is easy to add styles to the application as shown in part 2 using [inline](/p
 const Show = ({ show }) => {
   const showStyle = {
     padding: 10,
-    border: "dotted",
+    border: 'dotted',
     borderWidth: 4,
-    borderColor: "goldenrod",
+    borderColor: 'goldenrod',
     marginTop: 15,
-    fontFamily: "monospace"
+    fontFamily: 'monospace'
   }
 
   return (
@@ -688,10 +688,10 @@ The console will display the following error message if the prop is left undefin
 
 ![console error stating buttonLabel is undefined](../../images/5/15.png)
 
-The application still works and nothing forces us to define props despite the PropTypes definitions.
+The application still works and nothing forces us to define props despite the `PropTypes` definitions.
 Mind you, it is extremely unprofessional to leave **any** red output in the browser console.
 
-Let's also define PropTypes to the `LoginForm` component:
+Let's also define `PropTypes` to the `LoginForm` component:
 
 ```js
 import PropTypes from 'prop-types'
@@ -763,19 +763,19 @@ module.exports = {
   "rules": {
       "indent": [
           "error",
-          2  
+          4  
       ],
       "linebreak-style": [
           "error",
-          "unix"
+          "windows"
       ],
       "quotes": [
           "error",
           "single"
       ],
       "semi": [
-          "error",
-          "never"
+          "warn",
+          "always"
       ],
       "eqeqeq": "error",
       "no-trailing-spaces": "error",
@@ -786,6 +786,7 @@ module.exports = {
           "error", { "before": true, "after": true }
       ],
       "no-console": 0,
+      "no-debugger": 0,
       "react/prop-types": 0,
       "react/react-in-jsx-scope": "off"
   },
@@ -797,12 +798,11 @@ module.exports = {
 }
 ```
 
-NOTE: If you are using Visual Studio Code together with ESLint plugin, you might need to add a workspace setting for it to work.
-If you are seeing ```Failed to load plugin react: Cannot find module 'eslint-plugin-react'``` additional configuration is needed.
-Adding the line ```"eslint.workingDirectories": [{ "mode": "auto" }]``` to settings.json in the workspace seems to work.
-See [here](https://github.com/microsoft/vscode-eslint/issues/880#issuecomment-578052807) for more information.
+> NOTICE: We may need to turn on our ESLint settings like we did in [part 3](/part3/validation_and_es_lint#configure-webstorm-with-eslint)
+> Make sure that you turn on --eslint-fix-on-save and configure the node interpreter for this new project again.
+> We may update this with additional configurations, but for now, you can ask in discord if there are any issues.
 
-Let's create [.eslintignore](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories) file with the following contents to the repository root
+Let's also create [.eslintignore](https://eslint.org/docs/user-guide/configuring#ignoring-files-and-directories) file with the following contents to the repository root
 
 ```bash
 node_modules
@@ -812,7 +812,7 @@ build
 
 Now the directories *build* and *node_modules* will be skipped when linting.
 
-Let us also create an npm script to run the lint:
+Let us also add an npm script to run the linter:
 
 ```js
 {
@@ -823,7 +823,7 @@ Let us also create an npm script to run the lint:
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server -p3001 db.json",
+    "server": "json-server -p3001 --watch db.json",
     "eslint": "eslint ." // highlight-line
   },
   // ...
@@ -848,11 +848,13 @@ const Togglable = React.forwardRef((props, ref) => {
   // ...
 })
 
-Togglable.displayName = 'Togglable' // highlight-line
+Togglable.displayName = 'Togglable'; // highlight-line
 
 export default Togglable
 ```
 
+After this, I just went through the files and saved each one by adding a space to each file and then saving,
+which causes eslint to run and fix the correctable items.
 You can find the code for our current application in its entirety in the *part5-7* branch of
 [this GitHub repository](https://github.com/comp227/part2-tasks/tree/part5-7).
 

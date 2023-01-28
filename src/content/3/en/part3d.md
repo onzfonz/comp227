@@ -328,6 +328,8 @@ Lint has quite a lot to say about our code, much of which can be easily fixed.
 
 Let's not fix these issues just yet.
 
+#### Configure WebStorm with ESLint
+
 I like having the `lint:fix` option to go through and problems ESlint can fix by itself (like semicolons, line endings and spacing),
 but a convenient alternative to the command line is to configure WebStorm to use ESLint so that you run the linter continuously.
 By using WebStorm you will see errors in your code immediately.
