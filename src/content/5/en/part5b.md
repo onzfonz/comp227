@@ -123,7 +123,7 @@ const App = () => {
 ```
 
 You'll see that there will be a warning with LoginForm because we did not import it.
-Use webstorm's context actions (hopefully using the keyboard shortcut) to select the option to *add the import statement*.
+Use WebStorm's context actions (hopefully using the keyboard shortcut) to select the option to *add the import statement*.
 The `App` components state now contains the boolean `loginVisible`, which defines if the login form should be shown to the user or not.
 
 The value of `loginVisible` is toggled with two buttons.
@@ -293,10 +293,10 @@ The state of the application currently is in the `App` component.
 React documentation says the [following](https://reactjs.org/docs/lifting-state-up.html) about where to place the state:
 
 > *Often, several components need to reflect the same changing data.
-  We recommend lifting the shared state up to their closest common ancestor.*
+> We recommend lifting the shared state up to their closest common ancestor.*
 
-If we think about the state of the forms, so for example the contents of a new task before it has been created, the `App` component does not need it for anything.
-We could just as well move the state of the forms to the corresponding components.
+If we think about the *state* in the forms, like a new task's contents, the `App` component does not need it for anything.
+We could move the state contained in the forms into their more closely related components.
 
 The component for a task changes like so:
 
@@ -366,7 +366,7 @@ const App = () => {
 }
 ```
 
-We could do the same for the log in form, but we'll leave that for an optional exercise.
+We could do the same for the login form, but we'll leave that for an optional exercise.
 
 The application code can be found on [GitHub](https://github.com/comp227/part2-tasks/tree/part5-5),
 branch *part5-5*.
@@ -378,11 +378,11 @@ Our current implementation is quite good; it has one aspect that could be improv
 After a new task is created, it would make sense to hide the new task form.
 Currently, the form stays visible.
 There is a slight problem with hiding the form.
-The visibility is controlled with the `visible` variable inside of the `Togglable` component.
-How can we access it outside of the component?
+*The visibility is controlled with the `visible` variable inside of the `Togglable` component*.
+***How can we access it outside of the component?***
 
 There are many ways to implement closing the form from the parent component,
-but let's use the [ref](https://reactjs.org/docs/refs-and-the-dom.html) mechanism of React, which offers a reference to the component.
+but let's use the [**ref**](https://reactjs.org/docs/refs-and-the-dom.html) mechanism of React, which offers a reference to the component.
 
 Let's make the following changes to the `App` component:
 
@@ -408,7 +408,7 @@ that is assigned to the `Togglable` component containing the creation task form.
 The `taskFormRef` variable acts as a reference to the component.
 This hook ensures the same reference (ref) that is kept throughout re-renders of the component.
 
-We also make the following changes to the `Togglable` component:
+We also need to make the following changes to the `Togglable` component:
 
 ```js
 import { useState, forwardRef, useImperativeHandle } from 'react' // highlight-line
@@ -447,10 +447,10 @@ const Togglable = forwardRef((props, refs) => { // highlight-line
 export default Togglable
 ```
 
-The function that creates the component is wrapped inside of a [forwardRef](https://reactjs.org/docs/react-api.html#reactforwardref) function call.
+The function that creates the component is wrapped inside of a [`forwardRef`](https://reactjs.org/docs/react-api.html#reactforwardref) function call.
 This way the component can access the ref that is assigned to it.
 
-The component uses the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) hook
+The component uses the [`useImperativeHandle`](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) hook
 to make its `toggleVisibility` function available outside of the component.
 
 We can now hide the form by calling `taskFormRef.current.toggleVisibility()` after a new task has been created:
@@ -470,7 +470,7 @@ const App = () => {
 }
 ```
 
-To recap, the [useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) function is a React hook,
+To recap, the [**`useImperativeHandle`**](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) function is a React hook,
 that is used for defining functions in a component, which can be invoked from outside of the component.
 
 This trick works for changing the state of a component, but it looks a bit unpleasant.
@@ -523,36 +523,36 @@ The `ref` attribute is used for assigning a reference to each of the components 
 
 ### Exercises 5.5-5.10
 
-#### 5.5 Blog list frontend, step5
+#### 5.5 Watchlist frontend, step5
 
-Change the form for creating blog posts so that it is only displayed when appropriate.
+Change the form for creating shows so that it is only displayed when appropriate.
 Use functionality similar to what was shown [earlier in this part of the course material](/part5/props_children_and_proptypes#displaying-the-login-form-only-when-appropriate).
 If you wish to do so, you can use the `Togglable` component defined in part 5.
 
-By default the form is not visible
+By default, the form is not visible
 
 ![browser showing new task button with no form](../../images/5/13ae.png)
 
-It expands when button ***create new blog*** is clicked
+It expands when the button ***Recommend New Show*** is clicked
 
 ![browser showing form with create new](../../images/5/13be.png)
 
-The form closes when a new blog is created.
+The form closes when a new show has been added.
 
-#### 5.6 Blog list frontend, step6
+#### 5.6 Watchlist frontend, step6
 
-Separate the form for creating a new blog into its own component (if you have not already done so),
-and move all the states required for creating a new blog to this component.
+Separate the form for recommending a new show into its own component (if you have not already done so),
+and move all the states required for recommending a new show to this component.
 
-The component must work like the `TaskForm` component from the [material](/part5/props_children_and_proptypes) of this part.
+The component must work like the `TaskForm` component from this [previously covered part](/part5/props_children_and_proptypes).
 
-#### 5.7* Blog list frontend, step7
+#### 5.7* Watchlist frontend, step7
 
-Let's add a button to each blog, which controls whether all of the details about the blog are shown or not.
+Let's add a button to each show, which controls whether all of the details about the show are shown or not.
 
-Full details of the blog open when the button is clicked.
+Full details of the show open when the button is clicked.
 
-![browser showing full details of a blog with others just having view buttons](../../images/5/13ea.png)
+![browser showing full details of a show with others just having view buttons](../../images/5/13ea.png)
 
 And the details are hidden when the button is clicked again.
 
@@ -563,19 +563,20 @@ The application shown in the picture has a bit of additional CSS to improve its 
 It is easy to add styles to the application as shown in part 2 using [inline](/part2/adding_styles_to_react_app#inline-styles) styles:
 
 ```js
-const Blog = ({ blog }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
+const Show = ({ show }) => {
+  const showStyle = {
+    padding: 10,
+    border: "dotted",
+    borderWidth: 4,
+    borderColor: "goldenrod",
+    marginTop: 15,
+    fontFamily: "monospace"
   }
 
   return (
-    <div style={blogStyle}> // highlight-line
+    <div style={showStyle}> // highlight-line
       <div>
-        {blog.title} {blog.author}
+        {show.title} ({show.genre})
       </div>
       // ...
   </div>
@@ -584,15 +585,15 @@ const Blog = ({ blog }) => {
 
 **NB:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component,
 the component can not be used directly to achieve the desired behavior.
-The easiest solution will be to add a state to the blog post that controls the displayed form of the blog post.
+The easiest solution will be ***to add a state to the blog post that controls the displayed form of the blog post***.
 
-#### 5.8: Blog list frontend, step8
+#### 5.8: Watchlist frontend, step8
 
 Implement the functionality for the like button.
-Likes are increased by making an HTTP ***PUT*** request to the unique address of the blog post in the backend.
+Likes are increased by making an HTTP ***PUT*** request to the unique address of the show in the backend.
 
-Since the backend operation replaces the entire blog post, you will have to send all of its fields in the request body.
-If you wanted to add a like to the following blog post:
+Since the backend operation replaces the entire show, you will have to send all of its fields in the request body.
+If you wanted to add a like to the following show:
 
 ```js
 {
@@ -600,50 +601,50 @@ If you wanted to add a like to the following blog post:
   user: {
     _id: "5a43e6b6c37f3d065eaaa581",
     username: "powercat",
-    name: "Matti Luukkainen"
+    name: "Tommy Tiger Jr"
   },
   likes: 0,
-  author: "Joel Spolsky",
-  title: "The Joel Test: 12 Steps to Better Code",
-  url: "https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/"
+  genre: "Comedy",
+  title: "Silicon Valley",
+  url: "https://www.hbo.com/silicon-valley"
 },
 ```
 
-You would have to make an HTTP PUT request to the address ***/api/blogs/5a43fde2cbd20b12a2c34e91*** with the following request data:
+You would have to make an HTTP PUT request to the address ***/api/shows/5a43fde2cbd20b12a2c34e91*** with the following request data:
 
 ```js
 {
   user: "5a43e6b6c37f3d065eaaa581",
   likes: 1,
-  author: "Joel Spolsky",
-  title: "The Joel Test: 12 Steps to Better Code",
-  url: "https://www.joelonsoftware.com/2000/08/09/the-joel-test-12-steps-to-better-code/"
+  genre: "Comedy",
+  title: "Silicon Valley",
+  url: "https://www.hbo.com/silicon-valley"
 }
 ```
 
-The backend has to be updated too to handle the user reference.
+The backend also has to be updated to handle the user reference.
 
 **One last warning:** if you notice that you are using `async`/`await` and the `then` method in the same code,
 it is almost certain that you are doing something wrong.
 Stick to using one or the other, and never use both at the same time "just in case".
 
-#### 5.9: Blog list frontend, step9
+#### 5.9: Watchlist frontend, step9
 
-Modify the application to list the blog posts by the number of ***likes***.
-Sorting the blog posts can be done with the array [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) method.
+Modify the application to list the shows by the number of ***likes***.
+Sorting the shows can be done with the array [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) method.
 
-#### 5.10: Blog list frontend, step10
+#### 5.10: Watchlist frontend, step10
 
-Add a new button for deleting blog posts.
-Also, implement the logic for deleting blog posts in the frontend.
+Add a new button for deleting shows.
+Also, implement the logic for deleting shows in the frontend.
 
 Your application could look something like this:
 
-![browser of confirmation of blog removal](../../images/5/14ea.png)
+![browser of confirmation of show removal](../../images/5/14ea.png)
 
-The confirmation dialog for deleting a blog post is easy to implement with the [window.confirm](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) function.
+The confirmation dialog for deleting a recommended show is easy to implement with the [window.confirm](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) function.
 
-Show the button for deleting a blog post only if the blog post was added by the user.
+Show the button for deleting a recommended show ***only if the show was added by the user***.
 
 </div>
 
@@ -867,11 +868,11 @@ mentions that it is ok to replace the default but does not encourage us to do so
 
 ### Exercises 5.11-5.12
 
-#### 5.11: Blog list frontend, step11
+#### 5.11: Watchlist frontend, step11
 
 Define PropTypes for one of the components of your application.
 
-#### 5.12: Blog list frontend, step12
+#### 5.12: Watchlist frontend, step12
 
 Add ESlint to the project.
 Define the configuration according to your liking.
