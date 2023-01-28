@@ -37,8 +37,8 @@ You'll then:
 
 At that point click ***Debug***.
 
-At this point you'll see that webstorm starts up by running npm start, by looking at the output in the process console.
-The output in red is similar to the `npm start` output from the terminal, with some additional messages about webstorm attaching a debugger.
+At this point, you'll see via the process console that WebStorm starts up by running `npm start`.
+The output in red is similar to the `npm start` output from the terminal, with some additional messages about WebStorm attaching a debugger.
 
 ![Webstorm process console](../../images/3/custom/process_console.png)
 
@@ -46,7 +46,7 @@ Remember that the application shouldn't be running in another console, otherwise
 
 Below you can see a screenshot where the code execution has been paused in the middle of saving a new task:
 
-![webstorm screenshot of execution at a breakpoint](../../images/3/36x.png)
+![WebStorm screenshot of execution at a breakpoint](../../images/3/36x.png)
 
 The execution stopped at the **breakpoint** in line 81.
 On the line itself and in the code, you see in light gray some of the values of different variables, like the value of the task variable.
@@ -56,18 +56,18 @@ In the Debugger Console, you can type in values just like you did before in the 
 The Debugger Console is great as you can type out code to see what values would be as you are writing the code.
 See here my example of checking to see if I am parsing a string correctly.
 
-![webstorm screenshot of debugger console](../../images/3/custom/webstorm_debugger_console.png)
+![WebStorm screenshot of debugger console](../../images/3/custom/webstorm_debugger_console.png)
 
 The arrows at the top of the debugger window can be used for controlling the flow of control.
 For example, step over, executes one line of the code, while step into if you are on say a function, will jump into that function to start executing inside.
-Finally the inspector is like the debugger console that I showed,
-but is a feature that is available across all Jetbrains IDEs for evaluating expressions while debugging during the state of control.
+Finally, the inspector is similar to the debugger console that I showed.
+However, this particular feature is available across all JetBrains IDEs for evaluating expressions while debugging during the state of control.
 
 Lastly, look at some of the icons on the right.
 
 - The play button resumes execution of the program
 - The red square stop sign will stop debugging
-- the red octagon stop signs allow you to see all breakpoints or to muste breakpoints from executing for a while.
+- the red octagon stop signs allow you to see all breakpoints or to pause breakpoints from executing for a while.
 - the lightning bolt allows your program to break on an exception, which can be very handy when trying to find out why an exception is being thrown.
 
 I encourage you to learn to use the debugger as it can be quite useful!
@@ -90,7 +90,7 @@ The ***Sources*** tab can be used for setting breakpoints where the execution of
 ![dev tools sources tab breakpoint and watch variables](../../images/3/38eb.png)
 
 All of the application's `console.log` messages will appear in the ***Console*** tab of the debugger.
-You can also inspect values of variables and execute your own JavaScript code.
+You can also inspect the values of variables and execute your JavaScript code.
 
 ![dev tools console tab showing task object typed in](../../images/3/39ea.png)
 
@@ -100,7 +100,7 @@ Debugging Full Stack applications may seem tricky at first.
 Soon our application will also have a database in addition to the frontend and backend,
 and there will be many potential areas for bugs in the application.
 
-When the application "does not work", we have to first figure out where the problem actually occurs.
+When the application "does not work", we have to first figure out where the problem occurs.
 It's very common for the problem to exist in a place where you didn't expect it to,
 and it can take minutes, hours, or even days before you find the source of the problem.
 
@@ -116,7 +116,7 @@ from Toyota Production Systems is very effective in this situation as well.
 ### MongoDB
 
 To store our saved tasks indefinitely, we need a database.
-Most of college courses use relational databases.
+Most college courses use relational databases.
 In most parts of this course, we will use [MongoDB](https://www.mongodb.com/)
 which is a [**document database**](https://en.wikipedia.org/wiki/Document-oriented_database).
 
@@ -135,46 +135,46 @@ Our preferred MongoDB provider in this course will be [**MongoDB Atlas**](https:
 Once you've created, verified, and logged into your account with Atlas, you're first presented with a survey.
 These are the options to choose.
 
-![mongodb survey first time user](../../images/3/custom/mongo_survey.png)
+![MongoDB survey first time user](../../images/3/custom/mongo_survey.png)
 
 After clicking ***Finish***, you're given a choice for a deployment option.
 Choose the shared option.
 
-![mongodb deploy a cloud database free shared](../../images/3/mongo1.png)
+![MongoDB deploy a cloud database free shared](../../images/3/mongo1.png)
 
 Pick the cloud provider and location and create the cluster:
 
-![mongodb picking shared, aws and region](../../images/3/mongo2.png)
+![MongoDB picking shared, aws and region](../../images/3/mongo2.png)
 
 Let's wait for the cluster to be ready for use.
-This may take some minutes, but for me it was pretty quick.
+This may take some minutes, but for me, it was pretty quick.
 
 Now let's answer the questions from the Security Quickstart.
 Because you are handling data, you need to create a user and password that can connect and access your database.
 ***These are not the same credentials that you use for logging into MongoDB Atlas.***
 For me, I used comp227 as the user, and then clicked ***Autogenerate the password*** and clicked ***Copy***.
 Store that password somewhere that you can access it, as you'll need it in files we'll modify soon.
-Finally, once you've store the password in a secure location, click ***Create User***.
+Finally, once you've stored the password in a secure location, click ***Create User***.
 
-**Note** if you do ever lose that password, you'll be able to edit the user and set a new password.
+> If you do ever lose that password, you'll be able to edit the user and set a new password.
 
-![mongodb security quickstart](../../images/3/mongo3.png)
+![MongoDB security quickstart](../../images/3/mongo3.png)
 
 Next, we have to define the IP addresses that are allowed access to the database.
-For the sake of simplicity we will allow access from all IP addresses, scroll down and type `0.0.0.0/0`, and then click ***Add Entry*** and then ***Finish and Close***.
+For the sake of simplicity, we will allow access from all IP addresses, scroll down and type `0.0.0.0/0`, and then click ***Add Entry*** and then ***Finish and Close***.
 
-![mongodb network access/add ip access list](../../images/3/mongo4.png)
+![MongoDB network access/add ip access list](../../images/3/mongo4.png)
 
-At this point you may get two more popups.
-I liked the wizard so unchecked it before closing, and I also skipped the Termination Protection feature.
+At this point, you may get two more popups.
+I liked the wizard so I unchecked it before closing, and I also skipped the Termination Protection feature.
 After closing the popups, we are finally ready to connect to our database.
 Click ***Connect***:
 
-![mongodb database deployment connect](../../images/3/mongo5.png)
+![MongoDB database deployment connect](../../images/3/mongo5.png)
 
 Choose: ***Connect your application*** out of the options listed, and then you'll see this screen.
 
-![mongodb connect application](../../images/3/mongo6.png)
+![MongoDB connect application](../../images/3/mongo6.png)
 
 The view displays the *MongoDB URI*, which is the address of the database that we will supply to the MongoDB client library we will add to our application.
 
@@ -261,11 +261,11 @@ then you'll need to [URL encode that password](https://docs.atlas.mongodb.com/tr
 
 We can view the current state of the database from the MongoDB Atlas from ***Browse collections***, in the Database tab.
 
-![mongodb databases browse collections button](../../images/3/mongo7.png)
+![MongoDB databases browse collections button](../../images/3/mongo7.png)
 
 As the view states, the *document* matching the task has been added to the ***tasks*** collection in the ***myFirstDatabase*** database.
 
-![mongodb collections tab db myfirst app tasks](../../images/3/mongo8.png)
+![MongoDB collections tab db myfirst app tasks](../../images/3/mongo8.png)
 
 Let's destroy the default database ***myFirstDatabase*** and change the name of the database referenced in our connection string to `taskApp` instead, by modifying the URI:
 
@@ -275,7 +275,7 @@ mongodb+srv://comp227:$<password>@cluster0.gb6u3el.mongodb.net/taskApp?retryWrit
 
 Let's run our code again:
 
-![mongodb collections tab taskApp tasks](../../images/3/mongo9.png)
+![MongoDB collections tab taskApp tasks](../../images/3/mongo9.png)
 
 The data is now stored in the right database.
 The view also offers the ***create database*** functionality, that can be used to create new databases from the website.
@@ -520,7 +520,7 @@ taskSchema.set('toJSON', {
 })
 ```
 
-Even though the `_id` property of Mongoose objects looks like a string, it is in fact an object.
+Even though the `_id` property of Mongoose objects looks like a string, ***it is an object***.
 The `toJSON` method we defined transforms it into a string just to be safe.
 If we didn't make this change, it would cause more harm to us in the future once we start writing tests.
 
@@ -613,10 +613,10 @@ It's not a good idea to hardcode the address of the database into the code,
 so instead the address of the database is passed to the application via the `MONGODB_URI` environment variable.
 We'll discuss where to store this variable shortly.
 
-Now, our code for establishing a connection has handlers for dealing with a successful and unsuccessful connection attempt.
+Now, our code for establishing a connection has handlers for dealing with successful and unsuccessful connection attempts.
 Both functions just log a message to the console about the success status:
 
-![node output when wrong username/password](../../images/3/45e.png)
+![node output when given the wrong username/password](../../images/3/45e.png)
 
 There are many ways to define the value of an environment variable.
 One way would be to define it when the application is started:
@@ -670,10 +670,10 @@ This ensures that the environment variables from the *.env* file are available g
 Once the file .env has been gitignored, Render does not get the database URL from the repository, so you have to set it yourself.
 
 That can be done by visiting the [Render dashboard](http://dashboard.render.com).
-Once you are there, click on your web service and then select ***Environment*** from the left hand nav menu.
+Once you are there, click on your web service and then select ***Environment*** from the left-hand nav menu.
 Scroll down until you can click on ***Add Secret File.**
 From there, name the file .env and then click the contents section.
-There you will paste all of the contents of your .env file, making sure you put your db password from mongo in there.
+There you will paste all of the contents of your .env file, making sure you put your DB password from mongo in there.
 Next click ***Done*** and then Finally ***Save Changes***.
 
 ![Heroku dashboard showing config vars](../../images/3/cloudConfig.png)
@@ -882,7 +882,7 @@ Any error messages will catch your attention even when the console is far back i
 
 ![sample screenshot showing tiny slice of output](../../images/3/15b.png)
 
-You can do this even if you are using the webstorm terminal by changing the terminal to be a window instead of a dock by right clicking on the terminal's tab.
+You can do this even if you are using the WebStorm terminal by changing the terminal to a window instead of a dock by right-clicking on the terminal's tab.
 
 ![changing the terminal to be a window](../../images/3/custom/changing_terminal_to_window.png)
 
@@ -1027,7 +1027,7 @@ app.delete('/api/tasks/:id', (request, response, next) => {
 
 In both of the "successful" cases of deleting a resource, the backend responds with the status code **204 no content**.
 The two different cases are deleting a task that exists, and deleting a task that does not exist in the database.
-The `result` callback parameter could be used for checking if a resource was actually deleted,
+The `result` callback parameter could be used for checking if a resource was deleted,
 and we could use that information for returning different status codes for the two cases if we deemed it necessary.
 Any exception that occurs is passed onto the error handler.
 
@@ -1094,7 +1094,7 @@ Verify that the frontend works after making your changes.
 
 #### 3.18*: Communities database step6
 
-Also update the handling of the ***api/groups/:id*** and ***info*** routes to use the database,
+Also, update the handling of the ***api/groups/:id*** and ***info*** routes to use the database,
 and verify that they work directly with the browser, Postman, or VS Code REST client.
 
 Inspecting an individual community from the browser should look like this:
