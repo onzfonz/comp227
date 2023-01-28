@@ -872,11 +872,11 @@ mentions that it is ok to replace the default but does not encourage us to do so
 
 #### 5.11: Watchlist frontend, step11
 
-Define PropTypes for one of the components of your application.
+Define `PropTypes` for one of the components of your application.
 
 #### 5.12: Watchlist frontend, step12
 
-Add ESlint to the project.
+**Add ESlint to the project.**
 Define the configuration according to your liking.
 Fix all of the linter errors.
 
