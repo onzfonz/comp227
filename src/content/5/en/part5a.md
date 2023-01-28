@@ -187,8 +187,8 @@ If the login is successful, the form fields are emptied ***and*** the server res
 If the login fails or function `loginService.login` throws an error, the user is notified.
 
 The user is not notified about a successful login in any way.
-Let's modify the application to show the login form only *if the user is not logged-in* so when `user === null`.
-The form for adding new tasks is shown only if the *user is logged-in*, so `user` contains the user details.
+Let's modify the application to show the login form only *if the user is not logged in* so when `user === null`.
+The form for adding new tasks is shown only if the *user is logged in*, so `user` contains the user details.
 
 Let's add two helper functions to the `App` component for generating the forms:
 
@@ -328,15 +328,15 @@ return (
 
     <Notification message={errorMessage} />
 
-    {user === null ?
-      loginForm() :
-      // highlight-start
+    // highlight-start
+    {!user && loginForm()}
+    {user && 
       <div>
         <p>{user.name} logged-in</p>
         {taskForm()}
       </div>
-      // highlight-end
     }
+    // highlight-end
 
     // ...
 
@@ -472,9 +472,9 @@ and [removeItem](https://developer.mozilla.org/en-US/docs/Web/API/Storage/remove
 Values in the local storage are persisted even when the page is re-rendered.
 The storage is [origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin)-specific so each web application has its own storage.
 
-Let's extend our application so that it saves the details of a logged-in user to the local storage.
+Let's extend our application so that it saves the details of a logged-in user to local storage.
 
-Values saved to the storage are [**DOMstrings**](https://docs.w3cub.com/dom/domstring),
+Values saved to storage are [**DOMstrings**](https://docs.w3cub.com/dom/domstring),
 so we cannot save a JavaScript object as it is.
 The object has to be parsed to JSON first, with the method `JSON.stringify`.
 Correspondingly, when a JSON object is read from the local storage, *it has to be parsed back to JavaScript with `JSON.parse`*.
@@ -619,7 +619,7 @@ If a user is not logged in, ***only*** the login form is visible.
 
 ![browser showing visible login form only](../../images/5/4e.png)
 
-If the user is logged-in, the name of the user and a list of blogs is shown.
+If the user is logged in, the name of the user and a list of blogs is shown.
 
 ![browser showing tasks and who is logged in](../../images/5/5e.png)
 
@@ -655,7 +655,7 @@ User details of the logged-in user do not have to be saved to the local storage 
 Make the login 'permanent' by using the local storage.
 Also, implement a way to log out.
 
-![browser showing logout button after logging in](../../images/5/6e.png)
+![browser showing a logout button after logging in](../../images/5/6e.png)
 
 Ensure the browser does not remember the details of the user after logging out.
 
@@ -670,7 +670,7 @@ Expand your application to allow a logged-in user to add new shows:
 Implement notifications that inform the user about successful and unsuccessful operations at the top of the page.
 For example, when a new show is added, the following notification can be shown:
 
-![browser showing successful operation](../../images/5/8e.png)
+![browser showing a successful operation](../../images/5/8e.png)
 
 Failed login can show the following notification:
 
@@ -696,7 +696,7 @@ This solution is often called a **server-side session**.
 
 No matter how the validity of tokens is checked and ensured,
 saving a token in the local storage might contain a security risk if the application has a security vulnerability that allows
-[Cross Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) attacks.
+[Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) attacks.
 An XSS attack is possible if the application would allow a user to inject arbitrary JavaScript code (e.g. using a form) that the app would then execute.
 When using React sensibly it should not be possible since [React sanitizes](https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks)
 all text that it renders, meaning that it is not executing the rendered content as JavaScript.

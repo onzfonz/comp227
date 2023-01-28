@@ -348,7 +348,7 @@ The `addTask` function for creating new tasks receives a new task as a parameter
 ```js
 const App = () => {
   // ...
-  const addTask = (taskObject) => {
+  const addTask = (taskObject) => { //highlight-line
     taskService
       .create(taskObject)
       .then(returnedTask => {
@@ -516,6 +516,19 @@ We create *three separate instances of the component* that all have their separa
 ![browser of three togglable components](../../images/5/12e.png)
 
 The `ref` attribute is used for assigning a reference to each of the components in the variables `togglable1`, `togglable2` and `togglable3`.
+
+#### Web developers pledge v3
+
+We will once again update
+[our web developer pledge v2](/part2/altering_data_in_server#web-developers-pledge-v2)
+but will also add a few more items:
+
+> I also pledge to:
+>
+> - *Ensure the frontend works if I suspect a bug in the backend*
+> - *Ensure the backend works if I suspect a bug in the frontend*
+> - *Check that the database is storing the correct values*
+> - *Check that my code works when one of my tests does not pass*
 
 </div>
 
