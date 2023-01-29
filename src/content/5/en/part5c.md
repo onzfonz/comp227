@@ -24,7 +24,7 @@ npm install @testing-library/react @testing-library/jest-dom --save-dev
 
 We also installed [**jest-dom**](https://testing-library.com/docs/ecosystem-jest-dom/) which provides some nice Jest-related helper methods.
 
-Let's first write tests for the component that is responsible for rendering a task:
+Before we start writing tests, let's review the `Task` component and what it renders:
 
 ```js
 const Task = ({ task, toggleImportance }) => {
@@ -41,12 +41,12 @@ const Task = ({ task, toggleImportance }) => {
 }
 ```
 
-Notice that the `li` element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname `task`,
+Notice that the `li` element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname **`task`**,
 which could be used to access the component in our tests.
 
 ### Rendering the component for tests
 
-We will write our test in the *src/components/Task.test.js* file, which is in the same directory as the component itself.
+We will write our first test in the *src/components/Task.test.js* file, which is in the same directory as the component itself.
 
 The first test verifies that the component renders the contents of the task:
 
@@ -62,24 +62,29 @@ test('renders content', () => {
     important: true
   }
 
+  // highlight-start
   render(<Task task={task} />)
 
   const element = screen.getByText('Component testing is done with react-testing-library')
   expect(element).toBeDefined()
+  // highlight-end
 })
 ```
 
-After the initial configuration, the test renders the component with the [render](https://testing-library.com/docs/react-testing-library/api#render) function provided by the react-testing-library:
+Before we run the test, let's examine the contents of the test itself.
+After some initial configuration, our newest test renders the component with the
+[`render`](https://testing-library.com/docs/react-testing-library/api#render)
+function provided by the react-testing-library:
 
 ```js
 render(<Task task={task} />)
 ```
 
 Normally React components are rendered to the ***DOM***.
-The `render` method we used renders the components in a format that is suitable for tests without rendering them to the DOM.
+The `render` method we used renders the components in a format that is **suitable for tests *without* rendering them to the DOM**.
 
 We can use the object [`screen`](https://testing-library.com/docs/queries/about#screen) to access the rendered component.
-We use `screen`'s method [getByText](https://testing-library.com/docs/queries/bytext)
+We use `screen`'s method [`getByText`](https://testing-library.com/docs/queries/bytext)
 to search for an element that has the task content and ensure that it exists:
 
 ```js
@@ -89,7 +94,7 @@ to search for an element that has the task content and ensure that it exists:
 
 ### Running tests
 
-Create-react-app configures tests to be run in watch mode by default, which means that the `npm test` command will not exit once the tests have finished,
+*Create-react-app* configures tests to be run in **watch mode** by default, which means that the `npm test` command will not exit once the tests have finished,
 and will instead wait for changes to be made to the code.
 Once new changes to the code are saved, the tests are executed automatically after which Jest goes back to waiting for new changes to be made.
 
@@ -99,18 +104,12 @@ If you want to run tests "normally", you can do so with the command:
 CI=true npm test
 ```
 
-For Windows (PowerShell) users
-
-```js
-$env:CI=$true; npm test
-```
-
-> **NB:** the console may issue a warning if you have not installed ***Watchman***.
+> **NB:** the console may issue a warning if you have not installed [**Watchman**](https://facebook.github.io/watchman/).
 Watchman is an application developed by Facebook that watches for changes that are made to files.
 The program speeds up the execution of tests and at least starting from macOS Sierra,
 running tests in watch mode issues some warnings to the console, that can be removed by installing Watchman.
 >
-> Instructions for installing Watchman on different operating systems can be found on the official Watchman website: <https://facebook.github.io/watchman/>
+> You can install watchman using your package manager of choice
 
 ### Test file location
 
@@ -120,14 +119,14 @@ for the test file's location.
 We created our test files according to the current standard by placing them in the same directory as the component being tested.
 
 The other convention is to store the test files "normally" in a separate *test* directory.
-Whichever convention we choose, it is almost guaranteed to be wrong according to someone's opinion.
+This debate on which convention is better is almost as contentious (*and hilarious IMO*) as [the debate on whether you use Tabs or Spaces for indentation](https://www.youtube.com/watch?v=SsoOG6ZeyUI).
 
-I do not like this way of storing tests and application code in the same directory.
-The reason we choose to follow this convention is that it is configured by default in applications created by create-react-app.
+I prefer to store tests and application code separately.
+Nonetheless, we'll follow this convention because create-react-app uses it by default.
 
 ### Searching for content in a component
 
-The react-testing-library package offers many different ways of investigating the content of the component being tested.
+The *react-testing-library* package offers many different ways of investigating the content of the component being tested.
 In reality, the `expect` in our test is not needed at all
 
 ```js
@@ -150,11 +149,11 @@ test('renders content', () => {
 })
 ```
 
-The test fails if `getByText` does not find the element it is looking for.
+The test fails if in the previous line, `getByText` does not find the element it is looking for.
 
-We could also use [CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
-to find rendered elements by using the method [querySelector](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
-of the object [container](https://testing-library.com/docs/react-testing-library/api/#container-1) that is one of the fields returned by the render:
+We could also use [**CSS selectors**](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
+to find rendered elements by using the method [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)
+of the object [`container`](https://testing-library.com/docs/react-testing-library/api/#container-1) that is one of the fields returned by the render:
 
 ```js
 import React from 'react'
@@ -201,7 +200,7 @@ test('renders content', () => {
     important: true
   }
 
-  render(<Task task={task} />)
+  const { container } = render(<Task task={task} />)
 
   screen.debug() // highlight-line
 
@@ -212,21 +211,7 @@ test('renders content', () => {
 
 the HTML gets printed to the console:
 
-```js
-console.log
-  <body>
-    <div>
-      <li
-        class="task"
-      >
-        Component testing is done with react-testing-library
-        <button>
-          make not important
-        </button>
-      </li>
-    </div>
-  </body>
-```
+![showing output to the console](../../images/5/custom/showing_output_of_test.png)
 
 It is also possible to use the same method to print a wanted element to the console:
 
@@ -242,13 +227,13 @@ test('renders content', () => {
     important: true
   }
 
-  render(<Task task={task} />)
+  const { container } = render(<Task task={task} />)
 
   const element = screen.getByText('Component testing is done with react-testing-library')
 
   screen.debug(element)  // highlight-line
 
-  expect(element).toBeDefined()
+  // ...
 })
 ```
 
@@ -276,7 +261,7 @@ Let us install a library [**user-event**](https://testing-library.com/docs/user-
 npm install @testing-library/user-event --save-dev
 ```
 
-Testing this functionality can be accomplished like this:
+Testing this functionality can be accomplished by adding another test like this:
 
 ```js
 import React from 'react'
@@ -308,13 +293,13 @@ test('clicking the button calls event handler once', async () => {
 ```
 
 There are a few interesting things related to this test.
-The event handler is a [mock](https://facebook.github.io/jest/docs/en/mock-functions.html) function defined with Jest:
+The event handler is a [**mock**](https://facebook.github.io/jest/docs/en/mock-functions.html) function defined with Jest:
 
 ```js
 const mockHandler = jest.fn()
 ```
 
-A [session](https://testing-library.com/docs/user-event/setup/) is started to interact with the rendered component:
+A [**session**](https://testing-library.com/docs/user-event/setup/) is started to interact with the rendered component:
 
 ```js
 const user = userEvent.setup()
@@ -327,24 +312,24 @@ const button = screen.getByText('make not important')
 await user.click(button)
 ```
 
-Clicking happens with the method [click](https://testing-library.com/docs/user-event/convenience/#click) of the userEvent-library.
+Clicking happens with the method [`click`](https://testing-library.com/docs/user-event/convenience/#click) of the *userEvent* library.
 
-The expectation of the test verifies that the **mock function** has been called exactly once.
+The expectation of the test verifies that the **mock function** has been called *exactly once*.
 
 ```js
 expect(mockHandler.mock.calls).toHaveLength(1)
 ```
 
-[Mock objects and functions](https://en.wikipedia.org/wiki/Mock_object)
+[**Mock objects and functions**](https://en.wikipedia.org/wiki/Mock_object)
 are commonly used stub components in testing that are used for replacing dependencies of the components being tested.
-Mocks make it possible to return hardcoded responses, and to verify the number of times the mock functions are called and with what parameters.
+***Mocks*** make it possible to return hardcoded responses, and to verify the number of times the mock functions are called and with what parameters.
 
 In our example, the mock function is a perfect choice since it can be easily used for verifying that the method gets called exactly once.
 
 ### Tests for the `Togglable` component
 
 Let's write a few tests for the `Togglable` component.
-Let's add the `togglableContent` CSS classname to the div that returns the child components.
+Let's add the `togglableContent` CSS classname to the `div` that returns the child components.
 
 ```js
 const Togglable = forwardRef((props, ref) => {
@@ -366,7 +351,7 @@ const Togglable = forwardRef((props, ref) => {
 })
 ```
 
-The tests are shown below:
+The tests that we added in a new file *Togglable.test.js* are shown below:
 
 ```js
 import React from 'react'
@@ -418,13 +403,13 @@ The first test verifies that the `Togglable` component renders its child compone
 </div>
 ```
 
-The remaining tests use the [toHaveStyle](https://www.npmjs.com/package/@testing-library/jest-dom#tohavestyle)
+The remaining tests use the [`toHaveStyle`](https://www.npmjs.com/package/@testing-library/jest-dom#tohavestyle)
 method to verify that the child component of the `Togglable` component is not visible initially,
 by checking that the style of the `div` element contains `{ display: 'none' }`.
 Another test verifies that when the button is pressed the component is visible,
 meaning that the style for hiding the component **is no longer** assigned to the component.
 
-Let's also add a test that can be used to verify that the visible content can be hidden by clicking the second button of the component:
+Let's also ***add a test*** that can be used to verify that the visible content can be hidden by clicking the second button of the component:
 
 ```js
 describe('<Togglable />', () => {
@@ -457,8 +442,8 @@ await user.click(button)
 
 We can also simulate text input with `userEvent`.
 
-Let's make a test for the `TaskForm` component.
-The code of the component is as follows.
+Let's make a test for the `TaskForm` component in a separate file.
+But before we do, let's review and make a small change to our `TaskForm` component.
 
 ```js
 import { useState } from 'react'
@@ -481,7 +466,7 @@ const TaskForm = ({ createTask }) => {
   }
 
   return (
-    <div className="formDiv">
+    <div className="formDiv"> // highlight-line
       <h2>Create a new task</h2>
 
       <form onSubmit={addTask}>
@@ -498,9 +483,11 @@ const TaskForm = ({ createTask }) => {
 export default TaskForm
 ```
 
-The form works by calling the `createTask` function it received as props with the details of the new task.
+Notice that we added the `formDiv` CSS class, similar to what we did with our `Togglable` component above.
+Also, recall that `TaskForm` works by calling the `createTask` function it received as props with the new task's details.
 
-The test is as follows:
+We are now ready to write our test.
+*Taskform.test.js* is as follows:
 
 ```js
 import React from 'react'
@@ -526,12 +513,13 @@ test('<TaskForm /> updates parent state and calls onSubmit', async () => {
 })
 ```
 
-Tests get access to the input field using the function [getByRole](https://testing-library.com/docs/queries/byrole).
+Tests get access to the input field using the function [`getByRole`](https://testing-library.com/docs/queries/byrole).
 
-The method [type](https://testing-library.com/docs/user-event/utility#type) of the userEvent is used to write text to the input field.
+The method [`type`](https://testing-library.com/docs/user-event/utility#type) of the `userEvent` is used to write text to the input field.
 
-The first test expectation ensures, that submitting the form calls the `createTask` method.
-The second expectation checks, that the event handler is called with the right parameters - that a task with the correct content is created when the form is filled.
+Our first `expect` call ensures that submitting the form calls the `createTask` method.
+The second expectation checks that the event handler is called with the right parameters.
+In other words, the second `expect` checks that a task with the correct content is created when the form is filled.
 
 ### About finding the elements
 
@@ -583,7 +571,7 @@ await user.type(inputs[0], 'testing a form...')
 ```
 
 Method `getAllByRole` now returns an array and the right input field is the first element of the array.
-However, this approach is a bit suspicious since it relies on the order of the input fields.
+However, this approach is [**brittle**](https://www.callumhart.com/blog/brittle-selectors/) since it relies on the order of the input fields.
 
 Quite often input fields have **placeholder** text that hints user what kind of input is expected.
 Let us add a placeholder to our form:
@@ -600,7 +588,7 @@ const TaskForm = ({ createTask }) => {
         <input
           value={newTask}
           onChange={handleChange}
-          placeholder='write task content here' // highlight-line 
+          placeholder='write task here' // highlight-line 
         />
         <input
           value={...}
@@ -621,7 +609,7 @@ test('<TaskForm /> updates parent state and calls onSubmit', () => {
 
   render(<TaskForm createTask={createTask} />) 
 
-  const input = screen.getByPlaceholderText('write here task content') // highlight-line 
+  const input = screen.getByPlaceholderText('write task here') // highlight-line 
   const sendButton = screen.getByText('save')
 
   userEvent.type(input, 'testing a form...')
@@ -674,7 +662,7 @@ const input = container.querySelector('#task-input')
 However, we shall stick to the approach of using `getByPlaceholderText` in the test.
 
 Let us look at a couple of details before moving on.
-Let us assume that a component would render text to an HTML element as follows:
+Assume that a component would render text to an HTML element as follows:
 
 ```js
 const Task = ({ task, toggleImportance }) => {
@@ -724,10 +712,10 @@ or we could use the command `findByText`:
 const element = await screen.findByText('Does not work anymore :(')
 ```
 
-It is important to notice that, unlike the other `ByText` commands, `findByText` returns a promise!
+Notice that, unlike the other `ByText` commands, ***`findByText` returns a promise!***
 
 There are situations where yet another form of the command `queryByText` is useful.
-The command returns the element but *it does not cause an exception* if the element is not found.
+`queryByText` returns the element but *it does not cause an exception* if the element is not found.
 
 We could use the command to ensure that something **is not rendered** to the component:
 
@@ -747,7 +735,7 @@ test('does not render this', () => {
 
 ### Test coverage
 
-We can easily find out the [coverage](https://github.com/facebookincubator/create-react-app/blob/ed5c48c81b2139b4414810e1efe917e04c96ee8d/packages/react-scripts/template/README.md#coverage-reporting)
+We can easily find out the [**coverage**](https://github.com/facebookincubator/create-react-app/blob/ed5c48c81b2139b4414810e1efe917e04c96ee8d/packages/react-scripts/template/README.md#coverage-reporting)
 of our tests by running them with the command.
 
 ```js
@@ -756,7 +744,7 @@ CI=true npm test -- --coverage
 
 ![terminal output of test coverage](../../images/5/18ea.png)
 
-A quite primitive HTML report will be generated to the *coverage/lcov-report* directory.
+A no-frills HTML report will be generated to the *coverage/lcov-report* directory.
 The report will tell us the lines of untested code in each component:
 
 ![HTML report of the test coverage](../../images/5/19ea.png)
@@ -769,24 +757,24 @@ You can find the code for our current application in its entirety in the *part5-
 
 ### Exercises 5.13.-5.16
 
-#### 5.13: Blog list tests, step1
+#### 5.13: Watchlist tests, step1
 
-Make a test, which checks that the component displaying a blog renders the blog's title and author, but does not render its URL or number of likes by default.
+Make a test, which checks that the component displaying a show renders the show's title and genre, but does not render its URL or number of likes by default.
 
 Add CSS classes to the component to help the testing as necessary.
 
-#### 5.14: Blog list tests, step2
+#### 5.14: Watchlist tests, step2
 
-Make a test, which checks that the blog's URL and number of likes are shown when the button controlling the shown details has been clicked.
+Make a test, which checks that the shows's URL and number of likes are shown when the button controlling the shown details has been clicked.
 
-#### 5.15: Blog list tests, step3
+#### 5.15: Watchlist tests, step3
 
 Make a test, which ensures that if the ***like*** button is clicked twice, the event handler the component received as props is called twice.
 
-#### 5.16: Blog list tests, step4
+#### 5.16: Watchlist tests, step4
 
-Make a test for the new blog form.
-The test should check, that the form calls the event handler it received as props with the right details when a new blog is created.
+Make a test for the Recommend new show form.
+The test should check, that the form calls the event handler it received as props with the right details when a new show is added.
 
 </div>
 
@@ -795,29 +783,29 @@ The test should check, that the form calls the event handler it received as prop
 ### Frontend integration tests
 
 In the previous part of the course material, we wrote integration tests for the backend that tested its logic and connected the database through the API provided by the backend.
-When writing these tests, we made the conscious decision not to write unit tests, as the code for that backend is fairly simple,
-and it is likely that bugs in our application occur in more complicated scenarios than unit tests are well suited for.
+When writing these tests, we made the conscious decision **not to write unit tests**, as the code for that backend is fairly simple,
+and *it is likely that bugs in our application occur in more complicated scenarios* than what would be discovered via our unit tests.
 
 So far all of our tests for the frontend have been unit tests that have validated the correct functioning of individual components.
-Unit testing is useful at times, but even a comprehensive suite of unit tests is not enough to validate that the application works as a whole.
+Unit testing is useful at times, but ***even a comprehensive suite of unit tests is not enough to validate that the application works as a whole***.
 
 We could also make integration tests for the frontend.
-Integration testing tests the collaboration of multiple components.
+**Integration testing** tests the collaboration of multiple components.
 It is considerably more difficult than unit testing, as we would have to for example mock data from the server.
-We chose to concentrate on making end-to-end tests to test the whole application.
-We will work on the end-to-end tests in the last chapter of this part.
+We will concentrate on making end-to-end tests to test the whole application.
+We will work on the end-to-end tests in the next section.
 
 ### Snapshot testing
 
-Jest offers a completely different alternative to "traditional" testing called [snapshot](https://facebook.github.io/jest/docs/en/snapshot-testing.html) testing.
-The interesting feature of snapshot testing is that developers do not need to define any tests themselves, it is simple enough to adopt snapshot testing.
+Jest offers a completely different alternative to "traditional" testing called [**snapshot**](https://facebook.github.io/jest/docs/en/snapshot-testing.html) testing.
+The interesting feature of snapshot testing is that **developers do not need to define any tests themselves**, it is simple enough to adopt snapshot testing.
 
 The fundamental principle is to compare the HTML code defined by the component after it has changed to the HTML code that existed before it was changed.
 
 If the snapshot notices some change in the HTML defined by the component, then either it is new functionality or a "bug" caused by accident.
 Snapshot tests notify the developer if the HTML code of the component changes.
 The developer has to tell Jest if the change was desired or undesired.
-If the change to the HTML code is unexpected, it strongly implies a bug,
+*If the change to the HTML code is unexpected, it strongly implies a bug,*
 and the developer can become aware of these potential issues easily thanks to snapshot testing.
 
 </div>
