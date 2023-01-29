@@ -102,7 +102,7 @@ const App = () => {
     return (
       <div>
         <div style={hideWhenVisible}>
-          <button onClick={() => setLoginVisible(true)}>log in</button>
+          <button onClick={() => setLoginVisible(true)}>login</button>
         </div>
         <div style={showWhenVisible}>
           <LoginForm
@@ -130,7 +130,7 @@ The value of `loginVisible` is toggled with two buttons.
 Both buttons have their event handlers defined directly in the component:
 
 ```js
-<button onClick={() => setLoginVisible(true)}>log in</button>
+<button onClick={() => setLoginVisible(true)}>login</button>
 
 <button onClick={() => setLoginVisible(false)}>cancel</button>
 ```
