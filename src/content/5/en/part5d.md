@@ -130,7 +130,7 @@ We start the test from the opened window:
 
 > **NB**: you may need to restart Cypress if you run into any issues.
 
-Running the test opens your browser and shows how the application behaves as the test is run:
+Running the test shows how the application behaves as the test is run:
 
 ![cypress showing automation of task test](../../images/5/32x.png)
 
@@ -184,6 +184,41 @@ the test fails
 ![cypress showing failure expecting to find wtf but no](../../images/5/33x.png)
 
 Let's ***remove the failing code from the test***.
+
+> If you are following along as you are working through this text, you may have noticed that the variable `cy` in our tests gives us an error:
+>
+> ![vscode screenshot showing cy is not defined](../../images/5/30ea.png)
+>
+> We can get rid of those errors by installing [eslint-plugin-cypress](https://github.com/cypress-io/eslint-plugin-cypress) as a development dependency
+>
+> ```js
+> npm install eslint-plugin-cypress --save-dev
+> ```
+>
+> and changing the configuration in *.eslintrc.js* like so:
+>
+> ```js
+> module.exports = {
+>     "env": {
+>         "browser": true,
+>         "es6": true,
+>         "jest/globals": true,
+>         "cypress/globals": true // highlight-line
+>     },
+>     "extends": [ 
+>       // ...
+>     ],
+>     "parserOptions": {
+>       // ...
+>     },
+>     "plugins": [
+>         "react", "jest", "cypress" // highlight-line
+>     ],
+>     "rules": {
+>       // ...
+>     }
+> }
+> ```
 
 ### Writing to a form
 
@@ -327,41 +362,6 @@ If we search for a button by its text, [cy.contains](https://docs.cypress.io/api
 This will happen even if the button is not visible.
 To avoid name conflicts, we gave the submit button the id `login-button` we can use to access it.
 
-If you are following along as you are working through this text, you may have noticed that the variable `cy` in our tests gives us an error:
-
-![vscode screenshot showing cy is not defined](../../images/5/30ea.png)
-
-We can get rid of those errors by installing [eslint-plugin-cypress](https://github.com/cypress-io/eslint-plugin-cypress) as a development dependency
-
-```js
-npm install eslint-plugin-cypress --save-dev
-```
-
-and changing the configuration in *.eslintrc.js* like so:
-
-```js
-module.exports = {
-    "env": {
-        "browser": true,
-        "es6": true,
-        "jest/globals": true,
-        "cypress/globals": true // highlight-line
-    },
-    "extends": [ 
-      // ...
-    ],
-    "parserOptions": {
-      // ...
-    },
-    "plugins": [
-        "react", "jest", "cypress" // highlight-line
-    ],
-    "rules": {
-      // ...
-    }
-}
-```
-
 ### Testing new task form
 
 Let's next add test methods to test the "new task" functionality:
@@ -373,7 +373,7 @@ describe('Task app', function() {
   describe('when logged in', function() {
     beforeEach(function() {
       cy.contains('login').click()
-      cy.get('input:first').type('powercat')
+      cy.get('input:first').type('root')
       cy.get('input:last').type('tigers')
       cy.get('#login-button').click()
     })
@@ -392,7 +392,7 @@ describe('Task app', function() {
 })
 ```
 
-The test has been defined in its own `describe` block.
+Our new test ***has been defined in its own `describe` block***.
 Only logged-in users can create new tasks, so we added logging in to the application to a `beforeEach` block.
 
 The test trusts that when creating a new task the page contains only one input, so it searches for it like so:
@@ -401,11 +401,15 @@ The test trusts that when creating a new task the page contains only one input, 
 cy.get('input')
 ```
 
-If the page contained more inputs, the test would break
-
-![cypress error - cy.type can only be called on a single element](../../images/5/31x.png)
-
-Due to this problem, it would again be better to give the input an *id* and search for the element by its id.
+> If you were following along closely however, our page contained [two inputs from the last part](/part5/testing_react_apps#about-finding-the-elements)),
+which breaks our tests.
+>
+> ![cypress error - cy.type can only be called on a single element](../../images/5/31x.png)
+>
+> Due to this problem, it would again be better to give the input an *id* and search for the element by its id in the test.
+We will leave it to you to remove the second input and to provide the text an input id like *`new-task`*,
+though because that would mean that currently we would make changes to our backend
+I will wait to make these changes to our form until we reach the [next section](#controlling-the-state-of-the-database-on-the-frontend).
 
 The structure of the tests looks like so:
 
@@ -415,18 +419,18 @@ describe('Task app', function() {
 
   it('user can login', function() {
     cy.contains('login').click()
-    cy.get('#username').type('powercat')
+    cy.get('#username').type('root')
     cy.get('#password').type('tigers')
     cy.get('#login-button').click()
 
-    cy.contains('Matti Luukkainen logged in')
+    cy.contains('Superuser logged in')
   })
 
   describe('when logged in', function() {
     beforeEach(function() {
       cy.contains('login').click()
-      cy.get('input:first').type('powercat')
-      cy.get('input:last').type('tigers')
+      cy.get('#username').type('root')
+      cy.get('#password').type('tigers')
       cy.get('#login-button').click()
     })
 
@@ -500,11 +504,16 @@ Make sure your backend is running in test mode by starting it with this command 
   npm run start:test
 ```
 
-The modified backend code can be found on the [GitHub](https://github.com/comp227/part3-tasks-backend/tree/part5-1) branch *part5-1*.
+The modified backend code can be found on the [GitHub](https://github.com/comp227/part3-tasks-backend/tree/part5-9) branch *part5-9*.
+
+#### Controlling the state of the database on the frontend
 
 Next, we will change the `beforeEach` block so that it empties the server's database before tests are run.
 
 Currently, it is not possible to add new users through the frontend's UI, so we add a new user to the backend from the beforeEach block.
+While it may be a matter of preference, ***I'm going to make a different test user entirely*** (called *Pacific Tests*),
+which means that I'll also **change my tests slightly** to login with the new user.
+If you want to minimize your changes, just change our `Pacific Tests` user back to the same details as the `Superuser` below.
 
 ```js
 describe('Task app', function() {
@@ -512,9 +521,9 @@ describe('Task app', function() {
     // highlight-start
     cy.request('POST', 'http://localhost:3001/api/testing/reset')
     const user = {
-      name: 'Matti Luukkainen',
-      username: 'powercat',
-      password: 'tigers'
+      name: 'Pacific Tests',
+      username: 'test',
+      password: 'pacific'
     }
     cy.request('POST', 'http://localhost:3001/api/users/', user) 
     // highlight-end
@@ -535,13 +544,14 @@ describe('Task app', function() {
 })
 ```
 
-During the formatting, the test does HTTP requests to the backend with [cy.request](https://docs.cypress.io/api/commands/request.html).
+During the formatting, the test does HTTP requests to the backend with [`cy.request`](https://docs.cypress.io/api/commands/request.html).
 
 Unlike earlier, now the testing starts with the backend in the same state every time.
 The backend will contain one user and no tasks.
 
 Let's add one more test for checking that we can change the importance of tasks.
-First, we change the frontend so that a new task is unimportant by default, or the `important` field is `false`:
+First, we change the frontend so that a new task is unimportant by default, or the `important` field is `false`,
+as having it be random would leave to a flaky test.
 
 ```js
 const TaskForm = ({ createTask }) => {
@@ -560,9 +570,10 @@ const TaskForm = ({ createTask }) => {
 } 
 ```
 
-There are multiple ways to test this.
-In the following example, we first search for a task and click its ***make important*** button.
+Back in our tests, we first search for a task and click its ***make important*** button.
 Then we check that the task now contains a ***make not important*** button.
+
+> Notice that at this point I am now using our new id that we were [changing previously](#testing-new-task-form), `#new-task`!
 
 ```js
 describe('Task app', function() {
@@ -574,7 +585,7 @@ describe('Task app', function() {
     describe('and a task exists', function () {
       beforeEach(function () {
         cy.contains('new task').click()
-        cy.get('input').type('another task cypress')
+        cy.get('#new-task').type('another task cypress')
         cy.contains('save').click()
       })
 
@@ -604,7 +615,7 @@ Let's make a test to ensure that a login attempt fails if the password is wrong.
 
 Cypress will run all tests each time by default, and as the number of tests increases, it starts to become quite time-consuming.
 When developing a new test or when debugging a broken test,
-we can define the test with `it.only` instead of `it`, so that Cypress will only run the required test.
+*we can define the test with `it.only` instead of `it`*, so that Cypress will only run the required test.
 When the test is working, we can remove `.only`.
 
 First version of our tests is as follows:
@@ -615,18 +626,18 @@ describe('Task app', function() {
 
   it.only('login fails with wrong password', function() {
     cy.contains('login').click()
-    cy.get('#username').type('powercat')
+    cy.get('#username').type('root')
     cy.get('#password').type('wrong')
     cy.get('#login-button').click()
 
-    cy.contains('wrong credentials')
+    cy.contains('Wrong credentials')
   })
 
   // ...
 )}
 ```
 
-The test uses [cy.contains](https://docs.cypress.io/api/commands/contains.html#Syntax) to ensure that the application prints an error message.
+The test uses [`cy.contains`](https://docs.cypress.io/api/commands/contains.html#Syntax) to ensure that the application prints an error message.
 
 The application renders the error message to a component with the CSS class `error`:
 
@@ -644,35 +655,34 @@ const Notification = ({ message }) => {
 }
 ```
 
-We could make the test ensure that the error message is rendered to the correct component, that is, the component with the CSS class `error`:
+The test could also ensure that the error message renders to the correct component, *`error`*:
 
 ```js
 it('login fails with wrong password', function() {
   // ...
 
-  cy.get('.error').contains('wrong credentials') // highlight-line
+  cy.get('.error').contains('Wrong credentials') // highlight-line
 })
 ```
 
-First, we use [cy.get](https://docs.cypress.io/api/commands/get.html#Syntax) to search for a component with the CSS class `error`.
+First, we use [`cy.get`](https://docs.cypress.io/api/commands/get.html#Syntax) to search for a component with the CSS class `error`.
 Then we check that the error message can be found from this component.
-Notice that the [CSS class selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors)
-starts with a full stop, so the selector for the class `error` is `.error`.
+Notice that [CSS class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors)
+start with a period, so the selector for the class `error` is `.error`.
 
-We could do the same using the [should](https://docs.cypress.io/api/commands/should.html) syntax:
+We could do the same using the [`should`](https://docs.cypress.io/api/commands/should.html) syntax:
 
 ```js
 it('login fails with wrong password', function() {
   // ...
 
-  cy.get('.error').should('contain', 'wrong credentials') // highlight-line
+  cy.get('.error').should('contain', 'Wrong credentials') // highlight-line
 })
 ```
 
 Using `should` is a bit trickier than using `contains`, but it allows for more diverse tests than `contains` which works based on text content only.
 
-A list of the most common assertions which can be used with `should`
-can be found [here](https://docs.cypress.io/guides/references/assertions.html#Common-Assertions).
+You *should* (pun intended) check this [list of the most common assertions](https://docs.cypress.io/guides/references/assertions.html#Common-Assertions) that can be used with `should`.
 
 We can, for example, make sure that the error message is red and it has a border:
 
@@ -681,7 +691,7 @@ it('login fails with wrong password', function() {
   // ...
 
   cy.get('.error').should('contain', 'wrong credentials') 
-  cy.get('.error').should('have.css', 'color', 'rgb(255, 0, 0)')
+  cy.get('.error').should('have.css', 'background-color', 'rgb(156, 43, 46)')
   cy.get('.error').should('have.css', 'border-style', 'solid')
 })
 ```
@@ -697,40 +707,32 @@ it('login fails with wrong password', function() {
 
   cy.get('.error')
     .should('contain', 'wrong credentials')
-    .and('have.css', 'color', 'rgb(255, 0, 0)')
+    .and('have.css', 'background-color', 'rgb(156, 43, 46)')
     .and('have.css', 'border-style', 'solid')
 })
 ```
 
-Let's finish the test so that it also checks that the application does not render the success message `'Matti Luukkainen logged in'`:
+Let's finish the test so that it also checks that the application does not render the success message `'Pacific Tests logged in'`.
+Let's also remove the `only` from `it.only` if it's still present on this test:
 
 ```js
 it('login fails with wrong password', function() {
   cy.contains('login').click()
-  cy.get('#username').type('powercat')
+  cy.get('#username').type('root')
   cy.get('#password').type('wrong')
   cy.get('#login-button').click()
 
   cy.get('.error')
     .should('contain', 'wrong credentials')
-    .and('have.css', 'color', 'rgb(255, 0, 0)')
+    .and('have.css', 'background-color', 'rgb(156, 43, 46)')
     .and('have.css', 'border-style', 'solid')
 
-  cy.get('html').should('not.contain', 'Matti Luukkainen logged in') // highlight-line
+  cy.get('html').should('not.contain', 'Pacific Tests logged in') // highlight-line
 })
 ```
 
 Always consider chaining `should` with `get` (or another chainable command).
 We used `cy.get('html')` to access the whole visible content of the application.
-
-**NOTE:** Some CSS properties [behave differently on Firefox](https://github.com/cypress-io/cypress/issues/9349).
-If you run the tests with Firefox:
-  
-  ![running](https://user-images.githubusercontent.com/4255997/119015927-0bdff800-b9a2-11eb-9234-bb46d72c0368.png)
-  
-  then tests that involve, for example, `border-style`, `border-radius` and `padding`, will pass in Chrome or Electron, but fail in Firefox:
-  
-  ![borderstyle](https://user-images.githubusercontent.com/4255997/119016340-7b55e780-b9a2-11eb-82e0-bab0418244c0.png)
 
 ### Bypassing the UI
 
@@ -740,11 +742,11 @@ Currently, we have the following tests:
 describe('Task app', function() {
   it('user can login', function() {
     cy.contains('login').click()
-    cy.get('#username').type('powercat')
-    cy.get('#password').type('tigers')
+    cy.get('#username').type('test')
+    cy.get('#password').type('pacific')
     cy.get('#login-button').click()
 
-    cy.contains('Matti Luukkainen logged in')
+    cy.contains('Pacific Tests logged in')
   })
 
   it('login fails with wrong password', function() {
@@ -754,8 +756,8 @@ describe('Task app', function() {
   describe('when logged in', function() {
     beforeEach(function() {
       cy.contains('login').click()
-      cy.get('input:first').type('powercat')
-      cy.get('input:last').type('tigers')
+      cy.get('#username').type('test')
+      cy.get('#password').type('pacific')
       cy.get('#login-button').click()
     })
 
@@ -769,17 +771,16 @@ describe('Task app', function() {
 ```
 
 First, we test logging in.
-Then, in their own describe block, we have a bunch of tests, which expect the user to be logged in.
-User is logged in in the `beforeEach` block.
+Then, in their own `describe` block, we tests that expect the user to be logged in, which happens in the `beforeEach` block.
 
-As we said above, each test starts from zero! Tests do not start from the state where the previous tests ended.
+As we said above, ***each test starts from zero!*** Tests do not start from the state where the previous tests ended.
 
 The Cypress documentation gives us the following advice:
 [Fully test the login flow – but only once!](https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Fully-test-the-login-flow-but-only-once).
 So instead of logging in a user using the form in the `beforeEach` block, Cypress recommends that we
 [bypass the UI](https://docs.cypress.io/guides/getting-started/testing-your-app.html#Bypassing-your-UI)
 and do an HTTP request to the backend to login.
-The reason for this is that logging in with an HTTP request is much faster than filling out a form.
+The reason for this is that *logging in with an HTTP request is much faster than filling out a form*.
 
 Our situation is a bit more complicated than in the example in the Cypress documentation because when a user logs in, our application saves their details to the localStorage.
 However, Cypress can handle that as well.
@@ -790,7 +791,7 @@ describe('when logged in', function() {
   beforeEach(function() {
     // highlight-start
     cy.request('POST', 'http://localhost:3001/api/login', {
-      username: 'powercat', password: 'tigers'
+      username: 'test', password: 'pacific'
     }).then(response => {
       localStorage.setItem('loggedTaskappUser', JSON.stringify(response.body))
       cy.visit('http://localhost:3000')
@@ -813,7 +814,7 @@ The callback function saves the details of a logged-in user to localStorage, and
 Now there is no difference to a user logging in with the login form.
 
 If and when we write new tests to our application, we have to use the login code in multiple places.
-We should make it a [custom command](https://docs.cypress.io/api/cypress-api/custom-commands.html).
+We should make it a [**custom command**](https://docs.cypress.io/api/cypress-api/custom-commands.html).
 
 Custom commands are declared in *cypress/support/commands.js*.
 The code for logging in is as follows:
@@ -835,7 +836,7 @@ Using our custom command is easy, and our test becomes cleaner:
 describe('when logged in', function() {
   beforeEach(function() {
     // highlight-start
-    cy.login({ username: 'powercat', password: 'tigers' })
+    cy.login({ username: 'test', password: 'pacific' })
     // highlight-end
   })
 
