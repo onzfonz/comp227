@@ -188,7 +188,7 @@ Then let's add a style rule that suits an error message:
 
 ```css
 .error {
-  background: #9c2b2e;
+  background-color: #9c2b2e;
   font-size: 22px;
   border-style: solid;
   border-width: 1px;
