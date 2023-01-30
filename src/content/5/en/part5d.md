@@ -1176,6 +1176,7 @@ Now we can run our tests from the command line with the command `npm run test:e2
 ![terminal output of running npm e2e tests showing passed](../../images/5/39x.png)
 
 Notice that videos of the test execution will be saved to *cypress/videos/*, ***so you should add `cypress/videos` to your .gitignore***.
+It is also possible to [turn off](https://docs.cypress.io/guides/guides/screenshots-and-videos#Videos) video generation.
 
 The frontend and the test code can be found on the [GitHub](https://github.com/comp227/part2-tasks/tree/part5-11) branch *part5-11*.
 
@@ -1284,9 +1285,11 @@ Make a test that confirms users can like a show.
 
 Make a test for ensuring that the user who recommended a show can delete it.
 
-**Optional bonus exercise:** also check that other users cannot delete the show.
-
 #### 5.22: Watchlist end to end testing, step6
+
+Make an additional test that other users do not see a delete button on shows they did not recommend.
+
+#### 5.23: Watchlist end to end testing, step7
 
 Make a test that checks that the shows are ordered according to likes - the show with the most likes should be first.
 
