@@ -731,8 +731,15 @@ it('login fails with wrong password', function() {
 })
 ```
 
-Always consider chaining `should` with `get` (or another chainable command).
-We used `cy.get('html')` to access the whole visible content of the application.
+The command `should` is most often used by chaining it after the command `get` (or another similar chain-friendly command).
+The highlighted line above (`cy.get('html')`) essentially retrieves the visible content from the entire application.
+
+Another way to write that line is by chaining the command `contains` with the command `should` via the `not.exist` parameter.
+Here's the two options side-by-side.
+
+| Option 1 | Option 2 |
+| :--- | :--- |
+|`cy.get('html').should('not.contain', 'Pacific Tests logged in')`|`cy.contains('Pacific Tests logged in').should('not.exist')`|
 
 ### Bypassing the UI
 
@@ -890,7 +897,7 @@ Cypress.Commands.add('createTask', ({ content, important }) => {
     method: 'POST',
     body: { content, important },
     headers: {
-      'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedTaskappUser')).token}`
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedTaskappUser')).token}`
     }
   })
 
@@ -929,6 +936,72 @@ describe('Task app', function() {
 })
 ```
 
+#### Defininig a baseURL
+
+There is one more annoying feature in our tests. The application address `http://localhost:3000` is hardcoded in *commands.js* and *task_app.cy.js*.
+Let's define the `baseUrl` for the application in the Cypress pre-generated [configuration file](https://docs.cypress.io/guides/references/configuration) ***cypress.config.js***:
+
+```js
+const { defineConfig } = require("cypress")
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+    },
+    baseUrl: 'http://localhost:3000' // highlight-line
+  },
+})
+```
+
+All the commands in the tests use the address of the application
+
+```js
+cy.visit('http://localhost:3000')
+```
+
+can be transformed into
+
+```js
+cy.visit('')
+```
+
+The backend's hardcoded address `http://localhost:3001` is still in the tests.
+Cypress [documentation](https://docs.cypress.io/guides/guides/environment-variables) recommends defining other addresses used by the tests as **environment variables**.
+Environment variables are slightly different than a reserved word like `baseURL`.
+
+Let's expand the configuration file `cypress.config.js` as follows:
+
+```js
+const { defineConfig } = require("cypress")
+module.exports = defineConfig({
+  e2e: {
+    setupNodeEvents(on, config) {
+    },
+    baseUrl: 'http://localhost:3000',
+  },
+  env: {
+    BACKEND_API: 'http://localhost:3001/api' // highlight-line
+  }
+})
+```
+
+Let's replace all the backend addresses from the tests in the following way
+
+```js
+describe('Task app', function() {
+  beforeEach(function() {
+    cy.request('POST', `${Cypress.env('BACKEND_API')}/testing/reset`) // highlight-line
+    const user = {
+      name: 'Pacific Tests',
+      username: 'test',
+      password: 'pacific'
+    }
+    cy.request('POST', `${Cypress.env('BACKEND_API')}/users`, user) // highlight-line
+    cy.visit('')
+  })
+  // ...
+})
+```
+
 The tests and the frontend code can be found on the [GitHub](https://github.com/comp227/part2-tasks/tree/part5-10) branch *part5-10*.
 
 ### Changing the importance of a task
@@ -959,7 +1032,7 @@ describe('when logged in', function() {
 })
 ```
 
-How does the [cy.contains](https://docs.cypress.io/api/commands/contains.html) command actually work?
+How does the [`cy.contains`](https://docs.cypress.io/api/commands/contains.html) command actually work?
 
 When we click the `cy.contains('second task')` command in Cypress [Test Runner](https://docs.cypress.io/guides/core-concepts/test-runner.html),
 we see that the command searches for the element containing the text `second task`:
@@ -985,7 +1058,7 @@ The second line of the test would click the button of a wrong task:
 
 ![cypress showing error and incorrectly trying to click first button](../../images/5/36x.png)
 
-When coding tests, you should check in the test runner that the tests use the right components!
+When coding tests, you should ***check in the test runner that the tests use the right components***!
 
 Let's change the `Task` component so that the text of the task is rendered to a `span`.
 
@@ -1017,17 +1090,17 @@ it('one of those can be made important', function () {
 })
 ```
 
-In the first line, we use the [parent](https://docs.cypress.io/api/commands/parent.html)
+In the first line, we use the [`parent`](https://docs.cypress.io/api/commands/parent.html)
 command to access the parent element of the element containing ***second task*** and find the button from within it.
 Then we click the button and check that the text on it changes.
 
-Notice that we use the command [find](https://docs.cypress.io/api/commands/find.html#Syntax) to search for the button.
-We cannot use [cy.get](https://docs.cypress.io/api/commands/get.html) here,
-because it always searches from the **whole** page and would return all 5 buttons on the page.
+Notice that we use the command [`find`](https://docs.cypress.io/api/commands/find.html#Syntax) to search for the button.
+We cannot use [`cy.get`](https://docs.cypress.io/api/commands/get.html) here,
+because `cy.get` always searches from the *entire* page and ***would return all 5 buttons on the page***.
 
 Unfortunately, we have some copy-paste in the tests now, because the code for searching for the right button is always the same.
 
-In these kinds of situations, it is possible to use the [as](https://docs.cypress.io/api/commands/as.html) command:
+In these kinds of situations, it is possible to use the [`as`](https://docs.cypress.io/api/commands/as.html) command:
 
 ```js
 it('one of those can be made important', function () {
@@ -1042,26 +1115,26 @@ The following lines can use the named element with `cy.get('@theButton')`.
 
 ### Running and debugging the tests
 
-Finally, some tasks on how Cypress works and debugging your tests.
+Finally, let's discuss how Cypress works and how to debug your tests.
 
-The form of the Cypress tests gives the impression that the tests are normal JavaScript code, and we could for example try this:
+Cypress tests give the impression that the tests are normal JavaScript code, and we could for example try this:
 
 ```js
 const button = cy.contains('login')
 button.click()
-debugger() 
+debugger
 cy.contains('logout').click()
 ```
 
 This won't work, however.
-When Cypress runs a test, it adds each `cy` command to an execution queue.
+When Cypress runs a test, *it adds each `cy` command to an execution queue*.
 When the code of the test method has been executed, Cypress will execute each command in the queue one by one.
 
 Cypress commands always return `undefined`, so `button.click()` in the above code would cause an error.
 An attempt to start the debugger would not stop the code between executing the commands, but before any commands have been executed.
 
 Cypress commands are *like promises*, so if we want to access their return values,
-we have to do it using the [then](https://docs.cypress.io/api/commands/then.html) command.
+we have to do it using the [`then`](https://docs.cypress.io/api/commands/then.html) command.
 For example, the following test would print the number of buttons in the application, and click the first button:
 
 ```js
@@ -1092,6 +1165,7 @@ We just have to add an npm script for it:
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "json-server -p3001 --watch db.json",
+    "eslint": "eslint .",
     "cypress:open": "cypress open",
     "test:e2e": "cypress run" // highlight-line
   },
@@ -1101,7 +1175,7 @@ Now we can run our tests from the command line with the command `npm run test:e2
 
 ![terminal output of running npm e2e tests showing passed](../../images/5/39x.png)
 
-Notice that videos of the test execution will be saved to *cypress/videos/*, so you should probably git ignore this directory.
+Notice that videos of the test execution will be saved to *cypress/videos/*, ***so you should add `cypress/videos` to your .gitignore***.
 
 The frontend and the test code can be found on the [GitHub](https://github.com/comp227/part2-tasks/tree/part5-11) branch *part5-11*.
 
@@ -1111,7 +1185,7 @@ The frontend and the test code can be found on the [GitHub](https://github.com/c
 
 ### Exercises 5.17-5.22
 
-In the last exercises of this part, we will do some E2E tests for our blog application.
+In the last exercises of this part, we will do some E2E tests for our watchlist application.
 The material of this part should be enough to complete the exercises.
 You **must check out the Cypress [documentation](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell)**.
 It is probably the best documentation I have ever seen for an open-source project.
@@ -1121,7 +1195,7 @@ I especially recommend reading
 
 > **This is the single most important guide for understanding how to test with Cypress. Read it. Understand it.**
 
-#### 5.17: bloglist end to end testing, step1
+#### 5.17: Watchlist end to end testing, step1
 
 Configure Cypress for your project.
 Make a test for checking that the application displays the login form by default.
@@ -1129,7 +1203,7 @@ Make a test for checking that the application displays the login form by default
 The structure of the test must be as follows:
 
 ```js
-describe('Blog app', function() {
+describe('Watchlist app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
     cy.visit('http://localhost:3000')
@@ -1141,9 +1215,10 @@ describe('Blog app', function() {
 })
 ```
 
-The `beforeEach` formatting blog must empty the database using for example the method we used in the [material](/part5/end_to_end_testing#controlling-the-state-of-the-database).
+The `beforeEach` function must empty the database.
+Feel free to use the [method we used in the material](#controlling-the-state-of-the-database).
 
-#### 5.18: bloglist end to end testing, step2
+#### 5.18: Watchlist end to end testing, step2
 
 Make tests for logging in.
 Test both successful and unsuccessful login attempts.
@@ -1152,7 +1227,7 @@ Make a new user in the `beforeEach` block for the tests.
 The test structure extends like so:
 
 ```js
-describe('Blog app', function() {
+describe('Watchlist app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
     // create here a user to backend
@@ -1177,13 +1252,13 @@ describe('Blog app', function() {
 
 **Optional bonus exercise**: Check that the notification shown with unsuccessful login is displayed red.
 
-#### 5.19: bloglist end to end testing, step3
+#### 5.19: Watchlist end to end testing, step3
 
-Make a test that verifies a logged-in user can create a new blog.
+Make a test that verifies a logged-in user can recommend a new show.
 The structure of the test could be as follows:
 
 ```js
-describe('Blog app', function() {
+describe('Watchlist app', function() {
   // ...
 
   describe('When logged in', function() {
@@ -1191,7 +1266,7 @@ describe('Blog app', function() {
       // log in user here
     })
 
-    it('A blog can be created', function() {
+    it('A show can be added', function() {
       // ...
     })
   })
@@ -1199,34 +1274,34 @@ describe('Blog app', function() {
 })
 ```
 
-The test has to ensure that a new blog is added to the list of all blogs.
+The test has to ensure that a new show is added to the list of all shows.
 
-#### 5.20: bloglist end to end testing, step4
+#### 5.20: Watchlist end to end testing, step4
 
-Make a test that confirms users can like a blog.
+Make a test that confirms users can like a show.
 
-#### 5.21: bloglist end to end testing, step5
+#### 5.21: Watchlist end to end testing, step5
 
-Make a test for ensuring that the user who created a blog can delete it.
+Make a test for ensuring that the user who recommended a show can delete it.
 
-**Optional bonus exercise:** also check that other users cannot delete the blog.
+**Optional bonus exercise:** also check that other users cannot delete the show.
 
-#### 5.22: bloglist end to end testing, step6
+#### 5.22: Watchlist end to end testing, step6
 
-Make a test that checks that the blogs are ordered according to likes with the blog with the most likes being first.
+Make a test that checks that the shows are ordered according to likes - the show with the most likes should be first.
 
 This exercise is quite a bit trickier than the previous ones.
-One solution is to add a certain class for the element which wraps the blog's content
-and use the [eq](https://docs.cypress.io/api/commands/eq#Syntax) method to get the blog element in a specific index:
+One solution is to add a certain class for the element which wraps the show's content
+and use the [`eq`](https://docs.cypress.io/api/commands/eq#Syntax) method to get the show at a specific index:
   
 ```js
-cy.get('.blog').eq(0).should('contain', 'The title with the most likes')
-cy.get('.blog').eq(1).should('contain', 'The title with the second most likes')
+cy.get('.show').eq(0).should('contain', 'The title with the most likes')
+cy.get('.show').eq(1).should('contain', 'The title with the second most likes')
 ```
 
 Notice that you might end up having problems if you click a like button many times in a row.
 It might be that cypress does the clicking so fast that it does not have time to update the app state in between the clicks.
-One remedy for this is to wait for the number of likes to update in between all clicks.
+One remedy for this is to *wait for the number of likes to update in between all clicks*.
 
 This was the last exercise of this part, and it's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 
