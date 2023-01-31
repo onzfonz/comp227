@@ -623,7 +623,21 @@ The exercises are submitted through GitHub and marking them as done on Canvas.
 
 Please make sure that you commit often, as that will be the way you show your work and progress through the course.
 
-**WARNING** make sure you are in the correct location before calling `create-react-app`
+To start, we will move you to a new repo that will house all of the exercises from part 2.
+
+<http://go.djosv.com/227lab2>
+
+The repo is largely empty, so you'll need to make sure you are in the correct location before calling `create-react-app`
+(you should be in the base directory of your lab2 repo that you created from above).
+
+Your folders for this repo should be:
+
+```text
+(base)
+|-arcade
+|-communities
+|-countries
+```
 
 #### 2.1: handheld arcade info step6
 
