@@ -265,11 +265,14 @@ For example, a newline is an empty element, which in HTML can be written as foll
 <br>
 ```
 
-but when writing JSX, the tag needs to be closed:
+Notice that absence of a closing tag with HTML.
+However, when *writing JSX*, **the tag needs to be *closed* with a `/`**:
 
 ```html
 <br />
 ```
+
+This is also referred to as a **self-closing tag**.
 
 ### Multiple components
 
