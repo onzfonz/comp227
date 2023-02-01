@@ -337,6 +337,14 @@ Let's turn that on now by going to Settings (***Ctrl-Alt-S***) and typing `lint`
 which should take you to the Page ***Languages & Frameworks->JavaScript->Code Quality Tools->ESLint***
 Once you are in the ESLint setting select the ***Automatic ESLint configuration*** option and mark the checkbox below that says ***Run eslint --fix on save***.
 
+> Notice that these settings we just selected are for this project only!
+It really makes sense for us to apply it to all future new projects, so I will have you do on more thing and change some settings for new projects.
+To do so, you'll need to go to ***File->New Projects Setup->Settings for New Projects***.
+Once that window opens, then select ***Languages & Frameworks->Javascript->Code Quality Tools->ESLint***.
+Here you'll see a window similar to what we just configured, so again select ***Automatic ESLint configuration*** and mark the ***Run eslint --fix on save*** checbox.
+Also, while we are in the New Project settings, please ensure that the node interpreter from part 0 is selected as the node interpreter.
+*You can reach that option by typing node in the search bar, it will be under ***Languages & Frameworks->Node.js***.
+
 Once you click OK, Webstorm will underline style violations with a red line and will highlight other problems as well.
 
 ![Screenshot of vscode ESlint plugin showing errors](../../images/3/54a.png)

@@ -65,7 +65,7 @@ A better question would be:
 
 > *In the exercise 2.15 when I try to add a new person to the app, server responds with a 403, despite the request looking OK to me.*
 >
-> *The code looks like this*
+> *The line of code looks like this*
 >
 > ```js
 >   // the relevant part of code is pasted here
@@ -80,10 +80,9 @@ A better question would be:
 >
 > *The network tab looks like the following*
 >
-> [screen shot from the network console]
->
-> *All the code can be found here (a link to GitHub)*
+> [screen shot from the network or console]
 
+If you are asking the teaching staff directly for help, then please also include a link to your github repo, however, this should not be shared with your classmates.
 Notice the details in the second response and a plan of action for what you've tried.
 Both help you narrow down the possibilities.
 

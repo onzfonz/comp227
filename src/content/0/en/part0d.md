@@ -370,7 +370,13 @@ Back in the Settings window, type ***Node interpreter*** in the search box, whic
 Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
 Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both windows.
 
-***Remember that you'll have to do all of these steps (including the token generation if you don't save the token somewhere) for each computer that you use.***
+Because we will be working with a lot of repsositories, it makes sense that all new projects have these same settings.
+Let's ensure that all of these settings show up for new projects, by going to ***File->New Projects Setup->Settings for New Projects***.
+Once there, go through each of the settings we just changed and ensure that those options have been enabled.
+
+***Remember that you may have to do all of these steps (including the token generation if you don't save the token somewhere) for each computer that you use.***
+For the Jetbrains settings only, another option that I recommend would be to sync your settings via your Jetbrains account.
+That setting sync is located in the upper-right as a cog icon near the close window button.
 
 ### 9: Make changes
 
