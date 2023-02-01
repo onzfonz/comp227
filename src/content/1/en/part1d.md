@@ -1206,7 +1206,7 @@ The application should show:
 
 - the total number of days recorded,
 - the average score using this scoring system - (nah: -1, kinda: 0, yeah: 1)
-- the percentage of days that the use clicked yeah.
+- the percentage of days that the user clicked ***yeah***.
 
 ![average and percentage good screenshot feedback](../../images/1/14e.png)
 
