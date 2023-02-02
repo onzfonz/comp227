@@ -7,25 +7,19 @@ lang: en
 
 <div class="content">
 
-The exercises in this part are a bit different than the exercises in the previous parts.
-The exercises in the previous part and the exercises in this part [are about the theory presented in this part](/part7/custom_hooks#exercises-7-4-7-8).
-
-This part also contains a [series of exercises](/part7/exercises_extending_the_bloglist)
-in which we modify the Bloglist application from parts 4 and 5 to rehearse and apply the skills we have learned.
-
 ### Hooks
 
-React offers 15 different [built-in hooks](https://reactjs.org/docs/hooks-reference.html),
-of which the most popular ones are the [useState](https://reactjs.org/docs/hooks-reference.html#usestate)
-and [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) hooks that we have already been using extensively.
+React offers 15 different [**built-in hooks**](https://reactjs.org/docs/hooks-reference.html),
+of which the most popular ones are the [`useState`](https://reactjs.org/docs/hooks-reference.html#usestate)
+and [`useEffect`](https://reactjs.org/docs/hooks-reference.html#useeffect) hooks that we have already been using extensively.
 
 In [part 5](/part5/props_children_and_proptypes#references-to-components-with-ref) we used the
-[useImperativeHandle](https://reactjs.org/docs/hooks-reference.html#useimperativehandle)
+[`useImperativeHandle`](https://reactjs.org/docs/hooks-reference.html#useimperativehandle)
 hook which allows components to provide their functions to other components.
 
 Within the last couple of years, many React libraries have begun to offer hook-based APIs.
-[In part 6](/part6/flux_architecture_and_redux) we used the [useSelector](https://react-redux.js.org/api/hooks#useselector)
-and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch)
+[In part 6](/part6/flux_architecture_and_redux) we used the [`useSelector`](https://react-redux.js.org/api/hooks#useselector)
+and [`useDispatch`](https://react-redux.js.org/api/hooks#usedispatch)
 hooks from the react-redux library to share our redux-store and dispatch function to our components.
 Redux's hook-based API is a lot easier to use than the older, still available, [connect](/part6/connect) API.
 
@@ -37,12 +31,13 @@ As mentioned in [part 1](/part1/a_more_complex_state_debugging_react_apps#rules-
 hooks are not normal functions, and when using those we have to adhere to certain [rules or limitations](https://reactjs.org/docs/hooks-rules.html).
 Let's recap the rules of using hooks, copied verbatim from the official React documentation:
 
-**Don’t call Hooks inside loops, conditions, or nested functions.** Instead, always use Hooks at the top level of your React function.
-
-**Don’t call Hooks from regular JavaScript functions.** Instead, you can:
-
-- Call Hooks from React function components.
-- Call Hooks from custom Hooks
+> **Don’t call Hooks inside loops, conditions, or nested functions.**
+> Instead, always use Hooks at the top level of your React function.
+>
+> **Don’t call Hooks from regular JavaScript functions.** Instead, you can call hooks from:
+>
+> - React function components.
+> - custom Hooks
 
 There's an existing [ESlint](https://www.npmjs.com/package/eslint-plugin-react-hooks) rule that can be used to verify that the application uses hooks correctly.
 
@@ -52,14 +47,16 @@ that complains if hooks are used in an illegal manner:
 
 ![vscode error useState being called conditionally](../../images/7/60ea.png)
 
+If you do not see such an error here, then make sure that you have turned on ***Automatic ESLint configuration*** in ***File->New Projects Setup->Settings for New Projects***.
+
 ### Custom hooks
 
 React offers the option to create [custom](https://reactjs.org/docs/hooks-custom.html) hooks.
-According to React, the primary purpose of custom hooks is to facilitate the reuse of the logic used in components.
+According to React:
 
 > *Building your own Hooks lets you extract component logic into reusable functions.*
 
-Custom hooks are regular JavaScript functions that can use any other hooks,
+**Custom hooks** are regular JavaScript functions that can use any other hooks,
 as long as they adhere to the [rules of hooks](/part1/a_more_complex_state_debugging_react_apps#rules-of-hooks).
 Additionally, the name of custom hooks must start with the word `use`.
 
@@ -88,7 +85,7 @@ const App = (props) => {
 }
 ```
 
-Let's extract the counter logic into a custom hook.
+Let's extract the *counter logic into a custom hook*.
 The code for the hook is as follows:
 
 ```js
@@ -123,18 +120,18 @@ React components can use the hook as shown below:
 
 ```js
 const App = (props) => {
-  const counter = useCounter()
+  const counter = useCounter() // highlight-line
 
   return (
     <div>
-      <div>{counter.value}</div>
-      <button onClick={counter.increase}>
+      <div>{counter.value}</div> // highlight-line
+      <button onClick={counter.increase}> // highlight-line
         plus
       </button>
-      <button onClick={counter.decrease}>
+      <button onClick={counter.decrease}> // highlight-line
         minus
       </button>      
-      <button onClick={counter.zero}>
+      <button onClick={counter.zero}> // highlight-line
         zero
       </button>
     </div>
@@ -145,7 +142,7 @@ const App = (props) => {
 By doing this we can extract the state of the `App` component and its manipulation entirely into the `useCounter` hook.
 Managing the counter state and logic is now the responsibility of the custom hook.
 
-The same hook could be ***reused*** in the application that was keeping track of the number of clicks made to the left and right buttons:
+The same hook could be *reused* in the application that was keeping track of the number of clicks made to the left and right buttons:
 
 ```js
 
@@ -168,10 +165,10 @@ const App = () => {
 }
 ```
 
-The application creates ***two*** completely separate counters.
+The application creates ***two completely separate counters***.
 The first one is assigned to the variable `left` and the other to the variable `right`.
 
-Dealing with forms in React is somewhat tricky.
+Dealing with forms in React can be complex.
 The following application presents the user with a form that requests the user to input their name, birthday, and height:
 
 ```js
@@ -214,9 +211,9 @@ const App = () => {
 
 Every field of the form has its own state.
 To keep the state of the form synchronized with the data provided by the user,
-we have to register an appropriate `onChange` handler for each of the `input` elements.
+*we have to register an appropriate `onChange` handler for each of the `input` elements*.
 
-Let's define our own custom `useField` hook that simplifies the state management of the form:
+Let's **define our own custom `useField` hook** that simplifies the state management of the form:
 
 ```js
 const useField = (type) => {
@@ -235,22 +232,22 @@ const useField = (type) => {
 ```
 
 The hook function receives the type of the input field as a parameter.
-The function returns all of the attributes required by the `input`: its `type`, `value` and the `onChange` handler.
+The function returns *all of the attributes required by the `input`*: its `type`, `value` and the `onChange` handler.
 
-The hook can be used in the following way:
+Here's how the hook can be used:
 
 ```js
 const App = () => {
-  const name = useField('text')
+  const name = useField('text') // highlight-line
   // ...
 
   return (
     <div>
       <form>
         <input
-          type={name.type}
-          value={name.value}
-          onChange={name.onChange} 
+          type={name.type} // highlight-line
+          value={name.value} // highlight-line
+          onChange={name.onChange} // highlight-line
         /> 
         // ...
       </form>
@@ -264,7 +261,7 @@ const App = () => {
 We could simplify things a bit further.
 Since the `name` object has exactly all of the attributes that the `input` element expects to receive as props,
 we can pass the props to the element using the
-[spread syntax](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the following way:
+[**spread syntax**](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the following way:
 
 ```js
 <input {...name} /> 
@@ -273,30 +270,25 @@ we can pass the props to the element using the
 As the [example](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the React documentation states,
 the following two ways of passing props to a component achieve the exact same result:
 
-```js
-<Greeting firstName='Arto' lastName='Hellas' />
-
-const person = {
-  firstName: 'Arto',
-  lastName: 'Hellas'
-}
-
-<Greeting {...person} />
-```
+|Explicit assignment|Using Spread syntax|
+|:---|:---|
+|<pre>\<Greeting firstName='Randy'<br/>   lastName='Lau' /></pre>|<pre>const person = {<br/>  firstName: 'Randy',<br/>  lastName: 'Lau'<br/>}<br/><br/>\<Greeting {...person} /></pre>|
 
 The application gets simplified into the following format:
 
 ```js
 const App = () => {
+    // highlight-start
   const name = useField('text')
   const born = useField('date')
   const height = useField('number')
+    // highlight-end
 
   return (
     <div>
       <form>
         name: 
-        <input  {...name} /> 
+        <input  {...name} /> // highlight-line
         <br/> 
         birthdate:
         <input {...born} />
@@ -305,16 +297,16 @@ const App = () => {
         <input {...height} />
       </form>
       <div>
-        {name.value} {born.value} {height.value}
+        {name.value} {born.value} {height.value} // highlight-line
       </div>
     </div>
   )
 }
 ```
 
-Dealing with forms is greatly simplified when the unpleasant nitty-gritty details related to synchronizing the state of the form are encapsulated inside our custom hook.
+When we encapsulate the byzantine details for synchronizing the form's state inside our hook, which simplifies our form.
 
-Custom hooks are not only a tool for reuse; they also provide a better way for dividing our code into smaller modular parts.
+Custom hooks are not only a tool for reuse; they also **provide a better way for dividing our code into smaller modular parts**.
 
 ### More about hooks
 
@@ -426,13 +418,13 @@ One simple fix would be to not use the spread syntax and write all of the forms 
 ```
 
 If we were to do this, we would lose much of the benefit provided by the `useField` hook.
-Instead, come up with a solution that fixes the issue, but is still easy to use with spread syntax.
+Instead, *come up with a solution that fixes the issue, but is still easy to use with spread syntax*.
 
 #### 7.7: country hook
 
-Let's return to exercises [2.12-14](/part2/getting_data_from_server#exercises-2-11-2-14).
+Let's return to exercises [2.18-20](/part2/adding_styles_to_react_app#exercises-2-18-2-20).
 
-Use the code from <https://github.com/comp227/country-hook> as your starting point.
+We're going to start another repo by visiting <http://go.djosv.com/227lab7-2>
 
 The application can be used to search for a country's details from the <https://restcountries.com/> interface.
 If a country is found, the details of the country are displayed:
@@ -449,7 +441,7 @@ which can be used to search for the details of the country given to the hook as 
 Use the API endpoint [full name](https://restcountries.com/#api-endpoints-v3-full-name)
 to fetch a country's details in a `useEffect` hook within your custom hook.
 
-Notice that in this exercise it is essential to use useEffect's
+Notice that in this exercise, you must enter useEffect's
 [second parameter](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect)
 array to control when the effect function is executed.
 
@@ -490,12 +482,12 @@ export default { getAll, create, update, setToken }
 ```
 
 We notice that the code is in no way specific to the fact that our application deals with tasks.
-Excluding the value of the `baseUrl` variable, the same code could be reused in the blog post application for dealing with the communication with the backend.
+Excluding the value of the `baseUrl` variable, the same code could be reused in the watchlist application for dealing with the communication with the backend.
 
 Extract the code for communicating with the backend into its own `useResource` hook.
 It is sufficient to implement fetching all resources and creating a new resource.
 
-You can do the exercise for the project found in the <https://github.com/comp227/ultimate-hooks> repository.
+You can do the exercise for the project by going to <https://go.djosv.com/227lab7-3>.
 The `App` component for the project is the following:
 
 ```js
@@ -514,7 +506,7 @@ const App = () => {
  
   const handlePersonSubmit = (event) => {
     event.preventDefault()
-    personService.create({ name: name.value, number: number.value})
+    personService.create({ name: name.value, email: email.value})
   }
 
   return (
@@ -524,15 +516,19 @@ const App = () => {
         <input {...content} />
         <button>create</button>
       </form>
-      {tasks.map(t => <p key={t.id}>{t.content}</p>)}
+      <ol>
+        {tasks.map(t => <li key={t.id}>{t.content}</li>)}
+      </ol>
 
       <h2>persons</h2>
       <form onSubmit={handlePersonSubmit}>
         name <input {...name} /> <br/>
-        number <input {...number} />
+        email <input {...email} />
         <button>create</button>
       </form>
-      {persons.map(t => <p key={t.id}>{t.name} {t.number}</p>)}
+      <ul>
+        {persons.map(p => <li key={p.id}>{p.name} (<a href={`mailto:${p.number}`}>{p.number}</a>)</li>)}
+      </ul>
     </div>
   )
 }
@@ -542,8 +538,10 @@ The `useResource` custom hook returns an array of two items just like the state 
 The first item of the array contains all of the individual resources
 and the second item of the array is an object that can be used for manipulating the resource collection, like creating new ones.
 
-If you implement the hook correctly, it can be used for both tasks and phone numbers (start the server with the `npm run server` command at port 3005).
+If you implement the hook correctly, it can be used for both tasks and emails (start the server with the `npm run server` command at port 3005).
 
-![browser showing tasks and persons](../../images/5/21e.png)
+While the email link and having the tasks be a list here is not required, it's included here simple to make the use case more interesting/compelling.
+
+![browser showing tasks and persons](../../images/7/17.png)
 
 </div>

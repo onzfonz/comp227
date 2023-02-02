@@ -546,7 +546,7 @@ This assignment is strictly for educational purposes, as such the url for the im
 Because the picture portion is merely cosmetic, we will leave it in to make the assignment feel a tad bit more fun.
 However, we will **from now on refer to both *memes* and *jokes* as `jokes`**.
 
-To start, please visit <http://go.djosv.com/227lab7>
+To start, please visit <http://go.djosv.com/227lab7-1>
 We will use the repo there as the starting point for the exercises.
 
 The application starts the usual way, but first, you need to install the dependencies of the application:
