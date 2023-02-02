@@ -1204,7 +1204,7 @@ export default App
 Expand your application so that it shows more statistics about the gathered data.
 The application should show:
 
-- the total number of days recorded,
+- the total number of days recorded (total number of times the buttons were pressed),
 - the average score using this scoring system - (nah: -1, kinda: 0, yeah: 1)
 - the percentage of days that the user clicked ***yeah***.
 
