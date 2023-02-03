@@ -814,7 +814,7 @@ The application can, for example, look like this:
 
 #### 2.5: separate module
 
-Declare the `Company` component as a separate module, which is imported by the `App` component.
-You can include all subcomponents of the company in the same module.
+Declare the `Company` component as a separate module that represents a single Company, which is imported by the `App` component.
+You can include all subcomponents of the company in the same module though.
 
 </div>
