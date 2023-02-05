@@ -510,7 +510,7 @@ const App = () => {
       </Routes>   
 
       <div>
-        <em>Task app, Department of Computer Science 2022</em>
+        <em>Task app, Department of Computer Science 2023</em>
       </div>
     </div>
   )
