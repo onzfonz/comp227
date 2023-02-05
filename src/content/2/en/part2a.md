@@ -41,7 +41,7 @@ To use it, type `log` and hit Tab to autocomplete.
 
 Though it doesn't stop there, as you can make custom live templates.
 
-For example, I'm going to taken
+For example, I'm going to take
 [this tutorial](https://betterprogramming.pub/intellij-live-template-for-console-log-that-will-improve-your-daily-development-life-ef1320a8fe81)
 and boil it down to its essence.
 
