@@ -7,19 +7,20 @@ lang: en
 <div class="content">
 
 Developing with React was notorious for requiring tools that were very difficult to configure.
-These days, getting started with React development is almost painless thanks to [create-react-app](https://github.com/facebookincubator/create-react-app).
-A better development workflow has probably never existed for browser-side JavaScript development.
+Getting started with React development is easier now thanks to [create-react-app](https://github.com/facebookincubator/create-react-app).
+Using create-react-app is arguably the best workflow for beginner browser-side JavaScript development.
 
-We cannot rely on the black magic of create-react-app forever and it's time for us to take a look under the hood.
-One of the key players in making React applications functional is a tool called [webpack](https://webpack.js.org/).
+However, as we become more proficient, we may want to stop relying on the black magic of create-react-app.
+So let us look under the hood.
+One of the key players in making React applications functional is a tool called [**webpack**](https://webpack.js.org/).
 
 ### Bundling
 
 We have implemented our applications by dividing our code into separate modules that have been ***imported*** to places that require them.
-Even though ES6 modules are defined in the ECMAScript standard, the older browsers do not know how to handle code that is divided into modules.
+Even though ES6 modules are defined in the ECMAScript standard, *older browsers do not know how to handle code that is divided into modules*.
 
 For this reason, code that is divided into modules must be **bundled** for browsers,
-meaning that all of the source code files are transformed into a single file that contains all of the application code.
+meaning that ***all of the source code files are transformed into a single file*** that contains all of the application code.
 When we deployed our React frontend to production in [part 3](/part3/deploying_app_to_internet),
 we performed the bundling of our application with the `npm run build` command.
 Under the hood, the npm script bundles the source code using webpack, which produces the following collection of files in the *build* directory:
@@ -63,19 +64,25 @@ As we can see from the example application that was created with create-react-ap
 the build script also bundles the application's CSS files into a single */static/css/main.1becb9f2.css* file.
 
 In practice, bundling is done so that we define an entry point for the application, which typically is the *index.js* file.
-When webpack bundles the code, it includes all of the code that the entry point imports, the code that its imports import, and so on.
+When webpack bundles the code, it includes
+
+- all of the code that the entry point imports
+- the code that *its imports* import
+- and so on.
 
 Since part of the imported files are packages like React, Redux, and Axios,
 the bundled JavaScript file will also contain the contents of each of these libraries.
 
 > The old way of dividing the application's code into multiple files was based on the fact that
-> the *index.html* file loaded all of the separate JavaScript files of the application with the help of script tags.
+> the *index.html* file loaded all of the separate JavaScript files of the application with the help of `script` tags.
 > This resulted in decreased performance, since the loading of each separate file results in some overhead.
-> For this reason, these days the preferred method is to bundle the code into a single file.
+> For this reason, these days the preferred method is to *bundle the code into a single file*.
+
+#### Creating a webpack configuration
 
 Next, we will create a suitable webpack configuration for a React application by hand from scratch.
 
-Let's create a new directory for the project with the following subdirectories (*build* and *src*) and files:
+Let's ***create a new project*** with the following subdirectories (*build* and *src*) and files:
 
 ```shell
 ├── build
@@ -136,9 +143,9 @@ module.exports = config
 > module.exports = config
 > ```
 >
-> An object will suffice in many situations, but we will later need certain features that require the definition to be done as a function.
+> An object will suffice in many situations, but we will later need certain features that require us to define `config` as a function.
 
-We will then define a new npm script called *`build`* that will execute the bundling with webpack:
+Next, define a new npm script called *`build`* that will execute the bundling with webpack:
 
 ```js
 // ...
@@ -148,7 +155,7 @@ We will then define a new npm script called *`build`* that will execute the bund
 // ...
 ```
 
-Let's add some more code to the *src/index.js* file:
+Let's add this code to the *src/index.js* file:
 
 ```js
 const hello = name => {
@@ -162,10 +169,10 @@ The operation will produce a new *main.js* file that is added under the *build* 
 ![terminal output webpack npm run build](../../images/7/19x.png)
 
 The file contains a lot of stuff that looks quite interesting.
-We can also see the code we wrote earlier at the end of the file:
+We can also see the code we wrote in the middle of the file:
 
 ```js
-eval("const hello = name => {\n  console.log(`hello ${name}`)\n}\n\n//# sourceURL=webpack://webpack-osa7/./src/index.js?");
+eval("const hello = name => {\r\n    console.log(`hello ${name}`)\r\n}\n\n//# sourceURL=webpack://webpack-part7/./src/index.js?");
 ```
 
 Let's add an *App.js* file under the *src* directory with the following content:
@@ -194,7 +201,7 @@ When we bundle the application again with the `npm run build` command, we notice
 
 ![terminal output showing webpack generated two files](../../images/7/20x.png)
 
-Our application code can be found at the end of the bundle file in a rather obscure format:
+Our application code can be found in the middle of our bundle file (*main.js*) in a rather obscure format:
 
 ![terminal output showing our minified code](../../images/7/20z.png)
 
@@ -218,15 +225,15 @@ const config = () => {
 module.exports = config
 ```
 
-The configuration file has been written in JavaScript and the function returning the configuration object is exported using Node's module syntax.
+The configuration file has been written in JavaScript and the function returning the configuration object is exported using Node's `module` syntax.
 
-Our minimal configuration definition almost explains itself.
-The [entry](https://webpack.js.org/concepts/#entry) property of the configuration object specifies the file that will serve as the entry point for bundling the application.
+Our minimal configuration definition helps us to decipher it.
+The [*`entry`*](https://webpack.js.org/concepts/#entry) property of the configuration object specifies the file that will serve as the entry point for bundling the application.
 
-The [output](https://webpack.js.org/concepts/#output) property defines the location where the bundled code will be stored.
+The [*`output`*](https://webpack.js.org/concepts/#output) property defines the location where the bundled code will be stored.
 The target directory must be defined as an ***absolute path***,
-which is easy to create with the [path.resolve](https://nodejs.org/docs/latest-v8.x/api/path.html#path_path_resolve_paths) method.
-We also use [`__dirname`](https://nodejs.org/docs/latest/api/globals.html#globals_dirname)
+which is easy to create with the [**`path.resolve`**](https://nodejs.org/docs/latest-v8.x/api/path.html#path_path_resolve_paths) method.
+We also use [**`__dirname`**](https://nodejs.org/docs/latest/api/globals.html#globals_dirname)
 which is a global variable in Node that stores the path to the current directory.
 
 ### Bundling React
@@ -251,12 +258,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 We will also make the following changes to the *App.js* file:
 
 ```js
-import React from 'react' // we need this now also in component files
+import React from 'react' // will need this in all component files
 
 const App = () => {
   return (
     <div>
-      hello webpack
+      hey webpack
     </div>
   )
 }
@@ -264,7 +271,8 @@ const App = () => {
 export default App
 ```
 
-We still need the *build/index.html* file  that will serve as the "main page" of our application that will load our bundled JavaScript code with a *`script`* tag:
+We also need the *build/index.html* file.
+This file will serve as the "main page" of our application that will load our bundled JavaScript code with a *`script`* tag:
 
 ```html
 <!DOCTYPE html>
@@ -289,13 +297,13 @@ When we bundle our application, we run into the following problem:
 The error message from webpack states that we may need an appropriate ***loader*** to bundle the *App.js* file correctly.
 By default, webpack only knows how to deal with plain JavaScript.
 Although we may have become unaware of it, we are using [JSX](https://facebook.github.io/jsx/) for rendering our views in React.
-To illustrate this, the following code is not regular JavaScript:
+To illustrate this, the ***following code is not regular JavaScript***:
 
 ```js
 const App = () => {
   return (
     <div>
-      hello webpack
+      hey webpack
     </div>
   )
 }
@@ -303,7 +311,7 @@ const App = () => {
 
 The syntax used above comes from JSX and it provides us with an alternative way of defining a React element for an HTML *`div`* tag.
 
-We can use [loaders](https://webpack.js.org/concepts/loaders/) to inform webpack of the files that need to be processed before they are bundled.
+We can use [**loaders**](https://webpack.js.org/concepts/loaders/) to inform webpack of the files that need to be processed before they are bundled.
 
 Let's configure a loader to our application that transforms the JSX code into regular JavaScript:
 
@@ -365,12 +373,13 @@ Bundling the application will now succeed.
 If we make some changes to the `App` component and take a look at the bundled code, we notice that the bundled version of the component looks like this:
 
 ```js
-const App = () =>
-  react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
-    'div',
+const App = () => {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(
+    "div",
     null,
-    'hello webpack'
-  )
+    "hey webpack"
+  );
+};
 ```
 
 As we can see from the example above, the React elements that were written in JSX are now created with regular JavaScript
@@ -396,15 +405,15 @@ import 'core-js/stable/index.js'
 import 'regenerator-runtime/runtime.js'
 ```
 
-Our configuration contains nearly everything that we need for React development.
+We have configured almost everything for React development.
 
 ### Transpilers
 
-The process of transforming code from one form of JavaScript to another is called [transpiling](https://en.wiktionary.org/wiki/transpile).
+The process of transforming code from one form of JavaScript to another is called [**transpiling**](https://en.wiktionary.org/wiki/transpile).
 The general definition of the term is to compile source code by transforming it from one language to another.
 
 By using the configuration from the previous section,
-we are ***transpiling*** the code containing JSX into regular JavaScript with the help of [babel](https://babeljs.io/),
+we are ***transpiling*** the code containing JSX into regular JavaScript with the help of [*babel*](https://babeljs.io/),
 which is currently the most popular tool for the job.
 
 As mentioned in part 1, most browsers do not support the latest features that were introduced in ES6 and ES7,
@@ -446,11 +455,11 @@ npm install @babel/preset-env --save-dev
 ```
 
 When we transpile the code, it gets transformed into old-school JavaScript.
-The definition of the transformed `App` component looks like this:
+The definition of the transformed `App` component looks something like this:
 
 ```js
-var App = function App() {
-  return _react2.default.createElement('div', null, 'hello webpack')
+var App = function App() { // highlight-line
+  return react_default().createElement('div', null, 'hey webpack')
 };
 ```
 
@@ -465,7 +474,7 @@ Let's create a new *src/index.css* file:
 ```css
 .container {
   margin: 10px;
-  background-color: #dee8e4;
+  background-color: #cdf1e5;
 }
 ```
 
@@ -475,7 +484,7 @@ Then let's use the style in the `App` component:
 const App = () => {
   return (
     <div className="container">
-      hello webpack
+      hey webpack
     </div>
   )
 }
@@ -491,7 +500,7 @@ This will cause the transpilation process to break:
 
 ![webpack failure missing loader for css/style](../../images/7/23x.png)
 
-When using CSS, we have to use [css](https://webpack.js.org/loaders/css-loader/) and [style](https://webpack.js.org/loaders/style-loader/) loaders:
+When using CSS, we have to use the [**css**](https://webpack.js.org/loaders/css-loader/) and [**style**](https://webpack.js.org/loaders/style-loader/) loaders:
 
 ```js
 {
@@ -513,28 +522,28 @@ When using CSS, we have to use [css](https://webpack.js.org/loaders/css-loader/)
 }
 ```
 
-The job of the [css loader](https://webpack.js.org/loaders/css-loader/) is to load the *CSS* files
-and the job of the [style loader](https://webpack.js.org/loaders/style-loader/)
+The job of the [*css loader*](https://webpack.js.org/loaders/css-loader/) is to load the *CSS* files
+and the job of the [*style loader*](https://webpack.js.org/loaders/style-loader/)
 is to generate and inject a *`style`* element that contains all of the styles of the application.
 
-With this configuration, the CSS definitions are included in the *main.js* file of the application.
+With this configuration, the *CSS definitions are included in the **main.js** file of the application*.
 For this reason, there is no need to separately import the *CSS* styles in the main *index.html* file of the application.
 
 If needed, the application's CSS can also be generated into its own separate file
 by using the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin).
 
-When we install the loaders:
+Once we install the loaders:
 
 ```js
 npm install style-loader css-loader --save-dev
 ```
 
-The bundling will succeed once again and the application gets new styles.
+The bundling will succeed again and the application gets new styles.
 
 ### Webpack-dev-server
 
-The current configuration makes it possible to develop our application but the workflow is awful (to the point where it resembles the development workflow with Java).
-Every time we make a change to the code, we have to bundle it and refresh the browser to test the code.
+The current configuration makes it possible to develop our application but the workflow is bad (so bad it almost resembles the development workflow of Java).
+*Every time we make a change to the code, we have to bundle it and refresh the browser to test the code* 🤦.
 
 The [webpack-dev-server](https://webpack.js.org/guides/development/#using-webpack-dev-server) offers a solution to our problems.
 Let's install it with the command:
@@ -572,6 +581,7 @@ const config = {
     port: 3000,
   },
   // highlight-end
+  module: {
   // ...
 };
 ```
@@ -594,7 +604,8 @@ const App = () => {
 
   return (
     <div className="container">
-      hello webpack {counter} clicks
+      hey webpack <br/>
+      {counter} clicks &nbsp;
       <button onClick={() => setCounter(counter + 1)}>
         press
       </button>
@@ -625,7 +636,8 @@ const App = () => {
 
   return (
     <div className="container">
-      hello webpack {counter} clicks
+      hey webpack <br/>
+      {counter} clicks &nbsp;
       <button onClick={handleClick}> // highlight-line
         press
       </button>
@@ -638,11 +650,11 @@ The application no longer works and the console will display the following error
 
 ![devtools console cannot concat on undefined in handleClick](../../images/7/25.png)
 
-We know that the error is in the onClick method, but if the application was any larger the error message would be quite difficult to track down:
+We know that the error is in the `handleClick` method, but if the application was any larger the error message would be quite difficult to track down:
 
 ```shell
-App.js:27 Uncaught TypeError: Cannot read property 'concat' of undefined
-    at handleClick (App.js:27)
+App.js:27 Uncaught TypeError: Cannot read properties of undefined (reading 'concat')
+    at handleClick (App.js:27:22)
 ```
 
 The location of the error indicated in the message does not match the actual location of the error in our source code.
@@ -650,13 +662,13 @@ If we click the error message, we notice that the displayed source code does not
 
 ![devtools source does not show our source code](../../images/7/26.png)
 
-Of course, we want to see our actual source code in the error message.
+We prefer to see our actual source code instead.
 
 Luckily, fixing the error message in this respect is quite easy.
-We will ask webpack to generate a so-called [source map](https://webpack.js.org/configuration/devtool/) for the bundle,
-which makes it possible to ***map errors*** that occur during the execution of the bundle to the corresponding part in the original source code.
+We will ask webpack to generate a so-called [**source map**](https://webpack.js.org/configuration/devtool/) for the bundle,
+which makes it possible to ***map errors** that occur during the execution of the bundle to the corresponding part in the original source code*.
 
-The source map can be generated by adding a new `devtool` property to the configuration object with the value 'source-map':
+The source map can be generated by adding a new `devtool` property in *webpack.config.js* with the value `'source-map'`:
 
 ```js
 const config = {
@@ -668,6 +680,7 @@ const config = {
     // ...
   },
   devtool: 'source-map', // highlight-line
+  module: {
   // ..
 };
 ```
@@ -700,11 +713,12 @@ const App = () => {
 ### Minifying the code
 
 When we deploy the application to production, we are using the *main.js* code bundle that is generated by webpack.
-The size of the *main.js* file is 1009487 bytes even though our application only contains a few lines of our code.
+The size of the *main.js* file for me is 2000891 bytes even though our application only contains a few lines of our code.
 The large file size is because the bundle also contains the source code for the entire React library.
 The size of the bundled code matters since the browser has to load the code when the application is first used.
-With high-speed internet connections, 1009487 bytes is not an issue,
+With high-speed internet connections, 2000891 bytes (1.9MB) is not an issue,
 but if we were to keep adding more external dependencies, loading speeds could become an issue, particularly for mobile users.
+ > *Or for those of us whose connection still feels like it's a 56k modem.* 😏
 
 If we inspect the contents of the bundle file, we notice that it could be greatly optimized in terms of file size by removing all of the comments.
 There's no point in manually optimizing these files, as there are many existing tools for the job.
@@ -738,14 +752,14 @@ When we bundle the application again, the size of the resulting *main.js* decrea
 
 ```js
 $ ls -l build/main.js
--rw-r--r--  1 powercat  ATKK\hyad-all  227651 Feb  7 15:58 build/main.js
+-rw-r--r--  1 powercat 197609 323677 Feb  5 15:58 build/main.js
 ```
 
 The output of the minification process resembles old-school C code; all of the comments and even unnecessary whitespace
 and newline characters have been removed, and variable names have been replaced with a single character.
 
 ```js
-function h(){if(!d){var e=u(p);d=!0;for(var t=c.length;t;){for(s=c,c=[];++f<t;)s&&s[f].run();f=-1,t=c.length}s=null,d=!1,function(e){if(o===clearTimeout)return clearTimeout(e);if((o===l||!o)&&clearTimeout)return o=clearTimeout,clearTimeout(e);try{o(e)}catch(t){try{return o.call(null,e)}catch(t){return o.call(this,e)}}}(e)}}a.nextTick=function(e){var t=new Array(arguments.length-1);if(arguments.length>1)
+function(){var t=y((0,e.useState)(0),2),r=t[0],n=t[1],o=y((0,e.useState)([]),2),a=o[0],i=o[1];return e.createElement("div",{className:"container"},"hey webpack",e.createElement("br",null),r," clicks  ",e.createElement("button",{onClick:function(){n(r+1),i(a.concat(r))}},"press"))};t.createRoot(document.getElementById("root")).render(e.createElement(b,null));
 ```
 
 ### Development and production configuration
@@ -772,11 +786,12 @@ Let's store the following content in the *db.json* file:
 ```
 
 Our goal is to configure the application with webpack in such a way that, when used locally,
-the application uses the json-server available in port 3001 as its backend.
+the application uses a json-server available in port 3001 as its backend.
+Feel free to [go back and review the steps necessary to start that server](/part2/getting_data_from_server).
 
-The bundled file will then be configured to use the backend available at the <https://obscure-harbor-49797.herokuapp.com/api/tasks> URL.
+The bundled file will then be configured to use the backend available at the <https://comp227-osvaldo-lab3.onrender.com/api/tasks> URL.
 
-We will install ***axios***, start the json-server, and then make the necessary changes to the application.
+We will leave it to you to install ***axios***, start the json-server, and then make the necessary changes to the application.
 For the sake of changing things up, we will fetch the tasks from the backend with our [custom hook](/part7/custom_hooks) called `useTasks`:
 
 ```js
@@ -800,7 +815,7 @@ const useTasks = (url) => {
 const App = () => {
   const [counter, setCounter] = useState(0)
   const [values, setValues] = useState([])
-  const url = 'https://obscure-harbor-49797.herokuapp.com/api/tasks' // highlight-line
+  const url = 'https://comp227-osvaldo-lab3.onrender.com/api/tasks' // highlight-line
   const tasks = useTasks(url) // highlight-line
 
   const handleClick = () => {
@@ -810,9 +825,10 @@ const App = () => {
 
   return (
     <div className="container">
-      hello webpack {counter} clicks
+      hey webpack <br/>
+      {counter} clicks &nbsp;
       <button onClick={handleClick}>press</button>
-      <div>{tasks.length} tasks on server {url}</div> // highlight-line
+      <div>{tasks.length} tasks on server - {url}</div> // highlight-line
     </div>
   )
 }
@@ -824,7 +840,7 @@ The address of the backend server is currently hardcoded in the application code
 How can we change the address in a controlled fashion to point to the production backend server when the code is bundled for production?
 
 Webpack's configuration function has two parameters, `env` and `argv`.
-We can use the latter to find out the `mode` defined in the npm script.
+We can use the latter in *webpack.config.js* to find out the `mode` defined in the npm script.
 
 ```js
 const path = require('path');
@@ -854,7 +870,7 @@ const config = (env, argv) => {
 
   // highlight-start
   const backend_url = argv.mode === 'production'
-    ? 'https://obscure-harbor-49797.herokuapp.com/api/tasks'
+    ? 'https://comp227-osvaldo-lab3.onrender.com/api/tasks'
     : 'http://localhost:3001/tasks'
   // highlight-end
 
@@ -897,9 +913,10 @@ const App = () => {
   // ...
   return (
     <div className="container">
-      hello webpack {counter} clicks
+      hey webpack <br/>
+      {counter} clicks &nbsp;
       <button onClick={handleClick} >press</button>
-      <div>{tasks.length} tasks on server {BACKEND_URL}</div> // highlight-line
+      <div>{tasks.length} tasks on server - {BACKEND_URL}</div> // highlight-line
     </div>
   )
 }
@@ -909,14 +926,15 @@ If the configuration for development and production differs a lot,
 it may be a good idea to [separate the configuration](https://webpack.js.org/guides/production/) of the two into their own files.
 
 Now, if the application is started with the command `npm start` in development mode, it fetches the tasks from the address <http://localhost:3001/tasks>.
-The version bundled with the command `npm run build` uses the external address <> to retrieve the list of tasks.
+The version bundled with the command `npm run build` uses the external address <https://comp227-osvaldo-lab3.onrender.com/api/tasks> to retrieve the list of tasks.
 
-We can inspect the bundled production version of the application locally by executing the following command in the *build* directory:
+We can inspect the bundled production version of the application locally by executing the following command *from the **build** directory*:
 
 ```js
 npx static-server
 ```
 
+Doing this allows us to view the production version.
 By default, the bundled application will be available at <http://localhost:9080>.
 
 ### Polyfill
@@ -935,9 +953,10 @@ of JavaScript arrays exceeds the capabilities of IE:
 
 ![browser compatibility chart showing IE does not support find method](../../images/7/30.png)
 
-In these situations, it is not enough to transpile the code,
+While we may not really care to support IE,
+there may be other situations where it is not enough to transpile the code,
 as transpilation simply transforms the code from a newer version of JavaScript to an older one with wider browser support.
-IE understands Promises syntactically but it simply has not implemented their functionality.
+IE understands Promises syntactically but it never implemented their functionality.
 The `find` property of arrays in IE is simply `undefined`.
 
 If we want the application to be IE-compatible, we need to add a [polyfill](https://remysharp.com/2010/10/08/what-is-a-polyfill),
@@ -961,19 +980,19 @@ If the polyfilled Promise is implemented well enough, the rest of the code shoul
 
 One exhaustive list of existing polyfills can be found [here](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills).
 
-The browser compatibility of different APIs can be checked by visiting [https://caniuse.com](https://caniuse.com) or [Mozilla's website](https://developer.mozilla.org/en-US/).
+The browser compatibility of different APIs can be checked by visiting [caniuse.com](https://caniuse.com) or [Mozilla's website](https://developer.mozilla.org/en-US/).
 
 ### Eject
 
-The create-react-app tool uses webpack behind the scenes.
-If the default configuration is not enough, it is possible to [eject](https://create-react-app.dev/docs/available-scripts/#npm-run-eject)
+The *create-react-app* tool uses *webpack* behind the scenes.
+If you started with create-react-app and it is no longer suitable, it is possible to [**eject**](https://create-react-app.dev/docs/available-scripts/#npm-run-eject)
 the project which will get rid of all of the black magic,
 and the default configuration files will be stored in the *config* directory and a modified *package.json* file.
 
-If you eject an application created with create-react-app, there is no return and all of the configurations will have to be maintained manually.
+If you eject an application created with *create-react-app*, there is no return and ***all of the configurations will have to be maintained manually***.
 The default configuration is not trivial, and instead of ejecting from a create-react-app application,
 a better alternative may be to write your own webpack configuration from the get-go.
 
-Going through and reading the configuration files of an ejected application is still recommended and extremely educational.
+Going through and reading the configuration files of an ejected application is still recommended and educational.
 
 </div>
