@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-In part 2, we examined two different ways of adding styles to our application:
+Back in [part 2](/part2/), we examined two different ways of adding styles to our application:
 the old-school [single CSS](/part2/adding_styles_to_react_app) file and [inline styles](/part2/adding_styles_to_react_app#inline_styles).
 In this part, we will take a look at a few other ways.
 
@@ -27,7 +27,7 @@ Usually, UI frameworks are used by including the CSS stylesheets and JavaScript 
 Many UI frameworks have React-friendly versions where the framework's "components" have been transformed into React components.
 There are a few different React versions of Bootstrap like [reactstrap](http://reactstrap.github.io/) and [react-bootstrap](https://react-bootstrap.github.io/).
 
-Next, we will take a closer look at two UI frameworks, Bootstrap and [MaterialUI](https://mui.com/).
+To start off, we will examine two UI frameworks, Bootstrap and [MaterialUI](https://mui.com/).
 We will use both frameworks to add similar styles to the application we made in the [React-router](/part7/react_router) section of the course material.
 
 ### React Bootstrap
@@ -40,7 +40,7 @@ Let's install the package with the command:
 npm install react-bootstrap
 ```
 
-Then let's add a link for loading the CSS stylesheet for Bootstrap inside of the *`head`* tag in the *public/index.html* file of the application:
+Then let's add a `link` for loading the CSS stylesheet for Bootstrap inside of the *`head`* tag in the *public/index.html* file of the application:
 
 ```js
 <head>
@@ -106,15 +106,15 @@ const Tasks = ({ tasks }) => (
 )
 ```
 
-The appearance of the application is quite stylish:
-
-![browser tasks tab with built-in table](../../images/7/7e.png)
-
 Notice that the React Bootstrap components have to be imported separately from the library as shown below:
 
 ```js
 import { Table } from 'react-bootstrap'
 ```
+
+The appearance of the application is a tad bit more stylish:
+
+![browser tasks tab with built-in table](../../images/7/7e.png)
 
 #### Form in Bootstrap
 
@@ -146,10 +146,11 @@ let Login = (props) => {
         </Form.Group>
       </Form>
     </div>
-)}
+  )
+}
 ```
 
-The number of components we need to import increases:
+For this to work, you'll need to import the following (or simply follow Webstorm's lead and have it import these for you via its context actions):
 
 ```js
 import { Table, Form, Button } from 'react-bootstrap'
@@ -166,7 +167,7 @@ Now that the login form is in better shape, let's take a look at improving our a
 ![browser tasks app with bootstrap notification](../../images/7/9ea.png)
 
 Let's add a message for the notification when a user logs into the application.
-We will store it in the `message` variable in the `App` component's state:
+We will start by storing a `message` variable in the `App` component's state:
 
 ```js
 const App = () => {
@@ -190,7 +191,7 @@ const App = () => {
 }
 ```
 
-We will render the message as a Bootstrap [Alert](https://getbootstrap.com/docs/4.1/components/alerts/) component.
+We will then *render the message as a Bootstrap [Alert](https://getbootstrap.com/docs/4.1/components/alerts/) component*.
 Once again, the React Bootstrap library provides us with a matching [React component](https://react-bootstrap.github.io/components/alerts/):
 
 ```js
@@ -206,11 +207,13 @@ Once again, the React Bootstrap library provides us with a matching [React compo
 </div>
 ```
 
+You'll need to import the Alert library from react-bootstrap as well here.
+
 #### Navigation structure in Bootstrap
 
 Lastly, let's alter the application's navigation menu to use Bootstrap's [Navbar](https://getbootstrap.com/docs/4.1/components/navbar/) component.
 The React Bootstrap library provides us with [matching built-in components](https://react-bootstrap.github.io/components/navbar/#navbars-mobile-friendly).
-Through trial and error, we end up with a working solution despite the cryptic documentation:
+Through trial and error, we end up with a working solution despite the cryptic documentation, replacing our existing navigation links.
 
 ```js
 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -237,15 +240,15 @@ Through trial and error, we end up with a working solution despite the cryptic d
 </Navbar>
 ```
 
-The resulting layout has a very clean and pleasing appearance:
+The resulting layout has a new appearance:
 
 ![browser tasks app bootstrap black navigation bar](../../images/7/10ea.png)
 
-If the viewport of the browser is narrowed, we notice that the menu "collapses" and it can be expanded by clicking the "hamburger" button:
+If the browser window is narrowed, notice how the menu "collapses" into the "hamburger" icon:
 
 ![browser tasks app with hamburger menu](../../images/7/11ea.png)
 
-Bootstrap and a large majority of existing UI frameworks produce [responsive](https://en.wikipedia.org/wiki/Responsive_web_design) designs,
+Bootstrap and a large majority of existing UI frameworks produce [**responsive designs**](https://en.wikipedia.org/wiki/Responsive_web_design),
 meaning that the resulting applications render well on a variety of different screen sizes.
 
 Chrome's developer tools make it possible to simulate using our application in the browser of different mobile clients:
@@ -259,13 +262,19 @@ You can find the complete code for the application [here](https://github.com/com
 As our second example, we will look into the [MaterialUI](https://mui.com/) React library,
 which implements the [Material Design](https://material.io/) visual language developed by Google.
 
-Install the library with the command
+For this part, we will reset our javascript file and reset it with the contents that we previously had before we added the bootstrap libraries,
+which you can [retrieve from GitHub](https://github.com/comp227/misc/blob/main/tasks-starter.js)
+I have also removed the bootstrap library, which is nice to do some overall CSS niceties, but we will remove for simplicity sake.
+
+Once you have reset your index.js in your repo, install the MaterialUI library with the command:
 
 ```bash
 npm install @mui/material @emotion/react @emotion/styled
 ```
 
 Then add the following line to the *`head`* tag in the *public/index.html* file.
+> *Make sure you removed the bootstrap link from before*
+
 The line loads Google's font Roboto.
 
 ```js
@@ -277,23 +286,28 @@ The line loads Google's font Roboto.
 
 Now let's use MaterialUI to do the same modifications to the code we did earlier with bootstrap.
 
-Render the contents of the whole application within a [Container](https://mui.com/components/container/):
+Let's start by placing the contents of the App in a MaterialUI [`Container`](https://mui.com/components/container/).
+You can do this by replacing the `div className="container"` tag.
 
 ```js
 import { Container } from '@mui/material'
 
 const App = () => {
   // ...
+  const roboto = {
+        fontFamily: "Roboto"
+  }
+
   return (
-    <Container>
+    <Container style={roboto}>
       // ...
     </Container>
   )
 }
 ```
 
-Let's start with the `Tasks` component.
-We'll render the list of tasks as a [table](https://mui.com/material-ui/react-table/#simple-table):
+Then let's move to the `Tasks` component.
+We'll change the current `table` of tasks to a MaterialUI [`Table`](https://mui.com/material-ui/react-table/#simple-table)
 
 ```js
 const Tasks = ({ tasks }) => (
@@ -401,7 +415,8 @@ which is quite similar to Bootstrap's equivalent component:
 </div>
 ```
 
-Alert is quite stylish:
+You'll also need to add the setMessage state and timeouts [as we did above](#notification-in-bootstrap)
+The alert message looks professional:
 
 ![browser tasks app materialUI notifications](../../images/7/65ea.png)
 
@@ -435,12 +450,12 @@ If we use the example code from the documentation
 </AppBar>
 ```
 
-we do get working navigation, but it could look better
+our navigation works, but it could look better
 
 ![browser tasks app materialUI blue navbar](../../images/7/66ea.png)
 
-We can find a better way from the [documentation](https://mui.com/material-ui/guides/composition/#routing-libraries).
-We can use [component props](https://mui.com/material-ui/guides/composition/#component-prop) to define how the root element of a MaterialUI component is rendered.
+The [documentation](https://mui.com/material-ui/guides/composition/#routing-libraries) provides a better way for us to work through this.
+We can use [**component props**](https://mui.com/material-ui/guides/composition/#component-prop) to define *how the root element of a MaterialUI component is rendered*.
 
 By defining
 
@@ -484,17 +499,19 @@ The code of the application can be found [here](https://github.com/comp227/misc/
 
 ### Closing thoughts
 
-The difference between react-bootstrap and MaterialUI is not big.
+The difference between *react-bootstrap* and *MaterialUI* is not big.
 It's up to you which one you find better looking.
-I have not used MaterialUI a lot, but my first impressions are positive.
-Its documentation is a bit better than react-bootstrap's.
-According to <https://www.npmtrends.com/> which tracks the popularity of different npm-libraries, MaterialUI passed react-bootstrap in popularity at the end of 2018:
+Honestly, I haven't used either extensively, but I see both favorably.
+The MaterialUI documentation seems a bit better than react-bootstrap's.
+According to <https://www.npmtrends.com/> which tracks the popularity of different npm-libraries, MaterialUI passed react-bootstrap has largely stayed ahead of react bootstrap:
 
 ![npmtrends of materialUI vs bootstrap](../../images/7/68ea.png)
 
+There are other packages that MaterialUI is also split into, which could explain some of the more recent dropoff.
+
 In the two previous examples, we used the UI frameworks with the help of React-integration libraries.
 
-Instead of using the [React Bootstrap](https://react-bootstrap.github.io/) library,
+Instead of using the [*React Bootstrap*](https://react-bootstrap.github.io/) library,
 we could have just as well used Bootstrap directly by defining CSS classes for our application's HTML elements.
 Instead of defining the table with the `Table` component:
 
@@ -515,20 +532,23 @@ We could have used a regular HTML *`table`* and added the required CSS class:
 The benefit of using the React Bootstrap library is not that evident from this example.
 
 In addition to making the frontend code more compact and readable,
-another benefit of using React UI framework libraries is that they include the JavaScript that is needed to make specific components work.
+another advantage of using React UI framework libraries is that they *include the JavaScript that is needed to make specific components work*.
 Some Bootstrap components require a few unpleasant
 [JavaScript dependencies](https://getbootstrap.com/docs/4.1/getting-started/introduction/#js)
 that we would prefer not to include in our React applications.
 
-Some potential downsides to using UI frameworks through integration libraries instead of using them "directly" are that integration libraries may have unstable APIs and poor documentation.
+One drawback to using UI frameworks through integration libraries instead of using them "directly" are that ***integration libraries may have unstable APIs and poor documentation***.
 The situation with [Semantic UI React](https://react.semantic-ui.com) is a lot better than with many other UI frameworks, as it is an official React integration library.
 
-There is also the question of whether or not UI framework libraries should be used in the first place.
-It is up to everyone to form their own opinion, but for people lacking knowledge in CSS and web design, they are very useful tools.
+So why haven't I used either framework extensively?
+Mostly because I've done things using CSS.
+I was very hesitant to work with CSS originally, but after spending some time understanding it, I've found it suits my needs.
+However, for people lacking knowledge in CSS and web design, using these frameworks/tools can be very useful.
 
 ### Other UI frameworks
 
-Here are some other UI frameworks for your consideration.
+There are plenty of other UI frameworks out there.
+I would not spend a lot of time with any of them unless you are extremely curious or have heard a lot about one or the other.
 If you do not see your favorite UI framework in the list, please make a pull request to the course material.
 
 - <https://bulma.io/>
@@ -557,6 +577,10 @@ The [styled components](https://www.styled-components.com/) library offers an in
 through [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) that were introduced in ES6.
 
 Let's make a few changes to the styles of our application with the help of styled components.
+I'm going to reset again the page using our default starter.
+This time I will make sure that we **do not use any stylesheet or font**, so make sure you remove any links to the bootstrap or roboto fonts.
+While either of these two links can combine with styled components, we will leave them out for now so you can be sure that everything we have is directly from the styled components.
+
 First, install the package with the command:
 
 ```bash
@@ -569,12 +593,12 @@ Then let's define two components with styles:
 import styled from 'styled-components'
 
 const Button = styled.button`
-  background: Bisque;
+  background: lightgray;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid Chocolate;
-  border-radius: 3px;
+  border: 3px solid darkgray;
+  border-radius: 8px;
 `
 
 const Input = styled.input`
@@ -614,18 +638,21 @@ Let's create a few more components for styling that application which will be st
 
 ```js
 const Page = styled.div`
-  padding: 1em;
-  background: papayawhip;
+  background: #EDE7DC;
+  font-family: sans-serif;
 `
 
 const Navigation = styled.div`
-  background: BurlyWood;
+  background: #DCD2CC;
   padding: 1em;
+  border-radius: 5px;
+  margin-bottom: 1em;
 `
 
 const Footer = styled.div`
-  background: Chocolate;
+  background: #CCAFA5;
   padding: 1em;
+  border-radius: 30px;
   margin-top: 1em;
 `
 ```
@@ -657,7 +684,7 @@ const App = () => {
       </Routes>
 
       <Footer> // highlight-line
-        <em>Task app, Department of Computer Science 2022</em>
+        <em>Task app, Department of Computer Science 2023</em>
       </Footer> // highlight-line
     </Page> // highlight-line
   )
