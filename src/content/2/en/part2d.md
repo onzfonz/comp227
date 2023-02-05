@@ -834,7 +834,7 @@ E.g. the following is not possible:
 
 #### 2.15*: Communities step10
 
-*Why is there a star in the exercise? See [here](/en/part0/general_info#taking-the-course) for the explanation.*
+*Why is there a star in the exercise? See [here](/part0/general_info#taking-the-course) for the explanation.*
 
 Change the functionality so that if a URL is added to an already existing community, the new URL will replace the old URL.
 It's recommended to use the HTTP PUT method for updating the URL.

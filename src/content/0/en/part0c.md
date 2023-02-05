@@ -746,7 +746,7 @@ During this course, we will get familiar with React and other technologies which
 
 The status of React seems strong, but the world of JavaScript is ever-changing.
 For example, while [VueJS](https://vuejs.org/) has been around a while as an "up-and-comer",
-there are other frameworks like [Svelte](https://svelte.dev/) and [Qwik](https://qwik.build.io) that have recently started generating buzz.
+there are other frameworks like [Svelte](https://svelte.dev/) and [Qwik](https://qwik.builder.io) that have recently started generating buzz.
 While we have been talking about SPA, there is also talk about [returning more components back to the server](https://dev.to/this-is-learning/the-return-of-server-side-routing-b05).
 
 ### Full-stack web development

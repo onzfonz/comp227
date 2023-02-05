@@ -34,11 +34,18 @@
         },
         {
             "pattern": "recharts.org"
+        },
+        {
+            "pattern": "227demo.djosv"
+        },
+        {
+            "pattern": "onrender.com"
         }
 
     ],
     "retryOn429": true,
     "aliveStatusCodes": [
+        0,
         200,
         403,
         429,

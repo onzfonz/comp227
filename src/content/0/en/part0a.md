@@ -315,7 +315,7 @@ Students are expected to:
 Violations will be referred to and investigated by the Office of Student Conduct and Community Standards.
 If a student is found responsible, it will be documented as part of her or his permanent academic record.
 A student may receive a range of penalties, including failure of an assignment, failure of the course, suspension, or dismissal from the University.
-The Academic Honesty Policy is located in Tiger Lore and online at <http://www.pacific.edu/Campus-Life/Safety-and-Conduct/Student-Conduct/Tiger-LoreStudent-Handbook-.html>
+The Academic Honesty Policy is located in Tiger Lore and online at <https://www.pacific.edu/student-life/student-conduct/tiger-lore>
 
 You will be expected to conduct yourself according to professional ethics, just as if this were a real-world job.
 You should be able to explain any of the code you write and you also need to cite anything longer than a line of code that you get from the internet.

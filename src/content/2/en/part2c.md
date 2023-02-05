@@ -82,7 +82,7 @@ We will get familiar with the principles of implementing server-side functionali
 
 Our first task is fetching the already existing tasks to our React application from the address <http://localhost:3001/tasks>.
 
-In the part0 [example project](part0/fundamentals_of_web_apps#running-application-logic-in-the-browser),
+In the part0 [example project](/part0/fundamentals_of_web_apps#running-application-logic-in-the-browser),
 we already learned a way to fetch data from a server using JavaScript.
 The code in the example was fetching the data using [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest),
 otherwise known as an HTTP request made using an XHR object.
