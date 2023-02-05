@@ -40,15 +40,16 @@ Let's install the package with the command:
 npm install react-bootstrap
 ```
 
-Then let's add a `link` for loading the CSS stylesheet for Bootstrap inside of the *`head`* tag in the *public/index.html* file of the application:
+Then let's add a `link` for [loading a Bootstrap CSS stylesheet](https://react-bootstrap.github.io/getting-started/introduction#stylesheets)
+inside of the *`head`* tag in the *public/index.html* file of the application:
 
 ```js
 <head>
   <link
     rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-    crossOrigin="anonymous"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+    crossorigin="anonymous"
   />
   // ...
 </head>
@@ -77,6 +78,8 @@ We notice that this already affected the appearance of the application.
 The content is no longer as close to the edges of the browser as it was earlier:
 
 ![browser tasks app with margin spacing](../../images/7/6ea.png)
+
+#### Bootstrap Table
 
 Next, let's make some changes to the `Tasks` component so that it renders the list of tasks as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
 React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose,
@@ -305,6 +308,8 @@ const App = () => {
   )
 }
 ```
+
+#### MaterialUI Table
 
 Then let's move to the `Tasks` component.
 We'll change the current `table` of tasks to a MaterialUI [`Table`](https://mui.com/material-ui/react-table/#simple-table)

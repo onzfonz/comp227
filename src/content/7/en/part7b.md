@@ -21,7 +21,6 @@ Within the last couple of years, many React libraries have begun to offer hook-b
 [In part 6](/part6/flux_architecture_and_redux) we used the [`useSelector`](https://react-redux.js.org/api/hooks#useselector)
 and [`useDispatch`](https://react-redux.js.org/api/hooks#usedispatch)
 hooks from the react-redux library to share our redux-store and dispatch function to our components.
-Redux's hook-based API is a lot easier to use than the older, still available, [connect](/part6/connect) API.
 
 The [React Router's](https://reactrouter.com/en/main/start/tutorial) API we introduced in the
 [previous part](/part7/react_router) is also partially [hook](https://reactrouter.com/en/6.4.5/start/concepts)-based.
@@ -65,7 +64,7 @@ The code of the application is as follows:
 
 ```js  
 import { useState } from 'react'
-const App = (props) => {
+const App = () => {
   const [counter, setCounter] = useState(0)
 
   return (
@@ -444,6 +443,7 @@ to fetch a country's details in a `useEffect` hook within your custom hook.
 Notice that in this exercise, you must enter useEffect's
 [second parameter](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect)
 array to control when the effect function is executed.
+Review [this section of part 2](/en/part2/adding_styles_to_react_app#couple-of-important-remarks) for more info on how the second parameter could be used.
 
 #### 7.8: ultimate hooks
 

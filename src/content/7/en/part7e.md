@@ -295,9 +295,7 @@ With the help of the [ReactDOM](https://reactjs.org/docs/react-dom.html) library
 the virtual DOM defined by the components is rendered to a real DOM that can be shown by the browser using the DOM API:
 
 ```js
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <App />
-)
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
 When the state of the application changes, a ***new virtual DOM*** gets defined by the components.
@@ -329,17 +327,16 @@ one could say that using React only as a UI library is the intended use case.
 Following the Flux architecture adds some overhead to the application, and if we're talking about a small application or prototype,
 it might be a good idea to use React "wrong", since [over-engineering](https://en.wikipedia.org/wiki/Overengineering) rarely yields an optimal result.
 
-As I mentioned at the end of [part 6](/part6/connect#redux-and-the-component-state),
-the React [Context API](https://reactjs.org/docs/context.html)
-offers one alternative solution for centralized state management without the need for third-party libraries such as redux.
-You can read more about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/)
-and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/).
+[Part 6](/part6/react_query_use_reducer_ja_contex) covers the newer trends of state management in React.
+React's hook functions `useReducer` and `useContext` provide a kind of lightweight version of Redux.
+`React Query`, on the other hand, is a library that solves many of the problems associated with handling state on the server,
+eliminating the need for a React application to store data retrieved from the server directly in the frontend state.
 
 ### React/node-application security
 
 So far during the course, we have not touched on information security much.
 We do not have much time for this now either, but fortunately,
-there are other resources like the the MOOC course [Securing Software](https://cybersecuritybase.mooc.fi/module-2.1) for this important topic.
+there are other resources like a MOOC course [Securing Software](https://cybersecuritybase.mooc.fi/module-2.1) for this important topic.
 
 We will, however, take a look at some things specific to this course.
 
@@ -397,7 +394,7 @@ the code is not executed, but is only rendered as 'text' on the page:
 
 since React [takes care of sanitizing data in variables](https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks).
 Some versions of React [have been vulnerable](https://medium.com/dailyjs/exploiting-script-injection-flaws-in-reactjs-883fb1fe36c1) to XSS attacks.
-The security holes have of course been patched, but there is no guarantee that there couldn't be any more.
+The security holes have of course been patched, but there is no guarantee that there couldn't be anymore.
 
 One needs to remain vigilant when using libraries; if there are security updates to those libraries, it is advisable to update those libraries in one's applications.
 Security updates for Express are found in the [library's documentation](https://expressjs.com/en/advanced/security-updates.html)
@@ -699,13 +696,10 @@ If you are handling times and dates, [date-fns](https://github.com/date-fns/date
 If your application displays graphs, there are multiple options to choose from.
 Both [recharts](http://recharts.org/en-US/) and [highcharts](https://github.com/highcharts/highcharts-react) are well-recommended.
 
-The [immutable.js](https://github.com/facebook/immutable-js/) library maintained by Facebook provides,
-as the name suggests, immutable implementations of some data structures.
+The [Immer](https://github.com/mweststrate/immer) library provides immutable implementations of some data structures.
 The library could be of use when using Redux,
 since as we [remember](/part6/flux_architecture_and_redux#pure-functions-immutable) in part 6,
 reducers must be pure functions, meaning they must not modify the store's state but instead have to replace it with a new one when a change occurs.
-Over the past year, some of the popularity of Immutable.js has been taken over by [Immer](https://github.com/mweststrate/immer),
-which provides similar functionality but in a somewhat easier package.
 
 [Redux-saga](https://redux-saga.js.org/) provides an alternative way to make asynchronous actions for
 [Redux Thunk](/part6/communicating_with_server_in_a_redux_application#asynchronous-actions-and-redux-thunk) familiar from part 6.

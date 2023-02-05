@@ -239,7 +239,7 @@ const Tasks = ({tasks}) => (
     <ul>
       {tasks.map(task =>
         <li key={task.id}>
-          <Link to={`/tasks/${task.id}`}>{task.content}</Link>
+          <Link to={`/tasks/${task.id}`}>{task.content}</Link> // highlight-line
         </li>
       )}
     </ul>

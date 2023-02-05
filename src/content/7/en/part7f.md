@@ -13,6 +13,7 @@ and [custom hooks](/part7/custom_hooks) sections of this seventh part of the cou
 Some of the following exercises are "features" that are independent of one another,
 meaning that there is no need to finish the exercises in any particular order.
 You are free to skip over a part of the exercises if you wish to do so.
+A few of these exercises are applying some of the advanced state management techniques from Redux, React Query and Context.
 
 If you do not want to use your Bloglist application, you are free to use the code from the model solution as a starting point for these exercises.
 
@@ -40,28 +41,37 @@ Prettier is easy to integrate into the code editor so that when the code is save
 
 Take Prettier to use in your app and configure it to work with your editor.
 
-#### 7.10: redux, step1
+### State Management
 
-Refactor the application from using the internal React component state to using Redux for the application's state management.
+For exercises 7.10-7.13, you can do the state management either by using:
 
-Change the application's notifications to use Redux at this point of the exercise set.
+- React Query and Context
+- Redux
 
-#### 7.11: redux, step2
+You can maximize your learning by doing both.
+
+#### 7.10: State Management, step1
+
+Refactor the application from using the internal React component state to using one of the above technologies for the application's state management.
+
+Change the application's notifications to use the state management at this point of the exercise set.
+
+#### 7.11: State Management, step2
 
 > The next two exercises are quite laborious but incredibly educational.
 
-Store the information about blog posts in the Redux store.
+Store the information about blog posts in one of the two state management solutions.
 In this exercise, it is enough that you can see the blogs in the backend and create a new blog.
 
 You are free to manage the state for logging in and creating new blog posts by using the internal state of React components.
 
-#### 7.12: redux, step3
+#### 7.12: State Management, step3
 
 Expand your solution so that it is again possible to like and delete a blog.
 
-#### 7.13: redux, step4
+#### 7.13: State Management, step4
 
-Store the information about the signed-in user in the Redux store.
+Store the information about the signed-in user via State Management.
 
 #### 7.14: Users view
 
