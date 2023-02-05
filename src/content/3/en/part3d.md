@@ -148,7 +148,7 @@ there are simple reasons for our programs behaving in ways that we were hoping w
 Your logs are vital to helping you analyze what could potentially be awry.
 
 You can find the code for our current application in its entirety in the *part3-6* branch of
-[this GitHub repository](https://github.com/comp227-hy2019/part3-tasks-backend/tree/part3-6).
+[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-6).
 
 </div>
 
