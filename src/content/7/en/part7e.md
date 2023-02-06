@@ -12,9 +12,9 @@ lang: en
 During the course, we have only used React components having been defined as Javascript functions.
 This was not possible without the [hook](https://reactjs.org/docs/hooks-intro.html) functionality that came with version 16.8 of React.
 Before, when defining a component that uses state, one had to define it using Javascript's
-[Class](https://reactjs.org/docs/state-and-lifecycle.html#converting-a-function-to-a-class) syntax.
+[`class`](https://reactjs.org/docs/state-and-lifecycle.html#converting-a-function-to-a-class) syntax.
 
-It is beneficial to at least be familiar with Class Components to some extent since the world contains a lot of old React code,
+We should at least be familiar with Class Components since the world contains a lot of old React code,
 which will probably never be completely rewritten using the updated syntax.
 
 Let's get to know the main features of Class Components by producing yet another very familiar joke application.
@@ -44,12 +44,12 @@ export default App
 ```
 
 The component now has a [constructor](https://reactjs.org/docs/react-component.html#constructor),
-in which nothing happens at the moment, and contains the method [render](https://reactjs.org/docs/react-component.html#render).
-As one might guess, render defines how and what is rendered to the screen.
+in which nothing happens at the moment, and contains the method [`render`](https://reactjs.org/docs/react-component.html#render).
+As one might guess, `render` defines how and what is rendered to the screen.
 
 Let's define a state for the list of jokes and the currently-visible joke.
 In contrast to when using the [useState](https://reactjs.org/docs/hooks-state.html) hook, Class Components only contain one state.
-So if the state is made up of multiple "parts", they should be stored as properties of the state.
+So if the state is made up of multiple *parts*, they should be stored as properties of the state.
 The state is initialized in the constructor:
 
 ```js
@@ -88,15 +88,17 @@ class App extends React.Component {
 ```
 
 The component state is in the instance variable `this.state`.
-The state is an object having two properties.
-`this.state.jokes` is the list of jokes and `this.state.current` is the index of the currently-shown joke.
+The state is an object having two properties:
 
-In Functional components, the right place for fetching data from a server is inside an [effect hook](https://reactjs.org/docs/hooks-effect.html),
+1. `this.state.jokes` is the list of jokes
+2. `this.state.current` is the index of the currently-shown joke.
+
+In Functional components, *the right place for fetching data from a server is inside an [**effect hook**](https://reactjs.org/docs/hooks-effect.html)*,
 which is executed when a component renders or less frequently if necessary, e.g. only in combination with the first render.
 
-The [lifecycle methods](https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class) of Class Components offer corresponding functionality.
+The [*lifecycle methods*](https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class) of Class Components offer corresponding functionality.
 The correct place to trigger the fetching of data from a server is inside the lifecycle method
-[componentDidMount](https://reactjs.org/docs/react-component.html#componentdidmount),
+[`componentDidMount`](https://reactjs.org/docs/react-component.html#componentdidmount),
 which is executed once right after the first time a component renders:
 
 ```js
@@ -118,15 +120,16 @@ class App extends React.Component {
   }
   // highlight-end
 
+  render() {
   // ...
 }
 ```
 
-The callback function of the HTTP request updates the component state using the method [setState](https://reactjs.org/docs/react-component.html#setstate).
+The callback function of the HTTP request updates the component state using the method [`setState`](https://reactjs.org/docs/react-component.html#setstate).
 The method only touches the keys that have been defined in the object passed to the method as an argument.
 The value for the key `current` remains unchanged.
 
-Calling the method setState always triggers the rerender of the Class Component, i.e. calling the method `render`.
+Calling the method *`setState` always triggers the rerender of the Class Component*, i.e. calling the method `render`.
 
 We'll finish off the component with the ability to change the shown joke.
 The following is the code for the entire component with the addition highlighted:
@@ -150,9 +153,7 @@ class App extends React.Component {
 
   // highlight-start
   handleClick = () => {
-    const current = Math.floor(
-      Math.random() * this.state.jokes.length
-    )
+    const current = Math.floor(Math.random() * this.state.jokes.length)
     this.setState({ current })
   }
   // highlight-end
@@ -187,7 +188,7 @@ const App = () => {
   },[])
 
   const handleClick = () => {
-    setCurrent(Math.round(Math.random() * (jokes.length - 1)))
+    setCurrent(Math.floor(Math.random() * jokes.length))
   }
 
   if (jokes.length === 0) {
@@ -205,28 +206,34 @@ const App = () => {
 ```
 
 In the case of our example, the differences were minor.
-The biggest difference between Functional components and Class components is mainly that the state of a Class component is a single object,
-and that the state is updated using the method `setState`,
-while in Functional components the state can consist of multiple different variables,
-with all of them having their own update function.
+The main differences are highlighted in this table.
+
+| Feature | State components | Functional Components |
+| :-- | :---- | :---- |
+| What is the state? | single object | multiple variables that each have a `useState` |
+| How's it updated? | via `setState` | via their separate `setXXXX` methods |
+| side effects? | lifecycle methods | various effect hooks |
 
 In some more advanced use cases, the effect hook offers a considerably better mechanism for controlling side effects compared to the lifecycle methods of Class Components.
 
 A notable benefit of using Functional components is not having to deal with the self-referencing `this` reference of the Javascript class.
 
-In my opinion, and the opinion of many others,
-Class Components offer little benefit over Functional components enhanced with hooks,
+Class Components arguably offer little benefit over Functional components enhanced with hooks,
 except for the so-called [error boundary](https://reactjs.org/docs/error-boundaries.html) mechanism,
-which currently (15th February 2021) isn't yet in use by functional components.
+which currently (5th February 2023) isn't yet in use by functional components.
 
-When writing fresh code, [there is no rational reason to use Class Components](https://reactjs.org/docs/hooks-faq.html#should-i-use-hooks-classes-or-a-mix-of-both)
+When writing fresh code, [React encourages us to switch to hooks](https://reactjs.org/docs/hooks-faq.html#should-i-use-hooks-classes-or-a-mix-of-both)
 if the project is using React with a version number 16.8 or greater.
 On the other hand, [there is currently no need to rewrite all old React code](https://reactjs.org/docs/hooks-faq.html#do-i-need-to-rewrite-all-my-class-components) as Functional components.
 
 ### Organization of code in React application
 
-In most applications, we followed the principle by which components were placed in the directory *components*,
-reducers were placed in the directory *reducers*, and the code responsible for communicating with the server was placed in the directory *services*.
+In most applications, we followed the principle by which:
+
+- components were placed in the directory *components*,
+- reducers were placed in the directory *reducers*,
+- the code responsible for communicating with the server was placed in the directory *services*.
+
 This way of organizing fits a smaller application just fine, but as the amount of components increases, better solutions are needed.
 There is no one correct way to organize a project.
 The article
@@ -238,36 +245,36 @@ provides some perspective on the issue.
 During the course, we have created the frontend and backend into separate repositories.
 This is a very typical approach.
 However, we did the deployment by [copying](/part3/deploying_app_to_internet#serving-static-files-from-the-backend) the bundled frontend code into the backend repository.
-A possibly better approach would have been to deploy the frontend code separately.
+A potentially better approach would have been to deploy the frontend code separately.
 Especially with applications created using Create React App,
 it is very straightforward thanks to the included [buildpack](https://github.com/mars/create-react-app-buildpack).
 
 Sometimes, there may be a situation where the entire application is to be put into a single repository.
 In this case, a common approach is to put the *package.json* and *webpack.config.js* in the root directory,
-as well as place the frontend and backend code into their own directories, e.g. *client* and *server*.
+as well as *place the frontend and backend code into their own directories*, e.g. *client* and *server*.
 
 [This repository](https://github.com/comp227/create-app) provides one possible starting point for the organization of "single repository code".
 
 ### Changes on the server
 
-If there are changes in the state on the server, e.g. when new blogs are added by other users to the bloglist service,
+If there are changes in the state on the server, e.g. when new shows are recommended by other users on the watchlist service,
 the React frontend we implemented during this course will not notice these changes until the page reloads.
 A similar situation arises when the frontend triggers a time-consuming computation in the backend.
-How do we reflect the results of the computation to the frontend?
+***How do we reflect the results of the computation to the frontend?***
 
-One way is to execute [polling](<https://en.wikipedia.org/wiki/Polling_(computer_science)>) on the frontend,
-meaning repeated requests to the backend API e.g. using the [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval) command.
+One way is to execute [**polling**](<https://en.wikipedia.org/wiki/Polling_(computer_science)>) on the frontend,
+meaning repeated requests to the backend API e.g. using the [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval) command.
 
-A more sophisticated way is to use [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
-which allow for establishing a two-way communication channel between the browser and the server.
-In this case, the browser does not need to poll the backend,
-and instead only has to define callback functions for situations when the server sends data about updating state using a WebSocket.
+A more sophisticated way is to use [**WebSockets**](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
+which establish a two-way communication channel between the browser and the server.
+With Websockets, the browser does not need to poll the backend.
+Instead the browser defines callback functions for when the server sends data about updating its state.
 
-WebSockets is an API provided by the browser, which is not yet fully supported on all browsers:
+WebSockets is an API provided by the browser, which has a fairly good adoption rate at this point:
 
 ![caniuse chart showing websockets not usable by all yet](../../images/7/31ea.png)
 
-Instead of directly using the WebSocket API, it is advisable to use the [Socket.io](https://socket.io/) library,
+To coverall all browsers, instead of directly using the WebSocket API, one could use the [Socket.io](https://socket.io/) library,
 which provides various **fallback** options in case the browser does not have full support for WebSockets.
 
 ### Virtual DOM
@@ -277,7 +284,7 @@ What is it all about? As mentioned in [part 0](/part0/fundamentals_of_web_apps#d
 browsers provide a [DOM API](https://developer.mozilla.org/fi/docs/DOM)
 through which the JavaScript running in the browser can modify the elements defining the appearance of the page.
 
-When a software developer uses React, they rarely or never directly manipulate the DOM.
+When a software developer uses React, they rarely manipulate the DOM.
 The function defining the React component returns a set of [React elements](https://reactjs.org/docs/glossary.html#elements).
 Although some of the elements look like normal HTML elements
 
@@ -292,22 +299,22 @@ The React elements defining the appearance of the components of the application 
 which is stored in system memory during runtime.
 
 With the help of the [ReactDOM](https://reactjs.org/docs/react-dom.html) library,
-the virtual DOM defined by the components is rendered to a real DOM that can be shown by the browser using the DOM API:
+the virtual DOM defined by the components is rendered to a real DOM that can be shown by the browser via the DOM API:
 
 ```js
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-When the state of the application changes, a ***new virtual DOM*** gets defined by the components.
+When the state of the application changes, a ***new virtual DOM gets defined by the components***.
 React has the previous version of the virtual DOM in memory and instead of directly rendering the new virtual DOM using the DOM API,
-React computes the optimal way to update the DOM (remove, add or modify elements in the DOM) such that the DOM reflects the new virtual DOM.
+*React computes the optimal way to update the DOM* (remove, add or modify elements in the DOM) such that the DOM reflects the new virtual DOM.
 
 ### On the role of React in applications
 
-In the material, we may not have put enough emphasis on the fact that React is primarily a library for managing the creation of views for an application.
-If we look at the traditional
-[Model View Controller pattern,](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
-then the domain of React would be **View**.
+In the material, we may not have put enough emphasis on the fact that *React is primarily a library for managing the creation of views for an application*.
+In a traditional
+[Model View Controller pattern](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
+React would be a **View**.
 React has a more narrow area of application than e.g. [Angular](https://angular.io/),
 which is an all-encompassing Frontend MVC framework.
 Therefore, React is not called a *framework*, but a **library**.
@@ -316,16 +323,18 @@ In small applications, data handled by the application is stored in the state of
 the state of the components can be thought of as **models** of an MVC architecture.
 
 However, MVC architecture is not usually mentioned when talking about React applications.
-Furthermore, if we are using Redux, then the applications follow the [Flux](https://facebook.github.io/flux/docs/in-depth-overview) architecture
+Furthermore, if we are using Redux, then our applications follow the [Flux](https://facebook.github.io/flux/docs/in-depth-overview) architecture
 and the role of React is even more focused on creating the views.
-The business logic of the application is handled using the Redux state and action creators.
+The business logic of the application is handled using the Redux state and its action creators.
 If we're using [Redux Thunk](/part6/communicating_with_server_in_a_redux_application#asynchronous-actions-and-redux-thunk) familiar from part 6,
 then the business logic can be almost completely separated from the React code.
 
 Because both React and [Flux](https://facebook.github.io/flux/docs/in-depth-overview) were created at Facebook,
-one could say that using React only as a UI library is the intended use case.
-Following the Flux architecture adds some overhead to the application, and if we're talking about a small application or prototype,
-it might be a good idea to use React "wrong", since [over-engineering](https://en.wikipedia.org/wiki/Overengineering) rarely yields an optimal result.
+one could say that using React only as a UI library is the intended use case, with Flux taking care of the logic.
+
+> Keep in mind that the Flux architecture adds some overhead to the application.
+So if we're making a small application or prototype,
+it's ok to use just React, since [over-engineering](https://en.wikipedia.org/wiki/Overengineering) rarely yields an optimal result.
 
 [Part 6](/part6/react_query_use_reducer_ja_contex) covers the newer trends of state management in React.
 React's hook functions `useReducer` and `useContext` provide a kind of lightweight version of Redux.
@@ -335,39 +344,48 @@ eliminating the need for a React application to store data retrieved from the se
 ### React/node-application security
 
 So far during the course, we have not touched on information security much.
-We do not have much time for this now either, but fortunately,
-there are other resources like a MOOC course [Securing Software](https://cybersecuritybase.mooc.fi/module-2.1) for this important topic.
+Unfortunately we don't have the space to give it its proper coverage in this course.
+Nonetheless, there are other courses here at Pacific and other MOOC courses like[Securing Software](https://cybersecuritybase.mooc.fi/module-2.1) for this important topic.
 
-We will, however, take a look at some things specific to this course.
+We will, however, take a look now at some security topics that relate to COMP 227.
 
 The Open Web Application Security Project, otherwise known as [OWASP](https://www.owasp.org),
 publishes an annual list of the most common security risks in Web applications.
 The most recent list can be found [here](https://owasp.org/www-project-top-ten/).
 The same risks can be found from one year to another.
+Let's review a couple of these threats.
 
-At the top of the list, we find **injection**, which means that e.g. text sent using a form in an application is interpreted completely differently than the software developer had intended.
-The most famous type of injection is probably [SQL injection](https://stackoverflow.com/questions/332365/how-does-the-sql-injection-from-the-bobby-tables-xkcd-comic-work).
+#### Security Threat - Injection
 
-For example, imagine that the following SQL query is executed in a vulnerable application:
+Near the top of the list, we find **injection**,
+which means that e.g. text sent using a form in an application is interpreted completely differently than the software developer had intended.
+The most famous type of injection is probably [SQL injection](https://bobby-tables.com).
+
+![xkcd bobby tables comic](https://imgs.xkcd.com/comics/exploits_of_a_mom.png)
+*From [xkcd](https://xkcd.com/327/)*
+
+In case you haven't seen many of the (great explanations out there) [https://www.explainxkcd.com/wiki/index.php/Little_Bobby_Tables],
+let's review.
+Imagine you have some form and you have this query for searching users.
 
 ```js
 let query = "SELECT * FROM Users WHERE name = '" + userName + "';"
 ```
 
-Now let's assume that a malicious user *Arto Hellas* would define their name as
+Now pretend our mischievous Powercat came in and typed this in your form.
 
 ```shell
-Arto Hell-as'; DROP TABLE Users; --
+Powercat'; DROP TABLE Users; --
 ```
 
 so that the name would contain a single quote `'`, which is the beginning and end character of a SQL string.
 As a result of this, two SQL operations would be executed, the second of which would destroy the database table `Users`:
 
 ```sql
-SELECT * FROM Users WHERE name = 'Arto Hell-as'; DROP TABLE Users; --'
+SELECT * FROM Users WHERE name = 'Powercat'; DROP TABLE Users; --'
 ```
 
-SQL injections are prevented using [parameterized queries](https://security.stackexchange.com/questions/230211/why-are-stored-procedures-and-prepared-statements-the-preferred-modern-methods-f).
+SQL injections can be prevented using [parameterized queries](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html#defense-option-1-prepared-statements-with-parameterized-queries).
 With them, user input isn't mixed with the SQL query, but the database itself inserts the input values at placeholders in the query (usually `?`).
 
 ```js
@@ -375,12 +393,14 @@ execute("SELECT * FROM Users WHERE name = ?", [userName])
 ```
 
 Injection attacks are also possible in NoSQL databases.
-However, mongoose prevents them by [sanitizing](https://zanon.io/posts/nosql-injection-in-mongodb) the queries.
-More on the topic can be found e.g. [here](https://web.archive.org/web/20220901024441/https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb.html).
+However, mongoose helps by [sanitizing](https://zanon.io/posts/nosql-injection-in-mongodb) the queries.
+More on the topic can be found e.g. [here](https://blog.websecurify.com/2014/08/hacking-nodejs-and-mongodb).
+
+#### Security Threat - XSS
 
 **Cross-site scripting (XSS)** is an attack where it is possible to inject malicious JavaScript code into a legitimate web application.
 The malicious code would then be executed in the browser of the victim.
-If we try to inject the following into e.g. the tasks application:
+If we try to inject the following into e.g. our initial demo application:
 
 ```html
 <script>
@@ -397,6 +417,8 @@ Some versions of React [have been vulnerable](https://medium.com/dailyjs/exploit
 The security holes have of course been patched, but there is no guarantee that there couldn't be anymore.
 
 One needs to remain vigilant when using libraries; if there are security updates to those libraries, it is advisable to update those libraries in one's applications.
+I would also recommend that you continue updating node.
+While we did not start that here, this is a good reason for using nvm, since we can more easily make the switch.
 Security updates for Express are found in the [library's documentation](https://expressjs.com/en/advanced/security-updates.html)
 and the ones for Node are found in [this blog](https://nodejs.org/en/blog/).
 
@@ -406,7 +428,7 @@ You can check how up-to-date your dependencies are using the command
 npm outdated --depth 0
 ```
 
-The one-year-old project that is used in [part 8](/part8) of this course already has quite a few outdated dependencies:
+A one-year-old project that is used in [part 8](/part8) of this course already has quite a few outdated dependencies:
 
 ![npm outdated output of patientor](../../images/7/33x.png)
 
@@ -460,21 +482,23 @@ $ patientor npm audit
 
 ... many lines removed ...
 
-url-parse  <1.5.2
-Severity: moderate
-Open redirect in url-parse - https://github.com/advisories/GHSA-hh27-ffr2-f2jc
+minimatch  <3.0.5
+Severity: high
+minimatch ReDoS vulnerability - https://github.com/advisories/GHSA-f8q6-p94x-37v3
 fix available via `npm audit fix`
-node_modules/url-parse
+node_modules/recursive-readdir/node_modules/minimatch
+  recursive-readdir  1.2.0 - 2.2.2
+  Depends on vulnerable versions of minimatch
+  node_modules/recursive-readdir
 
-ws  6.0.0 - 6.2.1 || 7.0.0 - 7.4.5
-Severity: moderate
-ReDoS in Sec-Websocket-Protocol header - https://github.com/advisories/GHSA-6fc8-4gx4-v693
-ReDoS in Sec-Websocket-Protocol header - https://github.com/advisories/GHSA-6fc8-4gx4-v693
+terser  5.0.0 - 5.14.1
+Severity: high
+Terser insecure use of regular expressions before v4.8.1 and v5.14.2 leads to ReDoS - https://github.com/advisories/GHSA-4wf5-vphf-c2xc
 fix available via `npm audit fix`
-node_modules/webpack-dev-server/node_modules/ws
-node_modules/ws
+node_modules/terser
 
-120 vulnerabilities (102 moderate, 16 high, 2 critical)
+14 vulnerabilities (13 high, 1 critical)
+
 
 To address issues that do not require attention, run:
   npm audit fix
@@ -490,30 +514,40 @@ Let's run `npm audit fix` as the report suggests:
 ```js
 $ npm audit fix
 
-+ mongoose@5.9.1
-added 19 packages from 8 contributors, removed 8 packages and updated 15 packages in 7.325s
-fixed 354 of 416 vulnerabilities in 20047 scanned packages
-  1 package update for 62 vulns involved breaking changes
-  (use `npm audit fix --force` to install breaking changes; or refer to `npm audit` for steps to fix these manually)
+added 9 packages, removed 2 packages, changed 31 packages, and audited 1345 packages in 4s
+// many lines removed
+
+6 high severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
 ```
 
-62 threats remain because, by default, `audit fix` does not update dependencies if their ***major*** version number has increased.
+6 threats remain because, by default, `audit fix` does not update dependencies if their ***major*** version number has increased.
 Updating these dependencies could lead to the whole application breaking down.
 
-The source for the critical bug is the library [immer](https://github.com/immerjs/immer)
+The source for the critical bug is the library [nth-check](https://www.npmjs.com/package/nth-check)
 
 ```js
-immer  <9.0.6
-Severity: critical
-Prototype Pollution in immer - https://github.com/advisories/GHSA-33f9-j839-rf8h
+nth-check  <2.0.1
+Severity: high
+Inefficient Regular Expression Complexity in nth-check - https://github.com/advisories/GHSA-rp65-9cf3-cjxr
 fix available via `npm audit fix --force`
-Will install react-scripts@5.0.0, which is a breaking change
+Will install react-scripts@2.1.3, which is a breaking change
 ```
 
-Running `npm audit fix --force` would upgrade the library version but would also upgrade the library *react-scripts* and that would potentially break down the development environment.
-So we will leave the library upgrades for later...
+Running `npm audit fix --force` would upgrade the library version but would also upgrade the library *react-scripts*.
+That could potentially break down our development environment, and could lead us into dependency hell.
+Another package manager that I think does a better job with managing securities and updates is [yarn](https://yarnpkg.com/), and in a future course revision we may use it.
+However, for now, we will leave the library upgrades for later...
 
-One of the threats mentioned in the list from OWASP is **Broken Authentication** and the related **Broken Access Control**.
+#### Security Threat - Broken Authentication/Access Control
+
+Two of the threats mentioned in the list from OWASP are:
+
+- **Idenfitication and Authentication Failures *(Broken Authentication)***
+- **Broken Access Control** (related)
+
 The token-based authentication we have been using is fairly robust if the application is being used on the traffic-encrypting HTTPS protocol.
 When implementing access control, one should e.g. remember to not only check a user's identity in the browser but also on the server.
 Bad security would be to prevent some actions to be taken only by hiding the execution options in the code of the browser.
@@ -539,7 +573,7 @@ and the directions in which Web development is heading.
 
 Sometimes, the [dynamic typing](https://developer.mozilla.org/en-US/docs/Glossary/Dynamic_typing) of JavaScript variables creates annoying bugs.
 In part 5, we talked briefly about [PropTypes](/part5/props_children_and_proptypes#prop-types):
-a mechanism which enables one to enforce type-checking for props passed to React components.
+a mechanism which allows one to enforce type-checking for props passed to React components.
 
 Lately, there has been a notable uplift in the interest in [static type checking](https://en.wikipedia.org/wiki/Type_system#Static_type_checking).
 At the moment, the most popular typed version of Javascript is [Typescript](https://www.typescriptlang.org/) which has been developed by Microsoft.
@@ -557,11 +591,12 @@ The rendering that is done on the server goes by the name: **server-side renderi
 
 One motivation for server-side rendering is Search Engine Optimization (SEO).
 Search engines have traditionally been very bad at recognizing JavaScript-rendered content.
-However, the tide might be turning, e.g. take a look at [this](https://www.javascriptstuff.com/react-seo/)
+However, the situation remains fluid and ever-changing.
+If you're interested, take a look at [this](https://www.javascriptstuff.com/react-seo/)
 and [this](https://medium.freecodecamp.org/seo-vs-react-is-it-neccessary-to-render-react-pages-in-the-backend-74ce5015c0c9).
 
 Of course, server-side rendering is not anything specific to React or even JavaScript.
-Using the same programming language throughout the stack in theory simplifies the execution of the concept because the same code can be run on both the front- and backend.
+Using the same programming language throughout the stack in theory simplifies the execution of the concept because the same code can be run on both the front and backend.
 
 Along with server-side rendering, there has been talk of so-called **isomorphic applications** and **universal code**,
 although there has been some debate about their definitions.
@@ -573,7 +608,7 @@ React and Node provide a desirable option for implementing an isomorphic applica
 
 Writing universal code directly using React is currently still pretty cumbersome.
 Lately, a library called [Next.js](https://github.com/vercel/next.js),
-which is implemented on top of React, has garnered much attention and is a good option for making universal applications.
+which is implemented on top of React, has garnered some attention and is an option for making universal applications.
 
 #### Progressive web apps
 
@@ -600,7 +635,7 @@ During this course, we have only scratched the surface of the server end of thin
 In our applications, we had a **monolithic** backend,
 meaning one application making up a whole and running on a single server, serving only a few API endpoints.
 
-As the application grows, the monolithic backend approach starts turning problematic both in terms of performance and maintainability.
+As an application grows, the monolithic backend approach starts turning problematic both in terms of performance and maintainability.
 
 A [microservice architecture](https://martinfowler.com/articles/microservices.html) or (**microservices**)
 is a way of composing the backend of an application from many separate, independent services,
@@ -608,15 +643,16 @@ which communicate with each other over the network.
 An individual microservice's purpose is to take care of a particular logical functional whole.
 In a pure microservice architecture, the services do not use a shared database.
 
-For example, the bloglist application could consist of two services: one handling the user and another taking care of the blogs.
+For example, the watchlist application could consist of two services: one handling the user and another taking care of the shows.
 The responsibility of the user service would be user registration and user authentication,
-while the blog service would take care of operations related to the blogs.
+while the show service would take care of operations related to the shows.
 
 The image below visualizes the difference between the structure of an application based on a microservice architecture and one based on a more traditional monolithic structure:
 
 ![microservices vs traditional approach diagram](../../images/7/36.png)
+*From [Oracle](https://docs.oracle.com/en/solutions/learn-architect-microservice/)*
 
-The role of the frontend (enclosed by a square in the picture) does not differ much between the two models.
+The role of the frontend does not differ much between the two models.
 There is often a so-called [API gateway](http://microservices.io/patterns/apigateway) between the microservices and the frontend,
 which provides an illusion of a more traditional "everything on the same server" API.
 [Netflix](https://medium.com/netflix-techblog/optimizing-the-netflix-api-5c9ac715cf19),
@@ -624,7 +660,8 @@ among others, uses this type of approach.
 
 Microservice architectures emerged and evolved for the needs of large internet-scale applications.
 The trend was set by Amazon far before the appearance of the term microservice.
-The critical starting point was an email sent to all employees in 2002 by Amazon CEO Jeff Bezos:
+[Tech folklore legend](https://nordicapis.com/the-bezos-api-mandate-amazons-manifesto-for-externalization/)
+point to a critical initial email that folks believe Jeff Bezos sent to all employees in 2002:
 
 > All teams will henceforth expose their data and functionality through service interfaces.
 >
@@ -644,7 +681,7 @@ That is to say, the team must plan and design to be able to expose the interface
 > Anyone who doesn’t do this will be fired.
 Thank you; have a nice day!
 
-Nowadays, one of the biggest forerunners in the use of microservices is [Netflix](https://www.infoq.com/presentations/netflix-chaos-microservices).
+Nowadays, one of the biggest proponents in the use of microservices is [Netflix](https://www.infoq.com/presentations/netflix-chaos-microservices).
 
 The use of microservices has steadily been gaining hype to be kind of a [silver bullet](https://en.wikipedia.org/wiki/No_Silver_Bullet) of today,
 which is being offered as a solution to almost every kind of problem.
@@ -652,10 +689,10 @@ However, there are several challenges when it comes to applying a microservice a
 and it might make sense to go [monolith first](https://martinfowler.com/bliki/MonolithFirst.html) by initially making a traditional all-encompassing backend.
 Or maybe [not](https://martinfowler.com/articles/dont-start-monolith.html).
 There are a bunch of different opinions on the subject.
-Both links lead to Martin Fowler's site; as we can see, even the wise are not entirely sure which one of the right ways is more right.
+Both links lead to famous software author Martin Fowler's site; as we can see, even the wise are not entirely sure which one of the right ways is more right.
 
-Unfortunately, we cannot dive deeper into this important topic during this course.
-Even a cursory look at the topic would require at least 5 more weeks.
+If you're interested in learning more about microservices, there are a [multitude or resources](https://www.google.com/search?q=how+to+learn+more+about+microservices+react)
+out there to help.
 
 #### Serverless
 
@@ -668,13 +705,13 @@ is that it enables *the execution of individual functions* in the cloud.
 Before, the smallest executable unit in the cloud was a single **process**, e.g. a runtime environment running a Node backend.
 
 e.g. Using Amazon's [API gateway](https://aws.amazon.com/api-gateway/)
-it is possible to make serverless applications where the requests to the defined HTTP API get responses directly from cloud functions.
+it is possible to make serverless applications where the requests to the defined HTTP API GET responses come directly from cloud functions.
 Usually, the functions already operate using stored data in the databases of the cloud service.
 
 Serverless is not about there not being a server in applications, but about how the server is defined.
-Software developers can shift their programming efforts to a higher level of abstraction
-as there is no longer a need to programmatically define the routing of HTTP requests,
-database relations, etc., since the cloud infrastructure provides all of this.
+*Software developers can shift their programming efforts to a higher level of abstraction.*
+There is no longer a need to programmatically define the routing of HTTP requests, database relations, etc.,
+since the cloud infrastructure provides all of this.
 Cloud functions also lend themselves to creating a well-scaling system,
 e.g. Amazon's Lambda can execute a massive amount of cloud functions per second.
 All of this happens automatically through the infrastructure and there is no need to initiate new servers, etc.
@@ -682,8 +719,8 @@ All of this happens automatically through the infrastructure and there is no nee
 ### Useful libraries and interesting links
 
 The JavaScript developer community has produced a large variety of useful libraries.
-If you are developing anything more substantial, it is worth it to check if existing solutions are already available.
-Below are listed some libraries recommended by trustworthy parties.
+If you are developing anything more substantial, you should check if existing solutions are already available.
+Below are some recommended libraries.
 
 If your application has to handle complicated data, [lodash](https://www.npmjs.com/package/lodash),
 which we recommended in [part 4](/part4/structure_of_backend_application_introduction_to_testing#exercises-4-3-4-7),
@@ -704,7 +741,7 @@ reducers must be pure functions, meaning they must not modify the store's state 
 [Redux-saga](https://redux-saga.js.org/) provides an alternative way to make asynchronous actions for
 [Redux Thunk](/part6/communicating_with_server_in_a_redux_application#asynchronous-actions-and-redux-thunk) familiar from part 6.
 Some embrace the hype and like it.
-I don't.
+I'm meh.
 
 For single-page applications, the gathering of analytics data on the interaction between the users and the page is
 [more challenging](https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications)
@@ -715,7 +752,7 @@ You can take advantage of your React know-how when developing mobile application
 [React Native](https://facebook.github.io/react-native/) library, which is the topic of [part 9](/part9) of the course.
 
 When it comes to the tools used for the management and bundling of JavaScript projects, the community has been very fickle.
-Best practices have changed rapidly (the years are approximations, nobody remembers that far back in the past):
+Best practices have changed rapidly (the years are approximations):
 
 - 2011 [Bower](https://www.npmjs.com/package/bower)
 - 2012 [Grunt](https://www.npmjs.com/package/grunt)
@@ -730,7 +767,7 @@ Currently, [Vite](https://vitejs.dev) tools, also simpler than Webpack,
 are gaining popularity - but their success can only be measured in the future.
 
 Another notable mention is the [Rome](https://rome.tools/) library, which aspires to be an all-encompassing toolchain to unify linter, compiler, bundler, and more.
-It is currently under heavy development since the initial commit earlier this year on Feb 27, but the outlook sure seems promising.
+It is currently under heavy development as the project just started in early 2021, but the outlook sure seems promising.
 
 The site <https://reactpatterns.com/> provides a concise list of best practices for React, some of which are already familiar from this course.
 Another similar list is [react bits](https://vasanthk.gitbooks.io/react-bits/).
