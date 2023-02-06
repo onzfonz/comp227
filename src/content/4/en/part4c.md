@@ -207,7 +207,7 @@ const taskSchema = new mongoose.Schema({
 
 In stark contrast to the conventions of relational databases, ***references are now stored in both documents***:
 
-- the `task` references the `user` who created it, and
+- the `task` references the `user` who created it
 - the `user` has an array of references to all of the `tasks` created by them.
 
 ### Creating users

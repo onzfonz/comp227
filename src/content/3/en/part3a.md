@@ -1159,7 +1159,7 @@ Middleware are functions that can be used for handling `request` and `response` 
 As a reminder, the json-parser we used earlier:
 
 - takes the raw data from the requests that are stored in the `request` object
-- parses it into a JavaScript object and
+- parses it into a JavaScript object
 - assigns it to the `request` object as a new property `body`.
 
 In practice, you can use several middlewares at the same time.

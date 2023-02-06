@@ -46,7 +46,7 @@ Our application will have features such as:
 
 - sorting and filtering reviewed repositories
 - registering a user
-- logging in and
+- logging in
 - creating a review for a repository.
 
 The backend for the application will be provided for us so that we can solely focus on the React Native development.

@@ -85,7 +85,7 @@ Variables' type can be inferred based on their assigned value and their usage.
 The type inference takes place when:
 
 - initializing variables and members
-- setting parameter default values, and
+- setting parameter default values
 - determining function return types.
 
 For example, consider the function `add`:

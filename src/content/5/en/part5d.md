@@ -9,7 +9,7 @@ lang: en
 
 So far we have:
 
-- tested the backend on an API level using integration tests and
+- tested the backend on an API level using integration tests
 - tested some frontend components using unit tests.
 
 Next, we will look into one way to test the [system as a whole](https://en.wikipedia.org/wiki/System_testing) using **End to End** (E2E) tests.

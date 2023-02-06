@@ -12,7 +12,7 @@ In this section, we will learn how to:
 
 - build user interfaces with React Native's core components
 - add style properties to these core components
-- transition between views, and
+- transition between views
 - manage the form's state efficiently.
 
 ### Core components
