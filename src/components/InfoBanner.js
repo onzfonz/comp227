@@ -49,7 +49,7 @@ const InfoBanner = ({ visible, onHide }) => {
         <a href="/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
           <span style={linkStyle}>here</span>!
         </a> */}
-        Part 2 is now up!  Remember to keep checking canvas and discord
+        Part 3 will be up soon!
       </div>
       <div style={buttonDiv}>
         <button style={buttonStyle} onClick={onHide}>
