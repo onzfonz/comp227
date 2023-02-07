@@ -710,6 +710,6 @@ and quite a lot of people consider it to be the best way of defining styles in R
 ### Exercises
 
 The exercises related to the topics presented here can be found at the end of this course material section in the exercise set
-[for extending the blog list application](/part7/exercises_extending_the_bloglist).
+[for extending the watchlist application](/part7/exercises_extending_the_watchlist).
 
 </div>
