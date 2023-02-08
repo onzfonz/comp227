@@ -19,12 +19,12 @@ module.exports = {
       d: 'Altering data in server',
       e: 'Adding styles to React app',
     },
-    // '3': {
-    //   a: 'Node.js and Express',
-    //   b: 'Deploying app to internet',
-    //   c: 'Saving data to MongoDB',
-    //   d: 'Validation and ESLint',
-    // },
+    '3': {
+      a: 'Node.js and Express',
+      b: 'Deploying app to internet',
+      c: 'Saving data to MongoDB',
+      d: 'Validation and ESLint',
+    },
     // '4': {
     //   a: 'Structure of backend application, introduction to testing',
     //   b: 'Testing the backend',
@@ -49,7 +49,7 @@ module.exports = {
     //   c: 'More about styles',
     //   d: 'Webpack',
     //   e: 'Class components, Miscellaneous',
-    //   f: 'games: extending the bloglist',
+    //   f: 'Exercises: extending the watchlist',
     // },
     // '8': {
     //   a: 'Background and introduction',
