@@ -729,6 +729,9 @@ If you prefer the functional programming style, you might consider using [ramda]
 
 If you are handling times and dates, [date-fns](https://github.com/date-fns/date-fns) offers good tools for that.
 
+If your application displays graphs, there are multiple options to choose from.
+Both [recharts](http://recharts.org/en-US/) and [highcharts](https://github.com/highcharts/highcharts-react) are well-recommended.
+
 [Formik](https://www.npmjs.com/package/formik) and [final-form](https://final-form.org/react/) can be used to handle forms more easily.
 If your application displays graphs, there are multiple options to choose from.
 Both [recharts](http://recharts.org/en-US/) and [highcharts](https://github.com/highcharts/highcharts-react) are well-recommended.

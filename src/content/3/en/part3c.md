@@ -770,8 +770,7 @@ just like we did in the chapter [Database configuration into its own module](/pa
 Change the backend so that new URLs are **saved to the database**.
 Verify that your frontend still works after the changes.
 
-At this point, you can choose to simply allow users to create all communities.
-At this stage, the communities application can have multiple entries for a group with the same name.
+For this exercise, you can allow communities to have the same name.
 
 </div>
 
