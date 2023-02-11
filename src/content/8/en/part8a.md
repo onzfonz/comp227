@@ -17,6 +17,9 @@ To support building large-scale JavaScript applications, TypeScript offers featu
 - compile-time type checking
 - code-level documentation.
 
+In this part, we will do a brief introduction providing a mostly high-level view of Typescript.
+We will get into actually working with TypeScript in the [next section](/part8/first_steps_with_type_script)
+
 ### Main principle
 
 TypeScript is a typed superset of JavaScript, and eventually, it's compiled into plain JavaScript code.
