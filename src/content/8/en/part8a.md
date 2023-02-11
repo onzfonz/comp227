@@ -7,7 +7,7 @@ lang: en
 
 <div class="content">
 
-TypeScript is a programming language designed for large-scale JavaScript development created by Microsoft.
+[TypeScript](https://www.typescriptlang.org/) is a programming language designed for large-scale JavaScript development created by Microsoft.
 For example, Microsoft's <i>Azure Management Portal</i> (1,2 million lines of code) and <i>Visual Studio Code</i> (300 000 lines of code) have both been written in TypeScript.
 To support building large-scale JavaScript applications, TypeScript offers features such as better development-time tooling, static code analysis, compile-time type checking and code-level documentation.
 
@@ -95,44 +95,6 @@ The return expression performs an addition of the parameters a and b.
 We can see that a and b are numbers based on their types.
 Thus, we can infer the return value to be of type *number*.
 
-As a more complex example, let's consider the code below.
-If you have not used TypeScript before, this example might be a bit complex.
-But do not worry, you can safely skip it for now.
-
-```js
-type CallsFunction = (callback: (result: string) => any) => void;
-
-const func: CallsFunction = (cb) => {
-  cb('done');
-  cb(1);
-}
-
-func((result) => {
-  return result;
-});
-```
-
-First, we have a declaration of a [type alias](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) called <i>CallsFunction</i>.
-*CallsFunction* is a function type with one parameter: *callback*.
-The parameter *callback* is of type function which takes a string parameter and returns [any](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any) value.
- As we will learn later in this part, *any* is a kind of "wildcard" type that can represent any type.
-Also, CallsFunction returns [void](https://www.typescriptlang.org/docs/handbook/2/functions.html#void) type.
-
-Next, we define the function *func* of type *CallsFunction*.
-From the function's type, we can infer that its parameter function *cb* will only accept a string argument.
-To demonstrate this, there is also an example where the parameter function is called with a numeric value, which will cause an error in TypeScript.
-
-Lastly, we call *func* giving it the following function as a parameter:
-
-```js
-(result) => {
-  return result;
-}
-```
-
-<!-- So despite not defining types for the parameter function, it is inferred from the calling context that the argument <i>result</i> is of the type string. -->
-Despite the types of the parameter function not being defined, we can infer from the calling context that the argument *result* is of type string.
-
 #### Type erasure
 
 TypeScript removes all type system constructs during compilation.
@@ -149,7 +111,6 @@ Output:
 let x;
 ```
 
-<!-- This means that at runtime, there is no information present that says that some variable x was declared as being of type SomeInterface. -->
 This means that no type information remains at runtime - nothing says that some variable x was declared as being of type *SomeType*.
 
 The lack of runtime type information can be surprising for programmers who are used to extensively using reflection or other metadata systems.
@@ -202,9 +163,9 @@ Otherwise, you might want to start by getting acquainted with TypeScript's [docu
 
 The type inference in TypeScript is pretty good but not quite perfect.
 Sometimes, you may feel like you have declared your types perfectly, but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
-In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting and type guards.
-Using type casting or type guards, you are giving your word to the compiler that the value <i>is</i> of the type that you declare.
-You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+In these cases, you might need to help the compiler out by doing something like an "extra" type check.
+One should be careful with type casting (that is quite often called type assertion) or type guards: when using those, you are giving your word to the compiler that the value <i>is</i> of the type that you declare.
+You might want to check out TypeScript's documentation regarding [type assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) and [type guarding/narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
 
 #### Mysterious type errors
 
