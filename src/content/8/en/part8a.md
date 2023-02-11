@@ -1,6 +1,6 @@
 ---
-mainImage: ../../../images/part-9.svg
-part: 9
+mainImage: ../../../images/part-8.svg
+part: 8
 letter: a
 lang: en
 ---
@@ -25,7 +25,7 @@ TypeScript consists of three separate, but mutually fulfilling parts:
 - The compiler
 - The language service
 
-![diagram of typescript components](../../images/9/1.png)
+![diagram of typescript components](../../images/8/1.png)
 
 The <i>language</i> consists of syntax, keywords and type annotations.
 The syntax is similar to but not the same as JavaScript syntax.

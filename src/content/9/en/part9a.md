@@ -1,6 +1,6 @@
 ---
-mainImage: ../../../images/part-10.svg
-part: 10
+mainImage: ../../../images/part-9.svg
+part: 9
 letter: a
 lang: en
 ---
@@ -39,7 +39,7 @@ Our application will have features such as, sorting and filtering reviewed repos
 The back end for the application will be provided for us so that we can solely focus on the React Native development.
 The final version of our application will look something like this:
 
-![Application preview](../../images/10/4.png)
+![Application preview](../../images/9/4.png)
 
 All the exercises in this part have to be submitted into <i>a single GitHub repository</i> which will eventually contain the entire source code of your application.
 There will be model solutions available for each section of this part which you can use to fill in incomplete submissions.
@@ -64,7 +64,7 @@ During this part, you will earn credits based on the number of exercises you com
 Completing <i>at least 25 exercises</i> in this part will earn you <i>2 credits</i>.
 Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
 
-![Submitting exercises for credits](../../images/10/23.png)
+![Submitting exercises for credits](../../images/9/23.png)
 
 **Note** that you need a registration to the corresponding course part for getting the credits registered, see [here](/en/part0/general_info#parts-and-completion) for more information.
 
@@ -100,7 +100,7 @@ npx expo install react-native-web@~0.18.7 react-dom@18.2.0 @expo/webpack-config@
 Now that our application has been initialized, open the created <i>rate-repository-app</i> directory with an editor such as [Visual Studio Code](https://code.visualstudio.com/).
 The structure should be more or less the following:
 
-![Project structure](../../images/10/1.png)
+![Project structure](../../images/9/1.png)
 
 We might spot some familiar files and directories such as <i>package.json</i> and <i>node_modules</i>.
 On top of those, the most relevant files are the <i>app.json</i> file which contains Expo-related configuration and <i>App.js</i> which is the root component of our application.
@@ -170,9 +170,9 @@ Now, every time you want to reopen your application in the Expo mobile app, you 
 
 <div class="tasks">
 
-### Exercise 10.1
+### Exercise 9.1
 
-#### Exercise 10.1: initializing the application
+#### Exercise 9.1: initializing the application
 
 Initialize your application with Expo command-line interface and set up the development environment either using an emulator or Expo's mobile app.
 It is recommended to try both and find out which development environment is the most suitable for you.
@@ -246,7 +246,7 @@ We will be adding our future code to the <i>src</i> directory but because we hav
 Also if possible integrate ESLint with your editor.
 If you are using Visual Studio Code you can do that by, going to the extensions section and checking that the ESLint extension is installed and enabled:
 
-![Visual Studio Code ESLint extensions](../../images/10/3.png)
+![Visual Studio Code ESLint extensions](../../images/9/3.png)
 
 The provided ESLint configuration contains only the basis for the configuration.
 Feel free to improve the configuration and add new plugins if you feel like it.
@@ -255,9 +255,9 @@ Feel free to improve the configuration and add new plugins if you feel like it.
 
 <div class="tasks">
 
-### Exercise 10.2
+### Exercise 9.2
 
-#### Exercise 10.2: setting up the ESLint
+#### Exercise 9.2: setting up the ESLint
 
 Set up ESLint in your project so that you can perform linter checks by running <em>npm run lint</em>.
 To get most of linting it is also recommended to integrate ESLint with your editor.
@@ -291,7 +291,7 @@ Inside the emulator or the Expo mobile app, open the developer menu by following
 From the developer menu, select <i>Debug remote JS</i> to connect to the debugger.
 Now, you should be able to see the application's component tree in the debugger:
 
-![React Native Debugger](../../images/10/24.png)
+![React Native Debugger](../../images/9/24.png)
 
 The debugger's <i>Console</i> tab displays the application's logs.
 Like in the browser's development tools, error messages and messages logged with the <em>console.log</em> method are displayed there.

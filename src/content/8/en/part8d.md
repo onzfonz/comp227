@@ -1,6 +1,6 @@
 ---
-mainImage: ../../../images/part-9.svg
-part: 9
+mainImage: ../../../images/part-8.svg
+part: 8
 letter: d
 lang: en
 ---
@@ -226,15 +226,15 @@ HTMLElement | null
 
 since if the function does not find the searched element, it will return null.
 
-Earlier in this part we [warned](http://localhost:8000/en/part9/first_steps_with_type_script#type-assertion) about the dangers of type assertions, but in our case the assertion is ok since we are sure that the file <i>index.html</i> indeed has this particular id and the function is always returning a HTMLElement.
+Earlier in this part we [warned](http://localhost:8000/en/part8/first_steps_with_type_script#type-assertion) about the dangers of type assertions, but in our case the assertion is ok since we are sure that the file <i>index.html</i> indeed has this particular id and the function is always returning a HTMLElement.
 
 </div>
 
 <div class="tasks">
 
-### Exercise 9.14
+### Exercise 8.14
 
-#### 9.14
+#### 8.14
 
 Create a new Create React App with TypeScript, and set up ESlint for the project similarly to how we just did.
 
@@ -456,7 +456,7 @@ If we eg. try to add the following to the array
 
 We will immediately see an error in the editor:
 
-![vscode error description is missing in type CoursePart](../../images/9/63new.png)
+![vscode error description is missing in type CoursePart](../../images/8/63new.png)
 
 Since our new entry has the attribute *kind* with value *"basic"* TypeScript knows that the entry is does not only have the type *CoursePart* but it is actually meant to be a *CoursePartBasic*.
 So here the attribute *kind* "narrows" the type of the entry from a more general to a more specific type that has a certain set of attributes.
@@ -497,7 +497,7 @@ How should we now use these types in our components?
 
 If we try to acess the objects in the array *courseParts: CoursePart[]* we notice that it is possibly to only access the attributes that are common to all the types in the union:
 
-![vscode giving us only common course parts](../../images/9/65new.png)
+![vscode giving us only common course parts](../../images/8/65new.png)
 
 And indeed, the TypeScript [documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#working-with-union-types) says this:
 
@@ -514,7 +514,7 @@ One handy way to narrow these kinds of types in TypeScript is to use *switch cas
 Once TypeScript has inferred that a variable is of union type and that each type in the union contain a certain literal attribute (in our case *kind*), we can use that as a type identifier.
 We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block:
 
-![vscode showing which properties available based on switch case type](../../images/9/64new.png)
+![vscode showing which properties available based on switch case type](../../images/8/64new.png)
 
 In the above example, TypeScript knows that a *part* has the type *CoursePart* and it can then infer that *part* is of either type *CoursePartBasic*, *CoursePartGroup* or *CoursePartBackround* based on the value of the attribute *kind*.
 
@@ -565,7 +565,7 @@ default:
 
 and remove the case that handles the type *CoursePartBackround*, we would see the following error:
 
-![vscode error cannot assign coursepartbackground to never](../../images/9/66new.png)
+![vscode error cannot assign coursepartbackground to never](../../images/8/66new.png)
 
 The error message says that
 
@@ -580,11 +580,11 @@ This tells us that something needs to be fixed.
 
 <div class="tasks">
 
-### Exercise 9.15
+### Exercise 8.15
 
-#### 9.15
+#### 8.15
 
-Let us now continue extending the app created in exercise 9.14.
+Let us now continue extending the app created in exercise 8.14.
 First, add the type information and replace the variable *courseParts* with the one from the example below.
 
 ```js
@@ -673,7 +673,7 @@ Do the necessary changes to *Content*, so that all attributes for the new course
 
 The result might look like the following:
 
-![browser showing half stack application development](../../images/9/45.png)
+![browser showing half stack application development](../../images/8/45.png)
 
 </div>
 
@@ -756,7 +756,7 @@ You will most likely read far more code than you are going to produce throughout
 
 ### Patientor frontend
 
-It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 9.8.-9.13](/en/part9/typing_the_express_app).
+It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/en/part8/typing_the_express_app).
 
 Before diving into the code, let us start both the frontend and the backend.
 
@@ -776,7 +776,7 @@ The frontend might also not need all the fields of a data object saved in the ba
 
 The folder structure looks as follows:
 
-![vscode folder structure for patientor](../../images/9/34a.png)
+![vscode folder structure for patientor](../../images/8/34a.png)
 
 As you would expect, there are currently two main components: *AddPatientModal* and *PatientListPage*.
 The <i>state</i> folder contains state handling for the frontend.
@@ -1038,7 +1038,7 @@ dispatch({ type: "SET_PATIENT_LIST", payload: patients });
 
 <div class="tasks">
 
-### Exercises 9.16-9.18
+### Exercises 8.16-8.18
 
 We will soon add a new type for our app, *Entry*, which represents a lightweight patient journal entry.
 It consists of a journal text, i.e. a *description*, a creation date, information regarding the specialist who created it and possible diagnosis codes.
@@ -1047,7 +1047,7 @@ Our naive implementation will be that a patient has an array of entries.
 
 Before going into this, let us do some preparatory work.
 
-#### 9.16: Patientor, step1
+#### 8.16: Patientor, step1
 
 Create an endpoint <i>/api/patients/:id</i>  that returns all of the patient information for one patient, including the array of patient entries that is still empty for all the patients.
 For the time being, expand the backend types as follows:
@@ -1072,9 +1072,9 @@ export type PublicPatient = Omit<Patient, 'ssn' | 'entries'>;  // highlight-line
 
 The response should look as follows:
 
-![browser showing entries blank array when accessing patient](../../images/9/38a.png)
+![browser showing entries blank array when accessing patient](../../images/8/38a.png)
 
-#### 9.17: Patientor, step2
+#### 8.17: Patientor, step2
 
 Create a page for showing a patient's full information in the frontend.
 
@@ -1094,7 +1094,7 @@ You might want to have a look at [part 7](/en/part7/react_router) if you don't y
 
 The result could look like this:
 
-![browser showing patientor with one patient](../../images/9/39x.png)
+![browser showing patientor with one patient](../../images/8/39x.png)
 
 Example uses [Material UI Icons](https://mui.com/components/material-icons/) to represent genders.
 
@@ -1104,7 +1104,7 @@ Example uses [Material UI Icons](https://mui.com/components/material-icons/) to 
 const { id } = useParams<{ id: string }>();
 ```
 
-#### 9.18: Patientor, step3
+#### 8.18: Patientor, step3
 
 Currently, we create *action* objects wherever we dispatch actions, e.g. the *App* component has the following:
 
@@ -1132,7 +1132,7 @@ dispatch(setPatientList(patientListFromApi));
 
 ### Full entries
 
-In [exercise 9.10](/en/part9/typing_the_express_app#exercises-9-10-9-11) we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
+In [exercise 8.10](/en/part8/typing_the_express_app#exercises-8-10-8-11) we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
 Since we now have a page for viewing a patient's information, it would be nice to expand our data a bit.
 Let's add an *Entry* field to our patient data so that a patient's data contains their medical entries, including possible diagnoses.
 
@@ -1265,18 +1265,18 @@ type EntryWithoutId = UnionOmit<Entry, 'id'>;
 
 <div class="tasks">
 
-### Exercises 9.19-9.22
+### Exercises 8.19-8.22
 
-#### 9.19: Patientor, step4
+#### 8.19: Patientor, step4
 
 Define the types *OccupationalHealthcareEntry* and *HospitalEntry* so that those conform with the example data.
 Ensure that your backend returns the entries properly when you go to an individual patient's route:
 
-![browser shoiwing entries json data properly for patient](../../images/9/40.png)
+![browser shoiwing entries json data properly for patient](../../images/8/40.png)
 
 Use types properly in the backend! For now, there is no need to do a proper validation for all the fields of the entries in the backend, it is enough e.g. to check that the field *type* has a correct value.
 
-#### 9.20: Patientor, step5
+#### 8.20: Patientor, step5
 
 Extend a patient's page in the frontend to list the *date*, *description* and *diagnoseCodes* of the patient's entries.
 
@@ -1285,16 +1285,16 @@ For these exercises, it is enough to just copy/paste the definitions from the ba
 
 Your solution could look like this:
 
-![browser showing list of diagnosis codes for patient](../../images/9/41.png)
+![browser showing list of diagnosis codes for patient](../../images/8/41.png)
 
-#### 9.21: Patientor, step6
+#### 8.21: Patientor, step6
 
 Fetch and add diagnoses to the application state from the <i>/api/diagnoses</i> endpoint.
 Use the new diagnosis data to show the descriptions for patient's diagnosis codes:
 
-![browser showing list of codes and their descriptions for patient ](../../images/9/42.png)
+![browser showing list of codes and their descriptions for patient ](../../images/8/42.png)
 
-#### 9.22: Patientor, step7
+#### 8.22: Patientor, step7
 
 Extend the entry listing on the patient's page to include the Entry's details with a new component that shows the rest of the information of the patient's entries distinguishing different types from each other.
 
@@ -1304,11 +1304,11 @@ You should use a *switch case*-based rendering and <i>exhaustive type checking</
 
 Like this:
 
-![vscode showing error for healthCheckEntry not being assignable to type never](../../images/9/35c.png)
+![vscode showing error for healthCheckEntry not being assignable to type never](../../images/8/35c.png)
 
 The resulting entries in the listing <i>could</i> look something like this:
 
-![browser showing list of entries and their details in a nicer format](../../images/9/36x.png)
+![browser showing list of entries and their details in a nicer format](../../images/8/36x.png)
 
 </div>
 
@@ -1646,9 +1646,9 @@ When in doubt, try reading the existing code to find clues on how to proceed!
 
 <div class="tasks">
 
-### Exercises 9.23-9.27
+### Exercises 8.23-8.27
 
-#### 9.23: Patientor, step8
+#### 8.23: Patientor, step8
 
 We have established that patients can have different kinds of entries.
 We don't yet have any way of adding entries to patients in our app, so, at the moment, it is pretty useless as an electronic medical record.
@@ -1657,7 +1657,7 @@ Your next task is to add endpoint <i>/api/patients/:id/entries</i> to your backe
 
 Remember that we have different kinds of entries in our app, so our backend should support all those types and check that at least all required fields are given for each type.
 
-#### 9.24: Patientor, step9
+#### 8.24: Patientor, step9
 
 Now that our backend supports adding entries, we want to add the corresponding functionality to the frontend.
 In this exercise, you should add a form for adding an entry to a patient.
@@ -1713,11 +1713,11 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
 
 With small tweaks on types, the readily made component *SelectField* can be used for the health check rating.
 
-#### 9.25: Patientor, step10
+#### 8.25: Patientor, step10
 
 Extend your solution so that it displays an error message if some required values are missing or formatted incorrectly.
 
-#### 9.26: Patientor, step11
+#### 8.26: Patientor, step11
 
 Extend your solution so that it supports <i>two</i> entry types and displays an error message if some required values are missing or formatted incorrectly.
 You do not need to care about possible errors in the server's response.
@@ -1743,7 +1743,7 @@ Note that if you need to alter the shown form based on user selections, you can 
 </Formik>
 ```
 
-#### 9.27: Patientor, step12
+#### 8.27: Patientor, step12
 
 Extend your solution so that it supports <i>all the entry types</i> and displays an error message if some required values are missing or formatted incorrectly.
 You do not need to care about possible errors in the server's response.

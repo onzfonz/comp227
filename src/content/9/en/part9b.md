@@ -1,6 +1,6 @@
 ---
-mainImage: ../../../images/part-10.svg
-part: 10
+mainImage: ../../../images/part-9.svg
+part: 9
 letter: b
 lang: en
 ---
@@ -139,9 +139,9 @@ After the application has been reloaded, automatic reloads should work without t
 
 <div class="tasks">
 
-### Exercise 10.3
+### Exercise 9.3
 
-#### Exercise 10.3: the reviewed repositories list
+#### Exercise 9.3: the reviewed repositories list
 
 In this exercise, we will implement the first version of the reviewed repositories list.
 The list should contain the repository's full name, description, language, number of forks, number of stars, rating average and number of reviews.
@@ -226,7 +226,7 @@ export default RepositoryList;
 Render the <em>RepositoryList</em> component in the <em>Main</em> component which we previously added to the <i>Main.jsx</i> file.
 The reviewed repository list should roughly look something like this:
 
-![Application preview](../../images/10/5.jpg)
+![Application preview](../../images/9/5.jpg)
 
 </div>
 
@@ -566,9 +566,9 @@ More on React Native's flexbox implementation can be read in the [documentation]
 
 <div class="tasks">
 
-### Exercises 10.4-10.5
+### Exercises 9.4-9.5
 
-#### Exercise 10.4: the app bar
+#### Exercise 9.4: the app bar
 
 We will soon need to navigate between different views in our application.
 That is why we need an [app bar](https://material.io/components/app-bars-top/) to display tabs for switching between different views.
@@ -599,13 +599,13 @@ Make the tab pressable by using the [Pressable](https://reactnative.dev/docs/pre
 Add the <em>AppBar</em> component to the <em>Main</em> component so that it is the uppermost component on the screen.
 The <em>AppBar</em> component should look something like this:
 
-![Application preview](../../images/10/6.jpg)
+![Application preview](../../images/9/6.jpg)
 
 The background color of the app bar in the image is <em>#24292e</em> but you can use any other color as well.
 It might be a good idea to add the app bar's background color into the theme configuration so that it is easy to change it if needed.
 Another good idea might be to separate the app bar's tab into a component like <em>AppBarTab</em> so that it is easy to add new tabs in the future.
 
-#### Exercise 10.5: polished reviewed repositories list
+#### Exercise 9.5: polished reviewed repositories list
 
 The current version of the reviewed repositories list looks quite grim.
 Modify the <i>RepositoryItem</i> component so that it also displays the repository author's avatar image.
@@ -614,7 +614,7 @@ Counts, such as the number of stars and forks, larger than or equal to 1000 shou
 This means that for example fork count of 8439 should be displayed as "8.4k".
 Also, polish the overall look of the component so that the reviewed repositories list looks something like this:
 
-![Application preview](../../images/10/7.jpg)
+![Application preview](../../images/9/7.jpg)
 
 In the image, the <em>Main</em> component's background color is set to <em>#e1e4e8</em> whereas <em>RepositoryItem</em> component's background color is set to <em>white</em>.
 The language tag's background color is <em>#0366d6</em> which is the value of the <em>colors.primary</em> variable in the theme configuration.
@@ -708,9 +708,9 @@ In this case, we want to navigate to the home view.
 
 <div class="tasks">
 
-### Exercises 10.6-10.7
+### Exercises 9.6-9.7
 
-#### Exercise 10.6: the sign-in view
+#### Exercise 9.6: the sign-in view
 
 We will soon implement a form, that a user can use to <i>sign in</i> to our application.
 Before that, we must implement a view that can be accessed from the app bar.
@@ -730,7 +730,7 @@ Set up a route for this <em>SignIn</em> component in the <em>Main</em> component
 Also, add a tab with the text "Sign in" to the app bar next to the "Repositories" tab.
 Users should be able to navigate between the two views by pressing the tabs (hint: you can use the React router's [Link](https://reactrouter.com/en/6.4.5/components/link-native) component).
 
-#### Exercise 10.7: scrollable app bar
+#### Exercise 9.7: scrollable app bar
 
 As we are adding more tabs to our app bar, it is a good idea to allow horizontal scrolling once the tabs won't fit the screen.
 The [ScrollView](https://reactnative.dev/docs/scrollview) component is just the right component for the job.
@@ -934,9 +934,9 @@ If your Formik forms use other input components, it is a good idea to implement 
 
 <div class="tasks">
 
-### Exercise 10.8
+### Exercise 9.8
 
-#### Exercise 10.8: the sign-in form
+#### Exercise 9.8: the sign-in form
 
 Implement a sign-in form to the <em>SignIn</em> component we added earlier in the <i>SignIn.jsx</i> file.
 The sign-in form should include two text fields, one for the username and one for the password.
@@ -954,7 +954,7 @@ You can use the [secureTextEntry](https://reactnative.dev/docs/textinput#securet
 
 The sign-in form should look something like this:
 
-![Application preview](../../images/10/19.jpg)
+![Application preview](../../images/9/19.jpg)
 
 </div>
 
@@ -1044,9 +1044,9 @@ const FormikTextInput = ({ name, ...props }) => {
 
 <div class="tasks">
 
-### Exercise 10.9
+### Exercise 9.9
 
-#### Exercise 10.9: validating the sign-in form
+#### Exercise 9.9: validating the sign-in form
 
 Validate the sign-in form so that both username and password fields are required.
 Note that the <em>onSubmit</em> callback implemented in the previous exercise, <i>should not be called</i> if the form validation fails.
@@ -1060,7 +1060,7 @@ You can use the value of the <em>error</em> prop to attach conditional styles to
 
 Here's what the sign-in form should roughly look like with an invalid field:
 
-![Application preview](../../images/10/8.jpg)
+![Application preview](../../images/9/8.jpg)
 
 The red color used in this implementation is <em>#d73a4a</em>.
 
@@ -1137,9 +1137,9 @@ Now, the Android bundle of the application will have the component defined in th
 
 <div class="tasks">
 
-### Exercise 10.10
+### Exercise 9.9
 
-#### Exercise 10.10: a platform-specific font
+#### Exercise 9.9: a platform-specific font
 
 Currently, the font family of our application is set to <i>System</i> in the theme configuration located in the <i>theme.js</i> file.
 Instead of the <i>System</i> font, use a platform-specific [Sans-serif](https://en.wikipedia.org/wiki/Sans-serif) font.
