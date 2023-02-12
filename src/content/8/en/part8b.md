@@ -679,7 +679,7 @@ Handle exceptions and errors appropriately.
 The exerciseCalculator should accept inputs of varied lengths.
 Determine by yourself how you manage to collect all needed input.
 
-Cople of things to notice:
+Couple of things to notice:
 
 If you define helper functions in other modules, you should use the
 [JavaScript module system](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules),
