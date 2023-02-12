@@ -46,9 +46,10 @@ From the three parts of TypeScript, programmers have the most direct contact wit
 
 The **compiler** is responsible for type information erasure (i.e. removing the typing information) and for code transformations.
 The code transformations enable TypeScript code to be transpiled into executable JavaScript.
-Everything related to the types is removed at compile-time, so ***TypeScript isn't genuine statically-typed code***.
+***Everything related to the types is removed at compile-time***.
+Even though TypeScript isn't statically-typed code in its *truest* form, it is often still referred to as a statically-typed language.
 
-Traditionally,  *compiling* means that code is transformed from a human-readable format to a machine-readable format.
+Traditionally, *compiling* means that code is transformed from a human-readable format to a machine-readable format.
 In TypeScript, human-readable source code is transformed into another human-readable source code, so the correct term would be **transpiling**.
 However, compiling has been the most commonly-used term in this context, so we will continue to use it.
 
@@ -95,23 +96,24 @@ Two types are considered to be **identical** if they are compatible with each ot
 
 The TypeScript compiler can *attempt to infer the type information if no type has been specified*.
 Variables' type can be inferred based on their assigned value and their usage.
-The type inference takes place when:
+
+The ***type inference takes place when***:
 
 - initializing variables and members
 - setting parameter default values
 - determining function return types.
 
-For example, consider the function `add`:
-
-```js
-const add = (a: number, b: number) => {
-  /* The return value is used to determine
-     the return type of the function */
-  return a + b;
-}
-```
-
-The type of the function's return value is inferred by retracing the code back to the return expression, `return a + b;`.
+> For example, consider the function `add`:
+>
+> ```js
+> const add = (a: number, b: number) => {
+>   /* The return value is used to determine
+>      the return type of the function */
+>   return a + b;
+> }
+> ```
+>
+> The type of the function's return value is inferred by retracing the code back to the return expression, `return a + b;`.
 We can see that `a` and `b` are numbers based on their types.
 Thus, we can infer the return value for `add` to be of type `number`.
 
@@ -123,7 +125,8 @@ TypeScript removes all type system constructs during compilation.
 |:--|:--|
 `let x: SomeType;`|`let x;`|
 
-This means that ***no type information remains at runtime*** - nothing says that some variable x was declared as being of type `SomeType`.
+This means that ***no type information remains at runtime***.
+After transpiling, you are left with `let x`, there is no longer any information about `x` having been of `SomeType`.
 
 The lack of runtime type information can be surprising for programmers who are used to extensively using reflection or other metadata systems.
 
@@ -131,7 +134,10 @@ The lack of runtime type information can be surprising for programmers who are u
 
 On different forums, you may stumble upon a lot of different arguments either for or against TypeScript.
 The truth is probably as vague as: it depends on your needs and use of the functions that TypeScript offers.
-However, I would advocate for its use - overall it helps constrain our wild tendencies as programmers to make bad decisions.
+However, I would advocate for its use - overall it helps constrain our wild tendencies as programmers to
+[*make*](https://xkcd.com/292/)
+[**bad**](https://inside.pacific.edu)
+[***decisions***](https://blog.devgenius.io/the-best-examples-of-bad-code-ive-come-across-production-mode-4f13e8d4de2).
 
 Below are some additional explanations on why you should use TypeScript.
 
@@ -173,12 +179,14 @@ These runtime errors are especially common when handling external input, such as
 
 When using external libraries, you may find that *some libraries have either missing or in some way invalid type declarations*.
 Most often, this is due to the library not being written in TypeScript,
-and the person adding the type declarations manually not doing such a good job with it.
-In these cases, ***you might need to define the type declarations yourself***.
+and the person adding the type declarations manually not doing a good enough job with it.
+In a few of these cases, ***you might need to define the type declarations yourself***.
 However, there is a good chance someone has already added typings for the package you are using.
 Always check the [DefinitelyTyped GitHub page](https://github.com/DefinitelyTyped/DefinitelyTyped) first.
 They are probably the most popular sources for type declaration files.
-Otherwise, you might want to start by getting acquainted with
+You may also want to peruse the PRs by searching for the library you are looking for to get more information on possible issues,
+as the community for generating these types is very active.
+As a final option, you could also get acquainted with
 [TypeScript's documentation](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html)
 regarding type declarations.
 
