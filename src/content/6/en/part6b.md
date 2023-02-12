@@ -408,11 +408,11 @@ The current version of the application can be found on [GitHub](https://github.c
 
 ### Exercise 6.9
 
-#### 6.9 Better anecdotes, step7
+#### 6.9 Better jokes, step7
 
-Implement filtering for the anecdotes that are displayed to the user.
+Implement filtering for the jokes that are displayed to the user.
 
-![browser showing filtering of anecdotes](../../images/6/9ea.png)
+![browser showing filtering of jokes](../../images/6/9ea.png)
 
 Store the state of the filter in the redux store.
 It is recommended to create a new reducer, action creators, and a combined reducer for the store using the `combineReducers` function.

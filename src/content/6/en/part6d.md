@@ -391,14 +391,14 @@ but also some solution for how the rest of the frontend state (e.g. the state of
 
 ### Exercises 6.20-6.22
 
-Now let's make a new version of the anecdote application that uses the React Query library.
-Take [this project](https://github.com/comp127/query-anecdotes) as your starting point.
+Now let's make a new version of the joke application that uses the React Query library.
+Take [this project](https://github.com/comp127/query-jokes) as your starting point.
 The project has a ready-installed JSON Server, the operation of which has been slightly modified.
 Start the server with `npm run server`.
 
 #### Exercise 6.20
 
-Implement retrieving anecdotes from the server using React Query.
+Implement retrieving jokes from the server using React Query.
 
 The application should work in such a way that if there are problems communicating with the server, only an error page will be displayed:
 
@@ -413,7 +413,7 @@ You can optionally specify that no retries are made:
 
 ```js
 const result = useQuery(
-  'anecdotes', getAnecdotes, 
+  'jokes', getJokes, 
   {
     retry: false
   }
@@ -424,7 +424,7 @@ or that the request is retried e.g. only once:
 
 ```js
 const result = useQuery(
-  'anecdotes', getAnecdotes, 
+  'jokes', getJokes, 
   {
     retry: 1
   }
@@ -433,15 +433,15 @@ const result = useQuery(
 
 #### Exercise 6.21
 
-Implement adding new anecdotes to the server using React Query.
-The application should render a new anecdote by default.
-Notice that the content of the anecdote must be at least 5 characters long, otherwise the server will reject the POST request.
+Implement adding new jokes to the server using React Query.
+The application should render a new joke by default.
+Notice that the content of the joke must be at least 5 characters long, otherwise the server will reject the POST request.
 You don't have to worry about error handling now.
 
 #### Exercise 6.22
 
-Implement voting for anecdotes using again the React Query.
-The application should automatically render the increased number of votes for the voted anecdote
+Implement voting for jokes using again the React Query.
+The application should automatically render the increased number of votes for the voted joke
 
 </div>
 
@@ -844,15 +844,15 @@ We will return to custom hooks in a little more detail in [part 7](/part7/custom
 The application has a `Notification` component for displaying notifications to the user.
 
 Implement the application's notification state management using the useReducer hook and context.
-The notification should tell the user when a new anecdote is created or an anecdote is voted on:
+The notification should tell the user when a new joke is created or an joke is voted on:
 
-![browser showing notification for added anecdote](../../images/6/66new.png)
+![browser showing notification for added joke](../../images/6/66new.png)
 
 The notification is displayed for five seconds.
 
 #### Exercise 6.24
 
-As stated in exercise 6.20, the server requires that the content of the anecdote to be added is at least 5 characters long.
+As stated in exercise 6.20, the server requires that the content of the joke to be added is at least 5 characters long.
 Now implement error handling for the insertion.
 In practice, it is sufficient to display a notification to the user in case of a failed POST request:
 
