@@ -8,13 +8,14 @@ lang: en
 <div class="content">
 
 So far, we have followed the state management conventions recommended by React.
-We have placed the state and the methods for handling it in [the root component](https://reactjs.org/docs/lifting-state-up.html) of the application.
+We have placed the state and the functions for handling it in [higher level](https://reactjs.org/docs/lifting-state-up.html) of the component structure of the application.
+Quite often most of the app state and state altering functions reside directly in the root component.
 The state and its handler methods have then been passed to other components with props.
 This works up to a certain point, but when applications grow larger, state management becomes challenging.
 
 ### Flux-architecture
 
-Facebook developed the [Flux](https://facebook.github.io/flux/docs/in-depth-overview/)- architecture to make state management easier.
+A few years back Facebook developed the [Flux](https://facebook.github.io/flux/docs/in-depth-overview/) architecture to make state management of React apps easier.
 In Flux, the state is separated from the React components and into its own **stores**.
 State in the store is not changed directly, but with different **actions**.
 
@@ -39,7 +40,7 @@ We will get to know Redux by implementing a counter application yet again:
 
 ![browser counter application](../../images/6/1.png)
 
-Create a new create-react-app-application and install </i>redux</i> with the command
+Create a new create-react-app-application and install *`redux`* with the command
 
 ```bash
 npm install redux
@@ -86,6 +87,8 @@ const counterReducer = (state, action) => {
 
 The first parameter is the `state` in the store.
 The reducer returns a ***new state*** based on the `action` type.
+So, here when the type of Action is *`INCREMENT`*, the state gets the old value plus one.
+If the type of Action is *`ZERO`* the new value of state is zero.
 
 Let's change the code a bit.
 We have used if-else statements to respond to an action and change the state.
@@ -248,7 +251,10 @@ const App = () => {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
-const renderApp = () => root.render(<App />)
+
+const renderApp = () => {
+  root.render(<App />)
+}
 
 renderApp()
 store.subscribe(renderApp)
@@ -263,6 +269,34 @@ Thus we have registered a function `renderApp`, which renders the whole app, to 
 Notice that we have to immediately call the `renderApp` method.
 Without the call, the first rendering of the app would never happen.
 
+### A notice about the use of `createStore`
+
+The most observant will notice that the name of the function createStore is overlined.
+If you move the mouse over the name, an explanation will appear
+
+![vscode error showing createStore deprecated and to use configureStore](../../images/6/30new.png)
+
+The full explanation is as follows
+
+>*We recommend using the `configureStore` method of the **@reduxjs/toolkit** package, which replaces `createStore`.*
+>
+>*Redux Toolkit is our recommended approach for writing Redux logic today, including store setup, reducers, data fetching, and more.*
+>
+>*For more details, please read this Redux docs page: <https://redux.js.org/introduction/why-rtk-is-redux-today>*
+>
+>*`configureStore` from Redux Toolkit is an improved version of `createStore` that simplifies setup and helps avoid common bugs.*
+>
+>*You should not be using the redux core package by itself today, except for learning purposes.
+The `createStore` method from the core redux package will not be removed, but we encourage all users to migrate to using Redux Toolkit for all Redux code.*
+
+So, instead of the function `createStore`, it is recommended to use the slightly more "advanced" function `configureStore`,
+and we will also use it when we have taken over the basic functionality of Redux.
+
+> An Aside: `createStore` is defined as "deprecated", which usually means that the feature will be removed in some newer version of the library.
+The explanation above and the discussion of [this one](https://stackoverflow.com/questions/71944111/redux-createstore-is-deprecated-cannot-get-state-from-getstate-in-redux-ac)
+reveal that `createStore` will not be removed, and it has been given the status `deprecated`, perhaps with slightly incorrect reasons.
+So the function is not obsolete, but today there is a more preferable, new way to do almost the same thing.
+
 ### Redux-tasks
 
 We aim to modify our task application to use Redux for state management.
@@ -272,8 +306,8 @@ The first version of our application is the following
 
 ```js
 const taskReducer = (state = [], action) => {
-  if (action.type === 'NEW_NOTE') {
-    state.push(action.data)
+  if (action.type === 'NEW_TASK') {
+    state.push(action.payload)
     return state
   }
 
@@ -283,8 +317,8 @@ const taskReducer = (state = [], action) => {
 const store = createStore(taskReducer)
 
 store.dispatch({
-  type: 'NEW_NOTE',
-  data: {
+  type: 'NEW_TASK',
+  payload: {
     content: 'the app state is in redux store',
     important: true,
     id: 1
@@ -292,8 +326,8 @@ store.dispatch({
 })
 
 store.dispatch({
-  type: 'NEW_NOTE',
-  data: {
+  type: 'NEW_TASK',
+  payload: {
     content: 'state changes are made with actions',
     important: false,
     id: 2
@@ -315,14 +349,14 @@ const App = () => {
 }
 ```
 
-So far the application does not have the functionality for adding new tasks, although it is possible to do so by dispatching `NEW_NOTE` actions.
+So far the application does not have the functionality for adding new tasks, although it is possible to do so by dispatching `NEW_TASK` actions.
 
-Now the actions have a type and a field `data`, which contains the task to be added:
+Now the actions have a type and a field `payload`, which contains the task to be added:
 
 ```js
 {
-  type: 'NEW_NOTE',
-  data: {
+  type: 'NEW_TASK',
+  payload: {
     content: 'state changes are made with actions',
     important: false,
     id: 2
@@ -330,14 +364,17 @@ Now the actions have a type and a field `data`, which contains the task to be ad
 }
 ```
 
+The choice of the field name is not random.
+The general convention is that actions have exactly two fields, `type` telling the type and `payload` containing the data included with the Action.
+
 ### Pure functions, immutable
 
 The initial version of the reducer is very simple:
 
 ```js
 const taskReducer = (state = [], action) => {
-  if (action.type === 'NEW_NOTE') {
-    state.push(action.data)
+  if (action.type === 'NEW_TASK') {
+    state.push(action.payload)
     return state
   }
 
@@ -346,7 +383,7 @@ const taskReducer = (state = [], action) => {
 ```
 
 The state is now an Array.
-*NEW_NOTE*-type actions cause a new task to be added to the state with the [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
+*NEW_TASK*-type actions cause a new task to be added to the state with the [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
 
 The application seems to be working, but the reducer we have declared is bad.
 It breaks the [basic assumption](https://redux.js.org/tutorials/essentials/part-1-overview-concepts#reducers) of Redux reducer
@@ -354,7 +391,7 @@ that reducers must be [pure functions](https://en.wikipedia.org/wiki/Pure_functi
 
 Pure functions are such, that they **do not cause any side effects** and they must always return the same response when called with the same parameters.
 
-We added a new task to the state with the method `state.push(action.data)` which ***changes*** the state of the state-object.
+We added a new task to the state with the method `state.push(action.payload)` which ***changes*** the state of the state-object.
 This is not allowed.
 The problem is easily solved by using the
 [concat method,](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)
@@ -363,8 +400,8 @@ which contains all the elements of the old array and the new element:
 
 ```js
 const taskReducer = (state = [], action) => {
-  if (action.type === 'NEW_NOTE') {
-    return state.concat(action.data)
+  if (action.type === 'NEW_TASK') {
+    return state.concat(action.payload)
   }
 
   return state
@@ -380,14 +417,14 @@ Let's expand our reducer so that it can handle the change of a task's importance
 ```js
 {
   type: 'TOGGLE_IMPORTANCE',
-  data: {
+  payload: {
     id: 2
   }
 }
 ```
 
 Since we do not have any code which uses this functionality yet, we are expanding the reducer in the 'test-driven' way.
-Let's start by creating a test for handling the action `NEW_NOTE`.
+Let's start by creating a test for handling the action `NEW_TASK`.
 
 To make testing easier, we'll first move the reducer's code to its own module to file *src/reducers/taskReducer.js*.
 We'll also add the library [deep-freeze](https://www.npmjs.com/package/deep-freeze),
@@ -405,11 +442,11 @@ import taskReducer from './taskReducer'
 import deepFreeze from 'deep-freeze'
 
 describe('taskReducer', () => {
-  test('returns new state with action NEW_NOTE', () => {
+  test('returns new state with action NEW_TASK', () => {
     const state = []
     const action = {
-      type: 'NEW_NOTE',
-      data: {
+      type: 'NEW_TASK',
+      payload: {
         content: 'the app state is in redux store',
         important: true,
         id: 1
@@ -420,7 +457,7 @@ describe('taskReducer', () => {
     const newState = taskReducer(state, action)
 
     expect(newState).toHaveLength(1)
-    expect(newState).toContainEqual(action.data)
+    expect(newState).toContainEqual(action.payload)
   })
 })
 ```
@@ -448,7 +485,7 @@ test('returns new state with action TOGGLE_IMPORTANCE', () => {
 
   const action = {
     type: 'TOGGLE_IMPORTANCE',
-    data: {
+    payload: {
       id: 2
     }
   }
@@ -473,7 +510,7 @@ So the following action
 ```js
 {
   type: 'TOGGLE_IMPORTANCE',
-  data: {
+  payload: {
     id: 2
   }
 }
@@ -486,10 +523,10 @@ The reducer is expanded as follows
 ```js
 const taskReducer = (state = [], action) => {
   switch(action.type) {
-    case 'NEW_NOTE':
-      return state.concat(action.data)
+    case 'NEW_TASK':
+      return state.concat(action.payload)
     case 'TOGGLE_IMPORTANCE': {
-      const id = action.data.id
+      const id = action.payload.id
       const taskToChange = state.find(t => t.id === id)
       const changedTask = { 
         ...taskToChange, 
@@ -544,8 +581,8 @@ by using the JavaScript [array spread](https://developer.mozilla.org/en-US/docs/
 ```js
 const taskReducer = (state = [], action) => {
   switch(action.type) {
-    case 'NEW_NOTE':
-      return [...state, action.data]
+    case 'NEW_TASK':
+      return [...state, action.payload]
     case 'TOGGLE_IMPORTANCE':
       // ...
     default:
@@ -707,8 +744,9 @@ example above.
 
 Now implement the actual functionality of the application.
 
-Notice that since all the code is in the file *index.js* and you might need to manually reload the page after each change
-since the automatic reloading of the browser content does not always work for that file!
+Your application can have a modest appearance, nothing else is needed but buttons and the number of reviews for each type:
+
+![screenshot of studytracker with buttons](../../images/6/50new.png)
 
 </div>
 
@@ -728,33 +766,38 @@ const App = () => {
     const content = event.target.task.value
     event.target.task.value = ''
     store.dispatch({
-      type: 'NEW_NOTE',
-      data: {
+      type: 'NEW_TASK',
+      payload: {
         content,
         important: false,
         id: generateId()
       }
     })
   }
+    // highlight-end
 
+  // highlight-start
   const toggleImportance = (id) => {
     store.dispatch({
       type: 'TOGGLE_IMPORTANCE',
-      data: { id }
+      payload: { id }
     })
   }
+    // highlight-end
 
   return (
     <div>
+      // highlight-start
       <form onSubmit={addTask}>
         <input name="task" /> 
         <button type="submit">add</button>
       </form>
+        // highlight-end
       <ul>
         {store.getState().map(task =>
           <li
             key={task.id} 
-            onClick={() => toggleImportance(task.id)}
+            onClick={() => toggleImportance(task.id)} // highlight-line
           >
             {task.content} <strong>{task.important ? 'important' : ''}</strong>
           </li>
@@ -782,8 +825,8 @@ addTask = (event) => {
   const content = event.target.task.value  // highlight-line
   event.target.task.value = ''
   store.dispatch({
-    type: 'NEW_NOTE',
-    data: {
+    type: 'NEW_TASK',
+    payload: {
       content,
       important: false,
       id: generateId()
@@ -809,7 +852,7 @@ The event handler is very simple:
 toggleImportance = (id) => {
   store.dispatch({
     type: 'TOGGLE_IMPORTANCE',
-    data: { id }
+    payload: { id }
   })
 }
 ```
@@ -825,8 +868,8 @@ Let's separate creating actions into separate functions:
 ```js
 const createTask = (content) => {
   return {
-    type: 'NEW_NOTE',
-    data: {
+    type: 'NEW_TASK',
+    payload: {
       content,
       important: false,
       id: generateId()
@@ -837,7 +880,7 @@ const createTask = (content) => {
 const toggleImportanceOf = (id) => {
   return {
     type: 'TOGGLE_IMPORTANCE',
-    data: { id }
+    payload: { id }
   }
 }
 ```
@@ -888,11 +931,10 @@ Let's see how this affects the rest of the application files.
 ```js
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-
-import App from './App'
-
 import { createStore } from 'redux'
 import { Provider } from 'react-redux' // highlight-line
+
+import App from './App'
 import taskReducer from './reducers/taskReducer'
 
 const store = createStore(taskReducer)
@@ -920,8 +962,8 @@ const generateId = () =>
 
 export const createTask = (content) => { // highlight-line
   return {
-    type: 'NEW_NOTE',
-    data: {
+    type: 'NEW_TASK',
+    payload: {
       content,
       important: false,
       id: generateId()
@@ -932,7 +974,7 @@ export const createTask = (content) => { // highlight-line
 export const toggleImportanceOf = (id) => { // highlight-line
   return {
     type: 'TOGGLE_IMPORTANCE',
-    data: { id }
+    payload: { id }
   }
 }
 
@@ -1017,7 +1059,7 @@ Previously the code dispatched actions by calling the dispatch method of the Red
 ```js
 store.dispatch({
   type: 'TOGGLE_IMPORTANCE',
-  data: { id }
+  payload: { id }
 })
 ```
 
@@ -1076,6 +1118,8 @@ We could for example return only tasks marked as important:
 const importantTasks = useSelector(state => state.filter(task => task.important))  
 ```
 
+The current version of the application can be found on [GitHub](https://github.com/comp127/redux-tasks/tree/part6-0), branch *part6-0*.
+
 ### More components
 
 Let's separate creating a new task into a component.
@@ -1084,7 +1128,7 @@ Let's separate creating a new task into a component.
 import { useDispatch } from 'react-redux' // highlight-line
 import { createTask } from '../reducers/taskReducer' // highlight-line
 
-const NewTask = (props) => {
+const NewTask = () => {
   const dispatch = useDispatch() // highlight-line
 
   const addTask = (event) => {

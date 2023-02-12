@@ -7,9 +7,9 @@ lang: en
 
 <div class="content">
 
-TypeScript is a programming language designed for large-scale JavaScript development created by Microsoft.
+[TypeScript](https://www.typescriptlang.org/) is a programming language designed for large-scale JavaScript development created by Microsoft.
 For example, Microsoft's [*Azure Management Portal*](https://github.com/Azure/api-management-developer-portal) (1.2 million lines of code)
-and [*Visual Studio Code*](https://github.com/microsoft/vscode) (300 000 lines of code) have both been written in TypeScript.
+and [*Visual Studio Code*](https://github.com/microsoft/vscode) (300k lines of code) have both been written in TypeScript.
 To support building large-scale JavaScript applications, TypeScript offers features such as:
 
 - better development-time tooling
@@ -115,48 +115,6 @@ The type of the function's return value is inferred by retracing the code back t
 We can see that `a` and `b` are numbers based on their types.
 Thus, we can infer the return value for `add` to be of type `number`.
 
-As a more complex example, let's consider the code below.
-If you have not used TypeScript before, this example might be a bit complex.
-But do not worry, just review and cycle back again at the end of the section..
-
-```js
-type CallsFunction = (callback: (result: string) => any) => void;
-
-const func: CallsFunction = (cb) => {
-  cb('done');
-  cb(1);
-}
-
-func((result) => {
-  return result;
-});
-```
-
-First, we have a declaration of a [**type alias**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) called `CallsFunction`.
-Think of a type alias as a way to store a specific type in a variable.
-Type alias `CallsFunction` is a function type with one parameter: `callback`.
-The parameter `callback` is of type ***`function`*** which takes a `string` parameter
-and returns [`any`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any) value.
-As we will learn later in this part, `any` is a kind of "wildcard" type that can represent *any* type.
-Also, `CallsFunction` returns [`void`](https://www.typescriptlang.org/docs/handbook/2/functions.html#void) type.
-
-Next, we define the function `func` of type `CallsFunction`.
-From the function's type, ***we can infer that its parameter function `cb` will only accept a `string` argument***.
-To demonstrate this, you could try call `cb(1)`, as we try in the code above.
-That call will cause an error in TypeScript.
-
-Lastly, we call `func` giving it the following function as a parameter:
-
-```js
-(result) => {
-  return result;
-}
-```
-
-Despite the types of the parameter function not being defined, ***we can infer from the calling context that the argument `result` is of type `string`.***
-
-It may make sense to look through this part one more time to help you follow along, or to review once more before you start the exercises.
-
 #### Type erasure
 
 TypeScript removes all type system constructs during compilation.
@@ -229,10 +187,10 @@ regarding type declarations.
 The type inference in TypeScript is pretty good but not quite perfect.
 Sometimes, you may feel like you have declared your types perfectly,
 but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
-In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting and type guards.
-In using type casting or type guards, *you are giving your word to the compiler that the **value is of the type** that you declare*.
-You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
-and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
+In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting (aka type assesertion) or type guards.
+When using those, *you are giving your word to the compiler that the **value is of the type** that you declare*.
+You might want to check out TypeScript's documentation regarding [type assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
+and [type guarding/narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
 
 #### Mysterious type errors
 

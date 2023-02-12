@@ -104,7 +104,7 @@ However, a better solution in this situation is to define a new separate reducer
 const filterReducer = (state = 'ALL', action) => {
   switch (action.type) {
     case 'SET_FILTER':
-      return action.filter
+      return action.payload
     default:
       return state
   }
@@ -116,7 +116,7 @@ The actions for changing the state of the filter look like this:
 ```js
 {
   type: 'SET_FILTER',
-  filter: 'IMPORTANT'
+  payload: 'IMPORTANT'
 }
 ```
 
@@ -131,7 +131,7 @@ const filterReducer = (state = 'ALL', action) => {
 export const filterChange = filter => {
   return {
     type: 'SET_FILTER',
-    filter,
+    payload: filter,
   }
 }
 
@@ -163,13 +163,17 @@ const store = createStore(reducer)
 
 console.log(store.getState())
 
+/*
 ReactDOM.createRoot(document.getElementById('root')).render(
-  /*
   <Provider store={store}>
     <App />
-  </Provider>,
-  */
-  <div />
+  </Provider>
+)*/
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <div />
+  </Provider>
 )
 ```
 
@@ -396,6 +400,49 @@ There is a slight cosmetic flaw in our application.
 Even though the filter is set to *`ALL`* by default, the associated radio button is not selected.
 Naturally, this issue can be fixed, but since this is an unpleasant but ultimately harmless bug we will save the fix for later.
 
+The current version of the application can be found on [GitHub](https://github.com/comp127/redux-tasks/tree/part6-2), branch *part6-2*.
+
+</div>
+
+<div class="tasks">
+
+### Exercise 6.9
+
+#### 6.9 Better jokes, step7
+
+Implement filtering for the jokes that are displayed to the user.
+
+![browser showing filtering of jokes](../../images/6/9ea.png)
+
+Store the state of the filter in the redux store.
+It is recommended to create a new reducer, action creators, and a combined reducer for the store using the `combineReducers` function.
+
+Create a new `Filter` component for displaying the filter.
+You can use the following code as a template for the component:
+
+```js
+const Filter = () => {
+  const handleChange = (event) => {
+    // input-field value is in variable event.target.value
+  }
+  const style = {
+    marginBottom: 10
+  }
+
+  return (
+    <div style={style}>
+      filter <input onChange={handleChange} />
+    </div>
+  )
+}
+
+export default Filter
+```
+
+</div>
+
+<div class="content">
+
 ### Redux Toolkit
 
 As we have seen so far, Redux's configuration and state management implementation requires quite a lot of effort.
@@ -564,7 +611,7 @@ The imports in other files will work just as they did before:
 import taskReducer, { createTask, toggleImportanceOf } from './reducers/taskReducer'
 ```
 
-We need to alter the tests a bit due to the naming conventions of ReduxToolkit:
+We need to alter the action type names in the tests due to the conventions of ReduxToolkit:
 
 ```js
 import taskReducer from './taskReducer'
@@ -582,7 +629,7 @@ describe('taskReducer', () => {
     const newState = taskReducer(state, action)
 
     expect(newState).toHaveLength(1)
-    expect(newState.map(s => s.content)).toContainEqual(action.payload) // highlight-line
+    expect(newState.map(s => s.content)).toContainEqual(action.payload)
   })
 
   test('returns new state with action tasks/toggleImportanceOf', () => {
@@ -600,7 +647,7 @@ describe('taskReducer', () => {
   
     const action = {
       type: 'tasks/toggleImportanceOf', // highlight-line
-      payload: 2 // highlight-line
+      payload: 2 
     }
   
     deepFreeze(state)
@@ -619,6 +666,55 @@ describe('taskReducer', () => {
 })
 ```
 
+### Redux Toolkit and console.log
+
+As we have learned, console.log is an extremely powerful tool, it usually always saves us from trouble.
+
+Let's try to print the state of the Redux Store to the console in the middle of the reducer created with the function createSlice:
+
+```js
+const taskSlice = createSlice({
+  name: 'tasks',
+  initialState,
+  reducers: {
+    // ...
+    toggleImportanceOf(state, action) {
+      const id = action.payload
+
+      const taskToChange = state.find(n => n.id === id)
+
+      const changedTask = { 
+        ...taskToChange, 
+        important: !taskToChange.important 
+      }
+
+      console.log(state) // highlight-line
+
+      return state.map(task =>
+        task.id !== id ? task : changedTask 
+      )     
+    }
+  },
+})
+```
+
+The following is printed to the console
+
+![browser showing tasks array and proxy on console](../../images/6/40new.png)
+
+The output is interesting but not very useful.
+This is about the previously mentioned Immer library used by the Redux Toolkit, which is now used internally to save the state of the Store.
+
+The status can be converted to a human-readable format, e.g. by converting it to a string and back to a JavaScript object as follows:
+
+```js
+console.log(JSON.parse(JSON.stringify(state))) // highlight-line
+```
+
+Console output is now human readable
+
+![browser showing console with content from lists](../../images/6/41new.png)
+
 ### Redux DevTools
 
 [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) is a Chrome addon that offers useful development tools for Redux.
@@ -627,7 +723,7 @@ When the store is created using Redux Toolkit's `configureStore` function, no ad
 
 Once the addon is installed, clicking the ***Redux*** tab in the browser's console should open the development tools:
 
-![browser with redux addon in devtools](../../images/6/11ea.png)
+![browser with redux addon in devtools](../../images/6/42new.png)
 
 You can inspect how dispatching a certain action changes the state by clicking the action:
 
@@ -637,24 +733,30 @@ It is also possible to dispatch actions to the store using the development tools
 
 ![devtools redux dispatching createTask with payload](../../images/6/13ea.png)
 
-You can find the code for our current application in its entirety in the *part6-2* branch of
-[this GitHub repository](https://github.com/comp227/redux-tasks/tree/part6-2).
+You can find the code for our current application in its entirety in the *part6-3* branch of [this GitHub repository](https://github.com/comp227/redux-tasks/tree/part6-3).
 
 </div>
 
 <div class="tasks">
 
-### Exercises 6.9-6.12
+### Exercises 6.10-6.13
 
 Let's continue working on the joke application using Redux that we started in exercise 6.3.
 
-#### 6.9 Better jokes, step7
+#### 6.10 Better jokes, step8
 
 Install Redux Toolkit for the project.
 Move the Redux store creation into the file *store.js* and use Redux Toolkit's `configureStore` to create the store.
+
+Change the definition of the ***filter reducer and action creators*** to use the Redux Toolkit's `createSlice` function.
+
 Also, start using Redux DevTools to debug the application's state easier.
 
-#### 6.10 Better jokes, step8
+#### 6.11 Better jokes, step9
+
+Change also the definition of the ***joke reducer and action creators*** to use the Redux Toolkit's `createSlice` function.
+
+#### 6.12 Better jokes, step10
 
 The application has a ready-made body for the `Notification` component:
 
@@ -697,49 +799,16 @@ const Notification = () => {
 
 You will have to make changes to the application's existing reducer.
 Create a separate reducer for the new functionality by using the Redux Toolkit's `createSlice` function.
-Also, refactor the application so that it uses a combined reducer as shown in this part of the course material.
 
 The application does not have to use the `Notification` component intelligently at this point in the exercises.
 It is enough for the application to display the initial value set for the message in the `notificationReducer`.
 
-#### 6.11 Better jokes, step9
+#### 6.13 Better jokes, step11
 
 Extend the application so that it uses the `Notification` component to display a message for five seconds when the user votes for a joke or creates a new joke:
 
 ![browser showing message of having voted](../../images/6/8ea.png)
 
 It's recommended to create separate [action creators](https://redux-toolkit.js.org/api/createSlice#reducers) for setting and removing notifications.
-
-#### 6.12* Better jokes, step10
-
-Implement filtering for the jokes that are displayed to the user.
-
-![browser showing filtering of jokes](../../images/6/9ea.png)
-
-Store the state of the filter in the redux store.
-It is recommended to create a new reducer and action creators for this purpose.
-Implement the reducer and action creators using the Redux Toolkit's `createSlice` function.
-
-Create a new `Filter` component for displaying the filter.
-You can use the following code as a template for the component:
-
-```js
-const Filter = () => {
-  const handleChange = (event) => {
-    // input-field value is in variable event.target.value
-  }
-  const style = {
-    marginBottom: 10
-  }
-
-  return (
-    <div style={style}>
-      filter <input onChange={handleChange} />
-    </div>
-  )
-}
-
-export default Filter
-```
 
 </div>

@@ -134,15 +134,18 @@ We can do that by altering our lint command in *package.json* to the following:
 }
 ```
 
-If you are using Windows, you may need to use double quotes for the linting path: `"lint": "eslint \"./src/**/*.{ts,tsx}\""`.
+If you are using Windows, you may need to use double quotes for the linting path:
+
+```json
+"lint": "eslint \"./src/**/*.{ts,tsx}\""
+```
 
 ### React components with TypeScript
 
 Let us consider the following JavaScript React example:
 
 ```jsx
-import React from "react";
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'
 import PropTypes from "prop-types";
 
 const Welcome = props => {
@@ -153,8 +156,9 @@ Welcome.propTypes = {
   name: PropTypes.string
 };
 
-const element = <Welcome name="Sara" />;
-ReactDOM.render(element, document.getElementById("root"));
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <Welcome name="Sarah" />
+)
 ```
 
 In this example, we have a component called `Welcome` to which we pass a `name` as a prop.
@@ -165,71 +169,76 @@ and we use the [prop-types](https://www.npmjs.com/package/prop-types) package in
 
 With TypeScript, we don't need the ***prop-types*** package anymore.
 We can define the types with the help of TypeScript just like we define types for a regular function as react components are nothing but mere functions.
-We will use an interface for the parameter types (i.e., props) and `JSX.Element` as the return type for any react component.
-
-For example:
+We will use an interface for the parameter types (i.e., props) and `JSX.Element` as the return type for any react component:
 
 ```jsx
-const MyComp1 = () => {
-  // TypeScript automatically infers the return type of this function 
-  // (i.e., a react component) as `JSX.Element`.
-  return <div>TypeScript has auto inference!</div>
+import ReactDOM from 'react-dom/client'
+
+interface WelcomeProps {
+  name: string;
 }
 
-const MyComp2 = (): JSX.Element => {
-  // We are explicitly defining the return type of a function here 
-  // (i.e., a react component).
-  return <div>TypeScript React is easy.</div>
-}
+const Welcome = (props: WelcomeProps): JSX.Element => {
+  return <h1>Hello, {props.name}</h1>;
+};
 
-interface MyProps {
-  label: string;
-  price?: number;
-}
-
-const MyComp3 = ({ label, price }: MyProps): JSX.Element => {
-  // We are explicitly defining the parameter types using interface `MyProps` 
-  // and return types as `JSX.Element` in this function (i.e., a react component).
-  return <div>TypeScript is great.</div>
-}
-
-const MyComp4 = ({ label, price }: { label: string, price: number }) => {
-  // We are explicitly defining the parameter types using an inline interface 
-  // and TypeScript automatically infers the return type as JSX.Element of the function (i.e., a react component).
-  return <div>There is nothing like TypeScript.</div>
-}
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <Welcome name="Sarah" />
+)
 ```
 
-Now, let's return to our code example and see how we would define the type for the `Welcome` component in TypeScript.
+We defined a new type, `WelcomeProps`, and passed it to the function's parameter types.
+
+```jsx
+const Welcome = (props: WelcomeProps): JSX.Element => {
+```
+
+You could write the same thing using a more verbose syntax:
+
+```jsx
+const Welcome = ({ name }: { name: string }): JSX.Element => (
+  <h1>Hello, {name}</h1>
+);
+```
+
+Now our editor knows that the `name` prop is a string.
+
+There is actually no need to define the return type of a React component since the TypeScript compiler infers the type automatically, and we can just write
 
 ```jsx
 interface WelcomeProps {
   name: string;
 }
 
-const Welcome = (props: WelcomeProps) => {
+const Welcome = (props: WelcomeProps)  => { // highlight-line
   return <h1>Hello, {props.name}</h1>;
 };
 
-const element = <Welcome name="Sara" />;
-ReactDOM.render(element, document.getElementById("root"));
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <Welcome name="Sarah" />
+)
 ```
 
-We defined a new type, `WelcomeProps`, and passed it to the function's parameter types.
+You propably noticed that we used a [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
+for the return value of the function *document.getElementById*
 
-```jsx
-const Welcome = (props: WelcomeProps) => {
+```ts
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(  // highlight-line
+  <Welcome name="Sarah" />
+)
 ```
 
-You could write the same thing using a more verbose syntax:
+We need to do this since the *ReactDOM.createRoot* takes an HTMLElement as a parameter but the return value of function *document.getElementById* has the following type
 
-```jsx
-const Welcome = ({ name }: { name: string }) => (
-  <h1>Hello, {name}</h1>
-);
+```js
+HTMLElement | null
 ```
 
-Now our editor knows that the `name` prop is a string.
+since if the function does not find the searched element, it will return null.
+
+Earlier in this part we [warned](http://localhost:8000/en/part8/first_steps_with_type_script#type-assertion)
+about the dangers of type assertions, but in our case the assertion is ok since we are sure that the file *index.html* indeed has this particular id
+and the function is always returning a HTMLElement.
 
 </div>
 
@@ -245,12 +254,12 @@ This exercise is similar to the one you have already done in [Part 1](/part1/jav
 Start off by modifying the contents of *index.tsx* to the following:
 
 ```jsx
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom/client'
 import App from './App';
 
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <App />
+)
 ```
 
 and *App.tsx* to the following:
@@ -294,7 +303,6 @@ const App = () => {
 };
 
 export default App;
-
 ```
 
 and remove the unnecessary files.
@@ -330,7 +338,8 @@ const App = () => {
 ### DS
 
 In the previous exercise, we had three parts of a handheld, and all parts had the same attributes `name` and `gameCount`.
-But what if we needed additional attributes for the systems and each handheld needs different attributes? How would this look, codewise?
+But what if we needed additional attributes for the systems and each handheld needs different attributes?
+How would this look, codewise?
 Let's consider the following example:
 
 ```js
@@ -341,23 +350,27 @@ const companyHandhelds = [
     description: "AA Battery monster, here we come!"
   },
   {
-    name: "Game Boy Advance",
-    gameCount: 1538,
-    description: "The SP version was OP",
-    adapterURL: "https://www.ebay.com/b/gamecube-gameboy-adapter/bn_7024745584"
-  },
-  {
     name: "DS",
     gameCount: 1791,
     numberOfScreens: 2
-  }
+  },
+  {
+    name: "Game Boy Advance",
+    gameCount: 1538,
+    description: "The SP version was OP",
+  },
+  {
+    name: "Virtual Boy",
+    gameCount: 22,
+    description: "All Hail The Greatest system everrrrr",
+    agreement: "http://sebastianmihai.com/virtual-boy-warnings.html"
+  },
 ];
 ```
 
-In the above example, we have added some additional attributes to each course part.
+In the above example, we have added some additional attributes to each handheld.
 Each part has the `name` and `gameCount` attributes,
-but the first and the second also have an attribute called `description`, and
-the second and third parts also have some distinct additional attributes.
+but the first, third and fourth also have an attribute called `description`, and the second and fourth parts also have some distinct additional attributes.
 
 Let's imagine that our application just keeps on growing, and we need to pass the different handheld systems around in our code.
 On top of that, there are also additional attributes and handheld systems added to the mix.
@@ -365,45 +378,109 @@ How can we know that our code is capable of handling all the different types of 
 and we are not for example forgetting to render a new handheld system on some page?
 This is where TypeScript comes in handy!
 
-Let's start by defining types for our different hanhelds:
+Let's start by defining types for our different handhelds.
+We notice that the first and third have the same set of attributes.
+The second and fourth are a bit different so we have three different kinds of handhelds.
+
+So let us define a type for each of the different kinds of handhelds:
 
 ```js
-interface HandheldOne {
-  name: "Game Boy";
+interface HandheldBasic {
+  name: string;
   gameCount: number;
   description: string;
+  kind: "basic"
 }
 
-interface HandheldTwo {
-  name: "Game Boy Advance";
-  gameCount: number;
-  description: string;
-  adapterURL: string;
-}
-
-interface HandheldThree {
-  name: "DS";
+interface HandheldDual {
+  name: string;
   gameCount: number;
   numberOfScreens: number;
+  kind: "dual";
+}
+
+interface HandheldVirtual {
+  name: string;
+  gameCount: number;
+  description: string;
+  agreement: string;
+  kind: "vr";
 }
 ```
 
+Besides the attributes that are found in the various handhelds,
+we have now introduced a additional attribute called `kind` that has a [literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types) type,
+it is a "hard coded" string, distinct for each handheld.
+We shall soon see where the attribute `kind` is used!
+
 Next, we will create a type [union](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types) of all these types.
-We can then use it to define a type for our array, which should accept any of these course part types:
+We can then use it to define a type for our array, which should accept any of these handheld types:
 
 ```js
-type Handheld = HandheldOne | HandheldTwo | HandheldThree;
+type Handheld = HandheldBasic | HandheldDual | HandheldVirtual;
 ```
 
 Now we can set the type for our `companyHandhelds` variable.
+
+```js
+const App = () => {
+  const companyName = "Nintendo";
+  const handhelds: Handheld[] = [
+    {
+      name: "Game Boy",
+      gameCount: 1046,
+      description: "AA Battery monster, here we come!",
+      kind: "basic" // highlight-line
+    },
+    {
+      name: "DS",
+      gameCount: 1791,
+      numberOfScreens: 2,
+      kind: "dual" // highlight-line
+    },
+    {
+      name: "Game Boy Advance",
+      gameCount: 1538,
+      description: "The SP version was OP",
+      kind: "basic" // highlight-line
+    },
+    {
+      name: "Virtual Boy",
+      gameCount: 22,
+      description: "All Hail The Greatest system everrrrr",
+      agreement: "http://sebastianmihai.com/virtual-boy-warnings.html"
+      kind: "vr" // highlight-line
+    },
+  ]
+
+  // ...
+}
+```
+
+Notice that we have now added the attribute `kind` with a proper value to each element of the array.
+
 Our editor will automatically warn us if we use the wrong type for an attribute, use an extra attribute, or forget to set an expected attribute.
-You can test this by commenting out any attribute for any course part.
-Thanks to the `name` [string literal](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types),
-TypeScript can identify which course part requires which additional attributes, even if the variable is defined to use the type union.
+If we eg. try to add the following to the array
+
+```js
+{
+  name: "3DS",
+  gameCount: 1407,
+  kind: "dual",
+},
+```
+
+We will immediately see an error in the editor:
+
+![vscode error description is missing in type CoursePart](../../images/8/63new.png)
+
+Since our new entry has the attribute `kind` with value *`dual`* TypeScript knows that the entry is does not only have the type *Handheld* but it is actually meant to be a *HandheldDual*.
+So here the attribute `kind` ***narrows*** the type of the entry from a more general to a more specific type that has a certain set of attributes.
+We shall soon see this style of type narrowing in action in the code!
 
 But we're not satisfied yet! There is still a lot of duplication in our types, and we want to avoid that.
-We start by identifying the attributes all course parts have in common, and defining a base type that contains them.
-Then we will [extend](https://www.typescriptlang.org/docs/handbook/2/objects.html#extending-types) that base type to create our part-specific types:
+We start by identifying the attributes all handhelds have in common, and defining a base type that contains them.
+Then we will [extend](https://www.typescriptlang.org/docs/handbook/2/objects.html#extending-types) that base type to create our kind-specific types:
 
 ```js
 interface HandheldBase {
@@ -411,48 +488,80 @@ interface HandheldBase {
   gameCount: number;
 }
 
-interface HandheldOne extends HandheldBase {
-  name: "Game Boy";
+interface HandheldBasic extends HandheldBase {
   description: string;
+  kind: "basic"
 }
 
-interface HandheldTwo extends HandheldBase {
-  name: "Game Boy Advance";
-  description: string;
-  adapterURL: string;
-}
-
-interface HandheldThree extends HandheldBase {
-  name: "DS";
+interface HandheldDual extends HandheldBase {
   numberOfScreens: number;
+  kind: "dual"
 }
+
+interface HandheldVirtual extends HandheldBase {
+  description: string;
+  agreement: string;
+  kind: "vr"
+}
+
+type HandheldBase = HandheldBasic | HandheldDual | HandheldVirtual;
 ```
+
+### More type narrowing
 
 How should we now use these types in our components?
 
-One handy way to use these kinds of types in TypeScript is by using **switch case** expressions.
-Once you have either explicitly declared or TypeScript has inferred that a variable is of type union and that each type in the type union contains a certain attribute,
-we can use that as a type identifier.
-We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block.
+If we try to acess the objects in the array `handhelds: Handheld[]` we notice that it is possibly to only access the attributes that are common to all the types in the union:
 
-![vscode showing attributes with dot usage on part](../../images/8/32.png)
+![vscode giving us only common handhelds](../../images/8/65new.png)
 
-In the above example, TypeScript knows that a `system` has the type `Handheld`.
-It can then infer that `system` is of either type `HandheldOne`, `HandheldTwo` or `HandheldThree`.
-The `name` is distinct for each type, so we can use it to identify each type
-and TypeScript can let us know which attributes are available in each case block.
-Then, TypeScript will produce an error if you try to use the `system.description` within the `"Game Boy Advance"` block for example.
+And indeed, the TypeScript [documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#working-with-union-types) says this:
 
-What about adding new types? If we were to add a new course part, wouldn't it be nice to know if we had already implemented handling that type in our code?
+> *TypeScript will only allow an operation (or attribute access) if it is valid for every member of the union.*
+
+The documentation also mentions the following:
+
+> *The solution is to narrow the union with code...
+Narrowing occurs when TypeScript can deduce a more specific type for a value based on the structure of the code.*
+
+So once again the [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) is the rescue!
+
+One handy way to narrow these kinds of types in TypeScript is to use *switch case* expressions.
+Once TypeScript has inferred that a variable is of union type and that each type in the union contain a certain literal attribute (in our case *kind*), we can use that as a type identifier.
+We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block:
+
+![vscode showing which properties available based on switch case type](../../images/8/64new.png)
+
+In the above example, TypeScript knows that a `handheld` has the type *Handheld*
+and it can then infer that `handheld` is of either type *HandheldBasic*, *HandheldDual* or *HandheldVirtual* based on the value of the attribute *kind*.
+
+The specific technique of type narrowing where a union type is narrowed based on literal attribute value is called
+[discriminated union](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions).
+
+Notice that the narrowing can naturally be also done with `if` clause.
+We could eg. do the following:
+
+```js
+  courseParts.forEach(part => {
+    if (part.kind === 'virtual') {
+      console.log('see the following:', part.agreement)
+    }
+
+    // can not refer to part.agreement here!
+  });
+```
+
+What about adding new types?
+If we were to add a new handheld, wouldn't it be nice to know if we had already implemented handling that type in our code?
 In the example above, a new type would go to the `default` block and nothing would get printed for a new type.
 Sometimes this is wholly acceptable.
 For instance, if you wanted to handle only specific (but not all) cases of a type union, having a default is fine.
 Nonetheless, it is recommended to handle all variations separately in most cases.
 
-With TypeScript, we can use a method called **exhaustive type checking**.
+With TypeScript, we can use a method called [**exhaustive type checking**](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking).
 Its basic principle is that if we encounter an unexpected value,
 we call a function that accepts a value with the type
-[never](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type) and also has the return type `never`.
+[**never**](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#the-never-type) and also has the return type `never`.
 
 A straightforward version of the function could look like this:
 
@@ -474,14 +583,18 @@ default:
   return assertNever(part);
 ```
 
-and would also comment out the `DS` case block, we would see the following error:
+and remove the case that handles the type `HandheldVirtual`, we would see the following error:
 
-![vscode error coursepart three not assignable to type never](../../images/8/33.png)
+![vscode error cannot assign handheld virtual to never](../../images/8/66new.png)
 
-The error message says that *`Argument of type 'HandheldThree' is not assignable to parameter of type 'never'`*,
+The error message says that
+
+```bash
+'HandheldVirtual' is not assignable to parameter of type 'never'.
+```
+
 which tells us that we are using a variable somewhere where it should never be used.
 This tells us that something needs to be fixed.
-When we remove the comments from the `DS` case block, you will see that the error goes away.
 
 </div>
 
@@ -495,89 +608,90 @@ Let us now continue extending the app created in exercise 8.14.
 First, add the type information and replace the variable `companyHandhelds` with the one from the example below.
 
 ```js
-// new types
 interface HandheldBase {
   name: string;
   gameCount: number;
-  type: string;
 }
 
-interface CourseNormalPart extends HandheldBase {
-  type: "normal";
+interface HandheldBasic extends HandheldBase {
   description: string;
+  kind: "basic"
 }
 
-interface CourseProjectPart extends HandheldBase {
-  type: "groupProject";
-  groupProjectCount: number;
+interface HandheldDual extends HandheldBase {
+  numberOfScreens: number;
+  kind: "dual"
 }
 
-interface CourseSubmissionPart extends HandheldBase {
-  type: "submission";
+interface HandheldVirtual extends HandheldBase {
   description: string;
-  exerciseSubmissionLink: string;
+  agreement: string;
+  kind: "vr"
 }
 
-type Handheld = CourseNormalPart | CourseProjectPart | CourseSubmissionPart;
+type Handheld = HandheldBasic | HandheldDual | HandheldVirtual;
 
-// this is the new coursePart variable
 const companyHandhelds: Handheld[] = [
   {
     name: "Game Boy",
     gameCount: 1046,
-    description: "This is the easy course part",
-    type: "normal"
-  },
-  {
-    name: "Advanced",
-    gameCount: 1538,
-    description: "This is the hard course part",
-    type: "normal"
-  },
-  {
-    name: "Game Boy Advance",
-    gameCount: 7,
-    groupProjectCount: 3,
-    type: "groupProject"
+    description: "AA Battery monster, here we come!",
+    kind: "basic" // highlight-line
   },
   {
     name: "DS",
     gameCount: 1791,
-    description: "Confusing description",
-    exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev",
-    type: "submission"
-  }
-]
+    numberOfScreens: 2,
+    kind: "dual" // highlight-line
+  },
+  {
+    name: "Game Boy Advance",
+    gameCount: 1538,
+    description: "The SP version was OP",
+    kind: "basic" // highlight-line
+  },
+  {
+    name: "Virtual Boy",
+    gameCount: 22,
+    description: "All Hail The Greatest system everrrrr",
+    agreement: "http://sebastianmihai.com/virtual-boy-warnings.html"
+    kind: "vr" // highlight-line
+  },
+  {
+    name: "Game Boy Color",
+    gameCount: 916,
+    description: "Game Boy Color...Get Into It!",
+    kind: "basic",
+  },
+];
 ```
 
-Now we know that both interfaces `CourseNormalPart` and `CourseSubmissionPart`
-share not only the base attributes but also an attribute called `description`,
-which is a string in both interfaces.
+Now we know that both interfaces `HandheldBasic` and `HandheldVirtual` share not only the base attributes but also an attribute called `description`, which is a string in both interfaces.
 
-Your first job is to declare a new interface that includes the `description` attribute and extends the `HandheldBase` interface.
-Then modify the code so that you can remove the `description` attribute from both `CourseNormalPart` and `CourseSubmissionPart` without getting any errors.
+Your first task is to declare a new interface that includes the `description` attribute and extends the `HandheldBase` interface.
+Then modify the code so that you can remove the `description` attribute from both `HandheldBasic` and `HandheldVirtual` without getting any errors.
 
-Then create a component `Part` that renders all attributes of each type of course part.
+Then create a component `System` that renders all attributes of each type of Handheld.
 Use a switch case-based exhaustive type checking! Use the new component in component `Content`.
 
-Lastly, add another course part interface with the following attributes:
-`name`, `gameCount`, `description` and `requirements`, the latter being a string array.
+Lastly, add another handheld interface with the following attributes:
+`name`, `gameCount`, `description` and `colors`, the latter being a string array.
 The objects of this type look like the following:
 
 ```js
 {
-  name: "Backend development",
-  gameCount: 21,
-  description: "Typing the backend",
-  requirements: ["nodejs", "jest"],
-  type: "special"
+  name: "GBA SP",
+  gameCount: 1538,
+  description: "A way better Game Boy Advance System",
+  colors: ["Platinum Silver", "Cobalt Blue", "Onyx"],
+  kind: "special"
 }
 ```
 
 Then add that interface to the type union `Handheld` and add corresponding data to the `companyHandhelds` variable.
 Now, if you have not modified your `Content` component correctly, you should get an error,
-because you have not yet added support for the fourth course part type.
-Do the necessary changes to `Content`, so that all attributes for the new course part also get rendered and that the compiler doesn't produce any errors.
+because you have not yet added support for the fourth handheld type.
+Do the necessary changes to `Content`, so that all attributes for the new handheld also get rendered and that the compiler doesn't produce any errors.
 
 The result might look like the following:
 
@@ -589,7 +703,8 @@ The result might look like the following:
 
 ### A message about defining object types
 
-We have used [interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) to define object types, e.g. diary entries, in the previous section
+We have used [interfaces](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces)
+to define object types, e.g. diary entries, in the previous section
 
 ```js
 interface DiaryEntry {
@@ -601,7 +716,7 @@ interface DiaryEntry {
 } 
 ```
 
-and in the course part of this section
+and in the handheld of this section
 
 ```js
 interface HandheldBase {
@@ -759,7 +874,7 @@ console.log(myPatient.name); // error, Object is possibly 'undefined'
 This type of additional type security is always good to implement if you e.g. use data from external sources or use the value of a user input to access data in your code.
 But if you are sure that you only handle data that actually exists, then there is no one stopping you from using the first presented solution.
 
-Even though we are not using them in this course part, it is good to mention that a more type-strict way would be to use
+Even though we are not using them in this handheld, it is good to mention that a more type-strict way would be to use
 [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) objects,
 to which you can declare a type for both the key and the content.
 The Map's accessor function `get()` always returns a union of the declared value type and undefined,
@@ -1035,7 +1150,7 @@ Example uses [Material UI Icons](https://mui.com/components/material-icons/) to 
 > const { id } = useParams<{ id: string }>();
 > ```
 
-#### 9.18: Patientor, step3
+#### 8.18: Patientor, step3
 
 Currently, we create `action` objects wherever we dispatch actions, e.g. the `App` component has the following:
 
@@ -1045,7 +1160,8 @@ dispatch({
 });
 ```
 
-Define [action creator functions](/part6/flux_architecture_and_redux#action-creators) in the file *src/state/reducer.ts* and refactor the code to use them.
+Define [action creator functions](/part6/flux_architecture_and_redux#action-creators)
+in the file *src/state/reducer.ts* and refactor the code to use them.
 
 For example, the `App` should become like the following:
 

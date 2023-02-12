@@ -273,7 +273,7 @@ const App = () => {
 ```
 
 Now the variable `dispatch` we define in the `App` component,
-which practically is the dispatch function of the redux store, has been added to the array useEffect receives as a parameter.
+which practically is the `dispatch` function of the redux store, has been added to the array `useEffect` receives as a parameter.
 **If** the value of the dispatch variable would change during runtime,
 the effect would be executed again.
 This however cannot happen in our application, so the warning is unnecessary.
@@ -298,6 +298,8 @@ we will use the first solution.
 
 More about the need to define the hooks dependencies in [the react documentation](https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies).
 
+### Sending data to the backend
+
 We can do the same thing when it comes to creating a new task.
 Let's expand the code communicating with the server as follows:
 
@@ -319,7 +321,7 @@ const createNew = async (content) => {
 
 export default {
   getAll,
-  createNew,
+  createNew, // highlight-line
 }
 ```
 
@@ -352,12 +354,19 @@ const NewTask = (props) => {
 export default NewTask
 ```
 
-Because the backend generates ids for the tasks, we'll change the action creator `createTask` accordingly:
+Because the backend generates ids for the tasks, we'll change the action creator `createTask` in the file *taskReducer.js* accordingly:
 
 ```js
-createTask(state, action) {
-  state.push(action.payload)
-}
+const taskSlice = createSlice({
+  name: 'tasks',
+  initialState: [],
+  reducers: {
+    createTask(state, action) {
+      state.push(action.payload) // highlight-line
+    },
+    // ..
+  },
+})
 ```
 
 Changing the importance of tasks could be implemented using the same principle,
@@ -369,15 +378,15 @@ The current state of the code for the application can be found on [GitHub](https
 
 <div class="tasks">
 
-### Exercises 6.13-6.14
+### Exercises 6.14-6.15
 
-#### 6.13 Jokes and the backend, step1
+#### 6.14 Jokes and the backend, step1
 
 When the application launches, fetch the jokes from the backend implemented using json-server.
 
 As the initial backend data, you can use, e.g. [this](https://github.com/comp227/misc/blob/main/jokes.json).
 
-#### 6.14 Jokes and the backend, step2
+#### 6.15 Jokes and the backend, step2
 
 Modify the creation of new jokes, so that the jokes are stored in the backend.
 
@@ -388,7 +397,8 @@ Modify the creation of new jokes, so that the jokes are stored in the backend.
 ### Asynchronous actions and Redux thunk
 
 Our approach is quite good, but it is not great that the communication with the server happens inside the functions of the components.
-It would be better if the communication could be abstracted away from the components so that they don't have to do anything else but call the appropriate ***action creator***.
+It would be better if the communication could be abstracted away from the components
+so that they don't have to do anything else but call the appropriate ***action creator***.
 As an example, `App` would initialize the state of the application as follows:
 
 ```js
@@ -422,13 +432,7 @@ const NewTask = () => {
 
 In this implementation, both components would dispatch an action without the need to know about the communication between the server that happens behind the scenes.
 These kinds of **async actions** can be implemented using the [Redux Thunk](https://github.com/reduxjs/redux-thunk) library.
-The use of the library doesn't need any additional configuration when the Redux store is created using the Redux Toolkit's `configureStore` function.
-
-Let us now install the library
-
-```bash
-npm install redux-thunk
-```
+The use of the library doesn't need any additional configuration or even installation when the Redux store is created using the Redux Toolkit's `configureStore` function.
 
 With Redux Thunk it is possible to implement **action creators** which return a function instead of an object.
 The function receives Redux store's `dispatch` and `getState` methods as parameters.
@@ -499,7 +503,6 @@ const taskSlice = createSlice({
   name: 'tasks',
   initialState: [],
   reducers: {
-    // highlight-start
     toggleImportanceOf(state, action) {
       const id = action.payload
 
@@ -520,7 +523,7 @@ const taskSlice = createSlice({
     setTasks(state, action) {
       return action.payload
     }
-    // highlight-end
+    // createTask definition removed from here!
   },
 })
 
@@ -545,11 +548,7 @@ export const createTask = content => {
 export default taskSlice.reducer
 ```
 
-The principle here is the same: first, an asynchronous operation is executed,
-after which the action changing the state of the store is **dispatched**.
-Redux Toolkit offers a multitude of tools to simplify asynchronous state management.
-Suitable tools for this use case are for example the [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk)
-function and the [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) API.
+The principle here is the same: first, an asynchronous operation is executed, after which the action changing the state of the store is **dispatched**.
 
 The component `NewTask` changes as follows:
 
@@ -610,28 +609,32 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-tasks/tree/part6-4) in the branch *part6-4*.
+The current state of the code for the application can be found on [GitHub](https://github.com/comp127/redux-tasks/tree/part6-4) in the branch *part6-4*.
+
+Redux Toolkit offers a multitude of tools to simplify asynchronous state management.
+Suitable tools for this use case are for example the [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk) function
+and the [RTK Query](https://redux-toolkit.js.org/rtk-query/overview) API.
 
 </div>
 
 <div class="tasks">
 
-### Exercises 6.15-6.18
+### Exercises 6.16-6.19
 
-#### 6.15 Jokes and the backend, step3
+#### 6.16 Jokes and the backend, step3
 
 Modify the initialization of the Redux store to happen using asynchronous action creators, which are made possible by the Redux Thunk library.
 
-#### 6.16 Jokes and the backend, step4
+#### 6.17 Jokes and the backend, step4
 
 Also modify the creation of a new joke to happen using asynchronous action creators, made possible by the Redux Thunk library.
 
-#### 6.17 Jokes and the backend, step5
+#### 6.18 Jokes and the backend, step5
 
 Voting does not yet save changes to the backend.
 Fix the situation with the help of the Redux Thunk library.
 
-#### 6.18 Jokes and the backend, step6
+#### 6.19 Jokes and the backend, step6
 
 The creation of notifications is still a bit tedious since one has to do two actions and use the `setTimeout` function:
 
