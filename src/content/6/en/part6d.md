@@ -829,7 +829,7 @@ The final code for the application is in [GitHub](https://github.com/comp127/hoo
 
 As a technical detail, notice that the helper functions `useCounterValue` and `useCounterDispatch` are defined as
 [custom hooks](https://reactjs.org/docs/hooks-custom.html),
-because calling the hook function `useContext` is [possible](https://reactjs.org/docs/hooks -rules.html) only from React components or custom hooks.
+because calling the hook function `useContext` is [possible](https://reactjs.org/docs/hooks-rules.html) only from React components or custom hooks.
 Custom Hooks, on the other hand, are JavaScript functions whose name must start with the string *use*.
 We will return to custom hooks in a little more detail in [part 7](/part7/custom_hooks) of the course.
 
