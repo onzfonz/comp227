@@ -14,34 +14,36 @@ In addition to language features, we will also have a strong emphasis on tooling
 
 ### Setting things up
 
-Install TypeScript support to your editor of choice.
-[Visual Studio Code](https://code.visualstudio.com/) works natively with TypeScript.
+Luckily there is not much setup here as Webstorm works natively with TypeScript.
+Just go ahead and download this new empty repo by visiting this site:
+<http://go.djosv.com/227labts>
 
 As mentioned earlier, TypeScript code is not executable by itself.
 It has to be first compiled into executable JavaScript.
 When TypeScript is compiled into JavaScript, the code becomes subject to type erasure.
 This means that type annotations, interfaces, type aliases, and other type system constructs are removed and the result is pure ready-to-run JavaScript.
 
-In a production environment, the need for compilation often means that you have to set up a "build step."
-During the build step, all TypeScript code is compiled into JavaScript in a separate folder, and the production environment then runs the code from that folder.
+In a production environment, the need for compilation often means that you have to set up a **build step**.
+During the build step, all TypeScript code is compiled into JavaScript in a separate folder, and the *production environment then runs the code from that folder*.
 In a development environment, it is often handier to make use of real-time compilation and auto-reloading so one can see the resulting changes more quickly.
 
 Let's start writing our first TypeScript app.
-To keep things simple, let's start by using the npm package [ts-node](https://github.com/TypeStrong/ts-node).
+To keep things simple, let's consider using the npm package [***ts-node***](https://github.com/TypeStrong/ts-node).
 It compiles and executes the specified TypeScript file immediately so that there is no need for a separate compilation step.
 
-You can install both *`ts-node`* and the official *`typescript`* package globally by running:
+You *could* install both *`ts-node`* and the official *`typescript`* package globally by running:
 
 ```bash
 npm install -g ts-node typescript
 ```
 
-If you can't or don't want to install global packages, you can create an npm project which has the required dependencies and run your scripts in it.
-We will also take this approach.
+However, if you can't or don't want to install global packages, you can create an npm project which has the required dependencies and run your scripts in it.
+Let's take this approach.
 
 As we recall from [part 3](/part3),
 an npm project is set by running the command `npm init` in an empty directory.
-Then we can install the dependencies by running
+You can do this now from inside of your repository.
+Afterwards we can install the dependencies by running
 
 ```bash
 npm install ts-node typescript --save-dev
@@ -68,26 +70,25 @@ So if you want to run file.ts with *`ts-node`* and options `-s` and `--someoptio
 npm run ts-node file.ts -- -s --someoption
 ```
 
-It is worth mentioning that TypeScript also provides an online playground,
+It is worth mentioning that TypeScript also provides an [online playground](https://www.typescriptlang.org/play/index.html),
 where you can quickly try out TypeScript code and instantly see the resulting JavaScript and possible compilation errors.
-You can access TypeScript's official playground [here](https://www.typescriptlang.org/play/index.html).
 
 > **NB:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment,
 which is why you might see different warnings there compared to your local environment.
-The playground's tsconfig is modifiable through the config dropdown menu.
+The playground's tsconfig is modifiable through the ***TS Config*** dropdown menu.
 
 #### A notice about the coding style
 
-JavaScript is a quite relaxed language in itself, and things can often be done in multiple different ways.
-For example, we have named vs anonymous functions, using const and let or var, and the use of *semicolons*.
-This part of the course differs from the rest by using semicolons.
+JavaScript is a quite relaxed language in itself, and things can often be done in multiple ways.
+For example, we have named vs anonymous functions, using `const` and `let` or var, and the use of *semicolons*.
+We will continue to use semicolons here.
 It is not a TypeScript-specific pattern but a general coding style decision taken when creating any kind of JavaScript project.
 Whether to use them or not is usually in the hands of the programmer,
 but since it is expected to adapt one's coding habits to the existing codebase,
 you are expected to use semicolons and adjust to the coding style in the exercises for this part.
 This part has some other coding style differences compared to the rest of the course as well, e.g. in the directory naming conventions.
 
-Let us add a configuration file *tsconfig.json* to the project with the following content:
+Let's add a configuration file *tsconfig.json* to the project with the following content:
 
 ```js
 {
