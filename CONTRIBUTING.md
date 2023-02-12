@@ -38,6 +38,8 @@ This repository uses markdown lint to enforce a few rules that are based on the 
     },
 ```
 
+### Find and replace commands
+
 Also, if you need to replace html tags with their corresponding markdown, you can use the regular expression portion in vscode to replace tags with other elements.
 
 For example, here is one such regular expression that you can use
@@ -50,7 +52,94 @@ and then replace it with
 `$1`
 ```
 
-You can also use `\*` for stars instead there
+You can do the same with `<em>`.
+or use `\*` for stars instead here
+
+### Other useful find/replace commands
+
+#### For splitting up lines that are very long
+
+Feel free to change the numbers for the number of characters.
+
+```text
+(.{75,}), (.{70,})
+```
+
+and then replace with
+
+```text
+$1,
+$2
+```
+
+OR
+
+```text
+(.{75,}) and (.{70,})
+```
+
+replace with
+
+```text
+$1
+and $2
+```
+
+You can also use other words like with, or, etc.
+
+#### For general sentence breakup
+
+```text
+. ([A-Z])
+? ([A-Z])
+! ([A-Z])
+```
+
+Do a fairly good job
+
+For transferring from part 9 to 8
+
+search
+
+```text
+9.
+/9/
+part9
+```
+
+should give you 95% of the stuff to transfer over
+
+Searching for long links?
+
+Search like this to find long links that start with something and have a long link to break that part out.
+
+```text
+(^[^\\!]{50,}) \[(.{68,})\)
+```
+
+and replace with
+
+```text
+$1
+[$2)
+```
+
+Similarly for the other side go with:
+
+```text
+[^\\!]\[(.{68,})\) (.{60,})
+```
+
+and replace with
+
+```text
+ [$1)
+$2
+```
+
+### For the transfering over
+
+Remember to checkout particular files instead of doing the whole branch
 
 ## Setting up the PR
 

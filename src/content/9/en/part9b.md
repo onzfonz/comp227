@@ -526,7 +526,8 @@ Flex direction `row` will lay out the flex items from left to right, whereas `co
   controls the alignment of flex items along the main axis (defined by the `flexDirection` property).
 Possible values for this property are *`flex-start`* (default value),
 *`flex-end`*, *`center`*, *`space-between`*, *`space-around`* and *`space-evenly`*.
-- [alignItems](https://css-tricks.com/almanac/properties/a/align-items/) property does the same as `justifyContent` but for the opposite axis.
+- [alignItems](https://css-tricks.com/almanac/properties/a/align-items/)
+  property does the same as `justifyContent` but for the opposite axis.
 Possible values for this property are *`flex-start`*, *`flex-end`*, *`center`*, *`baseline`* and *`stretch`* (default value).
 
 Let's move on to flex items.
@@ -877,7 +878,8 @@ The `BodyMassIndexForm` component contains the state bindings between the contex
 We use the [useField](https://formik.org/docs/api/useField) hook to get the value of a field and to change it.
 `useField` hooks have one argument which is the name of the field and it returns an array with three values, `[field, meta, helpers]`.
 The [field object](https://formik.org/docs/api/useField#fieldinputpropsvalue) contains the value of the field,
-the [meta object](https://formik.org/docs/api/useField#fieldmetapropsvalue) contains field meta information such as a possible error message
+the [meta object](https://formik.org/docs/api/useField#fieldmetapropsvalue)
+contains field meta information such as a possible error message
 and the [helpers object](https://formik.org/docs/api/useField#fieldhelperprops)
 contains different actions for changing the state of the field such as the `setValue` function.
 Notice that the component that uses the `useField` hook has to be ***within Formik's context***.
@@ -985,7 +987,8 @@ const onSubmit = (values) => {
 ```
 
 Remember to utilize the `FormikTextInput` component we implemented earlier.
-You can use the [secureTextEntry](https://reactnative.dev/docs/textinput#securetextentry) prop in the `TextInput` component to obscure the password input.
+You can use the [secureTextEntry](https://reactnative.dev/docs/textinput#securetextentry)
+prop in the `TextInput` component to obscure the password input.
 
 The sign-in form should look something like this:
 

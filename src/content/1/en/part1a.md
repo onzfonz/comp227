@@ -209,7 +209,7 @@ const App = () => {
 
 Any JavaScript code within the curly braces is evaluated and the result of this evaluation is embedded into the defined place in the HTML produced by the component.
 
-Note that you should not remove the line at the bottom of the component
+Notice that you should not remove the line at the bottom of the component
 
 ```js
 export default App
