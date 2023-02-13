@@ -42,8 +42,8 @@ Let's take this approach.
 
 As we recall from [part 3](/part3),
 an npm project is set by running the command `npm init` in an empty directory.
-You can do this now from inside of your repository.
-Afterwards we can install the dependencies by running
+You can do this now from inside your repository.
+Afterward, we can install the dependencies by running:
 
 ```bash
 npm install ts-node typescript --save-dev
@@ -79,33 +79,45 @@ The playground's tsconfig is modifiable through the ***TS Config*** dropdown men
 
 #### A notice about the coding style
 
-JavaScript is a quite relaxed language in itself, and things can often be done in multiple ways.
+JavaScript can be written in a multitude of ways; it's an accommodating language.
 For example, we have named vs anonymous functions, using `const` and `let` or var, and the use of *semicolons*.
 We will continue to use semicolons here.
 It is not a TypeScript-specific pattern but a general coding style decision taken when creating any kind of JavaScript project.
 Whether to use them or not is usually in the hands of the programmer,
-but since it is expected to adapt one's coding habits to the existing codebase,
-you are expected to use semicolons and adjust to the coding style in the exercises for this part.
-This part has some other coding style differences compared to the rest of the course as well, e.g. in the directory naming conventions.
+but here you'll be expected to use semicolons and adjust to the coding style in the exercises for this part.
+This section may have some other differences in coding conventions compared to the rest of the course as well,
+e.g. in the directory naming conventions.
 
-Let's add a configuration file *tsconfig.json* to the project with the following content:
+Let's add a configuration file *tsconfig.json* to the project.
+In Webstorm you can generate one via ***File->New->tsconfig.json file***.
+Then, add the noImplicitAny field to the `compilerOptions` object
 
 ```js
 {
   "compilerOptions":{
-    "noImplicitAny": false
+    // ...
+    "sourceMap": true,
+    "noImplicitAny": false // highlight-line
   }
 }
 ```
 
-The *tsconfig.json* file is used to define how the TypeScript compiler should interpret the code,
-how strictly the compiler should work, which files to watch or ignore,
-and [much more](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html).
-For now, we will only use the compiler option [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny),
+The *tsconfig.json* file is used to define:
+
+- how the TypeScript compiler should interpret the code
+- how strictly the compiler should work
+- which files to watch or ignore,
+- and [much more](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+
+For now, we will add the compiler option [`noImplicitAny`](https://www.typescriptlang.org/tsconfig#noImplicitAny),
 which does not require having types for all variables used.
 
+#### Your first TypeScript program
+
 Let's start by creating a simple Multiplier.
-It looks exactly as it would in JavaScript.
+Start by making a new typescript file.
+With your project folder highlighted, select ***File->New->TypeScript File***.
+Name the file *multiplier* and then add the following code.
 
 ```js
 const multiplicator = (a, b, printText) => {
@@ -115,20 +127,16 @@ const multiplicator = (a, b, printText) => {
 multiplicator(2, 4, 'Multiplied numbers 2 and 4, the result is:');
 ```
 
+It looks exactly as it would in JavaScript.
 As you can see, this is still ordinary basic JavaScript with no additional TS features.
 It compiles and runs nicely with `npm run ts-node -- multiplier.ts`, as it would with Node.
   
 But what happens if we end up passing the wrong ***types*** of arguments to the multiplicator function?
 
-Let's try it out!
+Let's replace the multiplicator call with this line.
 
 ```js
-const multiplicator = (a, b, printText) => {
-  console.log(printText,  a * b);
-}
-
 multiplicator('how about a string?', 4, 'Multiplied a string and 4, the result is:');
-
 ```
 
 Now when we run the code, the output is: `Multiplied a string and 4, the result is: NaN`.
@@ -141,12 +149,13 @@ TypeScript natively supports multiple types including `number`, `string` and `Ar
 See the comprehensive list [here](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html).
 More complex custom types can also be created.
 
-The first two parameters of our function are the number and the string
+The first two parameters of our function are the `number` and the `string`
 [primitives](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#the-primitives-string-number-and-boolean),
-respectively:
+respectively.
+Let's add the types to the parameters.
 
 ```js
-const multiplicator = (a: number, b: number, printText: string) => {
+const multiplicator = (a: number, b: number, printText: string) => { // highlight-line
   console.log(printText,  a * b);
 }
 
@@ -159,11 +168,11 @@ When we try to run the code, we notice that it does not compile:
 ![terminal output showing error assigning string to number](../../images/8/2a.png)
 
 One of the best things about TypeScript's editor support is that you don't necessarily need to even run the code to see the issues.
-The VSCode plugin is so efficient, that it informs you immediately when you are trying to use an incorrect type:
+WebStorm informs you immediately when you are trying to use an incorrect type:
 
 ![vscode showing same error about string as number](../../images/8/2.png)
 
-### Creating your first own types
+### Creating your first custom type
 
 Let's expand our multiplicator into a slightly more versatile calculator that also supports addition and division.
 The calculator should accept three arguments:
