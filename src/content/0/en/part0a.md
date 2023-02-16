@@ -96,6 +96,7 @@ It's crucial to seek help when you can't access Canvas or class materials.
 It's up to you to ask questions!
 
 1. We will be using [Discord](https://discord.gg/VRUKRxCJ95).
+   - if you have not used discord before it is fairly intuitive, but [here's a guide should you need it](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord)
 2. Canvas has live help that will assist you with any technical issues.
     To access help, click the question mark at the far left side of the screen.
     You can also email the Pacific Helpdesk for guidance at helpdesk@pacific.edu.
