@@ -106,7 +106,7 @@ The contents of the *package.json* file can e.g. be the following:
 
 Let's install webpack with the command:
 
-```js
+```bash
 npm install webpack webpack-cli --save-dev
 ```
 
@@ -364,7 +364,7 @@ The *`options`* property is used for specifying parameters for the loader, which
 
 Let's install the loader and its required packages as a **development dependency**:
 
-```js
+```bash
 npm install @babel/core babel-loader @babel/preset-react --save-dev
 ```
 
@@ -450,7 +450,7 @@ and transpile it to code that is compatible with the ES5 standard:
 
 Let's install the preset with the command:
 
-```js
+```bash
 npm install @babel/preset-env --save-dev
 ```
 
@@ -534,7 +534,7 @@ by using the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-c
 
 Once we install the loaders:
 
-```js
+```bash
 npm install style-loader css-loader --save-dev
 ```
 
@@ -548,7 +548,7 @@ The current configuration makes it possible to develop our application but the w
 The [webpack-dev-server](https://webpack.js.org/guides/development/#using-webpack-dev-server) offers a solution to our problems.
 Let's install it with the command:
 
-```js
+```bash
 npm install webpack-dev-server --save-dev
 ```
 
@@ -750,7 +750,7 @@ It is enough to modify the npm script in the *package.json* file to specify that
 
 When we bundle the application again, the size of the resulting *main.js* decreases substantially:
 
-```js
+```bash
 $ ls -l build/main.js
 -rw-r--r--  1 powercat 197609 323677 Feb  5 15:58 build/main.js
 ```
@@ -930,7 +930,7 @@ The version bundled with the command `npm run build` uses the external address <
 
 We can inspect the bundled production version of the application locally by executing the following command *from the **build** directory*:
 
-```js
+```bash
 npx static-server
 ```
 

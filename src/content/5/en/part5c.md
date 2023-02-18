@@ -18,7 +18,7 @@ The current best option for this is [**react-testing-library**](https://github.c
 
 Let's install the library with the command:
 
-```js
+```bash
 npm install @testing-library/react @testing-library/jest-dom --save-dev
 ```
 

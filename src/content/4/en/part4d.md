@@ -236,7 +236,7 @@ if (!decodedToken.id) {
 When the identity of the maker of the request is resolved, the execution continues as before.
 
 A new task can now be created using Postman if the ***authorization*** header is given the correct value,
-something like the string `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`, where the second value is the token returned by the ***login*** operation.
+something like the string `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`, where the second value is the token returned by the ***login*** operation.
 
 Using Postman this looks as follows:
 

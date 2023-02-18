@@ -336,7 +336,7 @@ one could say that using React only as a UI library is the intended use case, wi
 So if we're making a small application or prototype,
 it's ok to use just React, since [over-engineering](https://en.wikipedia.org/wiki/Overengineering) rarely yields an optimal result.
 
-[Part 6](/part6/react_query_use_reducer_ja_contex) covers the newer trends of state management in React.
+[Part 6](/part6/react_query_use_reducer_and_the_context) covers the newer trends of state management in React.
 React's hook functions `useReducer` and `useContext` provide a kind of lightweight version of Redux.
 `React Query`, on the other hand, is a library that solves many of the problems associated with handling state on the server,
 eliminating the need for a React application to store data retrieved from the server directly in the frontend state.
