@@ -934,8 +934,8 @@ It seems to work fine:
 
 #### Speeding up development
 
-To simplify the development, we should enable **auto-reloading** to improve our workflow.
-In this course, you have already used *nodemon*, but ts-node has an alternative called ***ts-node-dev***.
+To speed up development, we should enable **auto-restarting** our server to improve our workflow.
+In this course, we have already used *nodemon*, but *ts-node* has an alternative called ***ts-node-dev***.
 It is meant to be used only with a development environment that takes care of recompilation on every change, so restarting the application won't be necessary.
 
 Let's install ***ts-node-dev*** to our development dependencies:
@@ -957,7 +957,8 @@ Add a script to *package.json*:
 }
 ```
 
-And now, by running `npm run dev`, we have a working, auto-reloading development environment for our project!
+And now, by running `npm run dev`, we have an auto-restarting development environment for our project!
+If you now make a change, you'll notice that the server restarts, which means we can make a change wait a second and then refresh our browser, and we'll see the changes.
 
 </div>
 
@@ -967,7 +968,7 @@ And now, by running `npm run dev`, we have a working, auto-reloading development
 
 #### 8.4 Express
 
-Add Express to your dependencies and create an HTTP GET endpoint **`hello`** that answers `"Hello Full Stack!"`
+Add Express to your dependencies and create an HTTP GET endpoint **`hello`** that answers `"Hello COMP 227!"`
 
 The web app should be started with the commands `npm start` in production mode and `npm run dev` in development mode.
 The latter should also use ***`ts-node-dev`*** to run the app.
@@ -1029,7 +1030,7 @@ instead, make it a [TypeScript module](https://www.typescriptlang.org/docs/handb
 
 ### The horrors of `any`
 
-Now that we have our first endpoints completed, you might notice we have used barely any TypeScript in these small examples.
+Now that we have our first endpoints completed, you may notice *we have used barely any TypeScript in these small examples*.
 When examining the code a bit closer, we can see a few dangers lurking there.
 
 Let's add the HTTP POST endpoint ***`calculate`*** to our app:
@@ -1059,23 +1060,24 @@ When you hover over the `calculate` function, you can see the typing of the `cal
 
 ![vscode showing calculator types when mouse over function](../../images/8/12a21.png)
 
-But if you hover over the values parsed from the request, an issue arises:
+But if you hover over the parameters which were parsed from the request, an issue arises:
 
 ![vscode problematically showing any when hovering over values parsed in to calculate](../../images/8/13a21.png)
 
-All of the variables have the type `any`. It is not all that surprising, as no one has given them a type yet.
+***All of the variables have the type `any`.***
+It is not all that surprising, as no one has given them a type yet.
 There are a couple of ways to fix this, but first, we have to consider why this is accepted and where the type `any` came from.
 
-In TypeScript, every untyped variable whose type cannot be inferred implicitly becomes type
+In TypeScript, *every untyped variable whose type cannot be inferred implicitly becomes type*
 [`any`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any).
-Any is a kind of "wild card" type which stands for **whatever** type.
-Things become implicitly any type quite often when one forgets to type functions.
+Any is *wild card* type which stands for **whatever** type.
+Variables implicitly become an `any` type; quite often when one forgets to type functions.
 
 We can also explicitly type things `any`.
-The only difference between the implicit and explicit any type is how the code looks; the compiler does not care about the difference.
+The only difference between the implicit and explicit any type is *how the code looks*; the compiler does not care about the difference.
 
 Programmers however see the code differently when `any` is explicitly enforced than when it is implicitly inferred.
-Implicit `any` typings are usually considered problematic, since it is quite often due to the coder forgetting to assign types (or being too lazy to do it),
+**Implicit `any` typings are usually considered problematic**, since it is quite often due to the coder forgetting to assign types (or being too lazy to do it),
 and it also means that the full power of TypeScript is not properly exploited.
 
 This is why the configuration rule [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny) exists on the compiler level,
@@ -1087,7 +1089,7 @@ const a : any = /* no clue what the type will be! */.
 ```
 
 We already have `noImplicitAny: true` configured in our example, so why does the compiler not complain about the implicit `any` types?
-The reason is that the `body` field of an Express [Request](https://expressjs.com/en/5x/api.html#req) object is explicitly typed `any`.
+The reason is that the `body` field of an Express [Request](https://expressjs.com/en/5x/api.html#req) object **is explicitly typed `any`**.
 The same is true for the `request.query` field that Express uses for the query parameters.
 
 *What if we would like to restrict developers from using the `any` type?*
@@ -1134,6 +1136,9 @@ Let us also set up a **lint** npm script to inspect the files with *.ts* extensi
 }
 ```
 
+Finally, we'll need to enable the eslint configuration in our settings. (***Ctrl-Alt-S***).
+Remember that the configuration to turn on in ***Languages & Frameworks->JavaScript->Code Quality Tools->ESLint***.
+Select the option **Automatic ESLint configuration** and check ***Run eslint --fix on save***.
 Now lint will complain if we try to define a variable of type `any`:
 
 ![vscode showing ESlint complaining about using the any type](../../images/8/13b.png)
@@ -1178,12 +1183,12 @@ So we will use the following *.eslintrc*
 }
 ```
 
-Quite a few semicolons are missing, but those are easy to add.
+You may have a few semicolons missing, but those are easy to add, and WebStorm should be able to add them when a file is saved.
 We also have to solve the ESlint issues concerning the `any` type:
 
 ![vscode error unsafe assignment of any value](../../images/8/50x.png)
 
-We could and probably should disable some ESlint rules to get the data from the request body.
+We should disable some ESlint rules to get the data from the request body.
 
 Disabling *`@typescript-eslint/no-unsafe-assignment`* for the destructuring assignment
 and calling the [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/Number) constructor to values is nearly enough:
@@ -1200,11 +1205,12 @@ app.post("/calculate", (req, res) => {
 });
 ```
 
-However this still leaves one problem to deal with, the last parameter in the function call is not safe:
+However this still leaves one problem to deal with, the last parameter in the function call (`op`) is not safe:
 
 ![vscode showing unsafe argument of any type assigned to parameter of type Operation](../../images/8/51x.png)
 
-We can just disable another ESlint rule to get rid of that:
+One option is to just disable the ESlint rule to make the error disappear:
+> *again you should be able to move your cursor to `op` and use the keyboard shortcut for context actions to disable the rule*
 
 ```js
 app.post("/calculate", (req, res) => {
@@ -1219,15 +1225,16 @@ app.post("/calculate", (req, res) => {
 });
 ```
 
-We now got ESlint silenced but we are totally at the mercy of the user.
-We most definitively should do some validation to the post data and give a proper error message if the data is invalid:
+We no longer have any ESLint errors but we don't have any validation.
+Even though we are using TypeScript, we should not rely on the user to give us proper values.
+We need to validate the post data and provide a proper error message when the data is invalid:
 
 ```js
 app.post("/calculate", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { value1, value2, op } = req.body;
 
-// highlight-start
+  // highlight-start
   if ( !value1 || isNaN(Number(value1)) ) {
     return res.status(400).send({ error: "..."});
   }
@@ -1237,24 +1244,25 @@ app.post("/calculate", (req, res) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   const result = calculator(Number(value1), Number(value2), op);
-  return res.send({ result });
+  return res.send({ result }); //highlight-line
 });
 ```
 
-We shall see later on in this part some techniques how the `any` typed data (eg. the input an app recieves from the user) can be ***narrowed*** to a more specific type (such as number).
-With a proper narrowing of types, there is no more need to silence the eslint rules.
+Notice that we also added the `return` syntax in the function for information we send.
+We will revisit shortly some techniques for how the `any` typed data (eg. the input an app recieves from the user) can be ***narrowed*** to a more specific type (such as `number`).
+*When we properly narrow types, we won't need to silence the ESlint rules*.
 
 ### Type assertion
 
 Using a [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
-is another "dirty trick" that can be done to keep TypeScript compiler and Eslint quiet.
+is a simple but [*unsafe way*](https://ts.dev/style/#type-and-non-nullability-assertions) to keep the TypeScript compiler and Eslint quiet.
 Let us export the type Operation in *calcultor.ts*:
 
 ```js
 export type Operation = "multiply" | "add" | "divide";
 ```
 
-Now we can import the type and use a **type assertion** to tell the TypeScript compiler what type a variable has:
+Now we can import `Operation` and use a **type assertion** to tell the TypeScript compiler what type `op` has:
 
 ```js
 import { calculator, Operation } from "./calculator"; // highligh-line
@@ -1274,9 +1282,9 @@ app.post("/calculate", (req, res) => {
 });
 ```
 
-The defined constant `operation` has now the type `Operation` and the compiler is perfectly happy,
-no quieting of the Eslint rule is needed on the following function call.
-The new variable is actually not needed, the type assertion can be done when an argument is passed to the function:
+The defined constant `operation` has now the type `Operation` and the compiler is perfectly happy.
+Notice we removed the Eslint rule comment before the call to `calculator()`.
+Furthermore, the type assertion can be done when an argument is passed to the function, removing the need for the `operation` variable:
 
 ```js
 app.post("/calculate", (req, res) => {
@@ -1293,13 +1301,13 @@ app.post("/calculate", (req, res) => {
 });
 ```
 
-Using a type assertion (or quieting an Eslint rule) is always a bit risky thing.
+Using a type assertion (or quieting an Eslint rule) is risky.
 It leaves the TypeScript compiler off the hook, the compiler just trusts that we as developers know what we are doing.
 If the asserted type does ***not*** have the right kind of value, the result will be a runtime error,
 so one must be pretty careful when validating the data if a type assertion is used.
 
-In the next chapter we shall have a look at [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)
-which will provide a much more safe way of giving a stricter type for data that is coming from an external source.
+In the next chapter we shall have a look at [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html),
+which will provide a safer way of specifying types for external data.
 
 </div>
 
