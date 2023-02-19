@@ -77,16 +77,7 @@ where you can quickly try out TypeScript code and instantly see the resulting Ja
 which is why you might see different warnings there compared to your local environment.
 The playground's tsconfig is modifiable through the ***TS Config*** dropdown menu.
 
-#### A notice about the coding style
-
-JavaScript can be written in a multitude of ways; it's an accommodating language.
-For example, we have named vs anonymous functions, using `const` and `let` or var, and the use of *semicolons*.
-We will continue to use semicolons here.
-It is not a TypeScript-specific pattern but a general coding style decision taken when creating any kind of JavaScript project.
-Whether to use them or not is usually in the hands of the programmer,
-but here you'll be expected to use semicolons and adjust to the coding style in the exercises for this part.
-This section may have some other differences in coding conventions compared to the rest of the course as well,
-e.g. in the directory naming conventions.
+#### Configuration and coding style
 
 Let's add a configuration file *tsconfig.json* to the project.
 In Webstorm you can generate one via ***File->New->tsconfig.json file***.
@@ -110,7 +101,29 @@ The *tsconfig.json* file is used to define:
 - and [much more](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
 For now, we will add the compiler option [`noImplicitAny`](https://www.typescriptlang.org/tsconfig#noImplicitAny),
-which does not require having types for all variables used.
+which will not require that we specify types for all variables.
+
+JavaScript can be written in a multitude of ways; it's an accommodating language.
+For example, we have named vs anonymous functions, using `const` and `let` or var, and the use of *semicolons*.
+We will continue to use semicolons here.
+It is not a TypeScript-specific pattern but a general coding style decision taken when creating any kind of JavaScript project.
+Whether to use them or not is usually in the hands of the programmer,
+but here you'll be expected to use semicolons and adjust to the coding style in the exercises for this part.
+This section may have some other differences in coding conventions compared to the rest of the course as well,
+e.g. in the directory naming conventions.
+
+To make our lives easier, let's have Webstorm help us with the semicolons.
+Open up your settings (***Ctrl-Alt-S***), and navigate to ***Editor->Code Style->Typescript***.
+From there, select the *Punctuation* tab and ensure that our use semicolon is set to always:
+
+![webstorm settings for always semicolons in typescript](../../images/teht/custom/semicolon.png)
+
+Then from there type save in the search box, which should leave you down to ***Tools->Actions on Save***.
+Make sure that the Reformat code option is checked.
+It's up to you whether you want to have the other actions saved.
+For me, I just have Run eslint --fix enabled from before.
+Once those options have been enabled, click OK.
+This now means that when we do an explicit save (like a ***Ctrl-S***), then semicolons will automatically be applied, so we let the IDE handle our new coding conventions.
 
 #### Your first TypeScript program
 
@@ -124,7 +137,7 @@ const multiplicator = (a, b, printText) => {
   console.log(printText,  a * b);
 }
 
-multiplicator(2, 4, 'Multiplied numbers 2 and 4, the result is:');
+multiplicator(2, 4, "Multiplied numbers 2 and 4, the result is:");
 ```
 
 It looks exactly as it would in JavaScript.
@@ -136,7 +149,7 @@ But what happens if we end up passing the wrong ***types*** of arguments to the 
 Let's replace the multiplicator call with this line.
 
 ```js
-multiplicator('how about a string?', 4, 'Multiplied a string and 4, the result is:');
+multiplicator("how about a string?", 4, "Multiplied a string and 4, the result is:");
 ```
 
 Now when we run the code, the output is: `Multiplied a string and 4, the result is: NaN`.
@@ -159,10 +172,10 @@ const multiplicator = (a: number, b: number, printText: string) => { // highligh
   console.log(printText,  a * b);
 }
 
-multiplicator('how about a string?', 4, 'Multiplied a string and 4, the result is:');
+multiplicator("how about a string?", 4, "Multiplied a string and 4, the result is:");
 ```
 
-Now the code is no longer valid JavaScript but in fact TypeScript.
+Now the code is no longer valid JavaScript but it is TypeScript.
 When we try to run the code, we notice that it does not compile:
 
 ![terminal output showing error assigning string to number](../../images/8/2a.png)
@@ -174,45 +187,53 @@ WebStorm informs you immediately when you are trying to use an incorrect type:
 
 ### Creating your first custom type
 
-Let's expand our multiplicator into a slightly more versatile calculator that also supports addition and division.
-The calculator should accept three arguments:
-two numbers and the operation, either `multiply`, `add` or `divide`, which tells it what to do with the numbers.
+Let's modify our *multiplicator* into a slightly more versatile ***calculator*** that also supports addition and division.
+To help drive this point home, I'm going to create a new file called *calculator.ts*.
+The calculator should accept two numbers and one operation as arguments.
+The operation:
 
-In JavaScript, the code would require additional validation to make sure the last argument is indeed a string.
-TypeScript offers a way to define specific types for inputs, which describe exactly what type of input is acceptable.
-On top of that, TypeScript can also show the info on the accepted values already at the editor level.
+- tells the calculator what to do with the two numbers;
+- is one of these values:
+    - `multiply`
+    - `add`
+    - `divide`
+
+In JavaScript, the code would require additional validation to make sure the last argument is indeed a `string`.
+TypeScript offers a way to define specific types for inputs.
+Those definitions detail what type of input is acceptable.
+Furthermore, TypeScript can show the info on the accepted values already at the editor level.
 
 We can create a **type** using the TypeScript native keyword `type`.
-Let's describe our type `Operation`:
+Let's describe the `Operation` type:
 
 ```js
-type Operation = 'multiply' | 'add' | 'divide';
+type Operation = "multiply" | "add" | "divide";
 ```
 
-Now the `Operation` type accepts only three kinds of values; exactly the three strings we wanted.
+Now the `Operation` type accepts only those three strings we wanted.
 Using the OR operator `|` we can define a variable to accept multiple values by creating a
 [union type](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types).
-In this case, we used exact strings
-(that, in technical terms, are called
-[string literal types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types))
-but with unions, you could also make the compiler accept for example both string and number: `string | number`.
+In this case, we used exact strings, AKA
+[**string literal types**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types).
+However, with unions, you could also make the compiler accept multiple general types.
+For example, we could accept a string or a number by writing: `string | number`.
 
 The `type` keyword defines a new name for a type:
-[a type alias](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases).
-Since the defined type is a union of three possible values, it is handy to give it an alias that has a representative name.
+[**a type alias**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases).
+Since the defined type is a union of three possible values, it is handy to name it appropriately.
 
-Let's look at our calculator now:
+Let's place this code into our *calculator.ts* file now:
 
 ```js
-type Operation = 'multiply' | 'add' | 'divide';
+type Operation = "multiply" | "add" | "divide";
 
 const calculator = (a: number, b: number, op: Operation) => {
-  if (op === 'multiply') {
+  if (op === "multiply") {
     return a * b;
-  } else if (op === 'add') {
+  } else if (op === "add") {
     return a + b;
-  } else if (op === 'divide') {
-    if (b === 0) return 'can\'t divide by 0!';
+  } else if (op === "divide") {
+    if (b === 0) return "cannot divide by 0!";
     return a / b;
   }
 }
@@ -224,23 +245,23 @@ Now, when we hover on top of the `Operation` type in the calculator function, we
 
 And if we try to use a value that is not within the `Operation` type, we get the familiar red warning signal and extra info from our editor:
 
-![vscode warning when trying to have 'yolo' as Operation](../../images/8/4x.png)
+![vscode warning when trying to have "yolo" as Operation](../../images/8/4x.png)
 
 This is already pretty nice, but one thing we haven't touched yet is typing the return value of a function.
 Usually, you want to know what a function returns, and it would be nice to have a guarantee that it returns what it says it does.
 Let's add a return value `number` to the calculator function:
 
 ```js
-type Operation = 'multiply' | 'add' | 'divide';
+type Operation = "multiply" | "add" | "divide";
 
 const calculator = (a: number, b: number, op: Operation): number => { // highlight-line
 
-  if (op === 'multiply') {
+  if (op === "multiply") {
     return a * b;
-  } else if (op === 'add') {
+  } else if (op === "add") {
     return a + b;
-  } else if (op === 'divide') {
-    if (b === 0) return 'this cannot be done';
+  } else if (op === "divide") {
+    if (b === 0) return "this cannot be done";
     return a / b;
   }
 }
@@ -266,45 +287,45 @@ const calculator = (a: number, b: number, op: Operation): Result =>  {
 }
 ```
 
-But now the question is if it's ***really*** okay for the function to return a string?
+But now the question becomes... *is it **really** okay for the function to return a `string`*?
 
-When your code can end up in a situation where something is divided by 0,
-something has probably gone terribly wrong and an error should be thrown and handled where the function was called.
+When your code can end up in a situation it tries to divide by 0,
+something has probably gone wrong and an error should be thrown and handled where the function was called.
 When you are deciding to return values you weren't originally expecting,
 the warnings you see from TypeScript prevent you from making rushed decisions and help you to keep your code working as expected.
 
-One more thing to consider is, that even though we have defined types for our parameters,
+Remember that even though we have defined types for our parameters,
 the generated JavaScript used at runtime does not contain the type checks.
 So if, for example, the `Operation` parameter's value comes from an external interface,
-there is no definite guarantee that it will be one of the allowed values.
-Therefore, it's still better to include error handling and be prepared for the unexpected to happen.
-In this case, when there are multiple possible accepted values and all unexpected ones should result in an error,
-the [switch...case](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)
-statement suits better than if...else in our code.
+***there is no definite guarantee that it will be one of the allowed values***.
+Therefore, we should include error handling and be prepared for the unexpected to happen.
+When our programs will accept many values but raise errors for anything else,
+we should use the [`switch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)
+statement over an `if`-`else`.
 
 The code of our calculator should look something like this:
 
 ```js
-type Operation = 'multiply' | 'add' | 'divide';
+type Operation = "multiply" | "add" | "divide";
 
 const calculator = (a: number, b: number, op: Operation) : number => {  // highlight-line
   switch(op) {
-    case 'multiply':
+    case "multiply":
       return a * b;
-    case 'divide':
-      if (b === 0) throw new Error('Can\'t divide by 0!');  // highlight-line
+    case "divide":
+      if (b === 0) throw new Error("Cannot divide by 0!");  // highlight-line
       return a / b;
-    case 'add':
+    case "add":
       return a + b;
     default:
-      throw new Error('Operation is not multiply, add or divide!');  // highlight-line
+      throw new Error("Operation is not multiply, add, or divide!");  // highlight-line
   }
 }
 
 try {
-  console.log(calculator(1, 5 , 'divide'));
+  console.log(calculator(1, 5 , "divide"));
 } catch (error: unknown) {
-  let errorMessage = 'Something went wrong: '
+  let errorMessage = "Something went wrong: ";
   if (error instanceof Error) {
     errorMessage += error.message;
   }
@@ -315,23 +336,26 @@ try {
 ### Type narrowing
 
 The default type of the `catch` block parameter `error` is *`unknown`*.
-The [unknown](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type)
-is a kind of top type that was introduced in TypeScript version 3 to be the type-safe counterpart of `any`.
-Anything is assignable to `unknown`, but `unknown` isn’t assignable to anything but itself and `any` without a type assertion or a control flow-based narrowing.
+Typescript version 3 introduced [`unknown`](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-0.html#new-unknown-top-type)
+to be the type-safe counterpart of `any`.
+We can assign any variable with `unknown`.
+However, we cannot assign an `unknown` variable to just any variable.
+Variables with the `unknown` type are only assignable to other variables of type `unknown` and `any`;
+unless there is a type assertion or a control flow-based narrowing.
 Likewise, no operations are permitted on an `unknown` without first asserting or narrowing it to a more specific type.
 
 Both the possible causes of exception (wrong operator or division by zero)
-will throw an [Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object with an error message,
+will throw an [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) object with an error message,
 that our program prints to the user.
 
 If our code would be JavaScript, we could print the error message by just referring to the field
-[message](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message) of the object `error` as follows:
+[`message`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message) of the object `error` as follows:
 
 ```js
 try {
-  console.log(calculator(1, 5 , 'divide'));
+  console.log(calculator(1, 5 , "divide"));
 } catch (error) {
-  console.log('Something went wrong: ' + error.message);  // highlight-line
+  console.log("Something went wrong: " + error.message);  // highlight-line
 }
 ```
 
@@ -340,9 +364,9 @@ we have to [narrow](https://www.typescriptlang.org/docs/handbook/2/narrowing.htm
 
 ```ts
 try {
-  console.log(calculator(1, 5 , 'divide'));
+  console.log(calculator(1, 5 , "divide"));
 } catch (error: unknown) {
-  let errorMessage = 'Something went wrong: '
+  let errorMessage = "Something went wrong: "
   // here we can not use error.message
   if (error instanceof Error) { // highlight-line 
     // the type is narrowed and we can refer to error.message
@@ -354,19 +378,17 @@ try {
 }
 ```
 
-Here the narrowing was done with a [typeof](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#typeof-type-guards) type guard,
-that is just one of the many ways to narrow a type.
+Here the narrowing was done with an [`instanceof` narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#instanceof-narrowing),
+which is just one of the many ways to narrow a type.
 We shall see many others later in this part.
 
 ### Accessing command line arguments
 
-The programs we have written are alright, but it sure would be better if we could use command-line arguments instead of always having to change the code to calculate different things.
+We can improve our current program by using command-line arguments instead of always having to change the code to calculate stuff.
 
 Let's try it out, as we would in a regular Node application, by accessing `process.argv`.
-If you are using a recent npm-version (7.0 or later),
-there are no problems but with an older setup something is not right:
-
-![vs code error cannot find name process need to install type definitions](../../images/8/5.png)
+Since we are using a recent npm-version (7.0 or later),
+there are no problems but with an older setup errors will be raised.
 
 So what is the problem with older setups?
 
@@ -375,7 +397,7 @@ So what is the problem with older setups?
 Let's return to the basic idea of TypeScript.
 TypeScript expects all globally-used code to be typed, as it does for your code when your project has a reasonable configuration.
 The TypeScript library itself contains only typings for the code of the TypeScript package.
-It is possible to write your own typings for a library, but that is rarely needed - since the TypeScript community has done it for us!
+It is possible to write custom typings for a library, but that is rarely needed - since the TypeScript community has done it for us!
 
 As with npm, the TypeScript world also celebrates open-source code.
 The community is active and continuously reacting to updates and changes in commonly-used npm packages.
@@ -391,14 +413,14 @@ npm install --save-dev @types/react @types/express @types/lodash @types/jest @ty
 ```
 
 and so on and so on.
-The `@types/*` are maintained by [Definitely typed](https://github.com/DefinitelyTyped/DefinitelyTyped),
+The `@types/*` are maintained by [*Definitely typed*](https://github.com/DefinitelyTyped/DefinitelyTyped),
 a community project to maintain types of everything in one place.
 
 Sometimes, an npm package can also include its types within the code and,
 in that case, installing the corresponding `@types/*` is not necessary.
 
 > **NB:** Since the typings are only used before compilation,
-> the typings are not needed in the production build and they should **always** be in the devDependencies of the package.json.
+> the typings are *not* needed in the production build and they should **always** be in the *`devDependencies`* of the *package.json*.
 
 Since the global variable `process` is defined by Node itself, we get its typings from the package *`@types/node`*.
 
@@ -411,12 +433,12 @@ If you have an older npm, the peer dependency must be installed explicitly:
 npm install @types/node --save-dev
 ```
 
-When the package @types/node is installed, the compiler does not complain about the variable `process`.
-Notice that there is no need to require the types to the code, the installation of the package is enough!
+When the package *`@types/node`* is installed, the compiler does not complain about the variable `process`.
+Notice that there is **no need to `require` the types as a header in the code**, the installation of the package is enough!
 
 ### Improving the project
 
-Next, let's add npm scripts to run our two programs ***multiplier*** and ***calculator***:
+Next, let's add an npm script to run our ***calculator*** program:
 
 ```json
 {
@@ -442,11 +464,11 @@ We can get the multiplier to work with command-line parameters with the followin
 
 ```js
 const multiplicator = (a: number, b: number, printText: string) => {
-  console.log(printText,  a * b);
+  console.log(printText, a * b);
 }
 
-const a: number = Number(process.argv[2])
-const b: number = Number(process.argv[3])
+const a: number = Number(process.argv[2]);
+const b: number = Number(process.argv[3]);
 multiplicator(a, b, `Multiplied ${a} and ${b}, the result is:`);
 ```
 
@@ -462,16 +484,16 @@ If the program is run with parameters that are not of the right type, e.g.
 npm run multiply 5 lol
 ```
 
-it "works" but gives us the answer:
+it *works* but gives us a potentially unexpected answer:
 
 ```shell
 Multiplied 5 and NaN, the result is: NaN
 ```
 
-The reason for this is, that `Number('lol')` returns `NaN`,
-which is actually of type `number`, so TypeScript has no power to rescue us from this kind of situation.
+The result is `NaN` because `Number("lol")` returns `NaN`,
+***which is of type `number`***, so TypeScript has no power to rescue us from this kind of situation.
 
-To prevent this kind of behavior, we have to validate the data given to us from the command line.
+To prevent this kind of behavior, we have to ***validate the data given to us from the command line***.
 
 The improved version of the multiplicator looks like this:
 
@@ -482,8 +504,8 @@ interface MultiplyValues {
 }
 
 const parseArguments = (args: string[]): MultiplyValues => {
-  if (args.length < 4) throw new Error('Not enough arguments');
-  if (args.length > 4) throw new Error('Too many arguments');
+  if (args.length < 4) throw new Error("Not enough arguments");
+  if (args.length > 4) throw new Error("Too many arguments");
 
   if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
     return {
@@ -491,7 +513,7 @@ const parseArguments = (args: string[]): MultiplyValues => {
       value2: Number(args[3])
     }
   } else {
-    throw new Error('Provided values were not numbers!');
+    throw new Error("Provided values were not numbers!");
   }
 }
 
@@ -503,9 +525,9 @@ try {
   const { value1, value2 } = parseArguments(process.argv);
   multiplicator(value1, value2, `Multiplied ${value1} and ${value2}, the result is:`);
 } catch (error: unknown) {
-  let errorMessage = 'Something bad happened.'
+  let errorMessage = "Something bad happened."
   if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message;
+    errorMessage += " Error: " + error.message;
   }
   console.log(errorMessage);
 }
@@ -517,18 +539,18 @@ When we now run the program:
 npm run multiply 1 lol
 ```
 
-we get a proper error message:
+we get an error message:
 
 ```shell
-Something bad happened.
-Error: Provided values were not numbers!
+Something bad happened. Error: Provided values were not numbers!
 ```
 
-There is quite a lot going on in the code.
-The most important addition is the function `parseArguments` that ensures that the parameters given to `multiplicator` are of the right type.
+Let's examine the above code closely.
+The most important addition is the function `parseArguments`.
+The function ensures that the parameters given to `multiplicator` are of the right type.
 If not, an exception is thrown with a descriptive error message.
 
-The definition of the function has a couple of interesting things:
+Let's review the `parseArguments` function definition:
 
 ```js
 const parseArguments = (args: string[]): MultiplyValues => {
@@ -536,7 +558,7 @@ const parseArguments = (args: string[]): MultiplyValues => {
 }
 ```
 
-Firstly, the parameter `args` is an [array](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays) of strings.
+Notice the parameter `args` is an [array](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#arrays) of strings.
 
 The return value of the function has the type `MultiplyValues`, which is defined as follows:
 
@@ -547,9 +569,9 @@ interface MultiplyValues {
 }
 ```
 
-The definition utilizes TypeScript's [Interface](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) keyword,
-which is one way to define the "shape" an object should have.
-In our case, it is quite obvious that the return value should be an object with the two properties `value1` and `value2`, which should both be of type number.
+The definition utilizes TypeScript's [**Interface**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces) keyword,
+which is one way to define the *shape* an object should have.
+In our case, it is quite obvious that the return value should be an object with the two properties `value1` and `value2`, both being of type `number`.
 
 ### The alternative array syntax
 
@@ -560,16 +582,16 @@ Instead of writing
 let values: number[]; 
 ```
 
-we could use the "generics syntax" and write
+we could use the ***generics syntax*** and write
 
 ```js
 let values: Array<number>; 
 ```
 
-In this course we shall mostly be following the convention enforced by the Eslint rule
+In this course, we shall mostly be following the convention enforced by the ESlint rule
 [array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)
-that suggests to write the simple arrays with the [] syntax and use the the <> syntax for the more complex ones,
-see [here](https://typescript-eslint.io/rules/array-type/#array-simple) for examples.
+that suggests to use [] syntax for simple arrays and <> syntax for the more complex ones.
+See [the ESlint array-simple rule documentation](https://typescript-eslint.io/rules/array-type/#array-simple) for examples.
 
 </div>
 
@@ -579,33 +601,42 @@ see [here](https://typescript-eslint.io/rules/array-type/#array-simple) for exam
 
 #### setup
 
-Exercises 8.1-8.7. will all be made in the same node project.
-Create the project in an empty directory with `npm init` and install the ts-node and typescript packages.
+Exercises 8.1-8.7. will all be made in the same project folder.
+
+Please start by visiting <http://go.djosv.com/227lab8> and importing the project into webstorm.
+
+Then, create the project in an empty directory with `npm init` and install the *ts-node* and *typescript* packages.
 Also, create the file *tsconfig.json* in the directory with the following content:
 
 ```json
 {
   "compilerOptions": {
-    "noImplicitAny": true,
-  }
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true,
+    "noImplicitAny": false // highlight-line
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
 ```
 
-The compiler option [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny) makes it mandatory to have types for all variables used.
+The compiler option [`noImplicitAny`](https://www.typescriptlang.org/tsconfig#noImplicitAny) makes it mandatory to have types for all variables used.
 This option is currently a default, but it lets us define it explicitly.
 
 #### 8.1 Body mass index
 
 Create the code of this exercise in the file *bmiCalculator.ts*.
 
-Write a function `calculateBmi` that calculates a [BMI](https://en.wikipedia.org/wiki/Body_mass_index)
+Write a function `calculateBMI` that calculates a [BMI](https://en.wikipedia.org/wiki/Body_mass_index)
 based on a given height (in centimeters) and weight (in kilograms) and then returns a message that suits the results.
 
 Call the function in the same file with hard-coded parameters and print out the result.
 The code
 
 ```js
-console.log(calculateBmi(180, 74))
+console.log(calculateBMI(180, 74))
 ```
 
 should print the following message:
@@ -614,7 +645,7 @@ should print the following message:
 Normal (healthy weight)
 ```
 
-Create an npm script for running the program with the command `npm run calculateBmi`.
+Create an npm script for running the program with the command `npm run calculateBMI`.
 
 #### 8.2 Exercise calculator
 
@@ -650,7 +681,7 @@ If you call the function with parameters `[3, 0, 2, 4.5, 0, 3, 1]` and `2`, it s
   trainingDays: 5,
   success: false,
   rating: 2,
-  ratingDescription: 'not too bad but could be better',
+  ratingDescription: "not too bad but could be better",
   target: 2,
   average: 1.9285714285714286 }
 ```
@@ -678,7 +709,7 @@ $ npm run calculateExercises 2 1 0 2 4.5 0 3 1 0 4
   trainingDays: 6,
   success: false,
   rating: 2,
-  ratingDescription: 'not too bad but could be better',
+  ratingDescription: "not too bad but could be better",
   target: 2,
   average: 1.7222222222222223 }
 ```
@@ -686,10 +717,10 @@ $ npm run calculateExercises 2 1 0 2 4.5 0 3 1 0 4
 In the example, the *first argument* is the target value.
 
 Handle exceptions and errors appropriately.
-The exerciseCalculator should accept inputs of varied lengths.
+The *exerciseCalculator* should accept inputs of varied lengths.
 Determine by yourself how you manage to collect all needed input.
 
-Couple of things to notice:
+A couple of things to notice:
 
 If you define helper functions in other modules, you should use the
 [JavaScript module system](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules),
@@ -712,10 +743,10 @@ Another note: somehow surprisingly TypeScript does not allow to define the same 
 
 ![browser showing pong from localhost:3000/ping](../../images/8/60new.png)
 
-This is actually not quite true.
-This rule applies only to files that are treated as "scripts".
-A file is a script if it does not contain any export or import statements.
-If a file has those, then the file is treated as a [module](https://www.typescriptlang.org/docs/handbook/modules.html), ***and*** the variables do not get defined in the block-scope.
+This is not *quite* true.
+This ***rule applies only to files that are treated as scripts***.
+A file is a **script** if it does not contain any `export` or `import` statements.
+If a file has those, then the file is treated as a [**module**](https://www.typescriptlang.org/docs/handbook/modules.html), ***and*** the variables do not get defined in the block-scope.
 
 </div>
 
@@ -749,23 +780,25 @@ Let's specify the following configurations in our *tsconfig.json* file:
 
 Do not worry too much about the `compilerOptions`; they will be under closer inspection later on.
 
-You can find explanations for each of the configurations from the TypeScript documentation or from the really handy [tsconfig page](https://www.typescriptlang.org/tsconfig),
-or from the tsconfig [schema definition](http://json.schemastore.org/tsconfig),
-which unfortunately is formatted a little worse than the first two options.
+You can find explanations for each of the configurations from:
+
+- the TypeScript documentation
+- the really handy [tsconfig page](https://www.typescriptlang.org/tsconfig)
+- the no-frills tsconfig [schema definition](http://json.schemastore.org/tsconfig)
+    - it's no-frills because the page output is in JSON.
 
 ### Adding Express to the mix
 
-Right now, we are in a pretty good place.
-Our project is set up and we have two executable calculators in it.
-However, since we aim to learn FullStack development, it is time to start working with some HTTP requests.
+Currently, our project is functional; it's set up and has two executable calculators in it.
+However, since we aim to learn full-stack web development, let's begin working with HTTP Requests.
 
-Let us start by installing Express:
+First, install Express:
 
 ```bash
 npm install express
 ```
 
-and then add the ***start*** script to package.json:
+and add the ***start*** script to package.json:
 
 ```json
 {
@@ -783,11 +816,11 @@ and then add the ***start*** script to package.json:
 Now we can create the file *index.ts*, and write the HTTP GET `ping` endpoint to it:
 
 ```js
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.get('/ping', (req, res) => {
-  res.send('pong');
+app.get("/ping", (req, res) => {
+  res.send("pong");
 });
 
 const PORT = 3003;
@@ -797,51 +830,68 @@ app.listen(PORT, () => {
 });
 ```
 
-Everything else seems to be working just fine but, as you'd expect, the `req` and `res` parameters of `app.get` need typing.
-If you look carefully, VSCode is also complaining about the importing of Express.
-You can see a short yellow line of dots under `require`.
-Let's hover over the problem:
+Everything else seems to be working just fine but, as you'd expect, ***the `req` and `res` parameters of `app.get` need typing***.
+Also, if you hover over the `require` statement on line 1 in WebStorm, you'll notice that WebStorm provides us with a message converting the line to an import.
 
 ![vscode warning to change require to import](../../images/8/6.png)
 
-The complaint is that the `'require' call may be converted to an import`.
-Let us follow the advice and write the import as follows:
+The subtle suggestion is that the `'require' call may be converted to an import`.
+This suggestion is a suggestion to use a more modern call for typescript, and as such, this error is currently not being highlighted as a warning.
+To turn it into a warning, we can open up the settings by using the ***Show Context Actions*** keyboard shortcut (or by right-clicking) and selecting the edit inspection setting.
+
+![WebStorm using context actions to turn on errors](../../images/8/custom/quickfixinspection.png)
+
+Once there, you are taken to WebStorm's settings, where in your case, you may see that all of the ES2015 migration aids category is mostly unselected.
+Webstorm provides an explanation for why we would want the change in the upper right area.
+On noticing that most of the inspections are not being raised as warnings, let's change that.
+Click the category ***ES2015 Migration aids*** and change the severity to a weak warning, as we show in the column below.
+
+![WebStorm inspection settings](../../images/8/custom/typescript_warnings.png)
+
+Once you do that, you'll now see that the require statement in underlined with a weak warning indicator.
+Let's again use the quick actions keyboard shortcut (make sure to practice this!) to select the first option.
+
+![WebStorm using the context actions](../../images/8/custom/quickfiximport.png)
+
+Completing the action replaces the first line with this:
 
 ```js
-import express from 'express';
+import express from "express";
 ```
 
-> **NB**: VSCode offers you the possibility to fix the issues automatically by clicking the ***Quick Fix...*** button.
+> **NB**: Make sure to utilize the context actions and quick fixes that WebStorm provides.
 Keep your eyes open for these helpers/quick fixes; listening to your editor usually makes your code better and easier to read.
 The automatic fixes for issues can be a major time saver as well.
 
-Now we run into another problem, the compiler complains about the import statement.
+Now we run into another problem that WebStorm is not explicitly letting on, the compiler is complaining about the import statement.
 Once again, the editor is our best friend when trying to find out what the issue is:
 
 ![vscode error about not finding express](../../images/8/7.png)
 
 We haven't installed types for *express*.
-Let's do what the suggestion says and run:
+Let's do what the suggestion says.
+You can type this line from the terminal.
+> *If you decided to run it from WebStorm, it may save it as a regular dependency instead of a dev dependency.*
 
 ```bash
 npm install @types/express --save-dev
 ```
 
-And no more errors! Let's take a look at what changed.
+And almost no more errors! Let's take a look at what changed.
 
-When we hover over the `require` statement, we can see the compiler interprets everything express-related to be of type `any`.
+At first, when we were using the `require` statement, and then we hovered over over `res`, you'll notice that WebStorm interprets everything express-related to be of type `any`.
 
-![vscode showing problem of implicitly having any type](../../images/8/8a.png)
+![ide showing problem of implicitly having any type](../../images/8/8a.png)
 
-Whereas when we use `import`, the editor knows the actual types:
+However, as soon as we used `import`, the editor knows the actual types:
 
-![vscode showing req is of type Request](../../images/8/9x.png)
+![ide showing req is of type Request](../../images/8/9x.png)
 
 Which import statement to use depends on the export method used in the imported package.
 
 A good rule of thumb is to try importing a module using the `import` statement first.
 We will always use this method in the *frontend*.
-If `import` does not work, try a combined method: `import ... = require('...')`.
+If `import` does not work, try a combined method: `import ... = require("...")`.
 
 We strongly suggest you read more about TypeScript modules [here](https://www.typescriptlang.org/docs/handbook/modules.html).
 
@@ -865,8 +915,8 @@ This is because we banned unused parameters in our *tsconfig.json*:
 }
 ```
 
-This configuration might create problems if you have library-wide predefined functions
-which require declaring a variable even if it's not used at all, as is the case here.
+This configuration might create problems if you have *library-wide predefined functions*
+that require declaring a variable even if it's not used at all, as is the case here.
 Fortunately, this issue has already been solved on the configuration level.
 Once again hovering over the issue gives us a solution.
 This time we can just click the quick fix button:
@@ -874,13 +924,15 @@ This time we can just click the quick fix button:
 ![vscode quickfix to add underscore to variable](../../images/8/14a.png)
 
 If it is absolutely impossible to get rid of an unused variable,
-you can prefix it with an underscore to inform the compiler you have thought about it and there is nothing you can do.
+you can ***prefix it with an underscore*** to inform the compiler you have thought about it and there is nothing you can do.
 
 Let's rename the `req` variable to `_req`.
 Finally, we are ready to start the application.
 It seems to work fine:
 
 ![browser result showing pong on /ping](../../images/8/11a.png)
+
+#### Speeding up development
 
 To simplify the development, we should enable **auto-reloading** to improve our workflow.
 In this course, you have already used *nodemon*, but ts-node has an alternative called ***ts-node-dev***.
@@ -915,7 +967,7 @@ And now, by running `npm run dev`, we have a working, auto-reloading development
 
 #### 8.4 Express
 
-Add Express to your dependencies and create an HTTP GET endpoint **`hello`** that answers `'Hello Full Stack!'`
+Add Express to your dependencies and create an HTTP GET endpoint **`hello`** that answers `"Hello Full Stack!"`
 
 The web app should be started with the commands `npm start` in production mode and `npm run dev` in development mode.
 The latter should also use ***`ts-node-dev`*** to run the app.
@@ -958,7 +1010,7 @@ The response is a JSON of the form:
 }
 ```
 
-See the [Express documentation](http://expressjs.com/en/5x/api.html#req.query) for info on how to access the query parameters.
+See the [Express documentation](https://expressjs.com/en/5x/api.html#req.query) for info on how to access the query parameters.
 
 If the query parameters of the request are of the wrong type or missing, a response with proper status code and an error message is given:
 
@@ -983,13 +1035,13 @@ When examining the code a bit closer, we can see a few dangers lurking there.
 Let's add the HTTP POST endpoint ***`calculate`*** to our app:
 
 ```js
-import { calculator } from './calculator';
+import { calculator } from "./calculator";
 
 app.use(express.json());
 
 // ...
 
-app.post('/calculate', (req, res) => {
+app.post("/calculate", (req, res) => {
   const { value1, value2, op } = req.body;
 
   const result = calculator(value1, value2, op);
@@ -1015,7 +1067,7 @@ All of the variables have the type `any`. It is not all that surprising, as no o
 There are a couple of ways to fix this, but first, we have to consider why this is accepted and where the type `any` came from.
 
 In TypeScript, every untyped variable whose type cannot be inferred implicitly becomes type
-[`any`](http://www.typescriptlang.org/docs/handbook/basic-types.html#any).
+[`any`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any).
 Any is a kind of "wild card" type which stands for **whatever** type.
 Things become implicitly any type quite often when one forgets to type functions.
 
@@ -1137,7 +1189,7 @@ Disabling *`@typescript-eslint/no-unsafe-assignment`* for the destructuring assi
 and calling the [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/Number) constructor to values is nearly enough:
 
 ```js
-app.post('/calculate', (req, res) => {
+app.post("/calculate", (req, res) => {
   // highlight-start
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment 
   // highlight-end
@@ -1155,7 +1207,7 @@ However this still leaves one problem to deal with, the last parameter in the fu
 We can just disable another ESlint rule to get rid of that:
 
 ```js
-app.post('/calculate', (req, res) => {
+app.post("/calculate", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { value1, value2, op } = req.body;
 
@@ -1171,13 +1223,13 @@ We now got ESlint silenced but we are totally at the mercy of the user.
 We most definitively should do some validation to the post data and give a proper error message if the data is invalid:
 
 ```js
-app.post('/calculate', (req, res) => {
+app.post("/calculate", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { value1, value2, op } = req.body;
 
 // highlight-start
   if ( !value1 || isNaN(Number(value1)) ) {
-    return res.status(400).send({ error: '...'});
+    return res.status(400).send({ error: "..."});
   }
   // highlight-end
 
@@ -1189,7 +1241,7 @@ app.post('/calculate', (req, res) => {
 });
 ```
 
-We shall see later on in this parts some techniques how the `any` typed data (eg. the input an app recieves from the user) can be ***narrowed*** to a more specific type (such as number).
+We shall see later on in this part some techniques how the `any` typed data (eg. the input an app recieves from the user) can be ***narrowed*** to a more specific type (such as number).
 With a proper narrowing of types, there is no more need to silence the eslint rules.
 
 ### Type assertion
@@ -1199,15 +1251,15 @@ is another "dirty trick" that can be done to keep TypeScript compiler and Eslint
 Let us export the type Operation in *calcultor.ts*:
 
 ```js
-export type Operation = 'multiply' | 'add' | 'divide';
+export type Operation = "multiply" | "add" | "divide";
 ```
 
 Now we can import the type and use a **type assertion** to tell the TypeScript compiler what type a variable has:
 
 ```js
-import { calculator, Operation } from './calculator'; // highligh-line
+import { calculator, Operation } from "./calculator"; // highligh-line
 
-app.post('/calculate', (req, res) => {
+app.post("/calculate", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { value1, value2, op } = req.body;
 
@@ -1227,7 +1279,7 @@ no quieting of the Eslint rule is needed on the following function call.
 The new variable is actually not needed, the type assertion can be done when an argument is passed to the function:
 
 ```js
-app.post('/calculate', (req, res) => {
+app.post("/calculate", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { value1, value2, op } = req.body;
 
