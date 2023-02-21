@@ -8,22 +8,24 @@ lang: en
 <div class="content">
 
 Now that we have a basic understanding of how TypeScript works and how to create small projects with it, it's time to start creating something useful.
-We are now going to create a new project that will introduce use cases that are a little more realistic.
+Let's create a new project with slighly more realistic use cases.
+Just go ahead and download this new empty repo by visiting this site:
+<http://go.djosv.com/227labts>
 
 One major change from the previous part is that ***we're not going to use ts-node anymore***.
-It is a handy tool that helps you get started, but in the long run,
-it is advisable to use the official TypeScript compiler that comes with the *typescript* npm-package.
+It's a useful tool for starting out, but we should switch to the official TypeScript compiler that comes with the *typescript* npm package.
 The official compiler generates and packages JavaScript files from the .ts files
-so that the built *production version* won't contain any TypeScript code anymore.
-This is the exact outcome we are aiming for since TypeScript itself is not executable by browsers or Node.
+so that the *production version* has no Typescript.
+This is what we want because browsers and Node can't execute TypeScript code directly.
 
 ### Setting up the project
 
-We will create a project for Ilari, who loves flying small planes but has a difficult time managing his flight history.
-He is a coder himself, so he doesn't necessarily need a user interface, but he'd like to use some custom software with HTTP requests
+We will create a project for Miles Prower ([Tails](https://en.wikipedia.org/wiki/Tails_(Sonic_the_Hedgehog))),
+who loves flying small planes but has a difficult time managing his flight history.
+He doesn't necessarily need a user interface, but he'd like to use some custom software with HTTP requests
 and retain the possibility of later adding a web-based user interface to the application.
 
-Let's start by creating our first real project: *Ilari's flight diaries*.
+Let's start by creating our first real project: *Tails' flight diaries*.
 As usual, run `npm init` and install the ***typescript*** package as a dev dependency.
 
 ```shell
@@ -46,24 +48,28 @@ The npm script for running *tsc* is set as follows:
 }
 ```
 
-The bare `tsc` command is often added to `scripts` so that other scripts can use it,
-hence don't be surprised to find it set up within the project like this.
+This bare `tsc` command is often added to `scripts` so that other scripts can use it.
+Don't be surprised to find it set up within the project like this.
 
-We can now initialize our tsconfig.json settings by running:
+We can now initialize our *tsconfig.json* by running:
 
 ```shell
  npm run tsc -- --init
 ```
 
-> **Notice** the extra `--` before the actual argument! Arguments before `--` are interpreted as being for the ***npm*** command,
-while the ones after that are meant for the command that is run through the script (i.e. *tsc* in this case).
+> ***Notice the extra `--` before the actual argument!***
+Arguments before `--` are linked to the ***npm*** command,
+while the ones after that are linked to the command that is run through the script (i.e. *tsc* in this case).
 
 The *tsconfig.json* file we just created contains a lengthy list of every configuration available to us.
 However, most of them are commented out.
 Studying this file can help you find some configuration options you might need.
 It is also completely okay to keep the commented lines, in case you might need them someday.
 
-At the moment, we want the following to be active:
+At the moment, we want to uncomment line 52 (outDir) and set it to `./build/`, and also uncomment 88-89 (locals/parameters) and 91-92 (returns/switch).
+Once uncommented those should all be set to true.
+
+Ideally we want to make sure the following are active:
 
 ```json
 {
@@ -83,40 +89,33 @@ At the moment, we want the following to be active:
 
 Let's go through each configuration:
 
-The `target` configuration tells the compiler which *ECMAScript* version to use when generating JavaScript.
-ES6 is supported by most browsers, so it is a good and safe option.
+| option | meaning |
+| :--- | :--- |
+| **`target`** | the *ECMAScript* version to use when generating JavaScript. ES6 is supported by most browsers, so it is a good and safe option. |
+| **`outDir`** | location where the compiled code should be placed |
+| **`module`** | the system we'd like to use for the compiled code. Because we are using node, we specify ***CommonJS***. This means we can use the old `require` syntax instead of the `import` one, which is not supported in older versions of *Node*, such as version 10.|
+| **`noUnusedLocals`**<br/>**`noUnusedParameters`** | prevents having unused local variables and/or unused parameters |
+|**`noImplicitReturns`** | checks all code paths in a function to ensure they return a value|
+|**`noFallthroughCasesInSwitch`** | ensures that, in a ***switch case***, each case ends either with a `return` or a `break` statement|
+|**`esModuleInterop`** | allows interoperability between CommonJS and ES Modules; see more in the [documentation](https://www.staging-typescript.org/tsconfig#esModuleInterop)|
 
-`outDir` tells where the compiled code should be placed.
-
-`module` tells the compiler that we want to use ***CommonJS*** modules in the compiled code.
-This means we can use the old `require` syntax instead of the `import` one,
-which is not supported in older versions of *Node*, such as version 10.
-
-`strict` is a shorthand for multiple separate options:
+Lastly, **`strict`** is a shorthand for multiple separate options:
 `noImplicitAny`, `noImplicitThis`, `alwaysStrict`, `strictBindCallApply`, `strictNullChecks`, `strictFunctionTypes` and `strictPropertyInitialization`.
 They guide our coding style to use the TypeScript features more strictly.
-For us, perhaps the most important is the already-familiar [noImplicitAny](https://www.staging-typescript.org/tsconfig#noImplicitAny).
+For us, perhaps the most important is the already-familiar [**`noImplicitAny`**](https://www.staging-typescript.org/tsconfig#noImplicitAny).
 It prevents implicitly setting type `any`, which can for example happen if you don't type the parameters of a function.
 Details about the rest of the configurations can be found in the [tsconfig documentation](https://www.staging-typescript.org/tsconfig#strict).
 Using `strict` is suggested by the official documentation.
 
-`noUnusedLocals` prevents having unused local variables, and `noUnusedParameters` throws an error if a function has unused parameters.
-
-`noImplicitReturns` checks all code paths in a function to ensure they return a value.
-
-`noFallthroughCasesInSwitch` ensures that, in a ***switch case***, each case ends either with a `return` or a `break` statement.
-
-`esModuleInterop` allows interoperability between CommonJS and ES Modules; see more in the [documentation](https://www.staging-typescript.org/tsconfig#esModuleInterop).
-
 Now that we have set our configuration, we can continue by installing *express* and, of course, also *@types/express*.
-Also, since this is a real project, which is intended to be grown over time, we will use ESlint from the very beginning:
+Also, since we intend to grow this project over time, we will use ESlint from the very beginning:
 
 ```shell
 npm install express
 npm install eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev
 ```
 
-Now our *package.json* should look like this:
+Now our *package.json* should look like something like this, with differing versions depending on which node version you are using
 
 ```json
 {
@@ -127,22 +126,22 @@ Now our *package.json* should look like this:
   "scripts": {
     "tsc": "tsc"
   },
-  "author": "Jane Doe",
+  "author": "Powercat",
   "license": "ISC",
   "devDependencies": {
-    "@types/express": "^4.17.13",
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
-    "eslint": "^8.9.0",
-    "typescript": "^4.5.5"
+    "@types/express": "^4.17.17",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
+    "eslint": "^8.34.0",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.18.2"
   }
 }
 ```
 
-We also create a *.eslintrc* file with the following content:
+Let's also create a *.eslintrc* file with the following content:
 
 ```json
 {
@@ -202,14 +201,15 @@ We finally define a few more npm scripts, and voilà, we are ready to begin:
 ```
 
 As you can see, there is a lot of stuff to go through before beginning the actual coding.
-When you are working on a real project, careful preparations support your development process.
+When you are working on a real project, pay special attention to establishing your development process.
 Take the time needed to create a good setup for yourself and your team, so that everything runs smoothly in the long run.
 
 ### Let there be code
 
-Now we can finally start coding! As always, we start by creating a ping endpoint, just to make sure everything is working.
+Now we can finally start coding!
+As always, we start by creating a *ping* endpoint, just to make sure everything is working.
 
-The contents of the *index.ts* file:
+Here's the contents of the *index.ts* file:
 
 ```js
 import express from 'express';
@@ -228,12 +228,12 @@ app.listen(PORT, () => {
 });
 ```
 
-Now, if we run the app with `npm run dev`, we can verify that a request to <http://localhost:3000/ping> gives the response ***pong***, so our configuration is set!
+If we run the app with `npm run dev`, we can verify that a request to <http://localhost:3000/ping> gives the response ***pong***, so our configuration is set!
 
 When starting the app with `npm run dev`, it runs in development mode.
 The development mode is not suitable at all when we later operate the app in production.
 
-Let's try to create a **production build** by running the TypeScript compiler.
+Let's create a **production build** by running the TypeScript compiler.
 Since we have defined the *outdir* in our tsconfig.json, nothing's left but to run the script `npm run tsc`.
 
 Just like magic, a native runnable JavaScript production build of the Express backend is created in file *index.js* inside the directory *build*.
@@ -258,9 +258,10 @@ app.listen(PORT, () => {
 });
 ```
 
-Currently, if we run ESlint it will also interpret the files in the *build* directory.
-We don't want that, since the code there is compiler-generated.
-We can prevent this by creating a  *.eslintignore* file that lists the content we want ESlint to ignore, just like we do with git and *.gitignore*.
+If we run ESlint now, it will unfortunately interpret the compiler-generated files in the *build* directory.
+We can prevent this by creating a *.eslintignore* file, which tells ESlint what to ignore.
+This file behaves similar to git and *.gitignore*; you only need to list `build/` in the file.
+We may still get warnings in WebStorm as we would also need to configure its settings to follow ESLint, but we will avoid that for now.
 
 Let's add an npm script for running the application in production mode:
 
@@ -281,9 +282,9 @@ When we run the app with `npm start`, we can verify that the production build al
 
 ![browser showing pong from localhost:3000/ping](../../images/8/15a.png)
 
-Now we have a minimal working pipeline for developing our project.
-With the help of our compiler and ESlint, it also ensures that good code quality is maintained.
-With this base, we can start creating an app that we could, later on, deploy into a production environment.
+Now we have a working pipeline for developing our project.
+The pipeline also ensures good code quality with the help of our compiler and ESlint.
+With this base, we can start creating an app that we could deploy into a production environment.
 
 </div>
 
@@ -293,36 +294,37 @@ With this base, we can start creating an app that we could, later on, deploy int
 
 #### Before you start the exercises
 
-For this set of exercises, you will be developing a backend for an existing project called **Patientor**,
+For this set of exercises, you will be developing a backend for an existing project called **Patientia**,
 which is a simple medical record application for doctors who handle diagnoses and basic health information of their patients.
 
-The [frontend](https://github.com/comp227/patientor) has already been built by outsider experts and your job is to create a backend to support the existing code.
+The [frontend](https://classroom.github.com/a/Jggqp2fY) has already been built by outsider experts and your job is to create a backend to support the existing code.
 
-#### WARNING about VSCode
+#### WARNING about IDEs
 
-Quite often VS code loses track what is really happening in the code and it shows type or style related warnings despite the code has been fixed.
-If this happens (to me it has happened quite often), just restart the editor.
-It is also good to double-check that everything really works by running the compiler and the eslint from the command line with commands:
+Quite often WebStorm or VSCode lose track of what is really happening in the code and it shows type or style-related warnings despite having fixed the code.
+If this happens (to me it has happened quite often), just restart the TypeScript service and the editor as a last resort.
+It is also good to double-check that everything really works by running the compiler and the ESlint from the command line with commands:
 
 ```bash
 npm run tsc
 npm run lint
 ```
 
-When you run these in command line you will get valid results.
-So, be suspicious of the editor!
+The command line will provide you with valid results.
+So, be a little suspicious of the editor. 👀
 
-#### 8.8: Patientor backend, step1
+#### 8.8: Patientia backend, step1
 
-Initialize a new backend project that will work with the frontend.
-Configure eslint and tsconfig with the same configurations as proposed in the material.
+From the *labts* repo that you cloned from <http://go.djosv.com/227labts>, initialize a new backend project that will work with the frontend in a new subfolder.
+Configure ESlint and tsconfig with the same configurations as proposed in the material.
 Define an endpoint that answers HTTP GET requests for route ***/api/ping***.
 
 The project should be runnable with npm scripts, both in development mode and, as compiled code, in production mode.
 
-#### 8.9: Patientor backend, step2
+#### 8.9: Patientia backend, step2
 
-Fork and clone the project [patientor](https://github.com/comp227/patientor).
+Accept the [patientia assignment](https://classroom.github.com/a/Jggqp2fY)
+
 Start the project with the help of the README file.
 
 You can run this command if you get an error message when trying to start the frontend:
@@ -331,7 +333,7 @@ You can run this command if you get an error message when trying to start the fr
 npm update chokidar
 ```
 
- You should be able to use the frontend without a functioning backend.
+You should be able to use the frontend without a functioning backend.
 
 Ensure that the backend answers the ping request that the *frontend* has made on startup.
 Check the developer tools to make sure it works:
@@ -350,7 +352,7 @@ If something fails, [part 3](/part3) of the course shows how the problem can be 
 Finally, we are ready to start writing some code.
 
 Let's start from the basics.
-Ilari wants to be able to keep track of his experiences on his flight journeys.
+Tails wants to be able to keep track of his experiences on his flight journeys.
 
 He wants to be able to save *diary entries*, which contain:
 
@@ -378,7 +380,7 @@ The data looks like the following:
     "date": "2017-04-01",
     "weather": "sunny",
     "visibility": "good",
-    "comment": "Everything went better than expected, I'm learning much"
+    "comment": "Everything went better than expected, no sign of Dr. Robotnik"
   },
   // ...
 ]
@@ -387,11 +389,11 @@ The data looks like the following:
 Let's start by creating an endpoint that returns all flight diary entries.
 
 First, we need to make some decisions on how to structure our source code.
-It is better to place all source code under *src* directory, so source code is not mixed with configuration files.
-We will move *index.ts* there and make the necessary changes to the npm scripts.
+We should not mix configuration files with source code, so place source code under the *src* directory.
+Let's **move *index.ts* to *src* and make the necessary changes to the npm scripts**.
 
-We will place all [routers](/part4/structure_of_backend_application_introduction_to_testing)
-and modules which are responsible for handling a set of specific resources such as ***diaries***, under the directory *src/routes*.
+Next, in the directory *src/routes*, place all [routers](/part4/structure_of_backend_application_introduction_to_testing)
+and modules which are responsible for specific resources like ***diaries***.
 This is a bit different than what we did in [part 4](/part4),
 where we used the directory *src/controllers*.
 
@@ -438,12 +440,12 @@ app.listen(PORT, () => {
 
 And now, if we make an HTTP GET request to <http://localhost:3000/api/diaries>, we should see the message: `Fetching all diaries!`
 
-Next, we need to start serving the seed data (found [here](https://github.com/comp227/misc/blob/main/diaryentries.json)) from the app.
+Next, let's serve the seed data (found [here](https://github.com/comp227/misc/blob/main/diaryentries.json)) from the app.
 We will fetch the data and save it to *data/diaries.json*.
 
 We won't be writing the code for the actual data manipulations in the router.
-We will create a ***service*** that takes care of the data manipulation instead.
-It is quite a common practice to separate the "business logic" from the router code into modules, which are quite often called **services**.
+We will create a **service** that takes care of the data manipulation instead.
+It is *common practice to separate the **business logic** from the router code into modules*, which are quite often called **services**.
 The name service originates from [Domain-driven design](https://en.wikipedia.org/wiki/Domain-driven_design)
 and was made popular by the [Spring](https://spring.io/) framework.
 
@@ -452,7 +454,7 @@ place the *diaryService.ts* file in it.
 The file contains two functions for fetching and saving diary entries:
 
 ```js
-import diaryData from '../../data/entries.json';
+import diaryData from '../../data/diaries.json';
 
 const getEntries = () => {
   return diaryData;
@@ -473,7 +475,7 @@ But something is not right:
 ![vscode asking to consider using resolveJsonModule since can't find module](../../images/8/17c.png)
 
 The hint says we might want to use `resolveJsonModule`.
-Let's add it to our tsconfig:
+Let's uncomment it out in our tsconfig (line 38):
 
 ```json
 {
@@ -494,24 +496,21 @@ Let's add it to our tsconfig:
 
 And our problem is solved.
 
-> **NB**: For some reason, VSCode tends to complain that it cannot find the file *../../data/diaries.json* from the service despite the file existing.
-That is a bug in the editor, and goes away when the editor is restarted.
-
-Earlier, we saw how the compiler can decide the type of a variable by the value it is assigned.
+Earlier, we observed how the compiler decided a variable's type by the value it was assigned.
 Similarly, the compiler can interpret large data sets consisting of objects and arrays.
-Due to this, the compiler warns us if we try to do something suspicious with the JSON data we are handling.
-For example, if we are handling an array containing objects of a specific type,
-and we try to add an object which does not have all the fields the other objects have, or has type conflicts
-(for example, a number where there should be a string),
+Due to this, ***the compiler warns us if we suspiciously handle our JSON data***.
+For example, if we are handling a `Fraction[]` that only has a `numerator` and `denominator`,
+and we try to add an object that is missing a `denominator`, or has type conflicts
+(for example, the `numerator` has a `string` instead of a `number`),
 the compiler can give us a warning.
 
-Even though the compiler is pretty good at making sure we don't do anything unwanted, it is safer to define the types for the data ourselves.
+While the TypeScript compiler helps prevent most unwanted behavior, it's still safer if we define data types ourselves.
 
-Currently, we have a basic working TypeScript express app, but there are barely any actual ***typings*** in the code.
+Currently, we have a basic working TypeScript express app, but **with barely any *typings* in the code**.
 Since we know what type of data should be accepted for the *`weather`* and *`visibility`* fields,
 there is no reason for us not to include their types in the code.
 
-Let's create a file for our types, *types.ts*, where we'll define all our types for this project.
+Let's create a file for our types, *src/types.ts*, where we'll define all our types for this project.
 
 First, let's type the `Weather` and `Visibility` values using a [union type](https://www.typescriptlang.org/docs/handbook/advanced-types.html#union-types) of the allowed strings:
 
@@ -521,7 +520,7 @@ export type Weather = 'sunny' | 'rainy' | 'cloudy' | 'windy' | 'stormy';
 export type Visibility = 'great' | 'good' | 'ok' | 'poor';
 ```
 
-And, from there, we can continue by creating a DiaryEntry type, which will be an [interface](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces):
+And, from there, we can continue by creating a `DiaryEntry` type, which will be an [`interface`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#interfaces):
 
 ```js
 export interface DiaryEntry {
@@ -536,11 +535,11 @@ export interface DiaryEntry {
 We can now try to type our imported JSON:
 
 ```js
-import diaryData from '../../data/entries.json';
+import diaryData from '../../data/diaries.json';
 
 import { DiaryEntry } from '../types'; // highlight-line
 
-const diaries: <DiaryEntry[] = diaryData; // highlight-line
+const diaries: DiaryEntry[] = diaryData; // highlight-line
 
 const getEntries = (): DiaryEntry[] => { // highlight-line
   return diaries; // highlight-line
@@ -561,64 +560,55 @@ But since the JSON already has its values declared, assigning a type for the dat
 ![vscode showing string not assignable to weather error](../../images/8/19b.png)
 
 The end of the error message reveals the problem: the `weather` fields are incompatible.
-In `DiaryEntry`, we specified that its type is `Weather`, but
-the TypeScript compiler had inferred its type to be `string`.
+In *types.ts*, `DiaryEntry` specified `weather` to be of type `Weather`, but
+the TypeScript compiler in *diaryService.ts* inferred its type to be `string`.
 
 We can fix the problem by doing a [type assertion](http://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions).
-As we already [mentioned](/en/part8/first_steps_with_type_script#type-assertion) type assertions should be done only if we are certain we know what we are doing!
+As we already [mentioned](/en/part8/first_steps_with_type_script#type-assertion) ***type assertions should be done only if we are certain we know what we are doing!***
 
 If we assert the type of the variable `diaryData` to be `DiaryEntry` with the keyword `as`, everything should work:
 
 ```js
-import diaryData from '../../data/entries.json'
-
-import { Weather, Visibility, DiaryEntry } from '../types'
+// ..
+import {DiaryEntry} from '../types';
 
 const diaries: DiaryEntry[] = diaryData as DiaryEntry[]; // highlight-line
 
 const getEntries = (): DiaryEntry[] => {
-  return diaries;
-}
-
-const addDiary = () => {
-  return null;
-}
-
-export default {
-  getEntries,
-  addDiary
-};
+// ..
 ```
 
-We should never use type assertion unless there is no other way to proceed,
-as there is always the danger we assert an unfit type to an object and cause a nasty runtime error.
+***Only use type assertions as a last resort.***
+There is always the danger that we assert an unfit type to an object and cause a nasty runtime error.
 While the compiler trusts you to know what you are doing when using `as`, by doing this,
-we are not using the full power of TypeScript but relying on the coder to secure the code.
+we are not using the full power of TypeScript *but relying on the coder to secure the code*.
 
 In our case, we could change how we export our data so we can type it within the data file.
-Since we cannot use typings in a JSON file, we should convert the JSON file to a ts file *diaries.ts* which exports the typed data like so:
+Since we cannot use typings in a JSON file, we should *convert the JSON file to a ts file **diaries.ts*** which exports the typed data like so:
 
 ```js
 import { DiaryEntry } from "../src/types"; // highlight-line
 
-const diaryEntries: DiaryEntry[] = [ // highlight-line
-  {
-      "id": 1,
-      "date": "2017-01-01",
-      "weather": "rainy",
-      "visibility": "poor",
-      "comment": "Pretty scary flight, I'm glad I'm alive"
-  },
-  // ...
-]; 
+const diaryEntries: DiaryEntry[] = // highlight-line
+  [ 
+    {
+        "id": 1,
+        "date": "2017-01-01",
+        "weather": "rainy",
+        "visibility": "poor",
+        "comment": "Pretty scary flight, I'm glad I'm alive"
+    },
+    // ...
+  ]; 
 
 export default diaryEntries; // highlight-line
 ```
 
-Now, when we import the array, the compiler interprets it correctly and the `weather` and `visibility` fields are understood right:
+Now, when we import the array, the compiler interprets it correctly and the `weather` and `visibility` fields are understood right.
+This means we can remove our intermediate variable `diaryData`.
 
 ```js
-import diaries from '../../data/ntries'; // highlight-line
+import diaries from '../../data/diaries'; // highlight-line
 
 import { DiaryEntry } from '../types';
 
@@ -626,14 +616,7 @@ const getEntries = (): DiaryEntry[] => {
   return diaries;
 }
 
-const addDiary = () => {
-  return null;
-}
-
-export default {
-  getEntries,
-  addDiary
-};
+// ..
 ```
 
 Notice that, if we want to be able to save entries without a certain field, e.g. *comment*,
@@ -653,7 +636,7 @@ export interface DiaryEntry {
 
 ### Node and JSON modules
 
-It is important to consider a problem that may arise when using the tsconfig
+Please be aware of a potential problem when using the tsconfig
 [resolveJsonModule](https://www.typescriptlang.org/tsconfig#resolveJsonModule) option:
 
 ```json
@@ -666,7 +649,7 @@ It is important to consider a problem that may arise when using the tsconfig
 ```
 
 According to the node documentation for [file modules](https://nodejs.org/api/modules.html#modules_file_modules),
-node will try to resolve modules in order of extensions:
+***node will try to resolve modules in order of extensions***:
 
 ```shell
  ["js", "json", "node"]
@@ -701,27 +684,28 @@ Looking closely at the order of node module extensions:
  ["js", "json", "node", "ts", "tsx"]
 ```
 
-We notice that the *.json* file extension takes precedence over *.ts* and so *myModule.json* will be imported and not *myModule.ts*.
+**We notice that the *.json* file extension takes precedence over *.ts* and so *myModule.json* will be imported and not *myModule.ts***.
 
-To avoid time-eating bugs, it is recommended that within a flat directory, each file with a valid node module extension has a unique filename.
+To avoid time-eating bugs, **use unique filenames for all files**.
 
 ### Utility Types
 
-Sometimes, we might want to use a specific modification of a type.
+Sometimes, we might want to use a particular type modification.
 For example, consider a page for listing some data, some of which is sensitive and some of which is non-sensitive.
 We might want to be sure that no sensitive data is used or displayed.
 We could ***pick*** the fields of a type we allow to be used to enforce this.
-We can do that by using the utility type [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys).
+We can do that by using the utility type [`Pick`](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys).
 
-In our project, we should consider that Ilari might want to create a listing of all his diary entries **excluding** the comment field since, during a very scary flight,
+In our project, we should consider that Tails might want to create a listing of all his diary entries **excluding** the comment field since, during a very scary flight,
 he might end up writing something he wouldn't necessarily want to show anyone else.
+> *I don't know how kind Tails would be to Knuckles.*
 
-The [Pick](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys) utility type
+The [`Pick`](https://www.typescriptlang.org/docs/handbook/utility-types.html#picktype-keys) utility type
 allows us to choose which fields of an existing type we want to use.
-Pick can be used to either construct a completely new type or to inform a function what it should return on runtime.
+`Pick` can be used to either construct a completely new type or to inform a function what it should return on runtime.
 Utility types are a special kind of type, but they can be used just like regular types.
 
-In our case, to create a "censored" version of the `DiaryEntry` for public displays, we can use `Pick` in the function declaration:
+In our case, to create a censored version of the `DiaryEntry` for public displays, we can use `Pick` in the function declaration:
 
 ```js
 const getNonSensitiveEntries =
@@ -732,7 +716,7 @@ const getNonSensitiveEntries =
 
 and the compiler would expect the function to return an array of values of the modified `DiaryEntry` type, which includes only the four selected fields.
 
-In this case, we want to exclude only one field, so it would be even better to use the [Omit](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)
+In this case, we want to exclude only one field, so it would be even better to use the [`Omit`](https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys)
 utility type, which we can use to declare which fields to exclude:
 
 ```js
@@ -741,7 +725,7 @@ const getNonSensitiveEntries = (): Omit<DiaryEntry, 'comment'>[] => {
 }
 ```
 
-To improve the readability, we define a [type alias](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) `NonSensitiveDiaryEntry` in the file *types.ts*:
+To improve the readability, we define a [**type alias**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) `NonSensitiveDiaryEntry` in the file *types.ts*:
 
 ```js
 export type NonSensitiveDiaryEntry = Omit<DiaryEntry, 'comment'>;
@@ -767,25 +751,25 @@ const addDiary = () => {
 
 export default {
   getEntries,
-  addDiary,
-  getNonSensitiveEntries // highlight-line
+  getNonSensitiveEntries, // highlight-line
+  addDiary
 };
 ```
 
 One thing in our application is a cause for concern.
-In `getNonSensitiveEntries`, we are returning the complete diary entries, and **no error is given** despite typing!
+In `getNonSensitiveEntries`, **we are returning the complete diary entries, and *no error is given* despite typing!**
 
 This happens because [TypeScript only checks](http://www.typescriptlang.org/docs/handbook/type-compatibility.html)
-whether we have all of the required fields or not, but excess fields are not prohibited.
-In our case, this means that it is **not prohibited** to return an object of type `DiaryEntry[]`, but if we were to try to access the `comment` field,
-it would not be possible because we would be accessing a field that TypeScript is unaware of even though it exists.
+whether we have all of the required fields or not, but ***excess fields are not prohibited***.
+In our case, this means that it is **not prohibited** to return an object of type `DiaryEntry[]`, but *if we were to try to access the `comment` field,
+it would not be possible because we would be accessing a field that TypeScript is unaware of* (even though it exists).
 
 Unfortunately, this can lead to unwanted behavior if you are not aware of what you are doing;
 the situation is valid as far as TypeScript is concerned, but you are most likely allowing use that is not wanted.
 If we were now to return all of the diary entries from the `getNonSensitiveEntries` function to the frontend,
 we would be ***leaking the unwanted fields to the requesting browser*** - even though our types seem to imply otherwise!
 
-Because TypeScript doesn't modify the actual data but only its type, we need to exclude the fields ourselves:
+Because TypeScript doesn't modify the actual data but only its type, ***we need to exclude the fields ourselves***:
 
 ```js
 import diaries from '../../data/entries.ts'
@@ -866,13 +850,13 @@ The response is what we expect it to be:
 
 ### Exercises 8.10-8.11
 
-Similarly to Ilari's flight service, we do not use a real database in our app
+Similarly to Tails' flight service, we do not use a real database in our app
 but instead use hardcoded data that is in the files [diagnoses.ts](https://github.com/comp227/misc/blob/master/diagnoses.ts)
 and [patients.ts](https://github.com/comp227/misc/blob/master/patients.ts).
 Get the files and store those in a directory called *data* in your project.
 All data modification can be done in runtime memory, so during this part, it is *not necessary to write to a file*.
 
-#### 8.10: Patientor backend, step3
+#### 8.10: Patientia backend, step3
 
 Create a type `Diagnose` and use it to create endpoint ***/api/diagnoses*** for fetching all diagnoses with HTTP GET.
 
@@ -881,7 +865,7 @@ Structure your code properly by using meaningfully-named directories and files.
 > **Notice** that *diagnoses* may or may not contain the field `latin`.
 You might want to use [optional properties](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#optional-properties) in the type definition.
 
-#### 8.11: Patientor backend, step4
+#### 8.11: Patientia backend, step4
 
 Create data type `Patient` and set up the GET endpoint ***/api/patients*** which returns all patients to the frontend, excluding field `ssn`.
 Use a [utility type](https://www.typescriptlang.org/docs/handbook/utility-types.html)
@@ -1526,7 +1510,7 @@ The source code of the application can be found on [GitHub](https://github.com/F
 
 ### Exercises 8.12-8.13
 
-#### 8.12: Patientor backend, step5
+#### 8.12: Patientia backend, step5
 
 Create a POST endpoint ***/api/patients*** for adding patients.
 Ensure that you can add patients also from the frontend.
@@ -1537,7 +1521,7 @@ import { v1 as uuid } from 'uuid'
 const id = uuid()
 ```
 
-#### 8.13: Patientor backend, step6
+#### 8.13: Patientia backend, step6
 
 Set up safe parsing, validation and type guards to the POST ***/api/patients*** request.
 
