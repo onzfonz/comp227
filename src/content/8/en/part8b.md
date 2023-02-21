@@ -16,11 +16,11 @@ In addition to language features, we will also have a strong emphasis on tooling
 
 Luckily there is not much setup here as Webstorm works natively with TypeScript.
 Just go ahead and download this new empty repo by visiting this site:
-<http://go.djosv.com/227labts>
+<http://go.djosv.com/227labtsintro>
 
-As mentioned earlier, TypeScript code is not executable by itself.
+As mentioned earlier, ***TypeScript code is not executable by itself***.
 It has to be first compiled into executable JavaScript.
-When TypeScript is compiled into JavaScript, the code becomes subject to type erasure.
+When TypeScript is compiled into JavaScript, the code becomes subject to **type erasure**.
 This means that type annotations, interfaces, type aliases, and other type system constructs are removed and the result is pure ready-to-run JavaScript.
 
 In a production environment, the need for compilation often means that you have to set up a **build step**.

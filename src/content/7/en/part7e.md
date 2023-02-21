@@ -430,7 +430,7 @@ npm outdated --depth 0
 
 A one-year-old project that is used in [part 8](/part8) of this course already has quite a few outdated dependencies:
 
-![npm outdated output of patientor](../../images/7/33x.png)
+![npm outdated output of patientia](../../images/7/33x.png)
 
 The dependencies can be brought up to date by updating the file *package.json*.
 The best way to do that is by using a tool called ***npm-check-updates***.
@@ -478,7 +478,7 @@ Running `npm audit` on the same project prints a long list of complaints and sug
 Below is a part of the report:
 
 ```js
-$ patientor npm audit
+$ patientia npm audit
 
 ... many lines removed ...
 

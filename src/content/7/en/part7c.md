@@ -28,7 +28,7 @@ Many UI frameworks have React-friendly versions where the framework's "component
 There are a few different React versions of Bootstrap like [reactstrap](http://reactstrap.github.io/) and [react-bootstrap](https://react-bootstrap.github.io/).
 
 To start off, we will examine two UI frameworks, Bootstrap and [MaterialUI](https://mui.com/).
-We will use both frameworks to add similar styles to the application we made in the [React-router](/part7/react_router) section of the course material.
+We will use both frameworks to add similar styles to the application we made in the [React Router](/part7/react_router) section of the course material.
 
 ### React Bootstrap
 
