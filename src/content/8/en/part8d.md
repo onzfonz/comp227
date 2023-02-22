@@ -755,7 +755,7 @@ It is always a good idea to start the application and click around to verify you
 
 You can also browse the folder structure to get some insight into the application's functionality and/or the architecture used.
 These are not always clear, and the developers might have chosen a way to organize code that is not familiar to you.
-The [sample project](https://github.com/comp227/patientor) used in the rest of this part is organized, feature-wise.
+The [sample project](https://github.com/comp227/patientia) used in the rest of this part is organized, feature-wise.
 You can see what pages the application has, and some general components, e.g. modals and state.
 Keep in mind that the features may have
 different scopes.
@@ -780,7 +780,7 @@ Understanding everything requires digging deep into the code and business domain
 The more code you read, the better you will be at understanding it.
 You will most likely read far more code than you are going to produce throughout your life.
 
-### Patientor frontend
+### Patientia frontend
 
 It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/part8/typing_the_express_app).
 
@@ -803,7 +803,7 @@ The frontend might also not need all the fields of a data object saved in the ba
 
 The folder structure looks as follows:
 
-![vscode folder structure for patientor](../../images/8/34a.png)
+![vscode folder structure for patientia](../../images/8/34a.png)
 
 As you would expect, there are currently two main components: `AddPatientModal` and `PatientListPage`.
 The *state* folder contains state handling for the frontend.
@@ -1092,7 +1092,7 @@ Our naive implementation will be that a patient has an array of entries.
 
 Before going into this, let us do some preparatory work.
 
-#### 8.16: Patientor, step1
+#### 8.16: Patientia, step1
 
 Create an endpoint ***/api/patients/:id***  that returns all of the patient information for one patient,
 including the array of patient entries that is still empty for all the patients.
@@ -1120,7 +1120,7 @@ The response should look as follows:
 
 ![browser showing entries blank array when accessing patient](../../images/8/38a.png)
 
-#### 8.17: Patientor, step2
+#### 8.17: Patientia, step2
 
 Create a page for showing a patient's full information in the frontend.
 
@@ -1140,7 +1140,7 @@ You might want to have a look at [part 7](/part7/react_router) if you don't yet 
 
 The result could look like this:
 
-![browser showing patientor with one patient](../../images/8/39x.png)
+![browser showing patientia with one patient](../../images/8/39x.png)
 
 Example uses [Material UI Icons](https://mui.com/components/material-icons/) to represent genders.
 
@@ -1150,7 +1150,7 @@ Example uses [Material UI Icons](https://mui.com/components/material-icons/) to 
 > const { id } = useParams<{ id: string }>();
 > ```
 
-#### 8.18: Patientor, step3
+#### 8.18: Patientia, step3
 
 Currently, we create `action` objects wherever we dispatch actions, e.g. the `App` component has the following:
 
@@ -1320,7 +1320,7 @@ type EntryWithoutId = UnionOmit<Entry, 'id'>;
 
 ### Exercises 8.19-8.22
 
-#### 8.19: Patientor, step4
+#### 8.19: Patientia, step4
 
 Define the types `OccupationalHealthcareEntry` and `HospitalEntry` so that those conform with the example data.
 Ensure that your backend returns the entries properly when you go to an individual patient's route:
@@ -1331,7 +1331,7 @@ Use types properly in the backend!
 For now, there is no need to do a proper validation for all the fields of the entries in the backend,
 it is enough to check that a ***field's type has a correct value***.
 
-#### 8.20: Patientor, step5
+#### 8.20: Patientia, step5
 
 Extend a patient's page in the frontend to list the `date`, `description` and `diagnoseCodes` of the patient's entries.
 
@@ -1342,14 +1342,14 @@ Your solution could look like this:
 
 ![browser showing list of diagnosis codes for patient](../../images/8/41.png)
 
-#### 8.21: Patientor, step6
+#### 8.21: Patientia, step6
 
 Fetch and add diagnoses to the application state from the ***/api/diagnoses*** endpoint.
 Use the new diagnosis data to show the descriptions for patient's diagnosis codes:
 
 ![browser showing list of codes and their descriptions for patient ](../../images/8/42.png)
 
-#### 8.22: Patientor, step7
+#### 8.22: Patientia, step7
 
 Extend the entry listing on the patient's page to include the Entry's details with a new component
 that shows the rest of the information of the patient's entries distinguishing different types from each other.
@@ -1710,7 +1710,7 @@ When in doubt, try reading the existing code to find clues on how to proceed!
 
 ### Exercises 8.23-8.27
 
-#### 8.23: Patientor, step8
+#### 8.23: Patientia, step8
 
 We have established that patients can have different kinds of entries.
 We don't yet have any way of adding entries to patients in our app, so, at the moment, it is pretty useless as an electronic medical record.
@@ -1720,7 +1720,7 @@ Your next task is to add endpoint ***/api/patients/:id/entries*** to your backen
 Remember that we have different kinds of entries in our app,
 so our backend should support all those types and check that at least all required fields are given for each type.
 
-#### 8.24: Patientor, step9
+#### 8.24: Patientia, step9
 
 Now that our backend supports adding entries, we want to add the corresponding functionality to the frontend.
 In this exercise, you should add a form for adding an entry to a patient.
@@ -1734,7 +1734,7 @@ and the patient's entries on the patient page should be updated to contain the n
 
 If you like, you can re-use some of the code from the ***Add patient*** form for this exercise, but this is not a requirement.
 
-Notice that the file [FormField.tsx](https://github.com/comp227/patientor/blob/master/src/AddPatientModal/FormField.tsx#L58)
+Notice that the file [FormField.tsx](https://github.com/comp227/patientia/blob/main/src/AddPatientModal/FormField.tsx#L58)
 has a ready-made component called `DiagnosisSelection` that can be used for setting the field `diagnoses`.
 
 It can be used as follows:
@@ -1778,11 +1778,11 @@ const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
 
 With small tweaks on types, the readily made component `SelectField` can be used for the health check rating.
 
-#### 8.25: Patientor, step10
+#### 8.25: Patientia, step10
 
 Extend your solution so that it displays an error message if some required values are missing or formatted incorrectly.
 
-#### 8.26: Patientor, step11
+#### 8.26: Patientia, step11
 
 Extend your solution so that it supports **two** entry types and displays an error message if some required values are missing or formatted incorrectly.
 You do not need to care about possible errors in the server's response.
@@ -1809,7 +1809,7 @@ you can access the form values using the parameter `values` of the rendering fun
 </Formik>
 ```
 
-#### 8.27: Patientor, step12
+#### 8.27: Patientia, step12
 
 Extend your solution so that it supports **all the entry types** and displays an error message if some required values are missing or formatted incorrectly.
 You do not need to care about possible errors in the server's response.
