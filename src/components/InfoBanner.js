@@ -49,8 +49,8 @@ const InfoBanner = ({ visible, onHide }) => {
         <a href="/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
           <span style={linkStyle}>here</span>!
         </a> */}
-        Part 3 is now online!
-        New activity for discussions this week as well.
+        Part 4 is now online!
+        You have new teams and directions for week 5's discussion as well.
       </div>
       <div style={buttonDiv}>
         <button style={buttonStyle} onClick={onHide}>
