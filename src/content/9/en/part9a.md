@@ -21,13 +21,13 @@ That is why these applications can not achieve the performance nor the look-and-
 [React Native](https://reactnative.dev/) is a framework for developing native Android and iOS applications using JavaScript and React.
 It provides a set of cross-platform components that behind the scenes utilize the platform's native components.
 Using React Native allows us to bring all the familiar features of React such as JSX, components, props, state, and hooks into native application development.
-On top of that, we can utilize many familiar libraries in the React ecosystem such as [react-redux](https://react-redux.js.org/), [react-apollo](https://github.com/apollographql/react-apollo), [react-router](https://reacttraining.com/react-router/core/guides/quick-start) and many more.
+On top of that, we can utilize many familiar libraries in the React ecosystem such as [React Redux](https://react-redux.js.org/), [Apollo](https://github.com/apollographql/react-apollo), [React Router](https://reacttraining.com/react-router/core/guides/quick-start) and many more.
 
 The speed of development and gentle learning curve for developers familiar with React is one of the most important benefits of React Native.
 Here's a motivational quote from Coinbase's article [Onboarding thousands of users with React Native](https://benbronsteiny.wordpress.com/2020/02/27/onboarding-thousands-of-users-with-react-native/) on the benefits of React Native:
 
-> If we were to reduce the benefits of React Native to a single word, it would be “velocity”.
-On average, our team was able to onboard engineers in less time, share more code (which we expect will lead to future productivity boosts), and ultimately deliver features faster than if we had taken a purely native approach.
+> <i>If we were to reduce the benefits of React Native to a single word, it would be “velocity”.
+On average, our team was able to onboard engineers in less time, share more code (which we expect will lead to future productivity boosts), and ultimately deliver features faster than if we had taken a purely native approach.</i>
 
 ### About this part
 
@@ -39,7 +39,7 @@ Our application will have features such as, sorting and filtering reviewed repos
 The back end for the application will be provided for us so that we can solely focus on the React Native development.
 The final version of our application will look something like this:
 
-![Application preview](../../images/9/4.png)
+![Application preview](../../images/10/4.png)
 
 All the exercises in this part have to be submitted into <i>a single GitHub repository</i> which will eventually contain the entire source code of your application.
 There will be model solutions available for each section of this part which you can use to fill in incomplete submissions.
@@ -64,7 +64,7 @@ During this part, you will earn credits based on the number of exercises you com
 Completing <i>at least 25 exercises</i> in this part will earn you <i>2 credits</i>.
 Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
 
-![Submitting exercises for credits](../../images/9/23.png)
+![Submitting exercises for credits](../../images/10/23.png)
 
 **Note** that you need a registration to the corresponding course part for getting the credits registered, see [here](/en/part0/general_info#parts-and-completion) for more information.
 
@@ -100,7 +100,7 @@ npx expo install react-native-web@~0.18.7 react-dom@18.2.0 @expo/webpack-config@
 Now that our application has been initialized, open the created <i>rate-repository-app</i> directory with an editor such as [Visual Studio Code](https://code.visualstudio.com/).
 The structure should be more or less the following:
 
-![Project structure](../../images/9/1.png)
+![Project structure](../../images/10/1.png)
 
 We might spot some familiar files and directories such as <i>package.json</i> and <i>node_modules</i>.
 On top of those, the most relevant files are the <i>app.json</i> file which contains Expo-related configuration and <i>App.js</i> which is the root component of our application.
@@ -115,14 +115,27 @@ Let's look at the <i>scripts</i> section of the <i>package.json</i> file which h
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+    "web": "expo start --web"
   },
   // ...
 }
 ```
 
-Running the script <em>npm start</em> starts the [Metro bundler](https://facebook.github.io/metro/) which is a JavaScript bundler for React Native.
+Let us now run the script *npm start*
+
+![metro bundler console output](../../images/10/25new.png)
+
+> <i>If the script fails with error</i>
+>
+>```bash
+>error:03000086:digital envelope routines::initialization
+>```
+>
+> <i>the problem is most likely your Node version.
+In case of problems, switch to version *16.19.0*.
+See eg. [here](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported) for more.</i>
+
+The script starts the [Metro bundler](https://facebook.github.io/metro/) which is a JavaScript bundler for React Native.
 It can be described as the [Webpack](https://webpack.js.org/) of the React Native ecosystem.
 In addition to the Metro bundler, the Expo command-line interface should be open in the terminal window.
 The command-line interface has a useful set of commands for viewing the application logs and starting the application in an emulator or in Expo's mobile application.
@@ -162,7 +175,7 @@ Note that the Expo mobile app can only open your application if your mobile devi
 When the Expo mobile app has finished installing, open it up.
 Next, if the Expo development tools are not already running, start them by running <em>npm start</em>.
 You should be able to see a QR code at the beginning of the command output.
-Within the Expo mobile app, press <i>Scan QR Code</i> and scan the QR code displayed in the development tools.
+Open the app by scanning the QR code, in Anroid with Expo app or in iOS with the Camera app.
 The Expo mobile app should start building the JavaScript bundle and after it is finished you should be able to see your application.
 Now, every time you want to reopen your application in the Expo mobile app, you should be able to access the application without scanning the QR code by pressing it in the <i>Recently opened</i> list in the <i>Projects</i> view.
 
@@ -234,7 +247,6 @@ And finally, let's add a <em>lint</em> script to the <i>package.json</i> file to
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject",
     "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern" // highlight-line
   },
   // ...
@@ -246,7 +258,7 @@ We will be adding our future code to the <i>src</i> directory but because we hav
 Also if possible integrate ESLint with your editor.
 If you are using Visual Studio Code you can do that by, going to the extensions section and checking that the ESLint extension is installed and enabled:
 
-![Visual Studio Code ESLint extensions](../../images/9/3.png)
+![Visual Studio Code ESLint extensions](../../images/10/3.png)
 
 The provided ESLint configuration contains only the basis for the configuration.
 Feel free to improve the configuration and add new plugins if you feel like it.
@@ -275,7 +287,12 @@ When our application doesn't work as intended, we should immediately start <i>de
 In practice, this means that we'll need to reproduce the erroneous behavior and monitor the code execution to find out which part of the code behaves incorrectly.
 During the course, we have already done a bunch of debugging by logging messages, inspecting network traffic, and using specific development tools, such as <i>React Development Tools</i>.
 In general, debugging isn't that different in React Native, we'll just need the right tools for the job.
-  
+
+The good old console.log messages appear in the Expo development tools command line:
+
+![console showing expo dev tools](../../images/10/27new.png)
+
+That might actually be enough in most cases, but sometimes we need more.
 [React Native Debugger](https://docs.expo.io/workflow/debugging/#react-native-debugger) is a tool that offers a similar set of debugging features as the browser's developer tools.
 Let's get started by installing React Native Debugger with the help of the [installation instructions](https://github.com/jhen0409/react-native-debugger#installation).
 If you are unsure which installation method to choose, downloading a pre-built binary from the [release page](https://github.com/jhen0409/react-native-debugger/releases) is perhaps the easiest option.
@@ -291,7 +308,7 @@ Inside the emulator or the Expo mobile app, open the developer menu by following
 From the developer menu, select <i>Debug remote JS</i> to connect to the debugger.
 Now, you should be able to see the application's component tree in the debugger:
 
-![React Native Debugger](../../images/9/24.png)
+![React Native Debugger](../../images/10/24.png)
 
 The debugger's <i>Console</i> tab displays the application's logs.
 Like in the browser's development tools, error messages and messages logged with the <em>console.log</em> method are displayed there.
