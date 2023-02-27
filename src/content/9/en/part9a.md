@@ -22,18 +22,18 @@ That is why these applications can not achieve the performance nor the look-and-
 It provides a set of cross-platform components that behind the scenes utilize the platform's native components.
 Using React Native allows us to bring all the familiar features of React such as
 JSX, components, props, state, and hooks into native application development.
-On top of that, we can utilize many familiar libraries in the React ecosystem such as [react-redux](https://react-redux.js.org/),
-[react-apollo](https://github.com/apollographql/react-apollo),
-[react-router](https://reactrouter.com/en/6.4.5/start/tutorial) and many more.
+On top of that, we can utilize many familiar libraries in the React ecosystem such as [React Redux](https://react-redux.js.org/),
+[Apollo](https://github.com/apollographql/react-apollo),
+[React Router](https://reactrouter.com/en/6.4.5/start/tutorial) and many more.
 
 The speed of development and gentle learning curve for developers familiar with React is one of the most important benefits of React Native.
 Here's a motivational quote from Coinbase's article
 [Onboarding thousands of users with React Native](https://benbronsteiny.wordpress.com/2020/02/27/onboarding-thousands-of-users-with-react-native/)
 on the benefits of React Native:
 
-> If we were to reduce the benefits of React Native to a single word, it would be “velocity”.
+> *If we were to reduce the benefits of React Native to a single word, it would be “velocity”.
 On average, our team was able to onboard engineers in less time, share more code (which we expect will lead to future productivity boosts),
-and ultimately deliver features faster than if we had taken a purely native approach.
+and ultimately deliver features faster than if we had taken a purely native approach.*
 
 ### About this part
 
@@ -52,7 +52,7 @@ Our application will have features such as:
 The backend for the application will be provided for us so that we can solely focus on the React Native development.
 The final version of our application will look something like this:
 
-![Application preview](../../images/9/4.png)
+![Application preview](../../images/10/4.png)
 
 All the exercises in this part have to be submitted into *a single GitHub repository* which will eventually contain the entire source code of your application.
 There will be model solutions available for each section of this part which you can use to fill in incomplete submissions.
@@ -100,7 +100,7 @@ npx expo install react-native-web@~0.18.7 react-dom@18.2.0 @expo/webpack-config@
 Now that our application has been initialized, open the created *rate-repository-app* directory with an editor such as [Visual Studio Code](https://code.visualstudio.com/).
 The structure should be more or less the following:
 
-![Project structure](../../images/9/1.png)
+![Project structure](../../images/10/1.png)
 
 We might spot some familiar files and directories such as *package.json* and *node_modules*.
 On top of those, the most relevant files are the *app.json* file which contains Expo-related configuration and *App.js* which is the root component of our application.
@@ -116,14 +116,27 @@ Let's look at the *`scripts`* section of the *package.json* file which has the f
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+    "web": "expo start --web"
   },
   // ...
 }
 ```
 
-Running the script `npm start` starts the [Metro bundler](https://facebook.github.io/metro/) which is a JavaScript bundler for React Native.
+Let us now run the script `npm start`
+
+![metro bundler console output](../../images/10/25new.png)
+
+> *If the script fails with error*
+>
+>```bash
+>error:03000086:digital envelope routines::initialization
+>```
+>
+> *the problem is most likely your Node version.
+In case of problems, switch to version **`16.19.0`**.
+See eg. [here](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported) for more.*
+
+The script starts the [Metro bundler](https://facebook.github.io/metro/) which is a JavaScript bundler for React Native.
 It can be described as the [Webpack](https://webpack.js.org/) of the React Native ecosystem.
 In addition to the Metro bundler, the Expo command-line interface should be open in the terminal window.
 The command-line interface has a useful set of commands for viewing the application logs
@@ -168,7 +181,7 @@ as the computer you are using for development.
 When the Expo mobile app has finished installing, open it up.
 Next, if the Expo development tools are not already running, start them by running `npm start`.
 You should be able to see a QR code at the beginning of the command output.
-Within the Expo mobile app, press ***Scan QR Code*** and scan the QR code displayed in the development tools.
+Open the app by scanning the QR code, in Anroid with the Expo app or in iOS with the Camera app.
 The Expo mobile app should start building the JavaScript bundle and after it is finished you should be able to see your application.
 Now, every time you want to reopen your application in the Expo mobile app,
 you should be able to access the application without scanning the QR code by pressing it in the ***Recently opened*** list in the ***Projects*** view.
@@ -236,7 +249,6 @@ And finally, let's add a `lint` script to the *package.json* file to check the l
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject",
     "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern" // highlight-line
   },
   // ...
@@ -248,7 +260,7 @@ We will be adding our future code to the *src* directory but because we haven't 
 Also if possible integrate ESLint with your editor.
 If you are using Visual Studio Code you can do that by, going to the extensions section and checking that the ESLint extension is installed and enabled:
 
-![Visual Studio Code ESLint extensions](../../images/9/3.png)
+![Visual Studio Code ESLint extensions](../../images/10/3.png)
 
 The provided ESLint configuration contains only the basis for the configuration.
 Feel free to improve the configuration and add new plugins if you feel like it.
@@ -278,9 +290,13 @@ and monitor the code execution to find out which part of the code behaves incorr
 During the course, we have already done a bunch of debugging by logging messages,
 inspecting network traffic, and using specific development tools, such as ***React Development Tools***.
 In general, debugging isn't that different in React Native, we'll just need the right tools for the job.
-  
-[React Native Debugger](https://docs.expo.io/workflow/debugging/#react-native-debugger)
-is a tool that offers a similar set of debugging features as the browser's developer tools.
+
+Expo development tools command line will show us our console.log commands.
+
+![console showing expo dev tools](../../images/10/27new.png)
+
+That might actually be enough in most cases, but sometimes we need more.
+[**React Native Debugger**](https://docs.expo.io/workflow/debugging/#react-native-debugger) is a tool that offers a similar set of debugging features as the browser's developer tools.
 Let's get started by installing React Native Debugger with the help of the [installation instructions](https://github.com/jhen0409/react-native-debugger#installation).
 If you are unsure which installation method to choose, downloading a pre-built binary from the
 [release page](https://github.com/jhen0409/react-native-debugger/releases) is perhaps the easiest option.
@@ -300,7 +316,7 @@ Inside the emulator or the Expo mobile app, open the developer menu by following
 From the developer menu, select ***Debug remote JS*** to connect to the debugger.
 Now, you should be able to see the application's component tree in the debugger:
 
-![React Native Debugger](../../images/9/24.png)
+![React Native Debugger](../../images/10/24.png)
 
 The debugger's ***Console*** tab displays the application's logs.
 Like in the browser's development tools, error messages and messages logged with the `console.log` method are displayed there.
