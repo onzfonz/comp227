@@ -4,1068 +4,520 @@ part: 8
 letter: e
 lang: en
 ---
+
+<div class="tasks">
+
+**NOTE**: this is the new section about Patientor frontend that has replaced 12th February 2023, [this chapter](/en/part8/patientor_frontend_the_old_material).
+In the change, the Patientor frontend structure was refactored to a simpler form that makes it much easier to focus on learning TypeScript.
+
+If you have started doing the exercises with the old Patientor, you may continue with [the old material](/en/part8/patientor_frontend_the_old_material).
+If not, then it is recommended to use the "new" patientor that is described in this section.
+
+</div>
+
 <div class="content">
 
+### Working with an existing codebase
 
-We are approaching the end of this part. Let's finish by having a look at a few more details of GraphQL. 
+When diving into an existing codebase for the first time, it is good to get an overall view of the conventions and structure of the project.
+You can start your research by reading the <i>README.md</i> in the root of the repository.
+Usually, the README contains a brief description of the application and the requirements for using it, as well as how to start it for development.
+If the README is not available or someone has "saved time" and left it as a stub, you can take a peek at the <i>package.json</i>.
+It is always a good idea to start the application and click around to verify you have a functional development environment.
 
-### Fragments
+You can also browse the folder structure to get some insight into the application's functionality and/or the architecture used.
+These are not always clear, and the developers might have chosen a way to organize code that is not familiar to you.
+The [sample project](https://github.com/fullstack-hy2020/patientor) used in the rest of this part is organized, feature-wise.
+You can see what pages the application has, and some general components, e.g. modals and state.
+Keep in mind that the features may have different scopes.
+For example, modals are visible UI-level components whereas the state is comparable to business logic and keeps the data organized under the hood for the rest of the app to use.
 
-It is pretty common in GraphQL that multiple queries return similar results. For example, the query for the details of a person
+TypeScript provides types for what kind of data structures, functions, components, and state to expect.  You can try looking for <i>types.ts</i> or something similar to get started.
+VSCode is a big help and simply highlighting variables and parameters can provide quite a lot of insight.
+All this naturally depends on how types are used in the project.
 
-```js
-query {
-  findPerson(name: "Pekka Mikkola") {
-    name
-    phone
-    address{
-      street 
-      city
-    }
-  }
-}
-```
+If the project has unit, integration or end-to-end tests, reading those is most likely beneficial.
+Test cases are your most important tool when refactoring or adding new features to the application.
+You want to make sure not to break any existing features when hammering around the code.
+TypeScript can also give you guidance with argument and return types when changing the code.
 
-and the query for all persons
+Remember that reading code is a skill in itself, so don't worry if you don't understand the code on your first readthrough.  The code may have a lot of corner cases, and pieces of logic may have been added here and there throughout its development cycle.
+It is hard to imagine what kind of problems the previous developer has wrestled with.
+Think of it all like [growth rings in trees](https://en.wikipedia.org/wiki/Dendrochronology#Growth_rings).
+Understanding everything requires digging deep into the code and business domain requirements.
+The more code you read, the better you will be at understanding it.
+You will most likely read far more code than you are going to produce throughout your life.
 
-```js
-query {
-  allPersons {
-    name
-    phone
-    address{
-      street 
-      city
-    }
-  }
-}
-```
+### Patientor frontend
 
-both return persons. When choosing the fields to return, both queries have to define exactly the same fields. 
+It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/en/part8/typing_an_express_app).
+We will actually also need some new features to the backend for finishing the app.
 
-These kinds of situations can be simplified with the use of [fragments](https://graphql.org/learn/queries/#fragments). Let's declare a fragment for selecting all fields of a person: 
+Before diving into the code, let us start both the frontend and the backend.
 
-```js
-fragment PersonDetails on Person {
-  name
-  phone 
-  address {
-    street 
-    city
-  }
-}
-```
+If all goes well, you should see a patient listing page.
+It fetches a list of patients from our backend, and renders it to the screen as a simple table.
+There is also a button for creating new patients on the backend.
+As we are using mock data instead of a database, the data will not persist - closing the backend will delete all the data we have added.
+UI design has not been a strong point of the creators, so let's disregard the UI for now.
 
-With the fragment, we can do the queries in a compact form:
+After verifying that everything works, we can start studying the code.
+All the interesting stuff resides in the <i>src</i> folder.
+For your convenience, there is already a <i>types.ts</i> file for basic types used in the app, which you will have to extend or refactor in the exercises.
 
-```js
-query {
-  allPersons {
-    ...PersonDetails // highlight-line
-  }
-}
+In principle, we could use the same types for both backend and frontend, but usually, the frontend has different data structures and use cases for the data, which causes the types to be different.
+For example, the frontend has a state and may want to keep data in objects or maps whereas the backend uses an array.
+The frontend might also not need all the fields of a data object saved in the backend, and it may need to add some new fields to use for rendering.
 
-query {
-  findPerson(name: "Pekka Mikkola") {
-    ...PersonDetails // highlight-line
-  }
-}
-```
+The folder structure looks as follows:
 
-The fragments <i><strong>are not</strong></i> defined in the GraphQL schema, but in the client. The fragments must be declared when the client uses them for queries. 
+![vscode folder structure for patientor](../../images/8/34brandnew.png)
 
-In principle, we could declare the fragment with each query like so:
+Besides the component *App* a directory for services, there are currently three main components: *AddPatientModal* and *PatientListPage* which are both defined in a directory, and a component *HealthRatingBar* defined in a file.
+If a component has some subcomponents not used elsewhere in the app, it might be a good idea to define the component and its subcomponents in a directory.
+For example now the AddPatientModal is defined in the file *components/AddPatientModal/index.tsx* and its subcomponent *AddPatientForm* in its own file under the same directory.
+
+There is nothing very surprising in the code.
+The state and communication with the backend are implemented with *useState* hook and Axios, similar to the notes app in the previous section. [Material UI](http://localhost:8000/en/part7/more_about_styles#material-ui) is used to style the app and the navigation structure is implementer with [React Router](http://localhost:8000/en/part7/react_router), both familiar to us from part 7 of the course.
+
+From typing point of view, there are a couple of interesting things.
+Component *App* passes the function *setPatients* as a prop to the component *PatientListPage*:
 
 ```js
-export const FIND_PERSON = gql`
-  query findPersonByName($nameToSearch: String!) {
-    findPerson(name: $nameToSearch) {
-      ...PersonDetails
-    }
-  }
+const App = () => {
+  const [patients, setPatients] = useState<Patient[]>([]); // highlight-line
 
-  fragment PersonDetails on Person {
-    name
-    phone 
-    address {
-      street 
-      city
-    }
-  }
-`
-```
-
-However, it is much better to declare the fragment once and save it to a variable. 
-
-```js
-const PERSON_DETAILS = gql`
-  fragment PersonDetails on Person {
-    id
-    name
-    phone 
-    address {
-      street 
-      city
-    }
-  }
-`
-```
-
-Declared like this, the fragment can be placed to any query or mutation using a [dollar sign and curly braces](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals):
-
-```js
-export const FIND_PERSON = gql`
-  query findPersonByName($nameToSearch: String!) {
-    findPerson(name: $nameToSearch) {
-      ...PersonDetails
-    }
-  }
-  ${PERSON_DETAILS}
-`
-```
-
-### Subscriptions
+  // ...
   
-Along with query and mutation types, GraphQL offers a third operation type: [subscriptions](https://www.apollographql.com/docs/react/data/subscriptions/). With subscriptions, clients can <i>subscribe</i> to updates about changes in the server. 
-
-Subscriptions are radically different from anything we have seen in this course so far. Until now, all interaction between browser and server was due to a React application in the browser making HTTP requests to the server. GraphQL queries and mutations have also been done this way. 
-With subscriptions, the situation is the opposite. After an application has made a subscription, it starts to listen to the server. 
-When changes occur on the server, it sends a notification to all of its <i>subscribers</i>.
-
-Technically speaking, the HTTP protocol is not well-suited for communication from the server to the browser. So, under the hood, Apollo uses [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) for server subscriber communication. 
-
-### Refactoring the backend
-
-Since version 3.0 Apollo Server does not support subscriptions out of the box so we need to do some changes before we set up subscriptions. Let us also clean the app structure a bit.
-
-Let us start by extracting the schema definition to file
-<i>schema.js</i>
-
-```js
-const { gql } = require('@apollo/server')
-
-const typeDefs = gql`
-  type User {
-    username: String!
-    friends: [Person!]!
-    id: ID!
-  }
-
-  type Token {
-    value: String!
-  }
-
-  type Address {
-    street: String!
-    city: String!
-  }
-
-  type Person {
-    name: String!
-    phone: String
-    address: Address!
-    id: ID!
-  }
-
-  enum YesNo {
-    YES
-    NO
-  }
-
-  type Query {
-    personCount: Int!
-    allPersons(phone: YesNo): [Person!]!
-    findPerson(name: String!): Person
-    me: User
-  }
-
-  type Mutation {
-    addPerson(
-      name: String!
-      phone: String
-      street: String!
-      city: String!
-    ): Person
-    editNumber(name: String!, phone: String!): Person
-    createUser(username: String!): User
-    login(username: String!, password: String!): Token
-    addAsFriend(name: String!): User
-  }
-`
-module.exports = typeDefs
-```
-
-The resolvers definition is moved to the file <i>resolvers.js</i>
-
-```js
-const { UserInputError, AuthenticationError } = require('@apollo/server')
-const jwt = require('jsonwebtoken')
-const Person = require('./models/person')
-const User = require('./models/user')
-
-const JWT_SECRET = 'NEED_HERE_A_SECRET_KEY'
-
-const resolvers = {
-  Query: {
-    personCount: async () => Person.collection.countDocuments(),
-    allPersons: async (root, args) => {
-      if (!args.phone) {
-        return Person.find({})
-      }
-
-      return Person.find({ phone: { $exists: args.phone === 'YES' } })
-    },
-    findPerson: async (root, args) => Person.findOne({ name: args.name }),
-    me: (root, args, context) => {
-      return context.currentUser
-    },
-  },
-  Person: {
-    address: (root) => {
-      return {
-        street: root.street,
-        city: root.city,
-      }
-    },
-  },
-  Mutation: {
-    addPerson: async (root, args, context) => {
-      const currentUser = context.currentUser
-
-      if (!currentUser) {
-        throw new AuthenticationError('not authenticated')
-      }
-
-      const person = new Person({ ...args })
-      try {
-        await person.save()
-        currentUser.friends = currentUser.friends.concat(person)
-        await currentUser.save()
-      } catch (error) {
-        throw new UserInputError(error.message, {
-          invalidArgs: args,
-        })
-      }
-
-      return person
-    },
-    editNumber: async (root, args) => {
-      const person = await Person.findOne({ name: args.name })
-      person.phone = args.phone
-
-      try {
-        await person.save()
-      } catch (error) {
-        throw new UserInputError(error.message, {
-          invalidArgs: args,
-        })
-      }
-      return person.save()
-    },
-    createUser: async (root, args) => {
-      const user = new User({ username: args.username })
-
-      return user.save().catch((error) => {
-        throw new UserInputError(error.message, {
-          invalidArgs: args,
-        })
-      })
-    },
-    login: async (root, args) => {
-      const user = await User.findOne({ username: args.username })
-
-      if (!user || args.password !== 'secret') {
-        throw new UserInputError('wrong credentials')
-      }
-
-      const userForToken = {
-        username: user.username,
-        id: user._id,
-      }
-
-      return { value: jwt.sign(userForToken, JWT_SECRET) }
-    },
-    addAsFriend: async (root, args, { currentUser }) => {
-      const nonFriendAlready = (person) =>
-        !currentUser.friends.map(f => f._id.toString()).includes(person._id.toString())
-
-      if (!currentUser) {
-        throw new AuthenticationError('not authenticated')
-      }
-
-      const person = await Person.findOne({ name: args.name })
-      if (nonFriendAlready(person)) {
-        currentUser.friends = currentUser.friends.concat(person)
-      }
-
-      await currentUser.save()
-
-      return currentUser
-    },
-  },
-}
-
-module.exports = resolvers
-```
-
-Next we will replace Apollo Server with [Apollo Server Express](https://www.apollographql.com/docs/apollo-server/integrations/middleware/#apollo-server-express). Following libraries are installed
-
-```
-npm install express cors body-parser @graphql-tools/schema
-```
-and the file <i>index.js</i> changes to:
-
-```js
-const { ApolloServer } = require('@apollo/server')
-const { expressMiddleware } = require('@apollo/server/express4')
-const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer')
-const { makeExecutableSchema } = require('@graphql-tools/schema')
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const http = require('http')
-
-const jwt = require('jsonwebtoken')
-
-const JWT_SECRET = 'NEED_HERE_A_SECRET_KEY'
-
-const mongoose = require('mongoose')
-
-const User = require('./models/user')
-
-const typeDefs = require('./schema')
-const resolvers = require('./resolvers')
-
-const MONGODB_URI = 'mongodb+srv://databaseurlhere'
-
-console.log('connecting to', MONGODB_URI)
-
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log('connected to MongoDB')
-  })
-  .catch((error) => {
-    console.log('error connection to MongoDB:', error.message)
-  })
-
-// setup is now within a function
-const start = async () => {
-  const app = express()
-  const httpServer = http.createServer(app)
-
-  const schema = makeExecutableSchema({ typeDefs, resolvers })
-
-  const server = new ApolloServer({
-    schema,
-    context: async ({ req }) => {
-      const auth = req ? req.headers.authorization : null
-      if (auth && auth.toLowerCase().startsWith('bearer ')) {
-        const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET)
-        const currentUser = await User.findById(decodedToken.id).populate(
-          'friends'
-        )
-        return { currentUser }
-      }
-    },
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  })
-  
-  app.use(
-    '/',
-    cors(),
-    bodyParser.json(),
-    expressMiddleware(server, {
-      context: async ({ req }) => {
-        const auth = req ? req.headers.authorization : null
-        if (auth && auth.toLowerCase().startsWith('bearer ')) {
-          const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET)
-          const currentUser = await User.findById(decodedToken.id).populate(
-            'friends'
-          )
-          return { currentUser }
-        }  
-      },
-    }),
+  return (
+    <div className="App">
+      <Router>
+        <Container>
+          <Routes>
+            // ...
+            <Route path="/" element={
+              <PatientListPage
+                patients={patients}
+                setPatients={setPatients} // highlight-line
+              />} 
+            />
+          </Routes>
+        </Container>
+      </Router>
+    </div>
   );
+};
+```
 
-  await server.start()
+To keep the TypeScript compiler happy, the props should be typed as follows:
 
-  const PORT = 4000
-
-  httpServer.listen(PORT, () =>
-    console.log(`Server is now running on http://localhost:${PORT}`)
-  )
+```js
+interface Props {
+  patients : Patient[]
+  setPatients: React.Dispatch<React.SetStateAction<Patient[]>>
 }
 
-// call the function that does the setup and starts the server
-start()
-```
-
-The backend code can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-backend/tree/part8-6), branch <i>part8-6</i>.
-
-### Subscriptions on the server
-
-
-Let's implement subscriptions for subscribing for notifications about new persons added. 
-
-The schema changes like so:
-
-```js
-type Subscription {
-  personAdded: Person!
-}    
-```
-
-So when a new person is added, all of its details are sent to all subscribers.
-
-First, we have to install two packages for adding subscriptions to GraphQL and a Node.js WebSocket library:
-
-```
-npm install graphql-subscriptions ws graphql-ws
-```
-
-The file <i>index.js</i> is changed to
-
-```js
-// highlight-start
-const { execute, subscribe } = require('graphql')
-const { WebSocketServer } = require('ws')
-const { useServer } = require('graphql-ws/lib/use/ws')
-// highlight-end
-
-// ...
-
-const start = async () => {
-  const app = express()
-  const httpServer = http.createServer(app)
-
-  const schema = makeExecutableSchema({ typeDefs, resolvers })
-
-// highlight-start
-  const wsServer = new WebSocketServer({
-    server: httpServer,
-    path: '/',
-  })
-
-  const serverCleanup = useServer({ schema }, wsServer)
-  // highlight-end
-
-  const server = new ApolloServer({
-    schema,
-    context: async ({ req }) => {
-      const auth = req ? req.headers.authorization : null
-      if (auth && auth.toLowerCase().startsWith('bearer ')) {
-        const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET)
-        const currentUser = await User.findById(decodedToken.id).populate(
-          'friends'
-        )
-        return { currentUser }
-      }
-    },
-    plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
-      // highlight-start
-      {
-        async serverWillStart() {
-          return {
-            async drainServer() {
-              await serverCleanup.dispose()
-            },
-          }
-        },
-      },
-      // highlight-end
-    ],
-  })
-
-  await server.start()
-
-  server.applyMiddleware({
-    app,
-    path: '/',
-  })
-
-  const PORT = 4000
-
-  httpServer.listen(PORT, () =>
-    console.log(`Server is now running on http://localhost:${PORT}`)
-  )
-}
-
-start()
-```
-
-
-When queries and mutations are used, GraphQL uses the HTTP protocol in the communication. In case of subscriptions, the communication between client and server happens with [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
-
-The above code registers a WebSocketServer object to listen the WebSocket connections, besides the usual HTTP connections that the server listens. The second part of the definition registers a function that closes the WebSocket connection on server shutdown.
-
-WebSockets are a perfect match for communication in the case of GraphQL subscriptions since when WebSockets are used, also the server can initiate the communication.
-
-The subscription _personAdded_ needs a resolver. The _addPerson_ resolver also has to be modified so that it sends a notification to subscribers. 
-
-The required changes are as follows:
-
-
-```js
-// highlight-start
-const { PubSub } = require('graphql-subscriptions')
-const pubsub = new PubSub()
-// highlight-end
-
-// ...
-
-const resolvers = {
-  // ...
-  Mutation: {
-    addPerson: async (root, args, context) => {
-      const person = new Person({ ...args })
-      const currentUser = context.currentUser
-
-      if (!currentUser) {
-        throw new AuthenticationError("not authenticated")
-      }
-
-      try {
-        await person.save()
-        currentUser.friends = currentUser.friends.concat(person)
-        await currentUser.save()
-      } catch (error) {
-        throw new UserInputError(error.message, {
-          invalidArgs: args,
-        })
-      }
-
-      pubsub.publish('PERSON_ADDED', { personAdded: person })  // highlight-line
-
-      return person
-    },  
-  },
-  // highlight-start
-  Subscription: {
-    personAdded: {
-      subscribe: () => pubsub.asyncIterator('PERSON_ADDED')
-    },
-  },
-  // highlight-end
-}
-```
-
-
-
-With subscriptions, the communication happens using the [publish-subscribe](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) principle utilizing the object [PubSub](https://www.apollographql.com/docs/apollo-server/data/subscriptions/#the-pubsub-class).
-
-There is only few lines of code added, but quite much is happening under the hood. The resolver of the _personAdded_ subscription registers and saves info about all the clients that do the subscription. The clients are saved to an 
-["iterator object"](https://www.apollographql.com/docs/apollo-server/data/subscriptions/#listening-for-events) called <i>PERSON\_ADDED</i>  thanks to the following code:
-
-```js
-Subscription: {
-  personAdded: {
-    subscribe: () => pubsub.asyncIterator('PERSON_ADDED')
-  },
-},
-```
-
-The iterator name is an arbitrary string, now the name follows the convention, it is the subscription name written in capital letters.
-
-Adding a new person <i>publishes</i> a notification about the operation to all subscribers with PubSub's method _publish_:
-
-```js
-pubsub.publish('PERSON_ADDED', { personAdded: person }) 
-```
-
-Execution of this line sends a WebSocket message about the added person to all the clients registered in the iterator <i>PERSON\_ADDED</i>.
-
-It's possible to test the subscriptions with the Apollo Explorer like this:
-
-![](../../images/8/31x.png)
-
-When the blue button <i>PersonAdded</i> is pressed Explorer starts to wait for a new person to be added. On addition (that you need to do from another browser window) the info of the added person appears in the right side of the Explorer.
-
-If the subscription does not work, check that you have correct connection settings:
-
-![](../../images/8/35.png)
-
-The backend code can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-backend/tree/part8-7), branch <i>part8-7</i>.
-
-### Subscriptions on the client
-
-In order to use subscriptions in our React application, we have to do some changes, especially on its [configuration](https://www.apollographql.com/docs/react/data/subscriptions/).
-The configuration in <i>index.js</i> has to be modified like so: 
-
-```js
-import { 
-  ApolloClient, ApolloProvider, HttpLink, InMemoryCache, 
-  split  // highlight-line
-} from '@apollo/client'
-import { setContext } from '@apollo/client/link/context'
-
-// highlight-start
-import { getMainDefinition } from '@apollo/client/utilities'
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
-import { createClient } from 'graphql-ws'
-// highlight-end
-
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('phonenumbers-user-token')
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `bearer ${token}` : null,
-    }
-  }
-})
-
-const httpLink = new HttpLink({
-  uri: 'http://localhost:4000',
-})
-
-// highlight-start
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: 'ws://localhost:4000',
-  })
-)
-// highlight-end
-
-// highlight-start
-const splitLink = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query)
-    return (
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'subscription'
-    )
-  },
-  wsLink,
-  authLink.concat(httpLink)
-)
-// highlight-end
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: splitLink // highlight-line
-})
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>
-)
-```
-
-For this to work, we have to install some dependencies:
-
-```bash
-npm install @apollo/client graphql-ws
-```
-
-The new configuration is due to the fact that the application must have an HTTP connection as well as a WebSocket connection to the GraphQL server.
-
-```js
-const wsLink = new WebSocketLink({
-  uri: `ws://localhost:4000/graphql`,
-  options: { reconnect: true }
-})
-
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: 'ws://localhost:4000',
-  })
-)
-```
-
-The subscriptions are done using the [useSubscription](https://www.apollographql.com/docs/react/api/react/hooks/#usesubscription) hook function.
-
-Let's modify the code like so:
-
-```js
-// highlight-start
-export const PERSON_ADDED = gql`
-  subscription {
-    personAdded {
-      ...PersonDetails
-    }
-  }
-  ${PERSON_DETAILS}
-`
-// highlight-end
-
-import {
-  useQuery, useMutation, useSubscription, useApolloClient // highlight-line
-} from '@apollo/client'
-
-const App = () => {
-  // ...
-
-  useSubscription(PERSON_ADDED, {
-    onData: ({ data }) => {
-      console.log(data)
-    }
-  })
-
+const PatientListPage = ({ patients, setPatients } : Props ) => { 
   // ...
 }
 ```
 
+So the function *setPatients* has type *React.Dispatch<React.SetStateAction<Patient[]>>*.
+We can see the type in the editor when we hover over the function:
 
-When a new person is now added to the phonebook, no matter where it's done, the details of the new person are printed to the client’s console: 
+![vscode showing Patient array as type for setPatients](../../images/8/73new.png)
 
-![](../../images/8/32e.png)
+The [React TypeScript cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples) has a pretty nice list of typical prop types, where we can seek for help if finding the proper typing for props is not obvious.
 
-
-When a new person is added, the server sends a notification to the client, and the callback function defined in the _onData_ attribute is called and given the details of the new person as parameters. 
-
-Let's extend our solution so that when the details of a new person are received, the person is added to the Apollo cache, so it is rendered to the screen immediately. 
+*PatientListPage* passes four props to the component *AddPatientModal*.
+Two of these props are functions.
+Let us have a look how these are typed:
 
 ```js
-const App = () => {
+const PatientListPage = ({ patients, setPatients } : Props ) => {
+
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
+
   // ...
 
-  useSubscription(PERSON_ADDED, {
-    onData: ({ data }) => {
-      const addedPerson = data.data.personAdded
-      notify(`${addedPerson.name} added`)
+  const closeModal = (): void => { // highlight-line
+    setModalOpen(false);
+    setError(undefined);
+  };
 
-      // highlight-start
-      client.cache.updateQuery({ query: ALL_PERSONS }, ({ allPersons }) => {
-        return {
-          allPersons: allPersons.concat(addedPerson),
-        }
-      })
-      // highlight-end
-    }
-  })
-
-  // ...
-}
-```
-
-Our solution has a small problem: a person is added to the cache and also rendered twice since the component _PersonForm_ is also adding it to the cache.
-
-Let us now fix the problem by ensuring that a person is not added twice in the cache:
-
-```js
-// highlight-start
-// function that takes care of manipulating cache
-export const updateCache = (cache, query, addedPerson) => {
-  // helper that is used to eliminate saving same person twice
-  const uniqByName = (a) => {
-    let seen = new Set()
-    return a.filter((item) => {
-      let k = item.name
-      return seen.has(k) ? false : seen.add(k)
-    })
-  }
-  // highlight-end
-
-  // highlight-start
-  cache.updateQuery(query, ({ allPersons }) => {
-    return {
-      allPersons: uniqByName(allPersons.concat(addedPerson)),
-    }
-  })
-}
-// highlight-end
-
-const App = () => {
-  const result = useQuery(ALL_PERSONS)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [token, setToken] = useState(null)
-  const client = useApolloClient() 
-
-  useSubscription(PERSON_ADDED, {
-    onData: ({ data, client }) => {
-      const addedPerson = data.data.personAdded
-      notify(`${addedPerson.name} added`)
-      updateCache(client.cache, { query: ALL_PERSONS }, addedPerson) // highlight-line
-    },
-  })
-
-  // ...
-}
-```
-
-The function _updateCache_ can also be used in _PersonForm_ for the cache update:
-
-```js
-import { updateCache } from '../App' // highlight-line
-
-const PersonForm = ({ setError }) => { 
-  // ...
-
-  const [createPerson] = useMutation(CREATE_PERSON, {
-    onError: (error) => {
-      setError(error.graphQLErrors[0].message)
-    },
-    update: (cache, response) => {
-      updateCache(cache, { query: ALL_PERSONS }, response.data.addPerson)  // highlight-line
-    },
-  })
-   
-  // ..
-} 
-```
-
-The final code of the client can be found on [GitHub](https://github.com/fullstack-hy2020/graphql-phonebook-frontend/tree/part8-9), branch <i>part8-9</i>.
-
-### n+1 problem
-
-First of all, you'll need to enable a debugging option via _mongoose_ in your backend project directory, by adding a line of code as shown below:
-
-```js
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('connected to MongoDB')
-  })
-  .catch((error) => {
-    console.log('error connection to MongoDB:', error.message)
-  })
-
-mongoose.set('debug', true); // highlight-line
-```
-
-Let's add some things to the backend. Let's modify the schema so that a <i>Person</i> type has a _friendOf_ field, which tells whose friends list the person is on. 
-
-```js
-type Person {
-  name: String!
-  phone: String
-  address: Address!
-  friendOf: [User!]!
-  id: ID!
-}
-```
-
-The application should support the following query: 
-
-```js
-query {
-  findPerson(name: "Leevi Hellas") {
-    friendOf {
-      username
-    }
-  }
-}
-```
-
-Because _friendOf_ is not a field of <i>Person</i> objects on the database, we have to create a resolver for it, which can solve this issue. Let's first create a resolver that returns an empty list: 
-
-```js
-Person: {
-  address: (root) => {
-    return { 
-      street: root.street,
-      city: root.city
-    }
-  },
-  // highlight-start
-  friendOf: (root) => {
-    // return list of users 
-    return [
-    ]
-  }
-  // highlight-end
-},
-```
-
-The parameter _root_ is the person object for which a friends list is being created, so we search from all _User_ objects the ones which have root._id in their friends list: 
-
-```js
-  Person: {
+  const submitNewPatient = async (values: PatientFormValues) => { // highlight-line
     // ...
-    friendOf: async (root) => {
-      const friends = await User.find({
-        friends: {
-          $in: [root._id]
-        } 
-      })
+  };
+  // ...
 
-      return friends
-    }
-  },
+  return (
+    <div className="App">
+      // ...
+      <AddPatientModal
+        modalOpen={modalOpen}
+        onSubmit={submitNewPatient} // highlight-line
+        error={error}
+        onClose={closeModal} // highlight-line
+      />
+    </div>
+  );
+};
 ```
 
-
-Now the application works. 
-
-
-We can immediately do even more complicated queries. It is possible for example to find the friends of all users:
+Types look like the following:
 
 ```js
-query {
-  allPersons {
-    name
-    friendOf {
-      username
-    }
-  }
+interface Props {
+  modalOpen: boolean;
+  onClose: () => void;
+  onSubmit: (values: PatientFormValues) => Promise<void>;
+  error?: string;
 }
-```
 
-There is however one issue with our solution: it does an unreasonable amount of queries to the database. If we log every query to the database, just like this for example,
-```js
-
-Query: {
-  allPersons: (root, args) => {    
-    // highlight-start
-    console.log('Person.find')
-    if (!args.phone) {
-      return Person.find({})
-    }
-
-    return Person.find({ phone: { $exists: args.phone === 'YES' } })
-    // highlight-end
-  }
-
-// ..
-
-},    
-
-// ..
-
-friendOf: async (root) => {
-  // highlight-start
-  const friends = await User.find({ friends: { $in: [root._id] } })
-  console.log("User.find")
-  // highlight-end
-  return friends
-},
-```
-
-and considering we have 5 persons saved, and we query _allPersons_ without _phone_ as argument, we see an absurd amount of queries like below.
-
-<pre>
-Person.find
-User.find
-User.find
-User.find
-User.find
-User.find
-</pre>
-
-So even though we primarily do one query for all persons, every person causes one more query in their resolver.
-
-This is a manifestation of the famous [n+1 problem](https://www.google.com/search?q=n%2B1+problem), which appears every once in a while in different contexts, and sometimes sneaks up on developers without them noticing. 
-
-The right solution for the n+1 problem depends on the situation. Often, it requires using some kind of a join query instead of multiple separate queries. 
-
-In our situation, the easiest solution would be to save whose friends list they are on each _Person_ object:
-
-```js
-const schema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 5
-  },
-  phone: {
-    type: String,
-    minlength: 5
-  },
-  street: {
-    type: String,
-    required: true,
-    minlength: 5
-  },  
-  city: {
-    type: String,
-    required: true,
-    minlength: 5
-  },
-  // highlight-start
-  friendOf: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ], 
-  // highlight-end
-})
-```
-
-Then we could do a "join query", or populate the _friendOf_ fields of persons when we fetch the _Person_ objects:
-
-```js
-Query: {
-  allPersons: (root, args) => {    
-    console.log('Person.find')
-    if (!args.phone) {
-      return Person.find({}).populate('friendOf') // highlight-line
-    }
-
-    return Person.find({ phone: { $exists: args.phone === 'YES' } })
-      .populate('friendOf') // highlight-line
-  },
+const AddPatientModal = ({ modalOpen, onClose, onSubmit, error }: Props) => {
   // ...
 }
 ```
 
-
-After the change, we would not need a separate resolver for the _friendOf_ field. 
-
-
-The allPersons query <i>does not cause</i> an n+1 problem, if we only  fetch the name and the phone number: 
+*onClose* is just a function that takes no parameters, and does not return anything, so the type is
 
 ```js
-query {
-  allPersons {
-    name
-    phone
-  }
-}
+() => void
 ```
 
-If we modify _allPersons_ to do a join query because it sometimes causes an n+1 problem, it becomes heavier when we don't need the information on related persons. By using the [fourth parameter](https://www.apollographql.com/docs/apollo-server/data/resolvers/#resolver-arguments) of resolver functions, we could optimize the query even further. The fourth parameter can be used to inspect the query itself, so we could do the join query only in cases with a predicted threat of n+1 problems. However, we should not jump into this level of optimization before we are sure it's worth it. 
+The type of *onSubmit* is a bit more interesting, it has one parameter that has the type *PatientFormValues*.
+The return value of the function is `Promise<void>`.
+So again the function type is written with the arrow syntax:
 
-[In the words of Donald Knuth](https://en.wikiquote.org/wiki/Donald_Knuth):
+```js
+(values: PatientFormValues) => Promise<void>
+```
 
-> <i>Programmers waste enormous amounts of time thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered. We should forget about small efficiencies, say about 97% of the time: <strong>premature optimization is the root of all evil.</strong></i>
-
-GraphQL Foundation's [DataLoader](https://github.com/graphql/dataloader) library offers a good solution for the n+1 problem among other issues. More about using DataLoader with Apollo server [here](https://www.robinwieruch.de/graphql-apollo-server-tutorial/#graphql-server-data-loader-caching-batching) and [here](http://www.petecorey.com/blog/2017/08/14/batching-graphql-queries-with-dataloader/).
-
-### Epilogue
-
-The application we created in this part is not optimally structured: we did some cleanups but much would still need to be done. Examples for better structuring of GraphQL applications can be found on the internet. For example, for the server
-[here](https://blog.apollographql.com/modularizing-your-graphql-schema-code-d7f71d5ed5f2) and the client [here](https://medium.com/@peterpme/thoughts-on-structuring-your-apollo-queries-mutations-939ba4746cd8).
-
-GraphQL is already a pretty old technology, having been used by Facebook since 2012, so we can see it as "battle-tested" already. Since Facebook published GraphQL in 2015, it has slowly gotten more and more attention, and might in the near future threaten the dominance of REST. The death of REST has also already been [predicted](https://www.stridenyc.com/podcasts/52-is-2018-the-year-graphql-kills-rest). Even though that will not happen quite yet, GraphQL is absolutely worth [learning](https://blog.graphqleditor.com/javascript-predictions-for-2019-by-npm/).
+The return value of a *async* function is a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function#return_value) with the value that the function returns.
+Our function does not return anything so the proper return type is just `Promise<void>`.
 
 </div>
 
 <div class="tasks">
 
-### Exercises 8.23.-8.26.
+### Exercises 8.20-8.21
 
-#### 8.23: Subscriptions - server
+We will soon add a new type for our app, *Entry*, which represents a lightweight patient journal entry.
+It consists of a journal text, i.e. a *description*, a creation date, information regarding the specialist who created it and possible diagnosis codes.
+Diagnosis codes map to the ICD-10 codes returned from the <i>/api/diagnoses</i> endpoint.
+Our naive implementation will be that a patient has an array of entries.
 
-Do a backend implementation for subscription _bookAdded_, which returns the details of all new books to its subscribers. 
+Before going into this, let us do some preparatory work.
 
-#### 8.24: Subscriptions - client, part 1
+#### 8.20: Patientor, step1
 
-Start using subscriptions in the client, and subscribe to _bookAdded_. When new books are added, notify the user. Any method works. For example, you can use the [window.alert](https://developer.mozilla.org/en-US/docs/Web/API/Window/alert) function. 
-
-#### 8.25: Subscriptions - client, part 2
-
-Keep the application's view updated when the server notifies about new books. You can test your implementation by opening the app in two browser tabs and adding a new book in one tab. Adding the new book should update the view in both tabs.
-
-#### 8.26: n+1
-
-Solve the n+1 problem of the following query using any method you like.
+Create an endpoint <i>/api/patients/:id</i> to the backend that returns all of the patient information for one patient, including the array of patient entries that is still empty for all the patients.
+For the time being, expand the backend types as follows:
 
 ```js
-query {
-  allAuthors {
-    name 
-    bookCount
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Entry {
+}
+
+export interface Patient {
+  id: string;
+  name: string;
+  ssn: string;
+  occupation: string;
+  gender: Gender;
+  dateOfBirth: string;
+  entries: Entry[] // highlight-line
+}
+
+export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;  // highlight-line
+```
+
+The response should look as follows:
+
+![browser showing entries blank array when accessing patient](../../images/8/38a.png)
+
+#### 8.21: Patientor, step2
+
+Create a page for showing a patient's full information in the frontend.
+
+The user should be able to access a patient's information by clicking the patient's name.
+
+Fetch the data from the endpoint created in the previous exercise.
+
+You may use [MaterialUI](https://material-ui.com/) for the new components but that is up to you since our main focus now is TypeScript.
+
+You might want to have a look at [part 7](/en/part7/react_router) if you don't yet have a grasp on how the [React Router](https://reactrouter.com/en/main/start/tutorial) works.
+
+The result could look like this:
+
+![browser showing patientor with one patient](../../images/8/39x.png)
+
+The example uses [Material UI Icons](https://mui.com/components/material-icons/) to represent genders.
+
+</div>
+
+<div class="content">
+
+### Full entries
+
+In [exercise 8.10](/en/part8/typing_an_express_app#exercises-8-10-8-11) we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
+Since we now have a page for viewing a patient's information, it would be nice to expand our data a bit.
+Let's add an *Entry* field to our patient data so that a patient's data contains their medical entries, including possible diagnoses.
+
+Let's ditch our old patient seed data from the backend and start using [this expanded format](https://github.com/fullstack-hy2020/misc/blob/master/patients-full.ts).
+
+Let us now create a proper *Entry* type based on the data we have.
+
+If we take a closer look at the data, we can see that the entries are quite different from one another.
+For example, let's take a look at the first two entries:
+
+```js
+{
+  id: 'd811e46d-70b3-4d90-b090-4535c7cf8fb1',
+  date: '2015-01-02',
+  type: 'Hospital',
+  specialist: 'MD House',
+  diagnosisCodes: ['S62.5'],
+  description:
+    "Healing time appr. 2 weeks. patient doesn't remember how he got the injury.",
+  discharge: {
+    date: '2015-01-16',
+    criteria: 'Thumb has healed.',
+  }
+}
+...
+{
+  id: 'fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62',
+  date: '2019-08-05',
+  type: 'OccupationalHealthcare',
+  specialist: 'MD House',
+  employerName: 'HyPD',
+  diagnosisCodes: ['Z57.1', 'Z74.3', 'M51.2'],
+  description:
+    'Patient mistakenly found himself in a nuclear plant waste site without protection gear.
+Very minor radiation poisoning. ',
+  sickLeave: {
+    startDate: '2019-08-05',
+    endDate: '2019-08-28'
   }
 }
 ```
 
+Immediately, we can see that while the first few fields are the same, the first entry has a *discharge* field and the second entry has *employerName* and *sickLeave* fields.
+All the entries seem to have some fields in common, but some fields are entry-specific.
+
+When looking at the *type*, we can see that there are three kinds of entries: *OccupationalHealthcare*, *Hospital* and *HealthCheck*.
+This indicates we need three separate types.
+Since they all have some fields in common, we might just want to create a base entry interface that we can extend with the different fields in each type.
+
+When looking at the data, it seems that the fields *id*, *description*, *date* and *specialist* are something that can be found in each entry.
+On top of that, it seems that *diagnosisCodes* is only found in one *OccupationalHealthcare* and one *Hospital* type entry.
+Since it is not always used even in those types of entries, it is safe to assume that the field is optional.
+We could consider adding it to the *HealthCheck* type as well
+since it might just not be used in these specific entries.
+
+So our *BaseEntry* from which each type could be extended would be the following:
+
+```js
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: string[];
+}
+```
+
+If we want to finetune it a bit further, since we already have a *Diagnosis* type defined in the backend, we might just want to refer to the code field of the *Diagnosis* type directly in case its type ever changes.
+We can do that like so:
+
+```js
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: Diagnosis['code'][];
+}
+```
+
+As was mentioned [earlier in this part](/en/part8/first_steps_with_type_script/#the-alternative-array-syntax), we could define an array with the syntax `Array<Type>` instead of defining it *Type[]*.
+In this particular case writing `Diagnosis['code'][]` starts to look a bit strange so we will decide to use the alternative syntax (that is also recommended by the ESlint rule [array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)):
+
+```js
+interface BaseEntry {
+  id: string;
+  description: string;
+  date: string;
+  specialist: string;
+  diagnosisCodes?: Array<Diagnosis['code']>; // highlight-line
+}
+```
+
+Now that we have the *BaseEntry* defined, we can start creating the extended entry types we will actually be using.
+Let's start by creating the *HealthCheckEntry* type.
+
+Entries of type *HealthCheck* contain the field *HealthCheckRating*, which is an integer from 0 to 3, zero meaning *Healthy* and 3 meaning *CriticalRisk*.
+This is a perfect case for an enum definition.
+With these specifications we could write a *HealthCheckEntry* type definition like so:
+
+```js
+export enum HealthCheckRating {
+  "Healthy" = 0,
+  "LowRisk" = 1,
+  "HighRisk" = 2,
+  "CriticalRisk" = 3
+}
+
+interface HealthCheckEntry extends BaseEntry {
+  type: "HealthCheck";
+  healthCheckRating: HealthCheckRating;
+}
+```
+
+Now we only need to create the *OccupationalHealthcareEntry* and *HospitalEntry* types so we can combine them in a union and export them as an Entry type like this:
+
+```js
+export type Entry =
+  | HospitalEntry
+  | OccupationalHealthcareEntry
+  | HealthCheckEntry;
+```
+
+### Omit with unions
+
+An important point concerning unions is that, when you use them with *Omit* to exclude a property, it works in a possibly unexpected way.
+Suppose we want to remove the *id* from each *Entry*.
+We could think of using
+
+```js
+Omit<Entry, 'id'>
+```
+
+but [it wouldn't work as we might expect](https://github.com/microsoft/TypeScript/issues/42680).
+In fact, the resulting type would only contain the common properties, but not the ones they don't share.
+A possible workaround is to define a special Omit-like function to deal with such situations:
+
+```ts
+// Define special omit for unions
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
+// Define Entry without the 'id' property
+type EntryWithoutId = UnionOmit<Entry, 'id'>;
+```
+
+</div>
+
+<div class="tasks">
+
+### Exercises 8.22-8.29
+
+Now we are ready to put the finishing touches to the app!
+
+#### 8.22: Patientor, step3
+
+Define the types *OccupationalHealthcareEntry* and *HospitalEntry* so that those conform with the example data.
+Ensure that your backend returns the entries properly when you go to an individual patient's route:
+
+![browser shoiwing entries json data properly for patient](../../images/8/40.png)
+
+Use types properly in the backend! For now, there is no need to do a proper validation for all the fields of the entries in the backend, it is enough e.g. to check that the field *type* has a correct value.
+
+#### 8.23: Patientor, step4
+
+Extend a patient's page in the frontend to list the *date*, *description* and *diagnoseCodes* of the patient's entries.
+
+You can use the same type definition for an *Entry* in the frontend.
+For these exercises, it is enough to just copy/paste the definitions from the backend to the frontend.
+
+Your solution could look like this:
+
+![browser showing list of diagnosis codes for patient](../../images/8/41.png)
+
+#### 8.24: Patientor, step5
+
+Fetch and add diagnoses to the application state from the <i>/api/diagnoses</i> endpoint.
+Use the new diagnosis data to show the descriptions for patient's diagnosis codes:
+
+![browser showing list of codes and their descriptions for patient ](../../images/8/42.png)
+
+#### 8.25: Patientor, step6
+
+Extend the entry listing on the patient's page to include the Entry's details with a new component that shows the rest of the information of the patient's entries distinguishing different types from each other.
+
+You could use eg. [Icons](https://mui.com/components/material-icons/) or some other [Material UI](https://mui.com/) component to get appropriate visuals for your listing.
+
+You should use a *switch case*-based rendering and <i>exhaustive type checking</i> so that no cases can be forgotten.
+
+Like this:
+
+![vscode showing error for healthCheckEntry not being assignable to type never](../../images/8/35c.png)
+
+The resulting entries in the listing <i>could</i> look something like this:
+
+![browser showing list of entries and their details in a nicer format](../../images/8/36x.png)
+
+#### 8.26: Patientor, step7
+
+We have established that patients can have different kinds of entries.
+We don't yet have any way of adding entries to patients in our app, so, at the moment, it is pretty useless as an electronic medical record.
+
+Your next task is to add endpoint <i>/api/patients/:id/entries</i> to your backend, through which you can POST an entry for a patient.
+
+Remember that we have different kinds of entries in our app, so our backend should support all those types and check that at least all required fields are given for each type.
+
+In this exercise you quite likely need to remember [this trick](/en/part8/grande_finale_patientor#omit-with-unions).
+
+You may assume that the diagnostic codes are sent in a correct form and use eg. the following kind of parser to extract those from the request body:
+
+```js
+const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
+  if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+    // we will just trust the data to be in correct form
+    return [] as Array<Diagnosis['code']>;
+  }
+
+  return object.diagnosisCodes as Array<Diagnosis['code']>;
+};
+```
+
+#### 8.27: Patientor, step8
+
+Now that our backend supports adding entries, we want to add the corresponding functionality to the frontend.
+In this exercise, you should add a form for adding an entry to a patient.
+An intuitive place for accessing the form would be on a patient's page.
+
+In this exercise, it is enough to **support <i>one</i> entry type**.
+All the fields in the form can be just plain text inputs, so it is up to user to enter valid values.
+
+Upon a successful submit, the new entry should be added to the correct patient and the patient's entries on the patient page should be updated to contain the new entry.
+
+Your form might look something like this:
+
+![Patientor new healthcheck entry form](../../images/8/74new.png)
+
+If user enters invalid values to the form and backend rejects the addition, show a proper error message to user
+
+![browser showing healthCheckRating incorrect 15 error](../../images/8/75new.png)
+
+#### 8.28: Patientor, step9
+
+Extend your solution so that it supports <i>all the entry types</i>
+
+#### 8.29: Patientor, step10
+
+Improve the entry creation forms so that it makes hard to enter incorrect dates, diagnosis codes and health rating.
+
+Your improved form might look something like this:
+
+![patientor showing fancy calendar ui](../../images/8/76new.png)
+
+Diagnosis codes are now set with Material UI [multiple select](https://mui.com/material-ui/react-select/#multiple-select) and dates with [Input](https://mui.com/material-ui/api/input/) elements with type [date](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
+
 ### Submitting exercises and getting the credits
 
-Exercises of this part are submitted via [the submissions system](https://studies.cs.helsinki.fi/stats/courses/fs-graphql) just like in the previous parts, but unlike previous parts, the submission goes to different "course instance". Remember that you have to finish at least 22 exercises to pass this part!
+Exercises of this part are submitted via [the submissions system](https://studies.cs.helsinki.fi/stats/courses/fs-typescript) just like in the previous parts, but unlike previous parts, the submission goes to a different "course instance".
+Remember that you have to finish at least 24 exercises to pass this part!
 
 Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
 
@@ -1073,6 +525,7 @@ Once you have completed the exercises and want to get the credits, let us know t
 
 **Note** that you need a registration to the corresponding course part for getting the credits registered, see [here](/en/part0/general_info#parts-and-completion) for more information.
 
-You can download the certificate for completing this part by clicking one of the flag icons. The flag icon corresponds to the certificate's language. 
+You can download the certificate for completing this part by clicking one of the flag icons.
+The flag icon corresponds to the certificate's language.
 
 </div>
