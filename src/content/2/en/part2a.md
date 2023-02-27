@@ -87,7 +87,8 @@ Event handling is complex.
 It's worth reviewing the
 [previous section on event handlers](/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited).
 
-Passing event handlers to the child components of the `App` component can also be complex, so you may want to revisit [the material that was provided about the topic here](/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
+Passing event handlers to the child components of the `App` component can also be complex, so you may want to revisit
+[the material that was provided about the topic here](/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
 
 ### Rendering Collections
 

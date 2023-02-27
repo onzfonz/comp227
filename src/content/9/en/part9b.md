@@ -1188,5 +1188,6 @@ Instead of the *`System`* font, use a platform-specific [Sans-serif](https://en.
 On the Android platform, use the `Roboto` font and on the iOS platform, use the `Arial` font.
 The default font can be *`System`*.
 
-This was the last exercise in this section. It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
+This was the last exercise in this section.
+It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 </div>

@@ -508,7 +508,8 @@ The difference between *react-bootstrap* and *MaterialUI* is not big.
 It's up to you which one you find better looking.
 Honestly, I haven't used either extensively, but I see both favorably.
 The MaterialUI documentation seems a bit better than react-bootstrap's.
-According to <https://www.npmtrends.com/> which tracks the popularity of different npm-libraries, MaterialUI passed react-bootstrap has largely stayed ahead of react bootstrap:
+According to <https://www.npmtrends.com/> which tracks the popularity of different npm-libraries,
+MaterialUI passed react-bootstrap has largely stayed ahead of react bootstrap:
 
 ![npmtrends of materialUI vs bootstrap](../../images/7/68ea.png)
 

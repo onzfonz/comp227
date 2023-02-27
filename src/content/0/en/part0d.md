@@ -223,7 +223,8 @@ Once accepted you'll be greeted with this image asking you to refresh.
 
 ![GitHub accepted lab](../../images/0/partc/classroomaccepted.png)
 
-Wait a minute or two, and then follow the lead given by GitHub, refresh the page, then click on the repo name, which will have your own GitHub handle on it as part of the link.
+Wait a minute or two, and then follow the lead given by GitHub, refresh the page, then click on the repo name
+which will have your own GitHub handle on it as part of the link.
 That will take you to the GitHub site where you will see your repository, with your handle at the end of the repository name.
 Click on the green code button ![green code button icon](../../images/0/partc/greencode.png)
 and then the copy button ![copy button icon](../../images/0/partc/image8.png) to copy the URL,
@@ -597,7 +598,8 @@ Furthermore, if we were to commit right now, nothing would happen.
 In git when you save a file, git merely tells you that the file that you have saved differs from what you had before.
 If you want that file to become part of the record, you'll need to stage the changes, which you can do again by calling this ambiguous term `add`.
 If you were to add the file, then it would show in green again to let you know that it will be committed.
-However, there is a way to automatically commit any of your tracked files into your repository, which is to use the flag -a, so typically when I commit, I do something like this:
+However, there is a way to automatically commit any of your tracked files into your repository,
+which is to use the flag -a, so typically when I commit, I do something like this:
 
 ```bash
 git commit -am "Personalized the readme with my name Osvaldo"

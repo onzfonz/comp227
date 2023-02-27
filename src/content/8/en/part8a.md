@@ -195,7 +195,8 @@ regarding type declarations.
 The type inference in TypeScript is pretty good but not quite perfect.
 Sometimes, you may feel like you have declared your types perfectly,
 but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
-In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting (aka type assesertion) or type guards.
+In these cases, you might need to help the compiler out by doing something like an "extra" type check,
+but be careful with type casting (aka type assesertion) or type guards.
 When using those, *you are giving your word to the compiler that the **value is of the type** that you declare*.
 You might want to check out TypeScript's documentation regarding [type assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
 and [type guarding/narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).

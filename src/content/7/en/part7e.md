@@ -689,7 +689,8 @@ However, there are several challenges when it comes to applying a microservice a
 and it might make sense to go [monolith first](https://martinfowler.com/bliki/MonolithFirst.html) by initially making a traditional all-encompassing backend.
 Or maybe [not](https://martinfowler.com/articles/dont-start-monolith.html).
 There are a bunch of different opinions on the subject.
-Both links lead to famous software author Martin Fowler's site; as we can see, even the wise are not entirely sure which one of the right ways is more right.
+Both links lead to famous software author Martin Fowler's site;
+s we can see, even the wise are not entirely sure which one of the right ways is more right.
 
 If you're interested in learning more about microservices, there are a [multitude or resources](https://www.google.com/search?q=how+to+learn+more+about+microservices+react)
 out there to help.

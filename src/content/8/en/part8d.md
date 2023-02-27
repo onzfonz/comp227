@@ -370,7 +370,8 @@ const companyHandhelds = [
 
 In the above example, we have added some additional attributes to each handheld.
 Each part has the `name` and `gameCount` attributes,
-but the first, third and fourth also have an attribute called `description`, and the second and fourth parts also have some distinct additional attributes.
+but the first, third and fourth also have an attribute called `description`,
+and the second and fourth parts also have some distinct additional attributes.
 
 Let's imagine that our application just keeps on growing, and we need to pass the different handheld systems around in our code.
 On top of that, there are also additional attributes and handheld systems added to the mix.
@@ -751,7 +752,9 @@ So the first element, assigned to `newTask` is a string and the second element t
 We notice that there is a string mentioned there, so we know that it must be the type of a function that sets a valued data.
 See [here](https://codewithstyle.info/Using-React-useState-hook-with-TypeScript/) if you want to learn more about the types of useState function.
 
-From this all we see that TypeScript has indeed [inferred](https://www.typescriptlang.org/docs/handbook/type-inference.html#handbook-content) the type of the first useState quite right, it is creating a state with type string.
+From this all we see that TypeScript has indeed
+[inferred](https://www.typescriptlang.org/docs/handbook/type-inference.html#handbook-content)
+the type of the first useState quite right, it is creating a state with type string.
 
 When we look at the second useState that has the initial value `[]` the type looks quite different
 
@@ -760,11 +763,13 @@ useState<never[]>(initialState: never[] | (() => never[])):
   [never[], React.Dispatch<React.SetStateAction<never[]>>] 
 ```
 
-TypeScript can just infer that the state has type `never[]`, it is an array but it has no clue what are the elements stored to array, so we clearly need to help the compiler and provide the type explicitly.
+TypeScript can just infer that the state has type `never[]`, it is an array but it has no clue what are the elements stored to array,
+so we clearly need to help the compiler and provide the type explicitly.
 
 One of the best sources for information about typing React is the [React TypeScript Cheatsheet](https://react-typescript-cheatsheet.netlify.app/).
 
-The chapter about [useState](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks#usestate) hook instructs to use a **type parameter** in situations where the compiler can not infer the type.
+The chapter about [useState](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/hooks#usestate) hook
+instructs to use a **type parameter** in situations where the compiler can not infer the type.
 
 Let us now define a type for tasks:
 
@@ -788,7 +793,8 @@ useState<Task[]>(initialState: Task[] | (() => Task[])):
   [Task[], React.Dispatch<React.SetStateAction<Task[]>>]
 ```
 
-So in technical terms useState is [a generic function](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables), where the type has to be specified as a type parameter in those cases when the compiler can not infer the type.
+So in technical terms useState is [a generic function](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables),
+where the type has to be specified as a type parameter in those cases when the compiler can not infer the type.
 
 Rendering the tasks is now easy.
 Let us just add some data to the state so that we can see that the code works:
@@ -888,7 +894,8 @@ It does not quite work, there is an Eslint error complaining about implicit any:
 
 ![vscode error event implicitly has any type](../../images/8/68new.png)
 
-TypeScript compiler has now no clue what is the type of the parameter, so that is why the type is the infamous implicit any that we wan to [avoid](/en/part9/first_steps_with_type_script#the-horrors-of-any) at all costs.
+TypeScript compiler has now no clue what is the type of the parameter,
+so that is why the type is the infamous implicit any that we want to [avoid](/en/part9/first_steps_with_type_script#the-horrors-of-any) at all costs.
 The React TypeScript cheatsheet comes again to rescue, the chapter about
 [forms and events](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events) reveals that the right type of event handler is `React.SyntheticEvent`.
 
@@ -989,7 +996,8 @@ We can now set the data in the state `tasks` to get the code working:
 
 So just like with `useState`, we gave a type  parameter to `axios.get` to instruct it how the typing should be done.
 Just like `useState` also `axios.get` is a [generic function](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables).
-Unlike some generic functions, the type parameter of `axios.get` has a default value `any` so, if the function is used without defining the type parameter, the type of the response data will be any.
+Unlike some generic functions, the type parameter of `axios.get` has a default value `any` so,
+if the function is used without defining the type parameter, the type of the response data will be any.
 
 The code works, compiler and Eslint are happy and remain quiet.
 However, giving a type parameter to `axios.get` is a potentially dangerous thing to do.
@@ -1009,7 +1017,8 @@ So our code is essentially as safe as it would be if a [type assertion](/en/part
 Since the TypeScript types do not even exist in runtime, our code does not give us any "safety" against situations where the request body contains data in a wrong form.
 
 Giving type variable to `axios.get` might be ok if we are *absolutely sure* that the backend behaves correctly and returns always the data in correct form.
-If we want to build a robust system we should prepare for surprises and parse the response data in the frontend similarly that we did [in the previous section](/en/part9/typing_an_express_app#proofing-requests) for the requests to the backend.
+If we want to build a robust system we should prepare for surprises and parse the response data in the frontend
+similarly to what we did [in the previous section](/en/part9/typing_an_express_app#proofing-requests) for the requests to the backend.
 
 Let us now wrap up our app by implementing the new task addition:
 
@@ -1103,7 +1112,7 @@ const App = () => {
 
 The app is now nicely typed and ready for further development!
 
-The code of the typed tasks can be found [here](https://github.com/fullstack-hy2020/typed-tasks).
+The code of the typed tasks can be found [here](https://github.com/comp227/typed-tasks).
 
 ### A task about defining object types
 
@@ -1156,7 +1165,7 @@ TypeScript documentation [recommends using interfaces](https://www.typescriptlan
 ### Exercises 8.16-8.19
 
 Let us now build a frontend for the Tails' flight diaries that was developed in [the previous section](/en/part9/typing_an_express_app).
-The source code of the backend can be found in [this GitHub repository](https://github.com/fullstack-hy2020/flight-diary).
+The source code of the backend can be found in [this GitHub repository](https://github.com/comp227/flight-diary).
 
 #### Exercise 8.16
 
@@ -1191,7 +1200,8 @@ Your solution may look like this:
 Addition of a diary entry is now very error prone since user can type anything to the input fields.
 The situation must be improved.
 
-Modify the input form so that the date is set with a HTML [date](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date) input element, and the weather and visibility are set with HTML [radio buttons](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio).
+Modify the input form so that the date is set with a HTML [date](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date) input element,
+and the weather and visibility are set with HTML [radio buttons](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio).
 We have already used radio buttons in [part 6](/en/part6/many_reducers#store-with-complex-state), that material may or may not be useful...
 
 Your app should all the time stay well typed and there should not be any Eslint errors and no Eslint rules should be ignored.

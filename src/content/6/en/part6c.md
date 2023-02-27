@@ -548,7 +548,8 @@ export const createTask = content => {
 export default taskSlice.reducer
 ```
 
-The principle here is the same: first, an asynchronous operation is executed, after which the action changing the state of the store is **dispatched**.
+The principle here is the same: first, an asynchronous operation is executed,
+after which the action changing the state of the store is **dispatched**.
 
 The component `NewTask` changes as follows:
 

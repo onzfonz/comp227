@@ -255,7 +255,7 @@ And finally, let's add a `lint` script to the *package.json* file to check the l
 }
 ```
 
-Now we can check that the linting rules are obeyed in JavaScript files in the *src* directory and in the *App.js* file by running `npm run lint`.
+Now we can check that the linting rules are obeyed in JavaScript files in the *src* directory and the *App.js* file by running `npm run lint`.
 We will be adding our future code to the *src* directory but because we haven't added any files there yet, we need the `no-error-on-unmatched-pattern` flag.
 Also if possible integrate ESLint with your editor.
 If you are using Visual Studio Code you can do that by, going to the extensions section and checking that the ESLint extension is installed and enabled:

@@ -123,7 +123,8 @@ Class selectors are defined with the `.classname` syntax:
 Notice this time that instead of a named color, I used a [**hex color value**](https://www.w3schools.com/colors/colors_hexadecimal.asp) to specify a color in the RGB space.
 If you now add other `li` elements to the application, they will not be affected by the style rule above.
 
-One final selector that we are going to use is called a **pseudo-class selector**, which is not an actual class, but something that is defined by most browsers.
+One final selector that we are going to use is called a **pseudo-class selector**,
+which is not an actual class, but something that is defined by most browsers.
 In our case, since we've been doing a lot websites with dark mode, we'll jump on the bandwagon and add this:
 
 :root {

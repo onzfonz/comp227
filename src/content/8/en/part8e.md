@@ -17,12 +17,13 @@ It is always a good idea to start the application and click around to verify you
 
 You can also browse the folder structure to get some insight into the application's functionality and/or the architecture used.
 These are not always clear, and the developers might have chosen a way to organize code that is not familiar to you.
-The [sample project](https://github.com/fullstack-hy2020/patientia) used in the rest of this part is organized, feature-wise.
+The [sample project](https://github.com/comp227/patientia) used in the rest of this part is organized, feature-wise.
 You can see what pages the application has, and some general components, e.g. modals and state.
 Keep in mind that the features may have different scopes.
 For example, modals are visible UI-level components whereas the state is comparable to business logic and keeps the data organized under the hood for the rest of the app to use.
 
-TypeScript provides types for what kind of data structures, functions, components, and state to expect.  You can try looking for *types.ts* or something similar to get started.
+TypeScript provides types for what kind of data structures, functions, components, and state to expect.
+You can try looking for *types.ts* or something similar to get started.
 VSCode is a big help and simply highlighting variables and parameters can provide quite a lot of insight.
 All this naturally depends on how types are used in the project.
 
@@ -31,7 +32,8 @@ Test cases are your most important tool when refactoring or adding new features 
 You want to make sure not to break any existing features when hammering around the code.
 TypeScript can also give you guidance with argument and return types when changing the code.
 
-Remember that reading code is a skill in itself, so don't worry if you don't understand the code on your first readthrough.  The code may have a lot of corner cases, and pieces of logic may have been added here and there throughout its development cycle.
+Remember that reading code is a skill in itself, so don't worry if you don't understand the code on your first readthrough.
+The code may have a lot of corner cases, and pieces of logic may have been added here and there throughout its development cycle.
 It is hard to imagine what kind of problems the previous developer has wrestled with.
 Think of it all like [growth rings in trees](https://en.wikipedia.org/wiki/Dendrochronology#Growth_rings).
 Understanding everything requires digging deep into the code and business domain requirements.
@@ -55,7 +57,8 @@ After verifying that everything works, we can start studying the code.
 All the interesting stuff resides in the *src* folder.
 For your convenience, there is already a *types.ts* file for basic types used in the app, which you will have to extend or refactor in the exercises.
 
-In principle, we could use the same types for both backend and frontend, but usually, the frontend has different data structures and use cases for the data, which causes the types to be different.
+In principle, we could use the same types for both backend and frontend,
+but usually, the frontend has different data structures and use cases for the data, which causes the types to be different.
 For example, the frontend has a state and may want to keep data in objects or maps whereas the backend uses an array.
 The frontend might also not need all the fields of a data object saved in the backend, and it may need to add some new fields to use for rendering.
 
@@ -63,12 +66,16 @@ The folder structure looks as follows:
 
 ![vscode folder structure for patientia](../../images/8/34brandnew.png)
 
-Besides the component `App` a directory for services, there are currently three main components: `AddPatientModal` and `PatientListPage` which are both defined in a directory, and a component `HealthRatingBar` defined in a file.
+Besides the component `App` a directory for services, there are currently three main components:
+`AddPatientModal` and `PatientListPage` which are both defined in a directory, and a component `HealthRatingBar` defined in a file.
 If a component has some subcomponents not used elsewhere in the app, it might be a good idea to define the component and its subcomponents in a directory.
 For example now the AddPatientModal is defined in the file *components/AddPatientModal/index.tsx* and its subcomponent `AddPatientForm` in its own file under the same directory.
 
 There is nothing very surprising in the code.
-The state and communication with the backend are implemented with `useState` hook and Axios, similar to the tasks app in the previous section. [Material UI](http://localhost:8000/en/part7/more_about_styles#material-ui) is used to style the app and the navigation structure is implementer with [React Router](http://localhost:8000/en/part7/react_router), both familiar to us from part 7 of the course.
+The state and communication with the backend are implemented with `useState` hook and Axios, similar to the tasks app in the previous section.
+[Material UI](http://localhost:8000/en/part7/more_about_styles#material-ui) is used to style the app and the navigation structure is implemented with
+[React Router](http://localhost:8000/en/part7/react_router),
+both familiar to us from part 7 of the course.
 
 From typing point of view, there are a couple of interesting things.
 Component `App` passes the function `setPatients` as a prop to the component `PatientListPage`:
@@ -117,7 +124,8 @@ We can see the type in the editor when we hover over the function:
 
 ![vscode showing Patient array as type for setPatients](../../images/8/73new.png)
 
-The [React TypeScript cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples) has a pretty nice list of typical prop types, where we can seek for help if finding the proper typing for props is not obvious.
+The [React TypeScript cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples)
+has a pretty nice list of typical prop types, where we can seek for help if finding the proper typing for props is not obvious.
 
 `PatientListPage` passes four props to the component `AddPatientModal`.
 Two of these props are functions.
@@ -184,7 +192,9 @@ So again the function type is written with the arrow syntax:
 (values: PatientFormValues) => Promise<void>
 ```
 
-The return value of a `async` function is a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function#return_value) with the value that the function returns.
+The return value of a `async` function is a
+[promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function#return_value)
+with the value that the function returns.
 Our function does not return anything so the proper return type is just `Promise<void>`.
 
 </div>
@@ -202,7 +212,8 @@ Before going into this, let us do some preparatory work.
 
 #### 8.20: Patientia, step1
 
-Create an endpoint ***/api/patients/:id*** to the backend that returns all of the patient information for one patient, including the array of patient entries that is still empty for all the patients.
+Create an endpoint ***/api/patients/:id*** to the backend that returns all of the patient information for one patient,
+including the array of patient entries that is still empty for all the patients.
 For the time being, expand the backend types as follows:
 
 ```js
@@ -251,11 +262,12 @@ The example uses [Material UI Icons](https://mui.com/components/material-icons/)
 
 ### Full entries
 
-In [exercise 8.10](/en/part8/typing_an_express_app#exercises-8-10-8-11) we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
+In [exercise 8.10](/en/part8/typing_an_express_app#exercises-8-10-8-11)
+we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
 Since we now have a page for viewing a patient's information, it would be nice to expand our data a bit.
 Let's add an `Entry` field to our patient data so that a patient's data contains their medical entries, including possible diagnoses.
 
-Let's ditch our old patient seed data from the backend and start using [this expanded format](https://github.com/fullstack-hy2020/misc/blob/master/patients-full.ts).
+Let's ditch our old patient seed data from the backend and start using [this expanded format](https://github.com/comp227/misc/blob/master/patients-full.ts).
 
 Let us now create a proper `Entry` type based on the data we have.
 
@@ -319,7 +331,8 @@ interface BaseEntry {
 }
 ```
 
-If we want to finetune it a bit further, since we already have a `Diagnosis` type defined in the backend, we might just want to refer to the code field of the `Diagnosis` type directly in case its type ever changes.
+If we want to finetune it a bit further, since we already have a `Diagnosis` type defined in the backend,
+we might just want to refer to the code field of the `Diagnosis` type directly in case its type ever changes.
 We can do that like so:
 
 ```js
@@ -332,7 +345,8 @@ interface BaseEntry {
 }
 ```
 
-As was mentioned [earlier in this part](/en/part8/first_steps_with_type_script/#the-alternative-array-syntax), we could define an array with the syntax `Array<Type>` instead of defining it `Type[]`.
+As was mentioned [earlier in this part](/en/part8/first_steps_with_type_script/#the-alternative-array-syntax),
+we could define an array with the syntax `Array<Type>` instead of defining it `Type[]`.
 In this particular case writing `Diagnosis['code'][]` starts to look a bit strange so we will decide to use the alternative syntax (that is also recommended by the ESlint rule [array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)):
 
 ```js
@@ -411,7 +425,9 @@ Ensure that your backend returns the entries properly when you go to an individu
 
 ![browser shoiwing entries json data properly for patient](../../images/8/40.png)
 
-Use types properly in the backend! For now, there is no need to do a proper validation for all the fields of the entries in the backend, it is enough e.g. to check that the field `type` has a correct value.
+Use types properly in the backend!
+For now, there is no need to do a proper validation for all the fields of the entries in the backend,
+it is enough e.g. to check that the field `type` has a correct value.
 
 #### 8.23: Patientia, step4
 
@@ -433,7 +449,8 @@ Use the new diagnosis data to show the descriptions for patient's diagnosis code
 
 #### 8.25: Patientia, step6
 
-Extend the entry listing on the patient's page to include the Entry's details with a new component that shows the rest of the information of the patient's entries distinguishing different types from each other.
+Extend the entry listing on the patient's page to include the Entry's details with a new component
+that shows the rest of the information of the patient's entries distinguishing different types from each other.
 
 You could use eg. [Icons](https://mui.com/components/material-icons/) or some other [Material UI](https://mui.com/) component to get appropriate visuals for your listing.
 
@@ -502,20 +519,9 @@ Your improved form might look something like this:
 
 ![patientia showing fancy calendar ui](../../images/8/76new.png)
 
-Diagnosis codes are now set with Material UI [multiple select](https://mui.com/material-ui/react-select/#multiple-select) and dates with [Input](https://mui.com/material-ui/api/input/) elements with type [date](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
-
-### Submitting exercises and getting the credits
-
-Exercises of this part are submitted via [the submissions system](https://studies.cs.helsinki.fi/stats/courses/fs-typescript) just like in the previous parts, but unlike previous parts, the submission goes to a different "course instance".
-Remember that you have to finish at least 24 exercises to pass this part!
-
-Once you have completed the exercises and want to get the credits, let us know through the exercise submission system that you have completed the course:
-
-![Submissions](../../images/11/21.png)
-
-**Notice** that you need a registration to the corresponding course part for getting the credits registered, see [here](/en/part0/general_info#parts-and-completion) for more information.
-
-You can download the certificate for completing this part by clicking one of the flag icons.
-The flag icon corresponds to the certificate's language.
+Diagnosis codes are now set with Material UI
+[multiple select](https://mui.com/material-ui/react-select/#multiple-select) and dates with
+[Input](https://mui.com/material-ui/api/input/) elements with type
+[date](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
 
 </div>

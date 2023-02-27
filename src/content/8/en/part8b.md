@@ -879,7 +879,8 @@ npm install @types/express --save-dev
 
 And almost no more errors! Let's take a look at what changed.
 
-At first, when we were using the `require` statement, and then we hovered over over `res`, you'll notice that WebStorm interprets everything express-related to be of type `any`.
+At first, when we were using the `require` statement, and then we hovered over over `res`,
+you'll notice that WebStorm interprets everything express-related to be of type `any`.
 
 ![ide showing problem of implicitly having any type](../../images/8/8a.png)
 
@@ -1071,7 +1072,7 @@ There are a couple of ways to fix this, but first, we have to consider why this 
 In TypeScript, *every untyped variable whose type cannot be inferred implicitly becomes type*
 [`any`](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any).
 Any is *wild card* type which stands for **whatever** type.
-Variables implicitly become an `any` type when one *forgets to type functions*.
+Variables implicitly become an `any` type when one *forgets to type **functions***.
 
 We can also explicitly type things `any`.
 The only difference between the implicit and explicit any type is *how the code looks*; the compiler does not care about the difference.

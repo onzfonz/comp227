@@ -213,7 +213,8 @@ Then either right click (or use your keyboard shortcut) to open up the context a
 
 ![install supertest option from package.json](../../images/4/custom/install_types_supertest.png)
 
-For many of the libraries we'll be able to download those types to have more information that Webstorm can provide us, and I think it's prudent to install as many as they allow as devDependencies.
+For many of the libraries we'll be able to download those types to have more information that Webstorm can provide us,
+and I think it's prudent to install as many as they allow as devDependencies.
 
 #### Mongoose related warnings
 

@@ -66,7 +66,8 @@ However, most of them are commented out.
 Studying this file can help you find some configuration options you might need.
 It is also completely okay to keep the commented lines, in case you might need them someday.
 
-At the moment, we want to uncomment line 52 (outDir) and set it to `./build/`, and also uncomment 88-89 (locals/parameters) and 91-92 (returns/switch).
+At the moment, we want to uncomment line 52 (outDir) and set it to `./build/`,
+and also uncomment 88-89 (locals/parameters) and 91-92 (returns/switch).
 Once uncommented those should all be set to true.
 
 Ideally we want to make sure the following are active:
