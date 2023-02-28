@@ -14,12 +14,17 @@ When everything works as it should, TypeScript will help us catch the following 
 - Forgetting to pass a required prop to a component
 - Passing a prop with the wrong type to a component
 
-If we make any of these errors, TypeScript can help us catch them in our editor right away.
+If we make any of these errors, TypeScript will help us notice them immediately via the IDE.
 If we didn't use TypeScript, we would have to catch these errors later during testing.
 We might be forced to do some tedious debugging to find the cause of the errors.
 
-That's enough reasoning for now.
-Let's start getting our hands dirty!
+Avoiding tedious debugging is always appreciated.
+
+Like in the previous parts, we'll start with a new empty repo.
+<http://go.djosv.com/227labtsreact>.
+Go ahead and import that into WebStorm just like with all the previous iterations.
+
+Once you have that done, let's get into it!
 
 ### Create React App with TypeScript
 
@@ -28,14 +33,15 @@ We can use [create-react-app](https://create-react-app.dev) to create a TypeScri
 So in order to create a TypeScript Create React App, run the following command:
 
 ```shell
-npx create-react-app my-app --template typescript
+npx create-react-app reading --template typescript
 ```
 
-After running the command, you should have a complete basic React app that uses TypeScript.
+After running the command, ***you should have a complete basic React app that uses TypeScript***.
 You can start the app by running `npm start` in the application's root.
+> *You'll need to cd into the new folder you just created to start it*
 
-If you take a look at the files and folders, you'll notice that the app is not that different from
-one using pure JavaScript.
+If you take a look at the files and folders,
+you'll notice that the app is not that different from one using pure JavaScript.
 The only differences are that the *.js* and *.jsx* files are now *.ts* and *.tsx* files,
 they contain some type annotations, and the root directory contains a *tsconfig.json* file.
 
@@ -70,18 +76,19 @@ Now, let's take a look at the *tsconfig.json* file that has been created for us:
 }
 ```
 
-Notice `compilerOptions` now has the key [lib](https://www.typescriptlang.org/tsconfig#lib)
-that includes "type definitions for things found in browser environments (like `document`)."
+Notice `compilerOptions` now has the key [`lib`](https://www.typescriptlang.org/tsconfig#lib)
+that includes:
+> *type definitions for things found in browser environments (like `document`).*
 
 Everything else should be more or less fine except that, at the moment,
 the configuration allows compiling JavaScript files because `allowJs` is set to `true`.
 That would be fine if you need to mix TypeScript and JavaScript (e.g. if you are in the process of transforming a JavaScript project into TypeScript or something like that),
-but we want to create a pure TypeScript app, so let's change that configuration to `false`.
+but we want to create a pure TypeScript app, so ***let's change the `allowJS` configuration to `false`***.
 
 In our previous project, we used ESlint to help us enforce a coding style, and we'll do the same with this app.
 We do not need to install any dependencies, since create-react-app has taken care of that already.
 
-We configure ESlint in *.eslintrc* with the following settings:
+**Let's create a file *.eslintrc*** with the following settings:
 
 ```js
 {
@@ -111,10 +118,10 @@ We configure ESlint in *.eslintrc* with the following settings:
 ```
 
 Since the return type of most React components is generally either `JSX.Element` or `null`,
-we have loosened up the default linting rules a bit by disabling the rules [explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
-and [explicit-module-boundary-types](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md).
+we have loosened up the default linting rules a bit by disabling the rules [*`explicit-function-return-type`*](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
+and [*`explicit-module-boundary-types`*](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md).
 Now we don't need to explicitly state our function return types everywhere.
-We will also disable [react/react-in-jsx-scope](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md) since importing React is
+We will also disable [*`react/react-in-jsx-scope`*](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md) since importing React is
 [no longer needed](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) in every file.
 
 Next, we need to get our linting script to parse `*.tsx` files, which are the TypeScript equivalent of React's JSX files.
@@ -134,15 +141,15 @@ We can do that by altering our lint command in *package.json* to the following:
 }
 ```
 
-If you are using Windows, you may need to use double quotes for the linting path:
-
-```json
-"lint": "eslint \"./src/**/*.{ts,tsx}\""
-```
+> *If you are using Windows*, you may need to change the linting path to use double quotes:
+>
+> ```json
+> "lint": "eslint \"./src/**/*.{ts,tsx}\""
+> ```
 
 ### React components with TypeScript
 
-Let us consider the following JavaScript React example:
+Let us consider the following ***JavaScript React example***:
 
 ```jsx
 import ReactDOM from 'react-dom/client'
@@ -157,7 +164,7 @@ Welcome.propTypes = {
 };
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Welcome name="Sarah" />
+  <Welcome name="Powercat" />
 )
 ```
 
@@ -167,9 +174,9 @@ We know that the `name` should be a string,
 and we use the [prop-types](https://www.npmjs.com/package/prop-types) package introduced in
 [part 5](/part5/props_children_and_proptypes#prop-types) to receive hints about the desired types of a component's props and warnings about invalid prop types.
 
-With TypeScript, we don't need the ***prop-types*** package anymore.
-We can define the types with the help of TypeScript just like we define types for a regular function as react components are nothing but mere functions.
-We will use an interface for the parameter types (i.e., props) and `JSX.Element` as the return type for any react component:
+With TypeScript, *we don't need the **prop-types** package anymore*.
+We can define the types with the help of TypeScript just like we define types for a regular function as *react components are nothing but mere functions*.
+We will use an interface for the parameter types (i.e., `props`) and `JSX.Element` as the return type for any react component:
 
 ```jsx
 import ReactDOM from 'react-dom/client'
@@ -183,23 +190,21 @@ const Welcome = (props: WelcomeProps): JSX.Element => {
 };
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <Welcome name="Sarah" />
+  <Welcome name="Powercat" />
 )
 ```
 
-We defined a new type, `WelcomeProps`, and passed it to the function's parameter types.
+***We defined a new type***, `WelcomeProps`, and passed it to the function's parameter types.
 
 ```jsx
 const Welcome = (props: WelcomeProps): JSX.Element => {
 ```
 
-You could write the same thing using a more verbose syntax:
-
-```jsx
-const Welcome = ({ name }: { name: string }): JSX.Element => (
-  <h1>Hello, {name}</h1>
-);
-```
+> You could write the same thing using a more verbose syntax with the help of destructuring:
+>
+> ```jsx
+> const Welcome = ({ name }: { name: string }): JSX.Element => (
+> ```
 
 Now our editor knows that the `name` prop is a string.
 
@@ -215,7 +220,7 @@ const Welcome = (props: WelcomeProps)  => { // highlight-line
 };
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <Welcome name="Sarah" />
+  <Welcome name="Powercat" />
 )
 ```
 
@@ -224,7 +229,7 @@ for the return value of the function *document.getElementById*
 
 ```ts
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(  // highlight-line
-  <Welcome name="Sarah" />
+  <Welcome name="Powercat" />
 )
 ```
 
@@ -234,19 +239,17 @@ We need to do this since the *ReactDOM.createRoot* takes an HTMLElement as a par
 HTMLElement | null
 ```
 
-since if the function does not find the searched element, it will return null.
+since if the function does not find the searched element, it will return `null`.
 
 Earlier in this part we [warned](/part8/first_steps_with_type_script#type-assertion)
-about the dangers of type assertions, but in our case the assertion is ok since we are sure that the file *index.html* indeed has this particular id
-and the function is always returning an HTMLElement.
+about the dangers of type assertions, but in our case the assertion is ok since we are sure that the file *index.html* indeed has the `root` id
+and the function is always returning an `HTMLElement`.
 
 </div>
 
 <div class="tasks">
 
 ### Exercise 8.14
-
-#### 8.14
 
 Create a new Create React App with TypeScript, and set up ESlint for the project similarly to how we just did.
 
@@ -295,8 +298,8 @@ const App = () => {
         {companyHandhelds[2].name} {companyHandhelds[2].gameCount}
       </p>
       <p>
-        Number of exercises{" "}
-        {companyHandhelds.reduce((carry, part) => carry + part.gameCount, 0)}
+        Number of games{" "}
+        {companyHandhelds.reduce((carry, handheld) => carry + handheld.gameCount, 0)}
       </p>
     </div>
   );
@@ -312,8 +315,8 @@ That is not what we want, so refactor the code so that it consists of three comp
 All data is still kept in the `App` component, which passes all necessary data to each component as props.
 **Be sure to add type declarations for each component's props!**
 
-The `Header` component should take care of rendering the name of the course.
-`Content` should render the names of the different parts and the number of exercises in each part, and `Total` should render the total sum of exercises in all parts.
+The `Header` component should take care of rendering the name of the company.
+`Content` should render the names of the different handhelds and the number of games on each handheld, and `Total` should render the total sum of games across all handhelds.
 
 The `App` component should look somewhat like this:
 
@@ -335,9 +338,9 @@ const App = () => {
 
 <div class="content">
 
-### DS
+### Adding types that don't exactly fit
 
-In the previous exercise, we had three parts of a handheld, and all parts had the same attributes `name` and `gameCount`.
+In the previous exercise, we had three handhelds, and all handhelds had the same attributes `name` and `gameCount`.
 But what if we needed additional attributes for the systems and each handheld needs different attributes?
 How would this look, codewise?
 Let's consider the following example:
@@ -369,9 +372,9 @@ const companyHandhelds = [
 ```
 
 In the above example, we have added some additional attributes to each handheld.
-Each part has the `name` and `gameCount` attributes,
+Each handheld has the `name` and `gameCount` attributes,
 but the first, third and fourth also have an attribute called `description`,
-and the second and fourth parts also have some distinct additional attributes.
+and the second and fourth handhelds also have some distinct additional attributes.
 
 Let's imagine that our application just keeps on growing, and we need to pass the different handheld systems around in our code.
 On top of that, there are also additional attributes and handheld systems added to the mix.
@@ -381,23 +384,23 @@ This is where TypeScript comes in handy!
 
 Let's start by defining types for our different handhelds.
 We notice that the first and third have the same set of attributes.
-The second and fourth are a bit different so we have three different kinds of handhelds.
+The second and fourth are a bit different so we have three different categories of handhelds.
 
-So let us define a type for each of the different kinds of handhelds:
+So let us define a type for each handheld category:
 
 ```js
 interface HandheldBasic {
   name: string;
   gameCount: number;
   description: string;
-  kind: "basic"
+  category: "basic"
 }
 
 interface HandheldDual {
   name: string;
   gameCount: number;
   numberOfScreens: number;
-  kind: "dual";
+  category: "dual";
 }
 
 interface HandheldVirtual {
@@ -405,17 +408,17 @@ interface HandheldVirtual {
   gameCount: number;
   description: string;
   agreement: string;
-  kind: "vr";
+  category: "vr";
 }
 ```
 
 Besides the attributes that are found in the various handhelds,
-we have now introduced a additional attribute called `kind` that has a [**literal**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types) type,
+we have now ***introduced a additional attribute called `category`*** that has a [**literal**](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#literal-types) type,
 it is a "hard coded" string, distinct for each handheld.
-We shall soon see where the attribute `kind` is used!
+We shall soon see where the attribute `category` is used!
 
-Next, we will create a type [union](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types) of all these types.
-We can then use it to define a type for our array, which should accept any of these handheld types:
+We will now create a type [union](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#union-types) of all these types.
+We can then use this union as the type for our array, which should accept any of these handheld types:
 
 ```js
 type Handheld = HandheldBasic | HandheldDual | HandheldVirtual;
@@ -426,31 +429,31 @@ Now we can set the type for our `companyHandhelds` variable.
 ```js
 const App = () => {
   const companyName = "Nintendo";
-  const handhelds: Handheld[] = [
+  const companyHandhelds: Handheld[] = [
     {
       name: "Game Boy",
       gameCount: 1046,
       description: "AA Battery monster, here we come!",
-      kind: "basic" // highlight-line
+      category: "basic" // highlight-line
     },
     {
       name: "DS",
       gameCount: 1791,
       numberOfScreens: 2,
-      kind: "dual" // highlight-line
+      category: "dual" // highlight-line
     },
     {
       name: "Game Boy Advance",
       gameCount: 1538,
       description: "The SP version was OP",
-      kind: "basic" // highlight-line
+      category: "basic" // highlight-line
     },
     {
       name: "Virtual Boy",
       gameCount: 22,
       description: "All Hail The Greatest system everrrrr",
-      agreement: "http://sebastianmihai.com/virtual-boy-warnings.html"
-      kind: "vr" // highlight-line
+      agreement: "http://sebastianmihai.com/virtual-boy-warnings.html",
+      category: "vr" // highlight-line
     },
   ]
 
@@ -458,7 +461,7 @@ const App = () => {
 }
 ```
 
-Notice that we have now added the attribute `kind` with a proper value to each element of the array.
+Notice that we have now added the attribute `category` with a proper value to each element of the array.
 
 Our editor will automatically warn us if we use the wrong type for an attribute, use an extra attribute, or forget to set an expected attribute.
 If we eg. try to add the following to the array
@@ -467,21 +470,21 @@ If we eg. try to add the following to the array
 {
   name: "3DS",
   gameCount: 1407,
-  kind: "dual",
+  category: "dual",
 },
 ```
 
 We will immediately see an error in the editor:
 
-![vscode exerciseCount not assignable to type CoursePart - description missing](../../images/8/63new.png)
+![webstorm 3DS needs number of screens to be a handheld](../../images/8/63new.png)
 
-Since our new entry has the attribute `kind` with value *`dual`* TypeScript knows that the entry is does not only have the type *Handheld* but it is actually meant to be a *HandheldDual*.
-So here the attribute `kind` ***narrows*** the type of the entry from a more general to a more specific type that has a certain set of attributes.
+Since our new entry has the attribute `category` with value *`dual`*, **TypeScript knows that the new entry is not just a *`Handheld`* but more specifically a *`HandheldDual`***.
+So here the attribute `category` ***narrows*** the type of the entry from a more general to a more specific type that has a certain set of attributes.
 We shall soon see this style of type narrowing in action in the code!
 
-But we're not satisfied yet! There is still a lot of duplication in our types, and we want to avoid that.
-We start by identifying the attributes all handhelds have in common, and defining a base type that contains them.
-Then we will [extend](https://www.typescriptlang.org/docs/handbook/2/objects.html#extending-types) that base type to create our kind-specific types:
+But we're not satisfied yet! There is still a lot of type duplication we want to avoid.
+We start by identifying the attributes all handhelds have in common, and defining a **base type** that contains them.
+Then we will [extend](https://www.typescriptlang.org/docs/handbook/2/objects.html#extending-types) that base type to create our category-specific types:
 
 ```js
 interface HandheldBase {
@@ -491,21 +494,21 @@ interface HandheldBase {
 
 interface HandheldBasic extends HandheldBase {
   description: string;
-  kind: "basic"
+  category: "basic"
 }
 
 interface HandheldDual extends HandheldBase {
   numberOfScreens: number;
-  kind: "dual"
+  category: "dual"
 }
 
 interface HandheldVirtual extends HandheldBase {
   description: string;
   agreement: string;
-  kind: "vr"
+  category: "vr"
 }
 
-type HandheldBase = HandheldBasic | HandheldDual | HandheldVirtual;
+type Handheld = HandheldBasic | HandheldDual | HandheldVirtual;
 ```
 
 ### More type narrowing
@@ -514,7 +517,7 @@ How should we now use these types in our components?
 
 If we try to acess the objects in the array `handhelds: Handheld[]` we notice that it is possibly to only access the attributes that are common to all the types in the union:
 
-![vscode showing part.exerciseCou...](../../images/8/65new.png)
+![webstorm showing handheld...](../../images/8/65new.png)
 
 And indeed, the TypeScript [documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#working-with-union-types) says this:
 
@@ -527,37 +530,40 @@ Narrowing occurs when TypeScript can deduce a more specific type for a value bas
 
 So once again the [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) is the rescue!
 
-One handy way to narrow these kinds of types in TypeScript is to use *switch case* expressions.
-Once TypeScript has inferred that a variable is of union type and that each type in the union contain a certain literal attribute (in our case *kind*), we can use that as a type identifier.
+One way to narrow these structures in TypeScript is to use *switch case* expressions.
+Once TypeScript has deduced that a variable is of union type and that each type in the union contains a particular literal attribute (in our case `category`),
+we can use that as a type identifier.
 We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block:
 
-![vscode showing part. and then attributes](../../images/8/64new.png)
+![webstorm showing handheld. and then attributes](../../images/8/64new.png)
 
 In the above example, TypeScript knows that a `handheld` has the type *Handheld*
-and it can then infer that `handheld` is of either type *HandheldBasic*, *HandheldDual* or *HandheldVirtual* based on the value of the attribute *kind*.
+and it can then infer that `handheld` is of either type *HandheldBasic*, *HandheldDual* or *HandheldVirtual* based on the value of the attribute `category`.
 
 The specific technique of type narrowing where a union type is narrowed based on literal attribute value is called
-[discriminated union](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions).
+[**discriminated union**](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions).
 
-Notice that the narrowing can naturally be also done with `if` clause.
+> Notice that the narrowing can naturally be also done via an `if` statement.
 We could eg. do the following:
+>
+> ```js
+>   companyHandhleds.forEach(handheld => {
+>     if (hahdheld.category === 'virtual') {
+>       console.log('see the following:', handheld.agreement)
+>     }
+> 
+>     // can not refer to handheld.agreement here!
+>   });
+> ```
 
-```js
-  courseParts.forEach(part => {
-    if (part.kind === 'virtual') {
-      console.log('see the following:', part.agreement)
-    }
+#### Adding new types
 
-    // can not refer to part.agreement here!
-  });
-```
-
-What about adding new types?
+*What about adding new types?*
 If we were to add a new handheld, wouldn't it be nice to know if we had already implemented handling that type in our code?
 In the example above, a new type would go to the `default` block and nothing would get printed for a new type.
 Sometimes this is wholly acceptable.
 For instance, if you wanted to handle only specific (but not all) cases of a type union, having a default is fine.
-Nonetheless, it is recommended to handle all variations separately in most cases.
+***Nonetheless, you should handle all variations separately in most cases.***
 
 With TypeScript, we can use a method called [**exhaustive type checking**](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking).
 Its basic principle is that if we encounter an unexpected value,
@@ -581,7 +587,7 @@ If we now were to replace the contents of our `default` block to:
 
 ```js
 default:
-  return assertNever(part);
+  return assertNever(handheld);
 ```
 
 and remove the case that handles the type `HandheldVirtual`, we would see the following error:
@@ -616,18 +622,18 @@ interface HandheldBase {
 
 interface HandheldBasic extends HandheldBase {
   description: string;
-  kind: "basic"
+  category: "basic"
 }
 
 interface HandheldDual extends HandheldBase {
   numberOfScreens: number;
-  kind: "dual"
+  category: "dual"
 }
 
 interface HandheldVirtual extends HandheldBase {
   description: string;
   agreement: string;
-  kind: "vr"
+  category: "vr"
 }
 
 type Handheld = HandheldBasic | HandheldDual | HandheldVirtual;
@@ -637,43 +643,44 @@ const companyHandhelds: Handheld[] = [
     name: "Game Boy",
     gameCount: 1046,
     description: "AA Battery monster, here we come!",
-    kind: "basic" // highlight-line
+    category: "basic" // highlight-line
   },
   {
     name: "DS",
     gameCount: 1791,
     numberOfScreens: 2,
-    kind: "dual" // highlight-line
+    category: "dual" // highlight-line
   },
   {
     name: "Game Boy Advance",
     gameCount: 1538,
     description: "The SP version was OP",
-    kind: "basic" // highlight-line
+    category: "basic" // highlight-line
   },
   {
     name: "Virtual Boy",
     gameCount: 22,
     description: "All Hail The Greatest system everrrrr",
     agreement: "http://sebastianmihai.com/virtual-boy-warnings.html"
-    kind: "vr" // highlight-line
+    category: "vr" // highlight-line
   },
   {
     name: "Game Boy Color",
     gameCount: 916,
     description: "Game Boy Color...Get Into It!",
-    kind: "basic",
+    category: "basic",
   },
 ];
 ```
 
-Now we know that both interfaces `HandheldBasic` and `HandheldVirtual` share not only the base attributes but also an attribute called `description`, which is a string in both interfaces.
+Now we know that both interfaces `HandheldBasic` and `HandheldVirtual` share not only the base attributes but also an attribute called `description`, which is a `string` in both interfaces.
 
 Your first task is to declare a new interface that includes the `description` attribute and extends the `HandheldBase` interface.
 Then modify the code so that you can remove the `description` attribute from both `HandheldBasic` and `HandheldVirtual` without getting any errors.
 
 Then create a component `System` that renders all attributes of each type of Handheld.
-Use a switch case-based exhaustive type checking! Use the new component in component `Content`.
+**Use switch case-based exhaustive type checking!**
+Use the new component in component `Content`.
 
 Lastly, add another handheld interface with the following attributes:
 `name`, `gameCount`, `description` and `colors`, the latter being a string array.
@@ -685,14 +692,14 @@ The objects of this type look like the following:
   gameCount: 1538,
   description: "A way better Game Boy Advance System",
   colors: ["Platinum Silver", "Cobalt Blue", "Onyx"],
-  kind: "special"
+  category: "special"
 }
 ```
 
 Then add that interface to the type union `Handheld` and add corresponding data to the `companyHandhelds` variable.
 Now, if you have not modified your `Content` component correctly, you should get an error,
 because you have not yet added support for the fourth handheld type.
-Do the necessary changes to `Content`, so that all attributes for the new handheld also get rendered and that the compiler doesn't produce any errors.
+Implement the necessary changes to `Content`, so that all attributes for the new handheld also get rendered and that the compiler doesn't produce any errors.
 
 The result might look like the following:
 
