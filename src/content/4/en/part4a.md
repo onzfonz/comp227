@@ -450,7 +450,7 @@ Now the exported *thing* (in this case a router object) is assigned to a variabl
 
 ### Exercises 4.1-4.2
 
-In the exercises for this part, we will be building a **Streaming Watchlist application**,
+In the exercises for this part, we will be ***building the backend*** for a **Streaming Watchlist application**,
 which allows users to save information about interesting shows they have stumbled across on the internet.
 For each listed show we will save the title, genre, Streaming Service URL, and amount of upvotes from users of the application.
 From here on, I will refer to a streaming show as a **show**.
