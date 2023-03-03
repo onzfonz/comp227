@@ -171,7 +171,7 @@ Once you're ready, click the **Create fork** button at the bottom.
 ![create fork options](https://i.imgur.com/ZYOJCHc.png)
 
 Notice that your fork will be out of your own GitHub handle and not be from 227.
-Remember that when you make changes to your repo, if you'd like to deploy thme,
+Remember that when you make changes to your repo, if you'd like to deploy them,
 you'll only ever to your fork and sync the changes once everything is connected.
 
 ![showing sync fork on GitHub](https://i.imgur.com/xlnsalk.png)
