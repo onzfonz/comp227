@@ -443,7 +443,7 @@ to fetch a country's details in a `useEffect` hook within your custom hook.
 Notice that in this exercise, you must enter useEffect's
 [second parameter](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect)
 array to control when the effect function is executed.
-Review [this section of part 2](/en/part2/adding_styles_to_react_app#couple-of-important-remarks) for more info on how the second parameter could be used.
+Review [this section of part 2](/part2/adding_styles_to_react_app#couple-of-important-remarks) for more info on how the second parameter could be used.
 
 #### 7.8: ultimate hooks
 

@@ -565,7 +565,7 @@ In *types.ts*, `DiaryEntry` specified `weather` to be of type `Weather`, but
 the TypeScript compiler in *diaryService.ts* inferred its type to be `string`.
 
 We can fix the problem by doing a [type assertion](http://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions).
-As we already [mentioned](/en/part8/first_steps_with_type_script#type-assertion) ***type assertions should be done only if we are certain we know what we are doing!***
+As we already [mentioned](/part8/first_steps_with_type_script#type-assertion) ***type assertions should be done only if we are certain we know what we are doing!***
 
 If we assert the type of the variable `diaryData` to be `DiaryEntry` with the keyword `as`, everything should work:
 
@@ -852,7 +852,7 @@ The response is what we expect it to be:
 
 ### Exercises 8.10-8.11
 
-Similarly to Tails' flight service, we do not use a real database in our app
+Similarly to Tails' flight service, Patientia will not use a real database
 but instead use hardcoded data that is in the files [diagnoses.ts](https://github.com/comp227/misc/blob/main/diagnoses.ts)
 and [patients.ts](https://github.com/comp227/misc/blob/main/patients.ts).
 Get the files and store those in a directory called *data* in your project.
@@ -860,7 +860,7 @@ All data modification can be done in runtime memory, so during this part, it is 
 
 #### 8.10: Patientia backend, step3
 
-Create a type `Diagnose` and use it to create endpoint ***/api/diagnoses*** for fetching all diagnoses with HTTP GET.
+Create a type `Diagnosis` and use it to create endpoint ***/api/diagnoses*** for fetching all diagnoses with HTTP GET.
 
 Structure your code properly by using meaningfully-named directories and files.
 

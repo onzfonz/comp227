@@ -9,18 +9,19 @@ lang: en
 
 ### Working with an existing codebase
 
-When diving into an existing codebase for the first time, it is good to get an overall view of the conventions and structure of the project.
-You can start your research by reading the *README.md* in the root of the repository.
+When you dive into an existing codebase for the first time, you should seek an overview of its conventions and structures.
+You can start this research by reading the *README.md* in the root of the repository.
 Usually, the README contains a brief description of the application and the requirements for using it, as well as how to start it for development.
-If the README is not available or someone has "saved time" and left it as a stub, you can take a peek at the *package.json*.
-It is always a good idea to start the application and click around to verify you have a functional development environment.
+If the README is not available or poorly written, you can take a peek at the *package.json*.
+You also should start the application and click around to verify you have a functional development environment.
 
 You can also browse the folder structure to get some insight into the application's functionality and/or the architecture used.
 These are not always clear, and the developers might have chosen a way to organize code that is not familiar to you.
-The [sample project](https://github.com/comp227/patientia) used in the rest of this part is organized, feature-wise.
+The patientia frontend you cloned [previously](/part8/typing_an_express_app#88-patientia-backend-step1) will be used in the rest of this part and is organized, feature-wise.
 You can see what pages the application has, and some general components, e.g. modals and state.
 Keep in mind that the features may have different scopes.
-For example, modals are visible UI-level components whereas the state is comparable to business logic and keeps the data organized under the hood for the rest of the app to use.
+For example, ***modals*** are visible UI-level components
+whereas the ***state*** is comparable to business logic and keeps the data organized under the hood for the rest of the app to use.
 
 TypeScript provides types for what kind of data structures, functions, components, and state to expect.
 You can try looking for *types.ts* or something similar to get started.
@@ -28,7 +29,7 @@ VSCode is a big help and simply highlighting variables and parameters can provid
 All this naturally depends on how types are used in the project.
 
 If the project has unit, integration or end-to-end tests, reading those is most likely beneficial.
-Test cases are your most important tool when refactoring or adding new features to the application.
+*Test cases are your most important tool when refactoring or adding new features to the application.*
 You want to make sure not to break any existing features when hammering around the code.
 TypeScript can also give you guidance with argument and return types when changing the code.
 
@@ -42,10 +43,10 @@ You will most likely read far more code than you are going to produce throughout
 
 ### Patientia frontend
 
-It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/en/part8/typing_an_express_app).
-We will actually also need some new features to the backend for finishing the app.
+It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/part8/typing_an_express_app#88-patientia-backend-step1).
+We will also add some new features to the backend for finishing the app.
 
-Before diving into the code, let us start both the frontend and the backend.
+Before diving into the code, let's start both the frontend and the backend.
 
 If all goes well, you should see a patient listing page.
 It fetches a list of patients from our backend, and renders it to the screen as a simple table.
@@ -54,30 +55,33 @@ As we are using mock data instead of a database, the data will not persist - clo
 UI design has not been a strong point of the creators, so let's disregard the UI for now.
 
 After verifying that everything works, we can start studying the code.
-All the interesting stuff resides in the *src* folder.
+All of the interesting stuff resides in the *src* folder.
 For your convenience, there is already a *types.ts* file for basic types used in the app, which you will have to extend or refactor in the exercises.
 
 In principle, we could use the same types for both backend and frontend,
-but usually, the frontend has different data structures and use cases for the data, which causes the types to be different.
+but usually, *the frontend has different data structures and use cases for the data*, which causes the types to be different.
 For example, the frontend has a state and may want to keep data in objects or maps whereas the backend uses an array.
 The frontend might also not need all the fields of a data object saved in the backend, and it may need to add some new fields to use for rendering.
 
 The folder structure looks as follows:
 
-![vscode folder structure for patientia](../../images/8/34brandnew.png)
+![vscode folder structure for patientia](../../images/8/34new.png)
 
-Besides the component `App` a directory for services, there are currently three main components:
+Besides the component `App`, there are currently three main components:
 `AddPatientModal` and `PatientListPage` which are both defined in a directory, and a component `HealthRatingBar` defined in a file.
-If a component has some subcomponents not used elsewhere in the app, it might be a good idea to define the component and its subcomponents in a directory.
-For example now the AddPatientModal is defined in the file *components/AddPatientModal/index.tsx* and its subcomponent `AddPatientForm` in its own file under the same directory.
+If a component has some subcomponents not used elsewhere in the app, some suggest defining that component and its subcomponents in a directory.
+For example, the *src/AddPatientModal* folder currently houses two components:
+
+- `AddPatientModal` defined in *index.tsx*
+- `AddPatientForm` a subcomponent of `AddPatientModal` defined in *AddPatientForm.tsx*.
 
 There is nothing very surprising in the code.
-The state and communication with the backend are implemented with `useState` hook and Axios, similar to the tasks app in the previous section.
-[Material UI](http://localhost:8000/en/part7/more_about_styles#material-ui) is used to style the app and the navigation structure is implemented with
-[React Router](http://localhost:8000/en/part7/react_router),
+The state and communication with the backend are implemented with the `useState` hook and Axios, similar to the tasks app in the previous section.
+[Material UI](/part7/more_about_styles#material-ui) is used to style the app and the navigation structure is implemented with
+[React Router](/part7/react_router),
 both familiar to us from part 7 of the course.
 
-From typing point of view, there are a couple of interesting things.
+From the typing point of view, there are a couple of interesting things.
 Component `App` passes the function `setPatients` as a prop to the component `PatientListPage`:
 
 ```js
@@ -106,7 +110,7 @@ const App = () => {
 };
 ```
 
-To keep the TypeScript compiler happy, the props should be typed as follows:
+To keep the TypeScript compiler happy, the props are typed as follows in *src/PatientListPage/index.tsx*:
 
 ```js
 interface Props {
@@ -124,12 +128,13 @@ We can see the type in the editor when we hover over the function:
 
 ![vscode showing Patient array as type for setPatients](../../images/8/73new.png)
 
-The [React TypeScript cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples)
-has a pretty nice list of typical prop types, where we can seek for help if finding the proper typing for props is not obvious.
+> The [React TypeScript cheatsheet's code blocks for `AppProps`](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples)
+have some nice lists for typical prop types.
+Use that cheatsheet later to help find the correct types for props that are not obvious.
 
-`PatientListPage` passes four props to the component `AddPatientModal`.
+`PatientListPage` passes four props to the component `AddPatientModal`
 Two of these props are functions.
-Let us have a look how these are typed:
+Here's the relevant code.
 
 ```js
 const PatientListPage = ({ patients, setPatients } : Props ) => {
@@ -163,7 +168,8 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
 };
 ```
 
-Types look like the following:
+Let us have a look how these are typed.
+The types, in *AddPatientModal/index.tsx* look like this:
 
 ```js
 interface Props {
@@ -192,10 +198,10 @@ So again the function type is written with the arrow syntax:
 (values: PatientFormValues) => Promise<void>
 ```
 
-The return value of a `async` function is a
+The return value of an `async` function is a
 [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function#return_value)
 with the value that the function returns.
-Our function does not return anything so the proper return type is just `Promise<void>`.
+Our function does not return anything so the correct return type is just `Promise<void>`.
 
 </div>
 
@@ -224,11 +230,11 @@ export interface Entry {
 export interface Patient {
   id: string;
   name: string;
-  ssn: string;
-  occupation: string;
-  gender: Gender;
   dateOfBirth: string;
-  entries: Entry[] // highlight-line
+  ssn: string;
+  gender: Gender;
+  occupation: string;
+  entries: Entry[]; // highlight-line
 }
 
 export type NonSensitivePatient = Omit<Patient, 'ssn' | 'entries'>;  // highlight-line
@@ -248,7 +254,7 @@ Fetch the data from the endpoint created in the previous exercise.
 
 You may use [MaterialUI](https://material-ui.com/) for the new components but that is up to you since our main focus now is TypeScript.
 
-You might want to have a look at [part 7](/en/part7/react_router) if you don't yet have a grasp on how the [React Router](https://reactrouter.com/en/main/start/tutorial) works.
+You might want to have a look at [part 7](/part7/react_router) if you don't yet have a grasp on how the [React Router](https://reactrouter.com/en/main/start/tutorial) works.
 
 The result could look like this:
 
@@ -262,14 +268,14 @@ The example uses [Material UI Icons](https://mui.com/components/material-icons/)
 
 ### Full entries
 
-In [exercise 8.10](/en/part8/typing_an_express_app#exercises-8-10-8-11)
+In [exercise 8.10](/part8/typing_an_express_app#exercises-8-10-8-11)
 we implemented an endpoint for fetching information about various diagnoses, but we are still not using that endpoint at all.
 Since we now have a page for viewing a patient's information, it would be nice to expand our data a bit.
 Let's add an `Entry` field to our patient data so that a patient's data contains their medical entries, including possible diagnoses.
 
-Let's ditch our old patient seed data from the backend and start using [this expanded format](https://github.com/comp227/misc/blob/master/patients-full.ts).
+Let's ditch our old patient seed data from the backend and start using [this expanded format](https://github.com/comp227/misc/blob/main/patients-full.ts).
 
-Let us now create a proper `Entry` type based on the data we have.
+Let's also start fleshing out our empty `Entry` in *types.ts* based on the data we have.
 
 If we take a closer look at the data, we can see that the entries are quite different from one another.
 For example, let's take a look at the first two entries:
@@ -279,13 +285,13 @@ For example, let's take a look at the first two entries:
   id: 'd811e46d-70b3-4d90-b090-4535c7cf8fb1',
   date: '2015-01-02',
   type: 'Hospital',
-  specialist: 'MD House',
+  specialist: 'Eggman',
   diagnosisCodes: ['S62.5'],
   description:
     "Healing time appr. 2 weeks. patient doesn't remember how he got the injury.",
   discharge: {
     date: '2015-01-16',
-    criteria: 'Thumb has healed.',
+    criteria: 'Hand has healed.',
   }
 }
 ...
@@ -293,12 +299,11 @@ For example, let's take a look at the first two entries:
   id: 'fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62',
   date: '2019-08-05',
   type: 'OccupationalHealthcare',
-  specialist: 'MD House',
-  employerName: 'HyPD',
+  specialist: 'Eggman',
+  employerName: 'SNPP',
   diagnosisCodes: ['Z57.1', 'Z74.3', 'M51.2'],
   description:
-    'Patient mistakenly found himself in a nuclear plant waste site without protection gear.
-Very minor radiation poisoning. ',
+    'Patient mistakenly found himself in a nuclear plant waste site without protection gear. Very minor radiation poisoning. ',
   sickLeave: {
     startDate: '2019-08-05',
     endDate: '2019-08-28'
@@ -309,7 +314,12 @@ Very minor radiation poisoning. ',
 Immediately, we can see that while the first few fields are the same, the first entry has a `discharge` field and the second entry has `employerName` and `sickLeave` fields.
 All the entries seem to have some fields in common, but some fields are entry-specific.
 
-When looking at the `type`, we can see that there are three kinds of entries: `OccupationalHealthcare`, `Hospital` and `HealthCheck`.
+When looking at the `type`, we can see that there are three kinds of entries:
+
+1. `OccupationalHealthcare`
+2. `Hospital`
+3. `HealthCheck`
+
 This indicates we need three separate types.
 Since they all have some fields in common, we might just want to create a base entry interface that we can extend with the different fields in each type.
 
@@ -332,7 +342,7 @@ interface BaseEntry {
 ```
 
 If we want to finetune it a bit further, since we already have a `Diagnosis` type defined in the backend,
-we might just want to refer to the code field of the `Diagnosis` type directly in case its type ever changes.
+we may want to refer to the code field of the `Diagnosis` type directly in case its type ever changes.
 We can do that like so:
 
 ```js
@@ -345,9 +355,10 @@ interface BaseEntry {
 }
 ```
 
-As was mentioned [earlier in this part](/en/part8/first_steps_with_type_script/#the-alternative-array-syntax),
-we could define an array with the syntax `Array<Type>` instead of defining it `Type[]`.
-In this particular case writing `Diagnosis['code'][]` starts to look a bit strange so we will decide to use the alternative syntax (that is also recommended by the ESlint rule [array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)):
+We could define an array with the syntax `Array<Type>` instead of defining it `Type[]`
+(as mentioned [earlier](/part8/first_steps_with_type_script/#the-alternative-array-syntax).
+In this particular case, writing `Diagnosis['code'][]` starts to look a bit strange so we will decide to use the alternative syntax
+(that is also recommended by the ESlint rule [array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)):
 
 ```js
 interface BaseEntry {
@@ -359,7 +370,7 @@ interface BaseEntry {
 }
 ```
 
-Now that we have the `BaseEntry` defined, we can start creating the extended entry types we will actually be using.
+Now that we have the `BaseEntry` defined in *types.ts*, we can start creating the extended entry types we will actually be using.
 Let's start by creating the `HealthCheckEntry` type.
 
 Entries of type `HealthCheck` contain the field `HealthCheckRating`, which is an integer from 0 to 3, zero meaning `Healthy` and 3 meaning `CriticalRisk`.
@@ -400,8 +411,8 @@ Omit<Entry, 'id'>
 ```
 
 but [it wouldn't work as we might expect](https://github.com/microsoft/TypeScript/issues/42680).
-In fact, the resulting type would only contain the common properties, but not the ones they don't share.
-A possible workaround is to define a special Omit-like function to deal with such situations:
+In fact, the *resulting type would only contain the common properties, **but not the ones they don't share***.
+A possible workaround is to define a special `Omit`-like function to deal with such situations:
 
 ```ts
 // Define special omit for unions
@@ -473,7 +484,7 @@ Your next task is to add endpoint ***/api/patients/:id/entries*** to your backen
 
 Remember that we have different kinds of entries in our app, so our backend should support all those types and check that at least all required fields are given for each type.
 
-In this exercise you quite likely need to remember [this trick](/en/part8/grande_finale_patientia#omit-with-unions).
+In this exercise you quite likely need to remember [this trick](/part8/grande_finale_patientia#omit-with-unions).
 
 You may assume that the diagnostic codes are sent in a correct form and use eg. the following kind of parser to extract those from the request body:
 
@@ -521,7 +532,7 @@ Your improved form might look something like this:
 
 Diagnosis codes are now set with Material UI
 [multiple select](https://mui.com/material-ui/react-select/#multiple-select) and dates with
-[Input](https://mui.com/material-ui/api/input/) elements with type
-[date](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
+[a Native Picker](https://mui.com/x/react-date-pickers/getting-started/#NativePickers.tsx) or the HTML
+[`input`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date) tag.
 
 </div>

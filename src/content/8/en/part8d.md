@@ -905,7 +905,7 @@ It does not quite work, there is an Eslint error complaining about implicit any:
 ![vscode error event implicitly has any type](../../images/8/68new.png)
 
 TypeScript compiler has now no clue what is the type of the parameter,
-so that is why the type is the infamous implicit any that we want to [avoid](/en/part8/first_steps_with_type_script#the-horrors-of-any) at all costs.
+so that is why the type is the infamous implicit any that we want to [avoid](/part8/first_steps_with_type_script#the-horrors-of-any) at all costs.
 The React TypeScript cheatsheet comes again to rescue, the chapter about
 [forms and events](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events) reveals that the right type of event handler is `React.SyntheticEvent`.
 
@@ -1011,7 +1011,7 @@ The code works, and we see no large errors from eslint or the compiler.
 However, ***giving a type parameter to `axios.get` is potentially dangerous***.
 The *request body can be **anything***, and when giving a type parameter we are essentially just telling to TypeScript compiler to trust us that the data has type `Task[]`.
 
-So our code is essentially as safe as it would be if a [type assertion](/en/part8/first_steps_with_type_script#type-assertion) were used:
+So our code is essentially as safe as it would be if a [type assertion](/part8/first_steps_with_type_script#type-assertion) were used:
 
 ```js
   useEffect(() => {
@@ -1026,7 +1026,7 @@ Since the TypeScript types do not even exist in runtime, **our code does not *sa
 
 Type casting `axios.get` might be ok if we are *absolutely sure* that the backend behaves correctly and always sends the right data.
 If we want to build a robust system, we should prepare for surprises and parse the response data in the frontend
-similarly to what we did [in the previous section](/en/part9/typing_an_express_app#proofing-requests) for the requests to the backend.
+similarly to what we did [in the previous section](/part9/typing_an_express_app#proofing-requests) for the requests to the backend.
 
 Let's finish our app's functionality by integrating axios into our task creation:
 
@@ -1174,7 +1174,7 @@ TypeScript documentation [recommends using interfaces](https://www.typescriptlan
 
 ### Exercises 8.16-8.19
 
-Let us now build a frontend for the Tails' flight diaries that was developed in [the previous section](/en/part8/typing_an_express_app).
+Let us now build a frontend for the Tails' flight diaries that was developed in [the previous section](/part8/typing_an_express_app).
 The source code of the backend can be found in [this GitHub repository](https://github.com/comp227/flight-diary).
 
 #### Exercise 8.16
@@ -1212,7 +1212,7 @@ We must improve this situation.
 
 Modify the input form so that the date is set with an HTML [`date`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date) input element,
 and the weather and visibility are set with HTML [radio buttons](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio).
-We have already used radio buttons in [part 6](/en/part6/many_reducers#store-with-complex-state), that material may or may not be useful...
+We have already used radio buttons in [part 6](/part6/many_reducers#store-with-complex-state), that material may or may not be useful...
 
 Your app should all the time stay well typed and there should not be any Eslint errors and no Eslint rules should be ignored.
 
