@@ -1326,7 +1326,7 @@ const App = () => {
 export default App
 ```
 
-The content of the file *index.js* is the same as in previous exercises.
+The contents of the file *index.js* is the same as in previous exercises.
 
 Find out how to generate random numbers in JavaScript, eg.
 via a search engine or on [Mozilla Developer Network](https://developer.mozilla.org).
