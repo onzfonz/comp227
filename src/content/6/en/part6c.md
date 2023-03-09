@@ -610,7 +610,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-The current state of the code for the application can be found on [GitHub](https://github.com/comp127/redux-tasks/tree/part6-4) in the branch *part6-4*.
+The current state of the code for the application can be found on [GitHub](https://github.com/comp227/redux-tasks/tree/part6-4) in the branch *part6-4*.
 
 Redux Toolkit offers a multitude of tools to simplify asynchronous state management.
 Suitable tools for this use case are for example the [createAsyncThunk](https://redux-toolkit.js.org/api/createAsyncThunk) function

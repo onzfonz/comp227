@@ -232,6 +232,8 @@ Notice that we use backticks in template strings instead of quotation marks used
 Individual tasks stored in the json-server backend can be modified in two different ways by making HTTP requests to the task's unique URL.
 We can either ***replace*** the entire task with an HTTP PUT request or only change some of the task's properties with an HTTP PATCH request.
 
+#### the `toggleImportanceOf` code
+
 The final form of the event handler function is the following:
 
 ```js

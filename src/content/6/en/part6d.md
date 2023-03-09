@@ -49,7 +49,7 @@ const App = () => {
 export default App
 ```
 
-The initial code is on GitHub in the repository [https://github.com/comp127/query-tasks](https://github.com/comp127/query-tasks/tree/part6-0) in branch *part6-0*.
+The initial code is on GitHub in the repository [https://github.com/comp227/query-tasks](https://github.com/comp227/query-tasks/tree/part6-0) in branch *part6-0*.
 
 ### Managing data on the server with the React Query library
 
@@ -162,7 +162,7 @@ const App = () => {
 }
 ```
 
-The current code for the application is in [GitHub](https://github.com/comp127/query-tasks/tree/part6-1) in the branch *part6-1*.
+The current code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-1) in the branch *part6-1*.
 
 ### Synchronizing data to the server using React Query
 
@@ -290,7 +290,7 @@ const App = () => {
 So again, a mutation was created that invalidated the query `tasks` so that the updated task is rendered correctly.
 Using mutation is easy, the method *mutate* receives a task as a parameter, the importance of which has been changed to the negation of the old value.
 
-The current code for the application is in [GitHub](https://github.com/comp127/query-tasks/tree/part6-2) in the branch *part6-2*.
+The current code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-2) in the branch *part6-2*.
 
 ### Optimizing the performance
 
@@ -369,7 +369,7 @@ If you put a console.log statement to the code, you can see from browser console
 The rule of thumb is that rerendering happens at least whenever there is a need for it, i.e. when the state of the query changes.
 You can read more about it e.g. [here](https://tkdodo.eu/blog/react-query-render-optimizations).
 
-The code for the application is in [GitHub](https://github.com/comp127/query-tasks/tree/part6-3) in the branch *part6-3*.
+The code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-3) in the branch *part6-3*.
 
 React Query is a versatile library that, based on what we have already seen, simplifies the application.
 Does React Query make more complex state management solutions such as Redux unnecessary? No.
@@ -392,7 +392,7 @@ but also some solution for how the rest of the frontend state (e.g. the state of
 ### Exercises 6.20-6.22
 
 Now let's make a new version of the joke application that uses the React Query library.
-Take [this project](https://github.com/comp127/query-jokes) as your starting point.
+Take [this project](https://github.com/comp227/query-jokes) as your starting point.
 The project has a ready-installed JSON Server, the operation of which has been slightly modified.
 Start the server with `npm run server`.
 
@@ -553,7 +553,7 @@ counterDispatch({ type: "INC" })
 ```
 
 The current code for the application is in the repository
-[https://github.com/comp127/hook-counter](https://github.com/comp127/hook-counter/tree/part6-1) in the branch *part6-1*.
+[https://github.com/comp227/hook-counter](https://github.com/comp227/hook-counter/tree/part6-1) in the branch *part6-1*.
 
 ### Using context for passing the state to components
 
@@ -661,7 +661,7 @@ const Button = ({ type, label }) => {
 }
 ```
 
-The current code for the application is in [GitHub](https://github.com/comp127/hook-counter/tree/part6-2) in the branch *part6-2*.
+The current code for the application is in [GitHub](https://github.com/comp227/hook-counter/tree/part6-2) in the branch *part6-2*.
 
 ### Defining the counter context in a separate file
 
@@ -825,7 +825,7 @@ The solution is quite elegant.
 The entire state of the application, i.e. the value of the counter and the code for managing it, is now isolated in the file `CounterContext`,
 which provides components with well-named and easy-to-use auxiliary functions for managing the state.
 
-The final code for the application is in [GitHub](https://github.com/comp127/hook-counter/tree/part6-3) in the branch *part6-3*.
+The final code for the application is in [GitHub](https://github.com/comp227/hook-counter/tree/part6-3) in the branch *part6-3*.
 
 As a technical detail, notice that the helper functions `useCounterValue` and `useCounterDispatch` are defined as
 [custom hooks](https://reactjs.org/docs/hooks-custom.html),

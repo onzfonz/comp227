@@ -400,7 +400,7 @@ There is a slight cosmetic flaw in our application.
 Even though the filter is set to *`ALL`* by default, the associated radio button is not selected.
 Naturally, this issue can be fixed, but since this is an unpleasant but ultimately harmless bug we will save the fix for later.
 
-The current version of the application can be found on [GitHub](https://github.com/comp127/redux-tasks/tree/part6-2), branch *part6-2*.
+The current version of the application can be found on [GitHub](https://github.com/comp227/redux-tasks/tree/part6-2), branch *part6-2*.
 
 </div>
 
