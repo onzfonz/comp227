@@ -36,7 +36,11 @@ We can access the backend from a browser and from postman without any problems.
 
 ### Same origin policy and CORS
 
-The issue lies with a thing called `same origin policy`. A URL's origin is defined by the combination of protocol (AKA scheme), hostname, and port.
+The issue lies with a concept called **same origin policy**. A URL's origin is defined by the combination of three things:
+
+- protocol (AKA scheme)
+- hostname
+- port
 
 ```text
 http://example.com:80/index.html
@@ -46,18 +50,26 @@ host: example.com
 port: 80
 ```
 
-When you visit a website (i.e <http://catwebsites.com>), the browser issues a request to the server on which the webiste (catwebsites.com) is hosted.
-The response sent by the server is an HTML file that may contain one or more references to external assets/resources hosted
-either on the same server that *catwebsites.com* is hosted on or a different website.
-When the browser sees reference(s) to a URL in the source HTML, it issues a request.
-If the request is issued using the URL that the source HTML was fetched from, then the browser processes the response without any issues.
-However, if the resource is fetched using a URL that doesn't share the same origin(scheme, host, port) as the source HTML,
-the browser will have to check the `Access-Control-Allow-origin` response header.
-If it contains `*` or the URL of the source HTML, the browser will process the response, otherwise the browser will refuse to process it and throw an error.
-  
-The **same-origin policy** is a security mechanism implemented by browsers in order to prevent session hijacking among other security vulnerabilities.
+When you visit a website (i.e <https://homestarrunner.com/>), the browser issues a ***request to the server*** on which the website (homestarrunner.com) is hosted.
+The *response sent by the server* is an HTML file that may contain one or more references to external assets/resources hosted
+either on:
 
-In order to enable legitimate cross-origin requests (requests to URLs that don't share the same origin),
+- the same server that *homestarrunner.com* is hosted on
+- a different website.
+
+When the browser sees reference(s) to a URL in the source HTML, *it issues a request*.
+If the request is issued using the URL that the source HTML was fetched from, then the browser processes the response without any issues. 😎
+
+However, *if the resource is fetched **using a URL that doesn't share the same origin(scheme, host, port)** as the source HTML*,
+the browser will have to check the `Access-Control-Allow-origin` response header. 😔
+
+If it contains a `*` or the URL of the source HTML, the browser will process the response. 😎
+
+Otherwise the browser will refuse to process it and throw an error. 😭
+  
+The **same-origin policy** is a security mechanism implemented by browsers to prevent session hijacking among other security vulnerabilities.
+
+To enable legitimate cross-origin requests (requests to URLs that don't share the same origin),
 W3C came up with a mechanism called <strong>CORS</strong>(Cross-Origin Resource Sharing).
 According to [Wikipedia](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing):
 
@@ -68,7 +80,7 @@ According to [Wikipedia](https://en.wikipedia.org/wiki/Cross-origin_resource_sha
 
 The problem is that, by default, the JavaScript code of an application that runs in a browser can only communicate with a server in the same
 [origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
-Because our server is in localhost port 3001, while our frontend is in localhost port 3000, they do not have the same origin.
+*Because our server is in localhost port `3001`, while our frontend is in localhost port `3000`, **they do not have the same origin***.
 
 Keep in mind, that [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) and CORS are not specific to React or Node.
 They are universal principles regarding the safe operation of web applications.
