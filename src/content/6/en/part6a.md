@@ -49,7 +49,8 @@ npm install redux
 
 #### Redux's Store and Actions
 
-Like Flux, the state in Redux is stored in a [**store**](https://redux.js.org/basics/store).
+Like Flux, the state in Redux is housed in a [**store**](https://redux.js.org/basics/store).
+You can think of the store as like a mini-database that redux uses to house information.
 
 Unlike Flux, the whole state of the application is stored in ***one*** JavaScript object in the store.
 Because our application only needs the value of the counter, we will save it straight to the store.
@@ -352,7 +353,7 @@ const App = () => {
       <ul>
         {store.getState().map(task=>
           <li key={task.id}>
-            {task.content} <strong>{task.important ? ' - important' : ''}</strong>
+            {task.content} <strong>{task.important ? '- important' : ''}</strong>
           </li>
         )}
         </ul>
@@ -824,7 +825,7 @@ const App = () => {
             key={task.id} 
             onClick={() => toggleImportance(task.id)} // highlight-line
           >
-            {task.content} <strong>{task.important ? ' - important' : ''}</strong>
+            {task.content} <strong>{task.important ? '- important' : ''}</strong>
           </li>
         )}
       </ul>
@@ -1067,7 +1068,7 @@ const App = () => {
             key={task.id} 
             onClick={() => toggleImportance(task.id)}
           >
-            {task.content} <strong>{task.important ? 'important' : ''}</strong>
+            {task.content} <strong>{task.important ? '- important' : ''}</strong>
           </li>
         )}
       </ul>
@@ -1188,7 +1189,7 @@ const Task = ({ task, handleClick }) => {
   return(
     <li onClick={handleClick}>
       {task.content} 
-      <strong> {task.important ? 'important' : ''}</strong>
+      <strong> {task.important ? '- important' : ''}</strong>
     </li>
   )
 }
