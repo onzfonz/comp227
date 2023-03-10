@@ -31,12 +31,12 @@ module.exports = {
       c: 'User administration',
       d: 'Token authentication',
     },
-    // '5': {
-    //   a: 'Login in frontend',
-    //   b: 'props.children and proptypes',
-    //   c: 'Testing React apps',
-    //   d: 'End to end testing',
-    // },
+    '5': {
+      a: 'Login in frontend',
+      b: 'props.children and proptypes',
+      c: 'Testing React apps',
+      d: 'End to end testing',
+    },
     // '6': {
     //   a: 'Flux-architecture and Redux',
     //   b: 'Many reducers',
