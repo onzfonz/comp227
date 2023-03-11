@@ -7,12 +7,12 @@ lang: en
 
 <div class="content">
 
-At the end of this part, we will look at a few more different ways to manage the state of an application.
+We will continue to look at various ways to manage an application's state.
 
-Let's continue with the task application.
+Let's continue with our task application.
 We will focus on communication with the server.
 Let's start the application from scratch.
-The first version is as follows:
+Here's version zero of our *App.js*:
 
 ```js
 const App = () => {
@@ -39,7 +39,7 @@ const App = () => {
       {tasks.map(task =>
         <li key={task.id} onClick={() => toggleImportance(task)}>
           {task.content} 
-          <strong> {task.important ? 'important' : ''}</strong>
+          <strong> {task.important ? '- important' : ''}</strong>
         </li>
       )}
     </div>
@@ -49,11 +49,11 @@ const App = () => {
 export default App
 ```
 
-The initial code is on GitHub in the repository [https://github.com/comp227/query-tasks](https://github.com/comp227/query-tasks/tree/part6-0) in branch *part6-0*.
+The [initial code is on GitHub](https://github.com/comp227/query-tasks/tree/part6-0) in branch *part6-0*.
 
 ### Managing data on the server with the React Query library
 
-We shall now use the [React Query](https://react-query-v3.tanstack.com/) library to store and manage data retrieved from the server.
+We shall now use the [***React Query***](https://react-query-v3.tanstack.com/) library to store and manage data retrieved from the server.
 
 Install the library with the command
 
@@ -80,6 +80,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 ```
 
 We can now retrieve the tasks in the `App` component.
+You should also copy over db.json from one of the other projects.
 The code expands as follows:
 
 ```js
@@ -112,29 +113,29 @@ const App = () => {
 }
 ```
 
-Retrieving data from the server is still done in the familiar way with the Axios `get` method.
+Retrieving data from the server still looks familiar as it uses Axios' `get` method.
 However, the Axios method call is now wrapped in a [query](https://react-query-v3.tanstack.com/guides/queries)
-formed with the [useQuery](https://react-query-v3.tanstack.com/reference/useQuery) function.
-The first parameter of the function call is a string `tasks` which acts as a [key](https://react-query-v3.tanstack.com/guides/query-keys) to the query defined, i.e. the list of tasks.
+formed with the [`useQuery`](https://react-query-v3.tanstack.com/reference/useQuery) function.
+`useQuery`'s first parameter is a string `tasks`, which acts as a [***key***](https://react-query-v3.tanstack.com/guides/query-keys) to the query defined, i.e. the list of tasks.
 
-The return value of the `useQuery` function is an object that indicates the status of the query.
-The output to the console illustrates the situation:
+The return value of the `useQuery` function is an *object that indicates the **status of the query***.
+Observe the browser's console output, which comes from our `console.log(result)` call:
 
 ![browser console output shows status object changes](../../images/6/60new.png)
 
-That is, the first time the component is rendered, the query is still in *`loading`* state, i.e. the associated HTTP request is pending.
+That is, the first time the component is rendered, the query is still in the *`loading`* state, i.e. the associated HTTP request is pending.
 At this stage, only the following is rendered:
 
 ```js
 <div>loading data...</div>
 ```
 
-However, the HTTP request is completed so quickly that even the most astute will not be able to see the text.
-When the request is completed, the component is rendered again.
+However, the HTTP request *is completed so quickly* that it's hard to ever see the text.
+**When the request is completed, the component is rendered again**.
 The query is in the state *`success`* on the second rendering, and the field `data` of the query object contains the data returned by the request,
-i.e. the list of tasks that is rendered on the screen.
+which is the task list rendered on the screen.
 
-So the application retrieves data from the server and renders it on the screen without using the React hooks `useState` and `useEffect` used in chapters 2-5 at all.
+So the code above *retrieves data from the server and renders it on the screen without using the React hooks `useState` and `useEffect`* used in chapters 2-5 at all.
 The data on the server is now entirely under the administration of the React Query library,
 and the application does not need the state defined with React's `useState` hook at all!
 
@@ -162,15 +163,15 @@ const App = () => {
 }
 ```
 
-The current code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-1) in the branch *part6-1*.
+The current code for the application is on [GitHub](https://github.com/comp227/query-tasks/tree/part6-1) in the branch *part6-1*.
+
+This code successfully retrieves data from the server.
+The next section will focus on sending data to the server.
 
 ### Synchronizing data to the server using React Query
 
-Data is already successfully retrieved from the server.
-Next, we will make sure that the added and modified data is stored on the server.
 Let's start by adding new tasks.
-
-Let's make a function `createTask` to the file *requests.js* for saving new tasks:
+In *requests.js*, make a function `createTask` for saving new tasks:
 
 ```js
 import axios from 'axios'
@@ -205,29 +206,30 @@ const App = () => {
 }
 ```
 
-To create a new task, a [mutation](https://react-query-v3.tanstack.com/guides/mutations) is defined using the function
-[useMutation](https://react-query-v3.tanstack.com/reference/useMutation):
+Let's review what we added.
+To create a new task, a [**mutation**](https://react-query-v3.tanstack.com/guides/mutations) is needed for us to modify the server's data.  We define the mutation via
+[`useMutation`](https://react-query-v3.tanstack.com/reference/useMutation):
 
 ```js
 const newTaskMutation = useMutation(createTask)
 ```
 
-The parameter is the function we added to the file *requests.js*, which uses Axios to send a new task to the server.
+`useMutation`'s parameter is `createTask`: the function we added to *requests.js*, which merely uses Axios to send a new task to the server.
 
-The event handler `addTask` performs the mutation by calling the mutation object's function `mutate` and passing the new task as a parameter:
+The **event handler `addTask`** performs the mutation by calling the mutation object's `mutate` method and passing in the new task (*`content, important: true`*):
 
 ```js
 newTaskMutation.mutate({ content, important: true })
 ```
 
-Our solution is good.
-Except it doesn't work.
-The new task is saved on the server, but it is not updated on the screen.
+Our solution looks promising.
+However, it doesn't work completely.
+While the new task is saved on the server, *it is not updated on the screen*.
 
-In order to render a new task as well, we need to tell React Query that the old result of the query whose key is the string `tasks` should be
-[invalidated](https://react-query-v3.tanstack.com/guides/invalidations-from-mutations).
+To render a new task, we need to tell React Query to [invalidate](https://react-query-v3.tanstack.com/guides/invalidations-from-mutations) the old `tasks` from the query.
 
-Fortunately, invalidation is easy, it can be done by defining the appropriate `onSuccess` callback function to the mutation:
+We can invalidate the tasks by adding a second parameter to `useMutation`.
+That parameter is an `onSuccess` callback function that tells the react query to invalidate the `tasks` key.
 
 ```js
 import { useQuery, useMutation, useQueryClient } from 'react-query' // highlight-line
@@ -246,17 +248,17 @@ const App = () => {
 }
 ```
 
-Now that the mutation has been successfully executed, a function call is made to
+So once the mutation has been successfully executed, the function call
 
 ```js
 queryClient.invalidateQueries('tasks')
 ```
 
-This in turn causes React Query to automatically update a query with the key `tasks`, i.e. fetch the tasks from the server.
+will cause React Query to automatically fetch the `tasks` from the server.
 As a result, the application renders the up-to-date state on the server, i.e. the added task is also rendered.
 
-Let us also implement the change in the importance of tasks.
-A function for updating tasks is added to the file *requests.js*:
+Let's also implement changing the importance of tasks.
+Start by adding a function for updating tasks is added to the file *requests.js*:
 
 ```js
 export const updateTask = updatedTask =>
@@ -273,14 +275,18 @@ import { getTasks, createTask, updateTask } from './requests' // highlight-line
 const App = () => {
   // ...
 
+  // highlight-start
   const updateTaskMutation = useMutation(updateTask, {
     onSuccess: () => {
       queryClient.invalidateQueries('tasks')
     },
   })
+  // highlight-end
+
+  // ...
 
   const toggleImportance = (task) => {
-    updateTaskMutation.mutate({...task, important: !task.important })
+    updateTaskMutation.mutate({...task, important: !task.important }) // highlight-line
   }
 
   // ...
@@ -288,14 +294,13 @@ const App = () => {
 ```
 
 So again, a mutation was created that invalidated the query `tasks` so that the updated task is rendered correctly.
-Using mutation is easy, the method *mutate* receives a task as a parameter, the importance of which has been changed to the negation of the old value.
+Using mutation is easy, the method `mutate` receives a `task` as a parameter, with the `important` property toggled.
 
 The current code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-2) in the branch *part6-2*.
 
 ### Optimizing the performance
 
-The application works well, and the code is relatively simple.
-The ease of making changes to the list of tasks is particularly surprising.
+Our application works and the ease of making changes to the list of tasks is particularly surprising.
 For example, when we change the importance of a task, invalidating the query `tasks` is enough for the application data to be updated:
 
 ```js
@@ -306,53 +311,59 @@ For example, when we change the importance of a task, invalidating the query `ta
   })
 ```
 
-The consequence of this, of course, is that after the PUT request that causes the task change,
+The consequence of this, of course, is that after the PUT request that causes the task to change,
 the application makes a new GET request to retrieve the query data from the server:
 
 ![devtools network tab with highlight over 3 and tasks requests](../../images/6/61new.png)
 
 If the amount of data retrieved by the application is not large, it doesn't really matter.
-After all, from a browser-side functionality point of view, making an extra HTTP GET request doesn't really matter, but in some situations it might put a strain on the server.
+Similarly, from a client's perspective, making an extra HTTP GET request doesn't matter either,
+but in some situations it could strain the server.
 
-If necessary, it is also possible to optimize performance
+If necessary, we could optimize performance
 [by manually updating](https://react-query-v3.tanstack.com/guides/updates-from-mutation-responses) the query state maintained by React Query.
 
-The change for the mutation adding a new task is as follows:
+Here's the manual update code for the new task mutation:
 
 ```js
 const App = () => {
   const queryClient =  useQueryClient() 
 
   const newTaskMutation = useMutation(createTask, {
+    // highlight-start
     onSuccess: (newTask) => {
-      const tasks = queryClient.getQueryData('tasks') // highlight-line
-      queryClient.setQueryData('tasks', tasks.concat(newTask)) // highlight-line
+      const tasks = queryClient.getQueryData('tasks') 
+      queryClient.setQueryData('tasks', tasks.concat(newTask))
+    // highlight-end
     }
   })
   // ...
 }
 ```
 
-That is, in the `onSuccess` callback, the `queryClient` object first reads the existing `tasks` state of the query and updates it by adding a new task,
-which is obtained as a parameter of the callback function.
-The value of the parameter is the value returned by the function `createTask`, defined in the file *requests.js* as follows:
+In the `onSuccess` callback, *where we now have the `newTask` as a paramemter*,
+the `queryClient` object reads the existing `tasks` state and updates it by adding the new task.
+The value of the `newTask` parameter is the *value returned by the function `createTask`*, defined in the file *requests.js* as follows:
 
 ```js
 export const createTask = newTask =>
   axios.post(baseUrl, newTask).then(res => res.data)
 ```
 
-It would be relatively easy to make a similar change to a mutation that changes the importance of the task, but we leave it as an optional exercise.
+It would be logical to make a similar change like this to a mutation that changes a task's importance, but we leave it as an optional exercise.
+
+#### Noticing extra network calls
 
 If we closely follow the browser's network tab, we notice that React Query retrieves all tasks as soon as we move the cursor to the input field:
 
 ![dev tools tasks app with input text field highlighted and arrow on network over notes request as 200](../../images/6/62new.png)
 
 What is going on?
-By reading the [documentation](https://react-query-v3.tanstack.com/reference/useQuery),
-we notice that the default functionality of React Query's queries is that the queries (whose status is ***stale***)
-are updated when **window focus**, i.e. the active element of the application's user interface, changes.
-If we want, we can turn off the functionality by creating a query as follows:
+The [React Query documentation](https://react-query-v3.tanstack.com/reference/useQuery),
+explains that queries (*whose status is **stale***)
+are updated when the **window focus** changes.
+So since the input field becomes active when clicked, that changes the window focus, and thus the queries update.
+If we want, we can turn off the functionality by adding an options parameter to our `getTasks` query.
 
 ```js
 const App = () => {
@@ -365,21 +376,21 @@ const App = () => {
 }
 ```
 
-If you put a console.log statement to the code, you can see from browser console how often React Query causes the application to be re-rendered.
+If you put a `console.log` statement in the code, you could see from browser console how often React Query causes the application to be re-rendered.
 The rule of thumb is that rerendering happens at least whenever there is a need for it, i.e. when the state of the query changes.
-You can read more about it e.g. [here](https://tkdodo.eu/blog/react-query-render-optimizations).
+You can read more about [render optimizations here](https://tkdodo.eu/blog/react-query-render-optimizations).
 
 The code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-3) in the branch *part6-3*.
 
 React Query is a versatile library that, based on what we have already seen, simplifies the application.
 Does React Query make more complex state management solutions such as Redux unnecessary? No.
 React Query can partially replace the state of the application in some cases,
-but as the [documentation](https://react-query-v3.tanstack.com/guides/does-this-replace-client-state) states
+but as the [documentation](https://react-query-v3.tanstack.com/guides/does-this-replace-client-state) states:
 
-- React Query is a **server-state library**, responsible for managing asynchronous operations between your server and client
-- Redux, etc. are **client-state libraries** that can be used to store asynchronous data, albeit inefficiently when compared to a tool like React Query
+>- *React Query is a **server-state library**, responsible for managing asynchronous operations between your server and client*
+>- *Redux, etc. are **client-state libraries** that can be used to store asynchronous data, albeit inefficiently when compared to a tool like React Query*
 
-So React Query is a library that maintains the **server state** in the frontend, i.e. acts as a cache for what is stored on the server.
+So React Query is a **library that maintains the server state in the frontend**, i.e. acts as a cache for what is stored on the server.
 React Query simplifies the processing of data on the server, and can in some cases eliminate the need for data on the server to be saved in the frontend state.
 
 Most React applications need not only a way to temporarily store the served data,
@@ -392,7 +403,7 @@ but also some solution for how the rest of the frontend state (e.g. the state of
 ### Exercises 6.20-6.22
 
 Now let's make a new version of the joke application that uses the React Query library.
-Take [this project](https://github.com/comp227/query-jokes) as your starting point.
+Use the *quipquery* folder in your part6 repo as your starting point in your project.
 The project has a ready-installed JSON Server, the operation of which has been slightly modified.
 Start the server with `npm run server`.
 
@@ -404,11 +415,12 @@ The application should work in such a way that if there are problems communicati
 
 ![browser saying anecdote service not available due to problems in server on localhost](../../images/6/65new.png)
 
-You can find [here](https://react-query-v3.tanstack.com/guides/queries) info how to detect the possible errors.
+Here is some [info on how to detect possible server errors](https://react-query-v3.tanstack.com/guides/queries).
 
-You can simulate a problem with the server by e.g. turning off the JSON Server.
-Please beware that in a problem situation, the query is first in the state `isLoading` for a while, because if a request fails,
-React Query tries the request a few times before it states that the request is not successful.
+> *You can simulate a problem with the server by e.g. turning off the JSON Server.*
+
+Please be aware that if a request fails, the query stays in the `isLoading` state for a while.
+This is because React Query tries the request a few times before it determines that the request is not successful.
 You can optionally specify that no retries are made:
 
 ```js
@@ -420,7 +432,7 @@ const result = useQuery(
 )
 ```
 
-or that the request is retried e.g. only once:
+or that the request is retried a specific number of times (*like once*):
 
 ```js
 const result = useQuery(
@@ -435,12 +447,12 @@ const result = useQuery(
 
 Implement adding new jokes to the server using React Query.
 The application should render a new joke by default.
-Notice that the content of the joke must be at least 5 characters long, otherwise the server will reject the POST request.
+Make sure that the content of the joke must be at least five characters long, otherwise the server will reject the POST request.
 You don't have to worry about error handling now.
 
 #### Exercise 6.22
 
-Implement voting for jokes using again the React Query.
+Implement voting for jokes using React Query.
 The application should automatically render the increased number of votes for the voted joke
 
 </div>
@@ -458,9 +470,9 @@ The application displays the counter value, and offers three buttons to update t
 
 ![browser showing simple counter application with + - 0 buttons and 7 above](../../images/6/63new.png)
 
-We shall now implement the counter state management using a Redux-like state management mechanism provided by React's built-in
-[useReducer](https://beta.reactjs.org/reference/react/useReducer) hook.
-Code looks like the following:
+Let's implement the state management of the counter *using a Redux-like state management mechanism* provided by React's built-in
+[***useReducer***](https://beta.reactjs.org/reference/react/useReducer) hook.
+Here's what the code looks like:
 
 ```js
 import { useReducer } from 'react'
@@ -496,15 +508,15 @@ const App = () => {
 export default App
 ```
 
-The hook [useReducer](https://beta.reactjs.org/reference/react/useReducer) provides a mechanism to create a state for an application.
-The parameter for creating a state is the reducer function that handles state changes, and the initial value of the state:
+The hook [`useReducer`](https://beta.reactjs.org/reference/react/useReducer) provides a mechanism to create a state for an application.
+`useReducer`'s first parameter, is the reducer function that handles state changes, while the second parameter is the initial value of the state:
 
 ```js
 const [counter, counterDispatch] = useReducer(counterReducer, 0)
 ```
 
 The reducer function that handles state changes is similar to Redux's reducers,
-i.e. the function gets as parameters the current state and the action that changes the state.
+i.e. the function takes in *parameters for the current state and the action that changes the state*.
 The function returns the new state updated based on the type and possible contents of the action:
 
 ```js
@@ -522,12 +534,14 @@ const counterReducer = (state, action) => {
 }
 ```
 
-In our example, actions have nothing but a type.
-If the action's type is `INC`, it increases the value of the counter by one, etc.
-Like Redux's reducers, actions can also contain arbitrary data, which is usually put in the action's `payload` field.
+In our example, actions only have a type.
+*If the action's type is `INC`, it increases the value of the counter by one, etc.*
+Like Redux's reducers, ***actions can also contain arbitrary data***, which is usually put in the action's `payload` field.
 
-The function `useReducer` returns an array that contains an element to access the current value of the state (first element of the array),
-and a `dispatch` function (second element of the array) to change the state:
+The function `useReducer` returns an array that contains:
+
+1. an element to access the current value of the state
+2. a `dispatch` function to change the state:
 
 ```js
 const App = () => {
@@ -546,7 +560,7 @@ const App = () => {
 }
 ```
 
-As can be seen the state change is done exactly as in Redux, the dispatch function is given the appropriate state-changing action as a parameter:
+One can observe that the state change is done exactly as in Redux, the dispatch function is given the appropriate state-changing action as a parameter:
 
 ```js
 counterDispatch({ type: "INC" })
@@ -558,8 +572,8 @@ The current code for the application is in the repository
 ### Using context for passing the state to components
 
 If we want to split the application into several components,
-the value of the counter and the dispatch function used to manage it must also be passed to the other components.
-One solution would be to pass these as props in the usual way:
+*the value of the counter and the dispatch function used to manage it must also be passed to the other components*.
+One solution would be to ***pass these as props*** in the usual way:
 
 ```js
 const Display = ({ counter }) => {
@@ -593,12 +607,15 @@ const App = () => {
 ```
 
 The solution works, but is not optimal.
-If the component structure gets complicated, e.g. the dispatcher should be forwarded using props through many components to the components that need it,
-even though the components in between in the component tree do not need the dispatcher.
-This phenomenon is called **prop drilling**.
+If the component structure becomes very nested, the dispatcher would need to be forwarded using props through all of those intermediary sub-components,
+even though those components in between may not need the dispatcher.
+This phenomenon is called [**prop drilling**](https://kentcdodds.com/blog/prop-drilling).
 
 React's built-in [Context API](https://beta.reactjs.org/learn/passing-data-deeply-with-context) provides a solution for us.
-React's context is a kind of global state of the application, to which it is possible to give direct access to any component app.
+React's **context** is like a global state for the application, so that any component could get access to the state.
+However, as Kent Dodds says in the [prop drilling article linked above](https://kentcdodds.com/blog/prop-drilling), when comparing the context api to global variables:
+
+>*The difference is that because of the way the [Context] API was designed, you can still statically find the source of the context as well as any consumers with relative ease.*
 
 Let us now create a context in the application that stores the state management of the counter.
 
@@ -613,7 +630,7 @@ const CounterContext = createContext()
 export default CounterContext
 ```
 
-The `App` component can now ***provide*** a context to its child components as follows:
+The `App` component can now ***provide a context to its child components*** as follows:
 
 ```js
 import CounterContext from './CounterContext' // highlight-line
@@ -634,23 +651,27 @@ const App = () => {
 }
 ```
 
-As can be seen, providing the context is done by wrapping the child components inside the `CounterContext.Provider` component and setting a suitable value for the context.
+The code above wraps child components inside the `CounterContext.Provider` component and sets a `value` in its attributes.
 
-The context value is now set to be an array containing the value of the counter, and the `dispatch` function.
+The context providers's `value` is set to be an array containing the value of the `counter`, and the `dispatch` function (*`counterDispatch`*).
 
-Other components now access the context using the [useContext](https://beta.reactjs.org/reference/react/useContext) hook:
+Other components (including *`Display`* and *`Button`*)
+can now access the context using the [`useContext`](https://beta.reactjs.org/reference/react/useContext) hook:
 
 ```js
 import { useContext } from 'react' // highlight-line
-import CounterContext from './CounterContext'
+import CounterContext from '../CounterContext'
 
 const Display = () => {
   const [counter, dispatch] = useContext(CounterContext) // highlight-line
-  return <div>
-    {counter}
-  </div>
+  return (
+    <div>
+      {counter}
+    </div>
+  )
 }
 
+// meanwhile in another component, Button.js
 const Button = ({ type, label }) => {
   const [counter, dispatch] = useContext(CounterContext) // highlight-line
   return (
@@ -665,8 +686,9 @@ The current code for the application is in [GitHub](https://github.com/comp227/h
 
 ### Defining the counter context in a separate file
 
-Our application has an annoying feature, that the functionality of the counter state management is partly defined in the `App` component.
-Now let's move everything related to the counter to *CounterContext.js*:
+In studying the application's code further,
+we want to avoid the fact that the functionality of the counter state management is partly defined in the `App` component.
+Let's move everything related to the counter to *CounterContext.js*:
 
 ```js
 import { createContext, useReducer } from 'react'
@@ -699,8 +721,8 @@ export const CounterContextProvider = (props) => {
 export default CounterContext
 ```
 
-The file now exports, in addition to the `CounterContext` object corresponding to the context, the `CounterContextProvider` component,
-which is practically a context provider whose value is a counter and a dispatcher used for its state management.
+The file now exports, in addition to the `CounterContext` object, the `CounterContextProvider` component,
+whose value is a counter and a dispatcher used for its state management.
 
 Let's enable the context provider by making a change in *index.js*:
 
@@ -716,7 +738,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-Now the context defining the value and functionality of the counter is available to ***all*** components of the application.
+Now the context defining the value and functionality of the counter **is available to *all* components of the application**.
 
 The `App` component is simplified to the following form:
 
@@ -758,13 +780,13 @@ const Button = ({ type, label }) => {
 export default Button
 ```
 
-The `Button` component only needs the `dispatch` function of the counter, but it also gets the value of the counter from the context using the function `useContext`:
+The `Button` component *only needs the `dispatch` function of the counter*, but it also gets the value of the counter from the context using the function `useContext`:
 
 ```js
   const [counter, dispatch] = useContext(CounterContext)
 ```
 
-This is not a big problem, but it is possible to make the code a bit more pleasant and expressive
+This is not a big problem, but it is possible to make the code a bit nicer
 by defining a couple of helper functions in the `CounterContext` file:
 
 ```js
@@ -787,7 +809,7 @@ export const useCounterDispatch = () => {
 // ...
 ```
 
-With the help of these helper functions, it is possible for the components that use the context to get hold of the part of the context that they need.
+With these helper functions, the components can now selectively retrieve the parts of the context they need.
 The `Display` component changes as follows:
 
 ```js
@@ -821,16 +843,16 @@ const Button = ({ type, label }) => {
 export default Button
 ```
 
-The solution is quite elegant.
-The entire state of the application, i.e. the value of the counter and the code for managing it, is now isolated in the file `CounterContext`,
-which provides components with well-named and easy-to-use auxiliary functions for managing the state.
+This code is much cleaner.
+The *entire state of the application*, i.e. the value of the counter and the code for managing it, ***is now isolated in the file `CounterContext`***.
+*CounterContext.js* also has well-named and easy-to-use auxiliary functions for managing the state and we've separated out our components as well.
 
 The final code for the application is in [GitHub](https://github.com/comp227/hook-counter/tree/part6-3) in the branch *part6-3*.
 
 As a technical detail, notice that the helper functions `useCounterValue` and `useCounterDispatch` are defined as
 [custom hooks](https://reactjs.org/docs/hooks-custom.html),
 because calling the hook function `useContext` is [possible](https://reactjs.org/docs/hooks-rules.html) only from React components or custom hooks.
-Custom Hooks, on the other hand, are JavaScript functions whose name must start with the string *use*.
+**Custom Hooks** are JavaScript functions whose name must start with the string *`use`*.
 We will return to custom hooks in a little more detail in [part 7](/part7/custom_hooks) of the course.
 
 </div>
@@ -853,13 +875,13 @@ The notification is displayed for five seconds.
 #### Exercise 6.24
 
 As stated in exercise 6.20, the server requires that the content of the joke to be added is at least 5 characters long.
-Now implement error handling for the insertion.
+***Now implement error handling for the insertion***.
 In practice, it is sufficient to display a notification to the user in case of a failed POST request:
 
 ![browser showing error notification for trying to add too short of an anecdoate](../../images/6/67new.png)
 
-The error condition should be handled in the callback function registered for it, see
-[here](https://react-query-v3.tanstack.com/reference/useMutation) how to register a function.
+The error condition should be handled in the callback function registered for it, here's
+[how to register a function](https://react-query-v3.tanstack.com/reference/useMutation).
 
 This was the last exercise for this part of the course and it's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 
@@ -871,16 +893,11 @@ This was the last exercise for this part of the course and it's time to push you
 
 In chapters 1-5, all state management of the application was done using React's hook `useState`.
 Asynchronous calls to the backend required the use of the `useEffect` hook in some situations.
-In principle, nothing else is needed.
+In principle, *nothing else is needed*.
 
-A subtle problem with a solution based on a state created with the `useState` hook is that
-if some part of the application's state is needed by multiple components of the application,
-the state and the functions for manipulating it must be passed via props to all components that handle the state.
-Sometimes props need to be passed through multiple components, and the components along the way may not even be interested in the state in any way.
-This somewhat unpleasant phenomenon is called **prop drilling**.
+However as we have discussed in this section, the idea of *prop drilling* or of wanting a more complex state management solution has often arisen.
 
-Over the years, several alternative solutions have been developed for state management of React applications,
-which can be used to ease problematic situations (e.g. prop drilling).
+Over the years, several alternative solutions have been developed for state management of React applications.
 However, no solution has been "final", all have their own pros and cons, and new solutions are being developed all the time.
 
 The situation may confuse a beginner and even an experienced web developer.
@@ -889,7 +906,6 @@ Which solution should be used?
 For a simple application, `useState` is certainly a good starting point.
 If the application is communicating with the server, the communication can be handled in the same way as in chapters 1-5, using the state of the application itself.
 Recently, however, it has become more common to move the communication and associated state management at least partially under the control of React Query (or some other similar library).
-If you are concerned about useState and the prop drilling it entails, using context may be a good option.
 There are also situations where it may make sense to handle some of the state with useState and some with contexts.
 
 The most comprehensive and robust state management solution is Redux, which is a way to implement the so-called [Flux](https://facebook.github.io/flux/) architecture.
@@ -905,12 +921,14 @@ Redux still clearly dominates, and in fact seems to be increasing its lead:
 ![graph showing redux growing in popularity over past 5 years](../../images/6/64new.png)
 
 Also, Redux does not have to be used in its entirety in an application.
-It may make sense, for example, to manage the form state outside of Redux, especially in situations where the state of a form does not affect the rest of the application.
-It is also perfectly possible to use Redux and React Query together in the same application.
+It may make sense, for example, *to manage the form state outside of Redux*, especially in situations where the state of a form does not affect the rest of the application.
+It is also possible to ***use Redux and React Query together in the same application***.
 
 The question of which state management solution should be used is not at all straightforward.
-It is impossible to give a single correct answer.
-It is also likely that the selected state management solution may turn out to be suboptimal
-as the application grows to such an extent that the solution has to be changed even if the application has already been put into production use.
+**It is impossible to give a single correct answer**.
+It may also turn out that over time, the application may outgrow the selected state management solution,
+*even if the application has already been put into production use*.
+
+The best we can do is to continue to learn about what's available.
 
 </div>
