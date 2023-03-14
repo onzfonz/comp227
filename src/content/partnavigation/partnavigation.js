@@ -56,6 +56,7 @@ module.exports = {
       b: 'First steps with TypeScript',
       c: 'Typing the express app',
       d: 'React with types',
+      e: 'Working with an existing codebase',
     },
     // '9': {
     //   a: 'Introduction to React Native',
