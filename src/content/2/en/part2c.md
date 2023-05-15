@@ -664,7 +664,7 @@ We will do this in [part 3](/part3).
 
 <div class="tasks">
 
-### Exercises 2.11-2.14
+### Exercise 2.11
 
 #### 2.11: The Communities Step6
 
