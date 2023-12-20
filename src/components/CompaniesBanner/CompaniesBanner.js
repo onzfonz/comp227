@@ -18,7 +18,7 @@ const partners = [
     url: 'https://www.helsinki.fi/',
   },
   {
-    image: { name: 'houston.svg', alt: 'Houston inc.' },
+    image: { name: 'houston2.svg', alt: 'Houston inc.' },
     url: 'https://www.houston-inc.com/careers',
   },
   {
@@ -28,10 +28,6 @@ const partners = [
   {
     image: { name: 'elisa.svg', alt: 'Elisa' },
     url: 'https://corporate.elisa.fi/rekrytointi/',
-  },
-  {
-    image: { name: 'kesko.svg', alt: 'Kesko' },
-    url: 'https://www.kesko.fi/',
   },
   {
     image: { name: 'unity.svg', alt: 'Unity' },
@@ -131,9 +127,7 @@ export const CompaniesBanner = ({ isFrontPage, lang }) => {
               applyPadding
               companyPath={company.url}
               image={{
-                src: require(`../../images/company_logos/${
-                  company.image.name
-                }`),
+                src: require(`../../images/company_logos/${company.image.name}`),
                 alt: company.image.alt,
               }}
               className={`col-3 col-5--mobile col-5--tablet`}

@@ -16,7 +16,7 @@ const InfoBanner = ({ visible, onHide }) => {
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignContent: 'space-between',
-    backgroundColor: '#E8E8E8',
+    backgroundColor: 'var(--color-background)',
     zIndex: 2147483647,
   };
 
@@ -38,6 +38,8 @@ const InfoBanner = ({ visible, onHide }) => {
     outline: 'none',
     backgroundColor: 'transparent',
     border: 'none',
+    color: 'var(--color-text)',
+    cursor: 'pointer',
   };
 
   return (

@@ -42,6 +42,8 @@ Type annotations in TypeScript are a lightweight way to record the intended <i>c
 In the example below, we have defined a <i>birthdayGreeter</i> function which accepts two arguments: one of type string and one of type number. 
 The function will return a string.
 
+Because we did not define resolvers for the fields of the type <i>Person</i>, Apollo has defined [default resolvers](https://www.graphql-tools.com/docs/resolvers/#default-resolver) for them.
+They work like the one shown below:
 
 ```js
 const birthdayGreeter = (name: string, age: number): string => {
@@ -146,6 +148,7 @@ Types can be reused all around the code base, and a change to a type definition 
 <!-- A third advantage with TypeScript is the more **specific and smarter intellisense**  that the IDE's can provide when they know exactly what types of data you are processing. -->
 The third advantage of TypeScript is that IDEs can provide more <i>specific and smarter intellisense</i> when they know exactly what types of data you are processing.
 
+The Mutation is given the details of the person as parameters. The parameter <i>phone</i> is the only one which is nullable. The Mutation also has a return value. The return value is type <i>Person</i>, the idea being that the details of the added person are returned if the operation is successful and if not, null. Value for the field <i>id</i> is not given as a parameter. Generating an id is better left for the server.
 
 <!-- All the features mentioned above are together extremely helpful when you need to refactor your code. The static code analysis emits warnings if you have any errors in your code, and the intellisense can give you hints about available properties and even possible refactoring options. The code level documentation helps you understand the existing code, and with the help of TypeScript it is also very easy to start using the newest JavaScript language features at an early stage just by altering the configuration. -->
 All of these features are extremely helpful when you need to refactor your code. The static code analysis warns you about any errors in your code, and the intellisense can give you hints about available properties and even possible refactoring options. The code-level documentation helps you understand the existing code.

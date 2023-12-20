@@ -799,6 +799,29 @@ The sign in form should look something like this:
 
 ![Application preview](../../images/9/19.jpg)
 
+A couple of things to notice:
+
+If you define helper functions in other modules, you should use the [JavaScript module system](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), that is, the one we have used with React where importing is done with
+
+```js
+import { isNotNumber } from "./utils";
+```
+
+and exporting
+
+```js
+export const isNotNumber = (argument: any): boolean =>
+  isNaN(Number(argument));
+
+export default "this is the default..."
+```
+
+Another note: somehow surprisingly TypeScript does not allow to define the same variable in many files at a "block-scope", that is, outside functions (or classes):
+
+![vs code showing error cannot redeclare block-scoped variable x](../../images/9/60new.png)
+
+This is actually not quite true. This rule applies only to files that are treated as "scripts". A file is a script if it does not contain any export or import statements. If a file has those, then the file is treated as a [module](https://www.typescriptlang.org/docs/handbook/modules.html), *and* the variables do not get defined in the block scope.
+
 </div>
 
 <div class="content">
@@ -817,6 +840,8 @@ Next, as an example, let's create validation schema for the body mass index form
 
 ```javascript
 import * as yup from 'yup'; // highlight-line
+
+app.use(express.json());
 
 // ...
 
@@ -874,6 +899,57 @@ const FormikTextInput = ({ name, ...props }) => {
   );
 };
 ```
+
+We shall see later in this part some techniques on how the *any* typed data (eg. the input an app receives from the user) can be *narrowed* to a more specific type (such as number). With a proper narrowing of types, there is no more need to silence the ESlint rules.
+
+### Type assertion
+
+Using a [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) is another "dirty trick" that can be done to keep TypeScript compiler and Eslint quiet. Let us export the type Operation in *calculator.ts*:
+
+```js
+export type Operation = 'multiply' | 'add' | 'divide';
+```
+
+Now we can import the type and use a *type assertion* to tell the TypeScript compiler what type a variable has:
+
+```js
+import { calculator, Operation } from './calculator'; // highlight-line
+
+app.post('/calculate', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { value1, value2, op } = req.body;
+
+  // validate the data here
+
+  // assert the type
+  const operation = op as Operation;  // highlight-line 
+
+  const result = calculator(Number(value1), Number(value2), operation); // highlight-line
+
+  return res.send({ result });
+});
+```
+
+The defined constant *operation* has now the type *Operation* and the compiler is perfectly happy, no quieting of the Eslint rule is needed on the following function call. The new variable is actually not needed, the type assertion can be done when an argument is passed to the function:
+
+```js
+app.post('/calculate', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const { value1, value2, op } = req.body;
+
+  // validate the data here
+
+  const result = calculator(
+    Number(value1), Number(value2), op as Operation // highlight-line
+  );
+
+  return res.send({ result });
+});
+```
+
+Using a type assertion (or quieting an Eslint rule) is always a bit risky thing. It leaves the TypeScript compiler off the hook, the compiler just trusts that we as developers know what we are doing. If the asserted type does *not* have the right kind of value, the result will be a runtime error, so one must be pretty careful when validating the data if a type assertion is used.
+
+In the next chapter, we shall have a look at [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) which will provide a much more safe way of giving a stricter type for data that is coming from an external source.
 
 </div>
 

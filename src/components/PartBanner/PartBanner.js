@@ -1,3 +1,4 @@
+import translationProgress from '../../utils/translationProgress';
 import { Banner } from '../Banner/Banner';
 import { ContentLiftup } from '../ContentLiftup/ContentLiftup';
 import React from 'react';
@@ -12,11 +13,20 @@ const partNameTranslations = {
     'Programming a server with NodeJS and Express',
     'Testing Express servers, user administration',
     'Testing React apps',
-    'State management with Redux',
+    'Advanced state management',
     'React router, custom hooks, styling app with CSS and webpack',
     'TypeScript',
     'React Native',
-  ],
+  ]
+};
+
+const partName = {
+  en: 'Part',
+  es: 'Parte',
+  fi: 'Osa',
+  fr: 'Partie',
+  ptbr: 'Parte',
+  zh: '部分',
 };
 
 export const PartBanner = ({ lang }) => {
@@ -33,6 +43,10 @@ export const PartBanner = ({ lang }) => {
           const partNames =
             partNameTranslations[lang] || partNameTranslations.en;
 
+          const summary =
+            translationProgress[lang] < part
+              ? partNames[part] + ' (english only)'
+              : partNames[part];
           return (
             <ContentLiftup
               key={partNames[part]}
