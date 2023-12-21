@@ -23,10 +23,6 @@ const LanguagePicker = ({
     fontSize: '1em',
   };
 
-  if (value === 'ptbr') {
-    fontSizeStyle.fontSize = '0.65em';
-  }
-
   return (
     /*eslint jsx-a11y/no-onchange: "off" */
     <>

@@ -22,11 +22,6 @@ const partNameTranslations = {
 
 const partName = {
   en: 'Part',
-  es: 'Parte',
-  fi: 'Osa',
-  fr: 'Partie',
-  ptbr: 'Parte',
-  zh: '部分',
 };
 
 export const PartBanner = ({ lang }) => {
