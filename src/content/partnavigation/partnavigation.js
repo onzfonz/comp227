@@ -41,10 +41,10 @@ module.exports = {
       a: 'Flux-architecture and Redux',
       b: 'Many reducers',
       c: 'Communicating with server in a redux application',
-      d: 'connect',
+      d: 'React Query, useReducer and the context',
     },
     '7': {
-      a: 'React-router',
+      a: 'React Router',
       b: 'Custom hooks',
       c: 'More about styles',
       d: 'Webpack',
@@ -54,7 +54,7 @@ module.exports = {
     '8': {
       a: 'Background and introduction',
       b: 'First steps with TypeScript',
-      c: 'Typing the express app',
+      c: 'Typing an Express app',
       d: 'React with types',
       e: 'Working with an existing codebase',
     },

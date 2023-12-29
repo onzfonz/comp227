@@ -48,14 +48,16 @@ Other parts do not have asterisk-marked exercises since there is no similar depe
 
 How to study the course – instructions in a nutshell:
 
-- Do the exercises. The exercises are submitted through GitHub and marking them as done on Canvas.
+- Do the exercises.
+  The exercises are submitted through GitHub and marking them as done on Canvas.
 - You need to work regularly.
   The easiest way to fall behind in the course is to not work on it every couple of days.
   Set yourself an alarm...do anything! But make it a habit of working on it at least 3 times a week for a little bit of time.
 
 ### How to ask help in Discord
 
-When you ask for help on a problem in our Discord group your question should be as informative and precise as possible. If your question looks like this
+When you ask for help on a problem in our Discord group your question should be as informative and precise as possible.
+If your question looks like this:
 
 > *Adding a new person does not work, could you help me with that?*
 

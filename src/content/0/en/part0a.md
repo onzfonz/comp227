@@ -50,6 +50,10 @@ You are also expected to have perseverance and a capacity for solving problems a
 Previous knowledge of JavaScript or other course topics is not required.
 If you do not have the strongly recommended skills, then realize that ***you will need to put extra time in at the beginning of the course***.
 
+How much programming experience is needed?
+It is hard to say, but you should be pretty fluent with *your* language.
+This level of fluency takes usually at least 100-200 hours of practice to develop.
+
 ### Course Objectives
 
 After successfully completing this course, students will be able to:
@@ -99,7 +103,7 @@ It's up to you to ask questions!
    - if you have not used discord before it is fairly intuitive, but [here's a guide should you need it](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord)
 2. Canvas has live help that will assist you with any technical issues.
     To access help, click the question mark at the far left side of the screen.
-    You can also email the Pacific Helpdesk for guidance at helpdesk@pacific.edu.
+    You can also email the Pacific Helpdesk for guidance at <helpdesk@pacific.edu>.
 3. For assistance with course materials contact your instructor or ask in the #help channel of discord
 
 An overview of available Canvas help resources can be found here: <https://community.canvaslms.com/videos/1687-canvas-help-resources-all-users>
@@ -340,7 +344,7 @@ To ensure timeliness of services, it is preferable that you obtain the accommoda
 After the instructor receives the accommodation letter, please schedule a meeting with the instructor during office hours or some other mutually convenient time to arrange the accommodation(s).
 The Office of Services for Students with Disabilities is located in the McCaffrey Center, Rm. 137.
 Phone: 209-946-3221.
-Email: ssd@pacific.edu.
+Email: <ssd@pacific.edu>.
 Online: <http://www.pacific.edu/disabilities>
 NOTE: The preceding information is the minimal information required in this section of the course syllabus,
 instructors are free to expand on the information above and/or add any additional information below.

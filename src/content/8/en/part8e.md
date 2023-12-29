@@ -25,7 +25,7 @@ whereas the ***state*** is comparable to business logic and keeps the data organ
 
 TypeScript provides types for what kind of data structures, functions, components, and state to expect.
 You can try looking for *types.ts* or something similar to get started.
-VSCode is a big help and simply highlighting variables and parameters can provide quite a lot of insight.
+IDEs can be a big help and simply highlighting variables and parameters can provide quite a lot of insight.
 All this naturally depends on how types are used in the project.
 
 If the project has unit, integration or end-to-end tests, reading those is most likely beneficial.
@@ -184,7 +184,7 @@ const AddPatientModal = ({ modalOpen, onClose, onSubmit, error }: Props) => {
 }
 ```
 
-`onClose` is just a function that takes no parameters, and does not return anything, so the type is
+`onClose` is just a function that takes no parameters, and does not return anything, so the type is:
 
 ```js
 () => void
@@ -216,7 +216,7 @@ Our naive implementation will be that a patient has an array of entries.
 
 Before going into this, let us do some preparatory work.
 
-#### 8.20: Patientia, step1
+#### 8.20: Patientia, step 1
 
 Create an endpoint ***/api/patients/:id*** to the backend that returns all of the patient information for one patient,
 including the array of patient entries that is still empty for all the patients.
@@ -244,7 +244,7 @@ The response should look as follows:
 
 ![browser showing entries blank array when accessing patient](../../images/8/38a.png)
 
-#### 8.21: Patientia, step2
+#### 8.21: Patientia, step 2
 
 Create a page for showing a patient's full information in the frontend.
 
@@ -429,7 +429,7 @@ type EntryWithoutId = UnionOmit<Entry, 'id'>;
 
 Now we are ready to put the finishing touches to the app!
 
-#### 8.22: Patientia, step3
+#### 8.22: Patientia, step 3
 
 Define the types `OccupationalHealthcareEntry` and `HospitalEntry` so that those conform with the example data.
 Ensure that your backend returns the entries properly when you go to an individual patient's route:
@@ -440,7 +440,7 @@ Use types properly in the backend!
 For now, there is no need to do a proper validation for all the fields of the entries in the backend,
 it is enough e.g. to check that the field `type` has a correct value.
 
-#### 8.23: Patientia, step4
+#### 8.23: Patientia, step 4
 
 Extend a patient's page in the frontend to list the `date`, `description` and `diagnoseCodes` of the patient's entries.
 
@@ -451,14 +451,14 @@ Your solution could look like this:
 
 ![browser showing list of diagnosis codes for patient](../../images/8/41.png)
 
-#### 8.24: Patientia, step5
+#### 8.24: Patientia, step 5
 
 Fetch and add diagnoses to the application state from the ***/api/diagnoses*** endpoint.
 Use the new diagnosis data to show the descriptions for patient's diagnosis codes:
 
 ![browser showing list of codes and their descriptions for patient ](../../images/8/42.png)
 
-#### 8.25: Patientia, step6
+#### 8.25: Patientia, step 6
 
 Extend the entry listing on the patient's page to include the Entry's details with a new component
 that shows the rest of the information of the patient's entries distinguishing different types from each other.
@@ -475,7 +475,7 @@ The resulting entries in the listing *could* look something like this:
 
 ![browser showing list of entries and their details in a nicer format](../../images/8/36x.png)
 
-#### 8.26: Patientia, step7
+#### 8.26: Patientia, step 7
 
 We have established that patients can have different kinds of entries.
 We don't yet have any way of adding entries to patients in our app, so, at the moment, it is pretty useless as an electronic medical record.
@@ -484,7 +484,7 @@ Your next task is to add endpoint ***/api/patients/:id/entries*** to your backen
 
 Remember that we have different kinds of entries in our app, so our backend should support all those types and check that at least all required fields are given for each type.
 
-In this exercise you quite likely need to remember [this trick](/part8/grande_finale_patientia#omit-with-unions).
+In this exercise you quite likely need to remember [this trick](/part8/working_with_an_existing_codebase#omit-with-unions).
 
 You may assume that the diagnostic codes are sent in a correct form and use eg. the following kind of parser to extract those from the request body:
 
@@ -499,7 +499,7 @@ const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
 };
 ```
 
-#### 8.27: Patientia, step8
+#### 8.27: Patientia, step 8
 
 Now that our backend supports adding entries, we want to add the corresponding functionality to the frontend.
 In this exercise, you should add a form for adding an entry to a patient.
@@ -518,11 +518,11 @@ If user enters invalid values to the form and backend rejects the addition, show
 
 ![browser showing healthCheckRating incorrect 15 error](../../images/8/75new.png)
 
-#### 8.28: Patientia, step9
+#### 8.28: Patientia, step 9
 
 Extend your solution so that it supports **all the entry types**
 
-#### 8.29: Patientia, step10
+#### 8.29: Patientia, step 10
 
 Improve the entry creation forms so that it makes hard to enter incorrect dates, diagnosis codes and health rating.
 

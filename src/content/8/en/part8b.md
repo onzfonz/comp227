@@ -25,7 +25,7 @@ This means that type annotations, interfaces, type aliases, and other type syste
 
 In a production environment, the need for compilation often means that you have to set up a **build step**.
 During the build step, all TypeScript code is compiled into JavaScript in a separate folder, and the *production environment then runs the code from that folder*.
-In a development environment, it is often handier to make use of real-time compilation and auto-reloading so one can see the resulting changes more quickly.
+In a development environment, it is often easier to make use of real-time compilation and auto-reloading so one can see the resulting changes more quickly.
 
 Let's start writing our first TypeScript app.
 To keep things simple, let's consider using the npm package [***ts-node***](https://github.com/TypeStrong/ts-node).
@@ -355,7 +355,7 @@ If our code would be JavaScript, we could print the error message by just referr
 try {
   console.log(calculator(1, 5 , "divide"));
 } catch (error) {
-  console.log("Something went wrong: " + error.message);  // highlight-line
+  console.log('Something went wrong: ', error.message);  // highlight-line
 }
 ```
 
@@ -400,7 +400,7 @@ The TypeScript library itself contains only typings for the code of the TypeScri
 It is possible to write custom typings for a library, but that is rarely needed - since the TypeScript community has done it for us!
 
 As with npm, the TypeScript world also celebrates open-source code.
-The community is active and continuously reacting to updates and changes in commonly-used npm packages.
+The community is active and continuously reacting to updates and changes in commonly used npm packages.
 You can almost always find the typings for npm packages, so you don't have to create types for all of your thousands of dependencies alone.
 
 Usually, types for existing packages can be found from the *`@types`* organization within npm,
@@ -590,7 +590,7 @@ let values: Array<number>;
 
 In this course, we shall mostly be following the convention enforced by the ESlint rule
 [array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)
-that suggests to use [] syntax for simple arrays and <> syntax for the more complex ones.
+that suggests to use `[]` syntax for simple arrays and `<>` syntax for the more complex ones.
 See [the ESlint array-simple rule documentation](https://typescript-eslint.io/rules/array-type/#array-simple) for examples.
 
 </div>
@@ -739,14 +739,14 @@ export const isNotNumber = (argument: any): boolean =>
 default export "this is the default..."
 ```
 
-Another note: somehow surprisingly TypeScript does not allow to define the same variable in many files at a "block-scope", that is, outside functions (or classes):
+Another note: somehow surprisingly TypeScript does not allow to define the same variable in many files at a "block scope", that is, outside functions (or classes):
 
 ![browser showing pong from localhost:3000/ping](../../images/8/60new.png)
 
 This is not *quite* true.
 This ***rule applies only to files that are treated as scripts***.
 A file is a **script** if it does not contain any `export` or `import` statements.
-If a file has those, then the file is treated as a [**module**](https://www.typescriptlang.org/docs/handbook/modules.html), ***and*** the variables do not get defined in the block-scope.
+If a file has those, then the file is treated as a [**module**](https://www.typescriptlang.org/docs/handbook/modules.html), ***and*** the variables do not get defined in the block scope.
 
 </div>
 
@@ -768,7 +768,7 @@ Let's specify the following configurations in our *tsconfig.json* file:
     "target": "ES2022",
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": true, // highlight-line
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true, // highlight-line
@@ -1078,8 +1078,9 @@ We can also explicitly type things `any`.
 The only difference between the implicit and explicit any type is *how the code looks*; the compiler does not care about the difference.
 
 Programmers however see the code differently when `any` is explicitly enforced than when it is implicitly inferred.
-**Implicit `any` typings are usually considered problematic**, since it is quite often due to the coder forgetting to assign types (or being too lazy to do it),
-and it also means that the full power of TypeScript is not properly exploited.
+**Implicit `any` typings are usually considered problematic**.
+Coders quite often use `any` as a placeholder and later forget to assign types (or they were just too lazy to do it).
+Using `any` also means that the full power of TypeScript is not properly exploited.
 
 This is why the configuration rule [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny) exists on the compiler level,
 and it is highly recommended to keep it on at all times.
@@ -1104,7 +1105,7 @@ npm install eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser --
 ```
 
 We will configure ESlint to [disallow explicit any]( https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md).
-Write the following rules to *.eslintrc*:
+Write the following rules to *.eslintrc.js*:
 
 ```json
 {
@@ -1137,7 +1138,7 @@ Let us also set up a **lint** npm script to inspect the files with *.ts* extensi
 }
 ```
 
-Finally, we'll need to enable the eslint configuration in our settings. (***Ctrl-Alt-S***).
+Finally, we'll need to enable the eslint configuration in our settings (***Ctrl-Alt-S***).
 Remember that the configuration to turn on in ***Languages & Frameworks->JavaScript->Code Quality Tools->ESLint***.
 Select the option **Automatic ESLint configuration** and check ***Run eslint --fix on save***.
 Now lint will complain if we try to define a variable of type `any`:
@@ -1149,9 +1150,9 @@ but you can also use all basic ESlint rules in TypeScript projects.
 For now, we should probably go with the recommended settings,
 and we will modify the rules as we go along whenever we find something we want to change the behavior of.
 
-On top of the recommended settings, we should try to get familiar with the coding style required in this part and ***set the semicolon at the end of each line of code to required***.
+On top of the recommended settings, we should try to get familiar with the coding style required in this part and ***set the semicolon at the end of each line of code to `required`***.
 
-So we will use the following *.eslintrc*
+So we will use the following *.eslintrc.js*
 
 ```json
 {
@@ -1307,7 +1308,7 @@ It leaves the TypeScript compiler off the hook, the compiler just trusts that we
 If the asserted type does ***not*** have the right kind of value, the result will be a runtime error,
 so one must be pretty careful when validating the data if a type assertion is used.
 
-In the next chapter we shall have a look at [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html),
+In the next chapter, we shall have a look at [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html),
 which will provide a safer way of specifying types for external data.
 
 </div>
@@ -1323,7 +1324,7 @@ Configure your project to use the above ESlint settings and fix all the warnings
 #### 8.7 WebExercises
 
 Add an endpoint to your app for the exercise calculator.
-It should be used by doing an HTTP POST request to endpoint ***<http://localhost:3002/exercises>*** with the input in the request body:
+It should be used by doing an HTTP POST request to the endpoint ***<http://localhost:3002/exercises>*** with the input in the request body:
 
 ```js
 {

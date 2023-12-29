@@ -120,7 +120,7 @@ Now our *package.json* should look like something like this, with differing vers
 
 ```json
 {
-  "name": "flight_diary",
+  "name": "flight-diary",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -138,11 +138,17 @@ Now our *package.json* should look like something like this, with differing vers
   },
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.18",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.50.0"
   }
 }
 ```
 
-Let's also create a *.eslintrc* file with the following content:
+Let's also create a *.eslintrc.js* file with the following content:
 
 ```json
 {
@@ -836,7 +842,7 @@ router.get('/', (_req, res) => {
 });
 
 router.post('/', (_req, res) => {
-    res.send('Saving a diary!');
+  res.send('Saving a diary!');
 });
 
 export default router;
@@ -1185,7 +1191,7 @@ The code continues to work and I feel less uninhibited rage.*
 
 ### Type guards
 
-Let's create parsers for each of the fields in our *`object`*.
+Let's create parsers for each of the fields of the parameter *`object: unknown`*.
 
 To validate the `comment` field, let's check that it exists and that it is a `string`.
 

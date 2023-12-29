@@ -52,7 +52,7 @@ addTask = event => {
   const taskObject = {
     content: newTask,
     date: new Date().toISOString(),
-    important: Math.random() < 0.5,
+    important: Math.random() > 0.5,
   }
 
 // highlight-start
@@ -82,6 +82,10 @@ which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_a
 ![content-type data in dev tools](../../images/2/21e1.png)
 
 ![request payload in dev tools](../../images/2/21e2.png)
+
+Also the *response* tab is useful, it shows what was the data the server responded with:
+
+![TODO - provide response tab screenshot here with tasks as response from server](../../images/2/21e3.png)
 
 We can use the inspector to check that the headers sent in the POST request are what we expected them to be and that their values are correct.
 
@@ -281,7 +285,7 @@ axios.put(url, task).then(response => {
 ```
 
 This is not recommended because the variable `task` is a reference to an item in the `tasks` array in the component's state,
-and as we recall ***we must [never mutate state directly](https://reactjs.org/docs/state-and-lifecycle.html#using-state-correctly) in React***.
+and as we recall ***we must [never mutate state directly](https://react.dev/learn/updating-objects-in-state#why-is-mutating-state-not-recommended-in-react) in React***.
 
 It's also worth noting that the new object `changedTask` is only a so-called
 [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
@@ -825,7 +829,7 @@ No data is sent with the request.
 You can make an HTTP DELETE request with the [axios](https://github.com/axios/axios) library in the same way that we make all of the other requests.
 
 > **NB:** You can't use the name `delete` for a variable because it's a reserved word in JavaScript.
-E.g. the following is not possible:
+> E.g. the following is not possible:
 >
 > ```js
 > // use some other name for variable!

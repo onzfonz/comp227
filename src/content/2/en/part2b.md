@@ -14,7 +14,7 @@ But merely reading (or just watching) is not enough, you have to practice and ty
 However, if you missed a step, you can find the code for our current application [here](https://github.com/comp227/part2-tasks/tree/part2-1).
 
 To get our page to update when new tasks are added it's best to store the tasks in the `App` component's state.
-Let's import the [useState](https://reactjs.org/docs/hooks-state.html) function
+Let's import the [useState](https://react.dev/reference/react/useState) function
 and use it to define a piece of state that gets initialized with the initial tasks array passed in the props.
 
 ```js
@@ -109,7 +109,7 @@ const addTask = (event) => {
 }
 ```
 
-The `event` parameter is the [event](https://reactjs.org/docs/handling-events.html) that triggers the call to the event handler function:
+The `event` parameter is the [event](https://react.dev/learn/responding-to-events) that triggers the call to the event handler function:
 
 The event handler immediately calls the `event.preventDefault()` method, which prevents the default action of submitting a form.
 The default action would, [among other things](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event),
@@ -126,7 +126,7 @@ How do we access the data contained in the form's `input` element?
 ### Controlled component
 
 There are many ways to accomplish this; the first method we will take a look at is through the use of so-called
-[controlled components](https://reactjs.org/docs/forms.html#controlled-components).
+[controlled components](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
 
 Let's add a new piece of state called `newTask` for storing the user-submitted input **and** let's set it as the `input` element's `value` attribute:
 
@@ -167,7 +167,7 @@ The console displays a warning that gives us a clue as to what might be wrong:
 ![provided value to prop without onchange console error](../../images/2/7e.png)
 
 Since we assigned a piece of the `App` component's state as the `value` attribute of the input element,
-the `App` component now [controls](https://reactjs.org/docs/forms.html#controlled-components) the behavior of the input element.
+the `App` component now [controls](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable) the behavior of the input element.
 
 To enable editing of the input element, we have to register an **event handler** that synchronizes the changes made to the input with the component's state:
 
@@ -249,7 +249,7 @@ const addTask = (event) => {
   const taskObject = {
     content: newTask,
     date: new Date().toISOString(),
-    important: Math.random() < 0.5,
+    important: Math.random() > 0.5,
     id: tasks.length + 1,
   }
 
@@ -272,7 +272,7 @@ setTasks(tasks.concat(taskObject))
 ```
 
 The method does not mutate the original `tasks` array, but rather creates *a new copy of the array with the new item added to the end*.
-This is important since we must [never mutate state directly](https://reactjs.org/docs/state-and-lifecycle.html#using-state-correctly) in React!
+This is important since we **must [never mutate state directly](https://react.dev/learn/updating-objects-in-state#why-is-mutating-state-not-recommended-in-react) in React**!
 
 The event handler also resets the value of the controlled input element by calling the `setNewTask` function of the `newTask` state:
 
@@ -367,8 +367,8 @@ The comparison operator is redundant, since the value of `task.important` is eit
 tasks.filter(task => task.important)
 ```
 
-The reason we showed the comparison operator first was to emphasize an important detail: in JavaScript `val1 == val2` does not work as expected in all situations
-and it's safer to use `val1 === val2` exclusively in comparisons.
+We showed the comparison operator first to emphasize an important detail: in JavaScript `val1 == val2` does not always work as expected.
+When performing comparisons, it's always safer to use `val1 === val2`.
 You can read more about the topic [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness).
 
 You can test out the filtering functionality by changing the initial value of the `showAll` state.
@@ -411,7 +411,7 @@ const App = (props) => {
 
 The displayed tasks (all versus important) are controlled with a button.
 The event handler for the button is so simple that it has been defined directly in the attribute of the button element.
-The event handler switches the value of `showAll` from true to false and vice versa:
+The event handler switches the value of `showAll` from *`true`* to *`false`* and vice versa:
 
 ```js
 () => setShowAll(!showAll)
@@ -436,7 +436,8 @@ In related sets of exercises, it is sufficient to return the final version of yo
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
-Please make sure **that you commit often**, as that will be the way you show your work and progress through the course.
+Please make sure **that you commit in tiny steps**, as that will be the way you show your work and progress through the course.
+Getting into that habit will also improve your reflections and workflow as a developer.
 
 **WARNING** make sure you are in the correct location before calling `create-react-app`
 
@@ -616,8 +617,8 @@ const App = () => {
 ```
 
 > **NB**: You might run into problems in this exercise if you define your components "in the wrong place".
-Now would be a good time to rehearse
-the chapter [do not define a component in another component](/part1/a_more_complex_state_debugging_react_apps#do-not-define-components-within-components)
-from the last part.
+> Now would be a good time to rehearse the chapter
+> [do not define a component in another component](/part1/a_more_complex_state_debugging_react_apps#do-not-define-components-within-components)
+> from the last part.
 
 </div>

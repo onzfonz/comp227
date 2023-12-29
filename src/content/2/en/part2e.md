@@ -17,7 +17,7 @@ First, we will add CSS to our application the old-school way; in a single file w
 [CSS preprocessor](https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor)
 (although this is not entirely true as we will learn later on).
 
-Let's add a new *index.css* file under the *src* directory and then add it to the application by importing it in the *index.js* file:
+Let's add a new *index.css* file under the *src* directory and then add it to the application by importing it in the *main.jsx* file:
 
 ```js
 import './index.css'
@@ -92,7 +92,7 @@ In regular HTML, classes are defined as the value of the `class` attribute:
 <li class="task">some text...</li>
 ```
 
-In React we have to use the [className](https://reactjs.org/docs/dom-elements.html#classname) attribute instead of the class attribute.
+In React we have to use the [className](https://react.dev/learn#adding-styles) attribute instead of the class attribute.
 With this in mind, let's make the following changes to our `Task` component:
 
 ```js
@@ -239,7 +239,8 @@ The code for the current state of our application can be found in the  *part2-7*
 React also makes it possible to write styles directly in the code as so-called [inline styles](https://react-cn.github.io/react/tips/inline-styles.html).
 
 The idea behind defining inline styles is extremely simple.
-Any React component or element can be provided with a set of CSS properties as a JavaScript object through the [style](https://reactjs.org/docs/dom-elements.html#style) attribute.
+Any React component or element can be provided with a set of CSS properties as a JavaScript object through the
+[style](https://react.dev/reference/react-dom/components/common#applying-css-styles) attribute.
 
 CSS rules are defined slightly differently in JavaScript than in normal CSS files.
 Let's say that we wanted to give some element the color green and italic font that's 16 pixels in size.
@@ -341,7 +342,7 @@ In these examples, use the gray and green colors.
 #### 2.17*: Communities step12
 
 Open your application in two browsers.
-**If you delete a group in browser 1** a short while before attempting to ***change the group's URL*** in browser 2, you will get the following error message:
+**If you delete a group in browser A** a short while before attempting to ***change the group's URL*** in browser B, you will get the following error message:
 
 ![error message 404 not found when changing multiple browsers](../../images/2/29b.png)
 
@@ -351,7 +352,8 @@ The messages shown for successful and unsuccessful events should look different:
 
 ![error message shown on screen instead of in console feature add-on](../../images/2/28e.png)
 
-> **Notice** that even if you handle the exception, the error message is printed to the console.
+> **Notice** that even if you handle the exception, the first ***404*** error message is still printed to the console.
+> But you should not see *`"Uncaught (in promise) Error"`*.
 
 </div>
 
@@ -377,9 +379,9 @@ const App = () => {
 
 This is a reasonable initial value for `tasks` since we will be storing multiple tasks in that state.
 
-If the state were to hold a "single thing",
-a better initial value would be `null` since it indicates that there is *nothing* in the state initially.
-Let us try what happens if we use this initial value:
+If the state were to hold a ***single thing***,
+it would be better to initialize that state to `null` since it indicates that there is *nothing* initially.
+Let us see what happens if we initialize our state to `null`:
 
 ```js
 const App = () => {
@@ -507,7 +509,7 @@ The other thing that we still need to have a closer look at is the second parame
   }, []) // highlight-line
 ```
 
-The second parameter of `useEffect` is used to [specify how often the effect is run](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect).
+The second parameter of `useEffect` is used to [specify how often the effect is run](https://react.dev/reference/react/useEffect#parameters).
 The principle is that the effect is always executed after the first render of the component
 *and* when the value of the second parameter changes.
 
@@ -564,6 +566,8 @@ const App = () => {
     </div>
   )
 }
+
+export default App
 ```
 
 The user interface of the application has a form,
@@ -611,7 +615,7 @@ if (currency) {
 }
 ```
 
-which prevents requesting the exchange rates just after the first render when the variable `currency` still has the initial value of `""`.
+which prevents requesting the exchange rates just after the first render when the variable `currency` still has the initial value, i.e. a null value.
 
 So if the user types *eur* in the search field,
 the application uses Axios to perform an HTTP GET request to the address <https://open.er-api.com/v6/latest/eur>
@@ -706,26 +710,24 @@ This issue can be fixed by completing the exercise using Chrome.
 
 *You will need an api-key to use almost every weather service.*
 **Do not save the api-key to source control!** Nor hardcode the api-key to your source code.
-Instead use an [environment variable](https://create-react-app.dev/docs/adding-custom-environment-variables/) to save the key.
+Instead use an [environment variable](https://vitejs.dev/guide/env-and-mode.html) to save the key.
 
 Assuming the api-key is `t0p53cr3t4p1k3yv4lu3`, when the application is started like so:
 
 ```bash
-REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3 npm start // For Linux/macOS Bash
-($env:REACT_APP_API_KEY="t0p53cr3t4p1k3yv4lu3") -and (npm start) // For Windows PowerShell
-set "REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3" && npm start // For Windows cmd.exe
+export VITE_SOME_KEY=t0p53cr3t4p1k3yv4lu3 && npm run dev // For Linux/macOS Bash
+($env:VITE_SOME_KEY="t0p53cr3t4p1k3yv4lu3") -and (npm run dev) // For Windows PowerShell
+set "VITE_SOME_KEY=t0p53cr3t4p1k3yv4lu3" && npm run dev // For Windows cmd.exe
 ```
 
-you can access the value of the key from the `process.env` object:
+you can access the value of the key from the `import.meta.env` object:
 
 ```js
-const api_key = process.env.REACT_APP_API_KEY
+const api_key = import.meta.env.VITE_SOME_KEY
 // variable api_key has now the value set in startup
 ```
 
-Notice that if you created the application using `npx create-react-app ...`
-and you want to use a different name for your environment variable then the environment variable name must still begin with `REACT_APP_`.
-You can also use a `.env` file rather than defining it on the command line each time by creating a file entitled '.env' in the root of the project and adding the following.
+You can also use a `.env` file rather than defining it on the command line each time by creating a file entitled '*.env*' in the root of the project and adding the following.
 
 ```text
 # .env
@@ -733,6 +735,6 @@ You can also use a `.env` file rather than defining it on the command line each 
 REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3
 ```
 
-Notice that you will need to restart the server to apply the changes.
+Either way, you will need to restart the server to apply the changes.
 
 </div>

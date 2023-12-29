@@ -10,19 +10,42 @@ lang: en
 There are many different ways of testing React applications.
 Let's take a look at few of those next.
 
-Tests can be implemented with the same [Jest](http://jestjs.io/) testing library developed by Facebook that was used in the previous part.
-Jest is configured by default to applications created with create-react-app.
+Tests will be implemented with the same [Jest](http://jestjs.io/) testing library developed by Facebook that was used in the previous part.
 
 In addition to Jest, we also need another testing library that will help us render components for testing purposes.
 The current best option for this is [**react-testing-library**](https://github.com/testing-library/react-testing-library) which has seen rapid growth in popularity in recent times.
 
-Let's install the library with the command:
+Let's install libraries with the command:
 
 ```bash
-npm install @testing-library/react @testing-library/jest-dom --save-dev
+npm install @testing-library/react @testing-library/jest-dom jest jest-environment-jsdom @babel/preset-env @babel/preset-react --save-dev
 ```
 
-We also installed [**jest-dom**](https://testing-library.com/docs/ecosystem-jest-dom/) which provides some nice Jest-related helper methods.
+The file *package.json* should be extended as follows:
+
+```js
+{
+  "scripts": {
+    // ...
+    "test": "jest"
+  }
+  // ...
+  "jest": {
+    "testEnvironment": "jsdom"
+  }
+}
+```
+
+We also need the file *.babelrc* with following content:
+
+```js
+{
+  "presets": [
+    "@babel/preset-env",
+    ["@babel/preset-react", { "runtime": "automatic" }]
+  ]
+}
+
 
 Before we start writing tests, let's review the `Task` component and what it renders:
 
@@ -41,7 +64,7 @@ const Task = ({ task, toggleImportance }) => {
 }
 ```
 
-Notice that the `li` element has the [CSS](https://reactjs.org/docs/dom-elements.html#classname) classname **`task`**,
+Notice that the `li` element has the [CSS](https://react.dev/learn#adding-styles) classname **`task`**,
 which could be used to access the component in our tests.
 
 ### Rendering the component for tests
@@ -52,7 +75,7 @@ The first test verifies that the component renders the contents of the task:
 
 ```js
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import Task from './Task'
 
@@ -94,22 +117,31 @@ to search for an element that has the task content and ensure that it exists:
 
 ### Running tests
 
-*Create-react-app* configures tests to be run in **watch mode** by default, which means that the `npm test` command will not exit once the tests have finished,
-and will instead wait for changes to be made to the code.
-Once new changes to the code are saved, the tests are executed automatically after which Jest goes back to waiting for new changes to be made.
-
-If you want to run tests "normally", you can do so with the command:
+Run the test with command `npm test`:
 
 ```js
-CI=true npm test
+$ npm test
+
+> tasks-frontend@0.0.0 test
+> jest
+
+ PASS  src/components/Task.test.js
+  ✓ renders content (15 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        1.152 s
 ```
+
+As expected, the test passes.
 
 > **NB:** the console may issue a warning if you have not installed [**Watchman**](https://facebook.github.io/watchman/).
 Watchman is an application developed by Facebook that watches for changes that are made to files.
 The program speeds up the execution of tests and at least starting from macOS Sierra,
-running tests in watch mode issues some warnings to the console, that can be removed by installing Watchman.
+running tests in watch mode issues some warnings to the console, which can be removed by installing Watchman.
 >
-> You can install watchman using your package manager of choice
+> You can install Watchman using your package manager of choice
 
 ### Test file location
 
@@ -131,7 +163,7 @@ In reality, the `expect` in our test is not needed at all
 
 ```js
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import Task from './Task'
 
@@ -157,7 +189,7 @@ of the object [`container`](https://testing-library.com/docs/react-testing-libra
 
 ```js
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import Task from './Task'
 
@@ -178,8 +210,10 @@ test('renders content', () => {
 })
 ```
 
-There are also other methods, e.g. [getByTestId](https://testing-library.com/docs/queries/bytestid/),
-that look for elements based on id-attributes that are inserted into the code specifically for testing purposes.
+> **NB** A more consistent way of selecting elements is using a [data attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
+> that is specifically defined for testing purposes.
+> Using *react-testing-library*, we can leverage the [`getByTestId`](https://testing-library.com/docs/queries/bytestid/) method
+> to select elements with a specified `data-testid` attribute.
 
 ### Debugging tests
 
@@ -190,7 +224,7 @@ If we change the test as follows:
 
 ```js
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import Task from './Task'
 
@@ -217,7 +251,7 @@ It is also possible to use the same method to print a wanted element to the cons
 
 ```js
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import Task from './Task'
 
@@ -265,7 +299,7 @@ Testing this functionality can be accomplished by adding another test like this:
 
 ```js
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event' // highlight-line
 import Task from './Task'
@@ -278,17 +312,17 @@ test('clicking the button calls event handler once', async () => {
     important: true
   }
 
-  const mockHandler = jest.fn()
+  const mockHandler = jest.fn()  // highlight-line
 
   render(
-    <Task task={task} toggleImportance={mockHandler} />
+    <Task task={task} toggleImportance={mockHandler} />  // highlight-line
   )
 
-  const user = userEvent.setup()
-  const button = screen.getByText('make not important')
-  await user.click(button)
+  const user = userEvent.setup()  // highlight-line
+  const button = screen.getByText('make not important')  // highlight-line
+  await user.click(button)  // highlight-line
 
-  expect(mockHandler.mock.calls).toHaveLength(1)
+  expect(mockHandler.mock.calls).toHaveLength(1)  // highlight-line
 })
 ```
 
@@ -355,7 +389,7 @@ The tests that we added in a new file *Togglable.test.js* are shown below:
 
 ```js
 import React from 'react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Togglable from './Togglable'
@@ -492,7 +526,7 @@ We are now ready to write our test.
 ```js
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
+import '@testing-library/jest-dom'
 import TaskForm from './TaskForm'
 import userEvent from '@testing-library/user-event'
 
@@ -573,7 +607,7 @@ await user.type(inputs[0], 'testing a form...')
 Method `getAllByRole` now returns an array and the right input field is the first element of the array.
 However, this approach is [**brittle**](https://www.callumhart.com/blog/brittle-selectors/) since it relies on the order of the input fields.
 
-Quite often input fields have **placeholder** text that hints user what kind of input is expected.
+Quite often input fields have some **placeholder** text that provides hints to the user about what kind of input is expected.
 Let us add a placeholder to our form:
 
 ```js
@@ -624,7 +658,7 @@ The most flexible way of finding elements in tests is the method `querySelector`
 as was mentioned [earlier in this part](/part5/testing_react_apps#searching-for-content-in-a-component).
 Any CSS selector can be used with this method for searching elements in tests.
 
-Consider e.g. that we would define a unique `id` to the input field:
+For example, if we added a unique `id` to the input field:
 
 ```js
 const TaskForm = ({ createTask }) => {
@@ -735,11 +769,10 @@ test('does not render this', () => {
 
 ### Test coverage
 
-We can easily find out the [**coverage**](https://github.com/facebookincubator/create-react-app/blob/ed5c48c81b2139b4414810e1efe917e04c96ee8d/packages/react-scripts/template/README.md#coverage-reporting)
-of our tests by running them with the command.
+We can easily find out the [**coverage**](https://jestjs.io/blog/2020/01/21/jest-25#v8-code-coverage) of our tests by running them with the command.
 
 ```js
-CI=true npm test -- --coverage
+npm test -- --coverage --collectCoverageFrom='src/**/*.{jsx,js}'
 ```
 
 ![terminal output of test coverage](../../images/5/18ea.png)
@@ -774,7 +807,7 @@ Make a test, which ensures that if the ***like*** button is clicked twice, the e
 #### 5.16: Watchlist tests, step4
 
 Make a test for the Recommend new show form.
-The test should check, that the form calls the event handler it received as props with the right details when a new show is added.
+The test should check if the form calls the event handler it received as props with the right details when a new show is added.
 
 </div>
 
@@ -791,13 +824,14 @@ Unit testing is useful at times, but ***even a comprehensive suite of unit tests
 
 We could also make integration tests for the frontend.
 **Integration testing** tests the collaboration of multiple components.
-It is considerably more difficult than unit testing, as we would have to for example mock data from the server.
+It is considerably more difficult than unit testing.
+For example, we would have to mock data from the server.
 We will concentrate on making end-to-end tests to test the whole application.
 We will work on the end-to-end tests in the next section.
 
 ### Snapshot testing
 
-Jest offers a completely different alternative to "traditional" testing called [**snapshot**](https://facebook.github.io/jest/docs/en/snapshot-testing.html) testing.
+Jest offers a completely different alternative to "traditional" testing called [**snapshot testing**](https://facebook.github.io/jest/docs/en/snapshot-testing.html).
 The interesting feature of snapshot testing is that **developers do not need to define any tests themselves**, it is simple enough to adopt snapshot testing.
 
 The fundamental principle is to compare the HTML code defined by the component after it has changed to the HTML code that existed before it was changed.

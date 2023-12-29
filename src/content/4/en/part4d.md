@@ -10,7 +10,8 @@ lang: en
 Users must be able to log into our application, and when a user is logged in,
 their user information must automatically be attached to any new tasks they create.
 
-We will now implement support for [**token-based authentication**](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works) to the backend.
+We will now implement support for
+[**token-based authentication**](https://www.digitalocean.com/community/tutorials/the-ins-and-outs-of-token-based-authentication#how-token-based-works) to the backend.
 
 The principles of token-based authentication are depicted in the following sequence diagram:
 
@@ -23,8 +24,7 @@ The principles of token-based authentication are depicted in the following seque
     - The token is signed digitally, making it highly impracticable to falsify cryptographically
 - The backend responds with a status code indicating the operation was successful and returns the token with the response.
 - The browser saves the token, for example to the state of a React application.
-- When the user creates a new task (or does some other operation requiring identification),
-the React code sends the token to the server with the request.
+- When the user creates a new task (or does some other operation requiring identification), the React code sends the token to the server with the request.
 - The server uses the token to identify the user
 
 Let's first implement the functionality for logging in.
@@ -34,7 +34,7 @@ Install the [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) library, 
 npm install jsonwebtoken
 ```
 
-The code for login functionality goes to the file controllers/login.js.
+The code for login functionality goes to the file *controllers/login.js*.
 
 ```js
 const jwt = require('jsonwebtoken')
@@ -72,17 +72,37 @@ module.exports = loginRouter
 ```
 
 The code starts by searching for the user from the database by the `username` attached to the request.
+
+```js
+const user = await User.findOne({ username })
+```
+
 Next, it checks the `password`, also attached to the request.
+
+```js
+const passwordCorrect = user === null
+  ? false
+  : await bcrypt.compare(password, user.passwordHash)
+```
+
 Because the passwords themselves are not saved to the database, but **hashes** calculated from the passwords,
 the `bcrypt.compare` method is used to check if the password is correct:
 
 ```js
-await bcrypt.compare(body.password, user.passwordHash)
+await bcrypt.compare(password, user.passwordHash)
 ```
 
 If the user is not found, or the password is incorrect,
-the request is responded to with the status code [401 unauthorized](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2).
+the request is responded with the status code [401 unauthorized](https://www.rfc-editor.org/rfc/rfc9110.html#name-401-unauthorized).
 The reason for the failure is explained in the response body.
+
+```js
+if (!(user && passwordCorrect)) {
+  return response.status(401).json({
+    error: 'invalid username or password'
+  })
+}
+```
 
 If the password is correct, a token is created with the method `jwt.sign`.
 The token contains the username and the user id in a digitally signed form.
@@ -102,6 +122,12 @@ The value for the environment variable must be set in the *.env* file.
 
 A successful request is responded to with the status code **200 OK**.
 The generated token and the username of the user are sent back in the response body.
+
+```js
+response
+  .status(200)
+  .send({ token, username: user.username, name: user.name })
+```
 
 Now the code for login just has to be added to the application by adding the new router to *app.js*.
 
@@ -133,11 +159,11 @@ Response code: 500 (Internal Server Error); Time: 235ms (235 ms); Content length
 The command `jwt.sign(userForToken, process.env.SECRET)` fails.
 We forgot to set a value to the environment variable `SECRET`.
 It can be any string.
-When we set the value in file *.env*, and stop and start the npm process, the login works.
+When we set the value in file *.env*, (and restart the server), the login works.
 
 A successful login returns the user details and the token:
 
-![vs code rest resonse showing details and token](../../images/4/18ea.png)
+![vs code rest response showing details and token](../../images/4/18ea.png)
 
 A wrong username or password returns an error message and the proper status code:
 
@@ -175,8 +201,8 @@ const jwt = require('jsonwebtoken') //highlight-line
 //highlight-start
 const getTokenFrom = request => {
   const authorization = request.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7)
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
   }
   return null
 }
@@ -185,11 +211,9 @@ const getTokenFrom = request => {
 tasksRouter.post('/', async (request, response) => {
   const body = request.body
 //highlight-start
-  const token = getTokenFrom(request)
-
-  const decodedToken = jwt.verify(token, process.env.SECRET)
+  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
   if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
+    return response.status(401).json({ error: 'token invalid' })
   }
 
   const user = await User.findById(decodedToken.id)
@@ -213,7 +237,6 @@ tasksRouter.post('/', async (request, response) => {
 The helper function `getTokenFrom` isolates the token from the ***authorization*** header.
 The validity of the token is checked with `jwt.verify`.
 The method also decodes the token, or returns the Object which the token was based on.
-If there is no token passed, it will return the error `"jwt must be provided"`.
 
 ```js
 const decodedToken = jwt.verify(token, process.env.SECRET)
@@ -228,7 +251,7 @@ is returned and the reason for the failure is explained in the response body.
 ```js
 if (!decodedToken.id) {
   return response.status(401).json({
-    error: 'token missing or invalid'
+    error: 'token invalid'
   })
 }
 ```
@@ -383,9 +406,9 @@ This kind of solution is often called a **server-side session**.
 
 The negative aspect of server-side sessions is the increased complexity in the backend and also the effect on performance
 since the token validity needs to be checked for each API request to the database.
-A database access is considerably slower compared to checking the validity of the token itself.
+Database access is considerably slower compared to checking the validity of the token itself.
 That is why it is quite common to save the session corresponding to a token to a **key-value database** such as [Redis](https://redis.io/)
-that is limited in functionality compared to a MongoDB or relational database but extremely fast in some usage scenarios.
+that is limited in functionality compared to a MongoDB or relational databases but extremely fast in some usage scenarios.
 
 When server-side sessions are used, the ***token is a random string*** (quite often).
 The token does not include any information about the user as it is quite often the case when jwt-tokens are used.
@@ -404,6 +427,8 @@ On the other hand, the production version of our application is on Render, so ou
 Render routes all traffic between a browser and the Render server over HTTPS.
 
 We will implement login to the frontend in the [next part](/part5).
+
+> NOTE: At this stage, in the deployed tasks app, it is expected that the creating a task feature will stop working as the backend login feature is not yet linked to the frontend.
 
 </div>
 
@@ -484,7 +509,7 @@ The user identified by the token is designated as the recommender of that show.
 
 #### 4.20*: watchlist expansion, step8
 
-[This example](/part4/token_authentication) from part 4 shows taking the token from the header with the `getTokenFrom` helper function.
+[This example](/part4/token_authentication) from part 4 shows taking the token from the header with the `getTokenFrom` helper function in *controllers/shows.js*.
 
 If you used the same solution, refactor taking the token to a [middleware](/part3/node_js_and_express#middleware).
 The middleware should take the token from the ***Authorization*** header and place it into the `token` field of the `request` object.
@@ -570,8 +595,11 @@ Notice that it is possible to register a middleware only for a specific set of r
 So instead of using `userExtractor` with all the routes,
 
 ```js
+const middleware = require('../utils/middleware');
+// ...
+
 // use the middleware in all routes
-app.use(userExtractor) // highlight-line
+app.use(middleware.userExtractor) // highlight-line
 
 app.use('/api/shows', showsRouter)  
 app.use('/api/users', usersRouter)
@@ -581,8 +609,11 @@ app.use('/api/login', loginRouter)
 we could register it to be only executed with path ***/api/shows*** routes:
 
 ```js
+const middleware = require('../utils/middleware');
+// ...
+
 // use the middleware only in /api/shows routes
-app.use('/api/shows', userExtractor, showsRouter) // highlight-line
+app.use('/api/shows', middleware.userExtractor, showsRouter) // highlight-line
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 ```
@@ -591,7 +622,10 @@ As can be seen, this happens by chaining multiple middlewares as the parameter o
 It would also be possible to register a middleware only for a specific operation:
 
 ```js
-router.post('/', userExtractor, async (request, response) => {
+const middleware = require('../utils/middleware');
+// ...
+
+router.post('/', middleware.userExtractor, async (request, response) => {
   // ...
 }
 ```

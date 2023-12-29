@@ -1,5 +1,6 @@
 import './PrevNext.scss';
 
+import translationProgress from '../../utils/translationProgress';
 import Element from '../Element/Element';
 import { Link } from 'gatsby';
 import { PropTypes } from 'prop-types';

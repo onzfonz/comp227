@@ -6,7 +6,7 @@ import './Footer.scss';
 
 import Element from '../Element/Element';
 import { Image } from '../Image/Image';
-import houston from '../../images/company_logos/houston.svg';
+import houston from '../../images/company_logos/houston2.svg';
 import { getNavigation } from '../Navigation/Navigation';
 import yliopisto from '../../images/company_logos/uoh_centre.svg';
 import pacific from '../../images/company_logos/pacific.svg';

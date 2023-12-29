@@ -40,15 +40,15 @@ Let's install the package with the command:
 npm install react-bootstrap
 ```
 
-Then let's add a `link` for [loading a Bootstrap CSS stylesheet](https://react-bootstrap.github.io/getting-started/introduction#stylesheets)
+Then let's add a `link` for [loading a Bootstrap CSS stylesheet](https://react-bootstrap.github.io/docs/getting-started/introduction#stylesheets)
 inside of the *`head`* tag in the *public/index.html* file of the application:
 
 ```js
 <head>
   <link
     rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
     crossorigin="anonymous"
   />
   // ...
@@ -82,7 +82,7 @@ The content is no longer as close to the edges of the browser as it was earlier:
 #### Bootstrap Table
 
 Next, let's make some changes to the `Tasks` component so that it renders the list of tasks as a [table](https://getbootstrap.com/docs/4.1/content/tables/).
-React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/components/table/) component for this purpose,
+React Bootstrap provides a built-in [Table](https://react-bootstrap.github.io/docs/components/table/) component for this purpose,
 so there is no need to define CSS classes separately.
 
 ```js
@@ -123,7 +123,7 @@ The appearance of the application is a tad bit more stylish:
 
 Let's improve the form in the `Login` view with the help of Bootstrap [forms](https://getbootstrap.com/docs/4.1/components/forms/).
 
-React Bootstrap provides built-in [components](https://react-bootstrap.github.io/forms/overview/)
+React Bootstrap provides built-in [components](https://react-bootstrap.github.io/docs/forms/overview/)
 for creating forms (although the documentation for them is slightly lacking):
 
 ```js
@@ -139,14 +139,16 @@ let Login = (props) => {
             type="text"
             name="username"
           />
+        </Form.Group>
+        <Form.Group>
           <Form.Label>password:</Form.Label>
           <Form.Control
             type="password"
           />
-          <Button variant="primary" type="submit">
-            login
-          </Button>
         </Form.Group>
+        <Button variant="primary" type="submit">
+          login
+        </Button>
       </Form>
     </div>
   )
@@ -195,7 +197,7 @@ const App = () => {
 ```
 
 We will then *render the message as a Bootstrap [Alert](https://getbootstrap.com/docs/4.1/components/alerts/) component*.
-Once again, the React Bootstrap library provides us with a matching [React component](https://react-bootstrap.github.io/components/alerts/):
+Once again, the React Bootstrap library provides us with a matching [React component](https://react-bootstrap.github.io/docs/components/alerts/):
 
 ```js
 <div className="container">
@@ -215,7 +217,7 @@ You'll need to import the Alert library from react-bootstrap as well here.
 #### Navigation structure in Bootstrap
 
 Lastly, let's alter the application's navigation menu to use Bootstrap's [Navbar](https://getbootstrap.com/docs/4.1/components/navbar/) component.
-The React Bootstrap library provides us with [matching built-in components](https://react-bootstrap.github.io/components/navbar/#navbars-mobile-friendly).
+The React Bootstrap library provides us with [matching built-in components](https://react-bootstrap.github.io/docs/components/navbar/#responsive-behaviors).
 Through trial and error, we end up with a working solution despite the cryptic documentation, replacing our existing navigation links.
 
 ```js
@@ -509,7 +511,7 @@ It's up to you which one you find better looking.
 Honestly, I haven't used either extensively, but I see both favorably.
 The MaterialUI documentation seems a bit better than react-bootstrap's.
 According to <https://www.npmtrends.com/> which tracks the popularity of different npm-libraries,
-MaterialUI passed react-bootstrap has largely stayed ahead of react bootstrap:
+MaterialUI and react-bootstrap have had different eras in which they've been popular.
 
 ![npmtrends of materialUI vs bootstrap](../../images/7/68ea.png)
 
@@ -575,6 +577,10 @@ If you do not see your favorite UI framework in the list, please make a pull req
 - <https://master.co/>
 - <https://www.radix-ui.com/>
 - <https://nextui.org/>
+- <https://daisyui.com/>
+- <https://ui.shadcn.com/>
+- <https://www.tremor.so/>
+- <https://headlessui.com/>
 
 ### Styled components
 

@@ -142,8 +142,8 @@ app.get('/', (req, res) => {
 
 You don't have to understand the code just yet.
 
-The content of the HTML page has been saved as a template string or a string that allows for evaluating, for example, variables in the midst of it.
-The dynamically changing part of the homepage, the number of saved places (in the code `placeCount`),
+The content of the HTML page has been saved as a template string or a string that allows for evaluating, for example, variables, like `placeCount`.
+The dynamically changing part of the homepage, the number of saved places (in the code `${placeCount}`),
 is replaced by the current number of places (in the code `places.length`) in the template string.
 
 Writing HTML amid the code is of course not smart, but for PHP programmers, it was a normal practice.
@@ -212,7 +212,7 @@ The sample code in this part is *not relevant at all* to the coding techniques o
 
 > Some might wonder why `xhttp` object is used instead of the modern `fetch`.
   This is because we don't want to get into promises at all yet, and the code having a secondary role in this part.
-  We'll discuss savvier ways to make requests to the server in part 2.
+  We'll discuss savvier ways to make requests to the server in [part 2](/part2).
 
 Immediately after fetching the `script` tag, the browser begins to execute the code.
 
@@ -474,7 +474,7 @@ Those two are not as important to our current discussion.
 
 A class selector definition always starts with a period and contains the name of the class.
 
-The classes can be applied to HTML elements as [**attributes**](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class).
+Classes are [**attributes**](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/class), which can be added to HTML elements.
 
 CSS attributes can be examined on the ***Elements*** tab of the console:  
 
@@ -495,7 +495,7 @@ JavaScript code uses the id to find the element.
 
 The ***Elements*** tab of the console can be used to change the styles of the elements.
 
-![developer tools elements tab](../../images/0/18e.png)
+![developer tools elements tab showing CSS rules applied to container class](../../images/0/18e.png)
 
 Changes made on the console will not be permanent.
 If you want to make lasting changes, they must be saved to the CSS style sheet on the server.
@@ -590,8 +590,8 @@ The places page of the application follows an early-nineties style of web develo
 As such, it's on the crest of the wave of early 2000s web technology.
 
 [**AJAX**](https://en.wikipedia.org/wiki/Ajax_(programming)) (Asynchronous JavaScript and XML)
-is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach.
-AJAX enables the fetching of content to web pages using JavaScript included within the HTML, without the need to rerender the page.
+is a term introduced in February 2005 on the back of advancements in browser technology to describe a new revolutionary approach to fetching content.
+AJAX enabled the fetching of content to web pages using JavaScript included within the HTML, without needing to re-render the page.
 
 Before the AJAX era, all web pages worked like the
 [traditional web application](/part0/fundamentals_of_web_apps#traditional-web-applications)
@@ -609,7 +609,7 @@ as they don't follow the generally acknowledged conventions of [RESTful](https:/
 which we'll look into more in [part 3](/part3).
 
 The term AJAX is now so commonplace that it's taken for granted.
-The term, like *shindig* and *home skillet*, has faded out of our collective consciousness.
+The term *AJAX*, like *shindig* and *home skillet*, has faded out of our collective consciousness.
 
 ### Single page app
 
@@ -741,7 +741,7 @@ However, the popularity of Angular plummeted in October 2014 after the
 and Angular 2 will not be backwards compatible with the first version.
 Angular 2 and the newer versions have not gotten too warm of a welcome.
 
-Currently, one of the most popular tools for implementing the browser-side logic of web applications is Facebook's [React](https://reactjs.org/) library.
+Currently, one of the most popular tools for implementing the browser-side logic of web applications is Facebook's [React](https://react.dev/) library.
 During this course, we will get familiar with React and other technologies which are frequently used together.
 
 The status of React seems strong, but the world of JavaScript is ever-changing.

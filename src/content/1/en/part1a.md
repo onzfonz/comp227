@@ -7,11 +7,11 @@ lang: en
 
 <div class="content">
 
-We will now start getting familiar with probably the most important topic of this course, namely the [React](https://reactjs.org/) library.
+We will now start getting familiar with probably the most important topic of this course, namely the [React](https://react.dev/) library.
 Let's start by making a simple React application as well as getting to know the core concepts of React.
 
-The easiest way to get started by far is by using a tool called [create-react-app](https://github.com/facebook/create-react-app).
-It is possible (but not necessary) to install *create-react-app* on your machine if the *npm* tool that was installed along with Node has a version number of at least *5.3*.
+The easiest way to get started by far is by using a tool called
+[Vite](https://vitejs.dev/).
 
 First, visit the classroom link: <http://go.djosv.com/227lab1>
 and use the steps outlined [from part 0c](/part0/configuring_your_machine_for_this_course) to
@@ -42,8 +42,10 @@ it might make sense to do so now.
 With your terminal now open you can type the following:
 
 ```bash
-npx create-react-app reading
+npm create vite@latest reading -- --template react
+
 cd reading
+npm install
 ```
 
 Say yes to any prompts that appear asking you to update or that ask you to allow access.
@@ -51,25 +53,32 @@ Say yes to any prompts that appear asking you to update or that ask you to allow
 Once you are in the reading directory, start our application by typing:
 
 ```bash
-npm start
+npm run dev
 ```
 
-By default, the application runs on localhost port 3000 with the address <http://localhost:3000>
+The console says that the application has started on localhost port 5173, i.e. the address <http://localhost:5173/>:
+
+![terminal showing vite launched in 5173](../../images/1/1-vite1.png)
 
 Your default browser should launch automatically.
 Open the browser console (***Ctrl-Shift-I***) **immediately**.
 Also, open a text editor so that you can view the code as well as the webpage at the same time on the screen:
 
-![code and browser side by side](../../images/1/1e.png)
+Vite starts the application [by default](https://vitejs.dev/config/server-options.html#server-port) on port 5173.
+If it is not free, Vite uses the next free port number.
 
 You can collapse lab0 and close the README.md from that lab that we had from the previous folder.
 Because we attached the projects, you'll need to make sure that you are editing the correct file, which you can check in the upper left breadcrumb trail.
 
 The code of the application resides in the *reading/src* folder.
 Let's simplify the default code such that the contents of the file *index.js* looks like this:
+Open the browser and a text editor so that you can view the code as well as the webpage at the same time on the screen:
+
+![code and browser side-by-side](../../images/1/1-vite4.png)
+
+The code of the application resides in the *src* folder. Let's simplify the default code such that the contents of the file main.jsx looks like this:
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
@@ -77,7 +86,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-and file *App.js* looks like this
+and file *App.jsx* looks like this
 
 ```js
 const App = () => (
@@ -103,18 +112,55 @@ If you use safe delete, you should not see any warnings about the files being us
 
 If you do see warnings, then you way want to read [this future section about react version differences](/part1/a_more_complex_state_debugging_react_apps/#old-react).
 
+### create-react-app
+
+Instead of Vite you can also use the older generation tool [*create-react-app*](https://github.com/facebookincubator/create-react-app) in the course to set up the applications.
+The most visible difference to Vite is the name of the application startup file, which is *index.js*.
+
+The way to start the application is also different in create-react-app (AKA ***CRA***), it is started with a command
+
+```bash
+npm start
+```
+
+in contrast to Vite's
+
+```bash
+npm run dev 
+```
+
+This year the course has been updated to vite,
+though some parts may still use the application base created with `create-react-app`.
+
 ### Component
 
-The file *App.js* now defines a [React component](https://reactjs.org/docs/components-and-props.html) with the name `App`.
-The command on the final line of file *index.js*, namely:
+The file *App.jsx* now defines a [React component](https://react.dev/learn/your-first-component) with the name `App`.
+The command on the final line of file *main.jsx*
 
 ```js
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-renders its contents into the file *public/index.html*, inside a `div` element that has the `id` value 'root'.
+renders its contents into the file *public/index.html*, inside a `div` element that has the `id` value `'root'`.
 
 By default, the file *public/index.html* doesn't contain any HTML markup that is visible to us in the browser.
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+```
+
 You can try adding some HTML to the file.
 However, when using React, all content that needs to be rendered is usually defined as React components.
 
@@ -224,7 +270,7 @@ Did you remember your promise to keep the console open? What was printed out the
 
 It seems like React components are returning HTML markup.
 However, this is not the case.
-The layout of React components is mostly written using [JSX](https://reactjs.org/docs/introducing-jsx.html).
+The layout of React components is mostly written using [JSX](https://react.dev/learn/writing-markup-with-jsx).
 Although JSX looks like HTML, we are dealing with a way to write JavaScript.
 Under the hood, JSX returned by React components is compiled into JavaScript.
 
@@ -249,11 +295,12 @@ const App = () => {
 ```
 
 The compilation is handled by [Babel](https://babeljs.io/repl/).
-Projects created with *create-react-app* are configured to compile automatically.
+Projects created with *vite* or *create-react-app* are configured to compile automatically.
 We will learn more about this topic in [part 7](/part7) of this course.
 
 It is also possible to write React as "pure JavaScript" without using JSX.
-Just like it's possible to chisel one of your programs from undergrad into a stone tablet. In either case, I wouldn't recommend it.
+Just like it's possible to chisel one of your old programming projects onto a stone tablet.
+In either case, I wouldn't recommend it.
 
 In practice, JSX is much like HTML with the distinction that with JSX you can easily embed dynamic content by writing appropriate JavaScript within curly braces.
 The idea of JSX is quite similar to many templating languages, such as Thymeleaf used along with Java Spring, which are used on servers.
@@ -276,7 +323,7 @@ This is also referred to as a **self-closing tag**.
 
 ### Multiple components
 
-Let's modify the file *App.js* as follows:
+Let's modify the file *App.jsx* as follows:
 
 ```js
 // highlight-start
@@ -320,6 +367,9 @@ const App = () => {
 }
 ```
 
+> NB: `export` at the bottom will be left out of any future examples.
+> It is still needed for the code to work.
+
 Writing components with React is easy, and by combining components, even a more complex application can be kept fairly maintainable.
 Indeed, a core philosophy of React is composing applications from many specialized reusable components.
 
@@ -329,7 +379,7 @@ there are situations where the component `App` is not exactly the root, but is w
 
 ### props: passing data to components
 
-It is possible to pass data to components using so-called [props](https://reactjs.org/docs/components-and-props.html).
+It is possible to pass data to components using so-called [**props**](https://react.dev/learn/passing-props-to-a-component).
 
 Let's modify the component `Greet` as follows:
 
@@ -392,6 +442,42 @@ const App = () => {
 
 The props sent by the component `App` are the values of the variables, the result of the evaluation of the sum expression and a regular string.
 
+### Possible error message
+
+Depending on the editor you are using, you may receive the following error message at this point:
+
+![vs code showing name is missing in props validation](../../images/1/1-vite5.png)
+
+It's not an actual error, but a warning caused by the [ESLint](https://eslint.org/) tool.
+You can silence the warning [`react/prop-types`](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)
+by adding to the file *.eslintrc.js* the next line
+
+```js
+module.exports = {
+   root: true,
+   env: { browser: true, es2020: true },
+   extends: [
+     'eslint:recommended',
+     'plugin:react/recommended',
+     'plugin:react/jsx-runtime',
+     'plugin:react-hooks/recommended',
+   ],
+   ignorePatterns: ['dist', '.eslintrc.js'],
+   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+   settings: { react: { version: '18.2' } },
+   plugins: ['react-refresh'],
+   rules: {
+     'react-refresh/only-export-components': [
+       'warn',
+       { allowConstantExport: true },
+     ],
+     'react/prop-types': 0 // highlight-line
+   },
+}
+```
+
+We will get to know ESLint in more detail [in part 3](/part3/validation_and_es_lint#lint).
+
 ### Some tips
 
 React generates helpful error messages.
@@ -399,7 +485,7 @@ Despite this, you should, at least in the beginning, advance in **very small ste
 
 **The console should always be open**.
 If the browser reports errors, don't continue writing more code, hoping for miracles.
-You should instead try to understand the cause of the error and, for example, go back to the previous working state:
+Instead, try to understand the cause of the error and, for example, go back to the previous working state:
 
 ![screenshot of undefined prop error](../../images/1/2a.png)
 
@@ -475,7 +561,7 @@ const App = () => {
 However, when defining the root component of the application this is not a particularly wise thing to do, and it makes the code look a bit ugly.
 
 Because the root element is stipulated, we have "extra" div elements in the DOM tree.
-This can be avoided by using [fragments](https://reactjs.org/docs/fragments.html#short-syntax),
+This can be avoided by using [fragments](https://react.dev/reference/react/Fragment),
 i.e. by wrapping the elements to be returned by the component with an empty element:
 
 ```js
@@ -495,6 +581,110 @@ const App = () => {
 ```
 
 It now compiles successfully, and the DOM generated by React no longer contains the extra div element.
+
+### Do not render objects
+
+Consider an application that prints the names and ages of some of our friends on the screen.
+Imagine this is code that you wrote:
+
+```js
+const App = () => {
+  const friends = [
+    { name: 'Monica', age: 24 },
+    { name: 'Joey', age: 25 },
+  ]
+
+  return (
+    <div>
+      <p>{friends[0]}</p>
+      <p>{friends[1]}</p>
+    </div>
+  )
+}
+
+export default App
+```
+
+However, once you try running the code, nothing appears on the screen.
+You try to find a problem in the code for 15 minutes, but you can't figure out where the problem could be.
+
+All of sudden, you remember the promise we made:
+
+> *I promise to keep the console open all the time during this course, and for the rest of my life when I'm doing web development*
+
+The console screams in red:
+
+![devtools showing error with highlight around "Objects are not valid as a React child"](../../images/1/34new.png)
+
+The core of the problem is *Objects are not valid as a React child*, i.e. the application tries to render *objects* and it fails again.
+
+The code tries to render the information of one friend as follows:
+
+```js
+<p>{friends[0]}</p>
+```
+
+and this causes a problem because the item to be rendered in the braces is an object.
+
+```js
+{ name: 'Monica', age: 24 }
+```
+
+In React, the *individual items rendered in braces must be primitive values*, such as numbers or strings.
+
+Here's the fix:
+
+```js
+const App = () => {
+  const friends = [
+    { name: 'Monica', age: 24 },
+    { name: 'Joey', age: 25 },
+  ]
+
+  return (
+    <div>
+      <p>{friends[0].name} {friends[0].age}</p> // highlight-line
+      <p>{friends[1].name} {friends[1].age}</p> // highlight-line
+    </div>
+  )
+}
+
+export default App
+```
+
+So now our first friend's name is rendered separately inside the curly braces
+
+```js
+{friends[0].name}
+```
+
+as *`Monica`* and her age
+
+```js
+{friends[0].age}
+```
+
+as *`24`*.
+
+After correcting the error, you should clear the console's error messages by pressing the 🚫 icon in the developer tools.
+Then, reload the page content and make sure that no error messages are displayed.
+
+> React also allows arrays to be rendered *if* the array contains values ​​that are eligible for rendering (such as numbers or strings).
+> So the following program would work, although the result might not be what we want:
+>
+> ```js
+> const App = () => {
+>   const friends = [ 'Monica', 'Joey']
+> 
+>   return (
+>     <div>
+>       <p>{friends}</p>
+>     </div>
+>   )
+> }
+> ```
+
+In this part, it is not even worth trying to use the direct rendering of the tables, we will come back to it in the next part.
 
 </div>
 
@@ -537,7 +727,6 @@ Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* f
 Modify *index.js* to match the following
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
@@ -545,7 +734,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-and *App.js* to match the following
+and *App.jsx* to match the following
 
 ```js
 const App = () => {
@@ -585,7 +774,7 @@ All data still resides in the `App` component, which passes the necessary data t
 `Header` takes care of rendering the name of the course,
 `Content` renders the parts and their number of exercises and `Total` renders the total number of exercises.
 
-Define the new components in the file *App.js*.
+Define the new components in the file *App.jsx*.
 
 The `App` component's body will approximately be as follows:
 
@@ -603,9 +792,9 @@ const App = () => {
 }
 ```
 
-**WARNING** make sure that you are back in the base portion of your directory before you use `create-react-app`.
-Calling it from inside our repo will do what we want.
-If we call it outside of our repo it will automatically make the project a git repository, which we don't want!
+**WARNING** Don't try to program all the components concurrently,
+because that will almost certainly break down the whole app.
+Proceed in small steps, first make e.g. the component *Header* and only when it works for sure, you could proceed to the next component.
 
 Also, do not try to program all the components at the same time.
 You need to go in small steps, like first make the component *Header* and when that works, **commit** the change and then ***then*** proceed to the next component.

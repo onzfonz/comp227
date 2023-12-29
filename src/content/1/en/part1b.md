@@ -11,14 +11,14 @@ During the course, we have a goal and a need to learn a sufficient amount of Jav
 
 JavaScript has advanced rapidly in the last few years and in this course, we use features from the newer versions.
 The official name of the JavaScript standard is [ECMAScript](https://en.wikipedia.org/wiki/ECMAScript).
-At this moment, the latest version is the one released in June of 2022 with the name
-[ECMAScript®2022](https://www.ecma-international.org/ecma-262/), otherwise known as ES13.
+At this moment, the latest version is the one released in June of 2023 with the name
+[ECMAScript®2023](https://tc39.es/ecma262/2023/), otherwise known as ES14.
 
 Browsers do not yet support all of JavaScript's newest features.
 Due to this fact, a lot of code run in browsers has been *transpiled* from a newer version of JavaScript to an older, more compatible version.
 
 Today, the most popular way to transpile is via [Babel](https://babeljs.io/).
-Transpilation is automatically configured in React applications created with create-react-app.
+Transpilation is automatically configured in React applications created with Vite.
 We will take a closer look at transpilation in [part 7](/part7) of this course.
 
 [Node.js](https://nodejs.org/en/) is a JavaScript runtime environment based on Google's [Chrome V8](https://developers.google.com/v8/)
@@ -31,7 +31,7 @@ The code is written into files ending with *.js* that are run by issuing the com
 
 It is also possible to write JavaScript code into the Node.js console,
 which is opened by typing `node` in the command line, as well as into the browser's developer tool console.
-[The newest revisions of Chrome handle the newer features of JavaScript pretty well](http://kangax.github.io/compat-table/es2016plus/) without transpiling the code.
+[The newest revisions of Chrome handle the newer features of JavaScript pretty well](https://compat-table.github.io/compat-table/es2016plus/) without transpiling the code.
 Alternatively, you can use a tool like [JS Bin](https://jsbin.com/?js,console).
 
 JavaScript is sort of reminiscent, both in name and syntax, to Java.
@@ -89,7 +89,7 @@ console.log(t.length) // 4 is printed
 console.log(t[1])     // -1 is printed
 
 t.forEach(value => {
-  console.log(value)  // numbers 1, -1, 3, 5 are printed, each to own line
+  console.log(value)  // numbers 1, -1, 3, 5 are printed, each on its own line
 })                    
 ```
 
@@ -98,7 +98,7 @@ Because the array is an object, the variable always points to the same object.
 However, the content of the array changes as new items are added to it.
 
 One way of iterating through the items of the array is using `forEach` as seen in the example.
-ForEach receives a **function** defined using the arrow syntax as a parameter.
+`forEach`` receives a **function** defined using the arrow syntax as a parameter.
 
 ```js
 value => {
@@ -106,19 +106,19 @@ value => {
 }
 ```
 
-ForEach calls the function *for each of the items in the array*, always passing the individual item as an argument.
+`forEach` calls the function ***for each*** *of the items in the array*, always passing the individual item as an argument.
 The function as the argument of `forEach` may also receive [other arguments](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach).
 
 In the previous example, a new item was added to the array using the method [push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push).
 When using React, techniques from functional programming are often used.
 One characteristic of the functional programming paradigm is the use of [immutable](https://en.wikipedia.org/wiki/Immutable_object) data structures.
 In React code, it is preferable to use the method [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat),
-which does not add the item to the array but creates a new array in which the content of the old array and the new item are both included.
+which creates a new array with the added item, leaving the original array unchanged.
 
 ```js
 const t = [1, -1, 3]
 
-const t2 = t.concat(5)
+const t2 = t.concat(5)  // creates new array
 
 console.log(t)  // [1, -1, 3] is printed
 console.log(t2) // [1, -1, 3, 5] is printed
@@ -307,6 +307,12 @@ const Header = (props) => {
   return <h1>{props.course}</h1>
 }
 ```
+
+If and *when* you encounter an error message
+
+> *`Objects are not valid as a React child`*
+
+keep in mind the things told [here](/part1/introduction_to_react#do-not-render-objects).
 
 #### 1.3: handheld arcade info step3
 
@@ -517,7 +523,7 @@ When calling the method through a reference, the method loses knowledge of what 
 Contrary to other languages, in JavaScript the value of
 [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
 is defined based on *how the method is called*.
-When calling the method through a reference the value of `this` becomes the so-called [global object](https://developer.mozilla.org/en-US/docs/Glossary/Global_object)
+When calling the method through a reference, the value of `this` becomes the so-called [global object](https://developer.mozilla.org/en-US/docs/Glossary/Global_object)
 and the end result is often not what the software developer had originally intended.
 
 Losing track of `this` when writing JavaScript code brings forth a few potential issues.
@@ -599,7 +605,7 @@ Check out [Not Awesome: ES6 Classes](https://github.com/petsel/not-awesome-es6-c
 or [Is “Class” In ES6 The New “Bad” Part? on Medium](https://medium.com/@rajaraodv/is-class-in-es6-the-new-bad-part-6c4e6fe1ee65) for more details.
 
 The ES6 class syntax is used a lot in "old" React and also in Node.js, hence an understanding of it is beneficial even in this course.
-However, since we are using the new [Hooks](https://reactjs.org/docs/hooks-intro.html) feature of React throughout this course,
+However, since we are using the new [Hooks](https://react.dev/reference/react) feature of React throughout this course,
 we have no concrete use for JavaScript's class syntax.
 
 ### JavaScript materials
@@ -617,6 +623,11 @@ Another great resource for learning JavaScript is [javascript.info](https://java
   
 The free and highly engaging book [Eloquent JavaScript](https://eloquentjavascript.net) takes you from the basics to interesting stuff quickly.
 It is a mixture of theory projects and exercises and covers general programming theory as well as the JavaScript language.
+
+[Namaste 🙏 JavaScript](https://www.youtube.com/playlist?list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
+is another great and highly recommended free JavaScript tutorial in order to understand how JS works under the hood.
+Namaste JavaScript is a pure in-depth JavaScript course released for free on YouTube.
+It will cover the core concepts of JavaScript in detail and everything about how JS works behind the scenes inside the JavaScript engine.
 
 [egghead.io](https://egghead.io) has plenty of quality screencasts on JavaScript, React, and other interesting topics.
 Unfortunately, some of the material is behind a paywall.

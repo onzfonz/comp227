@@ -8,10 +8,10 @@ lang: en
 <div class="content">
 
 So far, we have followed the state management conventions recommended by React.
-We have placed the state and the functions for handling it in a [single component](https://reactjs.org/docs/lifting-state-up.html),
+We have placed the state and the functions for handling it in a [higher single component](https://react.dev/learn/sharing-state-between-components),
 and then passed the state into the various components that use it.
-Quite often most of the app state and state altering functions reside directly in the root component.
-We then pass the state and its handlers to other components via props.
+Quite often most of the app state and state altering functions reside directly in the *`root`* component.
+We then pass the state and its handlers to other components via *`props`*.
 This works up to a certain point, but when applications grow larger, state management becomes challenging.
 
 ### Flux-architecture
@@ -22,18 +22,18 @@ State in the store is not changed directly, but with different **actions**.
 
 When an ***action changes the state of the store, the views are re-rendered***:
 
-![diagram - action->dispatcher->store->view](https://facebook.github.io/flux/img/overview/flux-simple-f8-diagram-1300w.png)
+![diagram - action->dispatcher->store->view](../../images/6/flux1.png)
 
-For example, if you push a button that then triggered the need to change the state, *that change is made with an action*.
+For example, if you push a button that triggers the need to change the state, *that change will be made with an action*.
 This causes re-rendering the view again:
 
-![same diagram as above but with action looping back](https://facebook.github.io/flux/img/overview/flux-simple-f8-diagram-with-client-action-1300w.png)
+![same diagram as above but with action looping back](../../images/6/flux2.png)
 
 Flux provides a standardized way to store and modify an application's state.
 
 ### Redux
 
-Facebook has an implementation for Flux, but we will be using the [Redux](https://redux.js.org) library.
+Facebook has an implementation for Flux, but we will be using the [Redux library](https://redux.js.org).
 It follows the same principles but is simpler to use.
 Facebook also uses Redux now instead of their original Flux.
 
@@ -41,7 +41,7 @@ We will get to know Redux by implementing a counter application yet again:
 
 ![browser counter application](../../images/6/1.png)
 
-Start with *`create-react-app`*, to get a simple `hello world!` going, and then install *`redux`* with the command
+Start with a new Vite application and then install *`redux`* with the command
 
 ```bash
 npm install redux
@@ -52,7 +52,7 @@ npm install redux
 Like Flux, the state in Redux is housed in a [**store**](https://redux.js.org/basics/store).
 You can think of the store as like a mini-database that redux uses to house information.
 
-Unlike Flux, the whole state of the application is stored in ***one*** JavaScript object in the store.
+Unlike Flux, Redux stores this state in a ***single JavaScript object***.
 Because our application only needs the value of the counter, we will save it straight to the store.
 If the state were more complex, the different values would be saved as separate properties in the object.
 
@@ -67,7 +67,7 @@ Our application will need for example the following action:
 ```
 
 If there is data involved with the action, other fields can be declared as needed.
-However, our counting app is so simple that the actions are fine with just the type field.
+However, our counting app is so simple that the actions are fine with just the *`type`* field.
 
 #### Reducers
 
@@ -105,7 +105,7 @@ Let's also define a [default value](https://developer.mozilla.org/en-US/docs/Web
 Now the reducer works even if the state has not been intialized.
 
 ```js
-const counterReducer = (state = 0, action) => {
+const counterReducer = (state = 0, action) => { // highlight-line
   switch (action.type) {
     case 'INCREMENT':
       return state + 1
@@ -119,18 +119,18 @@ const counterReducer = (state = 0, action) => {
 }
 ```
 
-While `counterReducer` is a function, we are never supposed to call any reducer directly from our code.
+While `counterReducer` is a function, ***we are never supposed to call any reducer directly from our code***.
 Instead, we pass the reducer into the older `createStore` function [(for now)](#a-notice-about-the-use-of-createstore),
 which will handle calling the function:
 
 ```js
-import { createStore } from 'redux'
+import { createStore } from 'redux' // highlight-line
 
 const counterReducer = (state = 0, action) => {
   // ...
 }
 
-const store = createStore(counterReducer)
+const store = createStore(counterReducer) // highlight-line
 ```
 
 The `store` now uses the reducer to handle **actions**,
@@ -176,7 +176,7 @@ If, for example, we would add the following function to `subscribe`, ****every c
 ```js
 store.subscribe(() => {
   const storeNow = store.getState()
-  console.log("breaking news! " + storeNow)
+  console.log('breaking news! ', storeNow)
 })
 ```
 
@@ -187,7 +187,7 @@ const store = createStore(counterReducer)
 
 store.subscribe(() => {
   const storeNow = store.getState()
-  console.log("breaking news! " + storeNow)
+  console.log('breaking news! ', storeNow)
 })
 
 store.dispatch({ type: 'INCREMENT' })
@@ -209,7 +209,7 @@ breaking news! -1
 
 Let's now replace our hello world content with buttons and some visible HTML.
 The entire code is below.
-All of it has been written in *index.js*,
+All of it has been written in *main.jsx*,
 so `store` is directly available everywhere 👀.
 Later on we will focus on properly structuring our React/Redux code.
 
@@ -276,7 +276,8 @@ There are a few notable things in the code.
 The buttons' `onClick` handlers ***dispatch*** the right action object to the `store`.
 
 When `store`'s state changes, *React cannot automatically re-render the application by itself*.
-Thus we have registered a function `renderApp` with `store.subscribe`. Now, ***`renderApp` will re-render the entire app anytmoe `store` changes***.
+Thus we have registered a function `renderApp` with `store.subscribe`.
+Now, ***`renderApp` will re-render the entire app anytmoe `store` changes***.
 *Remember that we have to also directly call `renderApp()`.*
 Otherwise, we would have only defined renderApp and so the first rendering of the app would never happen.
 
@@ -287,7 +288,7 @@ If you move the mouse over the name, an explanation will appear
 
 ![vscode error showing createStore deprecated and to use configureStore](../../images/6/30new.png)
 
-The full explanation is as follows
+Here's an official explanation:
 
 >*We recommend using the `configureStore` method of the **@reduxjs/toolkit** package, which replaces `createStore`.*
 >
@@ -304,7 +305,8 @@ So, since Redux recommends `configureStore` over `createStore`,
 we will start using `configureStore` in the [next section](/part6/many_reducers),
 *but we will continue using `createStore` here as we are still introducing redux concepts*.
 
-> An Aside: `createStore` is defined as **deprecated**. Functions/features that are deprecated are sometimes removed in a future version of a library.
+> An Aside: `createStore` is defined as **deprecated**.
+> Functions/features that are deprecated are sometimes removed in a future version of a library.
 The explanation above and the discussion of [this one](https://stackoverflow.com/questions/71944111/redux-createstore-is-deprecated-cannot-get-state-from-getstate-in-redux-ac)
 reveal that `createStore` will not be removed, and it has been given the status `deprecated`, perhaps to nudge people to use `configureStore` instead.
 
@@ -398,7 +400,7 @@ const taskReducer = (state = [], action) => {
 ```
 
 The `state` here is an Array.
-*`NEW_TASK`* actions cause a new task to be added to the `state` with the [`push`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
+*`NEW_TASK`* actions cause a new task to be added to the `state` with the [`push` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push).
 
 While the application seems to work, our `taskReducer` implementation is unacceptable.
 Unfortunately, `taskReducer` breaks a [basic assumption](https://redux.js.org/tutorials/essentials/part-1-overview-concepts#reducers)
@@ -419,14 +421,14 @@ Calling `state.concat` *creates a new array* that contains all the elements of t
 ```js
 const taskReducer = (state = [], action) => {
   if (action.type === 'NEW_TASK') {
-    return state.concat(action.payload)
+    return state.concat(action.payload) // highlight-line
   }
 
   return state
 }
 ```
 
-**A reducer state must be composed of [*immutable*](https://en.wikipedia.org/wiki/Immutable_object) objects**.
+**A reducer state must be composed of [*immutable objects*](https://en.wikipedia.org/wiki/Immutable_object)**.
 If there is a change in the state, the old object is not changed, but it is ***replaced with a new, changed, object***.
 This is exactly what we did with our revised `taskReducer`: the old `state` array is replaced with the new one.
 
@@ -441,8 +443,11 @@ Let's expand our reducer so that it can handle the change of a task's importance
 }
 ```
 
+### TDD with Redux setup
+
 Since we do not have any code which uses this functionality yet,
 let's expand the reducer via [Test-Driven Development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development).
+Let's start by creating a test for handling the action *`NEW_TASK`*.
 
 In short, TDD follows this three-step process:
 
@@ -450,7 +455,55 @@ In short, TDD follows this three-step process:
 2. Change the code so that it passes all the tests again (***green***)
 3. Refactor the code while ensuring the tests still pass (***refactor***)
 
-Let's start by creating a test for handling the action `NEW_TASK`.
+To follow TDD, we'll need to configure the [Jest](https://jestjs.io/) testing library for the project.
+First, install the following dependencies:
+
+```js
+npm install jest @babel/preset-env @babel/preset-react eslint-plugin-jest --save-dev 
+```
+
+Next we'll create the file *.babelrc*, with the following content:
+
+```json
+{
+    "presets": [
+        "@babel/preset-env",
+        ["@babel/preset-react", { "runtime": "automatic" }]
+    ]
+}
+```
+
+Let us expand *package.json* with a script for running the tests:
+
+```json
+{
+    // ...
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+        "preview": "vite preview",
+        "test": "jest" // highlight-line
+    },
+    // ...
+}
+```
+
+And finally, *.eslintrc.js* needs to be altered as follows:
+
+```js
+module.exports = {
+    root: true,
+    env: { 
+        browser: true,
+        es2020: true,
+        "jest/globals": true // highlight-line
+    },
+    // ...
+}
+```
+
+### Testing and Deep Freeze
 
 To make testing easier, we'll first move the reducer's code to its own module to file *src/reducers/taskReducer.js*.
 We'll also add the library [deep-freeze](https://www.npmjs.com/package/deep-freeze),
@@ -492,6 +545,8 @@ The `deepFreeze(state)` command ensures that the reducer does not change the sta
 If the reducer uses the `push` command to manipulate the state, the test will not pass
 
 ![terminal showing test failure and error about not using array.push](../../images/6/2.png)
+
+### Our first redux test - toggling importance
 
 Now that we setup our first step, let's start with TDD.
 We have yet to implement the functionality for toggling the importance of a task.
@@ -613,7 +668,7 @@ by using JavaScript's [*spread operator syntax*](https://developer.mozilla.org/e
 const taskReducer = (state = [], action) => {
   switch(action.type) {
     case 'NEW_TASK':
-      return [...state, action.payload]
+      return [...state, action.payload] // highlight-line
     case 'TOGGLE_IMPORTANCE':
       // ...
     default:
@@ -623,7 +678,7 @@ const taskReducer = (state = [], action) => {
 ```
 
 Here's how the spread syntax works.
-If we declare
+If we declare:
 
 ```js
 const my_physics_midterm_scores = [35, 34, 31]
@@ -784,8 +839,7 @@ Your application can have a modest appearance, nothing else is needed but button
 Let's add the functionality for adding new tasks and changing their importance:
 
 ```js
-const generateId = () =>
-  Number((Math.random() * 1000000).toFixed(0))
+const generateId = () => Number((Math.random() * 1000000).toFixed(0)) // highlight-line
 
 const App = () => {
   // highlight-start
@@ -802,7 +856,9 @@ const App = () => {
       }
     })
   }
+  // highlight-end
 
+  // highlight-start
   const toggleImportance = (id) => {
     store.dispatch({
       type: 'TOGGLE_IMPORTANCE',
@@ -836,7 +892,7 @@ const App = () => {
 
 The implementation of both actions is straightforward.
 Notice that we ***have not bound the state of the form fields to the state of the `App` component*** like we have previously done.
-React calls this kind of form [**uncontrolled**](https://reactjs.org/docs/uncontrolled-components.html).
+React calls this kind of form [**uncontrolled**](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
 
 >***Uncontrolled forms*** have certain limitations (for example, *dynamic error messages* or *disabling the submit button based on an input* are not possible).
 However uncontrolled forms are suitable enough for now.
@@ -844,7 +900,7 @@ However uncontrolled forms are suitable enough for now.
 >If interested, you can [read more about uncontrolled forms](https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/).
 
 Let's review the highlighted code above carefully.
-The method handler `addTask`, other than doing some form maintenance, largely dispatches the action for adding tasks to our `store`:
+The method handler `addTask`, mainly dispatches the action for adding tasks to our `store`:
 
 ```js
 addTask = (event) => {
@@ -935,13 +991,13 @@ const App = () => {
 
 ### Forwarding Redux Store to various components
 
-Aside from the reducer, our application for it to work would have to be in one file.
+Aside from the reducer, our application is in one file. 🧐
 We should separate `App` into its module.
 
 But how can the `App` access the store after the move?
 And more broadly, when a component is composed of many smaller components, ***there must be a way for all of the components to access the store***.
 There are multiple ways to share the Redux store with components.
-The newest (and possibly easiest) way of sharing the store is by using the [hooks](https://react-redux.js.org/api/hooks) API of the [react-redux](https://react-redux.js.org/) library.
+The newest (and possibly easiest) way of sharing the store is by using the [**hooks API**](https://react-redux.js.org/api/hooks) of the [react-redux](https://react-redux.js.org/) library.
 
 First, let's install react-redux
 
@@ -949,10 +1005,10 @@ First, let's install react-redux
 npm install react-redux
 ```
 
-Next, if you haven't done so already, move the `App` component into its own file *App.js*.
+Next, if you haven't done so already, move the `App` component into its own file *App.jsx*.
 Let's see how this affects the rest of the application files.
 
-*index.js* becomes:
+*main.jsx* becomes:
 
 ```js
 import React from 'react'
@@ -1106,10 +1162,10 @@ const App = () => {
 }
 ```
 
-The `useDispatch` hook provides ***any** React component access to **index.js**' `dispatch`'s `store`*.
+The `useDispatch` hook provides ***any** React component access to **main.jsx**' `dispatch`'s `store`*.
 This allows all components to make changes to the state of the Redux `store`.
 
-The component can access the tasks stored in the `store` with the [useSelector](https://react-redux.js.org/api/hooks#useselector) hook of the react-redux library.
+The component can access the tasks stored in the `store` with the [*`useSelector`*](https://react-redux.js.org/api/hooks#useselector) hook of the react-redux library.
 
 ```js
 import { useSelector, useDispatch } from 'react-redux'  // highlight-line
@@ -1154,7 +1210,7 @@ Let's separate creating a new task into a component (*components/NewTask.js*).
 import { useDispatch } from 'react-redux' // highlight-line
 import { createTask } from '../reducers/taskReducer' // highlight-line
 
-const NewTask = () => {
+-const NewTask = () => {
   const dispatch = useDispatch() // highlight-line
 
   const addTask = (event) => {
@@ -1179,7 +1235,7 @@ Unlike in the React code we did without Redux, the event handler for changing th
 *has been moved away from the `App` to a child component*.
 The logic for changing the state in Redux is still neatly separated from the whole React part of the application.
 
-We'll also separate the list of tasks and displaying a single task into their own components (both of which will be placed in the *components/Tasks.js* file ):
+We'll also separate the list of tasks and displaying a single task into their own components (both of which will be placed in the *components/Tasks.js* file):
 
 ```js
 import { useDispatch, useSelector } from 'react-redux' // highlight-line
@@ -1258,7 +1314,7 @@ Remember, to install the dependencies first before trying to run the application
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 After completing the exercises below, your application should look like this:

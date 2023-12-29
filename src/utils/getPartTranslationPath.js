@@ -1,3 +1,5 @@
+import translationProgress from './translationProgress';
+
 const getPartTranslationPath = (language, part, path = '') => {
   return language === 'en'
     ? `/part${part}${path}`

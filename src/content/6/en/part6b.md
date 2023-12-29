@@ -147,7 +147,7 @@ export default filterReducer
 
 We can *create the actual reducer for our application by combining the two existing reducers with the [`combineReducers`](https://redux.js.org/api/combinereducers) function*.
 
-Let's define the combined reducer in the *index.js* file:
+Let's define the combined reducer in *main.jsx*:
 
 ```js
 import React from 'react'
@@ -166,19 +166,20 @@ const reducer = combineReducers({
 })
  // highlight-end
 
-const store = createStore(reducer) //highlight-line
+const store = createStore(reducer) // highlight-line
 
 console.log(store.getState())
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     {/*<App />*/}
-    <div/>
+    <div />
   </Provider>
 )
 ```
 
-> *Since our application breaks at this point, we render a `<div/>` element, commenting out our `<App/>`.* Remember that you can toggle comments with ***Ctrl-/***.
+> *Since our application breaks at this point, we render a `<div />` element, commenting out our `<App />`.* Remember that you can toggle multiline comments with ***Ctrl-Shift-/***.
+>> You could also use ***Ctrl-/***, which will comment out lines individually.
 
 The state of the store gets printed to the console:
 
@@ -202,7 +203,7 @@ Likewise, the `filter` property is managed by the `filterReducer`.
 #### Combined reducers in action
 
 In this section we're going to take a step back from our project to investigate how the combined reducer works.
-Let' simulate changing the filter and creating a task by adding the following to the *index.js* file:
+Let's simulate changing the filter and creating a task by adding the following to the *main.jsx* file:
 
 ```js
 import { createTask } from './reducers/taskReducer'
@@ -239,7 +240,7 @@ but there are situations where *multiple reducers change their respective parts 
 ### Finishing the filters
 
 Let's finish the application so that it uses the combined reducer.
-We start by changing the rendering of the application and hooking up the store to the application in the *index.js* file:
+We start by changing the rendering of the application and hooking up the store to the application in the *main.jsx* file:
 
 ```js
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -465,8 +466,8 @@ First, we will need to install the library:
 npm install @reduxjs/toolkit
 ```
 
-Next, open the *index.js* file which currently creates the Redux store.
-Instead of Redux's `createStore` function, let's create the store using Redux Toolkit's [`configureStore`](https://redux-toolkit.js.org/api/configureStore) function in *index.js*:
+Next, open the *main.jsx* file which currently creates the Redux store.
+Instead of Redux's `createStore` function, let's create the store using Redux Toolkit's [`configureStore`](https://redux-toolkit.js.org/api/configureStore) function in *main.jsx*:
 
 ```js
 import React from 'react'

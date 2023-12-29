@@ -28,6 +28,7 @@ However, E2E tests have some drawbacks too.
 Configuring E2E tests is more challenging than unit or integration tests.
 They also tend to be quite slow, and with a large system, their execution time can be minutes or even hours.
 This is bad for development because during coding it is beneficial to be able to run tests as often as possible in case of code [regressions](https://en.wikipedia.org/wiki/Regression_testing).
+
 Lastly, E2E tests can be [**flaky**](https://docs.cypress.io/guides/cloud/flaky-test-management).
 Flaky tests are undesired because they can change from passing to failing or vice-versa simply *by running the tests again, without even changing any code*.
 
@@ -52,17 +53,19 @@ and by adding an npm-script to run it:
 {
   // ...
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite --host",  // highlight-line
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
     "server": "json-server -p3001 --watch db.json",
-    "eslint": "eslint .",
+    "test": "jest",
     "cypress:open": "cypress open"  // highlight-line
   },
   // ...
 }
 ```
+
+We also made a small change to the `dev` script that starts the application, without the change Cypress can not access the app.
 
 Unlike the frontend's unit tests, *Cypress tests can be in the frontend or the backend repository*, or even in their separate repository.
 
@@ -79,7 +82,7 @@ Let's add an npm script to *the backend* which starts it in test mode, or so tha
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
     "start:test": "cross-env NODE_ENV=test node index.js", // highlight-line
-    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../part3-tasks-backend",
+    "build:ui": "rm -rf dist && cd ../part2-tasks/ && npm run build && cp -r dist ../part3-tasks-backend",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
     "lint": "eslint .",
     "fixlint": "eslint . --fix"
@@ -89,8 +92,12 @@ Let's add an npm script to *the backend* which starts it in test mode, or so tha
 ```
 
 > **NB** To get Cypress working with WSL2 one might need to do some additional configuring first.
-These two [links](https://docs.cypress.io/guides/getting-started/installing-cypress#Windows-Subsystem-for-Linux)
-are great places to [start](https://nickymeuleman.netlify.app/blog/gui-on-wsl2-cypress).
+> These two links:
+>
+> - [Official Cypress Guide](https://docs.cypress.io/guides/getting-started/installing-cypress#Windows-Subsystem-for-Linux)
+> - [Blog on GUI/Cypress](https://nickymeuleman.netlify.app/blog/gui-on-wsl2-cypress)
+>
+> are great places to start.
   
 With the backend running, we can start Cypress via the frontend with the command
 
@@ -116,7 +123,7 @@ Locate it and open it in Webstorm and replace the contents with the code below.
 ```js
 describe('Task app', function() {
   it('front page can be opened', function() {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
     cy.contains('Tasks')
     cy.contains('Task app, Department of Computer Science, University of the Pacific 2023')
   })
@@ -126,7 +133,7 @@ describe('Task app', function() {
 Now, switch back to cypress and click on our task_app file.
 We start the test from the opened window:
 
-![cypress screenshot with run 1 integration spec](../../images/5/40x.png)
+Running the test shows how the application behaves as the test is run:
 
 > **NB**: you may need to restart Cypress if you run into any issues.
 
@@ -149,7 +156,7 @@ We could have declared the test using an arrow function
 ```js
 describe('Task app', () => { // highlight-line
   it('front page can be opened', () => { // highlight-line
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
     cy.contains('Tasks')
     cy.contains('Task app, Department of Computer Science, University of the Pacific 2023')
   })
@@ -165,14 +172,14 @@ So if we extend our test like so
 ```js
 describe('Task app', function() {
   it('front page can be opened',  function() {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
     cy.contains('Tasks')
     cy.contains('Task app, Department of Computer Science, University of the Pacific 2023')
   })
 
 // highlight-start
   it('front page contains random text', function() {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
     cy.contains('this app sus')
   })
 // highlight-end
@@ -232,7 +239,7 @@ describe('Task app',  function() {
   // ...
 
   it('login form can be opened', function() {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
     cy.contains('login').click()
   })
 })
@@ -243,14 +250,14 @@ The test
 1. *searches for the "login" button* by its text
 2. *clicks the button* with the command [`cy.click`](https://docs.cypress.io/api/commands/click.html#Syntax).
 
-Since both of our tests start by opening the page *<http://localhost:3000>*, we should
+Since both of our tests start by opening the page *<http://localhost:5173>*, we should
 separate that shared part into a `beforeEach` block run before each test:
 
 ```js
 describe('Task app', function() {
   // highlight-start
   beforeEach(function() {
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
   })
   // highlight-end
 
@@ -362,6 +369,9 @@ If we search for a button by its text, [cy.contains](https://docs.cypress.io/api
 This will happen even if the button is not visible.
 To avoid name conflicts, we gave the submit button the id `login-button` we can use to access it.
 
+Please note that passing the test at this stage *requires that in the backend test database*, there exists a user with the username *`root`* and password *`tigers`*.
+Create a user if needed!
+
 ### Testing new task form
 
 Let's next add test methods to test the "new task" functionality:
@@ -458,7 +468,7 @@ The challenge with E2E tests is that they do not have access to the database.
 
 The solution is to create API endpoints for the backend tests.
 We can empty the database using these endpoints.
-Let's create a new **router** for the tests
+Let's create a new **router** for the tests in *controllers/testing.js*.
 
 ```js
 const testingRouter = require('express').Router()
@@ -498,7 +508,7 @@ module.exports = app
 ```
 
 After the changes, an HTTP POST request to the ***/api/testing/reset*** endpoint empties the database.
-Make sure your backend is running in test mode by starting it with this command (previously configured in the package.json file):
+Make sure your backend is running in test mode by starting it with this command (previously configured in the *package.json* file):
 
 ```js
   npm run start:test
@@ -527,7 +537,7 @@ describe('Task app', function() {
     }
     cy.request('POST', 'http://localhost:3001/api/users/', user) 
     // highlight-end
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
   })
   
   it('front page can be opened', function() {
@@ -550,8 +560,8 @@ Unlike earlier, now the testing starts with the backend in the same state every 
 The backend will contain one user and no tasks.
 
 Let's add one more test for checking that we can change the importance of tasks.
-First, we change the frontend so that a new task is unimportant by default, or the `important` field is `false`,
-as having it be random would leave to a flaky test.
+[In part 5b](/part5/props_children_and_proptypes/) we changed the frontend so that a new task has the value `false`, instead of randomly selecting it to be `true` or `false`.
+If we would have left it to be randomly set, then that would leave to a flaky test.
 
 ```js
 const TaskForm = ({ createTask }) => {
@@ -655,7 +665,7 @@ const Notification = ({ message }) => {
 }
 ```
 
-The test could also ensure that the error message renders to the correct component, *`error`*:
+The test could also ensure that the error message renders to the correct component, the component with the CSS class *`error`*:
 
 ```js
 it('login fails with wrong password', function() {
@@ -668,7 +678,7 @@ it('login fails with wrong password', function() {
 First, we use [`cy.get`](https://docs.cypress.io/api/commands/get.html#Syntax) to search for a component with the CSS class `error`.
 Then we check that the error message can be found from this component.
 Notice that [CSS class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors)
-start with a period, so the selector for the class `error` is `.error`.
+start with a period, so the selector for the class `error` is **`.error`**.
 
 We could do the same using the [`should`](https://docs.cypress.io/api/commands/should.html) syntax:
 
@@ -783,7 +793,7 @@ Then, in their own `describe` block, we tests that expect the user to be logged 
 As we said above, ***each test starts from zero!*** Tests do not start from the state where the previous tests ended.
 
 The Cypress documentation gives us the following advice:
-[Fully test the login flow – but only once!](https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Fully-test-the-login-flow-but-only-once).
+[*Fully test the login flow – but only once!*](https://docs.cypress.io/guides/end-to-end-testing/testing-your-app#Fully-test-the-login-flow-but-only-once).
 So instead of logging in a user using the form in the `beforeEach` block, Cypress recommends that we
 [bypass the UI](https://docs.cypress.io/guides/getting-started/testing-your-app.html#Bypassing-your-UI)
 and do an HTTP request to the backend to login.
@@ -801,7 +811,7 @@ describe('when logged in', function() {
       username: 'test', password: 'pacific'
     }).then(response => {
       localStorage.setItem('loggedTaskappUser', JSON.stringify(response.body))
-      cy.visit('http://localhost:3000')
+      cy.visit('http://localhost:5173')
     })
     // highlight-end
   })
@@ -832,7 +842,7 @@ Cypress.Commands.add('login', ({ username, password }) => {
     username, password
   }).then(({ body }) => {
     localStorage.setItem('loggedTaskappUser', JSON.stringify(body))
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
   })
 })
 ```
@@ -901,7 +911,7 @@ Cypress.Commands.add('createTask', ({ content, important }) => {
     }
   })
 
-  cy.visit('http://localhost:3000')
+  cy.visit('http://localhost:5173')
 })
 ```
 
@@ -938,7 +948,8 @@ describe('Task app', function() {
 
 #### Defininig a baseURL
 
-There is one more annoying feature in our tests. The application address `http://localhost:3000` is hardcoded in *commands.js* and *task_app.cy.js*.
+There is one more annoying feature in our tests.
+The application address `http://localhost:5173` is hardcoded in *commands.js* and *task_app.cy.js*.
 Let's define the `baseUrl` for the application in the Cypress pre-generated [configuration file](https://docs.cypress.io/guides/references/configuration) ***cypress.config.js***:
 
 ```js
@@ -947,7 +958,7 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
     },
-    baseUrl: 'http://localhost:3000' // highlight-line
+    baseUrl: 'http://localhost:5173' // highlight-line
   },
 })
 ```
@@ -955,7 +966,7 @@ module.exports = defineConfig({
 All the commands in the tests use the address of the application
 
 ```js
-cy.visit('http://localhost:3000')
+cy.visit('http://localhost:5173')
 ```
 
 can be transformed into
@@ -976,7 +987,7 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
     },
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://localhost:5173',
   },
   env: {
     BACKEND_API: 'http://localhost:3001/api' // highlight-line
@@ -1194,7 +1205,9 @@ It is probably the best documentation I have ever seen for an open-source projec
 I especially recommend reading
 [Introduction to Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Cypress-Can-Be-Simple-Sometimes), which states
 
-> **This is the single most important guide for understanding how to test with Cypress. Read it. Understand it.**
+> **This is the single most important guide for understanding how to test with Cypress.**
+> **Read it.**
+> **Understand it.**
 
 #### 5.17: Watchlist end to end testing, step1
 
@@ -1207,7 +1220,7 @@ The structure of the test must be as follows:
 describe('Watchlist app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
   })
 
   it('Login form is shown', function() {
@@ -1232,7 +1245,7 @@ describe('Watchlist app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
     // create here a user to backend
-    cy.visit('http://localhost:3000')
+    cy.visit('http://localhost:5173')
   })
 
   it('Login form is shown', function() {

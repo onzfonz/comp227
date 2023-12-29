@@ -38,7 +38,7 @@ To do that, let's change the scripts in our *package.json* so that when tests ar
     "start": "NODE_ENV=production node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "NODE_ENV=test jest --verbose --runInBand", // highlight-line
-    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../part3-tasks-backend",
+    "build:ui": "rm -rf dist && cd ../part2-tasks/ && npm run build && cp -r dist ../part3-tasks-backend",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
     "lint": "eslint .",
     "fixlint": "eslint . --fix"
@@ -163,8 +163,8 @@ test('tasks are returned as json', async () => {
     .expect('Content-Type', /application\/json/)
 })
 
-afterAll(() => {
-  mongoose.connection.close()
+afterAll(async () => {
+  await mongoose.connection.close()
 })
 ```
 
@@ -175,8 +175,36 @@ This object is assigned to the `api` variable and tests can use it for making HT
 Our test makes an HTTP GET request to the ***api/tasks*** URL and verifies that the request is responded to with the status code 200.
 The test also verifies that the `Content-Type` header is set to `application/json`, indicating that the data is in the desired format.
 
+Checking the value of the header uses a bit strange looking syntax:
+
+```js
+.expect('Content-Type', /application\/json/)
+```
+
+The desired value is now defined as [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) or in short regex.
+The regex starts and ends with a slash `/`, because the desired string *`application/json`* also contains the same slash,
+it is preceded by a *`\`* so that it is not interpreted as a regex termination character.
+
+In principle, the test could also have been defined as a string
+
+```js
+.expect('Content-Type', 'application/json')
+```
+
+The problem here, however, is that when using a string, the value of the header *must be exactly the same*.
+For the regex we defined, it is acceptable that the header *contains* the string in question.
+The actual value of the header is *`application/json; charset=utf-8`*, i.e. it also contains information about character encoding.
+However, our test is not interested in this and therefore it is better to define the test as a regex instead of an exact string.
+
+The test contains some details that we will explore [a bit later on](/part4/testing_the_backend#async-await).
+The arrow function that defines the test is preceded by the **`async`** keyword and the method call for the *api* object is preceded by the **`await`** keyword.
+We will write a few tests and then take a closer look at this async/await magic.
+Do not concern yourself with them for now, just be assured that the example tests work correctly.
+The *`async`*/*`await`* syntax is related to the fact that making a request to the API is an *asynchronous* operation.
+The [*`async`*/*`await`* syntax](https://jestjs.io/docs/asynchronous) can be used for writing asynchronous code with the appearance of synchronous code.
+
 >If you're not familiar with the RegEx syntax of `/application\/json/`,
-you can learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).  
+you can learn more [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).
 I would strongly encourage you all to practice working more with regular expressions!
 If you're just plain rusty with regex and need practice, then there many sites that can help you test your regex as well, like [regex101](https://regex101.com/).
 
@@ -192,8 +220,8 @@ Once all the tests (there is currently only one) have finished running we have t
 This can be easily achieved with the [afterAll](https://jestjs.io/docs/api#afterallfn-timeout) method:
 
 ```js
-afterAll(() => {
-  mongoose.connection.close()
+afterAll(async () => {
+  await mongoose.connection.close()
 })
 ```
 
@@ -227,26 +255,29 @@ When running your tests you may also run across the following console warning:
 
 ![jest console warning about not exiting](../../images/4/8.png)
 
-The problem is quite likely caused by the Mongoose version 6.x, the problem does not appear when version 5.x is used.
+The problem is quite likely caused by the Mongoose version 6.x, the problem does not appear when versions 5.x or 7.x are used.
 [Mongoose documentation](https://mongoosejs.com/docs/jest.html) does not recommend testing Mongoose applications with Jest.
 
-One way to get rid of this is to run tests with option `--forceExit`:
+[One way](https://stackoverflow.com/questions/50687592/jest-and-mongoose-jest-has-detected-opened-handles)
+to get rid of this is to add to the directory *tests* a file *teardown.js* with the following content:
 
-```json
-{
-  // ..
-  "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
-    "dev": "cross-env NODE_ENV=development nodemon index.js",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit" // highlight-line
-    // ..
-  },
-  // ...
+```js
+module.exports = () => {
+  process.exit(0)
 }
 ```
 
-You'll still see a message about using *--forceExit*;
-ignore the message for now.
+and by extending the Jest definitions in the *package.json* like this:
+
+```js
+{
+ //...
+ "jest": {
+   "testEnvironment": "node",
+   "globalTeardown": "./tests/teardown.js" // highlight-line
+ }
+}
+```
 
 #### Tests taking a long time
 
@@ -266,24 +297,24 @@ This third parameter sets the timeout to 100000 ms.
 A long timeout ensures that our test won't fail due to the time it takes to run.
 (A long timeout may not be what you want for tests based on performance or speed, but this is fine for our example tests).
 
+If you still encounter issues with mongoose timeouts, set `bufferTimeoutMS` variable to a value significantly higher than 10000 (10 seconds).
+You could set it like this at the top, right after the `require` statements: `mongoose.set("bufferTimeoutMS", 30000)`
+
 > One tiny but important detail: at the [beginning](/part4/structure_of_backend_application_introduction_to_testing#project-structure)
 of this part we extracted the Express application into the *app.js* file,
-and the role of the *index.js* file was changed to launch the application at the specified port with Node's built-in `http` object:
+and the role of the *index.js* file was changed to launch the application at the specified port via `app.listen`:
 >
 > ```js
 > const app = require('./app') // the actual Express app
-> const http = require('http')
 > const config = require('./utils/config')
 > const logger = require('./utils/logger')
 > 
-> const server = http.createServer(app)
-> 
-> server.listen(config.PORT, () => {
+> app.listen(config.PORT, () => {
 >   logger.info(`Server running on port ${config.PORT}`)
 > })
 > ```
 >
-> The tests only use the express application defined in the *app.js* file:
+> The tests only use the express application defined in the *app.js* file, which doesn't listen to any ports.
 >
 > ```js
 > const mongoose = require('mongoose')
@@ -322,7 +353,7 @@ and unlike the previous test that used the methods provided by *supertest* for v
 this time we are inspecting the response data stored in `response.body` property.
 Our tests verify the format and content of the response data with the [expect](https://jestjs.io/docs/expect#expectvalue) method of Jest.
 
-The benefit of using the async/await syntax is starting to become evident.
+The benefit of using the *async/await* syntax is starting to become evident.
 Normally we would have to use callback functions to access the data returned by promises, but with the new syntax things are a lot more comfortable:
 
 ```js
@@ -415,13 +446,13 @@ By doing this, we ensure that the database is in the same state before every tes
 Let's also make the following changes to our last two tests:
 
 ```js
-test('all tasks are returned', async () => {
+test('all tasks are returned', async () => { // highlight-line
   const response = await api.get('/api/tasks')
 
   expect(response.body).toHaveLength(initialTasks.length) // highlight-line
 })
 
-test('a specific task is within the returned tasks', async () => {
+test('a specific task is within the returned tasks', async () => { // highlight-line
   const response = await api.get('/api/tasks')
 
   // highlight-start
@@ -467,7 +498,7 @@ The following command will run all of the tests that contain `tasks` in their na
 npm test -- -t 'tasks'
 ```
 
-**P.S.** When running a single test, the mongoose connection might stay open if no tests using the connection are run.
+> **Notice** When running a single test, the mongoose connection might stay open if no tests using the connection are run.
 The problem might be because supertest primes the connection, but Jest does not run the afterAll portion of the code.
 
 ### async/await
@@ -499,7 +530,7 @@ To illustrate this, you can view an artificial example of a function that fetche
 ```js
 Task.find({})
   .then(tasks => {
-    return tasks[0].remove()
+    return tasks[0].deleteOne()
   })
   .then(response => {
     console.log('the 1st task is removed')
@@ -532,7 +563,7 @@ The slightly complicated example presented above could be implemented by using a
 
 ```js
 const tasks = await Task.find({})
-const response = await tasks[0].remove()
+const response = await tasks[0].deleteOne()
 
 console.log('the 1st task is removed')
 ```
@@ -560,7 +591,7 @@ const main = async () => { // highlight-line
   const tasks = await Task.find({})
   console.log('operation returned the following tasks', tasks)
 
-  const response = await tasks[0].remove()
+  const response = await tasks[0].deleteOne()
   console.log('the first task is removed')
 }
 
@@ -691,7 +722,7 @@ const initialTasks = [
 const nonExistingId = async () => {
   const task = new Task({ content: 'willremovethissoon', date: new Date() })
   await task.save()
-  await task.remove()
+  await task.deleteOne()
 
   return task._id.toString()
 }
@@ -791,15 +822,15 @@ test('task without content is not added', async () => {
   expect(tasksAtEnd).toHaveLength(helper.initialTasks.length) // highlight-line
 })
 
-afterAll(() => {
-  mongoose.connection.close()
-}) 
+afterAll(async () => {
+  await mongoose.connection.close()
+})
 ```
 
 The code using promises works and the tests pass.
 We are ready to refactor our code to use the async/await syntax.
 
-We make the following changes to the code that takes care of adding a new task(notice that the route handler definition is preceded by the `async` keyword):
+We make the following changes to the code that takes care of adding a new task (notice that the route handler definition is preceded by the `async` keyword):
 
 ```js
 tasksRouter.post('/', async (request, response, next) => {
@@ -873,9 +904,7 @@ test('a specific task can be viewed', async () => {
     .expect('Content-Type', /application\/json/)
 // highlight-end
 
-  const processedTaskToView = JSON.parse(JSON.stringify(taskToView))
-
-  expect(resultTask.body).toEqual(processedTaskToView)
+  expect(resultTask.body).toEqual(taskToView)
 })
 
 test('a task can be deleted', async () => {
@@ -910,7 +939,7 @@ This processing will turn the task object's `date` property value's type from `D
 Because of this we can't directly compare the equality of the `resultTask.body` and `taskToView` that is read from the database.
 Instead, we must first perform similar JSON serialization and parsing for the `taskToView` as the server is performing for the task object.
 
-The tests pass and now that we have some coverage for that code, we can refactor the tested routes to use async/await:
+The tests pass and now that we have some coverage for that code, we can refactor the tested routes to use *async/await*:
 
 ```js
 tasksRouter.get('/:id', async (request, response, next) => {
@@ -928,7 +957,7 @@ tasksRouter.get('/:id', async (request, response, next) => {
 
 tasksRouter.delete('/:id', async (request, response, next) => {
   try {
-    await Task.findByIdAndRemove(request.params.id)
+    await Task.findByIdAndDelete(request.params.id)
     response.status(204).end()
   } catch(exception) {
     next(exception)
@@ -941,7 +970,7 @@ You can find the code for our current application in its entirety in the *part4-
 
 ### Eliminating the try-catch
 
-Async/await unclutters the code a bit, but the 'price' is the `try`/`catch` structure required for catching exceptions.
+*Async/await* unclutters the code, though at the expense of requiring the `try`/`catch` structure for catching exceptions.
 All of the route handlers follow the same structure
 
 ```js
@@ -963,7 +992,7 @@ npm install express-async-errors
 ```
 
 Using the library is *very* easy.
-You introduce the library in *app.js*:
+You introduce the library in *app.js* ***before*** you import your routes:
 
 ```js
 const config = require('./utils/config')
@@ -982,12 +1011,12 @@ module.exports = app
 ```
 
 The 'magic' of the library allows us to eliminate the try-catch blocks completely.
-For example, the current routing code for deleting a task
+For example, the code for the route that deletes a task:
 
 ```js
 tasksRouter.delete('/:id', async (request, response, next) => {
   try {
-    await Task.findByIdAndRemove(request.params.id)
+    await Task.findByIdAndDelete(request.params.id)
     response.status(204).end()
   } catch (exception) {
     next(exception)
@@ -995,11 +1024,11 @@ tasksRouter.delete('/:id', async (request, response, next) => {
 })
 ```
 
-transforms into
+becomes:
 
 ```js
 tasksRouter.delete('/:id', async (request, response) => {
-  await Task.findByIdAndRemove(request.params.id)
+  await Task.findByIdAndDelete(request.params.id)
   response.status(204).end()
 })
 ```
@@ -1073,7 +1102,8 @@ test('tasks are returned as json', async () => {
 ```
 
 We save the tasks stored in the array into the database inside of a `forEach` loop.
-The tests don't quite seem to work however. Imagine someone else added some console logs and wants your help to find the problem.
+The tests don't quite seem to work however.
+*Imagine someone else added some console logs and wants your help to find the problem.*
 
 The console displays the following output:
 
@@ -1149,6 +1179,16 @@ Even though the syntax makes it easier to deal with promises, it is still necess
 The code for our application can be found on
 [GitHub](https://github.com/comp227/part3-tasks-backend/tree/part4-5), branch *part4-5*.
 
+### Web developers pledge v4
+
+We will once again update
+[our web developer pledge](/part3/saving_data_to_mongo_db#web-developers-pledge-v3)
+but will also add another item, since last time we pledged to check the database:
+
+> I also pledge to:
+>
+> - *Check that my code works when one of my tests does not pass*
+
 </div>
 
 <div class="tasks">
@@ -1179,25 +1219,10 @@ like defining the test environment so that you can write tests that use separate
 >
 ![Warning to read docs on connecting mongoose to jest](../../images/4/8a.png)
 >
-> The problem is quite likely caused by the Mongoose version 6.x, the problem does not appear when version 5.x is used.
-[Mongoose documentation](https://mongoosejs.com/docs/jest.html) does not recommend testing Mongoose applications with Jest.
+> *Please revisit [the earlier section](#mongoose-related-warnings)*
+> to follow the directions for adding a *tests/teardown.js* file and updating Jest definitions in *package.json*.
 >
-> One way to get rid of [like we mentioned before](#mongoose-related-warnings) is to run tests with option `--forceExit`:
->
-> ```json
-> {
->   // ..
->   "scripts": {
->     "start": "cross-env NODE_ENV=production node index.js",
->     "dev": "cross-env NODE_ENV=development nodemon index.js",
->     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit" // highlight-line
->     // ...
->   },
->   // ...
-> }
-> ```
->
-> **NB:** when you are writing your tests ***it is better to not execute all of your tests***, only execute the ones you are working on.
+>> **NB:** when you are writing your tests ***it is better to not execute all of your tests***, only execute the ones you are working on.
 Read more about this [here](#running-tests-one-by-one).
 
 #### 4.9*: Watchlist tests, step2
@@ -1295,15 +1320,11 @@ describe('viewing a specific task', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
       
-    const processedTaskToView = JSON.parse(JSON.stringify(taskToView))
-
-    expect(resultTask.body).toEqual(processedTaskToView)
+    expect(resultTask.body).toEqual(taskToView)
   })
 
   test('fails with statuscode 404 if task does not exist', async () => {
     const validNonexistingId = await helper.nonExistingId()
-
-    console.log(validNonexistingId)
 
     await api
       .get(`/api/tasks/${validNonexistingId}`)
@@ -1378,8 +1399,8 @@ describe('deletion of a task', () => {
   })
 })
 
-afterAll(() => {
-  mongoose.connection.close()
+afterAll(async () => {
+  await mongoose.connection.close()
 })
 ```
 

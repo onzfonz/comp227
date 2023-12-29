@@ -20,7 +20,7 @@ In this section, we will learn how to:
 In the previous parts, we have learned that we can use React to define components as functions,
 which receive props as an argument and returns a tree of React elements.
 This tree is usually represented with JSX syntax.
-In the browser environment, we have used the [ReactDOM](https://reactjs.org/docs/react-dom.html) library
+In the browser environment, we have used the [ReactDOM](https://react.dev/reference/react-dom) library
 to turn these components into a DOM tree that can be rendered by a browser.
 Here is a concrete example of a very simple component:
 
@@ -56,7 +56,7 @@ const HelloWorld = props => {
 };
 ```
 
-So we import the [Text](https://reactnative.dev/docs/text) component from React Native and replace the `div` element with a `Text` element.
+So we import the [Text](https://reactnative.dev/docs/text) component from React Native and replace the `<div>` element with a `<Text>` element.
 Many familiar DOM elements have their React Native "counterparts".
 Here are some examples picked from React Native's [Core Components documentation](https://reactnative.dev/docs/components-and-apis):
 
@@ -1015,7 +1015,7 @@ npm install yup
 
 Next, as an example, let's create a validation schema for the body mass index form we implemented earlier.
 We want to validate that both `mass` and `height` fields are present and they are numeric.
-Also, the value of `mass` should be greater or equal to 1 and the value of `height` should be greater or equal to 0.5.
+Also, the value of `mass` should be greater or equal to 1 and the value of `height` should be greater or equal to *`0.5`*.
 Here is how we define the schema:
 
 ```javascript

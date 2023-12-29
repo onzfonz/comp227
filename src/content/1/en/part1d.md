@@ -173,7 +173,7 @@ there's no apparent benefit and the resulting application is a lot more complex.
 In this case, storing the click counters into separate pieces of state is a far more suitable choice.
 
 There are situations where it can be beneficial to store a piece of application state in a more complex data structure.
-[The official React documentation](https://reactjs.org/docs/hooks-faq.html#should-i-use-one-or-many-state-variables) contains some helpful guidance on the topic.
+[The official React documentation](https://react.dev/learn/choosing-the-state-structure) contains some helpful guidance on the topic.
 
 ### Handling arrays
 
@@ -269,6 +269,98 @@ We call the [join](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 on the `allClicks` array that joins all the items into a single string,
 separated by the string passed as the function parameter, which in our case is an empty space.
 
+### Update of the state is asynchronous
+
+Let's expand the application so that it tracks the total number of button presses in the state `total`.
+Everytime the mouse is clicked, `total` will update:
+
+```js
+const App = () => {
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
+  const [allClicks, setAll] = useState([])
+  const [total, setTotal] = useState(0) // highlight-line
+
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    setLeft(left + 1)
+    setTotal(left + right)  // highlight-line
+  }
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat('R'))
+    setRight(right + 1)
+    setTotal(left + right)  // highlight-line
+  }
+
+  return (
+    <div>
+      {left}
+      <button onClick={handleLeftClick}>left</button>
+      <button onClick={handleRightClick}>right</button>
+      {right}
+      <p>{allClicks.join(' ')}</p>
+      <p>total {total}</p>  // highlight-line
+    </div>
+  )
+}
+```
+
+The solution does not quite work:
+
+![browser showing 2 left|right 1, RLL total 2](../../images/1/33.png)
+
+The total number of button presses is consistently one less than the actual amount of presses, for some reason.
+
+Let us add couple of console.log statements to the event handler:
+
+```js
+const App = () => {
+  // ...
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    console.log('left before', left)  // highlight-line
+    setLeft(left + 1)
+    console.log('left after', left)  // highlight-line
+    setTotal(left + right)
+  }
+
+  // ...
+}
+```
+
+The console reveals the problem
+
+![devtools console showing left before 4 and left after 4](../../images/1/32.png)
+
+Even though a new value was set for `left` by calling `setLeft(left + 1)`, the old value persists despite the update.
+As a result, the attempt to count button presses produces a result that is too small:
+
+```js
+setTotal(left + right)
+```
+
+The reason for this is that *a state update in React happens* [***asynchronously***](https://react.dev/learn/queueing-a-series-of-state-updates),
+i.e. not immediately but "at some point" before the component is rendered again.
+
+We can fix the app as follows:
+
+```js
+const App = () => {
+  // ...
+  const handleLeftClick = () => {
+    setAll(allClicks.concat('L'))
+    const updatedLeft = left + 1
+    setLeft(updatedLeft)
+    setTotal(updatedLeft + right)
+  }
+
+  // ...
+}
+```
+
+So now the number of button presses is definitely based on the correct number of left button presses.
+
 ### Conditional rendering
 
 Let's modify our application so that the rendering of the clicking history is handled by a new `History` component:
@@ -325,7 +417,7 @@ And in all other cases, the component renders the clicking history:
 The `History` component renders completely different React elements depending on the state of the application.
 This is called **conditional rendering**.
 
-React also offers many other ways of doing [conditional rendering](https://reactjs.org/docs/conditional-rendering.html).
+React also offers many other ways of doing [conditional rendering](https://react.dev/learn/conditional-rendering).
 We will take a closer look at this in [part 2](/part2).
 
 Let's make one last modification to our application by refactoring it to use the `Button` component that we defined earlier on:
@@ -386,10 +478,10 @@ const App = () => {
 
 ### Old React
 
-In this course, we use the [state hook](https://reactjs.org/docs/hooks-state.html) to add state to our React components,
+In this course, we use the [state hook](https://react.dev/learn/state-a-components-memory) to add state to our React components,
 which is part of the newer versions of React and is available from version [16.8.0](https://www.npmjs.com/package/react/v/16.8.0) onwards.
 Before the addition of hooks, there was no way to add state to functional components.
-Components that required state had to be defined as [class](https://reactjs.org/docs/react-component.html) components, using the JavaScript class syntax.
+Components that required state had to be defined as [class](https://react.dev/reference/react/Component) components, using the JavaScript class syntax.
 
 In this course, we have made the slightly radical decision to use hooks exclusively from day one,
 to ensure that we are learning the current and future variations of React.
@@ -426,12 +518,12 @@ don't write more code but rather find and fix the problem **immediately**.
 There has yet to be a moment in the history of coding where code that fails to compile would miraculously start working after writing large amounts of additional code.
 I highly doubt that such an event will transpire during this course either.
 
-Old-school, print-based debugging is always a good idea.
+Old-school, print-based debugging can at times be a good idea.
 If the component
 
 ```js
-const Button = ({ onClick, text }) => (
-  <button onClick={onClick}>
+const Button = ({ handleClick, text }) => (
+  <button onClick={handleClick}>
     {text}
   </button>
 )
@@ -444,9 +536,9 @@ and receive the entire props object without destructuring it immediately:
 ```js
 const Button = (props) => { 
   console.log(props) // highlight-line
-  const { onClick, text } = props
+  const { handleClick, text } = props
   return (
-    <button onClick={onClick}>
+    <button onClick={handleClick}>
       {text}
     </button>
   )
@@ -458,25 +550,25 @@ This will immediately reveal if, for instance, one of the attributes has been mi
 ##### A quick aside about logging
 
 > **NB** When you use `console.log` for debugging, **don't combine objects** in a Java-like fashion by using the plus operator.
-Instead of writing:
+> If you write:
 >
 > ```js
 > console.log('props value is ' + props)
 > ```
 >
-> Separate the things you want to log to the console with a comma:
->
-> ```js
-> console.log('props value is', props)
-> ```
->
-> If you use the Java-like way of concatenating a string with an object, you will end up with a rather uninformative log message:
+> You will end up with an unhelpful log message:
 >
 > ```js
 > props value is [object Object]
 > ```
 >
-> Whereas the items separated by a comma will all be available in the browser console for further inspection.
+> To get actual values for variables, separate them in `console.log` with a comma:
+>
+> ```js
+> console.log('props value is', props)
+> ```
+>
+> Now, those separated items will be available in the browser console for further review.
 
 Logging output to the console is by no means the only way of debugging our applications.
 You can pause the execution of your application code in the Chrome developer console's *debugger*,
@@ -1013,9 +1105,9 @@ const App = (props) => {
   return (
     <div>
       {value}
-      <Button handleClick={setToValue(1000)} text="thousand" /> // highlight-line
-      <Button handleClick={setToValue(0)} text="reset" /> // highlight-line
-      <Button handleClick={setToValue(value + 1)} text="increment" /> // highlight-line
+      <Button handleClick={() => setToValue(1000)} text="thousand" /> // highlight-line
+      <Button handleClick={() => setToValue(0)} text="reset" /> // highlight-line
+      <Button handleClick={() => setToValue(value + 1)} text="increment" /> // highlight-line
     </div>
   )
 }
@@ -1103,9 +1195,9 @@ However, we use the new style of React for which a large majority of the materia
 
 You may find the following links useful:
 
-- The [official React documentation](https://reactjs.org/docs/hello-world.html) is worth checking out at some point,
-- although most of it will become relevant only later on in the course.
-Also, everything related to class-based components is irrelevant to us;
+- The [official React documentation](https://react.dev/learn) is worth checking out at some point,
+  although most of it will become relevant only later on in the course.
+  Also, everything related to class-based components is irrelevant to us;
 - Some courses on [Egghead.io](https://egghead.io) like [Start learning React](https://egghead.io/courses/start-learning-react) are of high quality,
   and the recently updated [Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-reactjs) is also relatively good;
   both courses introduce concepts that will also be introduced later on in this course.
@@ -1125,11 +1217,11 @@ Here it is:
 > *I pledge to:*
 >
 > - *Keep my browser's dev tools open all the time*
-> - *Progress in small steps and commit each of those steps*
+> - *Progress in tiny steps and commit each of those steps*
 > - *Use the debugger or use `console.log` to help me better understand my code*
 > - *Stop adding features if my code is broken.*
 > - *Consider that I can rollback my changes when I go in small steps if I cannot find an issue.*
-> - *Formulate my questions properly on Discord see [here](/part0/general_info#how-to-ask-help-in-discord)*
+> - *Formulate my questions on Discord [using this guide from part 0](/part0/general_info#how-to-ask-help-in-discord)*
 
 </div>
 
@@ -1145,13 +1237,19 @@ Once you have marked your submission as complete, **you cannot submit more exerc
 In these cases, it is sufficient to submit just the final version of the application,
 but you will need to commit regularly, it should often be at least 4 or 5 times while working on a particular exercise*
 
-**WARNING** ensure you are at the base folder of the correct repository when using `create-react-app` to create the studytracker and jokes apps/directories.
+**WARNING** ensure you are at the base folder of the correct repository when using `vite` to create the studytracker and jokes apps/directories.
 
 In some situations you may also have to run the command below from the root of the project:
 
 ```bash
 rm -rf node_modules/ && npm i
 ```
+
+> If and *when* you encounter an error message
+>
+>> *Objects are not valid as a React child*
+>
+> Remember what was discussed [in part 1 on how to fix it](/part1/introduction_to_react#do-not-render-objects).
 
 #### 1.6: studytracker step1
 
@@ -1167,7 +1265,7 @@ Notice that your application needs to work only during a single browser session.
 Once you refresh the page, the collected data is allowed to disappear.
 
 It is advisable to use the same structure that is used in the material and previous exercise.
-File *index.js* is as follows:
+File *main.jsx* is as follows:
 
 ```js
 import React from 'react'
@@ -1178,7 +1276,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```negative
 
-You can use the code below as a starting point for the *App.js* file:
+You can use the code below as a starting point for the *App.jsx* file:
 
 ```js
 import { useState } from 'react'
@@ -1326,7 +1424,7 @@ const App = () => {
 export default App
 ```
 
-The contents of the file *index.js* is the same as in previous exercises.
+The contents of the file *main.jsx* is the same as in previous exercises.
 
 Find out how to generate random numbers in JavaScript, eg.
 via a search engine or on [Mozilla Developer Network](https://developer.mozilla.org).
@@ -1336,7 +1434,7 @@ Your finished application could look something like this:
 
 ![random joke with next button](../../images/1/18a.png)
 
-**WARNING** Make sure that when you call create-react-app that you are inside of your repo's base folder - not inside of your other folders (like *reading*!)!
+**WARNING** Make sure that when you call `vite` that you are inside of your repo's base folder - not inside of your other folders (like *reading*!)!
 
 #### 1.13*: jokes step2
 

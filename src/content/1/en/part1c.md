@@ -95,7 +95,7 @@ const Greet = (props) => {
   const age = props.age
   // highlight-end
 
-  const bornYear = () => new Date().getFullYear() - age
+  const bornYear = () => new Date().getFullYear() - age // highlight-line
 
   return (
     <div>
@@ -188,7 +188,7 @@ So far all of our applications have been such that their appearance remains the 
 What if we wanted to create a counter where the value increased as a function of time or at the click of a button?
 
 Let's start with the following.
-File *App.js* becomes:
+File *App.jsx* becomes:
 
 ```js
 const App = (props) => {
@@ -201,10 +201,9 @@ const App = (props) => {
 export default App
 ```
 
-And file *index.js* becomes:
+And file *main.jsx* becomes:
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
@@ -266,13 +265,12 @@ Next, we'll introduce a better way of accomplishing this effect.
 
 All of our components up till now have been simple in the sense that they have not contained any state that could change during the lifecycle of the component.
 
-Next, let's add state to our application's `App` component with the help of React's [state hook](https://reactjs.org/docs/hooks-state.html).
+Next, let's add state to our application's `App` component with the help of React's [state hook](https://react.dev/learn/state-a-components-memory).
 
 We will change the application as follows.
-*index.js* goes back to
+*main.jsx* goes back to
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
@@ -280,7 +278,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-and *App.js* changes to the following:
+and *App.jsx* changes to the following:
 
 ```js
 import { useState } from 'react' // highlight-line
@@ -414,7 +412,7 @@ Button elements support so-called [mouse events](https://developer.mozilla.org/e
 of which [click](https://developer.mozilla.org/en-US/docs/Web/Events/click) is the most common event.
 The click event on a button can also be triggered with the keyboard or a touch screen despite the name *mouse event*.
 
-In React, [registering an event handler function](https://reactjs.org/docs/handling-events.html) to the ***click*** event happens like this:
+In React, [registering an event handler function](https://react.dev/learn/responding-to-events) to the ***click*** event happens like this:
 
 ```js
 const App = () => {
@@ -526,9 +524,9 @@ An event handler is supposed to be either a **function** or a **function referen
 
 the event handler is actually a **function call**.
 In many situations this is ok, but not in this particular situation.
-In the beginning, the value of the `counter` variable is 0.
+In the beginning, the value of the `counter` variable is **`0`**.
 When React renders the component for the first time,
-it executes the function call `setCounter(0+1)`, and changes the value of the component's state to 1.
+it executes the function call `setCounter(0+1)`, and changes the value of the component's state to **`1`**.
 This will cause the component to be re-rendered, React will execute the setCounter function call again, and the state will change leading to another rerender...
 
 Let's define the event handlers like we did before:
@@ -588,7 +586,7 @@ one component for displaying the counter and two components for buttons.
 
 Let's first implement a `Display` component that's responsible for displaying the value of the counter.
 
-One best practice in React is to [lift the state up](https://reactjs.org/docs/lifting-state-up.html) in the component hierarchy.
+One best practice in React is to [lift the state up](https://react.dev/learn/sharing-state-between-components) in the component hierarchy.
 The documentation says:
 
 > *Often, several components need to reflect the same changing data.
@@ -682,14 +680,17 @@ we've also implemented new functionality into our application by adding a button
 
 The event handler is passed to the `Button` component through the `onClick` prop.
 The name of the prop itself is not that significant, but our naming choice wasn't completely random.
-React's own official [tutorial](https://reactjs.org/tutorial/tutorial.html) suggests this convention.
+
+React's own official [tutorial](https://react.dev/learn/tutorial-tic-tac-toe) suggests this convention.
+> *"In React, it’s conventional to use `onSomething` names for props which take functions which handle events*
+> *and `handleSomething` for the actual function definitions which handle those events."*
 
 ### Changes in state cause rerendering
 
 Let's go over the main principles of how an application works once more.
 
 When the application starts, the code in `App` is executed.
-This code uses a [useState](https://reactjs.org/docs/hooks-reference.html#usestate)
+This code uses a [useState](https://react.dev/reference/react/useState)
 hook to create the application state,
 setting an initial value of the variable `counter`.
 This component contains the `Display` component - which displays the counter's value, `0` - and three `Button` components.
@@ -699,10 +700,10 @@ When one of the buttons is clicked, the event handler is executed.
 The event handler changes the state of the `App` component with the `setCounter` function.
 **Calling a function that changes the state causes the component to rerender.**
 
-So, if a user clicks the ***plus*** button, the button's event handler changes the value of `counter` to 1, and the `App` component is rerendered.
+So, if a user clicks the ***plus*** button, the button's event handler changes the value of `counter` to **`1`**, and the `App` component is rerendered.
 This causes its subcomponents `Display` and `Button` to also be re-rendered.
-`Display` receives the new value of the counter, 1, as props.
-The `Button` components receive event handlers which can be used to change the state of the counter.
+`Display` receives the new value of the counter, **`1`**, as props.
+The `Button` components receive event handlers, which can be used to change the state of the counter.
 
 To be sure to understand how the program works, let us add some `console.log` statements to it
 
@@ -788,6 +789,14 @@ const Button = (props) => {
 
 We can use destructuring to get only the required fields from `props`, and use the more compact form of arrow functions:
 
+> **NB**: While building your own components, you can name their event handler props anyway you like.
+For this you can refer to the react's documentation on [Naming event handler props](https://react.dev/learn/responding-to-events#naming-event-handler-props)
+It goes as following:
+>
+>> *By convention, event handler props should start with `on`, followed by a capital letter.*
+
+For example, the Button component’s `onClick` prop:
+
 ```js
 const Button = ({ onClick, text }) => (
   <button onClick={onClick}>
@@ -796,12 +805,24 @@ const Button = ({ onClick, text }) => (
 )
 ```
 
+could have been called `onSmash`:
+
+```js
+// highlight-start
+const Button = ({ onSmash, text }) => ( 
+  <button onClick={onSmash}>
+// highlight-end
+    {text}
+  </button>
+)
+```
+
 We can simplify the Button component once more by declaring the return statement in just one line:
 
 ```js
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+const Button = ({ onSmash, text }) => <button onClick={onSmash}>{text}</button>
 ```
 
-However, be careful to not oversimplify your components, as this makes adding complexity a more tedious exercise down the road.
+> *Be careful to not oversimplify your components, as this may make it more tedious to add complexity in the future.*
 
 </div>

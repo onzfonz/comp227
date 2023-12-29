@@ -80,6 +80,12 @@ Debugging backend applications is also possible with the Chrome developer consol
 node --inspect index.js
 ```
 
+You can also pass the `--inspect` flag to `nodemon`:
+
+```bash
+nodemon --inspect index.js
+```
+
 You can access the debugger by clicking the green icon - the node logo - that appears in the Chrome developer console:
 
 ![dev tools with green node logo icon](../../images/3/37.png)
@@ -110,7 +116,7 @@ Logging to the console, Postman, debuggers, and experience will help.
 
 When bugs occur, ***the worst of all possible strategies*** is to continue writing code.
 It will guarantee that your code will soon have even more bugs, and debugging them will be even more difficult.
-The [stop and fix](http://gettingtolean.com/toyota-principle-5-build-culture-stopping-fix/) principle
+The [stop and fix](https://leanscape.io/principles-of-lean-13-jidoka/) principle
 from Toyota Production Systems is very effective in this situation as well.
 
 ### MongoDB
@@ -120,7 +126,7 @@ Most college courses use relational databases.
 In most parts of this course, we will use [MongoDB](https://www.mongodb.com/)
 which is a [**document database**](https://en.wikipedia.org/wiki/Document-oriented_database).
 
-The reason for using Mongo as the database is its lower complexity compared to a relational database.
+Mongo is easier to understand compared to a relational database.
 
 Document databases differ from relational databases in how they organize data as well as in the query languages they support.
 Document databases are usually categorized under the [NoSQL](https://en.wikipedia.org/wiki/NoSQL) umbrella term.
@@ -172,7 +178,7 @@ Click ***Connect***:
 
 ![MongoDB database deployment connect](../../images/3/mongo5.png)
 
-Choose: ***Connect your application*** out of the options listed, and then you'll see this screen.
+Choose: ***Connect your application***, then you'll see this screen.
 
 ![MongoDB connect application](../../images/3/mongo6.png)
 
@@ -201,7 +207,7 @@ npm install mongoose
 ```
 
 Let's not add any code dealing with Mongo to our backend just yet.
-Instead, let's make a practice application by creating a new file, *mongo.js*:
+Instead, let's make a practice application by creating a new file, *mongo.js* in the root of the tasks backend application:
 
 ```js
 const mongoose = require('mongoose').set('strictQuery', true)
@@ -391,7 +397,7 @@ Create a cloud-based MongoDB database for the communities application with Mongo
 
 Create a *mongo.js* file in the project directory, that can be used for adding a community, and for listing all of the communities.
 
-***Do not include the password in the file that you commit and push to GitHub!***
+> ***Do not include the password in the file that you commit and push to GitHub!***
 
 The application should work as follows.
 You use the program by passing three command-line arguments (the first is the password), e.g.:
@@ -432,7 +438,7 @@ PySlackers https://pythondev.slack.com
 You can get the command-line parameters from the [process.argv](https://nodejs.org/docs/latest-v8.x/api/process.html#process_process_argv) variable.
 
 > **NB: do not close the connection in the wrong place**.
-E.g. the following code will not work:
+> E.g. the following code will not work:
 >
 > ```js
 > Group
@@ -465,7 +471,7 @@ and the execution will never get to the point where `Group.find` operation finis
 
 ### Connecting the backend to a database
 
-Now we have enough knowledge to start using Mongo in our application.
+Now we have enough knowledge to start using Mongo in our tasks application backend.
 
 Let's get a quick start by copy-pasting the Mongoose definitions to the backend's *index.js* file:
 
@@ -508,7 +514,20 @@ We also don't want to return the mongo versioning field `__v` to the frontend.
 
 One way to format the objects returned by Mongoose is to [*modify*](https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id)
 the `toJSON` method of the schema, which is used on all instances of the models produced with that schema.
-Modifying the method works like this:
+
+To modify the method we need to change the configurable options of the schema.
+
+Options can be changed using the [`set` method of the schema](https://mongoosejs.com/docs/guide.html#options).
+
+MongooseJS is a good source of documentation.
+For more info on the `toJSON` option, check out:
+
+- [the mongoose JSON guide](https://mongoosejs.com/docs/guide.html#toJSON)
+- [mongoose `toObject` JSON API Reference](https://mongoosejs.com/docs/api.html#document_Document-toObject)
+  
+For info on the `transform` function see <https://mongoosejs.com/docs/api/document.html#transform>.
+
+Below is one way to modify the schema:
 
 ```js
 taskSchema.set('toJSON', {
@@ -534,9 +553,7 @@ app.get('/api/tasks', (request, response) => {
 })
 ```
 
-Now the `tasks` variable is assigned to an array of objects returned by Mongo.
-When the response is sent in the JSON format, the `toJSON` method of each object in the array is called automatically by the
-[JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) method.
+The code automatically uses the defined `toJSON` when formatting *`tasks`* to the response.
 
 ### Database configuration into its own module
 
@@ -667,7 +684,7 @@ app.listen(PORT, () => {
 Observe how `dotenv` must be imported before the `task` model.
 This ensures that the environment variables from the *.env* file are available globally before the code from the other modules is imported.
 
-Once the file .env has been gitignored, Render does not get the database URL from the repository, so you have to set it yourself.
+Once the file *.env* has been gitignored, Render does not get the database URL from the repository, so you have to set it yourself.
 
 That can be done by visiting the [Render dashboard](http://dashboard.render.com).
 Once you are there, click on your web service and then select ***Environment*** from the left-hand nav menu.
@@ -695,7 +712,7 @@ app.post('/api/tasks', (request, response) => {
   const task = new Task({
     content: body.content,
     important: body.important || false,
-    date: new Date(),
+    date: new Date().toISOString(),
   })
 
   task.save().then(savedTask => {
@@ -945,7 +962,7 @@ For this reason, it is important to be careful when defining middleware.
 The correct order is the following:
 
 ```js
-app.use(express.static('build'))
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(requestLogger)
 
@@ -1012,11 +1029,11 @@ The only exception to this is the error handler which needs to come at the very 
 
 Let's add some missing functionality to our application, including deleting and updating an individual task.
 
-The easiest way to delete a task from the database is with the [findByIdAndRemove](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndRemove) method:
+The easiest way to delete a task from the database is with the [findByIdAndDelete](https://mongoosejs.com/docs/api/model.html#Model.findByIdAndDelete()) method:
 
 ```js
 app.delete('/api/tasks/:id', (request, response, next) => {
-  Task.findByIdAndRemove(request.params.id)
+  Task.findByIdAndDelete(request.params.id)
     .then(result => {
       response.status(204).end()
     })
@@ -1065,6 +1082,16 @@ The frontend also appears to work with the backend using the database.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of
 [this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-5).
+
+### Web developers pledge v3
+
+We will update
+[our web developer pledge](/part2/altering_data_in_server#web-developers-pledge-v2)
+by adding an item:
+
+> I also pledge to:
+>
+> - *Check that the database is storing the correct values*
 
 </div>
 

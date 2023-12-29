@@ -13,7 +13,7 @@ and [custom hooks](/part7/custom_hooks) sections of this seventh part of the cou
 Some of the following exercises are "features" that are independent of one another,
 meaning that there is no need to finish the exercises in any particular order.
 You are free to skip over a part of the exercises if you wish to do so.
-A few of these exercises are applying some of the advanced state management techniques from Redux, React Query and Context.
+A few of these exercises are applying some of the advanced state management techniques from Redux, React Query and Context covered in [part 6](/part6).
 
 If you you need help with your original Watchlist application, you can reach out to me so that we can help you move forward and to establish a starting point for these exercises.
 
@@ -54,6 +54,8 @@ You can maximize your learning by doing both.
 
 Refactor the application from using the internal React component state to using one of the above technologies for the application's state management.
 
+For example, you can refactor the app to use the `useReducer` hook and context to manage the notification data.
+
 Change the application's notifications to use the state management at this point of the exercise set.
 
 #### 7.11: State Management, step2
@@ -72,6 +74,10 @@ Expand your solution so that it is again possible to like and delete a show.
 #### 7.13: State Management, step4
 
 Store the information about the signed-in user via State Management.
+
+### Views
+
+The rest of the tasks are common to both the Redux and React Query versions.
 
 #### 7.14: Users view
 

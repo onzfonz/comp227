@@ -67,7 +67,7 @@ app.post('/api/tasks', (request, response, next) => { // highlight-line
   const task = new Task({
     content: body.content,
     important: body.important || false,
-    date: new Date(),
+    date: new Date().toISOString(),
   })
 
   task.save()
@@ -99,7 +99,7 @@ When validating an object fails, we return the following default error message f
 ![postman showing error message](../../images/3/50.png)
 
 We may notice that the backend has now a problem: ***validations are not done when editing a task***.
-The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem:
+The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what the problem is:
 validations are not run by default when `findOneAndUpdate` is executed.
 
 The fix is easy.
@@ -189,7 +189,7 @@ Add validation to your communities application, which will make sure that commun
 
 A community link must
 
-- start with `https://` and then either have **discord.com/invite** or **discord.gg** as part of its URL. (I was going to have you add slack, but decided against it)
+- start with `https://` and then either have **discord.com/invite** or **discord.gg** as part of its URL.
 - end with 6-10 more letters (both upper case and lowercase) or numbers, but not more than 10 of them.
     - e.g. <https://discord.com/invite/yNhmmsPBT8> and and <https://discord.gg/9BXyDG> are valid community links
     - e.g. discord.gg/9BXyDG, <https://reddit.com> and <https://something.discord.gg/9BXyDG> are invalid
@@ -205,6 +205,12 @@ Generate a new "comp227" version of the application by creating a new production
 Verify that everything works locally by using the entire application from the address <http://localhost:3001/>.
 
 Push the latest version to Render and verify that everything works there as well.
+
+> **NOTE**: you should **deploy the *backend*** to the cloud service.
+> Make sure that your backend is at the root of your repository.
+
+You shall NOT be deploying the frontend directly at any stage of this part.
+It is just backend repository that is deployed throughout the whole part, nothing else.
 
 </div>
 
@@ -223,8 +229,8 @@ In compiled statically typed languages like Java, IDEs like NetBeans can point o
 Additional tools for performing [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) like [checkstyle](https://checkstyle.sourceforge.io),
 can be used for expanding the capabilities of the IDE to also point out problems related to style, like indentation.
 
-In the JavaScript universe, the current leading tool for static analysis aka.
-"linting" is [ESlint](https://eslint.org/).
+In the JavaScript universe, the current leading tool for static analysis
+(AKA "linting") is [ESlint](https://eslint.org/).
 
 Let's install ESlint as a development dependency to the backend project with the command:
 
@@ -242,7 +248,8 @@ We will answer all of the questions:
 
 ![terminal output from ESlint init](../../images/3/52be.png)
 
-The configuration will be saved in the *.eslintrc.js* file:
+The configuration will be saved in the *.eslintrc.js* file.
+We will change `browser` to `node` in the `env` configuration:
 
 ```js
 module.exports = {
@@ -317,10 +324,10 @@ We do not want this to happen, and we can accomplish this by creating a [.eslint
 file in the project's root with the following contents:
 
 ```bash
-build
+dist
 ```
 
-This causes the entire *build* directory to not be checked by ESlint.
+This causes the entire *dist* directory to not be checked by ESlint.
 
 Lint has quite a lot to say about our code, much of which can be easily fixed.
 
@@ -403,7 +410,7 @@ Our default configuration takes a bunch of predetermined rules into use from `es
 
 This includes a rule that warns about *console.log* commands.
 [Disabling](https://eslint.org/docs/user-guide/configuring#configuring-rules) a rule can be accomplished by
-defining its "value" as 0 in the configuration file.
+defining its "value" as *`0`* in the configuration file.
 Let's do this for the `no-console` and `no-debugger` rules in the meantime,
 since we are learning and not intending to ship anything just yet.
 
@@ -439,7 +446,7 @@ While ESlint and Webstorm are great, sometimes Webstorm or ESlint may not have a
 
 ![eslint complaining about process](../../images/3/custom/eslint_process.png)
 
-In those cases, you may be tempted to use ***Suppress  'no-undef' for current line***.
+In those cases, you may be tempted to use ***Suppress 'no-undef' for current line***.
 Doing so leads to having a line for ESlint that looks like this just above the line.
 
 ```js
@@ -489,6 +496,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 Add ESlint to your application and fix all the warnings.
 
-This was the last exercise of this part of the course. It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
+> This was the last exercise of this part of the course.
+> It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 
 </div>

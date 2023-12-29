@@ -34,7 +34,8 @@ The other thing you should do is to give yourself an icon picture, which is alwa
 
 Now we are going to make sure that you have a version of git on your computer
 
-Some of you may already have git setup.  To check, I would type in Terminal:
+Some of you may already have git setup.
+To check, I would type in Terminal:
 
 ```bash
 git config --list
@@ -55,14 +56,16 @@ If this is all foreign to you, then please read on.
 If you saw something like: *command not found*, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
 ***We will install git using a package manager.***
 A **package manager** is a piece of software that keeps track of what you've installed and allows you to easily install and uninstall entire programs.
-Many can (when you ask them to) also upgrade to new versions when those become available.  
+Many can (when you ask them to) also upgrade to new versions when those become available.
 Just make sure your terminal program is open and type (or copy)
 
 |Windows|Mac|
 |:---|:--|
 |`winget install --id Git.Git -e --source winget`|`brew install git`|
 
-Press enter and wait.  It's not too bad.  If it complains, you may need administrative privileges, but just let it do its work.
+Press enter and wait.
+It's not too bad.
+If it complains, you may need administrative privileges, but just let it do its work.
 
 Once it finishes, you may need to restart your terminal, but then we'll get to this
 
@@ -147,7 +150,7 @@ You should now see your username and email displayed among lots of other options
 Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
 If you already have node installed,
 make sure it is at least version 16.13.2.
-We will discuss node.js further in [part 1](../../1/en/part1.md).
+We will discuss node.js further in [part 1](/part1).
 
 For this class, I'm going to install nvm first so that we can use a specific version of node,
 since the bulk of this course was written and tested with Node 16.13.2.
@@ -275,7 +278,7 @@ Before moving on, make sure that you have generated the repository from the GitH
 Now that we have WebStorm and a GitHub repo, we are almost ready to connect WebStorm to our GitHub profile and to the repo we created via GitHub classroom.
 
 Before we can do that though, we need to generate credentials that the computer can use to login to GitHub via Webstorm.
-Let's do that now.  
+Let's do that now.
 
 ### 7: Generate a GitHub token
 
@@ -311,7 +314,7 @@ Now what we will do is:
 4. After clicking OK, select ***Use Token*** from the authentication options
 5. Switch back to the token page that we just generated and copy that token
 6. Paste that token back into WebStorm
-7. Trust and open the project.  
+7. Trust and open the project.
 
 Following all of these steps would result in the project opening up, with it opening up the *README.md* file.
 
@@ -388,7 +391,8 @@ What you should do is watch
 and how to send those changes so that they are recorded on GitHub.
 
 Because we are editing a markdown file, Webstorm defaults for it to be in preview mode,
-but if I were to have clicked the middle button it would have shown a split preview between the raw text and what it looks like. (instead of flipping back and forth)
+but if I were to have clicked the middle button it would have shown a split preview between the raw text and what it looks like -
+(instead of flipping back and forth)
 
 Also, notice the green button at the top - ![green commit button](../../images/0/partc/git_green_button.png).
 That is used to create a commit, which is a record of the changes that you have made.
@@ -448,7 +452,7 @@ Make sure you put them in a folder and provide them with names that match the ex
 
 #### 0.9 - Final upload screenshot
 
-Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.  
+Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.
 Please name the screenshot file with the name `09`.
 Make sure the file has the correct extension.
 
@@ -509,7 +513,8 @@ When using git bash, you know you have entered a git repository when you see tha
 In our case, notice how the end of the prompt ends with
 `main`.
 That lets you know that you are on the main branch of a git
-project.  I will move up a directory and down just so you can see the difference.
+project.
+I will move up a directory and down just so you can see the difference.
 
 ![git terminal showing main as repo](../../images/0/partc/image5.png)
 

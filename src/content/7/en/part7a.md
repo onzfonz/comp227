@@ -129,7 +129,7 @@ The routing provided by React Router is enabled by changing the application as f
 import {
   BrowserRouter as Router,
   Routes, Route, Link
-} from "react-router-dom"
+} from 'react-router-dom'
 
 const App = () => {
 
@@ -170,7 +170,7 @@ because here the import happens by renaming the imported object:
 import {
   BrowserRouter as Router, // highlight-line
   Routes, Route, Link
-} from "react-router-dom"
+} from 'react-router-dom'
 ```
 
 According to the [v5 docs](https://v5.reactrouter.com/web/api/BrowserRouter):
@@ -275,7 +275,7 @@ When a browser navigates to the URL for a specific task, for example, ***/tasks/
 import {
   // ...
   useParams  // highlight-line
-} from "react-router-dom"
+} from 'react-router-dom'
 
 const Task = ({ tasks }) => {
   const id = useParams().id // highlight-line
@@ -364,7 +364,7 @@ With the user logs in, we call `navigate('/')` which causes the browser's URL to
 Both [`useParams`](https://reactrouter.com/en/main/hooks/use-params) and [`useNavigate`](https://reactrouter.com/en/main/hooks/use-navigate) are ***hook functions***,
 just like `useState` and `useEffect` which we have used many times now.
 As you remember from [part 1, there are some rules](/part1/a_more_complex_state_debugging_react_apps/#rules-of-hooks) to using hook functions.
-Create-react-app has been configured to warn you if you break these rules, for example, *by calling a hook function from a conditional statement*.
+Vite has been configured to warn you if you break these rules, for example, *by calling a hook function from a conditional statement*.
 
 ### redirect
 
@@ -481,7 +481,7 @@ The `App` component becomes:
 import {
   // ...
   useMatch  // highlight-line
-} from "react-router-dom"
+} from 'react-router-dom'
 
 const App = () => {
   // ...
@@ -553,7 +553,7 @@ The application starts the usual way, but first, you need to install the depende
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 #### 7.1: routed jokes, step1

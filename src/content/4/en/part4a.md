@@ -19,7 +19,7 @@ By the time we reach the [recap section](#directory-structure-recap), the direct
 ```bash
 ├── index.js
 ├── app.js
-├── build
+├── dist
 │   └── ...
 ├── controllers
 │   └── tasks.js
@@ -82,6 +82,15 @@ server.listen(config.PORT, () => {
 
 The *index.js* file only imports the actual application from the *app.js* file and then starts the application.
 The function `info` of the logger module is used for the console printout telling that the application is running.
+
+Now the Express app and the code taking care of the web server are separated from each other
+following [best practices](https://dev.to/nermineslimane/always-separate-app-and-server-files--1nc7).
+One of the advantages of this method is that the application can now be tested at the level of HTTP API calls
+without actually making calls via HTTP over the network, this makes the execution of tests faster.
+
+The route handlers have also been moved into a dedicated module.
+The event handlers of routes are commonly referred to as *controllers*, and for this reason we have created a new *controllers* directory.
+All of the routes related to tasks are now in the *tasks.js* module under the *controllers* directory.
 
 #### utils/config.js
 
@@ -154,7 +163,7 @@ tasksRouter.post('/', (request, response, next) => {
 })
 
 tasksRouter.delete('/:id', (request, response, next) => {
-  Task.findByIdAndRemove(request.params.id)
+  Task.findByIdAndDelete(request.params.id)
     .then(() => {
       response.status(204).end()
     })
@@ -194,7 +203,7 @@ module.exports = tasksRouter
 
 The module exports the router to be available for all consumers of the module.
 
-All routes are now defined for the router object, similar to what did before with the object representing the entire application.
+All routes are now defined for the router object, similar to what we did before with the object representing the entire application.
 
 It's worth noting that the paths in the route handlers have shortened.
 In the previous version, we had:
@@ -242,6 +251,8 @@ const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose').set('strictQuery', true)
 
+mongoose.set('strictQuery', false)
+
 logger.info('connecting to', config.MONGODB_URI)
 
 mongoose.connect(config.MONGODB_URI)
@@ -253,7 +264,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(cors())
-app.use(express.static('build'))
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
@@ -345,7 +356,7 @@ To recap, the directory structure looks like this after the changes have been ma
 ```bash
 ├── index.js
 ├── app.js
-├── build
+├── dist
 │   └── ...
 ├── controllers
 │   └── tasks.js
@@ -408,7 +419,7 @@ logger.info('message')
 logger.error('error message')
 ```
 
-The other option is to destructure the functions to their own variables in the `require` statement:
+The other option is to destructure the functions to their own variables in the *`require`* statement:
 
 ```js
 const { info, error } = require('./utils/logger')
@@ -421,7 +432,8 @@ I would recommend using the latter option when only a small portion of those exp
 
 #### Exporting a single value
 
-In file *controller/tasks.js*, exporting happens differently:
+The second way of exporting may be preferable if only a small portion of the exported functions are used in a file.
+As an example, in the file *controller/tasks.js*, exporting happens differently:
 
 ```js
 const tasksRouter = require('express').Router()
@@ -444,6 +456,16 @@ app.use('/api/tasks', tasksRouter)
 
 Now the exported *thing* (in this case a router object) is assigned to a variable and used as such.
 
+#### Finding the usages of your files with Webstorm
+
+Webstorm has some handy features that allow you to search for usages in your code.
+This can be very helpful for refactoring.
+For example, if you decide to split a function into two separate functions, your code could break if you don't modify all the usages.
+This is difficult if you don't know where they are.
+
+To find usages for any functions or variables, you can go to *Edit->Find Usages->Find Usages in File*
+and then search based on a variatey of criteria.
+
 </div>
 
 <div class="tasks">
@@ -455,12 +477,19 @@ which allows users to save information about interesting shows they have stumble
 For each listed show we will save the title, genre, Streaming Service URL, and amount of upvotes from users of the application.
 From here on, I will refer to a streaming show as a **show**.
 
+> **Note** You need to install Mongoose version 7.6.5 with the command
+>
+> ```bash
+> npm install mongoose@7.6.5
+> ```
+>
+> since the most recent Mongoose version does not support a library that we will be using in a later part of the course!
+
 #### 4.1 Watchlist, step1
 
 Let's imagine a situation, where you receive an email that contains the following application body:
 
 ```js
-const http = require('http')
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -525,6 +554,8 @@ The "shortcut" will end up taking more time than moving forward slowly and syste
 It makes it easier to find what error caused your mistake.
 This makes it easy to rollback to a situation where the application still works.
 
+If you're having issues with `content.body` being *`undefined`* for seemingly no reason, make sure you didn't forget to add *`app.use(express.json())`* near the top of the file.
+
 </div>
 
 <div class="content">
@@ -586,7 +617,7 @@ Let's define the *npm script `test`* to execute tests with Jest and to report ab
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest --verbose", // highlight-line
-    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../part3-tasks-backend",
+    "build:ui": "rm -rf dist && cd ../part2-tasks/ && npm run build && cp -r dist ../part3-tasks-backend",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
     "lint": "eslint .",
     "fixlint": "eslint . --fix"
@@ -654,13 +685,7 @@ module.exports = {
     'node': true,
     'jest': true, // highlight-line
   },
-  'extends': 'eslint:recommended',
-  'parserOptions': {
-    'ecmaVersion': 12
-  },
-  "rules": {
-    // ...
-  },
+  // ...
 }
 ```
 

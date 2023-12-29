@@ -27,7 +27,7 @@ We'll task you with doing this.
 
 ![browser showing user login for tasks](../../images/5/1e.png)
 
-Below are the changes needed to add the login form in *App.js*:
+Our new code for *App* is below:
 
 ```js
 const App = () => {
@@ -184,7 +184,7 @@ const App = () => {
 If the login is successful, the form fields are emptied ***and*** the server response
 (including a *token* and the user details) is saved to the `user` field of the application's state.
 
-If the login fails or function `loginService.login` throws an error, the user is notified.
+If the login fails or the function `loginService.login` throws an error, the user is notified.
 
 The user is not notified about a successful login in any way.
 Let's modify the application to show the login form only *if the user is not logged in* so when `user === null`.
@@ -281,7 +281,7 @@ const App = () => {
 ```
 
 A slightly odd looking, but commonly used
-[React trick](https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator)
+[React trick](https://react.dev/learn/conditional-rendering#logical-and-operator-)
 is used to render the forms conditionally:
 
 ```js
@@ -387,7 +387,7 @@ let token = null // highlight-line
 
 // highlight-start
 const setToken = newToken => {
-  token = `bearer ${newToken}`
+  token = `Bearer ${newToken}`
 }
 // highlight-end
 
@@ -396,8 +396,8 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+// highlight-start
 const create = async newObject => {
-  // highlight-start
   const config = {
     headers: { Authorization: token },
   }
@@ -444,15 +444,14 @@ And now adding new tasks works again!
 
 ### Saving the token to the browser's local storage
 
-Our application has a flaw: when the page is rerendered, the user's login information disappears.
-This also slows down development.
-For example, when we test creating new tasks, we have to login again every single time.
+Our application has a flaw: if we refresh the page (***F5***), the user's login information disappears.
+This flaw also slows down development, since when we test creating new tasks, we have to keep logging in.
 
 This problem is easily solved by saving the login details to [**local storage**](https://developer.mozilla.org/en-US/docs/Web/API/Storage).
 Local Storage is a [key-value](https://en.wikipedia.org/wiki/Key-value_database) database in the browser.
 
 It is very easy to use.
-A *value* corresponding to a certain *key* is saved to the database with the method [setItem](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem).
+A *value* corresponding to a certain *key* is saved to the database with the method [`setItem`](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem).
 For example:
 
 ```js
@@ -517,7 +516,7 @@ We still have to modify our application so that when we enter the page,
 the application checks if local storage has details for a logged-in user.
 If there is, the details are saved to the state of the application and to ***taskService***.
 
-The right way to do this is with an [*effect hook*](https://reactjs.org/docs/hooks-effect.html):
+The right way to do this is with an [*effect hook*](https://react.dev/reference/react/useEffect):
 a mechanism we first encountered in [part 2](/part2/getting_data_from_server#effect-hooks),
 and used to fetch tasks from the server.
 
@@ -556,11 +555,11 @@ const App = () => {
 ```
 
 The empty array `[]` as the parameter of the effect ensures that the effect is executed only when the component is rendered
-[for the first time](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect).
+[for the first time](https://react.dev/reference/react/useEffect#parameters).
 
 Now a user stays logged in to the application forever.
 We should probably add a ***logout*** functionality, which removes the login details from the local storage.
-*We will leave it as an exercise, as it builds character* 🧐.
+*We will leave it as an exercise, as it uhhhh "builds character"* 🧐.
 
 ***It's possible to log out a user using the console***, and that is enough for now.
 You can log out with the command:
@@ -595,7 +594,7 @@ The application is started the usual way, but you have to install its dependenci
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 Following what we have mentioned before about committing regularly, your commits should be providing context on the small changes that you are doing as you write your code.
@@ -698,7 +697,7 @@ No matter how the validity of tokens is checked and ensured,
 saving a token in the local storage might contain a security risk if the application has a security vulnerability that allows
 [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) attacks.
 An XSS attack is possible if the application would allow a user to inject arbitrary JavaScript code (e.g. using a form) that the app would then execute.
-When using React sensibly it should not be possible since [React sanitizes](https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks)
+When using React sensibly it should not be possible since [React sanitizes](https://legacy.reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks)
 all text that it renders, meaning that it is not executing the rendered content as JavaScript.
 
 If one wants to play safe, the best option is to not store a token in local storage.
@@ -709,8 +708,8 @@ so that JavaScript code could not have any access to the token.
 The drawback of this solution is that it would make implementing SPA applications a bit more complex.
 One would need at least to implement a separate page for logging in.
 
-However, it is good to notice that even the use of httpOnly cookies does not guarantee anything.
-It has even been suggested that httpOnly cookies are
+However, it is good to notice that even the use of *httpOnly cookies* does not guarantee anything.
+It has even been suggested that *httpOnly cookies* are
 [not any safer than](https://academind.com/tutorials/localstorage-vs-cookies-xss/)
 the use of local storage.
 
