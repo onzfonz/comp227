@@ -101,7 +101,16 @@
   }
 
   blockquote {
+    border-left: 2px;
     border-left-style: solid;
+    border-left-color: #{$gray};
+    padding-left: 0.5rem;
+    html[data-theme='light'] & {
+        background-color: #{$blockquote};
+    }
+    html[data-theme='dark'] & {
+        background-color: #{$blockquote--dark};
+    }
   }
 
   .letter {
@@ -157,12 +166,6 @@
     padding-left: 30%;
     padding-right: 5%;
   }
-
-//   TODO: this was added, but I don't think that it's needed since we have one above.  Probably better just to do the colors for the tasks or anything else here instead.
-//   blockquote {
-//     padding-left: 0.5rem;
-//     border-left: 2px #888 solid;
-//   }
 }
 
 .tasks {
