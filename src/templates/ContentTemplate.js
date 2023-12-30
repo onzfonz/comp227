@@ -54,10 +54,11 @@ export default class ContentTemplate extends Component {
             var partColorName = partColors[frontmatter.part];
             var partColor = colors[partColorName];
             var alternativePartColor = colors[partColorName + (theme === 'light' ? '-alt' : '')];
+            var textColor = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
             i.style = `border-color: ${alternativePartColor}`;
             var origColor = i.style.color;
 
-            i.style.color = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
+            i.style.color = textColor;
             !i.classList.contains('language-switcher__language') &&
                 (i.target = '_blank');
 
@@ -67,7 +68,7 @@ export default class ContentTemplate extends Component {
             }
             function out() {
                 i.style.backgroundColor = 'transparent';
-                i.style.color = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
+                i.style.color = textColor;
             }
 
             i.onmouseover = over;
