@@ -52,7 +52,7 @@ export default class ContentTemplate extends Component {
             // going to fix some of the link colors here to be bolder for the white ones in the light theming
             var theme = document.documentElement.dataset.theme;
             var partColorName = partColors[frontmatter.part];
-            var partColor = colors[partColorName];
+            var partColor = colors[partColorName + (theme === 'light' ? '' : '-dark')];
             var alternativePartColor = colors[partColorName + (theme === 'light' ? '-alt' : '')];
             var textColor = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
             i.style = `border-color: ${alternativePartColor}`;
@@ -63,7 +63,7 @@ export default class ContentTemplate extends Component {
                 (i.target = '_blank');
 
             function over() {
-                i.style.color = origColor;
+                i.style.color = (i.parentNode.tagName !== "STRONG") && theme !== 'light' ? '#ffffff': origColor;
                 i.style.backgroundColor = partColor;
             }
             function out() {
