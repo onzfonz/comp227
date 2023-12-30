@@ -144,9 +144,11 @@
 .tasks {
   a {
     border: 0;
-    border-bottom-width: 2px;
+    border-bottom-width: 3px;
     border-style: solid;
-    padding: 2px;
+    padding: 1px;
+    display: inline-block;
+    height: 1.45rem;
 
     &:hover {
       color: $black;
