@@ -103,8 +103,8 @@ export default class ContentTemplate extends Component {
         const { markdownRemark } = this.props.data;
         const { frontmatter, html } = markdownRemark;
         const { mainImage, letter, part, lang } = frontmatter;
-        const switchingColorCode = colors[partColors[part]+ (this.state.isDark ? '-dark' : '')]
-        const boldColorCode = colors[partColors[part]+ (this.state.isDark ? '' : '-dark')]
+        const switchingColorCode = colors[partColors[part]+ (this.state.isDark ? '-dark' : '-light')]
+        const boldColorCode = colors[partColors[part]+ (this.state.isDark ? '' : '-bold')]
         const colorCode = colors[partColors[part]];
 
         const parserOptions = {
