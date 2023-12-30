@@ -49,20 +49,25 @@ export default class ContentTemplate extends Component {
         const { frontmatter } = this.props.data.markdownRemark;
 
         links.map(i => {
-            i.style = `border-color: ${colors[partColors[frontmatter.part]]}`;
+            // going to fix some of the link colors here to be bolder for the white ones in the light theming
+            var theme = document.documentElement.dataset.theme;
+            var partColorName = partColors[frontmatter.part];
+            var partColor = colors[partColorName];
+            var alternativePartColor = colors[partColorName + (theme === 'light' ? '-alt' : '')];
+            i.style = `border-color: ${alternativePartColor}`;
             var origColor = i.style.color;
 
-            i.style.color = (i.parentNode.tagName === "STRONG") ? colors[partColors[frontmatter.part] + (document.documentElement.dataset.theme === 'light' ? '-alt' : '')] : origColor;
+            i.style.color = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
             !i.classList.contains('language-switcher__language') &&
                 (i.target = '_blank');
 
             function over() {
                 i.style.color = origColor;
-                i.style.backgroundColor = colors[partColors[frontmatter.part]];
+                i.style.backgroundColor = partColor;
             }
             function out() {
                 i.style.backgroundColor = 'transparent';
-                i.style.color = (i.parentNode.tagName === "STRONG") ? colors[partColors[frontmatter.part] + (document.documentElement.dataset.theme === 'light' ? '-alt' : '')] : origColor;
+                i.style.color = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
             }
 
             i.onmouseover = over;
