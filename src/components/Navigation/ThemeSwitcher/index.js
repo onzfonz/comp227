@@ -25,7 +25,6 @@ const ThemeSwitcher = () => {
 
   const handleThemeSwitchClick = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
-    window.location.reload();
   };
 
   return (

@@ -1,29 +1,30 @@
 import './ContentTemplate.scss';
 
-import React, { Component } from 'react';
+import React, { useEffect, Component } from 'react';
 
+import { graphql } from 'gatsby';
+import Parser from 'html-react-parser';
+import domToReact from 'html-react-parser/lib/dom-to-react';
+import snakeCase from 'lodash/fp/snakeCase';
+import path from 'path';
+import colors from '../colors';
 import Arrow from '../components/Arrow/Arrow';
-import ArrowToTop from '../images/up-arrow.svg';
 import { Banner } from '../components/Banner/Banner';
 import EditLink from '../components/EditLink/EditLink';
 import Element from '../components/Element/Element';
-import Layout from '../components/layout';
-import Parser from 'html-react-parser';
 import PrevNext from '../components/PrevNext/PrevNext';
-import SEO from '../components/seo';
 import ScrollNavigation from '../components/ScrollNavigation/ScrollNavigation';
 import { SubHeader } from '../components/SubHeader/SubHeader';
-import colors from '../colors';
-import domToReact from 'html-react-parser/lib/dom-to-react';
-import { graphql } from 'gatsby';
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import navigation from '../content/partnavigation/partnavigation';
 import mainSEOdescription from '../content/seo/mainSEOdescription';
 import mainSEOtags from '../content/seo/mainSEOtags';
-import navigation from '../content/partnavigation/partnavigation';
-import { partColors } from './partColors';
-import path from 'path';
-import snakeCase from 'lodash/fp/snakeCase';
+import ArrowToTop from '../images/up-arrow.svg';
 import getPartTranslationPath from '../utils/getPartTranslationPath';
 import { createCopyButton } from './copy-code-button/create-copy-buttons';
+import { partColors } from './partColors';
+import { updateLinks } from './ContentLinksUtils';
 
 export default class ContentTemplate extends Component {
     constructor(props) {
@@ -42,44 +43,12 @@ export default class ContentTemplate extends Component {
     }
 
     renderPartsForPage() {
-        const links = Array.from(
-            document.querySelectorAll('a:not(.skip-to-content')
-        );
-
+        
         const h1 = document.querySelector('h1');
         const h3 = document.querySelectorAll('h3');
         const h3Arr = Array.from(h3).map(t => t.innerText);
-
-        const { frontmatter } = this.props.data.markdownRemark;
-
-        links.map(i => {
-            // going to fix some of the link colors here to be bolder for the white ones in the light theming
-            var theme = document.documentElement.dataset.theme;
-            var partColorName = partColors[frontmatter.part];
-            var partColor = colors[partColorName + (theme === 'light' ? '' : '-dark')];
-            var alternativePartColor = colors[partColorName + (theme === 'light' ? '-alt' : '')];
-            var textColor = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
-            i.style = `border-color: ${alternativePartColor}`;
-            var origColor = i.style.color;
-
-            i.style.color = textColor;
-            !i.classList.contains('language-switcher__language') &&
-                (i.target = '_blank');
-
-            function over() {
-                i.style.color = (i.parentNode.tagName !== "STRONG") && theme !== 'light' ? '#ffffff' : origColor;
-                i.style.backgroundColor = partColor;
-            }
-            function out() {
-                i.style.backgroundColor = 'transparent';
-                i.style.color = textColor;
-            }
-
-            i.onmouseover = over;
-            i.onmouseleave = out;
-
-            return null;
-        });
+        
+        updateLinks(this.props);
 
         this.setState({
             h1Title: h1.innerText,
@@ -116,6 +85,8 @@ export default class ContentTemplate extends Component {
         const switchingColorCode = colors[partColors[part] + (this.state.isDark ? '-dark' : '-light')]
         const boldColorCode = colors[partColors[part] + (this.state.isDark ? '' : '-bold')]
         const colorCode = colors[partColors[part]];
+
+        updateLinks(this.props);
 
         const parserOptions = {
             replace: props => {
