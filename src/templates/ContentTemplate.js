@@ -38,10 +38,14 @@ export default class ContentTemplate extends Component {
     }
 
     componentDidMount() {
+        this.renderPartsForPage();
+    }
+
+    renderPartsForPage() {
         const links = Array.from(
             document.querySelectorAll('a:not(.skip-to-content')
         );
-        
+
         const h1 = document.querySelector('h1');
         const h3 = document.querySelectorAll('h3');
         const h3Arr = Array.from(h3).map(t => t.innerText);
@@ -63,7 +67,7 @@ export default class ContentTemplate extends Component {
                 (i.target = '_blank');
 
             function over() {
-                i.style.color = (i.parentNode.tagName !== "STRONG") && theme !== 'light' ? '#ffffff': origColor;
+                i.style.color = (i.parentNode.tagName !== "STRONG") && theme !== 'light' ? '#ffffff' : origColor;
                 i.style.backgroundColor = partColor;
             }
             function out() {
@@ -109,8 +113,8 @@ export default class ContentTemplate extends Component {
         const { markdownRemark } = this.props.data;
         const { frontmatter, html } = markdownRemark;
         const { mainImage, letter, part, lang } = frontmatter;
-        const switchingColorCode = colors[partColors[part]+ (this.state.isDark ? '-dark' : '-light')]
-        const boldColorCode = colors[partColors[part]+ (this.state.isDark ? '' : '-bold')]
+        const switchingColorCode = colors[partColors[part] + (this.state.isDark ? '-dark' : '-light')]
+        const boldColorCode = colors[partColors[part] + (this.state.isDark ? '' : '-bold')]
         const colorCode = colors[partColors[part]];
 
         const parserOptions = {
