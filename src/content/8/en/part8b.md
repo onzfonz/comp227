@@ -73,7 +73,7 @@ npm run ts-node file.ts -- -s --someoption
 It is worth mentioning that TypeScript also provides an [online playground](https://www.typescriptlang.org/play/index.html),
 where you can quickly try out TypeScript code and instantly see the resulting JavaScript and possible compilation errors.
 
-> **NB:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment,
+> **Pertinent:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment,
 which is why you might see different warnings there compared to your local environment.
 The playground's tsconfig is modifiable through the ***TS Config*** dropdown menu.
 
@@ -419,7 +419,7 @@ a community project to maintain types of everything in one place.
 Sometimes, an npm package can also include its types within the code and,
 in that case, installing the corresponding `@types/*` is not necessary.
 
-> **NB:** Since the typings are only used before compilation,
+> **Pertinent:** Since the typings are only used before compilation,
 > the typings are *not* needed in the production build and they should **always** be in the *`devDependencies`* of the *package.json*.
 
 Since the global variable `process` is defined by Node itself, we get its typings from the package *`@types/node`*.
@@ -739,14 +739,15 @@ export const isNotNumber = (argument: any): boolean =>
 default export "this is the default..."
 ```
 
-Another note: somehow surprisingly TypeScript does not allow to define the same variable in many files at a "block scope", that is, outside functions (or classes):
-
-![browser showing pong from localhost:3000/ping](../../images/8/60new.png)
-
-This is not *quite* true.
-This ***rule applies only to files that are treated as scripts***.
-A file is a **script** if it does not contain any `export` or `import` statements.
-If a file has those, then the file is treated as a [**module**](https://www.typescriptlang.org/docs/handbook/modules.html), ***and*** the variables do not get defined in the block scope.
+> Pertinent: somehow surprisingly TypeScript does not allow to define the same variable in many files at a "block scope", that is, outside functions (or classes):
+>
+> ![browser showing pong from localhost:3000/ping](../../images/8/60new.png)
+>
+> This is not *quite* true.
+> This ***rule applies only to files that are treated as scripts***.
+> A file is a **script** if it does not contain any `export` or `import` statements.
+> If a file has those, then the file is treated as a [**module**](https://www.typescriptlang.org/docs/handbook/modules.html),
+> ***and*** the variables do not get defined in the block scope.
 
 </div>
 

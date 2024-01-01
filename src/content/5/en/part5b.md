@@ -593,7 +593,7 @@ const Show = ({ show }) => {
 )}
 ```
 
-> **NB:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component,
+> **Pertinent:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component,
 the component can not be used directly to achieve the desired behavior.
 The easiest solution will be ***to add a state to the blog post that controls the displayed form of the blog post***.
 
@@ -811,7 +811,7 @@ module.exports = {
 }
 ```
 
-> NOTICE: We may need to turn on our ESLint settings like we did in [part 3](/part3/validation_and_es_lint#configure-webstorm-with-eslint)
+> Reminder: We may need to turn on our ESLint settings like we did in [part 3](/part3/validation_and_es_lint#configure-webstorm-with-eslint)
 > Make sure that you turn on *`--eslint-fix-on-save`* and configure the node interpreter for this new project again.
 > We may update this with additional configurations, but for now, you can ask in discord if there are any issues.
 

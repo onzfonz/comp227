@@ -216,7 +216,7 @@ taskService.getAll().then(tasks =>
 )
 ```
 
-> **NB:** why didn't we use `await` in place of promises and event handlers (registered to `then` methods)?
+> **Pertinent:** why didn't we use `await` in place of promises and event handlers (registered to `then` methods)?
 >
 > ***`await` only works inside `async` functions***, and `taskService.getAll` in *main.jsx* is not inside a function, so we'll abstain from using `async` here.
 

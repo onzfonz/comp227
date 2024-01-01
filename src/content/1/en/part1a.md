@@ -367,7 +367,7 @@ const App = () => {
 }
 ```
 
-> NB: `export` at the bottom will be left out of any future examples.
+> Pertinent: `export` at the bottom will be left out of any future examples.
 > It is still needed for the code to work.
 
 Writing components with React is easy, and by combining components, even a more complex application can be kept fairly maintainable.

@@ -414,16 +414,16 @@ userSchema.plugin(uniqueValidator) // highlight-line
 // ...
 ```
 
-Note: when installing the *mongoose-unique-validator* library, you may encounter the following error message:
-
-![screenshot showing mongoose compatibility error](../../images/4/uniq.png)
-
-The reason for this is that at the time of writing (10.11.2023) the library is not yet compatible with Mongoose version 8.
-If you encounter this error, you can revert to an older version of Mongoose by running the command
-
-```bash
-npm install mongoose@7.6.5
-```
+> Pertinent: when installing the *mongoose-unique-validator* library, you may encounter the following error message:
+>
+> ![screenshot showing mongoose compatibility error](../../images/4/uniq.png)
+>
+> The reason for this is that at the time of writing (10.11.2023) the library is not yet compatible with Mongoose version 8.
+> If you encounter this error, you can revert to an older version of Mongoose by running the command
+>
+> ```bash
+> npm install mongoose@7.6.5
+> ```
 
 We could also implement other validations into the user creation.
 We could check that the username is long enough, that the username only consists of permitted characters, or that the password is strong enough.
@@ -634,7 +634,7 @@ const taskSchema = new mongoose.Schema({
 You can find the code for our current application in its entirety in the *part4-8* branch of
 [this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-8).
 
-> NOTE: At this stage, firstly, some tests will fail.
+> Pertinent: At this stage, firstly, some tests will fail.
 > We will leave fixing the tests as an optional exercise.
 > Secondly, in the deployed tasks app, the creating a task feature will stop working as the user is not yet linked to the frontend.
 

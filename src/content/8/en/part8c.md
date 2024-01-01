@@ -1240,7 +1240,7 @@ The use of a type guard that returns a type predicate is one way to do [**type n
 that is, to give a variable a more strict or accurate type.
 As we will soon see there are also other kinds of [type guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html) available.
 
-> #### Side note: testing if something is a string
+> #### Important: testing if something is a string
 >
 > *Why do we have two conditions in the string type guard?*
 >

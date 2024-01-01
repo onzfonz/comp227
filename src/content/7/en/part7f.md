@@ -95,7 +95,7 @@ You can access the view by clicking the name of the user in the view that lists 
 
 ![browser watchlist showing clickable users](../../images/7/43.png)
 
-> **NB:** you will almost certainly stumble across the following error message during this exercise:
+> **Pertinent:** you will almost certainly stumble across the following error message during this exercise:
 >
 > ![browser TypeError cannot read property name of undefined](../../images/7/42ea.png)
 >

@@ -31,8 +31,8 @@ h1 {
 }
 ```
 
-**Notice:** when the content of the file *index.css* changes,
-React might not notice that automatically, so you may need to refresh the browser to see your changes!
+> **Pertinent:** when the content of the file *index.css* changes,
+> React might not notice that automatically, so you may need to refresh the browser to see your changes!
 
 CSS rules comprise of **selectors** and **declarations**.
 The selector defines which elements the rule should be applied to.
@@ -704,7 +704,7 @@ Notice that it might take some minutes until a generated API key is valid.
 
 If you use Open weather map, [here](https://openweathermap.org/weather-conditions#Icon-list) is the description for how to get weather icons.
 
-> **NB:** In some browsers (such as Firefox) the chosen API might send an error response,
+> **Pertinent:** In some browsers (such as Firefox) the chosen API might send an error response,
 which indicates that HTTPS encryption is not supported, although the request URL starts with `http://`.
 This issue can be fixed by completing the exercise using Chrome.
 

@@ -1195,7 +1195,7 @@ but will also add another item, since last time we pledged to check the database
 
 ### Exercises 4.8-4.12
 
-> **NB:** the material uses the [toContain](https://jestjs.io/docs/expect#tocontainitem) matcher in several places
+> **Pertinent:** the material uses the [toContain](https://jestjs.io/docs/expect#tocontainitem) matcher in several places
 to verify that an array contains a specific element.
 It's worth noting that the method uses the === operator for comparing and matching elements, which means that it is often not well-suited for matching objects.
 In most cases, the appropriate method for verifying objects in arrays is the [toContainEqual](https://jestjs.io/docs/expect#tocontainequalitem) matcher.
@@ -1215,14 +1215,14 @@ Notice that you will have to make similar changes to the code that were made
 [in the material](#specifying-application-modes),
 like defining the test environment so that you can write tests that use separate databases.
 
-> **NB:** When running the tests, you may run into the following warning:
+> **Pertinent:** When running the tests, you may run into the following warning:
 >
 ![Warning to read docs on connecting mongoose to jest](../../images/4/8a.png)
 >
 > *Please revisit [the earlier section](#mongoose-related-warnings)*
 > to follow the directions for adding a *tests/teardown.js* file and updating Jest definitions in *package.json*.
 >
->> **NB:** when you are writing your tests ***it is better to not execute all of your tests***, only execute the ones you are working on.
+>> **Pertinent:** when you are writing your tests ***it is better to not execute all of your tests***, only execute the ones you are working on.
 Read more about this [here](#running-tests-one-by-one).
 
 #### 4.9*: Watchlist tests, step2

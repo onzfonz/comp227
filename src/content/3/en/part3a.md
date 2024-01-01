@@ -1019,7 +1019,7 @@ Please use this new repo link to build your new repository.
 
 **<http://go.djosv.com/227lab3>**
 
-> **Notice:** Because this is not a frontend project and we are not working with React, the application **is not created** with *`create vite@latest -- --template react`*.
+> **Pertinent:** Because this is not a frontend project and we are not working with React, the application **is not created** with *`create vite@latest -- --template react`*.
 You initialize this project with the `npm init` command that was demonstrated earlier in this part of the material.
 >
 > **Strong recommendation:** When you are working on backend code, always keep an eye on what's going on in the terminal that is running your application.
@@ -1074,7 +1074,7 @@ Implement a page at the address <http://localhost:3001/info> that looks roughly 
 
 The page has to show the time that the request was received and how many communtiies are listed at the time of processing the request.
 
-> Notice: There can only be one *`response.send()`* statement in an Express app route.
+> Caution: There can only be one *`response.send()`* statement in an Express app route.
 > Once you send a response to the client using *`response.send()`*, the request-response cycle is complete and no further response can be sent.
 >
 > To include a line space in the output, use `<br/>` tag, or wrap the statements in `<p>` tags.

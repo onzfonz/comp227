@@ -126,7 +126,7 @@ const config = () => {
 module.exports = config
 ```
 
-> **Notice:** it would be possible to make the definition directly as an object instead of a function:
+> **Pertinent:** it would be possible to make the definition directly as an object instead of a function:
 >
 > ```js
 > const path = require('path')

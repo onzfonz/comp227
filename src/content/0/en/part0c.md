@@ -32,7 +32,7 @@ The console looks like this:
 Make sure that the ***Network*** tab is open, and check the ***Disable cache*** option as shown.
 *Preserve log* can also be useful: it saves the logs printed by the application when the page is reloaded.
 
-> **NB:** The most important tab is the ***Console*** tab.
+> **Pertinent:** The most important tab is the ***Console*** tab.
 However, in this introduction, we will be using the ***Network*** tab quite a bit.
 
 ### HTTP GET
@@ -551,7 +551,7 @@ The Form tag has attributes `action` and `method`, which define that submitting 
 
 ![action and method highlight](../../images/0/24e.png)
 
-The code on the server responsible for the POST request is quite simple (NB: this code is on the server, and not on the JavaScript code fetched by the browser):
+The code on the server responsible for the POST request is quite simple (Pertinent: this code is on the server, and not on the JavaScript code fetched by the browser):
 
 ```js
 app.post('/new_place', (req, res) => {

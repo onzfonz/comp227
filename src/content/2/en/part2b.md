@@ -497,7 +497,7 @@ After finishing this exercise your application should look something like this:
 
 Notice the use of the React developer tools extension in the picture above!
 
-> **NB:**
+> **Pertinent:**
 >
 > - you can use the group's name as a value of the `key` property
 > - remember to prevent the default action of submitting HTML forms!
@@ -563,7 +563,7 @@ Implement a search field that can be used to filter the list of communities by n
 You can implement the search field as an ***input*** element that is placed outside the HTML form.
 The filtering logic shown in the image is **case insensitive**, meaning that the search term `comp` also returns results that contain Comp with an uppercase C.
 
-> **NB:** When you are working on new functionality, it's often useful to "hardcode" some dummy data into your application, e.g.
+> **Pertinent:** When you are working on new functionality, it's often useful to "hardcode" some dummy data into your application, e.g.
 >
 > ```js
 > const App = () => {

@@ -327,7 +327,7 @@ We will get more familiar with the *npm* tool and additional dependency nuances 
 Now we are ready to use Axios.
 Going forward, json-server is assumed to be running on port 3001.
 
-> NB: To run json-server and your react app simultaneously, you will need to use two terminal windows.
+> Pertinent: To run json-server and your react app simultaneously, you will need to use two terminal windows.
 > One to keep json-server running and the other to run react-app.
 > Normally I have a third terminal window open as well to work with git if you are not using WebStorms built-in tools.
 

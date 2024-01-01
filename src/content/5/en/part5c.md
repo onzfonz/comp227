@@ -136,7 +136,7 @@ Time:        1.152 s
 
 As expected, the test passes.
 
-> **NB:** the console may issue a warning if you have not installed [**Watchman**](https://facebook.github.io/watchman/).
+> **Pertinent:** the console may issue a warning if you have not installed [**Watchman**](https://facebook.github.io/watchman/).
 Watchman is an application developed by Facebook that watches for changes that are made to files.
 The program speeds up the execution of tests and at least starting from macOS Sierra,
 running tests in watch mode issues some warnings to the console, which can be removed by installing Watchman.
