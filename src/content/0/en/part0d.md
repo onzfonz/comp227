@@ -149,13 +149,15 @@ You should now see your username and email displayed among lots of other options
 
 Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
 If you already have node installed,
-make sure it is at least version 16.13.2.
+make sure it is at least version 18.13.0.
 We will discuss node.js further in [part 1](/part1).
 
-For this class, I'm going to install nvm first so that we can use a specific version of node,
-since the bulk of this course was written and tested with Node 16.13.2.
-If that is the case, you could also install **[NVM](https://github.com/nvm-sh/nvm)**,
-which allows us to have different versions of node.js on our computer and switch between them.
+For this class, I'm going to install nvm first so that we can use a specific version of node.
+Specifically we'll use Node version 18.13.0.
+However, the bulk of this course was written and fully tested with Node 16.13.2.
+So essentially we want to have two node versions 18.13 (a newer version) and 16.13.2 (as a fallback).
+Since that is the case, we will also install **[NVM](https://github.com/nvm-sh/nvm)**,
+which allows us to have these two different versions of node.js on our computer and switch between them.
 
 This can be done via one of these commands.
 
@@ -163,15 +165,16 @@ This can be done via one of these commands.
 |:---|:--|
 |`winget install -e CoreyButler.NVMforWindows`|`brew install nvm`|
 
-After installing nvm, you can use the nvm's help to install a version (like 16.3.2, which is what I'll do).
+After installing nvm, you can use the nvm's help to install a version (like 18.13.0 and 16.13.2, which is what I'll do).
 Type nvm to navigate through, and you'll notice that you need to these two commands separately.
 
 ```bash
-nvm install 16.3
-nvm use 16
+nvm install 16.13
+nvm install 18.13
+nvm use 18
 ```
 
-After this, you should be able to type `node -v` and you'll notice that it should print out `v16.3.0`.
+After this, you should be able to type `node -v` and you'll notice that it should print out `v18.13.0`.
 
 To prepare you to use WebStorm we'll follow a couple more commands here:
 
