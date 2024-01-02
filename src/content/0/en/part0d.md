@@ -64,7 +64,7 @@ Just make sure your terminal program is open and type (or copy)
 |`winget install --id Git.Git -e --source winget`|`brew install git`|
 
 Press enter and wait.
-It's not too bad.
+It's not too bad, unless you are on a mac and have a slow internet connection.
 If it complains, you may need administrative privileges, but just let it do its work.
 
 Once it finishes, you may need to restart your terminal, but then we'll get to this
@@ -160,13 +160,14 @@ Since that is the case, we will also install **[NVM](https://github.com/nvm-sh/n
 which allows us to have these two different versions of node.js on our computer and switch between them.
 
 This can be done via one of these commands.
+***Remember, all of your terminal commands should be done in git bash at this point!***
 
 |Windows|Mac|
 |:---|:--|
 |`winget install -e CoreyButler.NVMforWindows`|`brew install nvm`|
 
-After installing nvm, you can use the nvm's help to install a version (like 18.13.0 and 16.13.2, which is what I'll do).
-Type nvm to navigate through, and you'll notice that you need to these two commands separately.
+After installing *`nvm`*, you could use the `nvm help` to figure out the commands to install a version (like 18.13.0 and 16.13.2), and then use the later version.
+I'll provide the commands though here, which you'll need to execute separately.
 
 ```bash
 nvm install 16.13
@@ -174,20 +175,24 @@ nvm install 18.13
 nvm use 18
 ```
 
-After this, you should be able to type `node -v` and you'll notice that it should print out `v18.13.0`.
+After this, you should be able to type `node -v` and you'll notice that it should print out *`v18.13.0`*.
 
-To prepare you to use WebStorm we'll follow a couple more commands here:
-
-One is to type the following lines, which creates a ***symbolic link*** where WebStorm can find the version of node we are using.
-***Remember, all of your terminal commands should be done in git bash at this point!***
+To link node to our future IDE WebStorm we'll follow the next couple of instructions.
+Here's the first:
 
 ```bash
 export NVM_SYMLINK_CURRENT=true
-nvm use default
 ```
 
-If, after typing the second line, you get an error like `panic: runtime error: slice bounds out of range`, this is mostly likely due to you already having node installed.
-If you type `nvm list` and you just type the number of one of the versions installed, like say `nvm use 16`, that will also work.
+The above command creates a ***symbolic link*** where WebStorm can find the version of node we are using.
+Then, type:
+
+```bash
+nvm use 18
+```
+
+> If, after typing this line, you get an error like *`panic: runtime error: slice bounds out of range`*, this is mostly likely due to you already having node installed.
+> If you type `nvm list` and you just type the number of one of the versions installed, like say `nvm use 18`, that will also work.
 
 #### 4 Alternate: Installing node directly
 
@@ -210,9 +215,9 @@ which we'll need a few times.
 
 ### 5: Join our GitHub Classroom
 
-At this point, you have made sure that your git configuration is correct.
+At this point, ensure your git configuration is correct.
 
-Then, you'll visit this URL:
+Next, you'll visit this URL:
 
 **<http://go.djosv.com/227start>**
 
@@ -221,7 +226,7 @@ Next, Accept the assignment.
 
 ![GitHub classroom Accept assignment](../../images/0/partc/classroomaccept.png)
 
-This is going to have you enter the comp227
+This is going to have you enter the *comp227*
 organization.
 If you have already signed up for an account it may ask
 you to re-enter your credentials.
@@ -244,14 +249,15 @@ Otherwise, if you close it, you'll need to navigate back through it by going to 
 
 For this course, I will be asking that you use [Webstorm](https://www.jetbrains.com/webstorm/download/) from JetBrains.
 You can do this with the package manager by merely typing `winget install JetBrains.WebStorm` or `brew install --cask webstorm` in your Terminal depending on your configuration.
-While I am OK if you decide to use [VS Code](http://code.visualstudio.com) instead,
-please be aware that I will only be supporting or answering questions about Webstorm.
+Because there is so much integration that we are doing between Webstorm and Git,
+I'm going to ask that you stick to using it.
+If you are adamant about using VSCode, then please contact me via Discord ***ASAP*** for some additional instructions.
 *Some of the pictures below may be from PHPStorm, which is just like WebStorm, except it's designed for PHP.
 If you see pictures below that have PHPStorm, pretend they say Webstorm, they behave similarly.*
 This also goes for anything that mentions COMP 127 (Assume it's 227).
 
 [WebStorm](https://www.jetbrains.com/webstorm/download/) is a web development editor from JetBrains
-(*Make sure that you activate an [educational license](https://www.jetbrains.com/shop/eform/students) from them*).
+> *Please activate an [educational license](https://www.jetbrains.com/shop/eform/students) from them*.
 
 If you haven't already, use the command line to download WebStorm.
 
@@ -259,7 +265,7 @@ If you haven't already, use the command line to download WebStorm.
 |:--|:--|
 |`winget install -e JetBrains.WebStorm`|`brew install --cask webstorm`|
 
-As you are downloading the product, make sure that you fill out the [student application](https://www.jetbrains.com/shop/eform/students).
+As you are downloading the product, make sure that you fill out the [student application for the educational license](https://www.jetbrains.com/shop/eform/students).
 While WebStorm offers a 30-day free trial, we want to start the application process early to avoid any hiccups.
 Jetbrains provides free access to all Jetbrains products while you're a student.
 
@@ -292,12 +298,12 @@ Tokens are slightly analogous to using a temporary credit card number for purcha
 instead of giving everyone access to your bank account.
 Because Webstorm will be constantly communicating with GitHub, let's generate a token that will be stored on our computer.
 
-Go back to [GitHub](http://github.com) and log in,
-then click on your profile icon in the upper right,
+Go back to [GitHub's new token page](http://github.com/settings/tokens/new) and login.
+Alternatively, you can click on your GitHub profile icon in the upper right,
 and then go to [*Settings->Developer settings->Personal Access Tokens->Tokens (classic)->Generate new token->Generate new token (classic)*](https://imgur.com/S1E0tQc).
 Then give the token a name,
 set expiration to *Custom* (providing a date up to 1 year from now) and select the `repo, workflow, read:org and gist` checkboxes for the scopes.
-Once you do that, scroll to the bottom and click the green Generate new Token.
+Once you do that, scroll to the bottom and click the green ***Generate Token***.
 [I did another short animation of this as well.](https://imgur.com/LUAt5DU)
 You'll then see a page that has the token that says to copy it because you won't be able to see it again.
 
@@ -316,19 +322,17 @@ Now what we will do is:
 3. Switch to WebStorm and select ***Get From VCS***, using the copied URL from GitHub.
 4. After clicking OK, select ***Use Token*** from the authentication options
 5. Switch back to the token page that we just generated and copy that token
-6. Paste that token back into WebStorm
+6. Paste that token back into WebStorm and ***Log In***.
 7. Trust and open the project.
 
 Following all of these steps would result in the project opening up, with it opening up the *README.md* file.
 
 Here's a recap in a [re-looping gif of all of these steps that you should see](https://imgur.com/UDQXB6V)
 
-#### Other permissions
+### 9: Additional Webstorm Setup
 
-The other permission you may have to set (if you are running into issues) is to allow JetBrains access to comp227's organizational space.
-You can do this by [visiting GitHub's apps settings](https://github.com/settings/applications#authorized) and then clicking on **JetBrains IDE Integration**.
-Click on that and then you should be able to see the heading ***Organization Access***.
-Click on the ***Grant*** button next to comp227, and now try cloning the project again.
+We'll need to make a few more changes to Webstorm to have it work as we expect.
+This is required.
 
 #### Configure your settings
 
@@ -340,18 +344,6 @@ I'll go over a few different settings that I've found useful:
 - [Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
 - [Changing your default terminal](#changing-our-default-terminal-app)
 - [Enabling autosave](#enabling-autosave)
-
-#### Changing keyboard shortcuts
-
-Since by this point I have become accustomed to eclipse keyboard shortcuts, WebStorm provides an ability in its settings to use an Eclipse keymap.
-They also have other keymaps as well.
-For me this allows me to not have to worry about learning new keyboard shortcuts,
-I can continue using handy shortcuts from eclipse like:
-(***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Ctrl-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
-
-To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
-Pick the file that will work best for you in navigating using keyboard shortcuts.
-This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
 
 #### Changing our default terminal app
 
@@ -365,10 +357,63 @@ There you should see bash.exe with a path for git.
 
 #### Enabling autosave
 
-This one I find to be incredibly useful, but it's a double-edged sword, as sometimes tends to break whatever I am working on.
-On the other hand, it allows me to not have to worry about saving all the time, which is key nowadays.
+Enabling autosave allows me to not have to worry about saving all the time, which is key.
+On the other hand sometimes we have some extra complexity.
+Nonetheless, the benefits outweigh any issues.
 Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
 check the option which says to ***Save files if the IDE is idle for 15 seconds***.
+
+#### Creating a File Watcher for our Git Configuration
+
+We will be making one additional required change to repos for projects for this class.
+Because of a wealth of issues previously with changes, we are going to install a *file watcher*.
+This file watcher will automatically allow us to connect our git repositories with our Webstorm IDE,
+Allowing us to commit our changes on Auto-Save.
+This is not meant to be a complete replacment of other instructions here.
+It is meant merely as a fail-safe backup.
+However, this is also something that we will be using, and so it will be required for the course.
+Enabling this however, can make things more difficult if you are using multiple machines.
+If this is the case, please let me know, but since most of the work will be individual,
+there should not be many issues that arise with this.
+
+To start:
+
+1. go to *File->Settings->Tools->File Watchers*.
+2. Click the plus (add) button ![plus icon](../../images/0/custom/plus_icon.png)
+3. Choose *`<custom>`*
+4. In the *Name* field, type *`COMP 227 Git Watcher`*
+5. In the *File Type* field, select *`React JSX`*
+6. In the *Program* field, provide the path to your git executable (something like `C:\Program Files\Git\bin\git.exe`)
+7. In the *Arguments* field, type *`commit -am "Auto-commit JSX on save for Comp 227"`* (don't forget the quotes!)
+8. Expand the *Advanced Options* area, and select *`Trigger the watcher regardless of syntax errors`*
+9. Ensure the Scope is on *Project Files*, and that the checkboxes for *auto-save* and *trigger on external* are checked.
+
+Here's what mine looked like, though your Program field may differ:
+
+![file watcher options](../../images/0/custom/file_watcher.png)
+
+Make sure to click ***OK*** to add the Watcher.
+You should now see it in your list of File Watchers.
+
+Let's export the watcher for future use.
+Click the export button and save it in a good location.
+
+![export icon showing highlighted](../../images/0/custom/export_button.png)
+Make sure to select a location you'll remember as you'll need it later.
+
+Now once you are back on list of File Wachters, click ***Apply*** and then ***OK*** to exit out of the Settings Window.
+
+#### Changing keyboard shortcuts
+
+Since by this point I have become accustomed to eclipse keyboard shortcuts, WebStorm provides an ability in its settings to use an Eclipse keymap.
+They also have other keymaps as well.
+For me this allows me to not have to worry about learning new keyboard shortcuts,
+I can continue using handy shortcuts from eclipse like:
+(***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Ctrl-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
+
+To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
+Pick the file that will work best for you in navigating using keyboard shortcuts.
+This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
 
 #### Link WebStorm to nvm
 
@@ -385,7 +430,14 @@ Once there, go through each of the settings we just changed and ensure that thos
 For the Jetbrains settings only, another option that I recommend would be to sync your settings via your Jetbrains account.
 That setting sync is located in the upper-right as a cog icon near the close window button.
 
-### 9: Make changes
+#### Running into issues?
+
+The other permission you may have to set (if you are running into issues) is to allow JetBrains access to comp227's organizational space.
+You can do this by [visiting GitHub's apps settings](https://github.com/settings/applications#authorized) and then clicking on **JetBrains IDE Integration**.
+Click on that and then you should be able to see the heading ***Organization Access***.
+Click on the ***Grant*** button next to comp227, and now try cloning the project again.
+
+### 10: Make changes
 
 By this point, your project should be open.
 
@@ -410,7 +462,7 @@ As you are toying around, you may get a popup like this in WebStorm.
 Like the picture shows, I would check ***Don't ask again*** and then click ***Cancel***.
 I like to be purposeful in my commits in git, so I do not like adding in files to be tracked that may not be necessary.
 
-### 10: Understand the process
+### 11: Understand the process
 
 For every project that we have thereafter, there will most likely be a new repo that you'll need to add to Webstorm using some of the steps that we've highlighted here.
 For every repo you'll need to accept the assignment and open up a new project from VCS.

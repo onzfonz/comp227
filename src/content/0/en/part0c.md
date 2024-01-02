@@ -32,7 +32,7 @@ The console looks like this:
 Make sure that the ***Network*** tab is open, and check the ***Disable cache*** option as shown.
 *Preserve log* can also be useful: it saves the logs printed by the application when the page is reloaded.
 
-> **Pertinent:** The most important tab is the ***Console*** tab.
+> **FYI:** The most important tab is the ***Console*** tab.
 However, in this introduction, we will be using the ***Network*** tab quite a bit.
 
 ### HTTP GET
@@ -43,7 +43,7 @@ The *Network* tab shows how the browser and the server communicate.
 When you reload the page (press the ***F5*** key or the &#8635; symbol on your browser),
 the console will show that a few events have happened.
 
-- The browser has fetched the contents of the page *comp227demo.pages.dev* from the server
+- The browser has fetched the contents of the page *227demo.djosv.com* from the server
 - And has downloaded the image *travel.jpg*
 - It also asked for the little icon that normally shows up next to your website's title in the tabs (favicon.ico).
 
@@ -57,16 +57,16 @@ Clicking the first event reveals more information on what's happening:
 
 The upper part, ***General***, shows that the browser requested the address *<http://227demo.djosv.com>*
 using the [GET](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method.
-That the request was successful
-because the server response had the [Status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) 200.
+The request was successful
+because the server responded with the [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) *`200`*.
 
 The request and server response have several [headers](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields):
 
 ![Screenshot of response headers](../../images/0/4e.png)
 
 The **Response headers** on top tell us details like the true server and the exact time of the response.
-An important header [Content-Type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
-tells us that the response is a text file in [UTF-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted with HTML.
+An important header [*`content-type`*](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
+tells us that the response is a text file in [UTF-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted as HTML.
 This way the browser knows the response to be a regular [HTML](https://en.wikipedia.org/wiki/HTML) page and to render it to the browser 'like a web page'.
 
 The **Response** tab shows the response data, a regular HTML page.
@@ -77,9 +77,9 @@ The **body** section determines the structure of the page rendered to the screen
 The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element which in turn contains:
 
 - a heading (`h1`)
-- A paragraph with text.
+- A `<p>`aragraph with text.
 - a link to our ***actual demo***
-- an [img](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag
+- an [`img`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag
 
 Because of the `img` tag, the browser does a second *HTTP request* to fetch the image *travel.jpg* from the server.
 The details of the request are as follows:
@@ -87,21 +87,20 @@ The details of the request are as follows:
 ![Detailed view of the second event](../../images/0/6e.png)
 
 The request was made to the address <https://227demo.djosv.com/travel.jpg> and its type is *HTTP GET*.
-The response headers tell us that the response size is 1396589 bytes (fairly large!),
-and its [Content-type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) is *image/jpeg*,
-so it is a png image.
+The response headers tell us that the response size is *`1396589`* bytes (fairly large!),
+and its `content-type` is *image/jpeg*, so it is a *jpeg* image.
 The browser uses this information to render the image correctly to the screen.
 
-The chain of events caused by opening the page <https://227demo.djosv.com>
-on a browser from the following [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/):
+The chain of events caused by the browser opening the page <https://227demo.djosv.com>
+has been detailed in the following [sequence diagram](https://www.geeksforgeeks.org/unified-modeling-language-uml-sequence-diagrams/):
 
 ![Sequence diagram of the flow covered above](../../images/0/7e.png)
 
-First, the browser sends an HTTP GET request to the server to fetch the HTML code of the page.
-The ***img*** tag in the HTML prompts the browser to fetch the image *travel.jpg*.
-The browser renders the HTML page and the image to the screen.
+First, the diagram illustrates that the browser sends an *`HTTP GET`* request to the server to fetch the HTML code of the page.
+The ***img*** tag in that fetched HTML prompts the browser to send a new GET request for the image *travel.jpg*, which the server sends back.
+The browser then renders the HTML and image it received to the screen.
 
-Even though it is difficult to notice, the HTML page begins to render before the image has been fetched from the server.
+> Even though it is difficult to notice, the HTML page begins to render before the image has been fetched from the server.
 
 ### Traditional web applications
 
@@ -161,8 +160,8 @@ This course will use Node.js and Express to create web servers.
 
 ### Running application logic in the browser
 
-Keep the Developer Console open.
-Empty the console by clicking the 🚫 symbol, or by typing `clear()` in the console.
+*Keep the Developer Console open.*
+Clear the console by clicking the 🚫 symbol, or by typing `clear()` in the console.
 Now when you go to the [places](https://227demo.djosv.com/places) page, the browser does 4 HTTP requests:
 
 ![Screenshot of the developer console with the 4 requests visible](../../images/0/8e.png)

@@ -10,7 +10,7 @@ lang: en
   | | |
 | --- | --- |
 | COURSE NAME| Web Development
-| SEMESTER|  Spring 2023
+| SEMESTER|  Spring 2024
 | NUMBER AND TYPE OF UNITS|  3
 | COURSE TIME AND LOCATION|  Online (Meetings will be asynchronous)
 | INSTRUCTOR NAME| Osvaldo Jiménez
@@ -27,7 +27,7 @@ Students are expected to read online resources and apply techniques to develop a
 | --- | --- |
 Email | ojimenez AT pacific.edu
 Discord |  <https://discord.gg/VRUKRxCJ95>
-Virtual Office Hours| TTh 5pm-7pm
+Virtual Office Hours| MW 3pm-5pm
 Other meetings | by email/discord appointment
 
 ### Prerequisites
@@ -230,6 +230,7 @@ The course is composed of a few parts
 #### Individual Exercises
 
 Part of your grade for the course will be based on the total number of submitted exercises for the required parts (including exercises marked with an asterisk).
+For all of the exercises, your work will not only come from the solution, but from you showing your work as you move toward your solution.
 
 **Your grade will not completely come from these exercises**.
 
@@ -377,21 +378,21 @@ All efforts will be made in this class to protect your privacy and to ensure con
 
 | Week | Date | Hours, Topics, and Activities |
 | - | - | - | - |
-| 1 | Jan 16 | 0 - General course info & Setup<br>1a-1c: React, Javascript, State & Handlers |
-|2  | Jan 23 | 1d - Debugging React<br>2a - Rendering collections |
-|3  | Jan 30 | 2b-2d - Forms and working with data on a server|
-|4 | Feb 6 | 2e - Adding styles to React<br>3a-3b Express and Deploying an app to the internet |
-|5  | Feb 13 | 3c-3d - Saving data to MongoDB and Validation |
-|6  |  Feb 20 | 4a-4b - Testing the backend |
-|7 | Feb 27 | 4c-4d - User administration & Token Authentication |
-|8  | Mar 6 | 5a-5b - Frontend logins and props|
-|9 | Mar 13 | 🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎 |
-|10 | Mar 20 | 5c-5d - Testing React and end-to-end|
-|11  | Mar 27 | 7a-7b - React Router & Custom Hooks |
-|12  | Apr 3 | 8a-8b - Typescript |
-|13 | Apr 10 | 8c-8d - More Typescript (Final Project) |
-|14  | Apr 17 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
-|15 |  Apr 24 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
-|16 | May 2 | Final Project |
+| 1 | Jan 15 | 0 - General course info & Setup<br>1a-1c: React, Javascript, State & Handlers |
+|2  | Jan 22 | 1d - Debugging React<br>2a - Rendering collections |
+|3  | Jan 29 | 2b-2d - Forms and working with data on a server|
+|4 | Feb 5 | 2e - Adding styles to React<br>3a-3b Express and Deploying an app to the internet |
+|5  | Feb 12 | 3c-3d - Saving data to MongoDB and Validation |
+|6  |  Feb 19 | 4a-4b - Testing the backend |
+|7 | Feb 26 | 4c-4d - User administration & Token Authentication |
+|8  | Mar 5 | 5a-5b - Frontend logins and props|
+|9 | Mar 12 | 🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎 |
+|10 | Mar 19 | 5c-5d - Testing React and end-to-end|
+|11  | Mar 26 | 7a-7b - React Router & Custom Hooks |
+|12  | Apr 2 | 8a-8b - Typescript |
+|13 | Apr 9 | 8c-8d - More Typescript (Final Project) |
+|14  | Apr 16 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
+|15 |  Apr 23 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
+|16 | May 1 | Final Project |
 
 </div>

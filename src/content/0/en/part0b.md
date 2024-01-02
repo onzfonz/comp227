@@ -49,7 +49,7 @@ Other parts do not have asterisk-marked exercises since there is no similar depe
 How to study the course – instructions in a nutshell:
 
 - Do the exercises.
-  The exercises are submitted through GitHub and marking them as done on Canvas.
+  You'll need to show your work on the exercises.  The exercises are submitted through GitHub and marking them as done on Canvas.
 - You need to work regularly.
   The easiest way to fall behind in the course is to not work on it every couple of days.
   Set yourself an alarm...do anything! But make it a habit of working on it at least 3 times a week for a little bit of time.
