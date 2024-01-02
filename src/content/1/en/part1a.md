@@ -29,14 +29,35 @@ I liked using attach, which puts all the repos in a single folder.
 However, this creates more issues in particular views like the git view as it shows you all the same files and you have to keep making sure you have the right path.
 ![new window and don't ask again](../../images/1/custom/attach_dont_ask.png)
 
+#### Importing File Watcher Settings
+
+One thing we'll need to remember to do is to import our file watcher settings that we created
+[when we were configuring our Webstorm](/part0/configuring_your_machine_for_this_course#9-additional-webstorm-setup)
+
+- Open up Webstorm's Settings again, and go to *Tools->File Watchers*, and click the *Import* icon.
+- Select the watchers file that you had previously exported
+- Once you locate the file, click ***OK***
+- You should see *COMP 227 Git Watcher* appear enabled
+- Click ***OK*** to close settings.
+
+Some of the images prepared for this class use the classic UI, which you can switch to with the settings icon near the close button.
+
+![classic ui location in webstorm](../../images/1/custom/classic_ui.png)
+
 You can click on the project bar in the upper right
 
 ![project bar in the upper right](../../images/1/custom/webstorm_project.png)
 
+This is what it looks like in the modern UI
+
+![project bar icon in modern webstorm UI](../../images/1/custom/webstorm_project_new_ui.png)
+
+### Starting Development
+
 to return to see that you should now have two sets of folders: *lab0* and *lab1*.
 
 You can now right-click on lab1 and select **Open in->Terminal**.
-If you did not review the [part 0c's coverage of git commands and the terminal](/part0/configuring_your_machine_for_this_course#some-git-command-line-tools),
+If you did not review the [part 0d's coverage of git commands and the terminal](/part0/configuring_your_machine_for_this_course#some-git-command-line-tools),
 it might make sense to do so now.
 
 With your terminal now open you can type the following:
@@ -56,27 +77,25 @@ Once you are in the reading directory, start our application by typing:
 npm run dev
 ```
 
-The console says that the application has started on localhost port 5173, i.e. the address <http://localhost:5173/>:
+The console says that the application has started on localhost port 5173, i.e. the address <http://localhost:5173/>.
+> Vite uses the port 5173 [by default](https://vitejs.dev/config/server-options.html#server-port).
+> If it's not available, Vite will use the next free port number.
 
 ![terminal showing vite launched in 5173](../../images/1/1-vite1.png)
 
-Your default browser should launch automatically.
-Open the browser console (***Ctrl-Shift-I***) **immediately**.
+Your default browser may have launched automatically.
+If not, click on the localhost address in your terminal.
+Once the browser opens, open the console (***Ctrl-Shift-I***) **immediately**.
 Also, open a text editor so that you can view the code as well as the webpage at the same time on the screen:
-
-Vite starts the application [by default](https://vitejs.dev/config/server-options.html#server-port) on port 5173.
-If it is not free, Vite uses the next free port number.
-
-You can collapse lab0 and close the README.md from that lab that we had from the previous folder.
-Because we attached the projects, you'll need to make sure that you are editing the correct file, which you can check in the upper left breadcrumb trail.
-
-The code of the application resides in the *reading/src* folder.
-Let's simplify the default code such that the contents of the file *index.js* looks like this:
-Open the browser and a text editor so that you can view the code as well as the webpage at the same time on the screen:
 
 ![code and browser side-by-side](../../images/1/1-vite4.png)
 
-The code of the application resides in the *src* folder. Let's simplify the default code such that the contents of the file main.jsx looks like this:
+You can close *lab0* and close the *README.md* from that lab that we had from the previous folder.
+Because we may be working on multiple projects, you'll need to make sure that you are editing the correct file, which you can check in the lower-left breadcrumb trail.
+*You'll also need to add the files to git for this reading, this will be part of the process to get credit for the course*
+
+The code of the application resides in the *reading/src* folder.
+Let's simplify the default code such that the contents of the file *main.jsx* looks like this:
 
 ```js
 import ReactDOM from 'react-dom/client'
@@ -91,7 +110,7 @@ and file *App.jsx* looks like this
 ```js
 const App = () => (
   <div>
-      <p>Hola COMP 227!</p>
+      <p>Hello COMP 227!</p>
   </div>
 )
 
@@ -100,36 +119,90 @@ export default App
 
 You may delete the files:
 
-- *App.css*
-- *App.test.js*
-- *index.css*
-- *logo.svg*
-- *reportWebVitals.js*
-- *setupTests.js*
+- *src/App.css*
+- *src/assets/react.svg*
+- *src/index.css*
 
 as they are not needed in our application right now.
-If you use safe delete, you should not see any warnings about the files being used.
+If you use Webstorm's safe delete feature, you should not see any warnings about the files being used.
 
 If you do see warnings, then you way want to read [this future section about react version differences](/part1/a_more_complex_state_debugging_react_apps/#old-react).
 
+#### Test our file watcher workflow
+
+Remember that as we mentioned before, the goal should not just be to read the material, but to follow along with the material and to perform the steps as you go.
+
+Remember how we used the File Watchers previously?
+We're going to make sure that process is working,
+as anytime that we add files or `create@vite-latest` app,
+we are going to get into the habit of adding the files to our git repository via the terminal
+**Not following these directions may impact your grade**.
+
+With the changes above and the files deleted, you're going to open your terminal in Webstorm type the command:
+
+```bash
+git add .
+```
+
+Once you do, you should see all of the files turn green in Webstorm.
+This means that we are about to add these files to our git repository.
+Depending on your configuration, you may get the warnings about the line endings.
+This is safe to ignore.
+
+![Webstorm showing files added as green](../../images/1/custom/git_add_green.png)
+
+Once they are in green, let's go ahead and commit by following this command:
+
+```bash
+git commit -m "Setting up reading for grading"
+```
+
+Once you do that, you'll see that the files have turned white again.
+
+![Webstorm showing files added as white](../../images/1/custom/git_commit_white.png)
+
+For this class, you should not ever really have files in Red, Green or any color in Webstorm for very long, since this will prevent our use of our Auto-Save feature and the File Watchers.
+***To test that this is working, please go to *App.jsx* and change the word *`Hello`* to *`Hola`*.***
+When you do this, you may notice that App.jsx turns blue which means that there are changes that have yet to be committed.
+
+![Webstorm showing files changed](../../images/1/custom/git_changed_blue.png)
+
+However, the file will not stay blue for long, and our workflow automation will be triggered, which will cause the file to be white again.
+
+The last thing I wanted to point your attention to is the fact that there is a green arrow near our main branch at the top.
+
+![Webstorm showing main needs to push changes](../../images/1/custom/git_commit_needs_push.png)
+
+This means that you have made changes locally that we want to sync with GitHub.
+To do this, we'll **push** them, which we can do via the terminal or via Webstorm.
+In terminal, you can just type:
+
+```bash
+git push
+```
+
+Once you complete this command, you'll notice that main no longer has the green arrow next to it.
+You can also ensure that your changes are on GitHub.
+To ensure that you are working through the material correctly, you will message me directly once you finish this to confirm that you are following the steps.
+
+> ***If you use more than one computer, you'll need to make sure that you pull at the beginning of the session and push at the end***.
+> Not following this process will most likely result in you needing to meet with me to fix things.
+> ***Let's avoid having unnecessary meetings and promise to follow these instructions***.
+
 ### create-react-app
 
-Instead of Vite you can also use the older generation tool [*create-react-app*](https://github.com/facebookincubator/create-react-app) in the course to set up the applications.
-The most visible difference to Vite is the name of the application startup file, which is *index.js*.
+An alternative to Vite is the older generation tool [*create-react-app*](https://github.com/facebookincubator/create-react-app).
+This tool was used in previous versions of the course.
 
-The way to start the application is also different in create-react-app (AKA ***CRA***), it is started with a command
+Here are some of the most notable differences
 
-```bash
-npm start
-```
+|Difference|Vite|create-react-app (AKA ***CRA***)|
+|--|--|--|
+|Application Startup filename|*main.jsx*|*index.js*|
+|Filename for `<App />` component|*App.jsx*|*App.js*|
+|command to launch application|`npm run dev`|`npm start`|
 
-in contrast to Vite's
-
-```bash
-npm run dev 
-```
-
-This year the course has been updated to vite,
+This year the course has been updated to Vite,
 though some parts may still use the application base created with `create-react-app`.
 
 ### Component
@@ -143,26 +216,26 @@ ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 
 renders its contents into the file *public/index.html*, inside a `div` element that has the `id` value `'root'`.
 
-By default, the file *public/index.html* doesn't contain any HTML markup that is visible to us in the browser.
-
-```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
-```
-
-You can try adding some HTML to the file.
-However, when using React, all content that needs to be rendered is usually defined as React components.
+> **FYI**: By default, the file *public/index.html* doesn't contain any HTML markup that is visible to us in the browser.
+>
+> ```html
+> <!doctype html>
+> <html lang="en">
+>   <head>
+>     <meta charset="UTF-8" />
+>     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+>     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+>     <title>Vite + React</title>
+>   </head>
+>   <body>
+>     <div id="root"></div>
+>     <script type="module" src="/src/main.jsx"></script>
+>   </body>
+> </html>
+> ```
+>
+> You can try adding some HTML to the file.
+> However, when using React, all content that needs to be rendered is usually defined as React components.
 
 Let's take a closer look at the code defining the component:
 
@@ -194,7 +267,7 @@ const App = ...
 ```
 
 There are a few ways to define functions in JavaScript.
-Here we will use [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions),
+Here we will use [*arrow functions*](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions),
 which are described in a newer version of JavaScript known as [ECMAScript 6](http://es6-features.org/#Constants), also called ES6.
 
 Because the function consists of only a single expression we have used a shorthand, which represents this piece of code:
@@ -253,7 +326,7 @@ const App = () => {
 }
 ```
 
-Any JavaScript code within the curly braces is evaluated and the result of this evaluation is embedded into the defined place in the HTML produced by the component.
+Any JavaScript code within the curly braces is evaluated and that result is embedded into the HTML where the curly braces once were.
 
 Notice that you should not remove the line at the bottom of the component
 
@@ -303,16 +376,16 @@ Just like it's possible to chisel one of your old programming projects onto a st
 In either case, I wouldn't recommend it.
 
 In practice, JSX is much like HTML with the distinction that with JSX you can easily embed dynamic content by writing appropriate JavaScript within curly braces.
-The idea of JSX is quite similar to many templating languages, such as Thymeleaf used along with Java Spring, which are used on servers.
+The idea of JSX is quite similar to other templating languages, such as [Thymeleaf](https://www.thymeleaf.org/) and [Java Spring](https://spring.io/), which are used on servers.
 
-JSX is "[XML](https://developer.mozilla.org/en-US/docs/Web/XML/XML_introduction)-like", which means that every tag needs to be closed.
+JSX is "[XML](https://developer.mozilla.org/en-US/docs/Web/XML/XML_introduction)-like", which means that *every tag needs to be closed*.
 For example, a newline is an empty element, which in HTML can be written as follows:
 
 ```html
 <br>
 ```
 
-Notice that absence of a closing tag with HTML.
+***Notice that absence of a closing tag with HTML.***
 However, when *writing JSX*, **the tag needs to be *closed* with a `/`**:
 
 ```html
@@ -346,8 +419,8 @@ const App = () => {
 }
 ```
 
-(Notice `export` at the bottom is left out in these *examples*, now and in the future.
-We still need **`export` for the code to work.**)
+> Pertinent: `export` at the bottom will be left out of any future examples.
+> We still need **`export` for the code to work.**
 
 We have defined a new component `Greet` and used it inside the component `App`.
 Naturally, a component can be used multiple times:
@@ -366,9 +439,6 @@ const App = () => {
   )
 }
 ```
-
-> Pertinent: `export` at the bottom will be left out of any future examples.
-> It is still needed for the code to work.
 
 Writing components with React is easy, and by combining components, even a more complex application can be kept fairly maintainable.
 Indeed, a core philosophy of React is composing applications from many specialized reusable components.
@@ -713,18 +783,20 @@ We have provided you with a fairly robust .gitignore file, which ignores things 
 so you should commit and add all of the files that you use in your directories.
 ***Make sure to remove any files you won't use before committing them!***
 
-Please make sure that you commit often, as that will be the way you show your work and progress through the course.
+Please make sure that you add all files initially, as that will be the way you show your work and progress through the course.
+Please use an appropriate commit message when adding files to the repo.
 
 Notice that in this part, there are more exercises besides those found below.
   
 #### 1.1: handheld arcade info, step1
 
 This exercise will start the ongoing development of a small application that will be further developed in a few of the following exercises.
-Please make sure to commit often.
+Please make sure to commit often and that you do not have any files in your project that are any color other than white.
 
-Use *create-react-app* in the base folder of lab1 to initialize a new application called **arcadeinfo**.
+Use *Vite* in the base folder of *lab1* to initialize a new application called **arcadeinfo**.
+Commit and add all of the files needed.
 Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* folders.
-Modify *index.js* to match the following
+Modify *index.jsx* to match the following
 
 ```js
 import ReactDOM from 'react-dom/client'
@@ -766,7 +838,7 @@ const App = () => {
 export default App
 ```
 
-and remove extra files (*App.css*, *App.test.js*, *index.css*, *logo.svg*, *setupTests.js*, *reportWebVitals.js*)).
+and remove extra files (*App.css*, *index.css*, *logo.svg*)).
 
 Unfortunately, the entire application is in the same component.
 Refactor the code so that it consists of three new components: `Header`, `Content`, and `Total`.
@@ -792,12 +864,12 @@ const App = () => {
 }
 ```
 
-**WARNING** Don't try to program all the components concurrently,
-because that will almost certainly break down the whole app.
-Proceed in small steps, first make e.g. the component *Header* and only when it works for sure, you could proceed to the next component.
-
-Also, do not try to program all the components at the same time.
-You need to go in small steps, like first make the component *Header* and when that works, **commit** the change and then ***then*** proceed to the next component.
+> **WARNING** Don't try to program all the components concurrently,
+> because that will almost certainly break down the whole app.
+> Proceed in small steps, first make e.g. the component *Header* and only when it works for sure, you could proceed to the next component.
+>
+> Also, do not try to program all the components at the same time.
+> You need to go in small steps, like first make the component *Header* and when that works, **commit** the change and then ***then*** proceed to the next component.
 
 #### 1.2: handheld arcade info, step2
 

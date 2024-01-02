@@ -24,18 +24,17 @@ We will take a closer look at transpilation in [part 7](/part7) of this course.
 [Node.js](https://nodejs.org/en/) is a JavaScript runtime environment based on Google's [Chrome V8](https://developers.google.com/v8/)
 JavaScript engine and works practically anywhere - from servers to mobile phones.
 Let's practice writing some JavaScript using Node.
-It is expected that the version of Node.js installed on your machine is at least version *16.13.0*.
-The latest versions of Node already understand the latest versions of JavaScript, so the code does not need to be transpiled.
+It is expected that you have both versions of node installed as directed in [install Node section of Part 0](/part0/configuring_your_machine_for_this_course#4-install-node)
 
 The code is written into files ending with *.js* that are run by issuing the command `node name_of_file.js`
 
-It is also possible to write JavaScript code into the Node.js console,
+It is also possible to write JavaScript code into the *Node.js console*,
 which is opened by typing `node` in the command line, as well as into the browser's developer tool console.
 [The newest revisions of Chrome handle the newer features of JavaScript pretty well](https://compat-table.github.io/compat-table/es2016plus/) without transpiling the code.
 Alternatively, you can use a tool like [JS Bin](https://jsbin.com/?js,console).
 
-JavaScript is sort of reminiscent, both in name and syntax, to Java.
-But when it comes to the core mechanism of the language they could not be more different.
+JavaScript can be reminiscent, both in name and syntax, to Java.
+But when it comes to the language's core, they could not be more different.
 Coming from a Java background, the behavior of JavaScript can seem a bit alien, especially if one does not make the effort to look up its features.
 
 In certain circles, it has also been popular to attempt "simulating" Java features and design patterns in JavaScript.
@@ -57,9 +56,9 @@ console.log(x, y)   // 1, sometext are printed
 x = 4               // causes an error
 ```
 
-[const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const)
+[`const`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const)
 does not define a variable but a **constant** for which the value can no longer be changed.
-On the other hand, [let](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let) defines a normal variable.
+On the other hand, [`let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let) defines a normal variable.
 
 In the example above, we also see that the variable's data type can change during execution.
 At the start, `y` stores an integer; at the end, it stores a string.
