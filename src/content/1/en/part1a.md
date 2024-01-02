@@ -450,7 +450,7 @@ Depending on the editor you are using, you may receive the following error messa
 
 It's not an actual error, but a warning caused by the [ESLint](https://eslint.org/) tool.
 You can silence the warning [`react/prop-types`](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)
-by adding to the file *.eslintrc.js* the next line
+by adding to the file *.estlintrc.cjs* the next line
 
 ```js
 module.exports = {
@@ -462,7 +462,7 @@ module.exports = {
      'plugin:react/jsx-runtime',
      'plugin:react-hooks/recommended',
    ],
-   ignorePatterns: ['dist', '.eslintrc.js'],
+   ignorePatterns: ['dist', '.estlintrc.cjs'],
    parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
    settings: { react: { version: '18.2' } },
    plugins: ['react-refresh'],

@@ -248,7 +248,7 @@ We will answer all of the questions:
 
 ![terminal output from ESlint init](../../images/3/52be.png)
 
-The configuration will be saved in the *.eslintrc.js* file.
+The configuration will be saved in the *.estlintrc.cjs* file.
 We will change `browser` to `node` in the `env` configuration:
 
 ```js
@@ -364,7 +364,7 @@ This makes the other errors easy to spot and fix right away.
 
 ![Screenshot of WebStorm ESlint plugin showing less errors after save](../../images/3/custom/eslint_after_save.png)
 
-ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the *.eslintrc.js* file.
+ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the *.estlintrc.cjs* file.
 
 Let's add the [eqeqeq](https://eslint.org/docs/rules/eqeqeq) rule that warns us if equality is checked with anything other than `===` (like `==`).
 The rule is added under the `rules` field in the configuration file.
@@ -473,7 +473,7 @@ It turns out that the best solution is not to do any suppression but to add this
 Enabling node means that ESlint knows that we can use the `process` variable,
 and allows you to rely on a system that has helped countless developers with similar situations who have come before you.
 
-> **NB** when you make changes to the *.eslintrc.js* file, play close attention to errors in there as well! Webstorm will highlight issues.
+> **NB** when you make changes to the *.estlintrc.cjs* file, play close attention to errors in there as well! Webstorm will highlight issues.
 If there are, Webstorm will report the issues to you, and you can look at the terminal output to see more details about it.
 >
 > ![terminal output from npm run lint](../../images/3/55.png)

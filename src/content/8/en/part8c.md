@@ -148,7 +148,7 @@ Now our *package.json* should look like something like this, with differing vers
 }
 ```
 
-Let's also create a *.eslintrc.js* file with the following content:
+Let's also create a *.estlintrc.cjs* file with the following content:
 
 ```json
 {

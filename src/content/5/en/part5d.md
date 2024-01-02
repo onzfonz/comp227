@@ -202,7 +202,7 @@ Let's ***remove the failing code from the test***.
 > npm install eslint-plugin-cypress --save-dev
 > ```
 >
-> and changing the configuration in *.eslintrc.js* like so:
+> and changing the configuration in *.estlintrc.cjs* like so:
 >
 > ```js
 > module.exports = {

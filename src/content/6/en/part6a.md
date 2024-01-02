@@ -489,7 +489,7 @@ Let us expand *package.json* with a script for running the tests:
 }
 ```
 
-And finally, *.eslintrc.js* needs to be altered as follows:
+And finally, *.estlintrc.cjs* needs to be altered as follows:
 
 ```js
 module.exports = {

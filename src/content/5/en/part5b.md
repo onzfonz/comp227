@@ -744,7 +744,7 @@ If the type of a passed prop is wrong, e.g. if we try to define the `handleSubmi
 In part 3 we configured the [ESlint](/part3/validation_and_es_lint#lint) code style tool to the backend.
 Let's take ESlint to use in the frontend as well.
 
-Vite has installed ESlint to the project by default, so all that's left for us to do is define our desired configuration in the *.eslintrc.js* file.
+Vite has installed ESlint to the project by default, so all that's left for us to do is define our desired configuration in the *.estlintrc.cjs* file.
 
 Next, we will start testing the frontend and in order to avoid undesired and irrelevant linter errors
 we will install the [eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest) package:
@@ -753,7 +753,7 @@ we will install the [eslint-plugin-jest](https://www.npmjs.com/package/eslint-pl
 npm install eslint-plugin-jest --save-dev
 ```
 
-Let's create a *.eslintrc.js* file with the following contents:
+Let's create a *.estlintrc.cjs* file with the following contents:
 
 ```js
 module.exports = {
@@ -769,7 +769,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.js'],
+  ignorePatterns: ['dist', '.estlintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
   plugins: ['react-refresh', 'jest'],
@@ -873,6 +873,6 @@ Define `PropTypes` for one of the components of your application, and ***Add ESl
 Define the configuration according to your liking.
 Fix all of the linter errors.
 
-Vite has installed ESlint to the project by default, so all that's left for you to do is define your desired configuration in the *.eslintrc.js* file.
+Vite has installed ESlint to the project by default, so all that's left for you to do is define your desired configuration in the *.estlintrc.cjs* file.
 
 </div>

@@ -217,7 +217,7 @@ Let's get started by installing the dependencies:
 npm install eslint @babel/eslint-parser eslint-plugin-react eslint-plugin-react-native --save-dev
 ```
 
-Next, let's add the ESLint configuration into a *.eslintrc.js* file in the *rate-repository-app* directory with the following content:
+Next, let's add the ESLint configuration into a *.estlintrc.cjs* file in the *rate-repository-app* directory with the following content:
 
 ```js
 {
