@@ -139,7 +139,7 @@ const loginRouter = require('./controllers/login')
 app.use('/api/login', loginRouter)
 ```
 
-Let's try logging in using the Webstorm REST-client:
+Let's try logging in using the WebStorm REST-client:
 
 ![WebStorm rest post with username/password](../../images/4/17e.png)
 

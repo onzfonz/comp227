@@ -26,7 +26,7 @@ You'll then see a tiny Debug window in the middle of the screen that looks like 
 
 Once you select, Edit configurations..., you'll then arrive at this window:
 
-![node configuration in Webstorm](../../images/3/35x.png)
+![node configuration in WebStorm](../../images/3/35x.png)
 
 After clicking on npm, you'll see a variety of options.
 You'll then:
@@ -40,7 +40,7 @@ At that point click ***Debug***.
 At this point, you'll see via the process console that WebStorm starts up by running `npm start`.
 The output in red is similar to the `npm start` output from the terminal, with some additional messages about WebStorm attaching a debugger.
 
-![Webstorm process console](../../images/3/custom/process_console.png)
+![WebStorm process console](../../images/3/custom/process_console.png)
 
 Remember that the application shouldn't be running in another console, otherwise the port will already be in use.
 
@@ -745,10 +745,10 @@ app.get('/api/tasks/:id', (request, response) => {
 
 ### Verifying frontend and backend integration
 
-When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the Webstorm REST client**.
+When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the WebStorm REST client**.
 Next, let's try creating a new task after taking the database into use:
 
-![Webstorm rest client doing a post](../../images/3/46e.png)
+![WebStorm rest client doing a post](../../images/3/46e.png)
 
 Only once everything has been verified to work in the backend, is it a good idea to test that the frontend works with the backend.
 ***It is highly inefficient to test things exclusively through the frontend.***
@@ -1077,7 +1077,7 @@ By default, the `updatedTask` parameter of the event handler receives the origin
 [without the modifications](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate).
 We added the optional `{ new: true }` parameter, which will cause our event handler to be called with the new modified document instead of the original.
 
-After testing the backend directly with Postman and the Webstorm REST client, we can verify that it seems to work.
+After testing the backend directly with Postman and the WebStorm REST client, we can verify that it seems to work.
 The frontend also appears to work with the backend using the database.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of

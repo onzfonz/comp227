@@ -232,16 +232,16 @@ Particularly you may see an error like this:
 
 ![jest supertest is having issues](../../images/4/custom/supertest_get_call.png)
 
-Your code still runs, but we want to prevent as many of these false positives from causing us to lose confidence in Webstorm's excellent warning system.
+Your code still runs, but we want to prevent as many of these false positives from causing us to lose confidence in WebStorm's excellent warning system.
 So to remove this, we can do something similar to what we did [for removing jest errors](/part4/#handling-complaints-about-jest) and issuing an npm command.
 
-This time, I'll show you how to do this from Webstorm.
+This time, I'll show you how to do this from WebStorm.
 Open *package.json* and locate the `supertest` dependency.
 Then either right click (or use your keyboard shortcut) to open up the context actions and select ***install @types/supertest*** option and you should be set.
 
 ![install supertest option from package.json](../../images/4/custom/install_types_supertest.png)
 
-For many of the libraries we'll be able to download those types to have more information that Webstorm can provide us,
+For many of the libraries we'll be able to download those types to have more information that WebStorm can provide us,
 and I think it's prudent to install as many as they allow as devDependencies.
 
 #### Mongoose related warnings
@@ -249,7 +249,7 @@ and I think it's prudent to install as many as they allow as devDependencies.
 While mongoose is a very popular library, there are some intricacies that we end up dealing with.
 
 For one, you may still see a warning for the connect method for mongoose..
-Webstorm looks like they are still [working on a fix](https://youtrack.jetbrains.com/issue/WEB-22317/Support-autocompletion-for-Mongoose-npm-module-MongoDB-very-popular-module)
+WebStorm looks like they are still [working on a fix](https://youtrack.jetbrains.com/issue/WEB-22317/Support-autocompletion-for-Mongoose-npm-module-MongoDB-very-popular-module)
 
 When running your tests you may also run across the following console warning:
 

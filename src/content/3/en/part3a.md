@@ -758,7 +758,7 @@ Because the tasks in the application are only saved to memory, the list of tasks
 
 ### WebStorm REST client
 
-While Postman has become fairly popular due to all of it's options, in our case we can also use Webstorm's REST client instead of Postman.
+While Postman has become fairly popular due to all of it's options, in our case we can also use WebStorm's REST client instead of Postman.
 
 To use the rest client, right-click on the project and select ***New->HTTP Request***.
 Give it the name `all_tasks` and then you'll see a file named ***all_tasks.http***.
@@ -878,7 +878,7 @@ Postman also allows users to save requests, but the situation can get quite chao
 > that can be used for getting the value of a single header.
 > The `request` object also has the *headers* property, that contains all of the headers of a specific request.
 >
-> Problems can occur with the Webstorm REST client if you accidentally add an empty line between the top row and the row specifying the HTTP headers.
+> Problems can occur with the WebStorm REST client if you accidentally add an empty line between the top row and the row specifying the HTTP headers.
 > In this situation, the REST client interprets this to mean that all headers are left empty,
 > which leads to the backend server not knowing that the data it has received is in the JSON format.
 >

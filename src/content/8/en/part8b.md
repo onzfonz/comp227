@@ -14,7 +14,7 @@ In addition to language features, we will also have a strong emphasis on tooling
 
 ### Setting things up
 
-Luckily there is not much setup here as Webstorm works natively with TypeScript.
+Luckily there is not much setup here as WebStorm works natively with TypeScript.
 Just go ahead and download this new empty repo by visiting this site:
 <http://go.djosv.com/227labtsintro>
 
@@ -80,7 +80,7 @@ The playground's tsconfig is modifiable through the ***TS Config*** dropdown men
 #### Configuration and coding style
 
 Let's add a configuration file *tsconfig.json* to the project.
-In Webstorm you can generate one via ***File->New->tsconfig.json file***.
+In WebStorm you can generate one via ***File->New->tsconfig.json file***.
 Then, add the noImplicitAny field to the `compilerOptions` object
 
 ```js
@@ -112,7 +112,7 @@ but here you'll be expected to use semicolons and adjust to the coding style in 
 This section may have some other differences in coding conventions compared to the rest of the course as well,
 e.g. in the directory naming conventions.
 
-To make our lives easier, let's have Webstorm help us with the semicolons.
+To make our lives easier, let's have WebStorm help us with the semicolons.
 Open up your settings (***Ctrl-Alt-S***), and navigate to ***Editor->Code Style->Typescript***.
 From there, select the *Punctuation* tab and ensure that our use semicolon is set to always:
 
@@ -843,7 +843,7 @@ To turn it into a warning, we can open up the settings by using the ***Show Cont
 ![WebStorm using context actions to turn on errors](../../images/8/custom/quickfixinspection.png)
 
 Once there, you are taken to WebStorm's settings, where in your case, you may see that all of the ES2015 migration aids category is mostly unselected.
-Webstorm provides an explanation for why we would want the change in the upper right area.
+WebStorm provides an explanation for why we would want the change in the upper right area.
 On noticing that most of the inspections are not being raised as warnings, let's change that.
 Click the category ***ES2015 Migration aids*** and change the severity to a weak warning, as we show in the column below.
 

@@ -352,7 +352,7 @@ Here you'll see a window similar to what we just configured, so again select ***
 Also, while we are in the New Project settings, please ensure that the node interpreter from part 0 is selected as the node interpreter.
 *You can reach that option by typing node in the search bar, it will be under ***Languages & Frameworks->Node.js***.
 
-Once you click OK, Webstorm will underline style violations with a red line and will highlight other problems as well.
+Once you click OK, WebStorm will underline style violations with a red line and will highlight other problems as well.
 
 ![Screenshot of vscode ESlint plugin showing errors](../../images/3/54a.png)
 
@@ -442,7 +442,7 @@ Just pay careful attention as you go through and fix some of the errors to ensur
 
 #### Supressing warnings and other tweaks
 
-While ESlint and Webstorm are great, sometimes Webstorm or ESlint may not have a good solution for you either, as it has with us complaining about using the variable **`process`**.
+While ESlint and WebStorm are great, sometimes WebStorm or ESlint may not have a good solution for you either, as it has with us complaining about using the variable **`process`**.
 
 ![eslint complaining about process](../../images/3/custom/eslint_process.png)
 
@@ -473,8 +473,8 @@ It turns out that the best solution is not to do any suppression but to add this
 Enabling node means that ESlint knows that we can use the `process` variable,
 and allows you to rely on a system that has helped countless developers with similar situations who have come before you.
 
-> **NB** when you make changes to the *.estlintrc.cjs* file, play close attention to errors in there as well! Webstorm will highlight issues.
-If there are, Webstorm will report the issues to you, and you can look at the terminal output to see more details about it.
+> **NB** when you make changes to the *.estlintrc.cjs* file, play close attention to errors in there as well! WebStorm will highlight issues.
+If there are, WebStorm will report the issues to you, and you can look at the terminal output to see more details about it.
 >
 > ![terminal output from npm run lint](../../images/3/55.png)
 

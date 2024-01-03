@@ -155,7 +155,7 @@ let Login = (props) => {
 }
 ```
 
-For this to work, you'll need to import the following (or simply follow Webstorm's lead and have it import these for you via its context actions):
+For this to work, you'll need to import the following (or simply follow WebStorm's lead and have it import these for you via its context actions):
 
 ```js
 import { Table, Form, Button } from 'react-bootstrap'

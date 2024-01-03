@@ -170,7 +170,7 @@ Here we are going to go to GitHub to set up a fork.
 Remember that the fork's job is merely to interact with the web server.
 We will never commit code directly to this fork.
 The fork though can sync with the your commit repo in 227 and when it does sync, the web server will be updated magically.
-Up until this point we have not talked about forks or your repos, as we want to make sure that you setup and commit code to the 227 repo from Webstorm.
+Up until this point we have not talked about forks or your repos, as we want to make sure that you setup and commit code to the 227 repo from WebStorm.
 
 To set up a fork, merely go to the comp227 webpage from your repo.
 This can be accessed if you go to *`github.com/comp227/lab3-yourusername`*
@@ -334,7 +334,7 @@ Nonetheless, we will:
 3. configure the backend to show the frontend's ***main page*** (the file *dist/index.html*) as the **backend's main page**.
 
 We begin by copying the production build of the frontend to the root of the backend.
-The copying can be done from the frontend directory by opening up the terminal in Webstorm from the frontend's project and then typing:
+The copying can be done from the frontend directory by opening up the terminal in WebStorm from the frontend's project and then typing:
 
 ```bash
 cp -r dist ../tasks-backend_OR_NAME_OF_YOUR_BACKEND_DIR

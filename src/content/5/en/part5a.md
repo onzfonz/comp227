@@ -588,7 +588,7 @@ You will be using a new repo for this part that you will be able to obtain by vi
 This new repo/application has a small amount of code to get you started.
 The application expects your backend to be running on port 3003.
 
-Visit <http://go.djosv.com/227lab5> to start the process of cloning the frontend repo into Webstorm.
+Visit <http://go.djosv.com/227lab5> to start the process of cloning the frontend repo into WebStorm.
 
 The application is started the usual way, but you have to install its dependencies first:
 

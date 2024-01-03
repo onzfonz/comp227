@@ -117,8 +117,8 @@ Once you reach the *Welcome to Cypress!* message, follow these steps:
 6. Close the next dialog box on the *spec successfully added screen*
 7. Now switch back to WebStorm and open the project explorer.
 
-Notice how in Webstorm there is now a *cypress/e2e* directory, along with our file *task_app.cy.js*.
-Locate it and open it in Webstorm and replace the contents with the code below.
+Notice how in WebStorm there is now a *cypress/e2e* directory, along with our file *task_app.cy.js*.
+Locate it and open it in WebStorm and replace the contents with the code below.
 
 ```js
 describe('Task app', function() {

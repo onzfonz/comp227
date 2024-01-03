@@ -521,10 +521,10 @@ Issue a warning with the [alert](https://developer.mozilla.org/en-US/docs/Web/AP
 `${newName} has already been added to the community directory`
 ```
 
-If the `newName` variable holds the value `Arto Hellas`, the template string expression returns the string
+If the `newName` variable holds the value `Powercat`, the template string expression returns the string
 
 ```js
-`Arto Hellas has already been added to the community directory`
+`Powercat has already been added to the community directory`
 ```
 
 The same could be done in a more Java-like fashion by using the plus operator:

@@ -33,7 +33,7 @@ By the time we reach the [recap section](#directory-structure-recap), the direct
 │   └── middleware.js  
 ```
 
-Before we get started, know that when you ask Webstorm to make a file, and if type *`dir/file`*, Webstorm will automatically create the directory if it doesn't exist.
+Before we get started, know that when you ask WebStorm to make a file, and if type *`dir/file`*, WebStorm will automatically create the directory if it doesn't exist.
 You just need to make sure the correct directory is selected before you begin.
 Let's get started
 
@@ -456,9 +456,9 @@ app.use('/api/tasks', tasksRouter)
 
 Now the exported *thing* (in this case a router object) is assigned to a variable and used as such.
 
-#### Finding the usages of your files with Webstorm
+#### Finding the usages of your files with WebStorm
 
-Webstorm has some handy features that allow you to search for usages in your code.
+WebStorm has some handy features that allow you to search for usages in your code.
 This can be very helpful for refactoring.
 For example, if you decide to split a function into two separate functions, your code could break if you don't modify all the usages.
 This is difficult if you don't know where they are.
@@ -689,7 +689,7 @@ module.exports = {
 }
 ```
 
-Webstorm also seems to complain with warnings for not knowing about test and expect.
+WebStorm also seems to complain with warnings for not knowing about test and expect.
 To get rid of these errors, you can simply type this command so that your project is also aware of the jest's types.
 
 ```bash

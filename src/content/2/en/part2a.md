@@ -24,7 +24,7 @@ when you use the command `console.log` for debugging,
 don't concatenate things 'the Java way' with a plus.
 **Use a comma instead!**
 
-### Protip: Webstorm Live Templates
+### Protip: WebStorm Live Templates
 
 With WebStorm it's easy to create and 'live templates', i.e., shortcuts/snippets
 for quickly generating commonly re-used portions of code, much like how `sout` works in Netbeans and `psvm` works in IntelliJ.
