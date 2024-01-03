@@ -514,26 +514,26 @@ Issue a warning with the [alert](https://developer.mozilla.org/en-US/docs/Web/AP
 
 ![2.7 sample screenshot](../../images/2/11e.png)
 
-**Hint:** when you are forming strings that contain values from variables, it is recommended to use a
-[template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals):
-
-```js
-`${newName} has already been added to the community directory`
-```
-
-If the `newName` variable holds the value `Powercat`, the template string expression returns the string
-
-```js
-`Powercat has already been added to the community directory`
-```
-
-The same could be done in a more Java-like fashion by using the plus operator:
-
-```js
-newName + ' has already been added to the community directory'
-```
-
-Using template strings is the more idiomatic option and the sign of a true JavaScript professional.
+> **Hint:** when you are forming strings that contain values from variables, it is recommended to use a
+> [template string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals):
+>
+> ```js
+> `${newName} has already been added to the community directory`
+> ```
+>
+> If the `newName` variable holds the value `Powercat`, the template string expression returns the string
+>
+> ```js
+> `Powercat has already been added to the community directory`
+> ```
+>
+> The same could be done in a more Java-like fashion by using the plus operator:
+>
+> ```js
+> newName + ' has already been added to the community directory'
+> ```
+>
+> Nonetheless, using template strings is the more idiomatic option and the sign of a true JavaScript professional.
 
 #### 2.8: The Communities Step3
 
