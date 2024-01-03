@@ -116,7 +116,7 @@ To make our lives easier, let's have WebStorm help us with the semicolons.
 Open up your settings (***Ctrl-Alt-S***), and navigate to ***Editor->Code Style->Typescript***.
 From there, select the *Punctuation* tab and ensure that our use semicolon is set to always:
 
-![webstorm settings for always semicolons in typescript](../../images/teht/custom/semicolon.png)
+![WebStorm settings for always semicolons in typescript](../../images/teht/custom/semicolon.png)
 
 Then from there type save in the search box, which should leave you down to ***Tools->Actions on Save***.
 Make sure that the Reformat code option is checked.
@@ -603,7 +603,7 @@ See [the ESlint array-simple rule documentation](https://typescript-eslint.io/ru
 
 Exercises 8.1-8.7. will all be made in the same project folder.
 
-Please start by visiting <http://go.djosv.com/227lab8> and importing the project into webstorm.
+Please start by visiting <http://go.djosv.com/227lab8> and importing the project into WebStorm.
 
 Then, create the project in an empty directory with `npm init` and install the *ts-node* and *typescript* packages.
 Also, create the file *tsconfig.json* in the directory with the following content:

@@ -418,7 +418,7 @@ If we eg. try to add the following to the array
 
 We will immediately see an error in the editor:
 
-![webstorm 3DS needs number of screens to be a handheld](../../images/8/63new.png)
+![WebStorm 3DS needs number of screens to be a handheld](../../images/8/63new.png)
 
 Since our new entry has the attribute `category` with value *`dual`*, **TypeScript knows that the new entry is not just a *`Handheld`* but more specifically a *`HandheldDual`***.
 So here the attribute `category` ***narrows*** the type of the entry from a more general to a more specific type that has a certain set of attributes.
@@ -459,7 +459,7 @@ How should we now use these types in our components?
 
 If we try to acess the objects in the array `handhelds: Handheld[]` we notice that it is possibly to only access the attributes that are common to all the types in the union:
 
-![webstorm showing handheld...](../../images/8/65new.png)
+![WebStorm showing handheld...](../../images/8/65new.png)
 
 And indeed, the TypeScript [documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#working-with-union-types) says this:
 
@@ -477,7 +477,7 @@ Once TypeScript has deduced that a variable is of union type and that each type 
 we can use that as a type identifier.
 We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block:
 
-![webstorm showing handheld. and then attributes](../../images/8/64new.png)
+![WebStorm showing handheld. and then attributes](../../images/8/64new.png)
 
 In the above example, TypeScript knows that a `handheld` has the type *Handheld*
 and it can then infer that `handheld` is of either type *HandheldBasic*, *HandheldDual* or *HandheldVirtual* based on the value of the attribute `category`.
