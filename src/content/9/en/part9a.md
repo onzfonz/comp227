@@ -199,7 +199,7 @@ It is recommended to try both and find out which development environment is the 
 The name of the application is not that relevant.
 You can, for example, go with *rate-repository-app*.
 
-To submit this exercise and all future exercises you need to make sure you have used the GitHub classroom link, which is listed on Canvas.
+To submit this exercise and all future exercises you need to make sure you have used the GitHub Classroom link, which is listed on Canvas.
 
 Finally, just commit and push your changes into the repository and you are all done.
 

@@ -284,7 +284,7 @@ module.exports = {
 ```
 
 Let's change the rule concerning semicolons so that it only raises a warning and not an error.
-You can also change the rule regarding indentation or others like the linebreak style if you are using windows.
+You can also change the rule regarding indentation or others like the linebreak style if you are using Windows.
 I had to change my configuration a little bit this first time around, and that's fine.
 The point is to be consistent.
 
