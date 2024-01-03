@@ -43,11 +43,11 @@ The *Network* tab shows how the browser and the server communicate.
 When you reload the page (press the ***F5*** key or the &#8635; symbol on your browser),
 the console will show that a few events have happened.
 
-- The browser has fetched the contents of the page *227demo.djosv.com* from the server
+- The browser has fetched the contents of *227demo.djosv.com* from the server
 - And has downloaded the image *travel.jpg*
 - It also asked for the little icon that normally shows up next to your website's title in the tabs (favicon.ico).
 
-![Screenshot of the developer console showing these two events](../../images/0/2e.png)
+![A screenshot of the developer console showing these two events](../../images/0/2e.png)
 
 On a small screen, you might have to widen the console window to see these.
 
@@ -66,7 +66,7 @@ The request and server response have several [headers](https://en.wikipedia.org/
 
 The **Response headers** on top tell us details like the true server and the exact time of the response.
 An important header [*`content-type`*](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type)
-tells us that the response is a text file in [UTF-8](https://en.wikipedia.org/wiki/UTF-8) format and the contents of which have been formatted as HTML.
+tells us that the response is an HTML text file in [UTF-8](https://en.wikipedia.org/wiki/UTF-8) format.
 This way the browser knows the response to be a regular [HTML](https://en.wikipedia.org/wiki/HTML) page and to render it to the browser 'like a web page'.
 
 The **Response** tab shows the response data, a regular HTML page.
@@ -77,7 +77,7 @@ The **body** section determines the structure of the page rendered to the screen
 The page contains a [div](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div) element which in turn contains:
 
 - a heading (`h1`)
-- A `<p>`aragraph with text.
+- A paragraph with text (`<p>`).
 - a link to our ***actual demo***
 - an [`img`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img) tag
 
@@ -257,7 +257,7 @@ data.forEach(function(place) {
 document.getElementById('places').appendChild(ul)
 ```
 
-The code first creates an unordered list with a [ul](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul) tag...
+The code first creates an unordered list with an [ul](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul) tag...
 
 ```js
 var ul = document.createElement('ul')
@@ -392,13 +392,13 @@ Finally, the tree branch of the `ul` variable is connected to its proper place i
 document.getElementsByClassName('places').appendChild(ul)
 ```
 
-### Manipulating the document object from console
+### Manipulating the document object from the console
 
 The topmost node of the DOM tree of an HTML document is called the `document` object.
 We can perform various operations on a webpage using the DOM-API.
 You can access the `document` object by typing `document` into the Console tab:
 
-![document in console tab of developer tools](../../images/0/15e.png)
+![document in the console tab of developer tools](../../images/0/15e.png)
 
 Let's add a new place to the page ***directly from the console***.
 
@@ -494,7 +494,7 @@ JavaScript code uses the id to find the element.
 
 The ***Elements*** tab of the console can be used to change the styles of the elements.
 
-![developer tools elements tab showing CSS rules applied to container class](../../images/0/18e.png)
+![developer tools elements tab showing CSS rules applied to the container class](../../images/0/18e.png)
 
 Changes made on the console will not be permanent.
 If you want to make lasting changes, they must be saved to the CSS style sheet on the server.
@@ -519,7 +519,7 @@ Next, let's examine how adding a new place is done.
 
 The Places page contains a [form element](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
 
-![form element highlight in webpage and developer tools](../../images/0/20e.png)
+![form element highlights in the webpage and developer tools](../../images/0/20e.png)
 
 When the button on the form is clicked, the browser will send the user input to the server.
 Let's open the ***Network*** tab and see what submitting the form looks like:
@@ -619,8 +619,8 @@ The browser tackles this job by executing the JavaScript code it fetched from th
 The code fetches the places from the server as JSON data and adds HTML elements for displaying the `places` on the page using the [DOM-API](/part0/fundamentals_of_web_apps#document-object-model-or-dom).
 
 In recent years, the [Single-page application](https://en.wikipedia.org/wiki/Single-page_application) (SPA) style of creating web applications has emerged.
-SPA-style websites don't fetch all of their pages separately from the server like our sample application does,
-but instead comprise only one HTML page fetched from the server,
+SPA-style websites don't fetch all of their pages separately from the server as our sample application does
+but instead comprise a single HTML page fetched from the server,
 the contents of which are manipulated with JavaScript that executes in the browser.
 
 The Places page of our application bears some resemblance to SPA-style apps, but it's not quite there yet.
@@ -638,7 +638,7 @@ The form has no `action` or `method` attributes to define how and where to send 
 Open the ***Network*** tab and empty it.
 When you now create a new place, you'll notice that the browser sends only one request to the server.
 
-![Network tab in developer tools for spa shows just one request](../../images/0/26e.png)
+![The Network tab in developer tools for spa shows just one request](../../images/0/26e.png)
 
 The POST request to the address `new_place_spa` contains the new place as JSON data containing both the name of the place (`name`) and the timestamp (`date`):
 
@@ -680,7 +680,7 @@ form.onsubmit = function(e) {
 ```
 
 The command `document.getElementById('places_form')` instructs the code to fetch the form element from the page and to register an ***event handler*** to handle the form's submit event.
-The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of the form's submit.
+The event handler immediately calls the method `e.preventDefault()` to prevent the default handling of the form's submission.
 The default method would send the data to the server and cause a new GET request, which we don't want to happen.
 
 Then the event handler:
@@ -736,8 +736,8 @@ After its [launch](https://github.com/angular/angular.js/blob/master/CHANGELOG.m
 Google's [AngularJS](https://angularjs.org/) quickly became almost the de facto standard of modern web development.
 
 However, the popularity of Angular plummeted in October 2014 after the
-[Angular team announced that support for version 1 will end](https://web.archive.org/web/20151208002550/https://jaxenter.com/angular-2-0-announcement-backfires-112127.html),
-and Angular 2 will not be backwards compatible with the first version.
+[Angular team announced that support for version 1 would end](https://web.archive.org/web/20151208002550/https://jaxenter.com/angular-2-0-announcement-backfires-112127.html),
+and Angular 2 would not be backward compatible with the first version.
 Angular 2 and the newer versions have not gotten too warm of a welcome.
 
 Currently, one of the most popular tools for implementing the browser-side logic of web applications is Facebook's [React](https://react.dev/) library.
@@ -746,7 +746,7 @@ During this course, we will get familiar with React and other technologies which
 The status of React seems strong, but the world of JavaScript is ever-changing.
 For example, while [VueJS](https://vuejs.org/) has been around a while as an "up-and-comer",
 there are other frameworks like [Svelte](https://svelte.dev/) and [Qwik](https://qwik.builder.io) that have recently started generating buzz.
-While we have been talking about SPA, there is also talk about [returning more components back to the server](https://dev.to/this-is-learning/the-return-of-server-side-routing-b05).
+While we have been talking about SPA, there is also talk about [returning more components to the server](https://dev.to/this-is-learning/the-return-of-server-side-routing-b05).
 
 ### Full-stack web development
 
@@ -812,7 +812,7 @@ The exercises are submitted through GitHub and marking them as done on Canvas.
 You will submit all of the exercises into the repository that you will be provided in part C GitHub.
 While we wait to do those parts, though, **please start doing these exercises first**.
 
-For now, *create a folder called part0 and put all of your work in there until you have the tools that we'll go over in the next section*.
+For now, *create a folder called **part0** and put all of your work in there until you have the tools that we'll go over in the next section*.
 
 #### 0.1: HTML
 
@@ -828,7 +828,7 @@ This exercise *is not submitted to GitHub*, it's enough to just read the tutoria
 
 #### 0.3: HTML forms
 
-Learn about the basics of HTML forms by reading Mozilla's tutorial [Your first form](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
+Learn about the basics of HTML forms by reading Mozilla's tutorial [Your first HTML form](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Your_first_HTML_form).
 
 This exercise *is not submitted to GitHub*, it's enough to just read the tutorial
 
@@ -873,7 +873,7 @@ If necessary, show operations on the browser or the server as comments on the di
 The diagram does not have to be a sequence diagram.
 Any sensible way of presenting the events is fine.
 
-All necessary information for doing this, and the next two exercises, can be found in the text of [this part](/part0/fundamentals_of_web_apps#forms-and-http-post).
+All the necessary information for doing this, and the next two exercises, can be found in the text of [this part](/part0/fundamentals_of_web_apps#forms-and-http-post).
 The idea of these exercises is to ***read the text through once more and to think through what is going on there***.
 Reading the application [code](https://github.com/comp227/example_app) is not necessary, but it is of course possible.
 
@@ -883,7 +883,7 @@ syntax that is now implemented in [GitHub](https://github.blog/2022-02-14-includ
 #### 0.5: Single-page app diagram
 
 Create a diagram depicting the situation where the user goes to the [single-page app](/part0/fundamentals_of_web_apps#single-page-app)
-version of the places app at <https://227demo.djosv.com/spa>.
+version of the *Places* app at <https://227demo.djosv.com/spa>.
 
 #### 0.6: New place in Single-page app diagram
 

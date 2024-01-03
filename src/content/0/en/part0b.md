@@ -32,13 +32,12 @@ The code of the example applications for each step of each part can be found on 
 ### Taking the course
 
 The course contains 10 parts, the first of which is numbered 0 for consistency with past iterations.
-One part corresponds loosely to around two weeks of studying, since you'll have other activities attached as well.
-This has been taken into account with respect to coursework.
+One part corresponds loosely to around two weeks of studying since you'll have other activities attached as well.
 
 For parts 0-5, You should not study part *n+1* without enough know-how of the topics in part *n*.
 In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning).
 
-In parts 0-4 you are expected to do *at least* all of the exercises that are not marked with an asterisk(*).
+In parts 0-4, you are expected to do *at least* all of the exercises that are not marked with an asterisk(*).
 You should only proceed to the next part after doing enough of the previous part's exercises.
 ***Once you mark or open up the next section of exercises, we will not grade any additional exercises from the previous part.***
 Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts.
@@ -54,7 +53,7 @@ How to study the course – instructions in a nutshell:
   The easiest way to fall behind in the course is to not work on it every couple of days.
   Set yourself an alarm...do anything! But make it a habit of working on it at least 3 times a week for a little bit of time.
 
-### How to ask help in Discord
+### How to ask for help in Discord
 
 When you ask for help on a problem in our Discord group your question should be as informative and precise as possible.
 If your question looks like this:
@@ -71,7 +70,7 @@ A better question would be:
 >
 > ```js
 >   // the relevant part of code is pasted here
->   // code should contain several console.log statements for helping the debuging
+>   // code should contain several console.log statements for helping the debugging
 > ```
 >
 > *When I run it, following gets printed to the console*
@@ -84,13 +83,13 @@ A better question would be:
 >
 > [screen shot from the network or console]
 
-If you are asking the teaching staff directly for help, then please also include a link to your github repo, however, this should not be shared with your classmates.
+If you are asking the teaching staff directly for help, then please also include a link to your GitHub repo, however, this should not be shared with your classmates.
 Notice the details in the second response and a plan of action for what you've tried.
 Both help you narrow down the possibilities.
 
 ### Submitting exercises
 
-You will be submitting exercises via the GitHub classroom repos that will be provided on Canvas.
+You will be submitting exercises via the GitHub Classroom repos that will be provided on Canvas.
 **All of the exercises from this website must be submitted through GitHub.**
 You will also be expected to submit your progress for exercises regularly, even if it is not finished.
 
@@ -110,7 +109,7 @@ It is the equivalent of showing your work in class.
 
 For the project, an application is implemented in React and/or Node, though implementing a mobile application in React Native is also possible.
 
-Most of you will be working in pairs or in groups on the final project.
+Some of you will be working in pairs or groups on the final project.
 
 More information about the project will be released via Canvas
 
@@ -124,14 +123,14 @@ which provides a similar range of features.
 
 In [part 0d](/part0/configuring_your_machine_for_this_course) we'll provide detailed instructions for installing some of the tools that we will be using extensively:
 [Git](https://git-scm.org) (via GitHub),
-[Webstorm](https://www.jetbrains.com/webstorm/download/)
+[WebStorm](https://www.jetbrains.com/webstorm/download/)
 and [Node.js](https://nodejs.org/en/).
 
 The course exercises will be submitted to GitHub, so Git must be installed and you should know how to use it.
 
 ### Typos in the material
 
-If you find a typo in the material, or something has been expressed unclearly or is simply bad grammar,
+If you find a typo in the material, grammar mistakes, a wordy paragraph, or an unclear explanation,
 submit a *pull request* to the course material in the [repository](https://github.com/comp227/comp227).
 For example, the markdown source code of this page can be found in the repository at <https://github.com/comp227/comp227/edit/source/src/content/0/en/part0a.md>
 

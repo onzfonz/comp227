@@ -51,7 +51,7 @@ Previous knowledge of JavaScript or other course topics is not required.
 If you do not have the strongly recommended skills, then realize that ***you will need to put extra time in at the beginning of the course***.
 
 How much programming experience is needed?
-It is hard to say, but you should be pretty fluent with *your* language.
+It is hard to say, but you should be pretty fluent in *your* programming language.
 This level of fluency takes usually at least 100-200 hours of practice to develop.
 
 ### Course Objectives
@@ -100,7 +100,7 @@ It's crucial to seek help when you can't access Canvas or class materials.
 It's up to you to ask questions!
 
 1. We will be using [Discord](https://discord.gg/VRUKRxCJ95).
-   - if you have not used discord before it is fairly intuitive, but [here's a guide should you need it](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord)
+   - if you have not used Discord before it is fairly intuitive, but [here's a guide should you need it](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord)
 2. Canvas has live help that will assist you with any technical issues.
     To access help, click the question mark at the far left side of the screen.
     You can also email the Pacific Helpdesk for guidance at <helpdesk@pacific.edu>.
@@ -113,19 +113,19 @@ Further in-depth information can be accessed in The Canvas Student Guide which c
 
 #### Important Tips for Success as an Online Learner
 
-- Begin planning now for private, uninterrupted time in your schedule to go through course materials and complete the assignments
-    - preferably in at least two-hours blocks and at least five times a week.
+- Begin planning now for private, uninterrupted time in your schedule to go through the course materials and complete the assignments
+    - preferably in at least two-hour blocks and at least five times a week.
 It can be easy to fall behind!
 - Check your email account and the class [discord](https://discord.gg/VRUKRxCJ95) regularly for updated information.
-- Use discord for private messages to the instructor.
-The discord is a great place to ask questions in the correct categories (make sure you read the rules there).
+- Use Discord for private messages to the instructor.
+Discord is a great place to ask questions in the correct categories (make sure you read the rules there).
 - If you have questions or are confused about an assignment, act promptly! Check #announcements, #help or #sos to see if your concern has been addressed already.
 If not, post your question to this discussion.
-- We may use Canvas tools such as WebEx for Q&A sessions and please follow the instruction the instructor sends out through Canvas Announcement.
+- We may use Canvas tools such as WebEx for Q&A sessions and please follow the instructions the instructor sends out through Canvas Announcement.
 - Read directions carefully.
 
 For posts to online discussions, conventions of online etiquette ("netiquette") which include courtesy to all users, will be observed.
-Please see Guidelines for Online Discussion for detail.
+Please see Guidelines for Online Discussion for details.
 
 ### Discord & Course Netiquette
 
@@ -160,7 +160,7 @@ Avoid any language that can be construed as angry, sarcastic, or even humorous.
 #### Don’t take things personally
 
 As mentioned above, there is no way for you to know for sure what that person writing intends.
-Given that the discussions are supposed to be a community building experience, assume that the responses are meant to be helpful.
+Given that the discussions are supposed to be a community-building experience, assume that the responses are meant to be helpful.
 If you have questions about a post, contact your instructor.
 
 #### When in doubt, take a break before posting
@@ -183,8 +183,8 @@ Many of you will have more experience and your assistance will be appreciated.
 
 ### Attendance policies
 
-Even though this is an asynchronous online course, attendance will be counted by how responsive you are on discord.
-You will be expected to respond to any discussion via discord in a reasonable timeframe (24-48 hours).
+Even though this is an asynchronous online course, attendance will be counted by how responsive you are on Discord.
+You will be expected to respond to any discussion via Discord in a reasonable time frame (24-48 hours).
 After having to contact you via other methods or bringing responsiveness in discord to your attention,
 any subsequent attempts to contact you will lower part of your social learning exercises grade by two percentage points.
 In addition to me reaching out, you will be expected to be in contact with others during the course and will be placed into learning pairs or triads.
@@ -230,7 +230,7 @@ The course is composed of a few parts
 #### Individual Exercises
 
 Part of your grade for the course will be based on the total number of submitted exercises for the required parts (including exercises marked with an asterisk).
-For all of the exercises, your work will not only come from the solution, but from you showing your work as you move toward your solution.
+For all of the exercises, your work will not only come from the solution but from you showing your work as you move toward your solution.
 
 **Your grade will not completely come from these exercises**.
 
@@ -272,7 +272,7 @@ Students are also responsible for being aware of any announcements the instructo
 You must also complete the course exam.
 Notice though that the exam is not listed in your grade breakdown.
 The exam does not count towards your final grade, but you must pass it to pass the course.
-More info about the exam will be discussed via canvas and discord in the middle of the semester.
+More info about the exam will be discussed via Canvas and Discord in the middle of the semester.
 
 You can only take the exam after submitting a sufficient number of exercises.
 It is not wise in practice to take the exam immediately after submitting the critical number of exercises.
@@ -285,7 +285,7 @@ If you complete the assignments and you work through the material in earnest, yo
 The only acceptable excuses for missing an assignment due date are serious illness, death in the immediate family or important professional activities.
 Illness or death in the family may require documentation.
 Excuses for professional activities must be approved by the instructor in advance.
-Late assignments that are not the individual exercises will be deducted 15% per day and will not be accepted beyond 1 week late.
+Late assignments other than the individual exercises will be deducted 15% per day and will not be accepted beyond 1 week late.
 
 #### Individual Work and Collaboration
 
