@@ -14,12 +14,12 @@ The easiest way to get started by far is by using a tool called
 [Vite](https://vitejs.dev/).
 
 First, visit the classroom link: <http://go.djosv.com/227lab1>
-and use the steps outlined [from part 0c](/part0/configuring_your_machine_for_this_course) to
+and use the steps outlined [in part 0c](/part0/configuring_your_machine_for_this_course) to
 [accept](https://imgur.com/5Tv7mVM), [download](https://imgur.com/UDQXB6V) and set up the repository from within WebStorm.
 The only different step in our [high-level checklist](/part0/configuring_your_machine_for_this_course#8-connect-webstorm-with-github)
 is that in step 3 we need to do is say ***File->New Project from Version Control*** from within WebStorm to open the URL prompt.
 
-I would also make sure to check **trust projects** that is presented in the first window so that you don't have to keep doing so.
+I would also make sure to check the option **trust projects** presented in the first window so that you don't have to keep doing so.
 ![clicking trust projects](../../images/1/custom/trust_projects.png)
 
 Lastly, I would choose the option ***New Window*** and check ***don't ask again*** in the next window.
@@ -32,9 +32,9 @@ However, this creates more issues in particular views like the git view as it sh
 #### Importing File Watcher Settings
 
 One thing we'll need to remember to do is to import our file watcher settings that we created
-[when we were configuring our Webstorm](/part0/configuring_your_machine_for_this_course#9-additional-webstorm-setup)
+[when we were configuring our WebStorm](/part0/configuring_your_machine_for_this_course#9-additional-webstorm-setup)
 
-- Open up Webstorm's Settings again, and go to *Tools->File Watchers*, and click the *Import* icon.
+- Open up WebStorm's Settings again, then go to *Tools->File Watchers*, and click the *Import* icon.
 - Select the watchers file that you had previously exported
 - Once you locate the file, click ***OK***
 - You should see *COMP 227 Git Watcher* appear enabled
@@ -42,7 +42,7 @@ One thing we'll need to remember to do is to import our file watcher settings th
 
 Some of the images prepared for this class use the classic UI, which you can switch to with the settings icon near the close button.
 
-![classic ui location in webstorm](../../images/1/custom/classic_ui.png)
+![Classic UI location in WebStorm](../../images/1/custom/classic_ui.png)
 
 You can click on the project bar in the upper right
 
@@ -50,14 +50,14 @@ You can click on the project bar in the upper right
 
 This is what it looks like in the modern UI
 
-![project bar icon in modern webstorm UI](../../images/1/custom/webstorm_project_new_ui.png)
+![project bar icon in modern WebStorm UI](../../images/1/custom/webstorm_project_new_ui.png)
 
 ### Starting Development
 
 to return to see that you should now have two sets of folders: *lab0* and *lab1*.
 
 You can now right-click on lab1 and select **Open in->Terminal**.
-If you did not review the [part 0d's coverage of git commands and the terminal](/part0/configuring_your_machine_for_this_course#some-git-command-line-tools),
+If you did not review [part 0d's coverage of git commands and the terminal](/part0/configuring_your_machine_for_this_course#some-git-command-line-tools),
 it might make sense to do so now.
 
 With your terminal now open you can type the following:
@@ -95,7 +95,7 @@ Because we may be working on multiple projects, you'll need to make sure that yo
 *You'll also need to add the files to git for this reading, this will be part of the process to get credit for the course*
 
 The code of the application resides in the *reading/src* folder.
-Let's simplify the default code such that the contents of the file *main.jsx* looks like this:
+Let's simplify the default code such that the contents of *main.jsx* looks like this:
 
 ```js
 import ReactDOM from 'react-dom/client'
@@ -105,7 +105,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-and file *App.jsx* looks like this
+and *App.jsx* looks like this
 
 ```js
 const App = () => (
@@ -124,9 +124,9 @@ You may delete the files:
 - *src/index.css*
 
 as they are not needed in our application right now.
-If you use Webstorm's safe delete feature, you should not see any warnings about the files being used.
+If you use WebStorm's safe delete feature, you should not see any warnings about the files being used.
 
-If you do see warnings, then you way want to read [this future section about react version differences](/part1/a_more_complex_state_debugging_react_apps/#old-react).
+If you do see warnings, then you may want to read [this future section about react version differences](/part1/a_more_complex_state_debugging_react_apps/#old-react).
 
 #### Test our file watcher workflow
 
@@ -134,22 +134,22 @@ Remember that as we mentioned before, the goal should not just be to read the ma
 
 Remember how we used the File Watchers previously?
 We're going to make sure that process is working,
-as anytime that we add files or `create@vite-latest` app,
+as any time that we add files or `create@vite-latest` app,
 we are going to get into the habit of adding the files to our git repository via the terminal
 **Not following these directions may impact your grade**.
 
-With the changes above and the files deleted, you're going to open your terminal in Webstorm type the command:
+With the changes above and the files deleted, you're going to open your terminal in WebStorm, type the command:
 
 ```bash
 git add .
 ```
 
-Once you do, you should see all of the files turn green in Webstorm.
+Once you do, you should see all of the files turn green in WebStorm.
 This means that we are about to add these files to our git repository.
-Depending on your configuration, you may get the warnings about the line endings.
+Depending on your configuration, you may get warnings about the line endings.
 This is safe to ignore.
 
-![Webstorm showing files added as green](../../images/1/custom/git_add_green.png)
+![WebStorm showing files added as green](../../images/1/custom/git_add_green.png)
 
 Once they are in green, let's go ahead and commit by following this command:
 
@@ -159,29 +159,29 @@ git commit -m "Setting up reading for grading"
 
 Once you do that, you'll see that the files have turned white again.
 
-![Webstorm showing files added as white](../../images/1/custom/git_commit_white.png)
+![WebStorm showing files added as white](../../images/1/custom/git_commit_white.png)
 
-For this class, you should not ever really have files in Red, Green or any color in Webstorm for very long, since this will prevent our use of our Auto-Save feature and the File Watchers.
+For this class, you should not ever really have files in Red, Green or any color in WebStorm for very long, since this will prevent our use of our Auto-Save feature and the File Watchers.
 ***To test that this is working, please go to *App.jsx* and change the word *`Hello`* to *`Hola`*.***
-When you do this, you may notice that App.jsx turns blue which means that there are changes that have yet to be committed.
+When you do this, you may notice that *App.jsx* turns blue which means that there are changes that have yet to be committed.
 
-![Webstorm showing files changed](../../images/1/custom/git_changed_blue.png)
+![WebStorm showing files changed](../../images/1/custom/git_changed_blue.png)
 
 However, the file will not stay blue for long, and our workflow automation will be triggered, which will cause the file to be white again.
 
 The last thing I wanted to point your attention to is the fact that there is a green arrow near our main branch at the top.
 
-![Webstorm showing main needs to push changes](../../images/1/custom/git_commit_needs_push.png)
+![WebStorm showing main needs to push changes](../../images/1/custom/git_commit_needs_push.png)
 
 This means that you have made changes locally that we want to sync with GitHub.
-To do this, we'll **push** them, which we can do via the terminal or via Webstorm.
-In terminal, you can just type:
+To do this, we'll **push** them, which we can do via the terminal or WebStorm.
+In Terminal, you can just type:
 
 ```bash
 git push
 ```
 
-Once you complete this command, you'll notice that main no longer has the green arrow next to it.
+Once you complete this command, you'll notice that the *main* branch no longer has the green arrow next to it.
 You can also ensure that your changes are on GitHub.
 To ensure that you are working through the material correctly, you will message me directly once you finish this to confirm that you are following the steps.
 
@@ -207,8 +207,8 @@ though some parts may still use the application base created with `create-react-
 
 ### Component
 
-The file *App.jsx* now defines a [React component](https://react.dev/learn/your-first-component) with the name `App`.
-The command on the final line of file *main.jsx*
+*App.jsx* now defines a [React component](https://react.dev/learn/your-first-component) with the name `App`.
+The command on the final line of *main.jsx*
 
 ```js
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
@@ -335,9 +335,10 @@ export default App
 ```
 
 The export is not shown in most of the examples of the course material.
-Without the export, the component and the whole app breaks down.
+Without the export, the application breaks.
 
-Did you remember your promise to keep the console open? What was printed out there?
+What was printed out in the console?
+Did you keep it open?
 
 ### JSX
 
@@ -385,7 +386,7 @@ For example, a newline is an empty element, which in HTML can be written as foll
 <br>
 ```
 
-***Notice that absence of a closing tag with HTML.***
+***Notice the absence of a closing tag with HTML.***
 However, when *writing JSX*, **the tag needs to be *closed* with a `/`**:
 
 ```html
@@ -396,7 +397,7 @@ This is also referred to as a **self-closing tag**.
 
 ### Multiple components
 
-Let's modify the file *App.jsx* as follows:
+Let's modify *App.jsx* as follows:
 
 ```js
 // highlight-start
@@ -463,7 +464,7 @@ const Greet = (props) => { // highlight-line
 }
 ```
 
-Now the function defining the component has a parameter **props**.
+Now the function defining the component has the parameter **props**.
 As an argument, the parameter receives an object, which has fields corresponding to all the "props" the user of the component defines.
 
 The props are defined as follows:
@@ -561,7 +562,7 @@ Instead, try to understand the cause of the error and, for example, go back to t
 
 While using undo (***Ctrl-Z***) and redo (***Ctrl-Y***) is great,
 if you commit often, looking at changes becomes even easier,
-as you could always look at the previously recorded changes on any line.
+as you can always look at the previously recorded changes on any line.
 
 It is good to remember that in React it is possible and worthwhile to write `console.log()` commands (which print to the console) within your code.
 
@@ -655,7 +656,7 @@ It now compiles successfully, and the DOM generated by React no longer contains 
 ### Do not render objects
 
 Consider an application that prints the names and ages of some of our friends on the screen.
-Imagine this is code that you wrote:
+Imagine this is the code that you wrote:
 
 ```js
 const App = () => {
@@ -678,13 +679,13 @@ export default App
 However, once you try running the code, nothing appears on the screen.
 You try to find a problem in the code for 15 minutes, but you can't figure out where the problem could be.
 
-All of sudden, you remember the promise we made:
+All of a sudden, you remember the promise we made:
 
 > *I promise to keep the console open all the time during this course, and for the rest of my life when I'm doing web development*
 
 The console screams in red:
 
-![devtools showing error with highlight around "Objects are not valid as a React child"](../../images/1/34new.png)
+![Devtools showing an error with a highlight around "Objects are not valid as a React child"](../../images/1/34new.png)
 
 The core of the problem is *Objects are not valid as a React child*, i.e. the application tries to render *objects* and it fails again.
 
@@ -779,7 +780,7 @@ lab1
 
 Each repo will need directories that will be used for an application that will be linked to a series of exercises, like "studytracker" for part 1.
 
-We have provided you with a fairly robust .gitignore file, which ignores things like the *node_modules* directory,
+We have provided you with a fairly robust *.gitignore* file, which ignores things like the *node_modules* directory,
 so you should commit and add all of the files that you use in your directories.
 ***Make sure to remove any files you won't use before committing them!***
 
@@ -846,7 +847,7 @@ All data still resides in the `App` component, which passes the necessary data t
 `Header` takes care of rendering the name of the course,
 `Content` renders the parts and their number of exercises and `Total` renders the total number of exercises.
 
-Define the new components in the file *App.jsx*.
+Define the new components in *App.jsx*.
 
 The `App` component's body will approximately be as follows:
 

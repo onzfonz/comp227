@@ -67,7 +67,7 @@ since it can directly access all props that are passed to the component.
 
 If we examine our current code closely, we'll notice that the helper function is defined inside of another function that defines the behavior of our component.
 In Java programming, defining a function inside another one is complex and cumbersome, so not all that common.
-In JavaScript, however, defining functions within functions is a commonly-used technique.
+In JavaScript, however, defining functions within functions is a commonly used technique.
 
 ### Destructuring
 
@@ -188,7 +188,7 @@ So far all of our applications have been such that their appearance remains the 
 What if we wanted to create a counter where the value increased as a function of time or at the click of a button?
 
 Let's start with the following.
-File *App.jsx* becomes:
+*App.jsx* becomes:
 
 ```js
 const App = (props) => {
@@ -249,7 +249,7 @@ Now the component ***renders three times***, first with the value 1, then 2, and
 However, values 1 and 2 are displayed on the screen for such a short amount of time that they can't be noticed.
 
 We can implement slightly more interesting functionality by re-rendering and incrementing the counter every second by using
-[setInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval):
+[`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval):
 
 ```js
 setInterval(() => {
@@ -313,7 +313,7 @@ The function body that defines the component begins with the function call:
 const [ counter, setCounter ] = useState(0)
 ```
 
-The function call adds **state** to the component and renders it initialized with the value of zero.
+The function call adds ***state*** to the component and renders it initialized with the value of zero.
 The function returns an array that contains two items.
 We assign the items to the variables `counter` and `setCounter` by using the destructuring assignment syntax shown earlier.
 
@@ -523,13 +523,13 @@ An event handler is supposed to be either a **function** or a **function referen
 ```
 
 the event handler is actually a **function call**.
-In many situations this is ok, but not in this particular situation.
+In many situations, this is OK, but not in this particular situation.
 In the beginning, the value of the `counter` variable is **`0`**.
 When React renders the component for the first time,
-it executes the function call `setCounter(0+1)`, and changes the value of the component's state to **`1`**.
+it executes the function call `setCounter(0+1)` and changes the value of the component's state to **`1`**.
 This will cause the component to be re-rendered, React will execute the setCounter function call again, and the state will change leading to another rerender...
 
-Let's define the event handlers like we did before:
+Let's define the event handlers as we did before:
 
 ```js
 <button onClick={() => setCounter(counter + 1)}> 
@@ -540,8 +540,8 @@ Let's define the event handlers like we did before:
 Now the button's attribute which defines what happens when the button is clicked - `onClick` - has the value `() => setCounter(counter + 1)`.
 The `setCounter` function is called only when a user clicks the button.
 
-Usually defining event handlers within JSX-templates is not a good idea.
-Here it's ok, because our event handlers are so simple.
+Usually defining event handlers within JSX templates is not a good idea.
+Here it's OK because our event handlers are so simple.
 
 Let's separate the event handlers into separate functions anyway:
 
@@ -578,7 +578,7 @@ The value of the `onClick` attribute is a variable containing a reference to a f
 </button>
 ```
 
-### Passing state - to child components
+### Passing state to child components
 
 It's recommended to write React components that are small and reusable across the application and even across projects.
 Let's refactor our application so that it's composed of three smaller components,
@@ -586,7 +586,7 @@ one component for displaying the counter and two components for buttons.
 
 Let's first implement a `Display` component that's responsible for displaying the value of the counter.
 
-One best practice in React is to [lift the state up](https://react.dev/learn/sharing-state-between-components) in the component hierarchy.
+One best practice in React is to [lift the state](https://react.dev/learn/sharing-state-between-components) in the component hierarchy.
 The documentation says:
 
 > *Often, several components need to reflect the same changing data.
