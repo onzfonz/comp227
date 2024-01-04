@@ -662,7 +662,7 @@ const group = { name, age }
 ```
 
 The result is identical for both expressions.
-They both create an object with a `name` property with the value `Leevi` and an `age` property with the value `0`.
+They both create an object with a `name` property with the value `Paloma` and an `age` property with the value `0`.
 
 ### Promises and Errors
 
@@ -820,7 +820,7 @@ Make it possible for users to delete entries from the communities application.
 The deletion can be done through a dedicated button for each community listed.
 You can confirm the action from the user by using the [window.confirm](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) method:
 
-![2.17 window confirm feature screeshot](../../images/2/24e.png)
+![2.17 window confirm feature screenshot](../../images/2/24e.png)
 
 The associated resource for a group in the backend can be deleted by making an HTTP DELETE request to the resource's URL.
 If we are deleting e.g. a group that has the `id` 2, we would have to make an HTTP DELETE request to the URL ***localhost:3001/groups/2***.

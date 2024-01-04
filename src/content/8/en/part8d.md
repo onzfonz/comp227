@@ -284,7 +284,7 @@ const App = () => {
 
 In the previous exercise, we had three handhelds, and all handhelds had the same attributes `name` and `gameCount`.
 But what if we needed additional attributes for the systems and each handheld needs different attributes?
-How would this look, codewise?
+How would this look, code-wise?
 Let's consider the following example:
 
 ```js
@@ -457,7 +457,7 @@ type Handheld = HandheldBasic | HandheldDual | HandheldVirtual;
 
 How should we now use these types in our components?
 
-If we try to acess the objects in the array `handhelds: Handheld[]` we notice that it is possibly to only access the attributes that are common to all the types in the union:
+If we try to access the objects in the array `handhelds: Handheld[]` we notice that it is possible to only access the attributes that are common to all the types in the union:
 
 ![WebStorm showing handheld...](../../images/8/65new.png)
 
@@ -489,8 +489,8 @@ The specific technique of type narrowing where a union type is narrowed based on
 > We could eg. do the following:
 >
 > ```js
->   companyHandhleds.forEach(handheld => {
->     if (hahdheld.category === 'virtual') {
+>   companyHandhelds.forEach(handheld => {
+>     if (handheld.category === 'virtual') {
 >       console.log('see the following:', handheld.agreement);
 >     }
 > 
@@ -809,7 +809,7 @@ const App = () => {
 ```
 
 It just works!
-When we hover over the `event.target.value`, we see that it is a `string`, which is what `setNewTask` expects as a parmeter:
+When we hover over the `event.target.value`, we see that it is a `string`, which is what `setNewTask` expects as a parameter:
 
 ![vscode showing variable is a string](../../images/8/67new.png)
 
@@ -1121,7 +1121,7 @@ The source code of the backend can be found in [this GitHub repository](https://
 
 #### Exercise 8.16
 
-Create a TypeScript React app with simillar configurations as the apps of this section.
+Create a TypeScript React app with similar configurations as the apps of this section.
 Fetch the diaries from the backend and render those to screen.
 Do all the required typing and ensure that there are no Eslint errors.
 

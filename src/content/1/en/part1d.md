@@ -272,7 +272,7 @@ separated by the string passed as the function parameter, which in our case is a
 ### Update of the state is asynchronous
 
 Let's expand the application so that it tracks the total number of button presses in the state `total`.
-Everytime the mouse is clicked, `total` will update:
+Every time the mouse is clicked, `total` will update:
 
 ```js
 const App = () => {
