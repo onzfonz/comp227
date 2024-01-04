@@ -77,24 +77,24 @@ You can find more on this topic on YouTube - e.g. [var, let and const - ES6 Java
 
 ### Arrays
 
-An [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and a couple of examples of its use:
+Here we provide some information on [arrays](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) and a couple of examples of their use:
 
 ```js
-const t = [1, -1, 3]
+const profits = [1, -1, 3]
 
-t.push(5)
+profits.push(5)
 
-console.log(t.length) // 4 is printed
-console.log(t[1])     // -1 is printed
+console.log(profits.length) // 4 is printed
+console.log(profits[1])     // -1 is printed
 
-t.forEach(value => {
+profits.forEach(value => {
   console.log(value)  // numbers 1, -1, 3, 5 are printed, each on its own line
 })                    
 ```
 
-Notable in this example is the fact that the contents of the array can be modified even though it is defined as a `const`.
-Because the array is an object, the variable always points to the same object.
-However, the content of the array changes as new items are added to it.
+Notable in this example is the fact that the contents of array `profits` can be modified even though it is defined as a `const`.
+Because *the array `profits` is an object*, it always points to the same object.
+However, the content of `profits` changes as new items are added to it.
 
 One way of iterating through the items of the array is using `forEach` as seen in the example.
 `forEach` receives a **function** defined using the arrow syntax as a parameter.
@@ -110,30 +110,30 @@ The function as the argument of `forEach` may also receive [other arguments](htt
 
 In the previous example, a new item was added to the array using the method [`push`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push).
 When using React, techniques from functional programming are often used.
-One characteristic of the functional programming paradigm is the use of [immutable](https://en.wikipedia.org/wiki/Immutable_object) data structures.
+One characteristic of the functional programming paradigm is the use of [immutable data structures](https://en.wikipedia.org/wiki/Immutable_object).
 In React code, it is preferable to use the method [`concat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat),
 which creates a new array with the added item, leaving the original array unchanged.
 
 ```js
-const t = [1, -1, 3]
+const profits = [1, -1, 3]
 
-const t2 = t.concat(5)  // creates new array
+const newProfits = profits.concat(5)  // creates new array
 
-console.log(t)  // [1, -1, 3] is printed
-console.log(t2) // [1, -1, 3, 5] is printed
+console.log(profits)  // [1, -1, 3] is printed
+console.log(newProfits) // [1, -1, 3, 5] is printed
 ```
 
-The expression *`t.concat(5)`* does not add a new item to the old array but returns a new array which,
-besides containing the items of the old array, also contains the new item.
+The expression *`profits.concat(5)`* does not add a new item to the old array.
+Instead, `concat` returns a duplicate with the new item added in.
 
 There are plenty of useful methods defined for arrays.
 Let's look at a short example of using the [`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) method.
 
 ```js
-const t = [1, 2, 3]
+const profits = [1, 2, 3]
 
-const m1 = t.map(value => value * 2)
-console.log(m1)   // [2, 4, 6] is printed
+const doubledProfits = profits.map(value => value * 2)
+console.log(doubledProfits)   // [2, 4, 6] is printed
 ```
 
 Based on the old array, `map` creates a ***new array***, for which the function given as a parameter is used to create the items.
@@ -142,8 +142,8 @@ In the case of this example, the original value is multiplied by two.
 `map` can also transform the array into something completely different:
 
 ```js
-const m2 = t.map(value => '<li>' + value + '</li>')
-console.log(m2)  
+const profitsHTML = profits.map(value => '<li>' + value + '</li>')
+console.log(profitsHTML)  
 // [ '<li>1</li>', '<li>2</li>', '<li>3</li>' ] is printed
 ```
 
@@ -154,27 +154,27 @@ Individual items of an array are easy to assign to variables with the help of th
 [destructuring assignment](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment).
 
 ```js
-const t = [1, 2, 3, 4, 5]
+const ratings = [1, 2, 3, 4, 5]
 
-const [first, second, ...rest] = t
+const [first, second, ...rest] = ratings
 
 console.log(first, second)  // 1, 2 is printed
 console.log(rest)          // [3, 4, 5] is printed
 ```
 
 Thanks to the assignment, the variables `first` and `second` will receive the first two integers of the array as their values.
-The remaining integers are "collected" into an array of their own which is then assigned to the variable `rest`.
+The remaining integers are *collected into an array of their own* which is then assigned to the variable `rest`.
 
 ### Objects
 
 There are a few different ways of defining objects in JavaScript.
-One very common method is using [object literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Object_literals),
+One popular way is by using [**object literals**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Object_literals),
 which happens by listing its properties within braces:
 
 ```js
 const object1 = {
   name: 'Powercat',
-  age: 23,
+  performances: 23,
   team: 'Tigers',
 }
 
@@ -200,19 +200,20 @@ The properties of an object are referenced by using the "dot" notation, or by us
 
 ```js
 console.log(object1.name)         // Powercat is printed
-const fieldName = 'age' 
-console.log(object1[fieldName])    // 23 is printed
+const fieldName = 'team' 
+console.log(object1[fieldName])    // Tigers is printed
 ```
 
-You can also add properties to an object on the fly by either using dot notation or brackets:
+You can also *add properties to an object dynamically* by using the same notation.
 
 ```js
 object1.address = 'University of the Pacific'
 object1['student ID'] = 989123456
 ```
 
-The latter of the additions has to be done by using brackets because when using dot notation,
-`object1.student ID` is not a valid property name because of the space character.
+> Keep in mind that properties that contain spaces must use brackets,
+> as `object1.student ID` will not compile.
+>> *The computer cannot determine if the property is named `student ID` or just `student`*
 
 Naturally, objects in JavaScript can also have methods.
 However, during this course, we do not need to define any objects with methods of their own.
@@ -228,10 +229,10 @@ We have already become familiar with defining arrow functions.
 The complete process, without cutting corners, of defining an arrow function is as follows:
 
 ```js
-const sum = (p1, p2) => {
-  console.log(p1)
-  console.log(p2)
-  return p1 + p2
+const sum = (n1, n2) => {
+  console.log(n1)
+  console.log(n2)
+  return n1 + n2
 }
 ```
 
@@ -245,9 +246,9 @@ console.log(result)
 If there is just a single parameter, we can exclude the parentheses from the definition:
 
 ```js
-const square = p => {
-  console.log(p)
-  return p * p
+const square = num => {
+  console.log(num)
+  return num * num
 }
 ```
 
@@ -256,15 +257,15 @@ In this case, the function only returns the result of its only expression.
 Now, if we remove console printing, we can further shorten the function definition:
 
 ```js
-const square = p => p * p
+const square = num => num * num
 ```
 
 This form is particularly handy when manipulating arrays - e.g. when using the map method:
 
 ```js
-const t = [1, 2, 3]
-const tSquared = t.map(p => p * p)
-// tSquared is now [1, 4, 9]
+const ratings = [1, 2, 3]
+const ratingsSquared = ratings.map(r => r * r)
+// ratingsSquared is now [1, 4, 9]
 ```
 
 The arrow function feature was added to JavaScript only a couple of years ago, with version [ES6](http://es6-features.org/).
@@ -281,8 +282,8 @@ In the function expression case, there is no need to give the function a name an
 During this course, we will define all functions using the arrow syntax, which means that the above function would be:
 
 ```js
-const product = (a, b) => {
-    return a * b
+const product = (n1, n2) => {
+    return n1 * n2
 }
 
 const result = product(2, 6)
@@ -297,21 +298,19 @@ const result = product(2, 6)
 *We continue building the application that we started working on in the previous exercises.
 You can write the code into the same project since you have been committing your changes from the previous exercises.*
 
-**Pro-tip:** you may run into issues when it comes to the structure of the `props` that components receive.
-A good way to make things clearer is by printing the props to the console, e.g. as follows:
-
-```js
-const Header = (props) => {
-  console.log(props) // highlight-line
-  return <h1>{props.course}</h1>
-}
-```
-
-If and *when* you encounter an error message
-
-> *`Objects are not valid as a React child`*
-
-keep in mind the things told [here](/part1/introduction_to_react#do-not-render-objects).
+> **Pro-tips:**
+>
+> 1. If and *when* you encounter an error message
+> *`Objects are not valid as a React child`*, keep in mind the things told [here](/part1/introduction_to_react#do-not-render-objects).
+> 2. You may run into issues when it comes to the structure of the `props` that components receive.
+> A good way to make things clearer is by printing the props to the console, e.g. as follows:
+>>
+>>  ```js
+>>  const Header = (props) => {
+>>    console.log(props) // highlight-line
+>>    return <h1>{props.course}</h1>
+>>  }
+>>  ```
 
 #### 1.3: handheld arcade info step3
 
@@ -434,9 +433,11 @@ const App = () => {
 ### Object methods and "this"
 
 Because this course uses a version of React containing React Hooks we do not need to define objects with methods.
-**The contents of this chapter are not relevant to the course** but are certainly in many ways good to know.
-In particular, when using older versions of React one must understand how the keyword
+However, when using older versions of React one must understand how the keyword
 [**`this`**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this) works.
+
+> *The keyword `this` is not as relevant to the course* but is valuable if you want to understand Javascript and plan to continue with web development.
+> Expect to be asked about it at a Javascript coding interview.
 
 `this`, which refers to the object itself, is commonly misunderstood.
 For example, `this` behaves differently when used in arrow functions versus others that use the `function()` keyword.
@@ -448,7 +449,7 @@ We can assign methods to an object by defining properties that are functions:
 ```js
 const mascot = {
   name: 'Powercat',
-  age: 23,
+  performances: 23,
   team: 'Tigers',
   // highlight-start
   cheer: function() {
@@ -465,7 +466,7 @@ Methods can be assigned to objects even after the creation of the object:
 ```js
 const mascot ={
   name: 'Powercat',
-  age: 23,
+  performances: 23,
   team: 'Tigers',
   cheer: function() {
     console.log('GO ', this.team, '!')
@@ -473,14 +474,14 @@ const mascot ={
 }
 
 // highlight-start
-mascot.growOlder = function() {
-  this.age += 1
+mascot.perform = function() {
+  this.performances += 1
 }
 // highlight-end
 
-console.log(mascot.age)   // 23 is printed
-mascot.growOlder()
-console.log(mascot.age)   // 24 is printed
+console.log(mascot.performances)   // 23 is printed
+mascot.perform()
+console.log(mascot.performances)   // 24 is printed
 ```
 
 Let's slightly modify the object:
@@ -488,28 +489,28 @@ Let's slightly modify the object:
 ```js
 const mascot ={
   name: 'Powercat',
-  age: 23,
+  performances: 23,
   team: 'Tigers',
   cheer: function() {
     console.log('GO ', this.team, '!')
   },
   // highlight-start
-  doAddition: function(a, b) {
-    console.log(a + b)
+  taunt: function(opponent) {
+    console.log('Boo ', opponent, '!')
   },
   // highlight-end
 }
 
-mascot.doAddition(1, 4)        // 5 is printed
+mascot.taunt('Bulldogs')        // Boo Bulldogs! is printed
 
-const referenceToAddition = mascot.doAddition
-referenceToAddition(10, 15)   // 25 is printed
+const referenceToTaunt = mascot.taunt
+referenceToTaunt('Bears')   // Boo Bears! is printed
 ```
 
-Now the object has the method `doAddition` which calculates the sum of numbers given to it as parameters.
-The method is called in the usual way, using the object `mascot.doAddition(1, 4)`
+Now the object has the method `taunt` which taunts the opposing word given to it as parameters.
+The method is called in the usual way, using the object `mascot.taunt('Bulldogs')`
 or by storing a **method reference** in a variable and calling the method through the variable:
-`referenceToAddition(10, 15)`.
+`referenceToTaunt('Bears')`.
 
 If we try to do the same with the method `cheer` we run into an issue:
 
@@ -530,7 +531,7 @@ and the result is often not what the software developer had originally intended.
 Losing track of `this` when writing JavaScript code brings forth a few potential issues.
 Situations often arise where React or Node (or more specifically the JavaScript engine of the web browser)
 needs to call some method in an object that the developer has defined.
-However, in this course, we avoid these issues by using "this-less" JavaScript.
+However, in this course, we avoid these issues by using *"this-less"* JavaScript.
 
 One situation leading to the "disappearance" of `this` arises when we set a timeout to call the `cheer` function on the `mascot` object,
 using the [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) function.
@@ -551,7 +552,7 @@ As mentioned, the value of `this` in JavaScript is defined based on how the meth
 When `setTimeout` is calling the method, it is the JavaScript engine that calls the method and, at that point, `this` refers to the global object.
 
 There are several mechanisms by which the original `this` can be preserved.
-One of these is using a method called [bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind):
+One of these is using a method called [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind):
 
 ```js
 setTimeout(mascot.cheer.bind(mascot), 1000)
@@ -576,10 +577,10 @@ There are, however, features to make "simulating" object-oriented [classes](http
 Let's take a quick look at the **class syntax** that was introduced into JavaScript with ES6,
 which substantially simplifies the definition of classes (or class-like things) in JavaScript.
 
-In the following example, we define a "class" called Person and two Person objects:
+In the following example, we define a "class" called `Fan` and two `Fan` objects:
 
 ```js
-class Person {
+class Fan {
   constructor(name, team) {
     this.name = name
     this.team = team
@@ -589,17 +590,17 @@ class Person {
   }
 }
 
-const stephen = new Person('Stephen Colbert', 'Cougars')
+const stephen = new Fan('Stephen Colbert', 'Cougars')
 stephen.cheer()
 
-const osvaldo = new Person('Too Hard to Pronounce', 'Roots')
+const osvaldo = new Fan('Too Hard to Pronounce', 'Roots')
 osvaldo.cheer()
 ```
 
 When it comes to syntax, the classes and the objects created from them are very reminiscent of Java classes and objects.
 Their behavior is also quite similar to Java objects.
 At the core, they are still objects based on JavaScript's [prototypal inheritance](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance).
-The type of both objects is literally `Object`, since JavaScript essentially only defines the types
+Both objects are explicitly of the type `Object`, since JavaScript essentially only defines the types
 [Boolean, Null, Undefined, Number, String, Symbol, BigInt, and Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures).
 
 The introduction of the class syntax was a controversial addition.
