@@ -150,11 +150,28 @@ adding additional levels of `>`:
 Blockquotes can contain other Markdown elements, including headers, lists,
 and code blocks:
 
-> ## This is a header
+> #### This is a header
 >
 > 1. This is the first list item.
 > 2. This is the second list item.
 >
+
+It should also be able to support certain craziness like this:
+> **Bolded message:**
+>
+> 1. Statement one *with italics*
+> *`Code Message Italics`*, as mentioned in [link](/part9/).
+> 2. Statement two with `code` line.
+> Followup code elaboration, which should be indented further in
+>>
+>>  ```js
+>>  const something = (props) => {
+>>    console.log(props) // highlight-line
+>>    return <h1>{props.field}</h1>
+>>  }
+>>  ```
+
+Note the code above should be indented further than the list.
 
 Any decent text editor should make email-style quoting easy. For
 example, with BBEdit, you can make a selection and choose Increase
