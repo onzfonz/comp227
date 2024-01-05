@@ -332,18 +332,22 @@ Here's a recap in a [re-looping gif of all of these steps that you should see](h
 We'll need to make a few more changes to WebStorm to have it work as we expect.
 This is required.
 
-#### Configure your settings
+#### Configuring your settings summary
 
 When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
 (but not too much initially, spend no more than 10-15 minutes).
 
-I'll go over a few different settings that I've found useful:
+I'll go over a few different settings that you will need to change for this course.
+You will have an assignment that will show me that you have indeed made all of these changes.
 
-- [Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
-- [Changing your default terminal](#changing-our-default-terminal-app)
+- [Changing the terminal app](#changing-our-default-terminal-app)
 - [Enabling autosave](#enabling-autosave)
+- [Creating File Watchers](#creating-a-file-watcher-for-our-git-configuration)
+- [Enabling ESLint](#enabling-eslint)
+- [Linking Webstorm with nvm](#link-webstorm-to-nvm)
+- [(Optional) Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
 
-#### Changing our default terminal app
+### Changing our default terminal app
 
 While installing the Eclipse keymap is optional, what I would like you to do is change your terminal of choice to ***git bash***.
 Just like with the gif from below, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
@@ -353,7 +357,7 @@ There you should see bash.exe with a path for git.
 
 ![WebStorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
 
-#### Enabling autosave
+### Enabling autosave
 
 Enabling autosave allows me to not have to worry about saving all the time, which is key.
 On the other hand, sometimes we have some extra complexity.
@@ -361,7 +365,7 @@ Nonetheless, the benefits outweigh any issues.
 Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
 check the option that says to ***Save files if the IDE is idle for 15 seconds***.
 
-#### Creating a File Watcher for our Git Configuration
+### Creating a File Watcher for our Git Configuration
 
 We will be making one additional required change to repos for projects in this class.
 Because of a wealth of issues previously with changes, we are going to install a *file watcher*.
@@ -399,7 +403,27 @@ Make sure to select a location you'll remember as you'll need it later.
 
 Now once you are back on the list of File Watchers, click ***Apply*** and then ***OK*** to exit out of the Settings Window.
 
-#### Changing keyboard shortcuts
+### Enabling ESLint
+
+In Webstorm, open Settings (***Ctrl-Alt-S***) and type `eslint` in the search bar,
+which should allow you to see an ESLint heading under *Languages & Frameworks->JavaScript->Code Quality Tools->EsLint*.
+Click on that heading on the left and then select ***Automatic ESLint configuration***, and click the checkbox ***Run eslint --fix on save***.
+Click ***Apply*** and then ***OK***.
+
+![Settings showing eslint options](../../images/0/custom/eslint_settings.png)
+
+### Link WebStorm to nvm
+
+This one is important as it tells WebStorm where our node version is, which helps with IDE integration.
+Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
+Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
+Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both Windows.
+
+Because we will be working with a lot of repositories, it makes sense that all new projects have these same settings.
+Let's ensure that all of these settings show up for new projects, by going to ***File->New Projects Setup->Settings for New Projects***.
+Once there, go through each of the settings we just changed and ensure that those options have been enabled.
+
+### Changing keyboard shortcuts
 
 Since by this point I have become accustomed to Eclipse keyboard shortcuts, WebStorm provides an ability in its settings to use an Eclipse keymap.
 They also have other keymaps as well.
@@ -410,26 +434,6 @@ I can continue using handy shortcuts from Eclipse like:
 To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
 Pick the file that will work best for you in navigating using keyboard shortcuts.
 This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
-
-#### Enabling ESLint
-
-In Webstorm, open Settings (***Ctrl-Alt-S***) and type `eslint` in the search bar,
-which should allow you to see an ESLint heading under *Languages & Frameworks->JavaScript->Code Quality Tools->EsLint*.
-Click on that heading on the left and then select ***Automatic ESLint configuration***, and click the checkbox ***Run eslint --fix on save***.
-Click ***Apply*** and then ***OK***.
-
-![Settings showing eslint options](../../images/0/custom/eslint_settings.png)
-
-#### Link WebStorm to nvm
-
-This last one is important as it tells WebStorm where our node version is, which helps with IDE integration.
-Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
-Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
-Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both Windows.
-
-Because we will be working with a lot of repositories, it makes sense that all new projects have these same settings.
-Let's ensure that all of these settings show up for new projects, by going to ***File->New Projects Setup->Settings for New Projects***.
-Once there, go through each of the settings we just changed and ensure that those options have been enabled.
 
 ***Remember that you may have to do all of these steps (including the token generation if you don't save the token somewhere) for each computer that you use.***
 For the JetBrains settings only, another option that I recommend would be to sync your settings via your JetBrains account.
