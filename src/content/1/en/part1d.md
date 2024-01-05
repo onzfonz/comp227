@@ -12,9 +12,9 @@ lang: en
 In our previous example, the application state was simple as it was comprised of a single integer.
 What if our application requires a more complex state?
 
-In most cases, the easiest and best way to accomplish this is by using the `useState` function multiple times to create separate "pieces" of state.
+In most cases, the easiest and best way to accomplish this is by *leveraging `useState` **multiple times** to create **separate "pieces"** of state*.
 
-In the following code we create two pieces of state for the application named `left` and `right` that both get the initial value of 0:
+In the following code, we create two pieces of state for the application named `left` and `right` that both get the initial value of *`0`*:
 
 ```js
 const App = () => {
@@ -110,7 +110,7 @@ The following object is set as the new state of the application:
 The new value of the `left` property is now the same as the value of `left + 1` from the previous state,
 and the value of the `right` property is the same as the value of the `right` property from the previous state.
 
-We can define the new state object a bit more neatly by using the [object spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+We can define the new state object a bit more neatly by using the [**object spread**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
 syntax that was added to the language specification in the summer of 2018:
 
 ```js
@@ -141,9 +141,9 @@ In the example above, this:
 { ...clicks, right: clicks.right + 1 }
 ```
 
-creates a copy of the `clicks` object where the value of the `right` property is increased by one.
+creates a copy of the `clicks` object where the `right` property is incremented.
 
-Assigning the object to a variable in the event handlers is not necessary and we can simplify the functions to the following form:
+Assigning the object to a variable in the event handlers is not necessary and we can simplify the functions like this:
 
 ```js
 const handleLeftClick = () =>
@@ -153,20 +153,20 @@ const handleRightClick = () =>
   setClicks({ ...clicks, right: clicks.right + 1 })
 ```
 
-Some readers might be wondering why we didn't just update the state directly, like this:
-
-```js
-const handleLeftClick = () => {
-  clicks.left++
-  setClicks(clicks)
-}
-```
-
-The application appears to work.
-However, **it is forbidden in React to mutate state directly**, since [it can result in unexpected side effects](https://stackoverflow.com/a/40309023).
-Changing state has to always be done by setting the state to a new object.
-If properties from the previous state object are not changed, they need to simply be copied,
-which is done by copying those properties into a new object and setting that as the new state.
+> Some readers might be wondering why we didn't just update the state directly, like this:
+>
+> ```js
+> const handleLeftClick = () => {
+>   clicks.left++
+>   setClicks(clicks)
+> }
+> ```
+>
+> This direct updating of the state *appears to work*.
+> However, **it is forbidden in React to mutate state directly**, since [it can result in unexpected side effects](https://stackoverflow.com/a/40309023).
+> Changing state has to always be done by setting the state to a new object.
+> If properties from the previous state object are not changed, they need to simply be copied,
+> which is done by copying those properties into a new object and setting that as the new state.
 
 Storing all of the state in a single state object is a bad choice for this particular application;
 there's no apparent benefit and the resulting application is a lot more complex.
