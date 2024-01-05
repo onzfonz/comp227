@@ -522,13 +522,14 @@ We define the event handlers for our buttons where we declare their `onClick` at
 > ![screenshot of re-renders error](../../images/1/5c.png)
 >
 > What's going on?
+> The problems section in Webstorm (lower right) hints at the issue, as it says: *`Type void is not assignable to MouseEventHandler<HTMLButtonElement>`*.
 > An event handler is supposed to be either a **function** or a **function reference**, and when we write:
 >
 > ```js
 > <button onClick={setCounter(counter + 1)}>
 > ```
 >
-> the event handler is actually a **function call**.
+> the event handler is actually a **function call** (hence the type *`void`*, since `setCounter` does not return anything).
 > In many situations, this is OK, but not in this particular situation.
 > In the beginning, the value of the `counter` variable is **`0`**.
 > When React renders the component for the first time,
