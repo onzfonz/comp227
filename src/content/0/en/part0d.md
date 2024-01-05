@@ -411,6 +411,15 @@ To switch your keyboard shortcuts, open settings by selecting *File->Settings* (
 Pick the file that will work best for you in navigating using keyboard shortcuts.
 This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
 
+#### Enabling ESLint
+
+In Webstorm, open Settings (***Ctrl-Alt-S***) and type `eslint` in the search bar,
+which should allow you to see an ESLint heading under *Languages & Frameworks->JavaScript->Code Quality Tools->EsLint*.
+Click on that heading on the left and then select ***Automatic ESLint configuration***, and click the checkbox ***Run eslint --fix on save***.
+Click ***Apply*** and then ***OK***.
+
+![Settings showing eslint options](../../images/0/custom/eslint_settings.png)
+
 #### Link WebStorm to nvm
 
 This last one is important as it tells WebStorm where our node version is, which helps with IDE integration.
