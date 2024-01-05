@@ -429,7 +429,7 @@ Since by this point I have become accustomed to Eclipse keyboard shortcuts, WebS
 They also have other keymaps as well.
 For me this allows me to not have to worry about learning new keyboard shortcuts,
 I can continue using handy shortcuts from Eclipse like:
-(***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Ctrl-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
+(***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Alt-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
 
 To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
 Pick the file that will work best for you in navigating using keyboard shortcuts.
