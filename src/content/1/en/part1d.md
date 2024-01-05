@@ -335,11 +335,11 @@ The console reveals the problem
 
 ![devtools console showing left before 4 and left after 4](../../images/1/32.png)
 
-Even though a new value was set for `left` by calling `setLeft(left + 1)`, the old value persists despite the update.
-As a result, the attempt to count button presses produces a result that is too small:
+Even though a new value for `left` was requested by calling `setLeft(left + 1)`, the ***old value remains in the `left` variable while this function still executes***.
+As a result, the attempt to count button presses uses the non-updated value for `left`:
 
 ```js
-setTotal(left + right)
+setTotal(left + right) // computer evaluates as '4 + 1'
 ```
 
 The reason for this is that *a state update in React happens* [***asynchronously***](https://react.dev/learn/queueing-a-series-of-state-updates),
@@ -512,16 +512,76 @@ Before we move on, let us remind ourselves of one of the most important rules of
 
 Keep both your code and the web page open together **at the same time, all the time**.
 
-If and when your code fails to compile and your browser lights up like a Christmas tree:
+If and when your code fails to compile and your browser lights up like a nightclub:
 
 ![screenshot of code](../../images/1/6x.png)
 
 don't write more code but rather find and fix the problem **immediately**.
-There has yet to be a moment in the history of coding where code that fails to compile would miraculously start working after writing large amounts of additional code.
-I highly doubt that such an event will transpire during this course either.
+Code will not miraculously start working after writing large amounts of additional code.
+
+### Webstorm IDE Debugger Introduction
 
 Old-school, print-based debugging can at times be a good idea.
-If the component
+I personally prefer using an IDE and its breakpoints though when possible.
+A **breakpoint** is a special IDE-based marker that tells your application to ***break*** (pause executing code), when it reaches a particular ***point*** (line of code).
+Breakpoints can be turned on or off by clicking on the line number to the left of a line:
+
+![breakpoint line number](../../images/1/custom/no_breakpoint_yet.png)
+
+When a line number is clicked, it turns into a stop sign indicating the breakpoint is enabled for that line:
+
+![WebStorm showing debugging enabled](../../images/1/custom/breakpoint_line_enabled.png)
+
+The application will only break at that line when it reaches that point and you click on the debugger icon
+![Debugger Icon](../../images/1/custom/debugger_icon.png) in the upper right of the Webstorm IDE.
+
+Once you are at a breakpoint, you'll notice that the Browser will give you an indication that it is paused.
+In WebStorm, you should notice that the Debug pane (***Alt-6***) is open, and there will also be an indication of the line that is is stopped at:
+
+![WebStorm showing line currently paused on](../../images/1/custom/debugger_paused_line.png)
+
+The ***Threads & Variables*** tab is handy as it provides a wealth of information of the current state of variables that you can explore by clicking around.
+You can see the state of all of the local and global variables as if you were to write `console.log` statements for all of your variables here.
+
+![WebStorm showing the variables tab](../../images/1/custom/ide_variables_tab.png)
+
+If you don't want to wade through, you could also setup expressions for the computer to evaluate with, which can also be done in the Console tab.
+What you would type in here is what would you would normally put inside of `console.log` statements.
+The ***Console*** tab also provides a history of what you have typed and can include some fairly complex expressions.
+
+![WebStorm console tab](../../images/1/custom/ide_console_tab.png)
+
+If you would like to continue executing the application, you can use the browser's resume button.
+
+![browser resume button](../../images/1/custom/browser_resume.png)
+
+Of course though, it will continue until it reaches the next breakpoint.
+In this case, because we have two buttons, pressing the button will feel *as if it did nothing*.
+However, if we examine the variables closely,
+the local variable `text` should now have the property `right` (which WebStorm highlights in blue).
+
+![WebStorm showing text in blue with right](../../images/1/custom/ide_debugger_changes.png)
+
+If you click the resume button again, it will appear as though the application has left the debugging session.
+However, the IDE will still have icons that let you know it is still connected.
+
+![IDE showing it's still in debug mode](../../images/1/custom/ide_in_debug.png)
+
+The application will run until it reaches another breakpoint.
+
+To get out of the Debugging Session, you can merely press the Red Stop button.
+Pressing the Green Bug Button to the left will restart the debugging session and relaunch the webpage.
+
+### Finding a small error
+
+Imagine that you have tried coding the application up.
+However, you notice that when you run the program, ***Nothing appears***.
+While it's normal for us to think of what is not happening, we need to focus on what is going on.
+Imagine we setup a breakpoint on the same line again and we try to debug.  Then we notice that our `text` local variables is *`undefined`*, like this:
+
+![WebStorm showing issues](../../images/1/custom/ide_text_undefined.png)
+
+If our component
 
 ```js
 const Button = ({ handleClick, text }) => (
@@ -531,13 +591,12 @@ const Button = ({ handleClick, text }) => (
 )
 ```
 
-is not working as intended, it's useful to start printing its variables out to the console.
-To do this effectively, we must transform our function into the less compact form
+is not working as intended, it's useful to examine the `props` object more closely.
+To do this effectively, we must stop debugging and transform our function into the less compact form
 and receive the entire props object without destructuring it immediately:
 
 ```js
 const Button = (props) => { 
-  console.log(props) // highlight-line
   const { handleClick, text } = props
   return (
     <button onClick={handleClick}>
@@ -547,15 +606,22 @@ const Button = (props) => {
 }
 ```
 
-This will immediately reveal if, for instance, one of the attributes has been misspelled when using the component.
+If we then run the debugger again, and place a breakpoint on the return line, we can examine the variables passed in much more closely.
+In this case, we might be able to find what the issue may be.
 
-##### A quick aside about logging
+![IDE Debug with props enabled showing variables](../../images/1/custom/ide_debug_puzzle.png)
 
-> **NB** When you use `console.log` for debugging, **don't combine objects** in a Java-like fashion by using the plus operator.
+***Study this picture and see if you can find the issue...I will ask you about it in the future!***
+
+#### A quick aside about logging
+
+> **NB** Some of you have had much more experience merely printing things to the console instead of using the debugger.
+> While printing things to the console is still helpful, I would also prefer for you to learn to use the debugger.
+> Nonetheless, when you the ***Console*** tab (or `console.log`) for debugging, **don't combine objects** in a Java-like fashion by using the plus operator.
 > If you write:
 >
 > ```js
-> console.log('props value is ' + props)
+> 'props value is ' + props
 > ```
 >
 > You will end up with an unhelpful log message:
@@ -567,13 +633,15 @@ This will immediately reveal if, for instance, one of the attributes has been mi
 > To get actual values for variables, separate them in `console.log` with a comma:
 >
 > ```js
-> console.log('props value is', props)
+> 'props value is', props
 > ```
 >
 > Now, those separated items will be available in the browser console for further review.
 
-Logging output to the console is by no means the only way of debugging our applications.
-You can pause the execution of your application code in the Chrome developer console's *debugger*,
+### Using the debugger statement
+
+Setting breakpoints or logging output to the console are not the only ways of debugging our applications.
+You can also pause the execution of your application code in the Chrome developer console's *debugger*,
 by writing the command [debugger](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) anywhere in your code.
 
 The execution will pause once it arrives at a point where the ***debugger*** command gets executed:
@@ -586,14 +654,14 @@ By going to the *Console* tab, it is easy to inspect the current state of variab
 
 Once the cause of the bug is discovered you can remove the ***debugger*** command and refresh the page.
 
-The debugger also enables us to execute our code line by line with the controls found on the right-hand side of the ***Sources*** tab.
+The debugger, like WebStorm, enables us to execute our code line by line with the controls found on the right-hand side of the ***Sources*** tab.
 
 You can also access the debugger without the ***debugger*** command by adding breakpoints in the ***Sources*** tab.
 Inspecting the values of the component's variables can be done in the ***Scope*** section:
 
 ![breakpoint example in devtools](../../images/1/9a.png)
 
-It is highly recommended to add the [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) extension to Chrome.
+It is highly recommended to add the [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) extension to Chrome.
 It adds a new ***Components*** tab to the developer tools.
 The new developer tools tab can be used to inspect the different React elements in the application, along with their state and props:
 
