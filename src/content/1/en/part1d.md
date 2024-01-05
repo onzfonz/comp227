@@ -110,6 +110,21 @@ The following object is set as the new state of the application:
 The new value of the `left` property is now the same as the value of `left + 1` from the previous state,
 and the value of the `right` property is the same as the value of the `right` property from the previous state.
 
+> **Pertinent**: Some readers might be wondering why we didn't just update the state directly, like this:
+>
+> ```js
+> const handleLeftClick = () => {
+>   clicks.left++
+>   setClicks(clicks)
+> }
+> ```
+>
+> This direct updating of the state *appears to work*.
+> However, **it is forbidden in React to mutate state directly**, since [it can result in unexpected side effects](https://stackoverflow.com/a/40309023).
+> Changing state has to always be done by setting the state to a new object.
+> If properties from the previous state object are not changed, they need to simply be copied,
+> which is done by copying those properties into a new object and setting that as the new state.
+
 We can define the new state object a bit more neatly by using the [**object spread**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
 syntax that was added to the language specification in the summer of 2018:
 
@@ -132,18 +147,18 @@ const handleRightClick = () => {
 ```
 
 The syntax may seem a bit strange at first.
-In practice `{ ...clicks }` creates a new object that has copies of all of the properties of the `clicks` object.
-When we specify a particular property - e.g. `right` in `{ ...clicks, right: 1 }`, the value of the `right` property in the new object will be 1.
+In practice `{ ...obj }` duplicates the original `obj` object and its properties.
+When we also specify a particular property - e.g. `field` in `{ ...obj, field: x }`, the value of the `field` property in the duplicated object will be what `x` evaluates to.
 
-In the example above, this:
+Applying this to the example above, with:
 
 ```js
 { ...clicks, right: clicks.right + 1 }
 ```
 
-creates a copy of the `clicks` object where the `right` property is incremented.
+Javascript increments the `right` property by *`1`* in the duplicated object.
 
-Assigning the object to a variable in the event handlers is not necessary and we can simplify the functions like this:
+we can simplify the functions like this:
 
 ```js
 const handleLeftClick = () =>
@@ -153,23 +168,10 @@ const handleRightClick = () =>
   setClicks({ ...clicks, right: clicks.right + 1 })
 ```
 
-> Some readers might be wondering why we didn't just update the state directly, like this:
->
-> ```js
-> const handleLeftClick = () => {
->   clicks.left++
->   setClicks(clicks)
-> }
-> ```
->
-> This direct updating of the state *appears to work*.
-> However, **it is forbidden in React to mutate state directly**, since [it can result in unexpected side effects](https://stackoverflow.com/a/40309023).
-> Changing state has to always be done by setting the state to a new object.
-> If properties from the previous state object are not changed, they need to simply be copied,
-> which is done by copying those properties into a new object and setting that as the new state.
+Since assigning the object to a variable in the event handlers (e.g. `newClicks`) is not necessary.
 
-Storing all of the state in a single state object is a bad choice for this particular application;
-there's no apparent benefit and the resulting application is a lot more complex.
+While our code has now shrunken, having a single state object (like `clicks`) to store everything is not ideal for this particular application;
+there's no apparent benefit and the resulting application is more complex.
 In this case, storing the click counters into separate pieces of state is a far more suitable choice.
 
 There are situations where it can be beneficial to store a piece of application state in a more complex data structure.
@@ -227,11 +229,11 @@ const handleLeftClick = () => {
 ```
 
 The piece of state stored in `allClicks` is now set to be an array that contains all of the items of the previous state array plus the letter `L`.
-Adding the new item to the array is accomplished with the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) method,
+Adding the new item to the array is accomplished with the [`concat` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat),
 which does not mutate the existing array but rather returns a **new copy of the array** with the item added to it.
 
 As mentioned previously, it's also possible in JavaScript to add items to an array with the
-[push](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push) method.
+[`push` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push).
 If we add the item by pushing it to the `allClicks` array and then updating the state, the application would still appear to work:
 
 ```js
@@ -242,8 +244,8 @@ const handleLeftClick = () => {
 }
 ```
 
-However, **don't** do this.
-As mentioned previously, the state of React components like `allClicks` must not be mutated directly.
+However, **don't use `push`, as it mutates `allClicks`**.
+Remember, the state of React components (like `allClicks`) must not be changed directly.
 Even if mutating state appears to work in some cases, *it can lead to problems that are very hard to debug*.
 
 Let's take a closer look at how the clicking
@@ -265,9 +267,9 @@ const App = () => {
 }
 ```
 
-We call the [join](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join) method
+We call the [`join` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join)
 on the `allClicks` array that joins all the items into a single string,
-separated by the string passed as the function parameter, which in our case is an empty space.
+separated by the string passed as the function parameter, which in our case is a single space.
 
 ### Update of the state is asynchronous
 
@@ -312,7 +314,7 @@ The solution does not quite work:
 
 The total number of button presses is consistently one less than the actual amount of presses, for some reason.
 
-Let us add couple of console.log statements to the event handler:
+Let us add a couple of `console.log` statements to the event handler:
 
 ```js
 const App = () => {
