@@ -458,7 +458,7 @@ Let's modify the component `Greet` as follows:
 const Greet = (props) => { // highlight-line
   return (
     <div>
-      <p>Hi {props.name}</p> // highlight-line
+      <p>Hey {props.name}!</p> // highlight-line
     </div>
   )
 }
@@ -481,43 +481,11 @@ const App = () => {
 }
 ```
 
-There can be an arbitrary number of props and their values can be *hard-coded* strings or the results of JavaScript expressions.
-If the value of the prop is achieved using JavaScript it must be wrapped with curly braces.
-
-Let's modify the code so that the component `Greet` uses two props:
-
-```js
-const Greet = (props) => {
-  return (
-    <div>
-      <p>
-        Hi {props.name}, you are {props.age} years old // highlight-line
-      </p>
-    </div>
-  )
-}
-
-const App = () => {
-  const name = 'Buddy' // highlight-line
-  const age = 10       // highlight-line
-
-  return (
-    <div>
-      <h1>Greetings</h1>
-      <Greet name='Bailey' age={7 + 14} /> // highlight-line
-      <Greet name={name} age={age} />     // highlight-line
-    </div>
-  )
-}
-```
-
-The props sent by the component `App` are the values of the variables, the result of the evaluation of the sum expression and a regular string.
-
 ### Possible error message
 
-Depending on the editor you are using, you may receive the following error message at this point:
+If you have set everything up correctly you will receive the following error message at this point:
 
-![vs code showing name is missing in props validation](../../images/1/1-vite5.png)
+![webstorm showing name is missing in props validation](../../images/1/1-vite5.png)
 
 It's not an actual error, but a warning caused by the [ESLint](https://eslint.org/) tool.
 You can silence the warning [`react/prop-types`](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)
@@ -549,25 +517,63 @@ module.exports = {
 
 We will get to know ESLint in more detail [in part 3](/part3/validation_and_es_lint#lint).
 
+### Multiple props
+
+There can be an arbitrary number of props and their values can be *hard-coded* strings or the results of JavaScript expressions.
+If the value of the prop is achieved using JavaScript it must be wrapped with curly braces.
+
+Let's modify the code so that the component `Greet` uses two props:
+
+```js
+const Greet = (props) => {
+  return (
+    <div>
+      <p>
+        Hey {props.name}, you are {props.age} years old // highlight-line
+      </p>
+    </div>
+  )
+}
+
+const App = () => {
+  const name = 'Buddy' // highlight-line
+  const age = 10       // highlight-line
+
+  return (
+    <div>
+      <h1>Greetings</h1>
+      <Greet name='Bailey' age={7 + 14} /> // highlight-line
+      <Greet name={name} age={age} />     // highlight-line
+    </div>
+  )
+}
+```
+
+The props sent by the component `App` are the values of the variables, the result of the evaluation of the sum expression and a regular string.
+
 ### Some tips
 
-React generates helpful error messages.
+React, ESLint, & WebStorm generate helpful error messages.
 Despite this, you should, at least in the beginning, advance in **very small steps** and make sure that every change works as desired.
 
 **The console should always be open**.
+You should also have the problems area view in WebStorm open as well (***Alt-6***).
+The arrows in the image below also point you to line numbers, as those can be helpful as well.
 If the browser reports errors, don't continue writing more code, hoping for miracles.
 Instead, try to understand the cause of the error and, for example, go back to the previous working state:
 
 ![screenshot of undefined prop error](../../images/1/2a.png)
 
 While using undo (***Ctrl-Z***) and redo (***Ctrl-Y***) is great,
-if you commit often, looking at changes becomes even easier,
-as you can always look at the previously recorded changes on any line.
+Because we have the file watcher setup, looking at changes becomes even easier,
+as you can always look at the previously recorded changes on any line using the git log window. (***Alt-9***)
 
-It is good to remember that in React it is possible and worthwhile to write `console.log()` commands (which print to the console) within your code.
+![screenshot of using the file watcher](../../images/1/custom/git_log_history.png)
+
+When you fix a component, you may notice that the page itself comes back to life, rendering what you expect.
 
 Also, keep in mind that **React component names must be capitalized**.
-If you try defining a component as follows:
+*If you try defining a component* like this:
 
 ```js
 const footer = () => {
@@ -593,20 +599,21 @@ const App = () => {
 }
 ```
 
-the page is not going to display the content defined within the Footer component,
+the page is not going to display the content defined within the footer component,
 and instead React only creates an empty [footer](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer) element,
 i.e. the built-in HTML element instead of the custom React element of the same name.
 If you change the first letter of the component name to a capital letter,
 then React creates a `div` element defined in the `Footer` component, which is rendered on the page.
 
 Notice that the content of a React component (usually) needs to contain **one root element**.
-If we, for example, try to define the component `App` without the outermost `div` element:
+If we, for example, try to define the component `App` without the outermost `div` element (which is *the root element*):
 
 ```js
 const App = () => {
   return (
     <h1>Greetings</h1>
     <Greet name='Bailey' age={7 + 14} />
+    <Greet name={name} age={age} />
     <Footer />
   )
 }
@@ -616,7 +623,7 @@ the result is an error message.
 
 ![multiple root elements error screenshot](../../images/1/3c.png)
 
-Using a root element is not the only working option.
+Using a root element (*like an outermost `<div>`*) is not the only working option.
 An *array* of components is also a valid solution:
 
 ```js
@@ -624,6 +631,7 @@ const App = () => {
   return [
     <h1>Greetings</h1>,
     <Greet name='Bailey' age={7 + 14} />,
+    <Greet name={name} age={age} />,
     <Footer />
   ]
 }
@@ -633,7 +641,7 @@ However, when defining the root component of the application this is not a parti
 
 Because the root element is stipulated, we have "extra" div elements in the DOM tree.
 This can be avoided by using [fragments](https://react.dev/reference/react/Fragment),
-i.e. by wrapping the elements to be returned by the component with an empty element:
+i.e. by wrapping the elements to be returned by the component with ***an empty element `<>`***:
 
 ```js
 const App = () => {
@@ -651,7 +659,7 @@ const App = () => {
 }
 ```
 
-It now compiles successfully, and the DOM generated by React no longer contains the extra div element.
+It now compiles successfully, and the DOM generated by React no longer contains the extra `div` element.
 
 ### Do not render objects
 
@@ -683,13 +691,18 @@ All of a sudden, you remember the promise we made:
 
 > *I promise to keep the console open all the time during this course, and for the rest of my life when I'm doing web development*
 
-The console screams in red:
+The developer console throws a few errors.
+
+> **Pertinent**: At this point, your developer console may be filled with a load of errors.
+> This is because the console does not clear fixed errors automatically.
+> To have the console show the latest relevant errors, you need to *clear the console by clicking on the 🚫 icon in the developer tools*.
+> Then *refresh the browser (**F5**)* so that the newest relevant errors re-appear
 
 ![Devtools showing an error with a highlight around "Objects are not valid as a React child"](../../images/1/34new.png)
 
-The core of the problem is *Objects are not valid as a React child*, i.e. the application tries to render *objects* and it fails again.
+The core of the problem is ***Objects are not valid as a React child***, i.e. the application tries to render *objects* and it fails again.
 
-The code tries to render the information of one friend as follows:
+The console also points to where the error occurred, which can be traced to this code:
 
 ```js
 <p>{friends[0]}</p>
@@ -701,7 +714,7 @@ and this causes a problem because the item to be rendered in the braces is an ob
 { name: 'Monica', age: 24 }
 ```
 
-In React, the *individual items rendered in braces must be primitive values*, such as numbers or strings.
+In React, the **individual items rendered in braces must be primitive values**, such as numbers or strings.
 
 Here's the fix:
 
@@ -736,9 +749,6 @@ as *`Monica`* and her age
 ```
 
 as *`24`*.
-
-After correcting the error, you should clear the console's error messages by pressing the 🚫 icon in the developer tools.
-Then, reload the page content and make sure that no error messages are displayed.
 
 > React also allows arrays to be rendered *if* the array contains values ​​that are eligible for rendering (such as numbers or strings).
 > So the following program would work, although the result might not be what we want:
