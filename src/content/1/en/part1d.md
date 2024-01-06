@@ -638,13 +638,13 @@ In this case, we might be able to find what the issue may be.
 >
 > Now, those separated items will be available in the browser console for further review.
 
-### Using the debugger statement
+### Using the browser's debugging tools
 
 Setting breakpoints or logging output to the console are not the only ways of debugging our applications.
 You can also pause the execution of your application code in the Chrome developer console's *debugger*,
-by writing the command [debugger](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) anywhere in your code.
+by writing the command [`debugger`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/debugger) anywhere in your code.
 
-The execution will pause once it arrives at a point where the ***debugger*** command gets executed:
+The execution will pause once it arrives at a point where the ***`debugger`*** command gets executed:
 
 ![debugger paused in dev tools](../../images/1/7a.png)
 
@@ -652,7 +652,13 @@ By going to the *Console* tab, it is easy to inspect the current state of variab
 
 ![console inspection screenshot](../../images/1/8a.png)
 
-Once the cause of the bug is discovered you can remove the ***debugger*** command and refresh the page.
+> You may notice that ESLint mentions the use of debugger *`Unexpected 'debugger' statement (no-debugger)`*.
+> ESLint flags this as a problem because we would not want to keep a debugger line in production code.
+> *Imagine being on a website only to have the application completely pause?*
+> This is why ESLint has this as a rule.  
+> There is a way to turn this off, but we will leave it on to remind us to take it out eventually.
+
+Once the cause of the bug is discovered you can remove the ***`debugger`*** command and refresh the page.
 
 The debugger, like WebStorm, enables us to execute our code line by line with the controls found on the right-hand side of the ***Sources*** tab.
 
@@ -686,31 +692,36 @@ the next contains the value of the `right` state and the last contains the value
 
 There are a few limitations and rules we have to follow to ensure that our application uses hooks-based state functions correctly.
 
-The `useState` function (as well as the `useEffect` function introduced later on in the course) **must not be called** from inside of a loop,
-a conditional expression, or any place that is not a function defining a component.
-This must be done to ensure that the hooks are always called in the same order, and if this isn't the case the application will behave erratically.
+***Hooks should be called at the base level of React function components, before any `return` statements***
+
+***Do not call*** `useState` (or `useEffect`) from:
+
+- ⛔inside of a loop⛔
+- ⛔a conditional expression⛔
+- ⛔any place that is not a function defining a React component⛔.
+
+Why? We need ensure that hooks are always called in the same order.
+If we use loops, conditionals or other nested functions, the application can behave erratically.
 
 To recap, hooks may only be called from the inside of a function body that defines a React component:
 
 ```js
 const App = () => {
-  // these are ok
+  // this is at the base level in a React function component
+  // You can typically tell a function component because it is capitalized (App)
   const [age, setAge] = useState(0)
   const [name, setName] = useState('CW Longbottom')
 
   if ( age > 10 ) {
-    // this does not work!
-    const [foobar, setFoobar] = useState(null)
+    const [foobar, setFoobar] = useState(null) // 🐞 - doesn't work
   }
 
   for ( let i = 0; i < age; i++ ) {
-    // also this is not good
-    const [rightWay, setRightWay] = useState(false)
+    const [rightWay, setRightWay] = useState(false) // 🐞 - also no good
   }
 
   const notGood = () => {
-    // and this is also illegal
-    const [x, setX] = useState(-1000)
+    const [x, setX] = useState(-1000) // 🐞 also illegal
   }
 
   return (
@@ -754,10 +765,10 @@ If we were to define the event handler as a string:
 React would warn us about this in the console:
 
 ```js
-index.js:2178 Warning: Expected `onClick` listener to be a function, instead got a value of `string` type.
-    in button (at index.js:20)
-    in div (at index.js:18)
-    in App (at index.js:27)
+Warning: Expected `onClick` listener to be a function, instead got a value of `string` type.
+    in button
+    in div
+    in App
 ```
 
 The following attempt would also not work:
@@ -770,7 +781,7 @@ We have attempted to set the event handler to `value + 1` which simply returns t
 React will kindly warn us about this in the console:
 
 ```js
-index.js:2178 Warning: Expected `onClick` listener to be a function, instead got a value of `number` type.
+Warning: Expected `onClick` listener to be a function, instead got a value of `number` type.
 ```
 
 This attempt would not work either:
@@ -790,10 +801,10 @@ What about the following:
 </button>
 ```
 
-The message gets printed to the console once when the component is rendered but nothing happens when we click the button.
+The message gets printed to the console *once when the component is rendered **but nothing happens when we click the button***.
 Why does this not work even when our event handler contains a function `console.log`?
 
-The issue here is that our event handler is defined as a *function call*
+The issue here is that *our event handler is defined as a **function call***
 which means that the event handler is assigned the returned value from the function, which in the case of `console.log` is `undefined`.
 
 The `console.log` function call gets executed when the component is rendered and for this reason, it gets printed once to the console.
@@ -807,10 +818,15 @@ The following attempt is flawed as well:
 We have once again tried to set a function call as the event handler.
 This does not work.
 This particular attempt also causes another problem.
-When the component is rendered the function `setValue(0)` gets executed which in turn causes the component to be re-rendered.
-Re-rendering in turn calls `setValue(0)` again, resulting in an infinite recursion.
+Let's follow these steps to explain:
 
-Executing a particular function call when the button is clicked can be accomplished like this:
+1. `button` component gets rendered
+2. `setValue(0)` gets executed (because we rendered the component)
+3. `button` component gets re-rendered (because we changed state).
+4. `setValue(0)` gets executed (because we rendered the component)
+5. This continues indefinitely 🐞
+
+Instead, executing a specific function with *`onClick`* should be written like this:
 
 ```js
 <button onClick={() => console.log('clicked the button')}>
@@ -818,9 +834,14 @@ Executing a particular function call when the button is clicked can be accomplis
 </button>
 ```
 
-Now the event handler is a function defined with the arrow function syntax *() => console.log('clicked the button')*.
-When the component gets rendered, no function gets called and only the reference to the arrow function is set to the event handler.
-Calling the function happens only once the button is clicked.
+Now the event handler is a function defined with the arrow function syntax *`() => console.log('clicked the button')`*.
+Now our setup looks like this:
+
+1. `button` component gets rendered
+2. reference to arrow function gets stored in `onClick` handler
+
+Now no function gets immediately called.
+`console.log` will only happen once the button is clicked.
 
 We can implement resetting the state in our application with this same technique:
 
@@ -828,34 +849,26 @@ We can implement resetting the state in our application with this same technique
 <button onClick={() => setValue(0)}>button</button>
 ```
 
-The event handler is now the function *() => setValue(0)*.
+The event handler is now the function *`() => setValue(0)`*.
 
-Defining event handlers directly in the attribute of the button is not necessarily the best possible idea.
+Defining event handlers directly in the button is not ideal.
 
 You will often see event handlers defined in a separate place.
-In the following version of our application we define a function that then gets assigned to the `handleClick` variable in the body of the component function:
+Below we set our arrow function to a variable `handleClick` that then gets assigned in the `onClick` handler.
 
 ```js
 const App = () => {
   const [value, setValue] = useState(10)
 
-  const handleClick = () =>
-    console.log('clicked the button')
+  const handleClick = () => console.log('clicked the button') // highlight-line
 
   return (
     <div>
       {value}
-      <button onClick={handleClick}>button</button>
+      <button onClick={handleClick}>button</button> // highlight-line
     </div>
   )
 }
-```
-
-The `handleClick` variable is now assigned to a reference to the function.
-The reference is passed to the button as the `onClick` attribute:
-
-```js
-<button onClick={handleClick}>button</button>
 ```
 
 Naturally, our event handler function can be composed of multiple commands.
@@ -886,7 +899,7 @@ const App = () => {
 Another way to define an event handler is to use a **function that returns a function**.
 
 You probably won't need to use functions that return functions in any of the exercises in this course.
-If the topic seems particularly confusing, you may skip over this section for now and return to it later.
+If the topic seems particularly confusing, you may jump to the [next section](#passing-event-handlers-to-child-components) and return to this later.
 
 Let's make the following changes to our code:
 
@@ -920,7 +933,7 @@ The event handler is now set to a function call:
 ```
 
 Earlier on we stated that an event handler may not be a call to a function and that it has to be a function or a reference to a function.
-Why then does a function call work in this case?
+***Why then does a function call work in this case?***
 
 When the component is rendered, the following function gets executed:
 
@@ -932,7 +945,7 @@ const hello = () => {
 }
 ```
 
-The *return value* of the function is another function that is assigned to the `handler` variable.
+The *return value* of the function is **another function that is assigned to the `handler` variable**.
 
 When React renders the line:
 
@@ -940,7 +953,7 @@ When React renders the line:
 <button onClick={hello()}>button</button>
 ```
 
-It assigns the return value of `hello()` to the `onClick` attribute.
+*It assigns the return value of `hello()` to the `onClick` attribute*.
 Essentially the line gets transformed into:
 
 ```js
@@ -951,7 +964,7 @@ Essentially the line gets transformed into:
 
 Since the `hello` function returns a function, the event handler is now a function.
 
-What's the point of this concept?
+😤 ***What's the point of this concept?*** 😤
 
 Let's change the code a tiny bit:
 
@@ -982,7 +995,7 @@ const App = () => {
 }
 ```
 
-Now the application has three buttons with event handlers defined by the `hello` function that accepts a parameter.
+Now the application has three buttons with event handlers defined by the `hello` function *that accepts a parameter*.
 
 The first button is defined as
 
@@ -1015,7 +1028,7 @@ The function call `hello('you')` that creates the event handler returns:
 
 Both buttons get their individualized event handlers.
 
-Functions returning functions can be utilized in defining generic functionality that can be customized with parameters.
+**Functions returning functions can be utilized in defining generic functionality that can be customized with parameters.**
 The `hello` function that creates the event handlers can be thought of as a factory that produces customized event handlers meant for greeting users.
 
 Our current definition is slightly verbose:
@@ -1107,7 +1120,7 @@ The increase button is declared as follows:
 
 The event handler is created by the function call `setToValue(value + 1)`
 which receives as its parameter the current value of the state variable `value` increased by one.
-If the value of `value` was 10, then the created event handler would be the function:
+If the value of `value` was *`10`*, then the created event handler would be the function:
 
 ```js
 () => {
@@ -1152,7 +1165,7 @@ The event handler for resetting the application state would be:
 <button onClick={() => setToValue(0)}>reset</button>
 ```
 
-Choosing between the two presented ways of defining your event handlers is mostly a matter of taste.
+*Choosing between the two presented ways of defining your event handlers is mostly a matter of taste.*
 
 ### Passing Event Handlers to Child Components
 
@@ -1209,7 +1222,7 @@ const App = () => {
     setValue(newValue)
   }
 
-  // Do not define components inside another component
+  // 🐞 Do not define components inside another component 🐞
   const Display = props => <div>{props.value}</div> // highlight-line
 
   return (
@@ -1226,9 +1239,9 @@ const App = () => {
 The application still appears to work, but **don't implement components like this!** Never define components inside of other components.
 The method provides no benefits and leads to many unpleasant problems.
 The biggest problems are because React treats a component defined inside of another component as a new component in every render.
-This makes it impossible for React to optimize the component.
+**This makes it impossible for React to optimize the component.**
 
-Let's instead move the `Display` component function to its correct place, which is outside of the `App` component function:
+Let's instead move the `Display` component function to its correct place, which is *outside of the `App` component function*:
 
 ```js
 const Display = props => <div>{props.value}</div>
@@ -1288,7 +1301,7 @@ Here it is:
 >
 > - *Keep my browser's dev tools open all the time*
 > - *Progress in tiny steps and commit each of those steps*
-> - *Use the debugger or use `console.log` to help me better understand my code*
+> - *Use the debugger to help me better understand my code*
 > - *Stop adding features if my code is broken.*
 > - *Consider that I can rollback my changes when I go in small steps if I cannot find an issue.*
 > - *Formulate my questions on Discord [using this guide from part 0](/part0/general_info#how-to-ask-help-in-discord)*
