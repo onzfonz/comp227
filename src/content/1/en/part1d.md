@@ -1325,23 +1325,25 @@ In these cases, because you have the file watcher you will commit regularly.*
 However, when you finish an exercise, you will amend your previous commit, which you can do in WebStorm or via the command line.
 
 ```bash
-git commit --amend
+git commit -m "Completed Exercise #XX.YY" --allow-empty
 ```
 
 For those exercises that you feel end up being the completed exercise, you will write the name of the exercise and its number as the commit message.
-So for example, if you finished Exercise 1.6, you would amend your commit and change the commit message to `Completed Exercise 1.6`.
+So for example, if you finished Exercise 1.6, you would commit your empty message with the commit message to `Completed Exercise 1.6`.
 
 Any mistakes here will impact your grade.
 
-> **WARNING:** ensure you are at the base folder of the correct repository when using `vite` to create the studytracker and jokes apps/directories.
+> **Pertinent:** ensure you are at the base folder of the correct repository
+> [when using `vite`](/part1/introduction_to_react#starting-development)
+> to create the *studytracker* and *jokes* apps.
 >
 > In some situations you may also have to run the command below from the root of the project:
-> 
+>
 > ```bash
 > rm -rf node_modules/ && npm i
 > ```
 >
->> **Remember:** If and *when* you encounter an error message
+>> **Also Remember:** If and *when* you encounter an error message
 >>
 >>> *`Objects are not valid as a React child`*
 >>
@@ -1361,7 +1363,7 @@ Notice that your application needs to work only during a single browser session.
 Once you refresh the page, the collected data is allowed to disappear.
 
 It is advisable to use the same structure that is used in the material and previous exercise.
-File *main.jsx* is as follows:
+File *main.jsx* should have.
 
 ```js
 import ReactDOM from 'react-dom/client'
@@ -1371,7 +1373,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-You can use the code below as a starting point for the *App.jsx* file:
+You can use the code below as a starting point for *App.jsx*:
 
 ```js
 import { useState } from 'react'
@@ -1392,7 +1394,7 @@ const App = () => {
 export default App
 ```
 
-> Don't forget to amend your commit with the message `Completed Exercise 1.6` once you feel you have completed this exercise!
+> Don't forget your empty commit with the message `Completed Exercise 1.6` once you feel you have completed this exercise!
 
 #### 1.7: studytracker step2
 
@@ -1405,7 +1407,7 @@ The application should show:
 
 ![average and percentage good screenshot feedback](../../images/1/14e.png)
 
-> Don't forget to amend your commit with the message `Completed Exercise 1.7` once you feel you have completed this exercise!
+> Don't forget your empty commit with the message `Completed Exercise 1.7` once you feel you have completed this exercise!
 
 #### 1.8: studytracker step3
 
@@ -1436,7 +1438,7 @@ const App = () => {
 }
 ```
 
-> Don't forget to amend your commit with the message `Completed Exercise 1.8` once you feel you have completed this exercise!
+> Don't forget your empty commit with the message `Completed Exercise 1.8` once you feel you have completed this exercise!
 > I will not provide any further reminders
 
 #### 1.9: studytracker step4
