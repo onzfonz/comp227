@@ -110,6 +110,9 @@ want to **set the git preferences on all the computers that you use.**  Let me s
 #### Set your git preferences on all computers that you will work on
 
 In addition to installing git, we need to make sure that we outline or configure our setup so that git knows who you are.
+
+#### Set your Git Username and Email
+
 With your terminal open, set up the git user email ID and username by typing these commands,
 making sure to replace the sections with your actual email and username
 
@@ -119,6 +122,26 @@ git config --global user.name your_github_username
 ```
 
 Make sure you press enter after each command.
+
+#### Create a Git Alias to send all changes to GitHub
+
+In addition to adding your username and password, we are going to use a specific command to streamline our git process for this course.
+You may not want to use this command in other situations as you'll want to keep closer track of what you are committing to the repo.
+However, for the purposes of this class, it will be necessary.
+
+This process will:
+
+1. add all files in the repo to be tracked
+2. commit those changes using a specified message
+3. push those changes to GitHub
+
+To do this all, we will create a git alias.
+
+```bash
+git config --global alias.send-all '!f() { git add -A && git commit -m "$@" && git push; }; f'
+```
+
+#### Change your default text editor for git commit messages
 
 Vim is the default text editor that is used in the command line.
 If you aren’t comfortable or have never used Vim, you can set up other Unix text
@@ -137,13 +160,16 @@ In those cases, you’d have to provide the entire path.
 git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
 ```
 
+#### Confirm your preferences
+
 Now to check your preferences, enter the command
 
 ```bash
 git config --list
 ```
 
-You should now see your username and email displayed among lots of other options.
+You should now see your username and email displayed, as well as the alias that we made and the editor changes.
+You can press ***Space*** to continue reviewing the changes, and ***q*** to exit.
 
 ### 4: Install Node
 
@@ -384,7 +410,7 @@ To start:
 4. In the *Name* field, type *`COMP 227 Git Watcher`*
 5. In the *File Type* field, select *`React JSX`*
 6. In the *Program* field, provide the path to your git executable (something like `C:\Program Files\Git\bin\git.exe`)
-7. In the *Arguments* field, type *`commit -am "Auto-commit JSX on save for Comp 227"`* (don't forget the quotes!)
+7. In the *Arguments* field, type *`send-all "Auto-commit JSX on save for Comp 227"`* (don't forget the quotes!)
 8. Expand the *Advanced Options* area, and select *`Trigger the watcher regardless of syntax errors`*
 9. Ensure the Scope is on *Project Files*, and that the checkboxes for *auto-save* and *trigger on external* are checked.
 
@@ -395,10 +421,19 @@ Here's what mine looked like, though your Program field may differ:
 Make sure to click ***OK*** to add the Watcher.
 You should now see it in your list of File Watchers.
 
-Let's export the watcher for future use.
+We'll need this File Watcher to be enabled for all projects in COMP 227.
+One way to make sure that it is enabled for all projects is to have the watcher be set to the Global Level.
+This can be done from the list of Watchers Setting, by changing its level category to ***Global***:
+
+![file watcher set to global](../../images/0/custom/file_watcher_global.png)
+
+If you do this, you can then jump to the [next part](#enabling-eslint)
+
+If you prefer to not have this be a global setting because you have other projects, then let's export the watcher for future use.
 Click the export button and save it in a good location.
 
 ![export icon showing highlighted](../../images/0/custom/export_button.png)
+
 Make sure to select a location you'll remember as you'll need it later.
 
 Now once you are back on the list of File Watchers, click ***Apply*** and then ***OK*** to exit out of the Settings Window.
