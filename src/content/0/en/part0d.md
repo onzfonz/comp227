@@ -427,8 +427,6 @@ This can be done from the list of Watchers Setting, by changing its level catego
 
 ![file watcher set to global](../../images/0/custom/file_watcher_global.png)
 
-If you do this, you can then jump to the [next part](#enabling-eslint)
-
 If you prefer to not have this be a global setting because you have other projects, then let's export the watcher for future use.
 Click the export button and save it in a good location.
 
@@ -440,7 +438,7 @@ Now once you are back on the list of File Watchers, click ***Apply*** and then *
 
 ### Enabling ESLint
 
-In Webstorm, open Settings (***Ctrl-Alt-S***) and type `eslint` in the search bar,
+In Settings (***Ctrl-Alt-S***), type `eslint` in the search bar,
 which should allow you to see an ESLint heading under *Languages & Frameworks->JavaScript->Code Quality Tools->EsLint*.
 Click on that heading on the left and then select ***Automatic ESLint configuration***, and click the checkbox ***Run eslint --fix on save***.
 Click ***Apply*** and then ***OK***.
