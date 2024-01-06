@@ -1300,6 +1300,7 @@ Here it is:
 > *I pledge to:*
 >
 > - *Keep my browser's dev tools open all the time*
+> - *Keep Webstorm's **Problems** tab open (**`Alt-6`**) and review it as well*
 > - *Progress in tiny steps and commit each of those steps*
 > - *Use the debugger to help me better understand my code*
 > - *Stop adding features if my code is broken.*
