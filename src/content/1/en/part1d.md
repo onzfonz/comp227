@@ -1314,26 +1314,38 @@ Here it is:
 ### Exercises 1.6-1.14
 
 Submit your solutions to the exercises by first pushing your code to GitHub and then marking the completed exercises in Canvas.
+Regardless of your progress, **you must push what code you at least every week as designated on Canvas**.
+However, I would strongly recommend you **push at the end of each working session you have.**
+If you know that you will be away for more than an hour, make it a habit to push your code.
 
 Once you have marked your submission as complete, **you cannot submit more exercises**.
 
 *Some of the exercises work on the same application.
-In these cases, it is sufficient to submit just the final version of the application,
-but you will need to commit regularly, it should often be at least 4 or 5 times while working on a particular exercise*
-
-**WARNING** ensure you are at the base folder of the correct repository when using `vite` to create the studytracker and jokes apps/directories.
-
-In some situations you may also have to run the command below from the root of the project:
+In these cases, because you have the file watcher you will commit regularly.*
+However, when you finish an exercise, you will amend your previous commit, which you can do in WebStorm or via the command line.
 
 ```bash
-rm -rf node_modules/ && npm i
+git commit --amend
 ```
 
-> If and *when* you encounter an error message
+For those exercises that you feel end up being the completed exercise, you will write the name of the exercise and its number as the commit message.
+So for example, if you finished Exercise 1.6, you would amend your commit and change the commit message to `Completed Exercise 1.6`.
+
+Any mistakes here will impact your grade.
+
+> **WARNING:** ensure you are at the base folder of the correct repository when using `vite` to create the studytracker and jokes apps/directories.
 >
->> *Objects are not valid as a React child*
+> In some situations you may also have to run the command below from the root of the project:
+> 
+> ```bash
+> rm -rf node_modules/ && npm i
+> ```
 >
-> Remember what was discussed [in part 1 on how to fix it](/part1/introduction_to_react#do-not-render-objects).
+>> **Remember:** If and *when* you encounter an error message
+>>
+>>> *`Objects are not valid as a React child`*
+>>
+>> Remember what was discussed [in part 1 on how to fix it](/part1/introduction_to_react#do-not-render-objects).
 
 #### 1.6: studytracker step1
 
@@ -1352,13 +1364,12 @@ It is advisable to use the same structure that is used in the material and previ
 File *main.jsx* is as follows:
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
-```negative
+```
 
 You can use the code below as a starting point for the *App.jsx* file:
 
@@ -1381,6 +1392,8 @@ const App = () => {
 export default App
 ```
 
+> Don't forget to amend your commit with the message `Completed Exercise 1.6` once you feel you have completed this exercise!
+
 #### 1.7: studytracker step2
 
 Expand your application so that it shows more statistics about the gathered data.
@@ -1391,6 +1404,8 @@ The application should show:
 - the percentage of days that the user clicked ***yeah***.
 
 ![average and percentage good screenshot feedback](../../images/1/14e.png)
+
+> Don't forget to amend your commit with the message `Completed Exercise 1.7` once you feel you have completed this exercise!
 
 #### 1.8: studytracker step3
 
@@ -1420,6 +1435,9 @@ const App = () => {
   )
 }
 ```
+
+> Don't forget to amend your commit with the message `Completed Exercise 1.8` once you feel you have completed this exercise!
+> I will not provide any further reminders
 
 #### 1.9: studytracker step4
 
