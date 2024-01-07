@@ -350,7 +350,7 @@ The following sources are worth checking out:
 
 We'll continue with the app from [exercises](/part7/react_router#exercises-7-1-7-3) of the chapter [react router](/part7/react_router).
 
-#### 7.4: jokes and hooks step1
+#### 7.4: jokes and hooks Step 1
 
 Simplify the joke creation form of your application with the `useField` custom hook we defined earlier.
 
@@ -393,7 +393,7 @@ const App = () => {
 }
 ```
 
-#### 7.5: jokes and hooks step2
+#### 7.5: jokes and hooks Step 2
 
 Add a button to the form that you can use to clear all the input fields:
 
@@ -407,7 +407,7 @@ Depending on your solution, you may see the following warning in your console:
 
 We will return to this warning in the next exercise.
 
-#### 7.6: jokes and hooks step3
+#### 7.6: jokes and hooks Step 3
 
 If your solution did not cause a warning to appear in the console, you have already finished this exercise.
 

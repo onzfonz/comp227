@@ -564,7 +564,7 @@ The changes in frontend code are in *part3-3* branch of the [frontend repository
 The following exercises don't require many lines of code.
 They can however be challenging, because you must understand exactly what is happening and where, and the configurations must be just right.
 
-#### 3.9 communities backend step9
+#### 3.9 communities backend Step 9
 
 Make the backend work with the communities frontend from the exercises of the previous part.
 Do not implement the functionality for making changes to the URLs yet, that will be implemented in exercise 3.17.
@@ -575,7 +575,7 @@ If some HTTP requests fail, you should check from the ***Network*** tab what is 
 Keep an eye on the backend's console as well.
 If you did not do the previous exercise, it is worth it to print the request data or `request.body` to the console in the event handler responsible for POST requests.
 
-#### 3.10 communities backend step10
+#### 3.10 communities backend Step 10
 
 Deploy the backend to the internet.
 You shall NOT be deploying the frontend directly at any stage of this part.

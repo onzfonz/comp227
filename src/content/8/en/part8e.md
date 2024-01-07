@@ -17,7 +17,7 @@ You also should start the application and click around to verify you have a func
 
 You can also browse the folder structure to get some insight into the application's functionality and/or the architecture used.
 These are not always clear, and the developers might have chosen a way to organize code that is not familiar to you.
-The patientia frontend you cloned [previously](/part8/typing_an_express_app#88-patientia-backend-step1) will be used in the rest of this part and is organized, feature-wise.
+The patientia frontend you cloned [previously](/part8/typing_an_express_app#exercises-8-8-8-9) will be used in the rest of this part and is organized, feature-wise.
 You can see what pages the application has, and some general components, e.g. modals and state.
 Keep in mind that the features may have different scopes.
 For example, ***modals*** are visible UI-level components
@@ -43,7 +43,7 @@ You will most likely read far more code than you are going to produce throughout
 
 ### Patientia frontend
 
-It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/part8/typing_an_express_app#88-patientia-backend-step1).
+It's time to get our hands dirty finalizing the frontend for the backend we built in [exercises 8.8.-8.13](/part8/typing_an_express_app#exercises-8-8-8-9).
 We will also add some new features to the backend for finishing the app.
 
 Before diving into the code, let's start both the frontend and the backend.

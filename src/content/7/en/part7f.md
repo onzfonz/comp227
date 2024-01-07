@@ -50,7 +50,7 @@ For exercises 7.10-7.13, you can do the state management either by using:
 
 You can maximize your learning by doing both.
 
-#### 7.10: State Management, step1
+#### 7.10: State Management, Step 1
 
 Refactor the application from using the internal React component state to using one of the above technologies for the application's state management.
 
@@ -58,7 +58,7 @@ For example, you can refactor the app to use the `useReducer` hook and context t
 
 Change the application's notifications to use the state management at this point of the exercise set.
 
-#### 7.11: State Management, step2
+#### 7.11: State Management, Step 2
 
 > The next two exercises are quite laborious but incredibly educational.
 
@@ -67,11 +67,11 @@ In this exercise, it is enough that you can see the shows in the backend and rec
 
 You are free to manage the state for logging in and creating new shows by using the internal state of React components.
 
-#### 7.12: State Management, step3
+#### 7.12: State Management, Step 3
 
 Expand your solution so that it is again possible to like and delete a show.
 
-#### 7.13: State Management, step4
+#### 7.13: State Management, Step 4
 
 Store the information about the signed-in user via State Management.
 
@@ -141,7 +141,7 @@ Implement a navigation menu for the application:
 
 ![browser shows navigation navigation menu](../../images/7/47.png)
 
-#### 7.18: comments, step1
+#### 7.18: comments, Step 1
 
 Implement the functionality for commenting on recommended shows:
 
@@ -153,17 +153,17 @@ In this exercise, it is enough for the frontend to only display the comments tha
 
 An appropriate mechanism for adding comments to a show would be an HTTP POST request to the ***api/shows/:id/comments*** endpoint.
 
-#### 7.19: comments, step2
+#### 7.19: comments, Step 2
 
 Extend your application so that users can add comments to recommended shows from the frontend:
 
 ![browser showing comments added via frontend](../../images/7/49.png)
 
-#### 7.20: Styles, step1
+#### 7.20: Styles, Step 1
 
 Improve the appearance of your application by applying one of the methods shown in the course material.
 
-#### 7.21: Styles, step2
+#### 7.21: Styles, Step 2
 
 You can mark this exercise as finished if you use an hour or more for styling your application.
 

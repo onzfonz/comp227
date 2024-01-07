@@ -727,7 +727,7 @@ Here we will have three projects in the same folder.
 Let's make a simplified version of the studytracker exercise from part 1.
 Let's handle the state management with Redux.
 
-#### 6.1: studytracker revisited, step1
+#### 6.1: studytracker revisited, Step 1
 
 Before implementing the functionality of the UI, let's implement the functionality required by the store.
 
@@ -822,7 +822,7 @@ Then add the rest of the tests, and finally the functionality that they are test
 A good model for the reducer is the [redux-tasks](/part6/flux_architecture_and_redux#pure-functions-immutable)
 example above.
 
-#### 6.2: studytracker revisited, step2
+#### 6.2: studytracker revisited, Step 2
 
 Now implement the actual functionality of the application.
 
@@ -1307,8 +1307,8 @@ The code of the Redux application can be found on
 
 ### Exercises 6.3-6.8
 
-Let's move on to a new version of the joke voting application from [part 1](/part1/a_more_complex_state_debugging_react_apps#112-jokes-step1).
-The project you cloned at the beginning of [part6](#61-studytracker-revisited-step1) has the *jokes* folder with everything you need to start.
+Let's move on to a new version of the joke voting application from [part 1](/part1/a_more_complex_state_debugging_react_apps#exercises-1-6-1-14).
+The project you cloned at the beginning of [part6](#exercises-6-1-6-2) has the *jokes* folder with everything you need to start.
 
 Remember, to install the dependencies first before trying to run the application
 
@@ -1321,33 +1321,33 @@ After completing the exercises below, your application should look like this:
 
 ![browser showing jokes and vote buttons](../../images/6/3.png)
 
-#### 6.3: jokes, step1
+#### 6.3: jokes, Step 1
 
 Implement the functionality for voting jokes.
 The number of votes must be saved to a Redux store.
 
-#### 6.4: jokes, step2
+#### 6.4: jokes, Step 2
 
 Implement the functionality for adding new jokes.
 
 You can keep the form uncontrolled like we did [earlier](/part6/flux_architecture_and_redux#uncontrolled-form).
 
-#### 6.5: jokes, step3
+#### 6.5: jokes, Step 3
 
 Make sure that the jokes are ordered by the number of votes.
 
-#### 6.6: jokes, step4
+#### 6.6: jokes, Step 4
 
 If you haven't done so already, separate the creation of action-objects to [*action creator functions*](https://read.reduxbook.com/markdown/part1/04-action-creators.html)
 functions and place them in the *src/reducers/jokeReducer.js* file,
 so do what we have been doing since the chapter [action creators](/part6/flux_architecture_and_redux#action-creators).
 
-#### 6.7: jokes, step5
+#### 6.7: jokes, Step 5
 
 Separate the creation of new jokes into a component called `JokeForm`.
 Move all logic for creating a new joke into this new component.
 
-#### 6.8: jokes, step6
+#### 6.8: jokes, Step 6
 
 Separate the rendering of the list of jokes into a component called `Jokes`.
 Move all logic related to voting for a joke into this new component.

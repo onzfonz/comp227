@@ -533,7 +533,7 @@ but will also add a few more items:
 
 ### Exercises 5.5-5.10
 
-#### 5.5 Watchlist frontend, step5
+#### 5.5 Watchlist frontend, Step 5
 
 Change the form for creating shows so that it is only displayed when appropriate.
 Use functionality similar to what was shown [earlier in this part of the course material](/part5/props_children_and_proptypes#displaying-the-login-form-only-when-appropriate).
@@ -549,14 +549,14 @@ It expands when the button ***Recommend New Show*** is clicked
 
 The form closes when a new show has been added.
 
-#### 5.6 Watchlist frontend, step6
+#### 5.6 Watchlist frontend, Step 6
 
 Separate the form for recommending a new show into its own component (if you have not already done so),
 and move all the states required for recommending a new show to this component.
 
 The component must work like the `TaskForm` component from this [previously covered part](/part5/props_children_and_proptypes).
 
-#### 5.7* Watchlist frontend, step7
+#### 5.7* Watchlist frontend, Step 7
 
 Let's add a button to each show, which controls whether all of the details about the show are shown or not.
 
@@ -597,7 +597,7 @@ const Show = ({ show }) => {
 the component can not be used directly to achieve the desired behavior.
 The easiest solution will be ***to add a state to the blog post that controls the displayed form of the blog post***.
 
-#### 5.8: Watchlist frontend, step8
+#### 5.8: Watchlist frontend, Step 8
 
 We notice that something is wrong.
 When a new show is recommended in the app, the name of the user that recommended that show is not shown in the details of the show:
@@ -607,7 +607,7 @@ When a new show is recommended in the app, the name of the user that recommended
 It's only when we reload the browser, that the information of the person is displayed.
 This is not acceptable, find out where the problem is and make the necessary correction.
 
-#### 5.9: Watchlist frontend, step9
+#### 5.9: Watchlist frontend, Step 9
 
 Implement the functionality for the like button.
 Likes are increased by making an HTTP ***PUT*** request to the unique address of the show in the backend.
@@ -648,12 +648,12 @@ The backend also has to be updated to handle the user reference.
 it is almost certain that you are doing something wrong.
 Stick to using one or the other, and never use both at the same time "just in case".
 
-#### 5.10: Watchlist frontend, step10
+#### 5.10: Watchlist frontend, Step 10
 
 Modify the application to list the shows by the number of ***likes***.
 Sorting the shows can be done with the array [sort](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) method.
 
-#### 5.11: Watchlist frontend, step11
+#### 5.11: Watchlist frontend, Step 11
 
 Add a new button for deleting shows.
 Also, implement the logic for deleting shows in the frontend.
@@ -867,7 +867,7 @@ You can find the code for our current application in its entirety in the *part5-
 
 ### Exercises 5.12
 
-#### 5.12: Watchlist frontend, step12
+#### 5.12: Watchlist frontend, Step 12
 
 Define `PropTypes` for one of the components of your application, and ***Add ESlint to the project.***
 Define the configuration according to your liking.

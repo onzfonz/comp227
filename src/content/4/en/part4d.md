@@ -444,7 +444,7 @@ You can of course also use your creativity.
 **One more warning:** If you notice you are mixing `async`/`await` and `then` calls, it is 99% certain you are doing something wrong.
 Use either or, never both.
 
-#### 4.15: watchlist expansion, step3
+#### 4.15: watchlist expansion, Step 3
 
 Implement a way to create new users by doing an HTTP POST request to address ***api/users***.
 Users have a *username, password and name*.
@@ -467,7 +467,7 @@ The list of users can, for example, look as follows:
 
 ![browser api/users shows JSON data of two users](../../images/4/22.png)
 
-#### 4.16*: watchlist expansion, step4
+#### 4.16*: watchlist expansion, Step 4
 
 Add a feature which adds the following restrictions to creating new users: Both username and password must be given.
 Both username and password must be at least 3 characters long.
@@ -481,7 +481,7 @@ The password length should be validated in the controller as we did in [part 3](
 
 Also, implement tests that ensure invalid users are not created and that an invalid add user operation returns a suitable status code and error message.
 
-#### 4.17: watchlist expansion, step5
+#### 4.17: watchlist expansion, Step 5
 
 Expand `show` so that each show contains information on the recommender of that show.
 
@@ -498,16 +498,16 @@ and listing all users also displays the shows they recommended:
 
 ![api/users embeds shows in JSON data](../../images/4/24e.png)
 
-#### 4.18: watchlist expansion, step6
+#### 4.18: watchlist expansion, Step 6
 
 Implement token-based authentication according to part 4 chapter [Token authentication](/part4/token_authentication).
 
-#### 4.19: watchlist expansion, step7
+#### 4.19: watchlist expansion, Step 7
 
 Modify adding new shows so that it is only possible if a valid token is sent with the HTTP POST request.
 The user identified by the token is designated as the recommender of that show.
 
-#### 4.20*: watchlist expansion, step8
+#### 4.20*: watchlist expansion, Step 8
 
 [This example](/part4/token_authentication) from part 4 shows taking the token from the header with the `getTokenFrom` helper function in *controllers/shows.js*.
 
@@ -541,7 +541,7 @@ const tokenExtractor = (request, response, next) => {
 }
 ```
 
-#### 4.21*: watchlist expansion, step9
+#### 4.21*: watchlist expansion, Step 9
 
 ***Change the delete show operation*** so that a show can be deleted only by the user who added the show.
 Therefore, deleting a show is possible only if the token sent with the request is the same as that of the show's recommender.
@@ -562,7 +562,7 @@ The id fetched from the database must be parsed into a string first.
 if ( show.user.toString() === userid.toString() ) // ...
 ```
 
-#### 4.22*:  watchlist expansion, step10
+#### 4.22*:  watchlist expansion, Step 10
 
 Both the new show recommendation and show deletion need to find out the identity of the user who is doing the operation.
 The middleware `tokenExtractor` that we did in exercise 4.20 helps
@@ -630,7 +630,7 @@ router.post('/', middleware.userExtractor, async (request, response) => {
 }
 ```
 
-#### 4.23*:  watchlist expansion, step11
+#### 4.23*:  watchlist expansion, Step 11
 
 After adding token-based authentication the tests for adding a new show broke down.
 Fix the tests.

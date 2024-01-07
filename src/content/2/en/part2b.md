@@ -441,7 +441,7 @@ Getting into that habit will also improve your reflections and workflow as a dev
 
 **WARNING** make sure you are in the correct location before calling `create-react-app`
 
-#### 2.6: The Communities Step1
+#### 2.6: The Communities Step 1
 
 Let's create a simple community directory, which will be a list of communities that we may want to join.
 
@@ -502,7 +502,7 @@ Notice the use of the React developer tools extension in the picture above!
 > - you can use the group's name as a value of the `key` property
 > - remember to prevent the default action of submitting HTML forms!
 
-#### 2.7: The Communities Step2
+#### 2.7: The Communities Step 2
 
 Prevent the user from being able to add names that already exist in the list.
 JavaScript arrays have numerous suitable
@@ -535,7 +535,7 @@ Issue a warning with the [alert](https://developer.mozilla.org/en-US/docs/Web/AP
 >
 > Nonetheless, using template strings is the more idiomatic option and the sign of a true JavaScript professional.
 
-#### 2.8: The Communities Step3
+#### 2.8: The Communities Step 3
 
 Expand your application by allowing users to add URLs to the community directory.
 The URL will be an invitation link to that communities' discord or slack group.
@@ -554,7 +554,7 @@ The image also displays the application's state with the help of [React develope
 
 ![2.8 sample screenshot](../../images/2/12e.png)
 
-#### 2.9*: The Communities Step4
+#### 2.9*: The Communities Step 4
 
 Implement a search field that can be used to filter the list of communities by name:
 
@@ -580,7 +580,7 @@ The filtering logic shown in the image is **case insensitive**, meaning that the
 >
 > This saves you from having to manually input data into your application for testing out your new functionality.
 
-#### 2.10: The Communities Step5
+#### 2.10: The Communities Step 5
 
 If you have implemented your application in a single component, refactor it by extracting suitable parts into new components.
 Maintain the application's state and all event handlers in the `App` root component.

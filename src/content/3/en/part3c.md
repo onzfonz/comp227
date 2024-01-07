@@ -773,7 +773,7 @@ You can find the code for our current application in its entirety in the *part3-
 The following exercises are pretty straightforward,
 but if your frontend stops working with the backend, then finding and fixing the bugs can be quite interesting.
 
-#### 3.13: Communities database, step1
+#### 3.13: Communities database, Step 1
 
 Change the fetching of all communities so that the data is **fetched from the database**.
 
@@ -782,7 +782,7 @@ Verify that the frontend works after the changes have been made.
 In the following exercises, write all Mongoose-specific code into its own module,
 just like we did in the chapter [Database configuration into its own module](/part3/saving_data_to_mongo_db#database-configuration-into-its-own-module).
 
-#### 3.14: Communities database, step2
+#### 3.14: Communities database, Step 2
 
 Change the backend so that new URLs are **saved to the database**.
 Verify that your frontend still works after the changes.
@@ -1099,17 +1099,17 @@ by adding an item:
 
 ### Exercises 3.15-3.18
 
-#### 3.15: Communities database, step3
+#### 3.15: Communities database, Step 3
 
 Change the backend so that deleting communities are reflected in the database.
 
 Verify that the frontend still works after making the changes.
 
-#### 3.16: Communities database, step4
+#### 3.16: Communities database, Step 4
 
 Move the error handling of the application to a new error handler middleware.
 
-#### 3.17*: Communities database, step5
+#### 3.17*: Communities database, Step 5
 
 If the user tries to create a new community for one whose name is already in the communities application,
 the frontend will try to update the community's invite location by making an HTTP PUT request to the entry's unique backend URL.
@@ -1118,7 +1118,7 @@ Modify the backend to support this request.
 
 Verify that the frontend works after making your changes.
 
-#### 3.18*: Communities database step6
+#### 3.18*: Communities database Step 6
 
 Also, update the handling of the ***api/groups/:id*** and ***info*** routes to use the database,
 and verify that they work directly with the browser, Postman, or VS Code REST client.

@@ -331,7 +331,7 @@ The code of the final version of our application can be found in the *part2-8* b
 
 ### Exercises 2.16-2.17
 
-#### 2.16: Communities step11
+#### 2.16: Communities Step 11
 
 Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message)
 example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a group is added or a number is changed).
@@ -339,7 +339,7 @@ In these examples, use the gray and green colors.
 
 ![successful green added screenshot](../../images/2/27e.png)
 
-#### 2.17*: Communities step12
+#### 2.17*: Communities Step 12
 
 Open your application in two browsers.
 **If you delete a group in browser A** a short while before attempting to ***change the group's URL*** in browser B, you will get the following error message:
@@ -649,7 +649,7 @@ Notice that this depends quite much on the approach you selected.
 
 ### Exercises 2.18-2.20
 
-#### 2.18* Data for countries, step1
+#### 2.18* Data for countries, Step 1
 
 The API [https://restcountries.com](https://restcountries.com) provides data for different countries in a machine-readable format, a so-called REST API.
 
@@ -678,7 +678,7 @@ its flag and the languages spoken are shown:
 Some countries, like ***Sudan***, can be hard to support since the name of the country is part of the name of another country, ***South Sudan***.
 You don't need to worry about these edge cases.
 
-#### 2.19*: Data for countries, step2
+#### 2.19*: Data for countries, Step 2
 
 **There is still a lot to do in this part, so don't get stuck on this exercise!**
 
@@ -691,7 +691,7 @@ which when pressed shows the view for that country:
 In this exercise, it is also enough that your application works for most countries.
 Countries whose name appears in the name of another country, like ***Sudan***, can be ignored.
 
-#### 2.20*: Data for countries, step3
+#### 2.20*: Data for countries, Step 3
 
 **There is still a lot to do in this part, so don't get stuck on this exercise!**
 

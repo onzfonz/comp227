@@ -156,7 +156,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.19-3.21
 
-#### 3.19*: Communities database, step7
+#### 3.19*: Communities database, Step 7
 
 Expand the validation so that the name stored in the database has to be at least three characters long.
 
@@ -183,7 +183,7 @@ You can display the default error message returned by Mongoose, even though they
 > **Pertinent:** On update operations, mongoose validators are off by default.
 [Read the documentation](https://mongoosejs.com/docs/validation.html) to determine how to enable them.
 
-#### 3.20*: Communities database, step8
+#### 3.20*: Communities database, Step 8
 
 Add validation to your communities application, which will make sure that community links are of the correct form.
 

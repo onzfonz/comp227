@@ -658,7 +658,7 @@ We will do this in [part 3](/part3).
 
 ### Exercise 2.11
 
-#### 2.11: The Communities Step6
+#### 2.11: The Communities Step 6
 
 We continue with developing our community directory.
 Store the initial state of the application in the file *db.json*, which should be placed in the root of the project.

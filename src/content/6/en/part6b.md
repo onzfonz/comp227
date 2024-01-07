@@ -411,7 +411,7 @@ The current version of the application can be found on [GitHub](https://github.c
 
 ### Exercise 6.9
 
-#### 6.9 Better jokes, step7
+#### 6.9 Better jokes, Step 7
 
 Implement filtering for the jokes that are displayed to the user.
 
@@ -755,7 +755,7 @@ You can find the code for our current application in its entirety in the *part6-
 
 Let's continue working on the joke application using Redux that we started in exercise 6.3.
 
-#### 6.10 Better jokes, step8
+#### 6.10 Better jokes, Step 8
 
 Install Redux Toolkit for the project.
 Move the Redux store creation into the file *store.js* and use Redux Toolkit's `configureStore` to create the store.
@@ -764,11 +764,11 @@ Change the definition of the ***filter reducer and action creators*** to use the
 
 Also, start using Redux DevTools to debug the application's state more easily.
 
-#### 6.11 Better jokes, step9
+#### 6.11 Better jokes, Step 9
 
 Change the definition of the ***joke reducer and action creators*** to use Redux Toolkit's `createSlice` function.
 
-#### 6.12 Better jokes, step10
+#### 6.12 Better jokes, Step 10
 
 The application has a ready-made body for the `Notification` component:
 
@@ -815,7 +815,7 @@ Create a separate reducer for the new functionality by using the Redux Toolkit's
 The application does not have to use the `Notification` component intelligently at this point in the exercises.
 It is enough for the application to display the initial value set for the message in the `notificationReducer`.
 
-#### 6.13 Better jokes, step11
+#### 6.13 Better jokes, Step 11
 
 Extend the application so that it uses the `Notification` component to display a message for five seconds when the user votes for a joke or creates a new joke:
 

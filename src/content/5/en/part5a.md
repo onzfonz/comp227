@@ -609,7 +609,7 @@ While doing the exercises, remember all of the debugging methods we have talked 
 **Warning:** If you notice you are mixing in the functions `async`/`await` and `then` commands, it's 99.9%  certain you are doing something wrong.
 Use either or, never both.
 
-#### 5.1: watchlist frontend, step1
+#### 5.1: watchlist frontend, Step 1
 
 Implement login functionality to the frontend.
 The token returned with a successful login is saved to the application's state `user`.
@@ -649,7 +649,7 @@ User details of the logged-in user do not have to be saved to the local storage 
 > }
 > ```
 
-#### 5.2: watchlist frontend, step2
+#### 5.2: watchlist frontend, Step 2
 
 Make the login 'permanent' by using the local storage.
 Also, implement a way to log out.
@@ -658,13 +658,13 @@ Also, implement a way to log out.
 
 Ensure the browser does not remember the details of the user after logging out.
 
-#### 5.3: watchlist frontend, step3
+#### 5.3: watchlist frontend, Step 3
 
 Expand your application to allow a logged-in user to add new shows:
 
 ![browser showing new blog form](../../images/5/7e.png)
 
-#### 5.4: watchlist frontend, step4
+#### 5.4: watchlist frontend, Step 4
 
 Implement notifications that inform the user about successful and unsuccessful operations at the top of the page.
 For example, when a new show is added, the following notification can be shown:

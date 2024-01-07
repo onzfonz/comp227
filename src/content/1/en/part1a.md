@@ -799,7 +799,7 @@ Please use an appropriate commit message when adding files to the repo.
 
 Notice that in this part, there are more exercises besides those found below.
   
-#### 1.1: handheld arcade info, step1
+#### 1.1: handheld arcade info, Step 1
 
 This exercise will start the ongoing development of a small application that will be further developed in a few of the following exercises.
 Please make sure to commit often and that you do not have any files in your project that are any color other than white.
@@ -882,7 +882,7 @@ const App = () => {
 > Also, do not try to program all the components at the same time.
 > You need to go in small steps, like first make the component *Header* and when that works, **commit** the change and then ***then*** proceed to the next component.
 
-#### 1.2: handheld arcade info, step2
+#### 1.2: handheld arcade info, Step 2
 
 Refactor the `Content` component so that it does not render any names of handhelds or their number of games by itself.
 Instead, it only renders three `Handheld` components of which each renders the name and number of games of one handheld.

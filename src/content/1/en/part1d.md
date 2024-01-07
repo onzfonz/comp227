@@ -1349,7 +1349,7 @@ Any mistakes here will impact your grade.
 >>
 >> Remember what was discussed [in part 1 on how to fix it](/part1/introduction_to_react#do-not-render-objects).
 
-#### 1.6: studytracker step1
+#### 1.6: studytracker Step 1
 
 Let's figure out a way to devise a web application that helps track your self-reported feelings on whether or not you had a good study day.
 There are only three options: ***yeah***, ***kinda***, and ***nah***.
@@ -1396,7 +1396,7 @@ export default App
 
 > Don't forget your empty commit with the message `Completed Exercise 1.6` once you feel you have completed this exercise!
 
-#### 1.7: studytracker step2
+#### 1.7: studytracker Step 2
 
 Expand your application so that it shows more statistics about the gathered data.
 The application should show:
@@ -1409,7 +1409,7 @@ The application should show:
 
 > Don't forget your empty commit with the message `Completed Exercise 1.7` once you feel you have completed this exercise!
 
-#### 1.8: studytracker step3
+#### 1.8: studytracker Step 3
 
 Refactor your application so that displaying the statistics is extracted into its own `Statistics` component.
 The state of the application should remain in the `App` root component.
@@ -1441,13 +1441,13 @@ const App = () => {
 > Don't forget your empty commit with the message `Completed Exercise 1.8` once you feel you have completed this exercise!
 > I will not provide any further reminders
 
-#### 1.9: studytracker step4
+#### 1.9: studytracker Step 4
 
 Change your application to display the statistics only once a response has been gathered.
 
 ![no answers recorded yet text screenshot](../../images/1/15e.png)
 
-#### 1.10: studytracker step5
+#### 1.10: studytracker Step 5
 
 Let's continue refactoring the application.
 Extract the following two components:
@@ -1475,7 +1475,7 @@ const Statistics = (props) => {
 
 The application's state should still be kept in the root `App` component.
 
-#### 1.11*: studytracker step6
+#### 1.11*: studytracker Step 6
 
 Display the statistics in an HTML [table](https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics),
 so that your application looks roughly like this:
@@ -1496,7 +1496,7 @@ Try going to `chrome://extensions/` and try disabling them one by one and refres
 
 **Make sure that from now on you don't see any warnings in your console!**
 
-#### 1.12*: jokes step1
+#### 1.12*: jokes Step 1
 
 The world of software engineering is filled with [bad jokes](https://www.devtopics.com/best-programming-jokes/).
 
@@ -1540,7 +1540,7 @@ Your finished application could look something like this:
 
 **WARNING** Make sure that when you call `vite` that you are inside of your repo's base folder - not inside of your other folders (like *reading*!)!
 
-#### 1.13*: jokes step2
+#### 1.13*: jokes Step 2
 
 Expand your application so that you can vote for the displayed joke.
 
@@ -1573,7 +1573,7 @@ Remember that the correct way of updating state stored in complex data structure
 Searching the Internet will provide you with lots of hints on how to
 [create a zero-filled array of the desired length](https://stackoverflow.com/questions/20222501/how-to-create-a-zero-filled-javascript-array-of-arbitrary-length/22209781).
 
-#### 1.14*: jokes step3
+#### 1.14*: jokes Step 3
 
 Now implement the final version of the application that displays the joke with the largest number of votes:
 

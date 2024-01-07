@@ -320,7 +320,7 @@ npm run lint
 The command line will provide you with valid results.
 So, be a little suspicious of the editor. 👀
 
-#### 8.8: Patientia backend, step1
+#### 8.8: Patientia backend, Step 1
 
 From the *labts* repo that you cloned from <http://go.djosv.com/227labts>, initialize a new backend project that will work with the frontend in a new subfolder, named *medbackend*.
 Configure ESlint and tsconfig with the same configurations as proposed in the material.
@@ -328,7 +328,7 @@ Define an endpoint that answers HTTP GET requests for route ***/api/ping***.
 
 The project should be runnable with npm scripts, both in development mode and, as compiled code, in production mode.
 
-#### 8.9: Patientia backend, step2
+#### 8.9: Patientia backend, Step 2
 
 Accept the [patientia assignment](https://classroom.github.com/a/Jggqp2fY)
 
@@ -864,7 +864,7 @@ and [patients.ts](https://github.com/comp227/misc/blob/main/patients.ts).
 Get the files and store those in a directory called *data* in your project.
 All data modification can be done in runtime memory, so during this part, it is *not necessary to write to a file*.
 
-#### 8.10: Patientia backend, step3
+#### 8.10: Patientia backend, Step 3
 
 Create a type `Diagnosis` and use it to create endpoint ***/api/diagnoses*** for fetching all diagnoses with HTTP GET.
 
@@ -873,7 +873,7 @@ Structure your code properly by using meaningfully-named directories and files.
 > **Notice** that *diagnoses* may or may not contain the field `latin`.
 You might want to use [optional properties](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#optional-properties) in the type definition.
 
-#### 8.11: Patientia backend, step4
+#### 8.11: Patientia backend, Step 4
 
 Create data type `Patient` and set up the GET endpoint ***/api/patients*** which returns all patients to the frontend, excluding field `ssn`.
 Use a [utility type](https://www.typescriptlang.org/docs/handbook/utility-types.html)
@@ -1505,7 +1505,7 @@ The source code of the application can be found on [GitHub](https://github.com/c
 
 ### Exercises 8.12-8.13
 
-#### 8.12: Patientia backend, step5
+#### 8.12: Patientia backend, Step 5
 
 Create a POST endpoint ***/api/patients*** for adding patients.
 Ensure that you can add patients also from the frontend.
@@ -1516,7 +1516,7 @@ import { v1 as uuid } from 'uuid'
 const id = uuid()
 ```
 
-#### 8.13: Patientia backend, step6
+#### 8.13: Patientia backend, Step 6
 
 Set up safe parsing, validation and type guards to the POST ***/api/patients*** request.
 

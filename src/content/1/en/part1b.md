@@ -312,7 +312,7 @@ You can write the code into the same project since you have been committing your
 >>  }
 >>  ```
 
-#### 1.3: handheld arcade info step3
+#### 1.3: handheld arcade info Step 3
 
 Let's move forward to using objects in our application.
 Modify the variable definitions of the `App` component as follows and also refactor the application so that it still works:
@@ -341,7 +341,7 @@ const App = () => {
 }
 ```
 
-#### 1.4: handheld arcade info step4
+#### 1.4: handheld arcade info Step 4
 
 And then place the objects into an array.
 Modify the variable definitions of `App` into the following form and modify the other parts of the application accordingly:
@@ -392,7 +392,7 @@ const App = () => {
 }
 ```
 
-#### 1.5: handheld arcade info step5
+#### 1.5: handheld arcade info Step 5
 
 Let's take the changes one step further.
 Change the company and its handhelds into a single JavaScript object.

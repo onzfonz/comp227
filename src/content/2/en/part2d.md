@@ -802,7 +802,7 @@ but will also add two more items:
 
 ### Exercises 2.12-2.15
 
-#### 2.12: Communities step7
+#### 2.12: Communities Step 7
 
 Let's return to our communities application.
 
@@ -810,11 +810,11 @@ Currently, any community that is added is not saved to a backend server.
 Fix this situation.
 Use ***<http://localhost:3001/groups>*** as your backend URL.
 
-#### 2.13: Communities step8
+#### 2.13: Communities Step 8
 
 Extract the code that handles the communication with the backend into its own module by following the example shown earlier in this part of the course material.
 
-#### 2.14: Communities step9
+#### 2.14: Communities Step 9
 
 Make it possible for users to delete entries from the communities application.
 The deletion can be done through a dedicated button for each community listed.
@@ -838,7 +838,7 @@ You can make an HTTP DELETE request with the [axios](https://github.com/axios/ax
 > }
 > ```
 
-#### 2.15*: Communities step10
+#### 2.15*: Communities Step 10
 
 *Why is there a star in the exercise? See [here](/part0/general_info#taking-the-course) for the explanation.*
 

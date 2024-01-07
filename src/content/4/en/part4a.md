@@ -485,7 +485,7 @@ From here on, I will refer to a streaming show as a **show**.
 >
 > since the most recent Mongoose version does not support a library that we will be using in a later part of the course!
 
-#### 4.1 Watchlist, step1
+#### 4.1 Watchlist, Step 1
 
 Let's imagine a situation, where you receive an email that contains the following application body:
 
@@ -541,7 +541,7 @@ You can create a new database for your application with MongoDB Atlas, or use th
 Verify that it is possible to add shows to the list with Postman or the WebStorm REST client
 and that the application returns the added shows at the correct endpoint.
 
-#### 4.2 Watchlist, step2
+#### 4.2 Watchlist, Step 2
 
 Refactor the application into separate modules as shown earlier in this part of the course material.
 
@@ -814,7 +814,7 @@ Let's create a collection of helper functions that are meant to assist in dealin
 Create the functions into a file called *utils/list_helper.js*.
 Write your tests into an appropriately named test file under the *tests* directory.
 
-#### 4.3: helper functions and unit tests, step1
+#### 4.3: helper functions and unit tests, Step 1
 
 First, define a `dummy` function that receives an array of shows as a parameter and always returns the value 1.
 The contents of the *list_helper.js* file at this point should be the following:
@@ -842,7 +842,7 @@ test('dummy returns one', () => {
 })
 ```
 
-#### 4.4: helper functions and unit tests, step2
+#### 4.4: helper functions and unit tests, Step 2
 
 Define a new `totalLikes` function that receives a list of shows as a parameter.
 The function returns the total sum of ***likes*** in all of the shows.
@@ -891,7 +891,7 @@ You can run a single test with the [only](https://jestjs.io/docs/api#testonlynam
 > npm test -- -t 'when list has only one show, equals the likes of that'
 > ```
 
-#### 4.5*: helper functions and unit tests, step3
+#### 4.5*: helper functions and unit tests, Step 3
 
 Define a new `favoriteShow` function that receives a list of shows as a parameter.
 The function finds out which show has the most likes.
@@ -913,7 +913,7 @@ since the [toBe](https://jestjs.io/docs/en/expect#tobevalue) tries to verify tha
 Write the tests for this exercise inside of a new `describe` block.
 Do the same for the remaining exercises as well.
 
-#### 4.6*: helper functions and unit tests, step4
+#### 4.6*: helper functions and unit tests, Step 4
 
 This and the next exercise are a little bit more challenging.
 Finishing these two exercises is not required to advance in the course material,
@@ -935,7 +935,7 @@ The return value also contains the number of shows the top genre has:
 
 If there are many top genres, then it is enough to return any one of them.
 
-#### 4.7*: helper functions and unit tests, step5
+#### 4.7*: helper functions and unit tests, Step 5
 
 Define a function called `mostLikes` that receives an array of shows as its parameter.
 The function returns the genre, whose shows collectively have the largest amount of likes.

@@ -623,7 +623,7 @@ Your folders for this repo should be:
 |-countries
 ```
 
-#### 2.1: handheld arcade info step6
+#### 2.1: handheld arcade info Step 6
 
 Let's finish the code for rendering companies' handheld arcade games and systems from exercises 1.1 - 1.5.
 If you need help getting your solution to a good state, please let me know.
@@ -697,13 +697,13 @@ so make sure the application works if you add or remove handheld systems that a 
 
 Ensure that the console shows no errors!
 
-#### 2.2: handheld arcade info step7
+#### 2.2: handheld arcade info Step 7
 
 Show also the sum of the games published for all handhelds of a company.
 
 ![sum of exercises added feature](../../images/teht/9e.png)
 
-#### 2.3*: handheld arcade info step8
+#### 2.3*: handheld arcade info Step 8
 
 If you haven't done so already, calculate the sum of games with the array method
 [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
@@ -733,7 +733,7 @@ showing you a preview of what that would look like.
 
 ![WebStorm sample suggestion for arrow function](../../images/2/5b.png)
 
-#### 2.4: handheld arcade info step9
+#### 2.4: handheld arcade info Step 9
 
 Let's extend our application to allow for an ***arbitrary number*** of companies:
 

@@ -1024,7 +1024,7 @@ You initialize this project with the `npm init` command that was demonstrated ea
 >
 > **Strong recommendation:** When you are working on backend code, always keep an eye on what's going on in the terminal that is running your application.
 
-#### 3.1: Communities backend step1
+#### 3.1: Communities backend Step 1
 
 Implement a Node application that returns a hardcoded list of communities entries from the address <http://localhost:3001/api/groups>.
   
@@ -1066,7 +1066,7 @@ The application must be started with the command `npm start`.
 The application must also offer an `npm run dev` command that will run the application
 and restart the server whenever changes are made and saved to a file in the source code.
 
-#### 3.2: Communities backend step2
+#### 3.2: Communities backend Step 2
 
 Implement a page at the address <http://localhost:3001/info> that looks roughly like this:
 
@@ -1079,27 +1079,27 @@ The page has to show the time that the request was received and how many communt
 >
 > To include a line space in the output, use `<br/>` tag, or wrap the statements in `<p>` tags.
 
-#### 3.3: Communities backend step3
+#### 3.3: Communities backend Step 3
 
 Implement the functionality for displaying the information for a community.
 The url for getting the data for a group with the id 5 should be <http://localhost:3001/api/groups/5>
 
 If an entry for the given id is not found, the server has to respond with the appropriate status code.
 
-#### 3.4: Communities backend step4
+#### 3.4: Communities backend Step 4
 
 Implement functionality that makes it possible to delete a community by making an HTTP DELETE request to the unique URL of that community.
 
 Test that your functionality works with either Postman or a REST client.
 
-#### 3.5: Communities backend step5
+#### 3.5: Communities backend Step 5
 
 Expand the backend so that new communities can be added by making HTTP POST requests to the address <http://localhost:3001/api/groups>.
 
 Generate a new id for the community with the [Math.random](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) function.
 Use a big enough range for your random values so that the likelihood of creating duplicate ids is small.
 
-#### 3.6: Communities backend step6
+#### 3.6: Communities backend Step 6
 
 Implement error handling for creating new entries.
 The request is not allowed to succeed, if:
@@ -1226,7 +1226,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.7-3.8
 
-#### 3.7: Communities backend step7
+#### 3.7: Communities backend Step 7
 
 Add the [**morgan**](https://github.com/expressjs/morgan) middleware to your application for logging.
 Configure it to log messages to your console based on the `tiny` configuration.
@@ -1238,7 +1238,7 @@ so it's good to learn to decipher and interpret cryptic documentation in any cas
 Morgan is installed just like all other libraries with the `npm install` command.
 Taking morgan into use happens the same way as configuring any other middleware by using the `app.use` command.
 
-#### 3.8*: Communities backend step8
+#### 3.8*: Communities backend Step 8
 
 Configure morgan so that it also shows the data sent in HTTP POST requests:
 

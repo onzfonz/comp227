@@ -1209,7 +1209,7 @@ I especially recommend reading
 > **Read it.**
 > **Understand it.**
 
-#### 5.17: Watchlist end to end testing, step1
+#### 5.17: Watchlist end to end testing, Step 1
 
 Configure Cypress for your project.
 Make a test for checking that the application displays the login form by default.
@@ -1232,7 +1232,7 @@ describe('Watchlist app', function() {
 The `beforeEach` function must empty the database.
 Feel free to use the [method we used in the material](#controlling-the-state-of-the-database).
 
-#### 5.18: Watchlist end to end testing, step2
+#### 5.18: Watchlist end to end testing, Step 2
 
 Make tests for logging in.
 Test both successful and unsuccessful login attempts.
@@ -1266,7 +1266,7 @@ describe('Watchlist app', function() {
 
 **Optional bonus exercise**: Check that the notification shown with unsuccessful login is displayed red.
 
-#### 5.19: Watchlist end to end testing, step3
+#### 5.19: Watchlist end to end testing, Step 3
 
 Make a test that verifies a logged-in user can recommend a new show.
 The structure of the test could be as follows:
@@ -1290,19 +1290,19 @@ describe('Watchlist app', function() {
 
 The test has to ensure that a new show is added to the list of all shows.
 
-#### 5.20: Watchlist end to end testing, step4
+#### 5.20: Watchlist end to end testing, Step 4
 
 Make a test that confirms users can like a show.
 
-#### 5.21: Watchlist end to end testing, step5
+#### 5.21: Watchlist end to end testing, Step 5
 
 Make a test for ensuring that the user who recommended a show can delete it.
 
-#### 5.22: Watchlist end to end testing, step6
+#### 5.22: Watchlist end to end testing, Step 6
 
 Make an additional test that other users do not see a delete button on shows they did not recommend.
 
-#### 5.23: Watchlist end to end testing, step7
+#### 5.23: Watchlist end to end testing, Step 7
 
 Make a test that checks that the shows are ordered according to likes - the show with the most likes should be first.
 

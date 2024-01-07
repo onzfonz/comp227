@@ -556,7 +556,7 @@ npm install
 npm run dev
 ```
 
-#### 7.1: routed jokes, step1
+#### 7.1: routed jokes, Step 1
 
 Add React Router to the application so that by clicking links in the `Menu` component the view can be changed.
 
@@ -570,7 +570,7 @@ The creation of a new joke should happen e.g. in the path *create*:
 
 ![browser jokes /create shows create form](../../assets/teht/41.png)
 
-#### 7.2: routed jokes, step2
+#### 7.2: routed jokes, Step 2
 
 Implement a view for showing a single joke:
 
@@ -580,7 +580,7 @@ Navigating to the page showing the single joke is done by clicking the name of t
 
 ![browser showing previous link that was clicked](../../assets/teht/43.png)
 
-#### 7.3: routed jokes, step3
+#### 7.3: routed jokes, Step 3
 
 The default functionality of the creation form is quite confusing because nothing seems to be happening after creating a new joke using the form.
 

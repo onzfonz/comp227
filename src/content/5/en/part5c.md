@@ -790,21 +790,21 @@ You can find the code for our current application in its entirety in the *part5-
 
 ### Exercises 5.13.-5.16
 
-#### 5.13: Watchlist tests, step1
+#### 5.13: Watchlist tests, Step 1
 
 Make a test, which checks that the component displaying a show renders the show's title and genre, but does not render its URL or number of likes by default.
 
 Add CSS classes to the component to help the testing as necessary.
 
-#### 5.14: Watchlist tests, step2
+#### 5.14: Watchlist tests, Step 2
 
 Make a test, which checks that the shows's URL and number of likes are shown when the button controlling the shown details has been clicked.
 
-#### 5.15: Watchlist tests, step3
+#### 5.15: Watchlist tests, Step 3
 
 Make a test, which ensures that if the ***like*** button is clicked twice, the event handler the component received as props is called twice.
 
-#### 5.16: Watchlist tests, step4
+#### 5.16: Watchlist tests, Step 4
 
 Make a test for the Recommend new show form.
 The test should check if the form calls the event handler it received as props with the right details when a new show is added.

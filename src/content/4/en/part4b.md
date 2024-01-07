@@ -1204,7 +1204,7 @@ However, the model solutions don't check for objects in arrays with matchers, so
 **Warning:** If you find yourself ***using `async`/`await` and `then` methods*** in the same code, it is almost guaranteed that **you are doing something wrong**.
 Use one or the other and don't mix the two.
 
-#### 4.8: Watchlist tests, step1
+#### 4.8: Watchlist tests, Step 1
 
 Use the supertest package for writing a test that makes an HTTP GET request to the ***/api/show*** URL.
 Verify that the watchlist application returns the correct amount of streaming shows in the JSON format.
@@ -1225,7 +1225,7 @@ like defining the test environment so that you can write tests that use separate
 >> **Pertinent:** when you are writing your tests ***it is better to not execute all of your tests***, only execute the ones you are working on.
 Read more about this [here](#running-tests-one-by-one).
 
-#### 4.9*: Watchlist tests, step2
+#### 4.9*: Watchlist tests, Step 2
 
 Write a test that verifies that the unique identifier property of the shows is named `id`, by default the database names the property `_id`.
 Verifying the existence of a property is easily done with Jest's [toBeDefined](https://jestjs.io/docs/en/expect#tobedefined) matcher.
@@ -1234,7 +1234,7 @@ Make the required changes to the code so that it passes the test.
 The [toJSON](/part3/saving_data_to_mongo_db#backend-connected-to-a-database) method discussed in part 3
 is an appropriate place for defining the `id` parameter.
 
-#### 4.10: Watchlist tests, step3
+#### 4.10: Watchlist tests, Step 3
 
 Write a test that verifies that making an HTTP POST request to the ***/api/shows*** URL successfully creates a new show onto the list.
 At the very least, verify that the total number of shows in the system is increased by one.
@@ -1242,14 +1242,14 @@ You can also verify that the show JSON object is saved correctly to the database
 
 Once the test is finished, refactor the operation to use async/await instead of promises.
 
-#### 4.11*: Watchlist tests, step4
+#### 4.11*: Watchlist tests, Step 4
 
 Write a test that verifies that if the `likes` property is missing from the request, it will default to the value 0.
 Do not test the other properties of the created shows yet.
 
 Make the required changes to the code so that it passes the test.
 
-#### 4.12*: Watchlist tests, step5
+#### 4.12*: Watchlist tests, Step 5
 
 Write a test related to creating new shows via the ***/api/shows*** endpoint,
 that verifies that if the `title` or `url` properties are missing from the request data,
@@ -1423,7 +1423,7 @@ You can find the code for our current application in its entirety in the *part4-
 
 ### Exercises 4.13-4.14
 
-#### 4.13 Watchlist expansions, step1
+#### 4.13 Watchlist expansions, Step 1
 
 Implement functionality for deleting a single show.
 
@@ -1432,7 +1432,7 @@ Follow [RESTful](/part3/node_js_and_express#rest) conventions when defining the 
 
 Implement tests for the functionality.
 
-#### 4.14 Watchlist expansions, step2
+#### 4.14 Watchlist expansions, Step 2
 
 Implement functionality for updating the information of an individual show.
 
