@@ -574,7 +574,7 @@ The user interface of the application has a form,
 in the input field of which the name of the desired currency is written.
 If the currency exists, the application renders the exchange rates of the currency to other currencies:
 
-![browser showing exchange rate for eur against aother currencies and developer tools opn](../../images/2/32new.png)
+![browser showing exchange rate for eur against other currencies and developer tools opn](../../images/2/32new.png)
 
 The application sets the name of the currency entered into the form to the state `currency` at the moment the button is pressed.
 
