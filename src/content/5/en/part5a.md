@@ -106,7 +106,7 @@ The current application code can be found on
 > | repository | command | port |
 > | :-- | :-- | :-- |
 > | backend | `npm run dev` | 3001 |
-> | frontend | `npm start` | 3000 |
+> | frontend | `npm run dev` | 5173 |
 >
 > After starting both, you will see the tasks that are saved in your MongoDB database from Part 4.
 >
