@@ -403,7 +403,7 @@ It's easy to follow and track the calls made to the `App` component's `render` f
 
 Was your browser console open?
 If it wasn't, do yourself a favor and keep it open.
-Make it a habit to type (***Ctrl-Shift-I***) while your localhost is loading.
+Make it a habit to type (***Ctrl-Shift-I***) while your *localhost* is loading.
 Or keep using the same browser tab.
 
 ### Event handling
@@ -522,7 +522,7 @@ We define the event handlers for our buttons where we declare their `onClick` at
 > ![screenshot of re-renders error](../../images/1/5c.png)
 >
 > What's going on?
-> The problems section in Webstorm (lower right) hints at the issue, as it says: *`Type void is not assignable to MouseEventHandler<HTMLButtonElement>`*.
+> The problems section in WebStorm (lower right) hints at the issue, as it says: *`Type void is not assignable to MouseEventHandler<HTMLButtonElement>`*.
 > An event handler is supposed to be either a **function** or a **function reference**, and when we write:
 >
 > ```js

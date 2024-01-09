@@ -271,7 +271,7 @@ We can view the current state of the database from the MongoDB Atlas from ***Bro
 
 As the view states, the *document* matching the task has been added to the ***tasks*** collection in the ***myFirstDatabase*** database.
 
-![MongoDB collections tab db myfirst app tasks](../../images/3/mongo8.png)
+![MongoDB collections tab db my first app tasks](../../images/3/mongo8.png)
 
 Let's destroy the default database ***myFirstDatabase*** and change the name of the database referenced in our connection string to `taskApp` instead, by modifying the URI:
 

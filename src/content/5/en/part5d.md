@@ -12,7 +12,7 @@ So far we have:
 - tested the backend on an API level using integration tests
 - tested some frontend components using unit tests.
 
-Next, we will look into one way to test the [system as a whole](https://en.wikipedia.org/wiki/System_testing) using **End to End** (E2E) tests.
+Next, we will look into one way to test the [system as a whole](https://en.wikipedia.org/wiki/System_testing) using **End-to-End** (E2E) tests.
 
 To do E2E testing on a web application, we can use a browser and a testing library.
 There are multiple testing libraries available.
@@ -946,7 +946,7 @@ describe('Task app', function() {
 })
 ```
 
-#### Defininig a baseURL
+#### Defining a baseURL
 
 There is one more annoying feature in our tests.
 The application address `http://localhost:5173` is hardcoded in *commands.js* and *task_app.cy.js*.
@@ -1197,7 +1197,7 @@ The frontend and the test code can be found on the [GitHub](https://github.com/c
 
 ### Exercises 5.17-5.22
 
-In the last exercises of this part, we will do some E2E tests for our watchlist application.
+In the last exercises of this part, we will do some E2E tests for our Watchlist application.
 The material of this part should be enough to complete the exercises.
 You **must check out the Cypress [documentation](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell)**.
 It is probably the best documentation I have ever seen for an open-source project.

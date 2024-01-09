@@ -350,7 +350,7 @@ const App = () => {
 }
 ```
 
-In the `onSuccess` callback, *where we now have the `newTask` as a paramemter*,
+In the `onSuccess` callback, *where we now have the `newTask` as a parameter*,
 the `queryClient` object reads the existing `tasks` state and updates it by adding the new task.
 The value of the `newTask` parameter is the *value returned by the function `createTask`*, defined in the file *requests.js* as follows:
 
@@ -892,7 +892,7 @@ As stated in exercise 6.21, the server requires that the content of the joke to 
 ***Now implement error handling for the insertion***.
 In practice, it is sufficient to display a notification to the user in case of a failed POST request:
 
-![browser showing error notification for trying to add too short of an anecdoate](../../images/6/67new.png)
+![browser showing error notification for trying to add too short of an anecdote](../../images/6/67new.png)
 
 The error condition should be handled in the callback function registered for it, here's
 [how to register a function](https://tanstack.com/query/latest/docs/react/reference/useMutation).

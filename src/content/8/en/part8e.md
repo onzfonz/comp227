@@ -434,7 +434,7 @@ Now we are ready to put the finishing touches to the app!
 Define the types `OccupationalHealthcareEntry` and `HospitalEntry` so that those conform with the example data.
 Ensure that your backend returns the entries properly when you go to an individual patient's route:
 
-![browser shoiwing entries json data properly for patient](../../images/8/40.png)
+![browser showing entries json data properly for patient](../../images/8/40.png)
 
 Use types properly in the backend!
 For now, there is no need to do a proper validation for all the fields of the entries in the backend,

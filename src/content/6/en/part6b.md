@@ -230,7 +230,7 @@ const filterReducer = (state = 'ALL', action) => {
 
 Based on the console output one might think that every action gets duplicated:
 
-![devtools console output showing dupblicated actions in task and filter reducers](../../images/6/6.png)
+![devtools console output showing duplicated actions in task and filter reducers](../../images/6/6.png)
 
 Is there a bug in our code? No.
 The combined reducer works in such a way that ***every `action` gets handled in every part of the combined reducer***.

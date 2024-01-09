@@ -283,7 +283,7 @@ JsonWebTokenError: invalid signature
 ```
 
 Once we get an exception, if we are not running nodemon, we would may have to restart our program,
-as any subsequent bad reqeusts could be met with an *Internal Server Error (500)*.
+as any subsequent bad requests could be met with an *Internal Server Error (500)*.
 
 There are many possible reasons for a decoding error.
 The token can be faulty (like in our example),

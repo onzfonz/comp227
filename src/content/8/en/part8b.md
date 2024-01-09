@@ -1252,14 +1252,14 @@ app.post("/calculate", (req, res) => {
 ```
 
 Notice that we also added the `return` syntax in the function for information we send.
-We will revisit shortly some techniques for how the `any` typed data (eg. the input an app recieves from the user) can be ***narrowed*** to a more specific type (such as `number`).
+We will revisit shortly some techniques for how the `any` typed data (eg. the input an app receives from the user) can be ***narrowed*** to a more specific type (such as `number`).
 *When we properly narrow types, we won't need to silence the ESlint rules*.
 
 ### Type assertion
 
 Using a [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
 is a simple but [*unsafe way*](https://ts.dev/style/#type-and-non-nullability-assertions) to keep the TypeScript compiler and Eslint quiet.
-Let us export the type Operation in *calcultor.ts*:
+Let us export the type Operation in *calculator.ts*:
 
 ```js
 export type Operation = "multiply" | "add" | "divide";
@@ -1268,7 +1268,7 @@ export type Operation = "multiply" | "add" | "divide";
 Now we can import `Operation` and use a **type assertion** to tell the TypeScript compiler what type `op` has:
 
 ```js
-import { calculator, Operation } from "./calculator"; // highligh-line
+import { calculator, Operation } from "./calculator"; // highlight-line
 
 app.post("/calculate", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

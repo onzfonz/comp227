@@ -485,7 +485,7 @@ const App = () => {
 
 If you have set everything up correctly you will receive the following error message at this point:
 
-![webstorm showing name is missing in props validation](../../images/1/1-vite5.png)
+![WebStorm showing name is missing in props validation](../../images/1/1-vite5.png)
 
 It's not an actual error, but a warning caused by the [ESLint](https://eslint.org/) tool.
 You can silence the warning [`react/prop-types`](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/prop-types.md)

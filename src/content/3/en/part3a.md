@@ -825,7 +825,7 @@ The application prints the data that we sent in the request to the console:
 Thanks to Nodemon any changes we make to the code will restart the application.
 If you pay attention to the console, you will immediately be able to pick up on errors that could occur:
 >
-> ![nodemon error as typing requre not defined](../../images/3/16.png)
+> ![nodemon error as typing require not defined](../../images/3/16.png)
 >
 > Similarly, it is useful to check the console for making sure that the backend behaves as we expect it to in different situations, like when we send data with an HTTP POST request.
 Naturally, it's OK to add lots of `console.log` commands to the code while the application is still being developed.
@@ -1072,7 +1072,7 @@ Implement a page at the address <http://localhost:3001/info> that looks roughly 
 
 ![Screenshot for 3.2](../../images/3/23x.png)
 
-The page has to show the time that the request was received and how many communtiies are listed at the time of processing the request.
+The page has to show the time that the request was received and how many communities are listed at the time of processing the request.
 
 > Caution: There can only be one *`response.send()`* statement in an Express app route.
 > Once you send a response to the client using *`response.send()`*, the request-response cycle is complete and no further response can be sent.

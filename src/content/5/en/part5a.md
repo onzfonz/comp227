@@ -156,7 +156,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 // highlight-end
   
-  const handleLogin = async (event) => { // higlight-line
+  const handleLogin = async (event) => { // highlight-line
     event.preventDefault()
     
     // highlight-start
@@ -301,7 +301,7 @@ return (
     <h1>Tasks</h1>
 
     <Notification message={errorMessage}/>
-    // higlight-start
+    // highlight-start
     {user === null ?
       loginForm() :
       taskForm()

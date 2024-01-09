@@ -127,7 +127,7 @@ Make sure you press enter after each command.
 
 In addition to adding your username and password, we are going to use a specific command to streamline our git process for this course.
 You may not want to use this command in other situations as you'll want to keep closer track of what you are committing to the repo.
-However, for the purposes of this class, it will be necessary.
+However, for this class, it will be necessary.
 
 This process will:
 
@@ -370,7 +370,7 @@ You will have an assignment that will show me that you have indeed made all of t
 - [Enabling autosave](#enabling-autosave)
 - [Creating File Watchers](#creating-a-file-watcher-for-our-git-configuration)
 - [Enabling ESLint](#enabling-eslint)
-- [Linking Webstorm with nvm](#link-webstorm-to-nvm)
+- [Linking WebStorm with nvm](#link-webstorm-to-nvm)
 - [(Optional) Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
 
 ### Changing our default terminal app

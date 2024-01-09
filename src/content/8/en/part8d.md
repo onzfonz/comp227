@@ -87,7 +87,7 @@ In our previous project, we used ESlint to help us enforce a coding style, and w
 We do not need to install any dependencies, since Vite has taken care of that already.
 
 When we look at the *main.tsx* file that Vite has generated, it looks familiar but there is a small but remarkable difference.
-There is a exclamation mark after the statement `document.getElementById('root')`:
+There is an exclamation mark after the statement `document.getElementById('root')`:
 
 ```js
 import React from 'react'
@@ -102,7 +102,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 ```
 
-The reason for this is that the statement might return value null but the `ReactDOM.createRoot` does not accept null as parameter.
+The reason for this is that the statement might return value null but the `ReactDOM.createRoot` does not accept *`null`* as a parameter.
 With the [`!` operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-),
 it is possible to assert to the TypeScript compiler that the value is *not null*.
 

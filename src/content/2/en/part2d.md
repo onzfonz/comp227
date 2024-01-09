@@ -65,7 +65,7 @@ addTask = event => {
 }
 ```
 
-We create a new object for the task but omit the `id` property since it's better to let the server generate ids for our resources!
+We create a new object for the task but omit the `id` property since it's better to let the server generate IDs for our resources!
 
 The object is sent to the server using the axios `post` method.
 The registered event handler logs the response that is sent back from the server to the console.
@@ -83,7 +83,7 @@ which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_a
 
 ![request payload in dev tools](../../images/2/21e2.png)
 
-Also the *response* tab is useful, it shows what was the data the server responded with:
+Also, the *response* tab is useful, it shows what was the data the server responded with:
 
 ![TODO - provide response tab screenshot here with tasks as response from server](../../images/2/21e3.png)
 

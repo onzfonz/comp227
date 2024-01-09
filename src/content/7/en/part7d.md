@@ -979,6 +979,6 @@ If the polyfilled Promise is implemented well enough, the rest of the code shoul
 
 One exhaustive list of existing polyfills can be found [here](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills).
 
-The browser compatibility of different APIs can be checked by visiting [caniuse.com](https://caniuse.com) or [Mozilla's website](https://developer.mozilla.org/en-US/).
+The browser compatibility of different APIs can be checked by visiting <https://caniuse.com> or [Mozilla's website](https://developer.mozilla.org/en-US/).
 
 </div>

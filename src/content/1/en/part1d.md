@@ -408,7 +408,7 @@ If not, meaning that the `allClicks` array is empty, the component renders a div
 <div>the app is used by pressing the buttons</div>
 ```
 
-And in all other cases, the component renders the clicking history:
+In all other cases, the component renders the clicking history:
 
 ```js
 <div>
@@ -519,7 +519,7 @@ If and when your code fails to compile and your browser lights up like a nightcl
 don't write more code but rather find and fix the problem **immediately**.
 Code will not miraculously start working after writing large amounts of additional code.
 
-### Webstorm IDE Debugger Introduction
+### WebStorm IDE Debugger Introduction
 
 Old-school, print-based debugging can at times be a good idea.
 I personally prefer using an IDE and its breakpoints though when possible.
@@ -533,7 +533,7 @@ When a line number is clicked, it turns into a stop sign indicating the breakpoi
 ![WebStorm showing debugging enabled](../../images/1/custom/breakpoint_line_enabled.png)
 
 The application will only break at that line when it reaches that point and you click on the debugger icon
-![Debugger Icon](../../images/1/custom/debugger_icon.png) in the upper right of the Webstorm IDE.
+![Debugger Icon](../../images/1/custom/debugger_icon.png) in the upper right of the WebStorm IDE.
 
 Once you are at a breakpoint, you'll notice that the Browser will give you an indication that it is paused.
 In WebStorm, you should notice that the Debug pane (***Alt-6***) is open, and there will also be an indication of the line that is is stopped at:
@@ -1300,7 +1300,7 @@ Here it is:
 > *I pledge to:*
 >
 > - *Keep my browser's dev tools open all the time*
-> - *Keep Webstorm's **Problems** tab open (**`Alt-6`**) and review it as well*
+> - *Keep WebStorm's **Problems** tab open (**`Alt-6`**) and review it as well*
 > - *Progress in tiny steps and commit each of those steps*
 > - *Use the debugger to help me better understand my code*
 > - *Stop adding features if my code is broken.*

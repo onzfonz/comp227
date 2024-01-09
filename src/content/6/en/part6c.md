@@ -197,7 +197,7 @@ export const { createTask, toggleImportanceOf, appendTask, setTasks } = taskSlic
 export default taskSlice.reducer
 ```
 
-Now, the code in the *main.jsx* file looks a lot better:
+Now, the code in *main.jsx* looks a lot better:
 
 ```js
 // ...

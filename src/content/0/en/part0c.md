@@ -145,7 +145,7 @@ The content of the HTML page has been saved as a template string or a string tha
 The dynamically changing part of the homepage, the number of saved places (in the code `${placeCount}`),
 is replaced by the current number of places (in the code `places.length`) in the template string.
 
-Writing HTML amid the code is of course not smart, but for PHP programmers, it was a normal practice.
+Writing HTML amid the code can be problematic, but for PHP programmers, it was a normal practice.
 
 In traditional web applications, the browser is "dumb".
 It only fetches HTML data from the server, and all application logic is on the server.

@@ -181,7 +181,7 @@ as the computer you are using for development.
 When the Expo mobile app has finished installing, open it up.
 Next, if the Expo development tools are not already running, start them by running `npm start`.
 You should be able to see a QR code at the beginning of the command output.
-Open the app by scanning the QR code, in Anroid with the Expo app or in iOS with the Camera app.
+Open the app by scanning the QR code, in Android with the Expo app or in iOS with the Camera app.
 The Expo mobile app should start building the JavaScript bundle and after it is finished you should be able to see your application.
 Now, every time you want to reopen your application in the Expo mobile app,
 you should be able to access the application without scanning the QR code by pressing it in the ***Recently opened*** list in the ***Projects*** view.

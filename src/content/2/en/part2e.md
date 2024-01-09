@@ -110,7 +110,7 @@ const Task = ({ task, toggleImportance }) => {
 }
 ```
 
-Class selectors are defined with the `.classname` syntax:
+Class selectors are defined with the `.className` syntax:
 
 ```css
 .task {

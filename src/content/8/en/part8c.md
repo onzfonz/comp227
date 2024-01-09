@@ -8,7 +8,7 @@ lang: en
 <div class="content">
 
 Now that we have a basic understanding of how TypeScript works and how to create small projects with it, it's time to start creating something useful.
-Let's create a new project with slighly more realistic use cases.
+Let's create a new project with slightly more realistic use cases.
 Just go ahead and download this new empty repo by visiting this site:
 <http://go.djosv.com/227labts>
 

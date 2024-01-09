@@ -23,7 +23,7 @@ This kind of testing where multiple components are combined and tested as a unit
 In one of the previous chapters of the course material, we mentioned that when your backend server is running in Render, it is in **production** mode.
 
 The convention in Node is to define the execution mode of the application with the `NODE_ENV` environment variable.
-In using Render, we were lucky enough that we were able to use the same *.env* file that we had in our development environemnt.
+In using Render, we were lucky enough that we were able to use the same *.env* file that we had in our development environment.
 Other services only allow you to set variables manually through their site,
 which means that the environment variables defined in the *.env* file would not be loaded if the application is ***not*** in production mode.
 

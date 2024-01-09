@@ -146,7 +146,7 @@ we run into another small issue.
 How do we differentiate between sharing code with folks (or even with ourselves as we are working on it
 versus having something that we want to deploy to the outside world?)  
 
-![drawing with team members with git and a webserver](../../images/3/custom/fork_step_3.png)
+![drawing with team members with git and a web server](../../images/3/custom/fork_step_3.png)
 
 We can't just have an automatic link between the GitHub server and the web server,
 since we may want to share something on the GitHub server with our team members but do not want to share it with the world just yet.
@@ -235,7 +235,7 @@ If you created your account with an email, at this point, you'll select the opti
 You'll then go through a series of pages that prompt you to authorize Render to access your GitHub account, including entering your GitHub password.
 Once you get back to Render, if you linked your account correctly, you should see your repos with purple connect button to the side of each one.
 
-![screenshot of connnected render dashboard to GitHub](../../images/3/custom/render_dashboard_connected.png)
+![screenshot of connected render dashboard to GitHub](../../images/3/custom/render_dashboard_connected.png)
 
 Click the connect button for your forked repo.
 You'll then be taken to a page to place all of your options to deploy the page.

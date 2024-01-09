@@ -14,7 +14,7 @@ But merely reading (or just watching) is not enough, you have to practice and ty
 However, if you missed a step, you can find the code for our current application [here](https://github.com/comp227/part2-tasks/tree/part2-1).
 
 To get our page to update when new tasks are added it's best to store the tasks in the `App` component's state.
-Let's import the [useState](https://react.dev/reference/react/useState) function
+Let's import the [`useState` function](https://react.dev/reference/react/useState)
 and use it to define a piece of state that gets initialized with the initial tasks array passed in the props.
 
 ```js

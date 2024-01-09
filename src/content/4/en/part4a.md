@@ -464,7 +464,7 @@ For example, if you decide to split a function into two separate functions, your
 This is difficult if you don't know where they are.
 
 To find usages for any functions or variables, you can go to *Edit->Find Usages->Find Usages in File*
-and then search based on a variatey of criteria.
+and then search based on a variety of criteria.
 
 </div>
 

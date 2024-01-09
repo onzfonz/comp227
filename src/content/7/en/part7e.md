@@ -543,7 +543,7 @@ However, for now, we will leave the library upgrades for later...
 
 Two of the threats mentioned in the list from OWASP are:
 
-- **Idenfitication and Authentication Failures *(Broken Authentication)***
+- **Identification and Authentication Failures *(Broken Authentication)***
 - **Broken Access Control** (related)
 
 The token-based authentication we have been using is fairly robust if the application is being used on the traffic-encrypting HTTPS protocol.

@@ -9,10 +9,10 @@ lang: en
 
 Before starting a new part, let's recap some of the topics that proved difficult last year.
 
-### Protip: WebStorm Live Templates
+### Pro-tip: WebStorm Live Templates
 
 With WebStorm it's easy to create and 'live templates', i.e., shortcuts/snippets
-for quickly generating commonly re-used portions of code, much like how `sout` works in Netbeans and `psvm` works in IntelliJ.
+for quickly generating commonly re-used portions of code, much like how `sout` works in NetBeans and `psvm` works in IntelliJ.
 
 **Try erasing everything in *App.jsx*, then type `rsc` and then hit the *Tab* key and see the magic that appears!**
 
@@ -42,7 +42,7 @@ Let's setup a custom `clog` live template.
     ```
 
 5. Select ***Reformat according to style***
-6. Click the Define linke below the template text and select ***Javascript & Typescript***.
+6. Click the Define link below the template text and select ***Javascript & Typescript***.
 7. Finally click edit variables and make it looks like this, make sure you have the order of the variables as well.
 
 ![image showing the variables and values](../../images/2/custom/live_template_variables.png)
@@ -492,7 +492,7 @@ If you clone the project, run the command `npm install` before starting the appl
 
 Early in your programming career (and even after 25 years of coding like yours truly),
 what often happens is that the application just completely breaks down.
-This is even moreso the case with dynamically typed languages, such as JavaScript, where the compiler does not check the data type.
+This is even more so the case with dynamically typed languages, such as JavaScript, where the compiler does not check the data type.
 Like with function variables or return values.
 
 A "React explosion" can, for example, look like this:
@@ -591,7 +591,7 @@ const Company = (props) => { // highlight-line
 If the problem has still not been resolved, sadly there isn't much to do apart from continuing to bug-hunt by sprinkling more `console.log` statements around your code.
 
 The original author added this chapter to the material after the model answer for the next question exploded completely
-(due to props being of the wrong type), and it had to be debuggged using `console.log`.
+(due to props being of the wrong type), and it had to be debugged using `console.log`.
 
 ***As you continue through, please remember the
 [pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge)

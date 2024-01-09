@@ -311,7 +311,7 @@ It is recommended to create some separate `npm script` for linting:
     "dev": "nodemon index.js",
     // ...
     "lint": "eslint .", // highlight-line
-    "lint:fix": "nprum run lint -- --fix" // highlight-line
+    "lint:fix": "npm run lint -- --fix" // highlight-line
   },
   // ...
 }
@@ -348,7 +348,7 @@ Once you are in the ESLint setting select the ***Automatic ESLint configuration*
 It really makes sense for us to apply it to all future new projects, so I will have you do on more thing and change some settings for new projects.
 To do so, you'll need to go to ***File->New Projects Setup->Settings for New Projects***.
 Once that window opens, then select ***Languages & Frameworks->Javascript->Code Quality Tools->ESLint***.
-Here you'll see a window similar to what we just configured, so again select ***Automatic ESLint configuration*** and mark the ***Run eslint --fix on save*** checbox.
+Here you'll see a window similar to what we just configured, so again select ***Automatic ESLint configuration*** and mark the ***Run eslint --fix on save*** checkbox.
 Also, while we are in the New Project settings, please ensure that the node interpreter from part 0 is selected as the node interpreter.
 *You can reach that option by typing node in the search bar, it will be under ***Languages & Frameworks->Node.js***.
 
@@ -383,7 +383,7 @@ While we're at it, let's make a few other changes to the rules.
 
 Let's prevent unnecessary [trailing spaces](https://eslint.org/docs/rules/no-trailing-spaces) at the ends of lines,
 let's require that [there is always a space before and after curly braces](https://eslint.org/docs/rules/object-curly-spacing),
-and let's also demand a consistent use of whitespaces in the function parameters of arrow functions.
+and let's also demand a consistent use of whitespace in the function parameters of arrow functions.
 
 ```js
 {
@@ -440,7 +440,7 @@ You can also use the keyboard shortcut shown to see a list of options for fixing
 
 Just pay careful attention as you go through and fix some of the errors to ensure that your program still works.
 
-#### Supressing warnings and other tweaks
+#### Suppressing warnings and other tweaks
 
 While ESlint and WebStorm are great, sometimes WebStorm or ESlint may not have a good solution for you either, as it has with us complaining about using the variable **`process`**.
 

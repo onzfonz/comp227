@@ -102,7 +102,7 @@ We have used if-else statements to build our reducer;
 However, the [`switch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch) statement is the most common approach to writing a reducer.
 
 Let's also define a [default value](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters) of `0` for the parameter `state`.
-Now the reducer works even if the state has not been intialized.
+Now the reducer works even if the state has not been initialized.
 
 ```js
 const counterReducer = (state = 0, action) => { // highlight-line
@@ -277,7 +277,7 @@ The buttons' `onClick` handlers ***dispatch*** the right action object to the `s
 
 When `store`'s state changes, *React cannot automatically re-render the application by itself*.
 Thus we have registered a function `renderApp` with `store.subscribe`.
-Now, ***`renderApp` will re-render the entire app anytmoe `store` changes***.
+Now, ***`renderApp` will re-render the entire app anytime `store` changes***.
 *Remember that we have to also directly call `renderApp()`.*
 Otherwise, we would have only defined renderApp and so the first rendering of the app would never happen.
 
