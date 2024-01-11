@@ -1070,7 +1070,7 @@ const hello = (who) => () => {
 }
 ```
 
-We can use the same trick to define event handlers that set the state of the component to a given value.
+We can use the same trick to ***define event handlers that set the state of the component to a given value***.
 Let's make the following changes to our code:
 
 ```js
