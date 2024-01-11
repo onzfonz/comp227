@@ -473,7 +473,8 @@ By changing the event handler to that direct form:
 </button>
 ```
 
-we still achieve the desired behavior - the value of `counter` is incremented **and** the component gets re-rendered.
+we still achieve the desired behavior.
+The value of `counter` is incremented **and** the component gets re-rendered.
 
 Let's also add a button for resetting the counter:
 
@@ -585,7 +586,7 @@ The value of the `onClick` attribute is a variable containing a reference to a f
 </button>
 ```
 
-### Passing state to child components
+### Passing state-to-child components
 
 It's recommended to write React components that are small and reusable across the application and even across projects.
 Let's refactor our application so that it's composed of three smaller components:
@@ -695,7 +696,7 @@ we added a button that decrements the counter with little code.
 The event handler is passed to the `Button` component through the `onClick` prop.
 The name of the prop itself is not that significant, but our naming choice wasn't completely random.
 
-React's own official [tutorial](https://react.dev/learn/tutorial-tic-tac-toe) suggests this convention.
+React's official [tutorial](https://react.dev/learn/tutorial-tic-tac-toe) suggests this convention.
 > *"In React, it’s conventional to use `onSomething` names for props which take functions which handle events*
 > *and `handleSomething` for the actual function definitions which handle those events."*
 
@@ -754,7 +755,7 @@ const App = () => {
 
 Let us now see what gets rendered to the console when the buttons ***plus***, ***plus***, ***zero*** and ***minus*** are pressed:
 
-![browser showing plus plus zero and minus being pressed](../../images/1/31.png)
+![browser showing plus, plus, zero, and minus being pressed](../../images/1/31.png)
 
 Do not try to guess what your code does.
 Use the debugger and `console.log` to observe what it does.
