@@ -187,10 +187,13 @@ Even though this is an asynchronous online course, attendance will be counted by
 You will be expected to respond to any discussion via Discord in a reasonable time frame (24-48 hours).
 After having to contact you via other methods or bringing responsiveness in discord to your attention,
 any subsequent attempts to contact you will lower part of your social learning exercises grade by two percentage points.
-In addition to me reaching out, you will be expected to be in contact with others during the course and will be placed into learning pairs or triads.
-You will be expected to communicate in those discord channels with your learning groups on a regular basis as well
-and will be expected to meet with them on a regular basis to go over the material.
-This means that you'll be expected to meet online with those groups either over Discord or via Zoom (or in person if you prefer).
+In addition to me reaching out, you will be expected to:
+
+- Be in contact with others via our official discord server channels.
+- Communicate in those discord channels with your learning groups regularly.
+- Meet with your learning groups regularly to go over the material.
+    - *This means that you'll be expected to meet online with those groups either over Discord or via Zoom (or in person if you prefer).*
+
 **Chatting privately via DMs will not count towards your expectations of regular communication.**
 Those meetings are crucial to your learning and your peers, and so you will be expected to make them up if you cannot make it, or forfeit your ability to pass the course.
 
@@ -252,7 +255,7 @@ Why did I put it this way? Because this is a guideline, not a contract.
 I don't even know if there are 138 exercises to begin with!
 Nevertheless, I wanted to provide this approximation to you so that you have a better understanding of what the expectations look like.
 Also, realize that what is more important here is a continual amount of progress each week.
-This means that if you get stuck one week, that is OK, but you'll need to do extra to catch up.
+This means that if you get stuck during a week, that is OK, but you'll need to do extra to catch up.
 How much you can catch up per week will also be capped, to no more than 10% of the exercises that you have left to do.
 If you wish to pass the course, you will need to work regularly and submit the assignments as listed in Canvas.
 
