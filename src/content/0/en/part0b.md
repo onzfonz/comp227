@@ -43,6 +43,14 @@ You should only proceed to the next part after doing enough of the previous part
 Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts.
 Other parts do not have asterisk-marked exercises since there is no similar dependency on previous parts.
 
+While there is no late penalty for not completing exercises for a given assignment,
+there is a cap on how many exercises you can submit in a given week.
+You are not superhuman, as such, you can only submit 110% of the exercise workload for any given week.
+This means that if you fall behind, while you will not be penalized for being late,
+it will impact how much you will be able to submit and learn, and thus will ultimately impact your grade.
+This is also done to encourage the idea of regular and consistent work throughout the semester, instead of **cramming**,
+which leads to not paying attention to the work as you move forward.
+
 ### Studying the course in a nutshell
 
 How to study the course – instructions in a nutshell:

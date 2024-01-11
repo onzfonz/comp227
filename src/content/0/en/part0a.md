@@ -293,6 +293,15 @@ Illness or death in the family may require documentation.
 Excuses for professional activities must be approved by the instructor in advance.
 Late assignments other than the individual exercises will be deducted 15% per day and will not be accepted beyond 1 week late.
 
+Individual exercises will follow a different policy.
+Exercises are broken into Canvas assignments.
+Students must submit one part before unlocking subsequent parts.
+There is no late penalty to submit a part.
+However, there is a cap on how many individual exercises can be submitted in a given week, which is 10% more than the regular workload.
+This means that falling behind greatly will impact your chances of finishing all of the exercises for credit.
+Your focus on that point with the individual exercises should be to focus on your current understanding.
+All work will have a hard cutoff that will be outlined in Canvas.
+
 #### Individual Work and Collaboration
 
 Computer professionals usually work in a cooperative environment, yet proper assessment requires that work be done by individuals.
