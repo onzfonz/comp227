@@ -339,6 +339,12 @@ A student may receive a range of penalties, including failure of an assignment, 
 The Academic Honesty Policy is located in Tiger Lore and online at <https://www.pacific.edu/student-life/student-conduct/tiger-lore>
 
 You will be expected to conduct yourself according to professional ethics, just as if this were a real-world job.
+With this course focused on exercises,
+***you may not ask others (including computers) for solutions or to partially solve any of the individual exercises***,
+This also applies to search tools, AI services and other humans, whether hired, friends or classmates.
+You MAY ask others (both computers and humans)
+for help understanding particular errors that appear, or in explaining high-level concepts that you feel the text does not explain well.
+However, those concepts should not contain the exercise text.
 You should be able to explain any of the code you write and you also need to cite anything longer than a line of code that you get from the internet.
 Provide links to any code and tutorials that you find that help you program.  
 Make sure to cite and credit code, libraries, videos, ideas, or other resources that are not provided directly from this website.
