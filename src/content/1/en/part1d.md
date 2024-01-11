@@ -246,7 +246,7 @@ const handleLeftClick = () => {
 
 However, **don't use `push`, as it mutates `allClicks`**.
 Remember, the state of React components (like `allClicks`) must not be changed directly.
-Even if mutating state appears to work in some cases, *it can lead to problems that are very hard to debug*.
+Even if mutating the state appears to work in some cases, *it can lead to problems that are very hard to debug*.
 
 Let's take a closer look at how the clicking
 is rendered to the page:
@@ -361,7 +361,7 @@ const App = () => {
 }
 ```
 
-So now the number of button presses is definitely based on the correct number of left button presses.
+So now the number of button presses is based on the correct number of left button presses.
 
 ### Conditional rendering
 
@@ -422,7 +422,7 @@ This is called **conditional rendering**.
 React also offers many other ways of doing [conditional rendering](https://react.dev/learn/conditional-rendering).
 We will take a closer look at this in [part 2](/part2).
 
-Let's make one last modification to our application by refactoring it to use the `Button` component that we defined earlier on:
+Let's make one last modification to our application by refactoring it to use the `Button` component that we defined earlier:
 
 ```js
 const History = (props) => {
@@ -496,7 +496,7 @@ We will learn more about React class components later on in the course.
 ### Debugging React applications
 
 A large part of a typical developer's time is spent on debugging and reading existing code.
-Every now and then we do get to write a line or two of new code,
+Once in a while, we do get to write a line or two of new code,
 but a large part of our time is spent trying to figure out why something is broken or how something works.
 Good practices and tools for debugging are extremely important for this reason.
 
@@ -522,8 +522,8 @@ Code will not miraculously start working after writing large amounts of addition
 ### WebStorm IDE Debugger Introduction
 
 Old-school, print-based debugging can at times be a good idea.
-I personally prefer using an IDE and its breakpoints though when possible.
-A **breakpoint** is a special IDE-based marker that tells your application to ***break*** (pause executing code), when it reaches a particular ***point*** (line of code).
+I prefer using an IDE and its breakpoints though when possible.
+A **breakpoint** is a special IDE-based marker that tells your application to ***break*** (pause executing code) when it reaches a particular ***point*** (line of code).
 Breakpoints can be turned on or off by clicking on the line number to the left of a line:
 
 ![breakpoint line number](../../images/1/custom/no_breakpoint_yet.png)
@@ -536,17 +536,17 @@ The application will only break at that line when it reaches that point and you 
 ![Debugger Icon](../../images/1/custom/debugger_icon.png) in the upper right of the WebStorm IDE.
 
 Once you are at a breakpoint, you'll notice that the Browser will give you an indication that it is paused.
-In WebStorm, you should notice that the Debug pane (***Alt-6***) is open, and there will also be an indication of the line that is is stopped at:
+In WebStorm, you should notice that the Debug pane (***Alt-6***) is open, and there will also be an indication of the line that it is stopped at:
 
 ![WebStorm showing line currently paused on](../../images/1/custom/debugger_paused_line.png)
 
-The ***Threads & Variables*** tab is handy as it provides a wealth of information of the current state of variables that you can explore by clicking around.
+The ***Threads & Variables*** tab is handy as it provides a wealth of information on the current state of variables that you can explore by clicking around.
 You can see the state of all of the local and global variables as if you were to write `console.log` statements for all of your variables here.
 
 ![WebStorm showing the variables tab](../../images/1/custom/ide_variables_tab.png)
 
-If you don't want to wade through, you could also setup expressions for the computer to evaluate with, which can also be done in the Console tab.
-What you would type in here is what would you would normally put inside of `console.log` statements.
+If you don't want to wade through, you could also set up expressions for the computer to evaluate, which can also be done in the Console tab.
+What you would type in here is what you would normally put inside of `console.log` statements.
 The ***Console*** tab also provides a history of what you have typed and can include some fairly complex expressions.
 
 ![WebStorm console tab](../../images/1/custom/ide_console_tab.png)
@@ -555,12 +555,12 @@ If you would like to continue executing the application, you can use the browser
 
 ![browser resume button](../../images/1/custom/browser_resume.png)
 
-Of course though, it will continue until it reaches the next breakpoint.
+Of course, it will continue until it reaches the next breakpoint.
 In this case, because we have two buttons, pressing the button will feel *as if it did nothing*.
 However, if we examine the variables closely,
 the local variable `text` should now have the property `right` (which WebStorm highlights in blue).
 
-![WebStorm showing text in blue with right](../../images/1/custom/ide_debugger_changes.png)
+![WebStorm shows text in blue with the value "right"](../../images/1/custom/ide_debugger_changes.png)
 
 If you click the resume button again, it will appear as though the application has left the debugging session.
 However, the IDE will still have icons that let you know it is still connected.
@@ -577,7 +577,7 @@ Pressing the Green Bug Button to the left will restart the debugging session and
 Imagine that you have tried coding the application up.
 However, you notice that when you run the program, ***Nothing appears***.
 While it's normal for us to think of what is not happening, we need to focus on what is going on.
-Imagine we setup a breakpoint on the same line again and we try to debug.  Then we notice that our `text` local variables is *`undefined`*, like this:
+Imagine we set a breakpoint on the same line again and we try to debug.  Then we notice that our `text` local variable is *`undefined`*, like this:
 
 ![WebStorm showing issues](../../images/1/custom/ide_text_undefined.png)
 
@@ -606,7 +606,7 @@ const Button = (props) => {
 }
 ```
 
-If we then run the debugger again, and place a breakpoint on the return line, we can examine the variables passed in much more closely.
+If we then run the debugger again and place a breakpoint on the return line, we can examine the variables passed in much more closely.
 In this case, we might be able to find what the issue may be.
 
 ![IDE Debug with props enabled showing variables](../../images/1/custom/ide_debug_puzzle.png)
@@ -683,7 +683,7 @@ const [allClicks, setAll] = useState([])
 
 Dev tools show the state of hooks in the order of their definition:
 
-![state of hooks in react dev tools](../../images/1/11ea.png)
+![state of hooks in React's dev tools](../../images/1/11ea.png)
 
 The first *State* contains the value of the `left` state,
 the next contains the value of the `right` state and the last contains the value of the `allClicks` state.
@@ -700,7 +700,7 @@ There are a few limitations and rules we have to follow to ensure that our appli
 - ⛔a conditional expression⛔
 - ⛔any place that is not a function defining a React component⛔.
 
-Why? We need ensure that hooks are always called in the same order.
+Why? We need to ensure that hooks are always called in the same order.
 If we use loops, conditionals or other nested functions, the application can behave erratically.
 
 To recap, hooks may only be called from the inside of a function body that defines a React component:
@@ -751,7 +751,7 @@ const App = () => {
 
 We want the clicking of the button to reset the state stored in the `value` variable.
 
-In order to make the button react to a click event, we have to add an **event handler** to it.
+To make the button react to a click event, we have to add an **event handler** to it.
 
 Event handlers must always be a function or a reference to a function.
 The button will not work if the event handler is set to a variable of any other type.
@@ -822,7 +822,7 @@ Let's follow these steps to explain:
 
 1. `button` component gets rendered
 2. `setValue(0)` gets executed (because we rendered the component)
-3. `button` component gets re-rendered (because we changed state).
+3. `button` component gets re-rendered (because we changed the ***state***).
 4. `setValue(0)` gets executed (because we rendered the component)
 5. This continues indefinitely 🐞
 
@@ -834,11 +834,11 @@ Instead, executing a specific function with *`onClick`* should be written like t
 </button>
 ```
 
-Now the event handler is a function defined with the arrow function syntax *`() => console.log('clicked the button')`*.
+Now the event handler is a function defined with the arrow function syntax: *`() => console.log('clicked the button')`*.
 Now our setup looks like this:
 
 1. `button` component gets rendered
-2. reference to arrow function gets stored in `onClick` handler
+2. reference to the arrow function gets stored in the `onClick` handler
 
 Now no function gets immediately called.
 `console.log` will only happen once the button is clicked.
@@ -872,7 +872,7 @@ const App = () => {
 ```
 
 Naturally, our event handler function can be composed of multiple commands.
-In these cases we use the longer curly brace syntax for arrow functions:
+In these cases, we use the longer curly brace syntax for arrow functions:
 
 ```js
 const App = () => {
@@ -1179,7 +1179,7 @@ const Button = (props) => (
 )
 ```
 
-The component gets the event handler function from the `handleClick` prop, and the text of the button from the `text` prop.
+The component gets the event handler function from the `handleClick` prop and the text of the button from the `text` prop.
 Let's use the new component:
 
 ```js
@@ -1281,7 +1281,7 @@ You may find the following links useful:
 - The [official React documentation](https://react.dev/learn) is worth checking out at some point,
   although most of it will become relevant only later on in the course.
   Also, everything related to class-based components is irrelevant to us;
-- Some courses on [Egghead.io](https://egghead.io) like [Start learning React](https://egghead.io/courses/start-learning-react) are of high quality,
+- Some courses on [Egghead.io](https://egghead.io) like [Start Learning React](https://egghead.io/courses/start-learning-react) are of high quality,
   and the recently updated [Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-reactjs) is also relatively good;
   both courses introduce concepts that will also be introduced later on in this course.
     - **NB** The first one uses class components but the latter uses the new functional ones.
@@ -1491,7 +1491,7 @@ Then perform the necessary actions to make the warning disappear.
 Try pasting the error message into a search engine if you get stuck.
 
 *Typical source of an error `Unchecked runtime.lastError: Could not establish connection.
-Receiving end does not exist.` is Chrome extension.
+Receiving end does not exist.` is a Chrome extension.
 Try going to `chrome://extensions/` and try disabling them one by one and refreshing React app page; the error should eventually disappear.*
 
 **Make sure that from now on you don't see any warnings in your console!**
@@ -1528,7 +1528,7 @@ const App = () => {
 export default App
 ```
 
-The contents of the file *main.jsx* is the same as in previous exercises.
+The contents of *main.jsx* are the same as in previous exercises.
 
 Find out how to generate random numbers in JavaScript, eg.
 via a search engine or on [Mozilla Developer Network](https://developer.mozilla.org).
@@ -1536,15 +1536,15 @@ Remember that you can test generating random numbers e.g. straight in the consol
 
 Your finished application could look something like this:
 
-![random joke with next button](../../images/1/18a.png)
+![random joke with the next joke button](../../images/1/18a.png)
 
-**WARNING** Make sure that when you call `vite` that you are inside of your repo's base folder - not inside of your other folders (like *reading*!)!
+**WARNING** Make sure that when you call `vite`, you are inside of your repo's base folder - not inside of your other folders (like *reading*!)!
 
 #### 1.13*: jokes Step 2
 
 Expand your application so that you can vote for the displayed joke.
 
-![joke app with votes button added](../../images/1/19a.png)
+![joke app with the votes button added](../../images/1/19a.png)
 
 > **NB** store the votes of each joke into an array or object in the component's state.
 Remember that the correct way of updating state stored in complex data structures like objects and arrays is to make a copy of the state.
@@ -1577,7 +1577,7 @@ Searching the Internet will provide you with lots of hints on how to
 
 Now implement the final version of the application that displays the joke with the largest number of votes:
 
-![joke with largest number of votes](../../images/1/20a.png)
+![joke with the largest number of votes](../../images/1/20a.png)
 
 If multiple jokes are tied for first place it is sufficient to just show one of them.
 
