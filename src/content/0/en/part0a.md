@@ -266,7 +266,6 @@ For the other modules, we will determine at a later date which ones will be comp
 | 6  | Redux | 24 | 1 |
 | 7  | React router, hooks & styling | 24 | 1 |
 | 8  | TypeScript | 24 | 1 |
-| 9 | React Native | 10 | 1 |
 
 With all submissions requested, please follow submission guidelines carefully.
 

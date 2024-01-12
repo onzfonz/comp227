@@ -31,7 +31,7 @@ The code of the example applications for each step of each part can be found on 
 
 ### Taking the course
 
-The course contains 10 parts, the first of which is numbered 0 for consistency with past iterations.
+The course contains 9 parts, the first of which is numbered 0 for consistency with past iterations.
 One part corresponds loosely to around two weeks of studying since you'll have other activities attached as well.
 
 For parts 0-5, You should not study part *n+1* without enough know-how of the topics in part *n*.
