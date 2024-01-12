@@ -3,7 +3,7 @@ import { partColors } from "./partColors";
 
 export const updateLinks = (props) => {
     const links = Array.from(
-        document.querySelectorAll('a:not(.skip-to-content')
+        document.querySelectorAll('a:not(.skip-to-content):not(.panel a)')
     );
     const { frontmatter } = props.data.markdownRemark;
 

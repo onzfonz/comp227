@@ -57,45 +57,49 @@
   padding: 2rem 18px;
 }
 
+
 .accordion--side-navigation {
   width: 100%;
   margin-left: unset;
-
+  
   .accordion {
-    border: none;
-    padding: 0 !important;
-    background-color: transparent !important;
-    color: var(--color-text) !important;
-    border-radius: 0;
-  }
-
-  .accordion__title {
-    font-size: 16px !important;
-    font-weight: unset;
-    background-color: transparent;
-
-    &:hover {
-      background-color: var(--color-text) !important;
-      color: var(--color-background) !important;
+      border: none;
+      padding: 0 !important;
+      background-color: transparent !important;
+      color: var(--color-text) !important;
+      border-radius: 0;
     }
-  }
-
-  .panel {
-    padding: 1rem 0 0 !important;
-    background-color: transparent;
-
-    ul {
-      margin-left: 1rem;
+    
+    .accordion__title {
+        font-size: 16px !important;
+        font-weight: unset;
+        background-color: transparent;
+        
+        &:hover {
+            background-color: var(--color-text) !important;
+            color: var(--color-background) !important;
+        }
     }
-  }
-
+    
+    .panel {
+        padding: 1rem 0 0 !important;
+        background-color: transparent !important;
+        color: var(--color-text) !important;
+        
+        ul {
+            margin-left: 1rem;
+        }
+    }
+    
   .active,
-  .accordion:hover {
+  .accordion:hover,
+  .panel:hover {
     background-color: var(--color-text);
     color: var(--color-background);
   }
 
   .accordion:after,
+  .panel:after,
   .active:after {
     content: '';
   }
