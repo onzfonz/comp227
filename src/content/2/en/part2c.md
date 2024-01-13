@@ -13,7 +13,7 @@ Nonetheless, we will now take a step in that direction by familiarizing ourselve
 
 Let's use a tool meant to be used during software development called [JSON Server](https://github.com/typicode/json-server) to act as our server.
 
-Create a file named *db.json* in the root directory of the previous tasks project with the following content:
+Create a file named *db.json* in the root directory of the previous *tasks* project with the following content:
 
 ```json
 {
@@ -44,10 +44,9 @@ You can [install](https://github.com/typicode/json-server#getting-started) a JSO
 A global installation requires administrative privileges, which means that it is not possible on school computers.
 
 After installing run the following command to run the json-server.
-The *json-server* starts running on port 3000 by default;
-but since projects created using create-react-app reserve port 3000,
-we must define an alternate port, such as port 3001, for the json-server.
-The --watch option automatically looks for any saved changes to db.json
+The *json-server* starts running on port *`3000`* by default;
+The `--watch` option automatically looks for any saved changes to *db.json*.
+Nonetheless, we will now define an alternate port *`3001`* for the json-server.
   
 ```js
 json-server --port 3001 --watch db.json
@@ -82,7 +81,7 @@ We will get familiar with the principles of implementing server-side functionali
 
 Our first task is fetching the already existing tasks to our React application from the address <http://localhost:3001/tasks>.
 
-In the part0 [example project](/part0/fundamentals_of_web_apps#running-application-logic-in-the-browser),
+In [part 0's example project](/part0/fundamentals_of_web_apps#running-application-logic-in-the-browser),
 we already learned a way to fetch data from a server using JavaScript.
 The code in the example was fetching the data using [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest),
 otherwise known as an HTTP request made using an XHR object.
@@ -136,7 +135,7 @@ tasks.forEach(m => {
 In Java, the code executes line by line and stops to wait for the HTTP request, which means waiting for the command `request.get(...)` to finish.
 The data returned by the command, in this case the tasks, are then stored in a variable, and we begin manipulating the data in the desired manner.
 
-On the other hand, JavaScript engines, or runtime environments, follow the [asynchronous model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop).
+In contrast, JavaScript engines, or runtime environments, follow the [asynchronous model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop).
 In principle, this requires all
 [IO operations](https://en.wikipedia.org/wiki/Input/output)
 (with some exceptions) to be executed as non-blocking.
@@ -195,46 +194,34 @@ It functions like fetch but is somewhat more pleasant to use.
 Another good reason to use axios is our getting familiar with adding external libraries, so-called *npm packages*, to React projects.
 
 Nowadays, practically all JavaScript projects are defined using the node package manager, aka [npm](https://docs.npmjs.com/getting-started/what-is-npm).
-The projects created using create-react-app also follow the npm format.
+The projects created using Vite also follow the npm format.
 A clear indicator that a project uses npm is the *package.json* file located at the root of the project:
 
 ```json
 {
   "name": "tasks",
-  "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "web-vitals": "^2.1.3"
-  },
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "vite": "^4.4.5"
   }
 }
 ```
@@ -255,17 +242,19 @@ Axios is now included among the other dependencies:
 ```json
 {
   "name": "tasks",
-  "version": "0.1.0",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.24.0", // highlight-line
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "web-vitals": "^2.1.3"
+    "axios": "^1.4.0", // highlight-line
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   // ...
 }
@@ -289,10 +278,10 @@ and making a small addition to the *scripts* part of the *package.json* file:
   // ...
 
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
     "server": "json-server -p3001 --watch db.json" // highlight-line
   },
 }
@@ -310,11 +299,11 @@ npm run server
 >
 > The red print in the error message informs us about the issue:
 >
-> *Cannot bind to port 3001.
-Please specify another port number either through --port argument or through the json-server.json configuration file*
+> *Cannot bind to port `3001`.*
+> *Please specify another port number either through `--port` argument or through the **json-server.json** configuration file*
 >
 > As we can see, the application is not able to bind itself to the [port](https://en.wikipedia.org/wiki/Port_(computer_networking)),
-because **port 3001 is already occupied by the previously started json-server**.
+because **port `3001` is already occupied by the previously started `json-server`**.
 
 #### The nuances of npm
 
@@ -335,16 +324,16 @@ We will get more familiar with the *npm* tool and additional dependency nuances 
 
 ### Axios and promises
 
-Now we are ready to use axios.
+Now we are ready to use Axios.
 Going forward, json-server is assumed to be running on port 3001.
 
-NB: To run json-server and your react app simultaneously, you will need to use two terminal windows.
-One to keep json-server running and the other to run react-app.
-Normally I have a third terminal window open as well to work with git if you are not using WebStorms built-in tools.
+> Pertinent: To run json-server and your react app simultaneously, you will need to use two terminal windows.
+> One to keep json-server running and the other to run react-app.
+> Normally I have a third terminal window open as well to work with git if you are not using WebStorms built-in tools.
 
 The library can be brought into use the same way other libraries, e.g. React, are, i.e., by using an appropriate `import` statement.
 
-Add the following to the file *index.js*:
+Add the following to the file *main.jsx*:
 
 ```js
 import axios from 'axios'
@@ -356,7 +345,7 @@ const promise2 = axios.get('http://localhost:3001/foobar')
 console.log(promise2)
 ```
 
-If you open <http://localhost:3000> in the browser, this should be printed to the console
+If you open <http://localhost:5173/> in the browser, this should be printed to the console
 
 ![promises printed to console](../../images/2/16b.png)
 
@@ -381,7 +370,7 @@ and the final value is available, which generally is a successful operation.
 This state is sometimes also called **resolved**.
 3. The promise is **rejected**: It means that an error prevented the final value from being determined, which generally represents a failed operation.
 
-The first promise in our example is ***fulfilled***, representing a successful *axios.get('http://localhost:3001/tasks')* request.
+The first promise in our example is ***fulfilled***, representing a successful *`axios.get('http://localhost:3001/tasks')`* request.
 The second one, however, is ***rejected***, and the console tells us the reason.
 It looks like we were trying to make an HTTP GET request to a non-existent address.
 
@@ -456,10 +445,10 @@ What's not immediately obvious, however, is where the command `axios.get` should
 
 ### Effect-hooks
 
-We have already used [state hooks](https://reactjs.org/docs/hooks-state.html)
+We have already used [state hooks](https://react.dev/learn/state-a-components-memory)
 that were introduced along with React version [16.8.0](https://www.npmjs.com/package/react/v/16.8.0),
 which provide state to React components defined as functions - the so-called **functional components**.
-Version 16.8.0 also introduces [effect hooks](https://reactjs.org/docs/hooks-effect.html) as a new feature.
+Version 16.8.0 also introduces [effect hooks](https://react.dev/reference/react#effect-hooks) as a new feature.
 As per the official docs:
 
 > *The Effect Hook lets you perform side effects on function components.*
@@ -467,12 +456,15 @@ As per the official docs:
 
 As such, effect hooks are precisely the right tool to use when fetching data from a server.
 
-Let's remove the fetching of data from *index.js*.
+Let's remove the fetching of data from *main.jsx*.
 Since we're gonna be retrieving the tasks from the server, there is no longer a need to pass data as props to the `App` component.
-So *index.js* can be simplified to:
+So *main.jsx* can be simplified to:
 
 ```js
-ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+import ReactDOM from "react-dom/client";
+import App from "./App";
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 ```
 
 The `App` component changes as follows:
@@ -579,7 +571,7 @@ const hook = () => {
 useEffect(hook, [])
 ```
 
-Now we can see more clearly that the function [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) takes **two parameters**.
+Now we can see more clearly that the function [useEffect](https://react.dev/reference/react/useEffect) takes **two parameters**.
 The first is a function, the ***effect*** itself.
 According to the documentation:
 
@@ -588,7 +580,7 @@ According to the documentation:
 So by default, the effect is ***always*** run after the component has been rendered.
 In our case, however, we only want to execute the effect along with the first render.
 
-The second parameter of `useEffect` is used to [specify how often the effect is run](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect).
+The second parameter of `useEffect` is used to [specify how often the effect is run](https://react.dev/reference/react/useEffect#parameters).
 If the second parameter is an empty array `[]`, then the effect is only run along with the first render of the component.
 
 There are many possible use cases for an effect hook other than fetching data from the server.
@@ -648,7 +640,7 @@ The following image describes the makeup of the application
 ![diagram of composition of react app](../../images/2/18e.png)
 
 The JavaScript code making up our React application is run in the browser.
-The browser gets the JavaScript from the *React dev server*, which is the application that runs after running the command `npm start`.
+The browser gets the JavaScript from the *React dev server*, which is the application that runs after running the command `npm run dev`.
 The dev-server transforms the JavaScript into a format understood by the browser.
 Among other things, it stitches together JavaScript from different files into one file.
 We'll discuss the dev-server in more detail in [part 7](/part7) of the course.
@@ -666,7 +658,7 @@ We will do this in [part 3](/part3).
 
 ### Exercise 2.11
 
-#### 2.11: The Communities Step6
+#### 2.11: The Communities Step 6
 
 We continue with developing our community directory.
 Store the initial state of the application in the file *db.json*, which should be placed in the root of the project.
@@ -716,6 +708,6 @@ it means that port 3001 is already in use by another application, e.g. in use by
 Close the other application, or change the port in case that doesn't work.
 
 Modify the application such that the initial state of the data is fetched from the server using the `axios` library.
-Complete the fetching with an [Effect hook](https://reactjs.org/docs/hooks-effect.html).
+Complete the fetching with an [Effect hook](https://react.dev/reference/react/useEffect).
 
 </div>

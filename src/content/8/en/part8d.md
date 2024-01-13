@@ -26,23 +26,22 @@ Go ahead and import that into WebStorm just like with all the previous iteration
 
 Once you have that done, let's get into it!
 
-### Create React App with TypeScript
+### Vite with TypeScript
 
-We can use [create-react-app](https://create-react-app.dev) to create a TypeScript app by adding a
-***template*** argument to the initialization script.
-So in order to create a TypeScript Create React App, run the following command:
+We can use [Vite](https://vitejs.dev/) to create a TypeScript app specifying the template *`react-ts`* in the initialization script.
+So to create a TypeScript app, run the following command:
 
 ```shell
-npx create-react-app reading --template typescript
+npm create vite@latest my-app-name -- --template react-ts
 ```
 
 After running the command, ***you should have a complete basic React app that uses TypeScript***.
-You can start the app by running `npm start` in the application's root.
+You can start the app by running `npm run dev` in the application's root.
 > *You'll need to cd into the new folder you just created to start it*
 
 If you take a look at the files and folders,
 you'll notice that the app is not that different from one using pure JavaScript.
-The only differences are that the *.js* and *.jsx* files are now *.ts* and *.tsx* files,
+The only differences are that the *.jsx* files are now *.tsx* files,
 they contain some type annotations, and the root directory contains a *tsconfig.json* file.
 
 Now, let's take a look at the *tsconfig.json* file that has been created for us:
@@ -50,29 +49,28 @@ Now, let's take a look at the *tsconfig.json* file that has been created for us:
 ```js
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
 ```
 
@@ -80,72 +78,36 @@ Notice `compilerOptions` now has the key [`lib`](https://www.typescriptlang.org/
 that includes:
 > *type definitions for things found in browser environments (like `document`).*
 
-Everything else should be more or less fine except that, at the moment,
-the configuration allows compiling JavaScript files because `allowJs` is set to `true`.
-That would be fine if you need to mix TypeScript and JavaScript (e.g. if you are in the process of transforming a JavaScript project into TypeScript or something like that),
-but we want to create a pure TypeScript app, so ***let's change the `allowJS` configuration to `false`***.
+Everything else should be more or less fine.
 
 In our previous project, we used ESlint to help us enforce a coding style, and we'll do the same with this app.
-We do not need to install any dependencies, since create-react-app has taken care of that already.
+We do not need to install any dependencies, since Vite has taken care of that already.
 
-**Let's create a file *.eslintrc*** with the following settings:
+In our previous project, we used ESlint to help us enforce a coding style, and we'll do the same with this app.
+We do not need to install any dependencies, since Vite has taken care of that already.
+
+When we look at the *main.tsx* file that Vite has generated, it looks familiar but there is a small but remarkable difference.
+There is an exclamation mark after the statement `document.getElementById('root')`:
 
 ```js
-{
-  "env": {
-    "browser": true,
-    "es6": true,
-    "jest": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended"
-  ],
-  "plugins": ["react", "@typescript-eslint"],
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "detect"
-    }
-  },
-  "rules": {
-    "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0,
-    "react/react-in-jsx-scope": 0
-  }
-}
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
 ```
 
-Since the return type of most React components is generally either `JSX.Element` or `null`,
-we have loosened up the default linting rules a bit by disabling the rules [*`explicit-function-return-type`*](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
-and [*`explicit-module-boundary-types`*](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-module-boundary-types.md).
-Now we don't need to explicitly state our function return types everywhere.
-We will also disable [*`react/react-in-jsx-scope`*](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md) since importing React is
-[no longer needed](https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html) in every file.
+The reason for this is that the statement might return value null but the `ReactDOM.createRoot` does not accept *`null`* as a parameter.
+With the [`!` operator](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#non-null-assertion-operator-postfix-),
+it is possible to assert to the TypeScript compiler that the value is *not null*.
 
-Next, we need to get our linting script to parse `*.tsx` files, which are the TypeScript equivalent of React's JSX files.
-We can do that by altering our lint command in *package.json* to the following:
-
-```json
-{
-  // ...
-    "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint './src/**/*.{ts,tsx}'" // highlight-line
-  },
-  // ...
-}
-```
-
-> *If you are using Windows*, you may need to change the linting path to use double quotes:
->
-> ```json
-> "lint": "eslint \"./src/**/*.{ts,tsx}\""
-> ```
+Earlier in this part we [warned](/part8/first_steps_with_type_script#type-assertion) about the dangers of type assertions,
+but in our case the assertion is OK since we are sure that the file *index.html* indeed has this particular id and the function is always returning a `HTMLElement`.
 
 ### React components with TypeScript
 
@@ -175,8 +137,8 @@ and we use the [prop-types](https://www.npmjs.com/package/prop-types) package in
 [part 5](/part5/props_children_and_proptypes#prop-types) to receive hints about the desired types of a component's props and warnings about invalid prop types.
 
 With TypeScript, *we don't need the **prop-types** package anymore*.
-We can define the types with the help of TypeScript just like we define types for a regular function as *react components are nothing but mere functions*.
-We will use an interface for the parameter types (i.e., `props`) and `JSX.Element` as the return type for any react component:
+We can define the types with the help of TypeScript, just like we define types for a regular function as *React components are nothing but mere functions*.
+We will use an interface for the parameter types (i.e., `props`) and `JSX.Element` as the return type for any React component:
 
 ```jsx
 import ReactDOM from 'react-dom/client';
@@ -189,7 +151,7 @@ const Welcome = (props: WelcomeProps): JSX.Element => {
   return <h1>Hello, {props.name}</h1>;
 };
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <Welcome name="Powercat" />
 )
 ```
@@ -208,42 +170,21 @@ const Welcome = (props: WelcomeProps): JSX.Element => {
 
 Now our editor knows that the `name` prop is a string.
 
-There is actually no need to define the return type of a React component since the TypeScript compiler infers the type automatically, and we can just write
+There is actually no need to define the return type of a React component since the TypeScript compiler infers the type automatically, and we can just write:
 
 ```jsx
 interface WelcomeProps {
   name: string;
 }
 
-const Welcome = (props: WelcomeProps)  => { // highlight-line
+const Welcome = (props: WelcomeProps) => { // highlight-line
   return <h1>Hello, {props.name}</h1>;
 };
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <Welcome name="Powercat" />
 );
 ```
-
-You propably noticed that we used a [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
-for the return value of the function *document.getElementById*
-
-```ts
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(  // highlight-line
-  <Welcome name="Powercat" />
-)
-```
-
-We need to do this since the *ReactDOM.createRoot* takes an HTMLElement as a parameter but the return value of function *document.getElementById* has the following type
-
-```js
-HTMLElement | null
-```
-
-since if the function does not find the searched element, it will return `null`.
-
-Earlier in this part we [warned](/part8/first_steps_with_type_script#type-assertion)
-about the dangers of type assertions, but in our case the assertion is ok since we are sure that the file *index.html* indeed has the `root` id
-and the function is always returning an `HTMLElement`.
 
 </div>
 
@@ -251,10 +192,10 @@ and the function is always returning an `HTMLElement`.
 
 ### Exercise 8.14
 
-Create a new Create React App with TypeScript, and set up ESlint for the project similarly to how we just did.
+Create a new Vite App with TypeScript.
 
 This exercise is similar to the one you have already done in [Part 1](/part1/java_script#exercises-1-3-1-5) of the course, but with TypeScript and some extra tweaks.
-Start off by modifying the contents of *index.tsx* to the following:
+Start off by modifying the contents of *main.tsx* to the following:
 
 ```jsx
 import ReactDOM from 'react-dom/client';
@@ -285,6 +226,8 @@ const App = () => {
     }
   ];
 
+  const totalGames = companyHandhelds.reduce((carry, handheld) => carry + handheld.gameCount, 0);
+
   return (
     <div>
       <h1>{companyName}</h1>
@@ -298,8 +241,7 @@ const App = () => {
         {companyHandhelds[2].name} {companyHandhelds[2].gameCount}
       </p>
       <p>
-        Number of games{" "}
-        {companyHandhelds.reduce((carry, handheld) => carry + handheld.gameCount, 0)}
+        Number of games{totalGames}
       </p>
     </div>
   );
@@ -342,7 +284,7 @@ const App = () => {
 
 In the previous exercise, we had three handhelds, and all handhelds had the same attributes `name` and `gameCount`.
 But what if we needed additional attributes for the systems and each handheld needs different attributes?
-How would this look, codewise?
+How would this look, code-wise?
 Let's consider the following example:
 
 ```js
@@ -476,7 +418,7 @@ If we eg. try to add the following to the array
 
 We will immediately see an error in the editor:
 
-![webstorm 3DS needs number of screens to be a handheld](../../images/8/63new.png)
+![WebStorm 3DS needs number of screens to be a handheld](../../images/8/63new.png)
 
 Since our new entry has the attribute `category` with value *`dual`*, **TypeScript knows that the new entry is not just a *`Handheld`* but more specifically a *`HandheldDual`***.
 So here the attribute `category` ***narrows*** the type of the entry from a more general to a more specific type that has a certain set of attributes.
@@ -515,9 +457,9 @@ type Handheld = HandheldBasic | HandheldDual | HandheldVirtual;
 
 How should we now use these types in our components?
 
-If we try to acess the objects in the array `handhelds: Handheld[]` we notice that it is possibly to only access the attributes that are common to all the types in the union:
+If we try to access the objects in the array `handhelds: Handheld[]` we notice that it is possible to only access the attributes that are common to all the types in the union:
 
-![webstorm showing handheld...](../../images/8/65new.png)
+![WebStorm showing handheld...](../../images/8/65new.png)
 
 And indeed, the TypeScript [documentation](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#working-with-union-types) says this:
 
@@ -535,7 +477,7 @@ Once TypeScript has deduced that a variable is of union type and that each type 
 we can use that as a type identifier.
 We can then build a switch case around that attribute and TypeScript will know which attributes are available within each case block:
 
-![webstorm showing handheld. and then attributes](../../images/8/64new.png)
+![WebStorm showing handheld. and then attributes](../../images/8/64new.png)
 
 In the above example, TypeScript knows that a `handheld` has the type *Handheld*
 and it can then infer that `handheld` is of either type *HandheldBasic*, *HandheldDual* or *HandheldVirtual* based on the value of the attribute `category`.
@@ -544,11 +486,11 @@ The specific technique of type narrowing where a union type is narrowed based on
 [**discriminated union**](https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions).
 
 > Notice that the narrowing can naturally be also done via an `if` statement.
-We could eg. do the following:
+> We could eg. do the following:
 >
 > ```js
->   companyHandhleds.forEach(handheld => {
->     if (hahdheld.category === 'virtual') {
+>   companyHandhelds.forEach(handheld => {
+>     if (handheld.category === 'virtual') {
 >       console.log('see the following:', handheld.agreement);
 >     }
 > 
@@ -867,7 +809,7 @@ const App = () => {
 ```
 
 It just works!
-When we hover over the `event.target.value`, we see that it is a `string`, which is what `setNewTask` expects as a parmeter:
+When we hover over the `event.target.value`, we see that it is a `string`, which is what `setNewTask` expects as a parameter:
 
 ![vscode showing variable is a string](../../images/8/67new.png)
 
@@ -958,7 +900,7 @@ Let's modify the app so that the tasks are saved in a JSON server backend in URL
 
 As usual, we shall use Axios and the `useEffect` hook to fetch the initial state from the server.
 
-Let us try the following
+Let us try the following:
 
 ```js
 const App = () => {
@@ -1026,7 +968,7 @@ Since the TypeScript types do not even exist in runtime, **our code does not *sa
 
 Type casting `axios.get` might be ok if we are *absolutely sure* that the backend behaves correctly and always sends the right data.
 If we want to build a robust system, we should prepare for surprises and parse the response data in the frontend
-similarly to what we did [in the previous section](/part9/typing_an_express_app#proofing-requests) for the requests to the backend.
+similarly to what we did [in the previous section](/part8/typing_an_express_app#proofing-requests) for the requests to the backend.
 
 Let's finish our app's functionality by integrating axios into our task creation:
 
@@ -1045,7 +987,7 @@ Let's finish our app's functionality by integrating axios into our task creation
 ```
 
 We are again giving `axios.post` a type parameter.
-We know that the server response is an added task so the proper type parameter is `Task`.
+We know that the server response is the added task, so the proper type parameter is `Task`.
 
 Let's refactor a bit of the code.
 Let's move some type definitions into a new file named *types.ts*:
@@ -1179,7 +1121,7 @@ The source code of the backend can be found in [this GitHub repository](https://
 
 #### Exercise 8.16
 
-Create a TypeScript React app with simillar configurations as the apps of this section.
+Create a TypeScript React app with similar configurations as the apps of this section.
 Fetch the diaries from the backend and render those to screen.
 Do all the required typing and ensure that there are no Eslint errors.
 
@@ -1197,7 +1139,8 @@ In this exercise you may skip all validations and assume that the user just ente
 
 #### Exercise 8.18
 
-Notify the user if the the creation of a diary entry fails in the backend. Make sure to also show the reason for the failure.
+Notify the user if the the creation of a diary entry fails in the backend.
+Make sure to also show the reason for the failure.
 
 See [this example](https://dev.to/mdmostafizurrahaman/handle-axios-error-in-typescript-4mf9) on how you can narrow the Axios error so that you can get hold of the error message.
 

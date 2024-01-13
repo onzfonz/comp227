@@ -19,7 +19,7 @@ By the time we reach the [recap section](#directory-structure-recap), the direct
 ```bash
 ├── index.js
 ├── app.js
-├── build
+├── dist
 │   └── ...
 ├── controllers
 │   └── tasks.js
@@ -33,7 +33,7 @@ By the time we reach the [recap section](#directory-structure-recap), the direct
 │   └── middleware.js  
 ```
 
-Before we get started, know that when you ask Webstorm to make a file, and if type *`dir/file`*, Webstorm will automatically create the directory if it doesn't exist.
+Before we get started, know that when you ask WebStorm to make a file, and if type *`dir/file`*, WebStorm will automatically create the directory if it doesn't exist.
 You just need to make sure the correct directory is selected before you begin.
 Let's get started
 
@@ -82,6 +82,15 @@ server.listen(config.PORT, () => {
 
 The *index.js* file only imports the actual application from the *app.js* file and then starts the application.
 The function `info` of the logger module is used for the console printout telling that the application is running.
+
+Now the Express app and the code taking care of the web server are separated from each other
+following [best practices](https://dev.to/nermineslimane/always-separate-app-and-server-files--1nc7).
+One of the advantages of this method is that the application can now be tested at the level of HTTP API calls
+without actually making calls via HTTP over the network, this makes the execution of tests faster.
+
+The route handlers have also been moved into a dedicated module.
+The event handlers of routes are commonly referred to as *controllers*, and for this reason we have created a new *controllers* directory.
+All of the routes related to tasks are now in the *tasks.js* module under the *controllers* directory.
 
 #### utils/config.js
 
@@ -154,7 +163,7 @@ tasksRouter.post('/', (request, response, next) => {
 })
 
 tasksRouter.delete('/:id', (request, response, next) => {
-  Task.findByIdAndRemove(request.params.id)
+  Task.findByIdAndDelete(request.params.id)
     .then(() => {
       response.status(204).end()
     })
@@ -194,7 +203,7 @@ module.exports = tasksRouter
 
 The module exports the router to be available for all consumers of the module.
 
-All routes are now defined for the router object, similar to what did before with the object representing the entire application.
+All routes are now defined for the router object, similar to what we did before with the object representing the entire application.
 
 It's worth noting that the paths in the route handlers have shortened.
 In the previous version, we had:
@@ -242,6 +251,8 @@ const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose').set('strictQuery', true)
 
+mongoose.set('strictQuery', false)
+
 logger.info('connecting to', config.MONGODB_URI)
 
 mongoose.connect(config.MONGODB_URI)
@@ -253,7 +264,7 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(cors())
-app.use(express.static('build'))
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
@@ -345,7 +356,7 @@ To recap, the directory structure looks like this after the changes have been ma
 ```bash
 ├── index.js
 ├── app.js
-├── build
+├── dist
 │   └── ...
 ├── controllers
 │   └── tasks.js
@@ -408,7 +419,7 @@ logger.info('message')
 logger.error('error message')
 ```
 
-The other option is to destructure the functions to their own variables in the `require` statement:
+The other option is to destructure the functions to their own variables in the *`require`* statement:
 
 ```js
 const { info, error } = require('./utils/logger')
@@ -421,7 +432,8 @@ I would recommend using the latter option when only a small portion of those exp
 
 #### Exporting a single value
 
-In file *controller/tasks.js*, exporting happens differently:
+The second way of exporting may be preferable if only a small portion of the exported functions are used in a file.
+As an example, in the file *controller/tasks.js*, exporting happens differently:
 
 ```js
 const tasksRouter = require('express').Router()
@@ -444,6 +456,16 @@ app.use('/api/tasks', tasksRouter)
 
 Now the exported *thing* (in this case a router object) is assigned to a variable and used as such.
 
+#### Finding the usages of your files with WebStorm
+
+WebStorm has some handy features that allow you to search for usages in your code.
+This can be very helpful for refactoring.
+For example, if you decide to split a function into two separate functions, your code could break if you don't modify all the usages.
+This is difficult if you don't know where they are.
+
+To find usages for any functions or variables, you can go to *Edit->Find Usages->Find Usages in File*
+and then search based on a variety of criteria.
+
 </div>
 
 <div class="tasks">
@@ -455,12 +477,19 @@ which allows users to save information about interesting shows they have stumble
 For each listed show we will save the title, genre, Streaming Service URL, and amount of upvotes from users of the application.
 From here on, I will refer to a streaming show as a **show**.
 
-#### 4.1 Watchlist, step1
+> **Note** You need to install Mongoose version 7.6.5 with the command
+>
+> ```bash
+> npm install mongoose@7.6.5
+> ```
+>
+> since the most recent Mongoose version does not support a library that we will be using in a later part of the course!
+
+#### 4.1 Watchlist, Step 1
 
 Let's imagine a situation, where you receive an email that contains the following application body:
 
 ```js
-const http = require('http')
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -512,7 +541,7 @@ You can create a new database for your application with MongoDB Atlas, or use th
 Verify that it is possible to add shows to the list with Postman or the WebStorm REST client
 and that the application returns the added shows at the correct endpoint.
 
-#### 4.2 Watchlist, step2
+#### 4.2 Watchlist, Step 2
 
 Refactor the application into separate modules as shown earlier in this part of the course material.
 
@@ -524,6 +553,8 @@ The "shortcut" will end up taking more time than moving forward slowly and syste
 > This is part of why I keep enforcing you all to commit your code every time it is in a stable state.
 It makes it easier to find what error caused your mistake.
 This makes it easy to rollback to a situation where the application still works.
+
+If you're having issues with `content.body` being *`undefined`* for seemingly no reason, make sure you didn't forget to add *`app.use(express.json())`* near the top of the file.
 
 </div>
 
@@ -586,7 +617,7 @@ Let's define the *npm script `test`* to execute tests with Jest and to report ab
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest --verbose", // highlight-line
-    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../part3-tasks-backend",
+    "build:ui": "rm -rf dist && cd ../part2-tasks/ && npm run build && cp -r dist ../part3-tasks-backend",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
     "lint": "eslint .",
     "fixlint": "eslint . --fix"
@@ -643,7 +674,7 @@ test('reverse of releveler', () => {
 
 The ESLint configuration we added to the project in the previous part complains about the `test` and `expect` commands in our test file
 since the configuration does not allow *globals*.
-Let's get rid of the complaints by adding `"jest": true` to the `env` property in the *.eslintrc.js* file.
+Let's get rid of the complaints by adding `"jest": true` to the `env` property in the *.estlintrc.cjs* file.
 
 ```js
 module.exports = {
@@ -654,17 +685,11 @@ module.exports = {
     'node': true,
     'jest': true, // highlight-line
   },
-  'extends': 'eslint:recommended',
-  'parserOptions': {
-    'ecmaVersion': 12
-  },
-  "rules": {
-    // ...
-  },
+  // ...
 }
 ```
 
-Webstorm also seems to complain with warnings for not knowing about test and expect.
+WebStorm also seems to complain with warnings for not knowing about test and expect.
 To get rid of these errors, you can simply type this command so that your project is also aware of the jest's types.
 
 ```bash
@@ -789,7 +814,7 @@ Let's create a collection of helper functions that are meant to assist in dealin
 Create the functions into a file called *utils/list_helper.js*.
 Write your tests into an appropriately named test file under the *tests* directory.
 
-#### 4.3: helper functions and unit tests, step1
+#### 4.3: helper functions and unit tests, Step 1
 
 First, define a `dummy` function that receives an array of shows as a parameter and always returns the value 1.
 The contents of the *list_helper.js* file at this point should be the following:
@@ -817,7 +842,7 @@ test('dummy returns one', () => {
 })
 ```
 
-#### 4.4: helper functions and unit tests, step2
+#### 4.4: helper functions and unit tests, Step 2
 
 Define a new `totalLikes` function that receives a list of shows as a parameter.
 The function returns the total sum of ***likes*** in all of the shows.
@@ -857,7 +882,7 @@ Remember the things that we learned about [debugging](/part3/saving_data_to_mong
 You can print things to the console with `console.log` even during test execution.
 It is even possible to use the debugger while running tests, you can find instructions for that [here](https://jestjs.io/docs/en/troubleshooting).
 
-> **NB:** if some test is failing, then it is recommended to only run that test while you are fixing the issue.
+> **Pertinent:** if some test is failing, then it is recommended to only run that test while you are fixing the issue.
 You can run a single test with the [only](https://jestjs.io/docs/api#testonlyname-fn-timeout) method.
 >
 > Another way of running a single test (or describe block) is to specify the name of the test to be run with the [-t](https://jestjs.io/docs/en/cli.html) flag:
@@ -866,7 +891,7 @@ You can run a single test with the [only](https://jestjs.io/docs/api#testonlynam
 > npm test -- -t 'when list has only one show, equals the likes of that'
 > ```
 
-#### 4.5*: helper functions and unit tests, step3
+#### 4.5*: helper functions and unit tests, Step 3
 
 Define a new `favoriteShow` function that receives a list of shows as a parameter.
 The function finds out which show has the most likes.
@@ -888,7 +913,7 @@ since the [toBe](https://jestjs.io/docs/en/expect#tobevalue) tries to verify tha
 Write the tests for this exercise inside of a new `describe` block.
 Do the same for the remaining exercises as well.
 
-#### 4.6*: helper functions and unit tests, step4
+#### 4.6*: helper functions and unit tests, Step 4
 
 This and the next exercise are a little bit more challenging.
 Finishing these two exercises is not required to advance in the course material,
@@ -910,7 +935,7 @@ The return value also contains the number of shows the top genre has:
 
 If there are many top genres, then it is enough to return any one of them.
 
-#### 4.7*: helper functions and unit tests, step5
+#### 4.7*: helper functions and unit tests, Step 5
 
 Define a function called `mostLikes` that receives an array of shows as its parameter.
 The function returns the genre, whose shows collectively have the largest amount of likes.

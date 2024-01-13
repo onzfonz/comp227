@@ -16,8 +16,7 @@ const InfoBanner = ({ visible, onHide }) => {
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignContent: 'space-between',
-    backgroundColor: '#E8E8E8',
-    color: '#212121',
+    backgroundColor: 'var(--color-background)',
     zIndex: 2147483647,
   };
 
@@ -39,6 +38,8 @@ const InfoBanner = ({ visible, onHide }) => {
     outline: 'none',
     backgroundColor: 'transparent',
     border: 'none',
+    color: 'var(--color-text)',
+    cursor: 'pointer',
   };
 
   return (
@@ -46,11 +47,9 @@ const InfoBanner = ({ visible, onHide }) => {
       <div stule={textStyle}>
         {/* TODO: Have this part have a different byline */}
         {/* Doing the course exam soon? Test the new exam system, read more{' '}
-        <a href="/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
+        <a href="/part0/general_info#doing-the-exam">
           <span style={linkStyle}>here</span>!
         </a> */}
-        Part 4 is now online!
-        You have new teams and directions for week 5's discussion as well.
       </div>
       <div style={buttonDiv}>
         <button style={buttonStyle} onClick={onHide}>

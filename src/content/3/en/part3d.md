@@ -67,7 +67,7 @@ app.post('/api/tasks', (request, response, next) => { // highlight-line
   const task = new Task({
     content: body.content,
     important: body.important || false,
-    date: new Date(),
+    date: new Date().toISOString(),
   })
 
   task.save()
@@ -99,7 +99,7 @@ When validating an object fails, we return the following default error message f
 ![postman showing error message](../../images/3/50.png)
 
 We may notice that the backend has now a problem: ***validations are not done when editing a task***.
-The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what is the problem:
+The [documentation](https://github.com/blakehaswell/mongoose-unique-validator#find--updates) explains what the problem is:
 validations are not run by default when `findOneAndUpdate` is executed.
 
 The fix is easy.
@@ -156,7 +156,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.19-3.21
 
-#### 3.19*: Communities database, step7
+#### 3.19*: Communities database, Step 7
 
 Expand the validation so that the name stored in the database has to be at least three characters long.
 
@@ -180,16 +180,16 @@ You can display the default error message returned by Mongoose, even though they
 
 ![communities screenshot showing group validation failure](../../images/3/56e.png)
 
-> **NB:** On update operations, mongoose validators are off by default.
+> **Pertinent:** On update operations, mongoose validators are off by default.
 [Read the documentation](https://mongoosejs.com/docs/validation.html) to determine how to enable them.
 
-#### 3.20*: Communities database, step8
+#### 3.20*: Communities database, Step 8
 
 Add validation to your communities application, which will make sure that community links are of the correct form.
 
 A community link must
 
-- start with `https://` and then either have **discord.com/invite** or **discord.gg** as part of its URL. (I was going to have you add slack, but decided against it)
+- start with `https://` and then either have **discord.com/invite** or **discord.gg** as part of its URL.
 - end with 6-10 more letters (both upper case and lowercase) or numbers, but not more than 10 of them.
     - e.g. <https://discord.com/invite/yNhmmsPBT8> and and <https://discord.gg/9BXyDG> are valid community links
     - e.g. discord.gg/9BXyDG, <https://reddit.com> and <https://something.discord.gg/9BXyDG> are invalid
@@ -205,6 +205,12 @@ Generate a new "comp227" version of the application by creating a new production
 Verify that everything works locally by using the entire application from the address <http://localhost:3001/>.
 
 Push the latest version to Render and verify that everything works there as well.
+
+> **NOTE**: you should **deploy the *backend*** to the cloud service.
+> Make sure that your backend is at the root of your repository.
+
+You shall NOT be deploying the frontend directly at any stage of this part.
+It is just backend repository that is deployed throughout the whole part, nothing else.
 
 </div>
 
@@ -223,8 +229,8 @@ In compiled statically typed languages like Java, IDEs like NetBeans can point o
 Additional tools for performing [static analysis](https://en.wikipedia.org/wiki/Static_program_analysis) like [checkstyle](https://checkstyle.sourceforge.io),
 can be used for expanding the capabilities of the IDE to also point out problems related to style, like indentation.
 
-In the JavaScript universe, the current leading tool for static analysis aka.
-"linting" is [ESlint](https://eslint.org/).
+In the JavaScript universe, the current leading tool for static analysis
+(AKA "linting") is [ESlint](https://eslint.org/).
 
 Let's install ESlint as a development dependency to the backend project with the command:
 
@@ -242,7 +248,8 @@ We will answer all of the questions:
 
 ![terminal output from ESlint init](../../images/3/52be.png)
 
-The configuration will be saved in the *.eslintrc.js* file:
+The configuration will be saved in the *.estlintrc.cjs* file.
+We will change `browser` to `node` in the `env` configuration:
 
 ```js
 module.exports = {
@@ -277,7 +284,7 @@ module.exports = {
 ```
 
 Let's change the rule concerning semicolons so that it only raises a warning and not an error.
-You can also change the rule regarding indentation or others like the linebreak style if you are using windows.
+You can also change the rule regarding indentation or others like the linebreak style if you are using Windows.
 I had to change my configuration a little bit this first time around, and that's fine.
 The point is to be consistent.
 
@@ -304,7 +311,7 @@ It is recommended to create some separate `npm script` for linting:
     "dev": "nodemon index.js",
     // ...
     "lint": "eslint .", // highlight-line
-    "lint:fix": "nprum run lint -- --fix" // highlight-line
+    "lint:fix": "npm run lint -- --fix" // highlight-line
   },
   // ...
 }
@@ -317,10 +324,10 @@ We do not want this to happen, and we can accomplish this by creating a [.eslint
 file in the project's root with the following contents:
 
 ```bash
-build
+dist
 ```
 
-This causes the entire *build* directory to not be checked by ESlint.
+This causes the entire *dist* directory to not be checked by ESlint.
 
 Lint has quite a lot to say about our code, much of which can be easily fixed.
 
@@ -341,11 +348,11 @@ Once you are in the ESLint setting select the ***Automatic ESLint configuration*
 It really makes sense for us to apply it to all future new projects, so I will have you do on more thing and change some settings for new projects.
 To do so, you'll need to go to ***File->New Projects Setup->Settings for New Projects***.
 Once that window opens, then select ***Languages & Frameworks->Javascript->Code Quality Tools->ESLint***.
-Here you'll see a window similar to what we just configured, so again select ***Automatic ESLint configuration*** and mark the ***Run eslint --fix on save*** checbox.
+Here you'll see a window similar to what we just configured, so again select ***Automatic ESLint configuration*** and mark the ***Run eslint --fix on save*** checkbox.
 Also, while we are in the New Project settings, please ensure that the node interpreter from part 0 is selected as the node interpreter.
 *You can reach that option by typing node in the search bar, it will be under ***Languages & Frameworks->Node.js***.
 
-Once you click OK, Webstorm will underline style violations with a red line and will highlight other problems as well.
+Once you click OK, WebStorm will underline style violations with a red line and will highlight other problems as well.
 
 ![Screenshot of vscode ESlint plugin showing errors](../../images/3/54a.png)
 
@@ -357,7 +364,7 @@ This makes the other errors easy to spot and fix right away.
 
 ![Screenshot of WebStorm ESlint plugin showing less errors after save](../../images/3/custom/eslint_after_save.png)
 
-ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the *.eslintrc.js* file.
+ESlint has a vast array of [rules](https://eslint.org/docs/rules/) that are easy to take into use by editing the *.estlintrc.cjs* file.
 
 Let's add the [eqeqeq](https://eslint.org/docs/rules/eqeqeq) rule that warns us if equality is checked with anything other than `===` (like `==`).
 The rule is added under the `rules` field in the configuration file.
@@ -376,7 +383,7 @@ While we're at it, let's make a few other changes to the rules.
 
 Let's prevent unnecessary [trailing spaces](https://eslint.org/docs/rules/no-trailing-spaces) at the ends of lines,
 let's require that [there is always a space before and after curly braces](https://eslint.org/docs/rules/object-curly-spacing),
-and let's also demand a consistent use of whitespaces in the function parameters of arrow functions.
+and let's also demand a consistent use of whitespace in the function parameters of arrow functions.
 
 ```js
 {
@@ -403,7 +410,7 @@ Our default configuration takes a bunch of predetermined rules into use from `es
 
 This includes a rule that warns about *console.log* commands.
 [Disabling](https://eslint.org/docs/user-guide/configuring#configuring-rules) a rule can be accomplished by
-defining its "value" as 0 in the configuration file.
+defining its "value" as *`0`* in the configuration file.
 Let's do this for the `no-console` and `no-debugger` rules in the meantime,
 since we are learning and not intending to ship anything just yet.
 
@@ -433,13 +440,13 @@ You can also use the keyboard shortcut shown to see a list of options for fixing
 
 Just pay careful attention as you go through and fix some of the errors to ensure that your program still works.
 
-#### Supressing warnings and other tweaks
+#### Suppressing warnings and other tweaks
 
-While ESlint and Webstorm are great, sometimes Webstorm or ESlint may not have a good solution for you either, as it has with us complaining about using the variable **`process`**.
+While ESlint and WebStorm are great, sometimes WebStorm or ESlint may not have a good solution for you either, as it has with us complaining about using the variable **`process`**.
 
 ![eslint complaining about process](../../images/3/custom/eslint_process.png)
 
-In those cases, you may be tempted to use ***Suppress  'no-undef' for current line***.
+In those cases, you may be tempted to use ***Suppress 'no-undef' for current line***.
 Doing so leads to having a line for ESlint that looks like this just above the line.
 
 ```js
@@ -466,8 +473,8 @@ It turns out that the best solution is not to do any suppression but to add this
 Enabling node means that ESlint knows that we can use the `process` variable,
 and allows you to rely on a system that has helped countless developers with similar situations who have come before you.
 
-> **NB** when you make changes to the *.eslintrc.js* file, play close attention to errors in there as well! Webstorm will highlight issues.
-If there are, Webstorm will report the issues to you, and you can look at the terminal output to see more details about it.
+> **NB** when you make changes to the *.estlintrc.cjs* file, play close attention to errors in there as well! WebStorm will highlight issues.
+If there are, WebStorm will report the issues to you, and you can look at the terminal output to see more details about it.
 >
 > ![terminal output from npm run lint](../../images/3/55.png)
 
@@ -489,6 +496,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 Add ESlint to your application and fix all the warnings.
 
-This was the last exercise of this part of the course. It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
+> This was the last exercise of this part of the course.
+> It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
 
 </div>

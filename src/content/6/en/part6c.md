@@ -30,7 +30,7 @@ The initial state of the database is stored in the file *db.json*, which is plac
 }
 ```
 
-Let's install both *`axios`* and *`json-server`* to the project...
+Let's install both *`axios`* and *`json-server`* to the project:
 
 ```js
 npm install json-server --save-dev
@@ -119,7 +119,7 @@ export const { createTask, toggleImportanceOf, appendTask } = taskSlice.actions 
 export default taskSlice.reducer
 ```
 
-A quick way to *initialize the **tasks' state** based on the server's data* is to ***fetch** the tasks* in the *index.js* file
+A quick way to *initialize the **tasks' state** based on the server's data* is to ***fetch** the tasks* in *main.jsx*
 and *`dispatch` an action* using the `appendTask` action creator for each individual task object:
 
 ```js
@@ -197,7 +197,7 @@ export const { createTask, toggleImportanceOf, appendTask, setTasks } = taskSlic
 export default taskSlice.reducer
 ```
 
-Now, the code in the *index.js* file looks a lot better:
+Now, the code in *main.jsx* looks a lot better:
 
 ```js
 // ...
@@ -216,9 +216,9 @@ taskService.getAll().then(tasks =>
 )
 ```
 
-> **NB:** why didn't we use `await` in place of promises and event handlers (registered to `then` methods)?
+> **Pertinent:** why didn't we use `await` in place of promises and event handlers (registered to `then` methods)?
 >
-> ***`await` only works inside `async` functions***, and `taskService.getAll` in *index.js* is not inside a function, so we'll abstain from using `async` here.
+> ***`await` only works inside `async` functions***, and `taskService.getAll` in *main.jsx* is not inside a function, so we'll abstain from using `async` here.
 
 Let's refactor the task initialization into the `App` component,
 and, as usual, when fetching data from a server, we'll use the **effect hook**.
@@ -252,49 +252,6 @@ const App = () => {
 
 export default App
 ```
-
-Using the `useEffect` hook causes an eslint warning:
-
-![vscode warning useEffect missing dispatch dependency](../../images/6/26ea.png)
-
-We can get rid of it by following their suggestion to include `dispatch` as a dependency for `useEffect`.
-
-```js
-const App = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    taskService
-      .getAll().then(tasks => dispatch(setTasks(tasks)))
-  }, [dispatch]) // highlight-line
-
-  // ...
-}
-```
-
-Remember that `dispatch` is essentially the ***dispatch function*** of our redux store.
-**If** the value of `dispatch` were to change during runtime,
-the effect would be executed again.
-This however cannot happen in our application, so the warning is unnecessary.
-
-A potential alternative to rid ourselves of the warning would be to disable ESlint on that line:
-
-```js
-const App = () => {
-  const dispatch = useDispatch()
-  useEffect(() => {
-    taskService
-      .getAll().then(tasks => dispatch(setTasks(tasks)))   
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps  
-
-  // ...
-}
-```
-
-Generally disabling ESlint when it throws a warning is not a good idea.
-*Even though the ESlint rule in question has caused some [arguments](https://github.com/facebook/create-react-app/issues/6880)*,
-we will follow the code hint.
-
-You can find more about the need to define hooks dependencies in [the react documentation](https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies).
 
 ### Sending data to the backend
 
@@ -378,13 +335,13 @@ The current state of the code for the application can be found on [GitHub](https
 
 ### Exercises 6.14-6.15
 
-#### 6.14 Jokes and the backend, step1
+#### 6.14 Jokes and the backend, Step 1
 
 When the application launches, fetch the jokes from the backend implemented using json-server.
 
 As the initial backend data, you can use, e.g. [this](https://github.com/comp227/misc/blob/main/jokes.json).
 
-#### 6.15 Jokes and the backend, step2
+#### 6.15 Jokes and the backend, Step 2
 
 Modify the creation of new jokes, so that the jokes are stored in the backend.
 
@@ -579,7 +536,7 @@ const NewTask = () => {
 }
 ```
 
-Finally, let's clean up the *index.js* file a bit by moving the code related to the creation of the Redux store into its own, *store.js* file:
+Finally, let's clean up the *main.jsx* file a bit by moving the code related to the creation of the Redux store into its own, *store.js* file:
 
 ```js
 import { configureStore } from '@reduxjs/toolkit'
@@ -597,7 +554,7 @@ const store = configureStore({
 export default store
 ```
 
-After the changes, the content of the *index.js* is the following:
+After the changes, the content of the *main.jsx* is the following:
 
 ```js
 import React from 'react'
@@ -625,20 +582,20 @@ and the [*RTK Query*](https://redux-toolkit.js.org/rtk-query/overview) API.
 
 ### Exercises 6.16-6.19
 
-#### 6.16 Jokes and the backend, step3
+#### 6.16 Jokes and the backend, Step 3
 
 Modify the initialization of the Redux store to happen using asynchronous action creators, which are made possible by the *Redux Thunk* library.
 
-#### 6.17 Jokes and the backend, step4
+#### 6.17 Jokes and the backend, Step 4
 
 Also modify the creation of a new joke to happen using asynchronous action creators.
 
-#### 6.18 Jokes and the backend, step5
+#### 6.18 Jokes and the backend, Step 5
 
 Voting does not yet save changes to the backend.
 Fix this situation with the help of the *Redux Thunk* library.
 
-#### 6.19 Jokes and the backend, step6
+#### 6.19 Jokes and the backend, Step 6
 
 The creation of notifications is still a bit tedious since one has to do two actions and use the `setTimeout` function:
 

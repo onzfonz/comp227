@@ -53,7 +53,7 @@ Let's assume that the `users` collection contains two users:
     username: 'randy',
     _id: 141414,
   },
-];
+]
 ```
 
 The `tasks` collection contains three tasks that all have a `user` field that references a user in the `users` collection:
@@ -238,8 +238,7 @@ const usersRouter = require('./controllers/users')
 app.use('/api/users', usersRouter)
 ```
 
-Then, let's define a separate **router** for dealing with users in a new *controllers/users.js* file.
-The contents of our new router (*controllers/users.js*) is as follows:
+The contents of the file, (*controllers/users.js*), that defines the router is as follows:
 
 ```js
 const bcrypt = require('bcrypt')
@@ -365,7 +364,7 @@ describe('when there is initially one user in db', () => {
       .expect(400)
       .expect('Content-Type', /application\/json/)
 
-    expect(result.body.error).toContain('username must be unique')
+    expect(result.body.error).toContain('expected `username` to be unique')
 
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd).toEqual(usersAtStart)
@@ -378,38 +377,53 @@ We are essentially practicing [**test-driven development** (TDD)](https://en.wik
 where tests for new functionality are written before the functionality is implemented.
 
 Mongoose does not have a built-in validator for checking the uniqueness of a field.
-In principle we could find a ready-made solution for this from the
-[mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator)
-npm package, but as of Jan 15, 2023 it looks like the project is not being actively developed.
-So let's implement the uniqueness check by ourselves in the controller:
+Fortunately, there is ready-made solution for this, the
+[mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator) library.
+Let's install the library:
+
+```bash
+npm install mongoose-unique-validator
+```
+
+and extend the code by following the library documentation in *models/user.js*:
 
 ```js
-usersRouter.post('/', async (request, response) => {
-  const { username, name, password } = request.body
+const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator') // highlight-line
 
-// highlight-start
-  const existingUser = await User.findOne({ username })
-  if (existingUser) {
-    return response.status(400).json({
-      error: 'username must be unique'
-    })
-  }
+const userSchema = mongoose.Schema({
+  // highlight-start
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
   // highlight-end
-
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
-
-  const user = new User({
-    username,
-    name,
-    passwordHash,
-  })
-
-  const savedUser = await user.save()
-
-  response.status(201).json(savedUser)
+  name: String,
+  passwordHash: String,
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Task'
+    }
+  ],
 })
+
+userSchema.plugin(uniqueValidator) // highlight-line
+
+// ...
 ```
+
+> Pertinent: when installing the *mongoose-unique-validator* library, you may encounter the following error message:
+>
+> ![screenshot showing mongoose compatibility error](../../images/4/uniq.png)
+>
+> The reason for this is that at the time of writing (10.11.2023) the library is not yet compatible with Mongoose version 8.
+> If you encounter this error, you can revert to an older version of Mongoose by running the command
+>
+> ```bash
+> npm install mongoose@7.6.5
+> ```
 
 We could also implement other validations into the user creation.
 We could check that the username is long enough, that the username only consists of permitted characters, or that the password is strong enough.
@@ -456,14 +470,14 @@ You can find the code for our current application in its entirety in the *part4-
 
 The code for creating a new task has to be updated so that the task is assigned to the user who created it.
 
-Let's expand our current implementation so that the information about the user who created a task is sent in the `userId` field of the request body:
+Let's expand our current implementation in *controllers/tasks.js* so that the information about the user who created a task is sent in the `userId` field of the request body:
 
 ```js
 const User = require('../models/user') //highlight-line
 
 //...
 
-tasksRouter.post('/', async (request, response, next) => {
+tasksRouter.post('/', async (request, response) => {
   const body = request.body
 
   const user = await User.findById(body.userId) //highlight-line
@@ -483,8 +497,28 @@ tasksRouter.post('/', async (request, response, next) => {
 })
 ```
 
+The task schema will also need to change as follows in our *models/task.js* file:
+
+```js
+const taskSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true,
+    minlength: 5
+  },
+  important: Boolean,
+  date: Date,
+  // highlight-start
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+  //highlight-end
+})
+```
+
 It's worth noting that the `user` object also changes.
-The `id` of the task is stored in the `tasks` field:
+The `id` of the task is stored in the `tasks` field of the `user` object:
 
 ```js
 const user = await User.findById(body.userId)
@@ -523,7 +557,7 @@ With join queries in Mongoose, *nothing can guarantee that the state between the
 meaning that if we make a query that joins the user and tasks collections, the **state of the collections may change during the query**.
 
 The Mongoose join is done with the [`populate`](http://mongoosejs.com/docs/populate.html) method.
-Let's update the route that returns all users first:
+Let's update the route that returns all users first in *controllers/users.js*:
 
 ```js
 usersRouter.get('/', async (request, response) => {
@@ -543,24 +577,25 @@ The result is almost exactly what we wanted:
 
 ![JSON data showing populated tasks and users data with repetition](../../images/4/13ea.png)
 
-We can use the populate parameter for choosing the fields we want to include from the documents.
+We can use the *`populate`* parameter for choosing the fields we want to include from the documents.
+In addition to the field *`id`*, we are now only interested in *`content`* and *`important`*.
 The selection of fields is done with the Mongo [syntax](https://docs.mongodb.com/manual/tutorial/project-fields-from-query-results/#return-the-specified-fields-and-the-id-field-only):
 
 ```js
 usersRouter.get('/', async (request, response) => {
   const users = await User
     .find({})
-    .populate('tasks', { content: 1, date: 1 }) // highlight-line
+    .populate('tasks', { content: 1, important: 1 }) // highlight-line
 
   response.json(users)
-});
+})
 ```
 
 The result is now exactly like we want it to be:
 
 ![combined data showing no repetition](../../images/4/14ea.png)
 
-Let's also add a suitable population of user information to tasks:
+Let's also add a suitable population of user information to tasks in *controllers/tasks.js*:
 
 ```js
 tasksRouter.get('/', async (request, response) => {
@@ -598,5 +633,9 @@ const taskSchema = new mongoose.Schema({
 
 You can find the code for our current application in its entirety in the *part4-8* branch of
 [this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part4-8).
+
+> Pertinent: At this stage, firstly, some tests will fail.
+> We will leave fixing the tests as an optional exercise.
+> Secondly, in the deployed tasks app, the creating a task feature will stop working as the user is not yet linked to the frontend.
 
 </div>

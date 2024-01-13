@@ -17,7 +17,7 @@ First, we will add CSS to our application the old-school way; in a single file w
 [CSS preprocessor](https://developer.mozilla.org/en-US/docs/Glossary/CSS_preprocessor)
 (although this is not entirely true as we will learn later on).
 
-Let's add a new *index.css* file under the *src* directory and then add it to the application by importing it in the *index.js* file:
+Let's add a new *index.css* file under the *src* directory and then add it to the application by importing it in the *main.jsx* file:
 
 ```js
 import './index.css'
@@ -31,8 +31,8 @@ h1 {
 }
 ```
 
-**Notice:** when the content of the file *index.css* changes,
-React might not notice that automatically, so you may need to refresh the browser to see your changes!
+> **Pertinent:** when the content of the file *index.css* changes,
+> React might not notice that automatically, so you may need to refresh the browser to see your changes!
 
 CSS rules comprise of **selectors** and **declarations**.
 The selector defines which elements the rule should be applied to.
@@ -92,7 +92,7 @@ In regular HTML, classes are defined as the value of the `class` attribute:
 <li class="task">some text...</li>
 ```
 
-In React we have to use the [className](https://reactjs.org/docs/dom-elements.html#classname) attribute instead of the class attribute.
+In React we have to use the [className](https://react.dev/learn#adding-styles) attribute instead of the class attribute.
 With this in mind, let's make the following changes to our `Task` component:
 
 ```js
@@ -110,7 +110,7 @@ const Task = ({ task, toggleImportance }) => {
 }
 ```
 
-Class selectors are defined with the `.classname` syntax:
+Class selectors are defined with the `.className` syntax:
 
 ```css
 .task {
@@ -239,7 +239,8 @@ The code for the current state of our application can be found in the  *part2-7*
 React also makes it possible to write styles directly in the code as so-called [inline styles](https://react-cn.github.io/react/tips/inline-styles.html).
 
 The idea behind defining inline styles is extremely simple.
-Any React component or element can be provided with a set of CSS properties as a JavaScript object through the [style](https://reactjs.org/docs/dom-elements.html#style) attribute.
+Any React component or element can be provided with a set of CSS properties as a JavaScript object through the
+[style](https://react.dev/reference/react-dom/components/common#applying-css-styles) attribute.
 
 CSS rules are defined slightly differently in JavaScript than in normal CSS files.
 Let's say that we wanted to give some element the color green and italic font that's 16 pixels in size.
@@ -330,7 +331,7 @@ The code of the final version of our application can be found in the *part2-8* b
 
 ### Exercises 2.16-2.17
 
-#### 2.16: Communities step11
+#### 2.16: Communities Step 11
 
 Use the [improved error message](/part2/adding_styles_to_react_app#improved-error-message)
 example from part 2 as a guide to show a notification that lasts for a few seconds after a successful operation is executed (a group is added or a number is changed).
@@ -338,10 +339,10 @@ In these examples, use the gray and green colors.
 
 ![successful green added screenshot](../../images/2/27e.png)
 
-#### 2.17*: Communities step12
+#### 2.17*: Communities Step 12
 
 Open your application in two browsers.
-**If you delete a group in browser 1** a short while before attempting to ***change the group's URL*** in browser 2, you will get the following error message:
+**If you delete a group in browser A** a short while before attempting to ***change the group's URL*** in browser B, you will get the following error message:
 
 ![error message 404 not found when changing multiple browsers](../../images/2/29b.png)
 
@@ -351,7 +352,8 @@ The messages shown for successful and unsuccessful events should look different:
 
 ![error message shown on screen instead of in console feature add-on](../../images/2/28e.png)
 
-> **Notice** that even if you handle the exception, the error message is printed to the console.
+> **Notice** that even if you handle the exception, the first ***404*** error message is still printed to the console.
+> But you should not see *`"Uncaught (in promise) Error"`*.
 
 </div>
 
@@ -377,9 +379,9 @@ const App = () => {
 
 This is a reasonable initial value for `tasks` since we will be storing multiple tasks in that state.
 
-If the state were to hold a "single thing",
-a better initial value would be `null` since it indicates that there is *nothing* in the state initially.
-Let us try what happens if we use this initial value:
+If the state were to hold a ***single thing***,
+it would be better to initialize that state to `null` since it indicates that there is *nothing* initially.
+Let us see what happens if we initialize our state to `null`:
 
 ```js
 const App = () => {
@@ -507,7 +509,7 @@ The other thing that we still need to have a closer look at is the second parame
   }, []) // highlight-line
 ```
 
-The second parameter of `useEffect` is used to [specify how often the effect is run](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect).
+The second parameter of `useEffect` is used to [specify how often the effect is run](https://react.dev/reference/react/useEffect#parameters).
 The principle is that the effect is always executed after the first render of the component
 *and* when the value of the second parameter changes.
 
@@ -564,13 +566,15 @@ const App = () => {
     </div>
   )
 }
+
+export default App
 ```
 
 The user interface of the application has a form,
 in the input field of which the name of the desired currency is written.
 If the currency exists, the application renders the exchange rates of the currency to other currencies:
 
-![browser showing exchange rate for eur against aother currencies and developer tools opn](../../images/2/32new.png)
+![browser showing exchange rate for eur against other currencies and developer tools opn](../../images/2/32new.png)
 
 The application sets the name of the currency entered into the form to the state `currency` at the moment the button is pressed.
 
@@ -611,7 +615,7 @@ if (currency) {
 }
 ```
 
-which prevents requesting the exchange rates just after the first render when the variable `currency` still has the initial value of `""`.
+which prevents requesting the exchange rates just after the first render when the variable `currency` still has the initial value, i.e. a null value.
 
 So if the user types *eur* in the search field,
 the application uses Axios to perform an HTTP GET request to the address <https://open.er-api.com/v6/latest/eur>
@@ -645,7 +649,7 @@ Notice that this depends quite much on the approach you selected.
 
 ### Exercises 2.18-2.20
 
-#### 2.18* Data for countries, step1
+#### 2.18* Data for countries, Step 1
 
 The API [https://restcountries.com](https://restcountries.com) provides data for different countries in a machine-readable format, a so-called REST API.
 
@@ -674,7 +678,7 @@ its flag and the languages spoken are shown:
 Some countries, like ***Sudan***, can be hard to support since the name of the country is part of the name of another country, ***South Sudan***.
 You don't need to worry about these edge cases.
 
-#### 2.19*: Data for countries, step2
+#### 2.19*: Data for countries, Step 2
 
 **There is still a lot to do in this part, so don't get stuck on this exercise!**
 
@@ -687,7 +691,7 @@ which when pressed shows the view for that country:
 In this exercise, it is also enough that your application works for most countries.
 Countries whose name appears in the name of another country, like ***Sudan***, can be ignored.
 
-#### 2.20*: Data for countries, step3
+#### 2.20*: Data for countries, Step 3
 
 **There is still a lot to do in this part, so don't get stuck on this exercise!**
 
@@ -700,32 +704,30 @@ Notice that it might take some minutes until a generated API key is valid.
 
 If you use Open weather map, [here](https://openweathermap.org/weather-conditions#Icon-list) is the description for how to get weather icons.
 
-> **NB:** In some browsers (such as Firefox) the chosen API might send an error response,
+> **Pertinent:** In some browsers (such as Firefox) the chosen API might send an error response,
 which indicates that HTTPS encryption is not supported, although the request URL starts with `http://`.
 This issue can be fixed by completing the exercise using Chrome.
 
 *You will need an api-key to use almost every weather service.*
 **Do not save the api-key to source control!** Nor hardcode the api-key to your source code.
-Instead use an [environment variable](https://create-react-app.dev/docs/adding-custom-environment-variables/) to save the key.
+Instead use an [environment variable](https://vitejs.dev/guide/env-and-mode.html) to save the key.
 
 Assuming the api-key is `t0p53cr3t4p1k3yv4lu3`, when the application is started like so:
 
 ```bash
-REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3 npm start // For Linux/macOS Bash
-($env:REACT_APP_API_KEY="t0p53cr3t4p1k3yv4lu3") -and (npm start) // For Windows PowerShell
-set "REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3" && npm start // For Windows cmd.exe
+export VITE_SOME_KEY=t0p53cr3t4p1k3yv4lu3 && npm run dev // For Linux/macOS Bash
+($env:VITE_SOME_KEY="t0p53cr3t4p1k3yv4lu3") -and (npm run dev) // For Windows PowerShell
+set "VITE_SOME_KEY=t0p53cr3t4p1k3yv4lu3" && npm run dev // For Windows cmd.exe
 ```
 
-you can access the value of the key from the `process.env` object:
+you can access the value of the key from the `import.meta.env` object:
 
 ```js
-const api_key = process.env.REACT_APP_API_KEY
+const api_key = import.meta.env.VITE_SOME_KEY
 // variable api_key has now the value set in startup
 ```
 
-Notice that if you created the application using `npx create-react-app ...`
-and you want to use a different name for your environment variable then the environment variable name must still begin with `REACT_APP_`.
-You can also use a `.env` file rather than defining it on the command line each time by creating a file entitled '.env' in the root of the project and adding the following.
+You can also use a `.env` file rather than defining it on the command line each time by creating a file entitled '*.env*' in the root of the project and adding the following.
 
 ```text
 # .env
@@ -733,6 +735,6 @@ You can also use a `.env` file rather than defining it on the command line each 
 REACT_APP_API_KEY=t0p53cr3t4p1k3yv4lu3
 ```
 
-Notice that you will need to restart the server to apply the changes.
+Either way, you will need to restart the server to apply the changes.
 
 </div>

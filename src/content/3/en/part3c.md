@@ -26,7 +26,7 @@ You'll then see a tiny Debug window in the middle of the screen that looks like 
 
 Once you select, Edit configurations..., you'll then arrive at this window:
 
-![node configuration in Webstorm](../../images/3/35x.png)
+![node configuration in WebStorm](../../images/3/35x.png)
 
 After clicking on npm, you'll see a variety of options.
 You'll then:
@@ -40,7 +40,7 @@ At that point click ***Debug***.
 At this point, you'll see via the process console that WebStorm starts up by running `npm start`.
 The output in red is similar to the `npm start` output from the terminal, with some additional messages about WebStorm attaching a debugger.
 
-![Webstorm process console](../../images/3/custom/process_console.png)
+![WebStorm process console](../../images/3/custom/process_console.png)
 
 Remember that the application shouldn't be running in another console, otherwise the port will already be in use.
 
@@ -80,6 +80,12 @@ Debugging backend applications is also possible with the Chrome developer consol
 node --inspect index.js
 ```
 
+You can also pass the `--inspect` flag to `nodemon`:
+
+```bash
+nodemon --inspect index.js
+```
+
 You can access the debugger by clicking the green icon - the node logo - that appears in the Chrome developer console:
 
 ![dev tools with green node logo icon](../../images/3/37.png)
@@ -110,7 +116,7 @@ Logging to the console, Postman, debuggers, and experience will help.
 
 When bugs occur, ***the worst of all possible strategies*** is to continue writing code.
 It will guarantee that your code will soon have even more bugs, and debugging them will be even more difficult.
-The [stop and fix](http://gettingtolean.com/toyota-principle-5-build-culture-stopping-fix/) principle
+The [stop and fix](https://leanscape.io/principles-of-lean-13-jidoka/) principle
 from Toyota Production Systems is very effective in this situation as well.
 
 ### MongoDB
@@ -120,7 +126,7 @@ Most college courses use relational databases.
 In most parts of this course, we will use [MongoDB](https://www.mongodb.com/)
 which is a [**document database**](https://en.wikipedia.org/wiki/Document-oriented_database).
 
-The reason for using Mongo as the database is its lower complexity compared to a relational database.
+Mongo is easier to understand compared to a relational database.
 
 Document databases differ from relational databases in how they organize data as well as in the query languages they support.
 Document databases are usually categorized under the [NoSQL](https://en.wikipedia.org/wiki/NoSQL) umbrella term.
@@ -172,7 +178,7 @@ Click ***Connect***:
 
 ![MongoDB database deployment connect](../../images/3/mongo5.png)
 
-Choose: ***Connect your application*** out of the options listed, and then you'll see this screen.
+Choose: ***Connect your application***, then you'll see this screen.
 
 ![MongoDB connect application](../../images/3/mongo6.png)
 
@@ -201,7 +207,7 @@ npm install mongoose
 ```
 
 Let's not add any code dealing with Mongo to our backend just yet.
-Instead, let's make a practice application by creating a new file, *mongo.js*:
+Instead, let's make a practice application by creating a new file, *mongo.js* in the root of the tasks backend application:
 
 ```js
 const mongoose = require('mongoose').set('strictQuery', true)
@@ -243,7 +249,7 @@ mongoose
   .catch((err) => console.log(err))
 ```
 
-> **NB:** Depending on which region you selected when building your cluster, the *MongoDB URI* may be different from the example provided above.
+> **Pertinent:** Depending on which region you selected when building your cluster, the *MongoDB URI* may be different from the example provided above.
 You should verify and use the correct URI that was generated from MongoDB Atlas.
 
 The code also assumes that it will be passed the password from the credentials we created in MongoDB Atlas, as a command line parameter.
@@ -265,7 +271,7 @@ We can view the current state of the database from the MongoDB Atlas from ***Bro
 
 As the view states, the *document* matching the task has been added to the ***tasks*** collection in the ***myFirstDatabase*** database.
 
-![MongoDB collections tab db myfirst app tasks](../../images/3/mongo8.png)
+![MongoDB collections tab db my first app tasks](../../images/3/mongo8.png)
 
 Let's destroy the default database ***myFirstDatabase*** and change the name of the database referenced in our connection string to `taskApp` instead, by modifying the URI:
 
@@ -343,7 +349,7 @@ You can print the object to the console if you want to take a closer look at it 
 
 Let's also save a few more tasks by modifying the data in the code and by executing the program again.
 
-> **NB:** Unfortunately the Mongoose documentation is not very consistent,
+> **Pertinent:** Unfortunately the Mongoose documentation is not very consistent,
 with parts of it using callbacks in its examples and other parts, other styles,
 so it is not recommended to copy and paste code directly from there.
 Mixing promises with old-school callbacks in the same code is not recommended.
@@ -391,7 +397,7 @@ Create a cloud-based MongoDB database for the communities application with Mongo
 
 Create a *mongo.js* file in the project directory, that can be used for adding a community, and for listing all of the communities.
 
-***Do not include the password in the file that you commit and push to GitHub!***
+> ***Do not include the password in the file that you commit and push to GitHub!***
 
 The application should work as follows.
 You use the program by passing three command-line arguments (the first is the password), e.g.:
@@ -431,8 +437,8 @@ PySlackers https://pythondev.slack.com
 
 You can get the command-line parameters from the [process.argv](https://nodejs.org/docs/latest-v8.x/api/process.html#process_process_argv) variable.
 
-> **NB: do not close the connection in the wrong place**.
-E.g. the following code will not work:
+> **Pertinent: do not close the connection in the wrong place**.
+> E.g. the following code will not work:
 >
 > ```js
 > Group
@@ -465,7 +471,7 @@ and the execution will never get to the point where `Group.find` operation finis
 
 ### Connecting the backend to a database
 
-Now we have enough knowledge to start using Mongo in our application.
+Now we have enough knowledge to start using Mongo in our tasks application backend.
 
 Let's get a quick start by copy-pasting the Mongoose definitions to the backend's *index.js* file:
 
@@ -508,7 +514,20 @@ We also don't want to return the mongo versioning field `__v` to the frontend.
 
 One way to format the objects returned by Mongoose is to [*modify*](https://stackoverflow.com/questions/7034848/mongodb-output-id-instead-of-id)
 the `toJSON` method of the schema, which is used on all instances of the models produced with that schema.
-Modifying the method works like this:
+
+To modify the method we need to change the configurable options of the schema.
+
+Options can be changed using the [`set` method of the schema](https://mongoosejs.com/docs/guide.html#options).
+
+MongooseJS is a good source of documentation.
+For more info on the `toJSON` option, check out:
+
+- [the mongoose JSON guide](https://mongoosejs.com/docs/guide.html#toJSON)
+- [mongoose `toObject` JSON API Reference](https://mongoosejs.com/docs/api.html#document_Document-toObject)
+  
+For info on the `transform` function see <https://mongoosejs.com/docs/api/document.html#transform>.
+
+Below is one way to modify the schema:
 
 ```js
 taskSchema.set('toJSON', {
@@ -534,9 +553,7 @@ app.get('/api/tasks', (request, response) => {
 })
 ```
 
-Now the `tasks` variable is assigned to an array of objects returned by Mongo.
-When the response is sent in the JSON format, the `toJSON` method of each object in the array is called automatically by the
-[JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) method.
+The code automatically uses the defined `toJSON` when formatting *`tasks`* to the response.
 
 ### Database configuration into its own module
 
@@ -667,7 +684,7 @@ app.listen(PORT, () => {
 Observe how `dotenv` must be imported before the `task` model.
 This ensures that the environment variables from the *.env* file are available globally before the code from the other modules is imported.
 
-Once the file .env has been gitignored, Render does not get the database URL from the repository, so you have to set it yourself.
+Once the file *.env* has been gitignored, Render does not get the database URL from the repository, so you have to set it yourself.
 
 That can be done by visiting the [Render dashboard](http://dashboard.render.com).
 Once you are there, click on your web service and then select ***Environment*** from the left-hand nav menu.
@@ -695,7 +712,7 @@ app.post('/api/tasks', (request, response) => {
   const task = new Task({
     content: body.content,
     important: body.important || false,
-    date: new Date(),
+    date: new Date().toISOString(),
   })
 
   task.save().then(savedTask => {
@@ -728,10 +745,10 @@ app.get('/api/tasks/:id', (request, response) => {
 
 ### Verifying frontend and backend integration
 
-When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the Webstorm REST client**.
+When the backend gets expanded, it's a good idea to test the backend first with **the browser, Postman or the WebStorm REST client**.
 Next, let's try creating a new task after taking the database into use:
 
-![Webstorm rest client doing a post](../../images/3/46e.png)
+![WebStorm rest client doing a post](../../images/3/46e.png)
 
 Only once everything has been verified to work in the backend, is it a good idea to test that the frontend works with the backend.
 ***It is highly inefficient to test things exclusively through the frontend.***
@@ -756,7 +773,7 @@ You can find the code for our current application in its entirety in the *part3-
 The following exercises are pretty straightforward,
 but if your frontend stops working with the backend, then finding and fixing the bugs can be quite interesting.
 
-#### 3.13: Communities database, step1
+#### 3.13: Communities database, Step 1
 
 Change the fetching of all communities so that the data is **fetched from the database**.
 
@@ -765,7 +782,7 @@ Verify that the frontend works after the changes have been made.
 In the following exercises, write all Mongoose-specific code into its own module,
 just like we did in the chapter [Database configuration into its own module](/part3/saving_data_to_mongo_db#database-configuration-into-its-own-module).
 
-#### 3.14: Communities database, step2
+#### 3.14: Communities database, Step 2
 
 Change the backend so that new URLs are **saved to the database**.
 Verify that your frontend still works after the changes.
@@ -945,7 +962,7 @@ For this reason, it is important to be careful when defining middleware.
 The correct order is the following:
 
 ```js
-app.use(express.static('build'))
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(requestLogger)
 
@@ -1012,11 +1029,11 @@ The only exception to this is the error handler which needs to come at the very 
 
 Let's add some missing functionality to our application, including deleting and updating an individual task.
 
-The easiest way to delete a task from the database is with the [findByIdAndRemove](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndRemove) method:
+The easiest way to delete a task from the database is with the [findByIdAndDelete](https://mongoosejs.com/docs/api/model.html#Model.findByIdAndDelete()) method:
 
 ```js
 app.delete('/api/tasks/:id', (request, response, next) => {
-  Task.findByIdAndRemove(request.params.id)
+  Task.findByIdAndDelete(request.params.id)
     .then(result => {
       response.status(204).end()
     })
@@ -1060,11 +1077,21 @@ By default, the `updatedTask` parameter of the event handler receives the origin
 [without the modifications](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate).
 We added the optional `{ new: true }` parameter, which will cause our event handler to be called with the new modified document instead of the original.
 
-After testing the backend directly with Postman and the Webstorm REST client, we can verify that it seems to work.
+After testing the backend directly with Postman and the WebStorm REST client, we can verify that it seems to work.
 The frontend also appears to work with the backend using the database.
 
 You can find the code for our current application in its entirety in the *part3-5* branch of
 [this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-5).
+
+### Web developers pledge v3
+
+We will update
+[our web developer pledge](/part2/altering_data_in_server#web-developers-pledge-v2)
+by adding an item:
+
+> I also pledge to:
+>
+> - *Check that the database is storing the correct values*
 
 </div>
 
@@ -1072,17 +1099,17 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.15-3.18
 
-#### 3.15: Communities database, step3
+#### 3.15: Communities database, Step 3
 
 Change the backend so that deleting communities are reflected in the database.
 
 Verify that the frontend still works after making the changes.
 
-#### 3.16: Communities database, step4
+#### 3.16: Communities database, Step 4
 
 Move the error handling of the application to a new error handler middleware.
 
-#### 3.17*: Communities database, step5
+#### 3.17*: Communities database, Step 5
 
 If the user tries to create a new community for one whose name is already in the communities application,
 the frontend will try to update the community's invite location by making an HTTP PUT request to the entry's unique backend URL.
@@ -1091,7 +1118,7 @@ Modify the backend to support this request.
 
 Verify that the frontend works after making your changes.
 
-#### 3.18*: Communities database step6
+#### 3.18*: Communities database Step 6
 
 Also, update the handling of the ***api/groups/:id*** and ***info*** routes to use the database,
 and verify that they work directly with the browser, Postman, or VS Code REST client.

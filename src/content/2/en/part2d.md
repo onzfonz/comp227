@@ -52,7 +52,7 @@ addTask = event => {
   const taskObject = {
     content: newTask,
     date: new Date().toISOString(),
-    important: Math.random() < 0.5,
+    important: Math.random() > 0.5,
   }
 
 // highlight-start
@@ -65,7 +65,7 @@ addTask = event => {
 }
 ```
 
-We create a new object for the task but omit the `id` property since it's better to let the server generate ids for our resources!
+We create a new object for the task but omit the `id` property since it's better to let the server generate IDs for our resources!
 
 The object is sent to the server using the axios `post` method.
 The registered event handler logs the response that is sent back from the server to the console.
@@ -82,6 +82,10 @@ which was used heavily at the beginning of [part 0](/part0/fundamentals_of_web_a
 ![content-type data in dev tools](../../images/2/21e1.png)
 
 ![request payload in dev tools](../../images/2/21e2.png)
+
+Also, the *response* tab is useful, it shows what was the data the server responded with:
+
+![TODO - provide response tab screenshot here with tasks as response from server](../../images/2/21e3.png)
 
 We can use the inspector to check that the headers sent in the POST request are what we expected them to be and that their values are correct.
 
@@ -134,7 +138,7 @@ In the next part of the course, we will learn to implement our own logic in the 
 We will then take a closer look at tools like [Postman](https://www.postman.com/downloads/) that helps us to debug our server applications.
 However, inspecting the state of the json-server through the browser is sufficient for our current needs.
 
-> **NB:** In the current version of our application, the browser adds the creation date property to the task.
+> **Pertinent:** In the current version of our application, the browser adds the creation date property to the task.
 Since the clock of the machine running the browser can be wrongly configured,
 it's much wiser to let the backend server generate this timestamp for us.
 This is in fact what we will do in the next part of the course.
@@ -281,7 +285,7 @@ axios.put(url, task).then(response => {
 ```
 
 This is not recommended because the variable `task` is a reference to an item in the `tasks` array in the component's state,
-and as we recall ***we must [never mutate state directly](https://reactjs.org/docs/state-and-lifecycle.html#using-state-correctly) in React***.
+and as we recall ***we must [never mutate state directly](https://react.dev/learn/updating-objects-in-state#why-is-mutating-state-not-recommended-in-react) in React***.
 
 It's also worth noting that the new object `changedTask` is only a so-called
 [shallow copy](https://en.wikipedia.org/wiki/Object_copying#Shallow_copy),
@@ -658,7 +662,7 @@ const group = { name, age }
 ```
 
 The result is identical for both expressions.
-They both create an object with a `name` property with the value `Leevi` and an `age` property with the value `0`.
+They both create an object with a `name` property with the value `Paloma` and an `age` property with the value `0`.
 
 ### Promises and Errors
 
@@ -798,7 +802,7 @@ but will also add two more items:
 
 ### Exercises 2.12-2.15
 
-#### 2.12: Communities step7
+#### 2.12: Communities Step 7
 
 Let's return to our communities application.
 
@@ -806,17 +810,17 @@ Currently, any community that is added is not saved to a backend server.
 Fix this situation.
 Use ***<http://localhost:3001/groups>*** as your backend URL.
 
-#### 2.13: Communities step8
+#### 2.13: Communities Step 8
 
 Extract the code that handles the communication with the backend into its own module by following the example shown earlier in this part of the course material.
 
-#### 2.14: Communities step9
+#### 2.14: Communities Step 9
 
 Make it possible for users to delete entries from the communities application.
 The deletion can be done through a dedicated button for each community listed.
 You can confirm the action from the user by using the [window.confirm](https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm) method:
 
-![2.17 window confirm feature screeshot](../../images/2/24e.png)
+![2.17 window confirm feature screenshot](../../images/2/24e.png)
 
 The associated resource for a group in the backend can be deleted by making an HTTP DELETE request to the resource's URL.
 If we are deleting e.g. a group that has the `id` 2, we would have to make an HTTP DELETE request to the URL ***localhost:3001/groups/2***.
@@ -824,8 +828,8 @@ No data is sent with the request.
 
 You can make an HTTP DELETE request with the [axios](https://github.com/axios/axios) library in the same way that we make all of the other requests.
 
-> **NB:** You can't use the name `delete` for a variable because it's a reserved word in JavaScript.
-E.g. the following is not possible:
+> **Pertinent:** You can't use the name `delete` for a variable because it's a reserved word in JavaScript.
+> E.g. the following is not possible:
 >
 > ```js
 > // use some other name for variable!
@@ -834,7 +838,7 @@ E.g. the following is not possible:
 > }
 > ```
 
-#### 2.15*: Communities step10
+#### 2.15*: Communities Step 10
 
 *Why is there a star in the exercise? See [here](/part0/general_info#taking-the-course) for the explanation.*
 

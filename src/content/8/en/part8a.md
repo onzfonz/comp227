@@ -135,9 +135,10 @@ The lack of runtime type information can be surprising for programmers who are u
 On different forums, you may stumble upon a lot of different arguments either for or against TypeScript.
 The truth is probably as vague as: it depends on your needs and use of the functions that TypeScript offers.
 However, I would advocate for its use - overall it helps constrain our wild tendencies as programmers to
-[*make*](https://xkcd.com/292/)
-[**bad**](https://inside.pacific.edu)
-[***decisions***](https://blog.devgenius.io/the-best-examples-of-bad-code-ive-come-across-production-mode-4f13e8d4de2).
+
+- [*make*](https://xkcd.com/292/)
+- [**bad**](https://inside.pacific.edu)
+- [***decisions***](https://blog.devgenius.io/the-best-examples-of-bad-code-ive-come-across-production-mode-4f13e8d4de2).
 
 Below are some additional explanations on why you should use TypeScript.
 
@@ -147,18 +148,18 @@ Below are some additional explanations on why you should use TypeScript.
     The static code analysis doesn't only warn about wrongful type usage,
     but also other mistakes such as misspelling a variable or function name or trying to use a variable beyond its scope.
 
-1. Type annotations in the code can function as a type of **code-level documentation**.
+2. Type annotations in the code can function as **code-level documentation**.
     It's easy to check from a function signature what kind of arguments the function can consume and what type of data it will return.
     This form of type annotation-bound documentation will always be up to date
     and it makes it easier for new programmers to start working on an existing project.
-    It is also helpful when returning to an old project.
+    It is also helpful when returning to modify an old project.
 
     *Types can be reused all around the code base, and a change to a type definition will automatically be reflected everywhere the type is used*.
 
     > One might argue that you can achieve similar code-level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html),
     but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily, and is also more verbose.
 
-1. IDEs can provide **improved code hints**
+3. IDEs can provide **improved code hints**
 when they know exactly what types of data you are processing.
 
 All of these features are extremely helpful when you need to refactor your code.
@@ -169,7 +170,7 @@ With the help of TypeScript, it is also very easy to start using the newest Java
 
 ### What does TypeScript not fix?
 
-As mentioned above, TypeScript type annotations and type checking exist only at compile time and no longer at runtime.
+As mentioned above, TypeScript's type annotations and type checking exist only at compile time and no longer at runtime.
 Even if the compiler does not throw any errors, runtime errors are still possible.
 These runtime errors are especially common when handling external input, such as data received from a network request.
 
@@ -183,7 +184,7 @@ and the person adding the type declarations manually not doing a good enough job
 In a few of these cases, ***you might need to define the type declarations yourself***.
 However, there is a good chance someone has already added typings for the package you are using.
 Always check the [DefinitelyTyped GitHub page](https://github.com/DefinitelyTyped/DefinitelyTyped) first.
-They are probably the most popular sources for type declaration files.
+It is probably the most popular source for type declaration files.
 You may also want to peruse the PRs by searching for the library you are looking for to get more information on possible issues,
 as the community for generating these types is very active.
 As a final option, you could also get acquainted with
@@ -196,7 +197,7 @@ The type inference in TypeScript is pretty good but not quite perfect.
 Sometimes, you may feel like you have declared your types perfectly,
 but the compiler still tells you that the property does not exist or that this kind of usage is not allowed.
 In these cases, you might need to help the compiler out by doing something like an "extra" type check,
-but be careful with type casting (aka type assesertion) or type guards.
+but be careful with type casting (aka type assertion) or type guards.
 When using those, *you are giving your word to the compiler that the **value is of the type** that you declare*.
 You might want to check out TypeScript's documentation regarding [type assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
 and [type guarding/narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).

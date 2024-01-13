@@ -9,9 +9,9 @@ lang: en
 
 These next couple of steps are a mishmash of steps that need to be
 completed individually to get us ready technically for this course.
-These steps allow you to share your work across computers and with me.
+These steps allow you to share your work with me for seamless submissions.
 Most of you have done some of these things already, so if you have, just make
-sure to read through the step to ensure you did all the steps that are here.
+sure to read through the steps to ensure you did all the steps that are here.
 *Some of the images that are here are taken directly from or sourced directly from GitHub itself.*
 
 ### 1: Setup a GitHub account
@@ -32,9 +32,10 @@ The other thing you should do is to give yourself an icon picture, which is alwa
 
 ### 2: Making sure Git is installed
 
-Now we are going to make sure that you have a version of git on your computer
+Now we are going to make sure that you have a version of Git on your computer
 
-Some of you may already have git setup.  To check, I would type in Terminal:
+Some of you may already have Git setup.
+To check, I would type in Terminal:
 
 ```bash
 git config --list
@@ -52,17 +53,19 @@ If this is all foreign to you, then please read on.
 
 #### Using a package manager  
 
-If you saw something like: *command not found*, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
+If you see something like *"command not found"*, we'll need to install **[git](https://git-scm.com/downloads)**, which we'll be using to manage our projects.
 ***We will install git using a package manager.***
 A **package manager** is a piece of software that keeps track of what you've installed and allows you to easily install and uninstall entire programs.
-Many can (when you ask them to) also upgrade to new versions when those become available.  
+Many can (when you ask them to) also upgrade to new versions when those become available.
 Just make sure your terminal program is open and type (or copy)
 
 |Windows|Mac|
 |:---|:--|
 |`winget install --id Git.Git -e --source winget`|`brew install git`|
 
-Press enter and wait.  It's not too bad.  If it complains, you may need administrative privileges, but just let it do its work.
+Press enter and wait.
+It's not too bad...unless you are on a Mac and have a slow internet connection.
+If it complains, you may need administrative privileges, but just let it do its work.
 
 Once it finishes, you may need to restart your terminal, but then we'll get to this
 
@@ -71,15 +74,15 @@ Once it finishes, you may need to restart your terminal, but then we'll get to t
 
 Successfully installing git via the package manager means that you can skip to the [next section and move to configure git](#3-configure-git).
 
-### 2 Alternative: Traditional git directions
+### 2 Alternative: Traditional Git directions
 
-You should *really* learn [to use a package manager](#2-making-sure-git-is-installed)!
+You should learn [to use a package manager](#2-making-sure-git-is-installed)!
 However, if that makes you queasy or you are running into major issues, here's how to install git the regular way.
 Go to <https://git-scm.com/downloads> (or search “download git” via
-google) Pick your operating system of choice.
+Google) Pick your operating system of choice.
 If you are on a lab
 computer, you may need to select the portable version once you get to
-the windows page.
+the Windows page.
 
 ![git-scm download link](../../images/0/partc/gitportable.png)
 
@@ -92,10 +95,10 @@ though you can change some options if you feel necessary.
 Make sure
 though that the **option to commit in Unix Line Endings is enabled**.
 Keep that preference.
-That will help sure that your files will play nice
+That will help ensure that your files will play nice
 with everyone else.
 Once you have it installed, go ahead and open it,
-and let’s change some user preferences in git.
+and let’s change some user preferences in Git.
 
 ### 3: Configure Git
 
@@ -107,7 +110,10 @@ want to **set the git preferences on all the computers that you use.**  Let me s
 #### Set your git preferences on all computers that you will work on
 
 In addition to installing git, we need to make sure that we outline or configure our setup so that git knows who you are.
-With your terminal open, setup the git user email id and username by typing these commands,
+
+#### Set your Git Username and Email
+
+With your terminal open, set up the git user email ID and username by typing these commands,
 making sure to replace the sections with your actual email and username
 
 ```bash
@@ -117,8 +123,28 @@ git config --global user.name your_github_username
 
 Make sure you press enter after each command.
 
+#### Create a Git Alias to send all changes to GitHub
+
+In addition to adding your username and password, we are going to use a specific command to streamline our git process for this course.
+You may not want to use this command in other situations as you'll want to keep closer track of what you are committing to the repo.
+However, for this class, it will be necessary.
+
+This process will:
+
+1. add all files in the repo to be tracked
+2. commit those changes using a specified message
+3. push those changes to GitHub
+
+To do this all, we will create a git alias.
+
+```bash
+git config --global alias.send-all '!f() { git add -A && git commit -m "$@" && git push; }; f'
+```
+
+#### Change your default text editor for git commit messages
+
 Vim is the default text editor that is used in the command line.
-If you aren’t comfortable or have never used vim, you can set up other Unix text
+If you aren’t comfortable or have never used Vim, you can set up other Unix text
 editors instead.
 So if you'd like to use emacs you’d write:
 
@@ -126,7 +152,7 @@ So if you'd like to use emacs you’d write:
 git config --global core.editor emacs
 ```
 
-If you’re like me, you’ll want to use something like [notepad++](https://notepad-plus-plus.org/downloads/) or
+If you’re like me, you’ll want to use something like [Notepad++](https://notepad-plus-plus.org/downloads/) or
 possibly some other text editor that you love.
 In those cases, you’d have to provide the entire path.
 
@@ -134,59 +160,70 @@ In those cases, you’d have to provide the entire path.
 git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
 ```
 
+#### Confirm your preferences
+
 Now to check your preferences, enter the command
 
 ```bash
 git config --list
 ```
 
-You should now see your username and email displayed among lots of other options.
+You should now see your username and email displayed, as well as the alias that we made and the editor changes.
+You can press ***Space*** to continue reviewing the changes, and ***q*** to exit.
 
 ### 4: Install Node
 
 Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
-If you already have node installed,
-make sure it is at least version 16.13.2.
-We will discuss node.js further in [part 1](../../1/en/part1.md).
+If you already have Node installed,
+make sure it is at least version 18.13.0.
+We will discuss node.js further in [part 1](/part1).
 
-For this class, I'm going to install nvm first so that we can use a specific version of node,
-since the bulk of this course was written and tested with Node 16.13.2.
-If that is the case, you could also install **[NVM](https://github.com/nvm-sh/nvm)**,
-which allows us to have different versions of node.js on our computer and switch between them.
+For this class, I'm going to install nvm first so that we can use a specific version of node.
+Specifically, we'll use Node version 18.13.0.
+However, the bulk of this course was written and fully tested with Node 16.13.2.
+So essentially we want to have two node versions 18.13 (a newer version) and 16.13.2 (as a fallback).
+Since that is the case, we will also install **[NVM](https://github.com/nvm-sh/nvm)**,
+which allows us to have these two different versions of node.js on our computer and switch between them.
 
 This can be done via one of these commands.
+***Remember, all of your terminal commands should be done in git bash at this point!***
 
 |Windows|Mac|
 |:---|:--|
 |`winget install -e CoreyButler.NVMforWindows`|`brew install nvm`|
 
-After installing nvm, you can use the nvm's help to install a version (like 16.3.2, which is what I'll do).
-Type nvm to navigate through, and you'll notice that you need to these two commands separately.
+After installing *`nvm`*, you could use the `nvm help` to figure out the commands to install a version (like 18.13.0 and 16.13.2), and then use the later version.
+I'll provide the commands here, which you'll need to execute separately.
 
 ```bash
-nvm install 16.3
-nvm use 16
+nvm install 16.13
+nvm install 18.13
+nvm use 18
 ```
 
-After this, you should be able to type `node -v` and you'll notice that it should print out `v16.3.0`.
+After this, you should be able to type `node -v` and you'll notice that it should print out *`v18.13.0`*.
 
-To prepare you to use WebStorm we'll follow a couple more commands here:
-
-One is to type the following lines, which creates a ***symbolic link*** where WebStorm can find the version of node we are using.
-***Remember, all of your terminal commands should be done in git bash at this point!***
+To link node to our future IDE WebStorm we'll follow the next couple of instructions.
+Here's the first:
 
 ```bash
 export NVM_SYMLINK_CURRENT=true
-nvm use default
 ```
 
-If, after typing the second line, you get an error like `panic: runtime error: slice bounds out of range`, this is mostly likely due to you already having node installed.
-If you type `nvm list` and you just type the number of one of the versions installed, like say `nvm use 16`, that will also work.
+The above command creates a ***symbolic link*** where WebStorm can find the version of Node we are using.
+Then, type:
+
+```bash
+nvm use 18
+```
+
+> If, after typing this line, you get an error like *`panic: runtime error: slice bounds out of range`*, this is mostly likely due to you already having node installed.
+> If you type `nvm list` and you just type the number of one of the versions installed, like say `nvm use 18`, that will also work.
 
 #### 4 Alternate: Installing node directly
 
-Alternatively, you can try to just install node without using a version manager.
-I've taken the [installation instructions](https://nodejs.org/en/download/package-manager/) for node and provided the most popular options here.
+Alternatively, you can try to just install Node without using a version manager.
+I've taken the [installation instructions](https://nodejs.org/en/download/package-manager/) for Node and provided the most popular options here.
 
 |Windows|Mac|
 |:---|:--|
@@ -204,18 +241,18 @@ which we'll need a few times.
 
 ### 5: Join our GitHub Classroom
 
-At this point, you have made sure that your git configuration is correct.
+At this point, ensure your git configuration is correct.
 
-Then, you'll visit this URL:
+Next, you'll visit this URL:
 
 **<http://go.djosv.com/227start>**
 
 Make sure you log in and accept any of the authorizations that are present.
 Next, Accept the assignment.
 
-![GitHub classroom Accept assignment](../../images/0/partc/classroomaccept.png)
+![GitHub Classroom Accept assignment](../../images/0/partc/classroomaccept.png)
 
-This is going to have you enter the comp227
+This is going to have you enter the *comp227*
 organization.
 If you have already signed up for an account it may ask
 you to re-enter your credentials.
@@ -226,8 +263,8 @@ Once accepted you'll be greeted with this image asking you to refresh.
 Wait a minute or two, and then follow the lead given by GitHub, refresh the page, then click on the repo name
 which will have your own GitHub handle on it as part of the link.
 That will take you to the GitHub site where you will see your repository, with your handle at the end of the repository name.
-Click on the green code button ![green code button icon](../../images/0/partc/greencode.png)
-and then the copy button ![copy button icon](../../images/0/partc/image8.png) to copy the URL,
+Click on the green code button ![icon showing green code button](../../images/0/partc/greencode.png)
+and then the copy button ![icon showing copy button](../../images/0/partc/image8.png) to copy the URL,
 as shown via this [animation accepting and clicking on the assignment](https://imgur.com/5Tv7mVM)
 
 Make sure to save this URL that was just created specifically for you.
@@ -236,26 +273,25 @@ Otherwise, if you close it, you'll need to navigate back through it by going to 
 
 ### 6: Install WebStorm
 
-For this course, I will be asking that you use [Webstorm](https://www.jetbrains.com/webstorm/download/) from JetBrains.
-You can do this with the package manager by merely typing `winget install JetBrains.WebStorm` or `brew install --cask webstorm` in your Terminal depending on your configuration.
-While I am OK if you decide to use [VS Code](http://code.visualstudio.com) instead,
-please be aware that I will only be supporting or answering questions about Webstorm.
-*Some of the pictures below may be from PHPStorm, which is just like WebStorm, except it's designed for PHP.
-If you see pictures below that have PHPStorm, pretend they say Webstorm, they behave similarly.*
-This also goes for anything that mentions COMP 127 (Assume it's 227).
+For this course, you will be using [WebStorm](https://www.jetbrains.com/webstorm/download/), a web development IDE from JetBrains.
 
-[WebStorm](https://www.jetbrains.com/webstorm/download/) is a web development editor from JetBrains
-(*Make sure that you activate an [educational license](https://www.jetbrains.com/shop/eform/students) from them*).
+Because there is so much integration that we are doing between WebStorm and Git,
+I'm going to ask that you stick to using it.
+If you are adamant about using VSCode or another IDE, then please contact me via Discord ***ASAP*** for some additional instructions.
 
-If you haven't already, use the command line to download WebStorm.
+> **FYI:** Some of the pictures below may be from PHPStorm, which is just like WebStorm, except it's designed for PHP.
+> *If you see pictures below that have PHPStorm, pretend they say WebStorm, they behave similarly.*
+> This also goes for anything that mentions COMP 127 (Assume it's 227).
+
+Use the command line to download WebStorm.
 
 |Windows|Mac|
 |:--|:--|
 |`winget install -e JetBrains.WebStorm`|`brew install --cask webstorm`|
 
-As you are downloading the product, make sure that you fill out the [student application](https://www.jetbrains.com/shop/eform/students).
+As you are downloading the product, make sure that you fill out the [student application for the educational license](https://www.jetbrains.com/shop/eform/students).
 While WebStorm offers a 30-day free trial, we want to start the application process early to avoid any hiccups.
-Jetbrains provides free access to all Jetbrains products while you're a student.
+JetBrains provides free access to all JetBrains products while you're a student.
 
 Once it finishes installing and you pass all the permissions, you can open it up.
 
@@ -266,16 +302,16 @@ You'll be greeted with a simple window.
 Most of you will choose not to import settings and click **OK**.
 
 At this point, you'll now move on to the project page, where you'll need a project.
-**Leave Webstorm open for now.**
+**Leave WebStorm open for now.**
 
 ![Select VCS from the opening page](../../images/0/partc/webstorm_first_time.png)
 
-Before moving on, make sure that you have generated the repository from the GitHub classroom assignment.
+Before moving on, make sure that you have generated the repository from the GitHub Classroom assignment.
 
-Now that we have WebStorm and a GitHub repo, we are almost ready to connect WebStorm to our GitHub profile and to the repo we created via GitHub classroom.
+Now that we have WebStorm and a GitHub repo, we are almost ready to connect WebStorm to our GitHub profile and to the repo we created via GitHub Classroom.
 
-Before we can do that though, we need to generate credentials that the computer can use to login to GitHub via Webstorm.
-Let's do that now.  
+Before we can do that though, we need to generate credentials that the computer can use to login to GitHub via WebStorm.
+Let's do that now.
 
 ### 7: Generate a GitHub token
 
@@ -284,72 +320,62 @@ GitHub has moved to have us use tokens to access our projects from our computers
 **Tokens** act like credentials but have much more fine-grained controls on what they can and cannot access.
 Tokens are slightly analogous to using a temporary credit card number for purchases,
 instead of giving everyone access to your bank account.
-Because Webstorm will be constantly communicating with GitHub, let's generate a token that will be stored on our computer.
+Because WebStorm will be constantly communicating with GitHub, let's generate a token that will be stored on our computer.
 
-Go back to [GitHub](http://github.com) and log in,
-then click on your profile icon in the upper right,
+Go back to [GitHub's new token page](http://github.com/settings/tokens/new) and login.
+Alternatively, you can click on your GitHub profile icon in the upper right,
 and then go to [*Settings->Developer settings->Personal Access Tokens->Tokens (classic)->Generate new token->Generate new token (classic)*](https://imgur.com/S1E0tQc).
 Then give the token a name,
 set expiration to *Custom* (providing a date up to 1 year from now) and select the `repo, workflow, read:org and gist` checkboxes for the scopes.
-Once you do that, scroll to the bottom and click the green Generate new Token.
+Once you do that, scroll to the bottom and click the green ***Generate Token***.
 [I did another short animation of this as well.](https://imgur.com/LUAt5DU)
 You'll then see a page that has the token that says to copy it because you won't be able to see it again.
 
 ![token about to expire](../../images/0/partc/github_token_ready.png)
 
-Make sure to copy it someplace safe or leave the page open for now.
+Make sure to copy it somewhere safe or leave the page open for now.
 If you do lose the token, you can safely generate a new one.
 You may also want to consider deleting the old one, which prevents it from being used anymore.
 
-### 8: Connect Webstorm with GitHub
+### 8: Connect WebStorm with GitHub
 
 Now what we will do is:
 
-1. Take the GitHub repo that we generated from GitHub classroom
+1. Take the GitHub repo that we generated from GitHub Classroom
 2. Copy the link for it
 3. Switch to WebStorm and select ***Get From VCS***, using the copied URL from GitHub.
 4. After clicking OK, select ***Use Token*** from the authentication options
 5. Switch back to the token page that we just generated and copy that token
-6. Paste that token back into WebStorm
-7. Trust and open the project.  
+6. Paste that token back into WebStorm and ***Log In***.
+7. Trust and open the project.
 
 Following all of these steps would result in the project opening up, with it opening up the *README.md* file.
 
 Here's a recap in a [re-looping gif of all of these steps that you should see](https://imgur.com/UDQXB6V)
 
-#### Other permissions
+### 9: Additional WebStorm Setup
 
-The other permission you may have to set (if you are running into issues) is to allow JetBrains access to comp227's organizational space.
-You can do this by [visiting GitHub's apps settings](https://github.com/settings/applications#authorized) and then clicking on **JetBrains IDE Integration**.
-Click on that and then you should be able to see the heading ***Organization Access***.
-Click on the ***Grant*** button next to comp227, and now try cloning the project again.
+We'll need to make a few more changes to WebStorm to have it work as we expect.
+This is required.
 
-#### Configure your settings
+#### Configuring your settings summary
 
 When you have a new dev environment, it often is beneficial to spend a little bit of time tweaking things to your liking
 (but not too much initially, spend no more than 10-15 minutes).
 
-I'll go over a few different settings that I've found useful:
+I'll go over a few different settings that you will need to change for this course.
+You will have an assignment that will show me that you have indeed made all of these changes.
 
-- [Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
-- [Changing your default terminal](#changing-our-default-terminal-app)
+- [Changing the terminal app](#changing-our-default-terminal-app)
 - [Enabling autosave](#enabling-autosave)
+- [Creating File Watchers](#creating-a-file-watcher-for-our-git-configuration)
+- [Enabling ESLint](#enabling-eslint)
+- [Linking WebStorm with nvm](#link-webstorm-to-nvm)
+- [(Optional) Changing your keyboard shortcuts](#changing-keyboard-shortcuts)
 
-#### Changing keyboard shortcuts
+### Changing our default terminal app
 
-Since by this point I have become accustomed to eclipse keyboard shortcuts, WebStorm provides an ability in its settings to use an Eclipse keymap.
-They also have other keymaps as well.
-For me this allows me to not have to worry about learning new keyboard shortcuts,
-I can continue using handy shortcuts from eclipse like:
-(***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Ctrl-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
-
-To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
-Pick the file that will work best for you in navigating using keyboard shortcuts.
-This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
-
-#### Changing our default terminal app
-
-While installing the eclipse keymap is optional, what I would like you to do is to change your terminal of choice to git bash.
+While installing the Eclipse keymap is optional, what I would like you to do is change your terminal of choice to ***git bash***.
 Just like with the gif from below, open up the settings (***Ctrl-Alt-S***) and search for Terminal.
 Navigate to the ***Tools*** on the left sidebar and select the dropdown for the Shell path.
 There you should see bash.exe with a path for git.
@@ -357,29 +383,103 @@ There you should see bash.exe with a path for git.
 
 ![WebStorm terminal settings showing git bash](../../images/0/partc/git_bash_terminal.png)
 
-#### Enabling autosave
+### Enabling autosave
 
-This one I find to be incredibly useful, but it's a double-edged sword, as sometimes tends to break whatever I am working on.
-On the other hand, it allows me to not have to worry about saving all the time, which is key nowadays.
+Enabling autosave allows me to not have to worry about saving all the time, which is key.
+On the other hand, sometimes we have some extra complexity.
+Nonetheless, the benefits outweigh any issues.
 Head back to the settings (***Ctrl-Alt-S***) and type ***autosave***, and then once you are in **System Settings**,
-check the option which says to ***Save files if the IDE is idle for 15 seconds***.
+check the option that says to ***Save files if the IDE is idle for 15 seconds***.
 
-#### Link WebStorm to nvm
+### Creating a File Watcher for our Git Configuration
 
-This last one is important as it tells Webstorm where our node version is, which helps with IDE integration.
+We will be making one additional required change to repos for projects in this class.
+Because of a wealth of issues previously with changes, we are going to install a *file watcher*.
+This file watcher will automatically allow us to connect our git repositories with our WebStorm IDE,
+Allowing us to commit any changes to git-tracked files when we save.
+It is meant merely as an additional backup, though we still need to pull and push, making sure we do not edit the files from the GitHub site directly.
+Enabling the file watcher can make things more difficult if you are using multiple machines.
+However, if you install the file watcher on both machines and are diligent about pulling before making any changes, and pushing once you are done, you should not run into many issues.
+Regardless, please let me know if you run into issues with this, as not having this feature setup correctly impacts your grade.
+
+To start:
+
+1. go to *File->Settings->Tools->File Watchers*.
+2. Click the plus (add) button ![plus icon](../../images/0/custom/plus_icon.png)
+3. Choose *`<custom>`*
+4. In the *Name* field, type *`COMP 227 Git Watcher`*
+5. In the *File Type* field, select *`React JSX`*
+6. In the *Program* field, provide the path to your git executable (something like `C:\Program Files\Git\bin\git.exe`)
+7. In the *Arguments* field, type *`send-all "Auto-commit JSX on save for Comp 227"`* (don't forget the quotes!)
+8. Expand the *Advanced Options* area, and select *`Trigger the watcher regardless of syntax errors`*
+9. Ensure the Scope is on *Project Files*, and that the checkboxes for *auto-save* and *trigger on external* are checked.
+
+Here's what mine looked like, though your Program field may differ:
+
+![file watcher options](../../images/0/custom/file_watcher.png)
+
+Make sure to click ***OK*** to add the Watcher.
+You should now see it in your list of File Watchers.
+
+We'll need this File Watcher to be enabled for all projects in COMP 227.
+One way to make sure that it is enabled for all projects is to have the watcher be set to the Global Level.
+This can be done from the list of Watchers Setting, by changing its level category to ***Global***:
+
+![file watcher set to global](../../images/0/custom/file_watcher_global.png)
+
+If you prefer to not have this be a global setting because you have other projects, then let's export the watcher for future use.
+Click the export button and save it in a good location.
+
+![export icon showing highlighted](../../images/0/custom/export_button.png)
+
+Make sure to select a location you'll remember as you'll need it later.
+
+Now once you are back on the list of File Watchers, click ***Apply*** and then ***OK*** to exit out of the Settings Window.
+
+### Enabling ESLint
+
+In Settings (***Ctrl-Alt-S***), type `eslint` in the search bar,
+which should allow you to see an ESLint heading under *Languages & Frameworks->JavaScript->Code Quality Tools->EsLint*.
+Click on that heading on the left and then select ***Automatic ESLint configuration***, and click the checkbox ***Run eslint --fix on save***.
+Click ***Apply*** and then ***OK***.
+
+![Settings showing eslint options](../../images/0/custom/eslint_settings.png)
+
+### Link WebStorm to nvm
+
+This one is important as it tells WebStorm where our node version is, which helps with IDE integration.
 Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
 Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
-Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both windows.
+Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both Windows.
 
-Because we will be working with a lot of repsositories, it makes sense that all new projects have these same settings.
+Because we will be working with a lot of repositories, it makes sense that all new projects have these same settings.
 Let's ensure that all of these settings show up for new projects, by going to ***File->New Projects Setup->Settings for New Projects***.
 Once there, go through each of the settings we just changed and ensure that those options have been enabled.
 
-***Remember that you may have to do all of these steps (including the token generation if you don't save the token somewhere) for each computer that you use.***
-For the Jetbrains settings only, another option that I recommend would be to sync your settings via your Jetbrains account.
-That setting sync is located in the upper-right as a cog icon near the close window button.
+### Changing keyboard shortcuts
 
-### 9: Make changes
+Since by this point I have become accustomed to Eclipse keyboard shortcuts, WebStorm provides an ability in its settings to use an Eclipse keymap.
+They also have other keymaps as well.
+For me this allows me to not have to worry about learning new keyboard shortcuts,
+I can continue using handy shortcuts from Eclipse like:
+(***Alt-Up/Down***, ***Ctrl-D***, ***Alt-Shift-R***, ***Alt-Shift-Up***, ***Alt-Shift-M***, or ***Alt-Shift-H***, to name a few).
+
+To switch your keyboard shortcuts, open settings by selecting *File->Settings* (or do ***Ctrl-Alt-S***) and searching for the **Keymap** tab in Settings.
+Pick the file that will work best for you in navigating using keyboard shortcuts.
+This [gif will show you how to find and install a keymap like eclipse](https://imgur.com/g7eYe1H)
+
+***Remember that you may have to do all of these steps (including the token generation if you don't save the token somewhere) for each computer that you use.***
+For the JetBrains settings only, another option that I recommend would be to sync your settings via your JetBrains account.
+That setting sync is located in the upper right as a cog icon near the *close window* button.
+
+#### Running into issues?
+
+The other permission you may have to set (if you are running into issues) is to allow JetBrains access to comp227's organizational space.
+You can do this by [visiting GitHub's apps settings](https://github.com/settings/applications#authorized) and then clicking on **JetBrains IDE Integration**.
+Click on that and then you should be able to see the heading ***Organization Access***.
+Click on the ***Grant*** button next to comp227, and now try cloning the project again.
+
+### 10: Make changes
 
 By this point, your project should be open.
 
@@ -387,8 +487,9 @@ What you should do is watch
 [this animation a few times to see how to make changes to the markdown file](https://imgur.com/blj5aGh)
 and how to send those changes so that they are recorded on GitHub.
 
-Because we are editing a markdown file, Webstorm defaults for it to be in preview mode,
-but if I were to have clicked the middle button it would have shown a split preview between the raw text and what it looks like. (instead of flipping back and forth)
+Because we are editing a markdown file, WebStorm defaults for it to be in preview mode,
+but if I were to have clicked the middle button it would have shown a split preview between the raw text and what it looks like -
+(instead of flipping back and forth)
 
 Also, notice the green button at the top - ![green commit button](../../images/0/partc/git_green_button.png).
 That is used to create a commit, which is a record of the changes that you have made.
@@ -401,12 +502,13 @@ As you are toying around, you may get a popup like this in WebStorm.
 ![popup asking if you want to add files to git](../../images/0/partc/add_file_to_git.png)
 
 Like the picture shows, I would check ***Don't ask again*** and then click ***Cancel***.
-I like to be purposeful in my commits in git, so I do not like adding in files to be tracked that may not be necessary.
+I like to be purposeful with my commits in Git, so I do not like adding files to Git that may not be necessary.
+However, in this class, it will be safer to just add in all files and ensure the file watcher process is working.
 
-### 10: Understand the process
+### 11: Understand the process
 
-For every project that we have thereafter, there will most likely be a new repo that you'll need to add to Webstorm using some of the steps that we've highlighted here.
-For every repo you'll need to accept the assignment and open up a new project from VCS.
+For every project that we have thereafter, there will most likely be a new repo that you'll need to add to WebStorm using some of the steps that we've highlighted here.
+For every repo you'll need to accept the assignment, open up a new project from VCS, and import File Watchers (which we'll revisit in the next part)
 You won't need to generate a new token, however.
 The process that we follow here is merely to get you to understand the workflow for checking out projects from GitHub.
 
@@ -420,7 +522,7 @@ There you'll also see how you can [verify that your changes appear on GitHub](#0
 ### Exercises 0.7-0.9
 
 To submit the assignment you'll be making changes that will appear in your GitHub repo.
-For one, I would like you to edit the file that we created via Webstorm and add your name to the markdown file.
+For one, I would like you to edit the file that we created via WebStorm and add your name to the markdown file.
 
 #### 0.7 - Verifying changes made it to GitHub
 
@@ -434,21 +536,21 @@ Like the gif above click on the text that has your commit message and you'll see
 changes that you committed and how your commit changed the file, which
 you can immediately identify.
 If you see your custom picture and your
-name or id, then you'll get the rest of the credit.
+name or ID, then you'll get the rest of the credit.
 If you don't, then
 simply make an additional change to one of the files (adding a line or a
 space) while [editing the user preferences as outlined earlier](#3-configure-git).
 
 #### 0.8 - Upload exercises from exercises 0.1-0.6
 
-Now that GitHub has been setup correctly,
+Now that GitHub has been set up correctly,
 please upload the materials from the previous section
 [Exercises 0.1-0.6](/part0/fundamentals_of_web_apps#exercises-0-1-0-6) into your GitHub repo.
 Make sure you put them in a folder and provide them with names that match the exercise that you had.
 
 #### 0.9 - Final upload screenshot
 
-Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.  
+Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.
 Please name the screenshot file with the name `09`.
 Make sure the file has the correct extension.
 
@@ -469,7 +571,7 @@ While the workflow in JetBrains is fairly good for what we want,
 at some point you are going to want to do something that is beyond what's available.
 The best thing that you can do to help yourself is to begin to practice using git on the command line.
 It is harder to use.
-However, there are many more resources out there (like stackoverflow) that give you a git command to do some neat things,
+However, there are many more resources out there (like StackOverflow) that give you a git command to do some neat things,
 like amend your last commit, or go back a couple of commits, among other things.
 
 For this, we'll continue getting comfortable with git bash.
@@ -487,14 +589,13 @@ are:
 
 And press the tab key to autocomplete any folders and folder paths as
 you type so that you don’t misspell things as you go along.
-Another
-other option you have is, if you are on your computer, to use windows
-explorer to get to the directory where you want to download the project,
+Another option you have is, if you are on your computer, to use Windows
+Explorer to get to the directory where you want to download the project,
 and then right-click and select *Git Bash Here*.
-If you are on windows and using the new [Terminal](https://github.com/microsoft/terminal),
-you can also click the folder from explorer and drag the folder from windows into Terminal to have it automatically type the path for you.
+If you are on Windows and using the new [Terminal](https://github.com/microsoft/terminal),
+you can also click the folder from Explorer and drag the folder from Windows into Terminal to have it automatically type the path for you.
 Once you are inside the correct place that you want to be, then you can move on.
-Lastly, one of the last ways to do this is merely via Webstorm.
+Lastly, one of the last ways to do this is merely via WebStorm.
 You can right-click on your project and say ***Open In->Terminal***, and the terminal will open down below.
 
 ### Learning the git commands in bash
@@ -509,7 +610,8 @@ When using git bash, you know you have entered a git repository when you see tha
 In our case, notice how the end of the prompt ends with
 `main`.
 That lets you know that you are on the main branch of a git
-project.  I will move up a directory and down just so you can see the difference.
+project.
+I will move up a directory and down just so you can see the difference.
 
 ![git terminal showing main as repo](../../images/0/partc/image5.png)
 
@@ -539,8 +641,8 @@ which means that git is not monitoring them for any changes.
 When untracked files change, *git knows nothing about them*.
 So let's add a set of files so that git starts tracking them for any changes.
 Let's practice adding one set of files to what will be our next commit.
-Part of what you need to do is add a picture or screenshot to the repo, which can you can drag into WebStorm on top of your *lab0* folder.
-You'll see a *move* window pop up that you can click ***Refactor***.
+Part of what you need to do is add a picture or screenshot to the repo, which you can drag into WebStorm on top of your *lab0* folder.
+You'll see a *Move* window pop up that you can click ***Refactor***.
 Go ahead and do that.
 Type `git status` again and you'll now see the file appear as an untracked file.
 
@@ -579,7 +681,7 @@ This means that the next time you say commit via git all of the files will be pl
 In this case, let's write this line
 
 ```bash
-git commit -m "Adding screenshot and other repo files from webstorm"
+git commit -m "Adding screenshot and other repo files from WebStorm"
 ```
 
 By having the `-m`, we are providing the commit message that we would like to have to help us know what we did in this particular commit.
@@ -599,22 +701,20 @@ In git when you save a file, git merely tells you that the file that you have sa
 If you want that file to become part of the record, you'll need to stage the changes, which you can do again by calling this ambiguous term `add`.
 If you were to add the file, then it would show in green again to let you know that it will be committed.
 However, there is a way to automatically commit any of your tracked files into your repository,
-which is to use the flag -a, so typically when I commit, I do something like this:
+which is to use the flag `-a`, so typically when I commit, I do something like this:
 
 ```bash
 git commit -am "Personalized the readme with my name Osvaldo"
 ```
 
-While
-I typically use the `-a` flag to automatically add all my changes to the next commit, one reason for not
+While I typically use the `-a` flag to automatically add all my changes to the next commit, one reason for not
 automatically adding (or staging) all changes is to make multiple commits so that you split
 apart multiple changes that you’ve made.
- Leaving files unstaged won’t
-make them a part of the commit, so you can commit multiple times and add
+Leaving files unstaged won’t make them a part of the commit, so you can commit multiple times and add
 the appropriate files to address each bug or feature for example and to provide an appropriate message for each.
 Therefore, if you made multiple changes, each commit will have just the files related to that change or improvement instead of a bunch of unrelated things.
 
-However, because I advocate for committing often, I will mostly have you use the -a option so that git commits all changes to tracked files.
+However, because I advocate for committing often, I will mostly have you use the `-a` option so that Git commits all changes to tracked files.
 
 Committing will save the changes to the local repository.
 The `–a` switch

@@ -65,7 +65,7 @@
 
   a {
     html[data-theme='light'] & {
-        font-family: $font-heading;
+        font-family: $font-heading--light;
     }
   }
 
@@ -82,10 +82,10 @@
   code.language-text {
     background-color: rgba(var(--color-main), 0.6);
     color: rgba(var(--color-main), 0.6);
-    font-family: 'SFMono-Regular', Consolas, 'Roboto Mono', 'Droid Sans Mono',
+    font-family: 'Fira Code', Consolas, 'Roboto Mono', 'Droid Sans Mono',
     'Liberation Mono', Menlo, Courier, monospace;
-    font-weight: bold;
-    padding: 2px 0px 0px 5px;
+    font-weight: regular;
+    padding: 0px 0px 0px 0px;
   }
 
   img {
@@ -101,7 +101,16 @@
   }
 
   blockquote {
+    border-left: 2px;
     border-left-style: solid;
+    border-left-color: #{$gray};
+    padding-left: 0.5rem;
+    html[data-theme='light'] & {
+        background-color: #{$blockquote};
+    }
+    html[data-theme='dark'] & {
+        background-color: #{$blockquote--dark};
+    }
   }
 
   .letter {
@@ -135,9 +144,11 @@
 .tasks {
   a {
     border: 0;
-    border-bottom-width: 2px;
+    border-bottom-width: 3px;
     border-style: solid;
-    padding: 2px;
+    padding: 1px;
+    display: inline-block;
+    height: 1.45rem;
 
     &:hover {
       color: $black;
@@ -184,7 +195,12 @@
 }
 
 .gatsby-highlight-code-line {
-  background-color: #291e2a;
+  html[data-theme='dark'] & {
+    background-color: #291e2a;
+  }
+  html[data-theme='light'] & {
+    background-color: #3D2C3E;
+  }
   display: block;
   margin-right: -1em;
   margin-left: -1em;

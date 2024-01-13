@@ -11,7 +11,7 @@ Next, let's connect the frontend we made in [part 2](/part2) to our own backend.
 
 In the previous part, the frontend could ask for the list of tasks from the json-server we had as a backend, from the address <http://localhost:3001/tasks>.
 Our backend has a slightly different URL structure now, as the tasks can be found at <http://localhost:3001/api/tasks>.
-Let's change the attribute `baseUrl` in the *src/services/tasks.js* like so:
+Let's change the attribute `baseUrl` in the frontend tasks app at *src/services/tasks.js* like so:
 
 ```js
 import axios from 'axios'
@@ -36,7 +36,8 @@ We can access the backend from a browser and from postman without any problems.
 
 ### Same origin policy and CORS
 
-The issue lies with a concept called **same origin policy**. A URL's origin is defined by the combination of three things:
+The issue lies with a concept called **same origin policy**.
+A URL's origin is defined by the combination of three things:
 
 - protocol (AKA scheme)
 - hostname
@@ -54,7 +55,7 @@ When you visit a website (i.e <https://homestarrunner.com/>), the browser issues
 The *response sent by the server* is an HTML file that may contain one or more references to external assets/resources hosted
 either on:
 
-- the same server that *homestarrunner.com* is hosted on
+- the same server that *`homestarrunner.com`* is hosted on
 - a different website.
 
 When the browser sees reference(s) to a URL in the source HTML, *it issues a request*.
@@ -80,7 +81,7 @@ According to [Wikipedia](https://en.wikipedia.org/wiki/Cross-origin_resource_sha
 
 The problem is that, by default, the JavaScript code of an application that runs in a browser can only communicate with a server in the same
 [origin](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy).
-*Because our server is in localhost port `3001`, while our frontend is in localhost port `3000`, **they do not have the same origin***.
+*Because our server is in localhost port `3001`, while our frontend is in localhost port `5173`, **they do not have the same origin***.
 
 Keep in mind, that [same-origin policy](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy) and CORS are not specific to React or Node.
 They are universal principles regarding the safe operation of web applications.
@@ -145,13 +146,13 @@ we run into another small issue.
 How do we differentiate between sharing code with folks (or even with ourselves as we are working on it
 versus having something that we want to deploy to the outside world?)  
 
-![drawing with team members with git and a webserver](../../images/3/custom/fork_step_3.png)
+![drawing with team members with git and a web server](../../images/3/custom/fork_step_3.png)
 
 We can't just have an automatic link between the GitHub server and the web server,
 since we may want to share something on the GitHub server with our team members but do not want to share it with the world just yet.
 Instead, we'll need to have a separate **deploy** step that involves us deploying the code to the web.
 While there are many ways of having this be separated,
-we are going to follow a workflow that fits with our permissions and circumstances.  
+we are going to follow a workflow that fits with our permissions and circumstances.
 What we are going to do is to have a **fork** of our comp227 repo that we will place into our personal account.
 This fork will merely exist to connect to a web server.
 **We should not push any code to our personal repo.**
@@ -169,9 +170,10 @@ Here we are going to go to GitHub to set up a fork.
 Remember that the fork's job is merely to interact with the web server.
 We will never commit code directly to this fork.
 The fork though can sync with the your commit repo in 227 and when it does sync, the web server will be updated magically.
-Up until this point we have not talked about forks or your repos, as we want to make sure that you setup and commit code to the 227 repo from Webstorm.
+Up until this point we have not talked about forks or your repos, as we want to make sure that you setup and commit code to the 227 repo from WebStorm.
 
-To set up a fork, merely go to the comp227 webpage from your repo.  This can be accessed if you go to `github.com/comp227/lab3-yourusername`
+To set up a fork, merely go to the comp227 webpage from your repo.
+This can be accessed if you go to *`github.com/comp227/lab3-yourusername`*
 
 Once there, you will see a fork button at the upper right, with a picture similar to this:
 ![fork repo](https://i.imgur.com/1M86XYR.png)
@@ -233,7 +235,7 @@ If you created your account with an email, at this point, you'll select the opti
 You'll then go through a series of pages that prompt you to authorize Render to access your GitHub account, including entering your GitHub password.
 Once you get back to Render, if you linked your account correctly, you should see your repos with purple connect button to the side of each one.
 
-![screenshot of connnected render dashboard to GitHub](../../images/3/custom/render_dashboard_connected.png)
+![screenshot of connected render dashboard to GitHub](../../images/3/custom/render_dashboard_connected.png)
 
 Click the connect button for your forked repo.
 You'll then be taken to a page to place all of your options to deploy the page.
@@ -302,16 +304,16 @@ Let's go through one of them next.
 So far we have been running React code in **development mode**.
 In development mode the application is configured to give clear error messages, immediately render code changes to the browser, and so on.
 
-When the application is deployed, we must create a [production build](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)
+When the application is deployed, we must create a [production build](https://vitejs.dev/guide/build.html)
 or a version of the application which is optimized for production.
 
-A production build of applications created with *create-react-app* can be created with the command
-[npm run build](https://github.com/facebookincubator/create-react-app#npm-run-build-or-yarn-build).
+A production build of applications created with *Vite* can be created with the command
+[`npm run build`](https://vitejs.dev/guide/build.html).
 
-Let's run this command from the ***root of the frontend project***.
+Let's run this command from the ***root of the frontend project*** that we developed in [Part 2](/part2).
 
-This creates a directory called *build* (which contains the only HTML file of our application, *index.html* ) which contains the directory *static*.
-[Minified](<https://en.wikipedia.org/wiki/Minification_(programming)>) version of our application's JavaScript code will be generated in the *static* directory.
+This creates a directory called *dist* (which contains the only HTML file of our application, *index.html* ) and the directory *assets*.
+The [**minified**](<https://en.wikipedia.org/wiki/Minification_(programming)>) version of our application's JavaScript code will be generated in the *dist* directory.
 Even though the application code is in multiple files, all of the JavaScript will be minified into one file.
 All of the code from all of the application's dependencies will also be minified into this single file.
 
@@ -325,17 +327,17 @@ The beginning of the code looks like this:
 ### Serving static files from the backend
 
 There are many options for deploying the frontend.
-We will:
+Nonetheless, we will:
 
-1. copy the production build (that *build* directory) from frontend
+1. copy the production build (that *dist* directory) from frontend
 2. paste it in the root of the backend repository and
-3. configure the backend to show the frontend's ***main page*** (the file *build/index.html*) as the **backend's main page**.
+3. configure the backend to show the frontend's ***main page*** (the file *dist/index.html*) as the **backend's main page**.
 
 We begin by copying the production build of the frontend to the root of the backend.
-The copying can be done from the frontend directory by opening up the terminal in Webstorm from the frontend's project and then typing:
+The copying can be done from the frontend directory by opening up the terminal in WebStorm from the frontend's project and then typing:
 
 ```bash
-cp -r build ../tasks-backend_OR_NAME_OF_YOUR_BACKEND_DIR
+cp -r dist ../tasks-backend_OR_NAME_OF_YOUR_BACKEND_DIR
 ```
 
 Otherwise, simply copy and paste.
@@ -350,14 +352,14 @@ we need a built-in middleware from express called [static](http://expressjs.com/
 Then we add the following amidst the declarations of middlewares
 
 ```js
-app.use(express.static('build'))
+app.use(express.static('dist'))
 ```
 
-whenever express gets an HTTP GET request it will first check if the *build* directory contains a file corresponding to the request's address.
+Whenever express gets an HTTP GET request it will first check if the *dist* directory contains a file corresponding to the request's address.
 If a correct file is found, express will return it.
 
-Now HTTP GET requests to the address ***www.serversaddress.com/index.html*** or ***www.serversaddress.com*** will show the React frontend.
-GET requests to the address ***www.serversaddress.com/api/tasks*** will be handled by the backend's code.
+Now HTTP GET requests to the address ***`www.serversaddress.com/index.html`*** or ***`www.serversaddress.com`*** will show the React frontend.
+GET requests to the address ***`www.serversaddress.com/api/tasks`*** will be handled by the backend's code.
 
 Because of our situation, both the frontend and the backend are at the same address,
 we can declare `baseUrl` in frontend's *services/tasks* as a [relative](https://www.w3.org/TR/WD-html40-970917/htmlweb.html#h-5.1.2) URL.
@@ -375,7 +377,10 @@ const getAll = () => {
 // ...
 ```
 
-After the change, we have to ***create a new production build and copy it to the root of the backend repository***.
+After the change, we have to:
+
+1. *create a new production build of the **frontend***
+2. *copy it to the root of the **backend** repository*.
 
 The application can now be used from the *backend* address <http://localhost:3001>:
 
@@ -383,25 +388,30 @@ The application can now be used from the *backend* address <http://localhost:300
 
 Our application now works exactly like the [single-page app](/part0/fundamentals_of_web_apps#single-page-app) example application we studied in part 0.
 
-When we use a browser to go to the address <http://localhost:3001>, the server returns the *index.html* file from the *build* repository.
-The summarized contents of the file are as follows:
+When we use a browser to go to the address <http://localhost:3001>, the server returns the *index.html* file from the *dist* directory.
+The contents of the file are:
 
 ```html
-<head>
-  <meta charset="utf-8"/>
-  <title>React App</title>
-  <link href="/static/css/main.f9a47af2.chunk.css" rel="stylesheet">
-</head>
-<body>
-  <div id="root"></div>
-  <script src="/static/js/1.578f4ea1.chunk.js"></script>
-  <script src="/static/js/main.104ca08d.chunk.js"></script>
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+    <script type="module" crossorigin src="/assets/index-5f6faa37.js"></script>
+    <link rel="stylesheet" href="/assets/index-198af077.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    
+  </body>
 </html>
+
 ```
 
 The file contains instructions to fetch a CSS stylesheet defining the styles of the application,
-and two `script` tags that instruct the browser to fetch the JavaScript code of the application - the actual React application.
+and one `script` tag that instruct the browser to fetch the JavaScript code of the application - the actual React application.
 
 The React code fetches tasks from the server address <http://localhost:3001/api/tasks> and renders them to the screen.
 The communications between the server and the browser can be seen in the ***Network*** tab of the developer console:
@@ -413,9 +423,9 @@ The setup that is ready for a product deployment looks as follows:
 ![diagram of deployment ready react app](../../images/3/101.png)
 
 Unlike when running the app in a development environment,
-everything is now in the same node/express-backend that runs in [localhost:3001](http://localhost:3001).
+everything is now in the same *node/express-backend* that runs in [localhost:3001](http://localhost:3001).
 When the browser goes to the page, the file *index.html* is rendered.
-That causes the browser to fetch the product version of the React app.
+That causes the browser to fetch the production version of the React app.
 Once it starts to run, it fetches the json-data from the address [localhost:3001/api/tasks](http://localhost:3001/api/tasks).
 
 ### The whole app to the internet
@@ -437,7 +447,7 @@ If the application crashes or is restarted, all of the data will disappear.
 The application needs a database.
 Before we introduce one, let's go through a few things.
 
-The setup looks like now as follows:
+The setup now looks like this:
 
 ![diagram of react app on render with a database](../../images/3/102.png)
 
@@ -454,13 +464,27 @@ let's add some npm-scripts to the ***backend's package.json***.
 {
     "scripts": {
         //...
-    "build:ui": "rm -rf build && cd ../part2-tasks/ && npm run build && cp -r build ../tasks-backend",
+    "build:ui": "rm -rf dist && cd ../part2-tasks/ && npm run build && cp -r dist ../tasks-backend",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
   }
 }
 ```
+  
+> *Note for Windows users*
+>
+> Back in part 0, I mentioned that you should work exclusively using git bash as your terminal of choice.
+> This is because Windows most popular terminal options Command Prompt and Powershell, do not natively support Linux-like commands.
+> This means that standard shell commands in `build:ui` would not work in Powershell.
+> To get the script to work in Powershell, it would have to be rewritten as:
+>
+> ```json
+> "build:ui": "@powershell Remove-Item -Recurse -Force build && cd ../frontend && npm run build && @powershell Copy-Item build -Recurse ../backend",
+> ```
+>
+> Let's not rewrite all our shell scripts and ***stick to using git bash***.
 
-Re-examine the text above. Make sure to modify the names of your directories to match your repos.
+Re-examine the text above.
+Make sure to modify the names of your directories to match your repos.
 
 The script `npm run build:ui` builds the frontend and copies the production version under the backend repository.
 `npm run deploy` releases the current backend and pushes it to GitHub.
@@ -470,7 +494,7 @@ Notice that the directory paths in the script `build:ui` depend on the location 
 
 ### Proxy
 
-Changes on the frontend have caused it to no longer work in development mode (when started with command `npm start`),
+Changes on the frontend have caused it to no longer work in development mode (when started with command `npm run dev`),
 as the connection to the backend does not work,
 which you'll also have to start as well.
 
@@ -482,31 +506,40 @@ This is due to changing the backend address to a relative URL:
 const baseUrl = '/api/tasks'
 ```
 
-Because in development mode the frontend is at the address [localhost:3000](http://localhost:3000),
-the requests to the backend go to the wrong address [localhost:3000/api/tasks](http://localhost:3000/api/tasks).
+Because in development mode the frontend is at the address [localhost:5173](http://localhost:5173),
+the requests to the backend go to the wrong address [localhost:5173/api/tasks](http://localhost:5173/api/tasks).
 The backend is at [localhost:3001](http://localhost:3001).
 
-If the project was created with create-react-app, this problem is easy to solve.
-It is enough to add the following declaration to the ***frontend's*** *package.json* file.
+If the project was created with Vite, this problem is easy to solve.
+It is enough to add the following declaration to the ***frontend's*** *vite.config.js* file.
 
 ```bash
-{
-  "dependencies": {
-    // ...
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  // highlight-start
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+    }
   },
-  "scripts": {
-    // ...
-  },
-  "proxy": "http://localhost:3001"  // highlight-line
-}
+  // highlight-end
+})
+
 ```
 
-After a restart, the React development environment will work as a [proxy](https://create-react-app.dev/docs/proxying-api-requests-in-development/).
-If the React code does an HTTP request to a server address at *<http://localhost:3000>* not managed by the React application itself
+After a restart, the React development environment will work as a [proxy](https://vitejs.dev/config/server-options.html#server-proxy).
+If the React code does an HTTP request to a server address at *<http://localhost:5173>* not managed by the React application itself
 (i.e. when requests are not about fetching the CSS or JavaScript of the application),
 the request will be redirected to the server at *<http://localhost:3001>*.
 
-Now the frontend is also fine, working with the server both in development- and production mode.
+Note that with the vite-configuration shown above, only requests that are made to paths starting with ***/api*** are redirected to the server.
 
 A negative aspect of our approach is how complicated it is to deploy the frontend.
 Deploying a new version requires generating a new production build of the frontend and copying it to the backend repository.
@@ -517,7 +550,6 @@ There are multiple ways to achieve this - for example placing both backend and f
 [in the same repository](https://github.com/mars/heroku-cra-node) - but we will not go into those now.
 
 In some situations, it may be sensible to deploy the frontend code as its own application.
-With apps created with create-react-app it is [straightforward](https://github.com/mars/create-react-app-buildpack).
 
 The current backend code can be found on [Github](https://github.com/comp227/part3-tasks-backend/tree/part3-3),
 in the branch *part3-3*.
@@ -532,7 +564,7 @@ The changes in frontend code are in *part3-3* branch of the [frontend repository
 The following exercises don't require many lines of code.
 They can however be challenging, because you must understand exactly what is happening and where, and the configurations must be just right.
 
-#### 3.9 communities backend step9
+#### 3.9 communities backend Step 9
 
 Make the backend work with the communities frontend from the exercises of the previous part.
 Do not implement the functionality for making changes to the URLs yet, that will be implemented in exercise 3.17.
@@ -543,11 +575,13 @@ If some HTTP requests fail, you should check from the ***Network*** tab what is 
 Keep an eye on the backend's console as well.
 If you did not do the previous exercise, it is worth it to print the request data or `request.body` to the console in the event handler responsible for POST requests.
 
-#### 3.10 communities backend step10
+#### 3.10 communities backend Step 10
 
 Deploy the backend to the internet.
+You shall NOT be deploying the frontend directly at any stage of this part.
+It is just backend repository that is deployed throughout the whole part, nothing else.
 
-Test the deployed backend with a browser and Postman or VS Code REST client to ensure it works.
+Test the deployed backend with a browser and Postman or REST client to ensure it works.
 
 **PRO TIP:** When you deploy your application to the cloud,
 it is worth it to at least in the beginning keep an eye on the logs in render.
@@ -560,6 +594,8 @@ so information about the dependency was not saved to the file *package.json*.
 Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`.
 
 Create a README.md at the root of your repository, and add a link to your online application to it.
+
+Also, make sure that the frontend still works locally (in development mode when started with command `npm run dev`).
 
 #### 3.11 Communities full stack
 

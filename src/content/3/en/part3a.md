@@ -31,7 +31,7 @@ Our goal is to implement a backend that will work with the tasks application fro
 However, let's start with the basics by implementing a classic "hello world" application.
 
 > **Notice** that the applications and exercises in this part are not all React applications,
-and we will not use the *create-react-app* utility for initializing the project for this application.
+and we will not use the *`create vite@latest -- --template react`* utility for initializing the project for this application.
 
 We had already mentioned [npm](/part2/getting_data_from_server#npm) back in part 2, which is a tool used for managing JavaScript packages.
 In fact, npm originates from the Node ecosystem.
@@ -111,7 +111,7 @@ echo "Error: no test specified" && exit 1
 
 ### Simple web server
 
-Let's change the application into a web server by editing the *index.js* files as follow:
+Let's change the application into a web server by editing the *index.js* file as follows:
 
 ```js
 const http = require('http')
@@ -159,8 +159,8 @@ Also the address <http://localhost:3001/foo/bar> will display the same content.
 > ```
 >
 > You have two options.
-Either shut down the application using port 3001 (the json-server in the last part of the material was using port 3001),
-or use a different port for this application.
+> Either shut down the application using port 3001 (the json-server in the last part of the material was using port 3001),
+> or use a different port for this application.
 
 Let's take a closer look at the first line of the code:
 
@@ -181,7 +181,8 @@ and taken into use with an [import](https://developer.mozilla.org/en-US/docs/Web
 
 However, Node.js uses so-called [CommonJS](https://en.wikipedia.org/wiki/CommonJS) modules.
 The reason for this is that the Node ecosystem had a need for modules long before JavaScript supported them in the language specification.
-Node supports now also the use of ES6 modules, but since the support is yet [not quite perfect](https://nodejs.org/api/esm.html#modules-ecmascript-modules) we'll stick to CommonJS modules.
+Node supports now also the use of ES6 modules,
+but since the support is yet [not quite perfect](https://nodejs.org/api/esm.html#modules-ecmascript-modules) we'll stick to the CommonJS modules.
 
 CommonJS modules function almost exactly like ES6 modules, at least as far as our needs in this course are concerned.
 
@@ -418,7 +419,8 @@ The experiment shown below illustrates this point:
 
 The experiment above was done in the interactive [node-repl](https://nodejs.org/docs/latest-v8.x/api/repl.html).
 You can start the interactive node-repl by typing in `node` in the command line.
-The repl is particularly useful for testing how commands work while you're writing application code.  To get out of node-repl, type `.exit`.
+The repl is particularly useful for testing how commands work while you're writing application code.
+To get out of node-repl, type `.exit`.
 I highly recommend this!
 
 ### nodemon
@@ -494,7 +496,7 @@ We can now start the server in development mode with the command:
 npm run dev
 ```
 
-Unlike with the ***start*** and ***test*** scripts, we also have to add `run` to the command.
+Unlike with the ***start*** and ***test*** scripts, we also have to add `run` to the command because it is a non-native script.
 
 ### REST
 
@@ -515,12 +517,12 @@ Every resource has an associated URL which is the resource's unique address.
 
 One convention for creating unique addresses is to combine the name of the resource type with the resource's unique identifier.
 
-Let's assume that the root URL of our service is ***www.example.com/api***.
+Let's assume that the root URL of our service is ***`www.example.com/api`***.
 
 If we define the resource type of task to be ***tasks***,
-then the address of a task resource with the identifier 10, has the unique address ***www.example.com/api/tasks/10***.
+then the address of a task resource with the identifier 10, has the unique address ***`www.example.com/api/tasks/10`***.
 
-The URL for the entire collection of all task resources is ***www.example.com/api/tasks***.
+The URL for the entire collection of all task resources is ***`www.example.com/api/tasks`***.
 
 We can execute different operations on resources.
 The operation to be executed is defined by the HTTP *verb*:
@@ -589,7 +591,8 @@ Afterwards, I decided to edit the variables in the live template so they look li
 
 ![log template variables](../../images/3/custom/log_template.png)
 
-Now we can add `log` commands to our code for id and task. So type `log`, ***Enter***, `id`, ***Enter***(2x), and you get the console.log statement that shows below.
+Now we can add `log` commands to our code for id and task.
+So type `log`, ***Enter***, `id`, ***Enter***(2x), and you get the console.log statement that shows below.
 You could also add the line numbers and file names, but since I have clog already, I'll use that as well.
 
 ```js
@@ -636,8 +639,8 @@ task.id === id = false
 ```
 
 The cause of the bug becomes clear.
-The `id` variable contains a string '1', whereas the ids of tasks are integers.
-In JavaScript, the "triple equals" comparison === considers all values of different types to not be equal by default, meaning that 1 is not '1'.
+The `id` variable contains a string *`'1'`*, whereas the ids of tasks are integers.
+In JavaScript, the "triple equals" comparison `===` considers all values of different types to not be equal by default, meaning that *`1`* is not *`'1'`*.
 
 Let's fix the issue by changing the id parameter from a string into a [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number):
 
@@ -659,8 +662,8 @@ If we search for a task with an id that does not exist, the server responds with
 
 ![network tools showing 200 and content-length 0](../../images/3/10ea.png)
 
-The HTTP status code that is returned is 200, which means that the response succeeded.
-There is no data sent back with the response, since the value of the `content-length` header is 0, and the same can be verified from the browser.
+The HTTP status code that is returned is ***200***, which means that the response succeeded.
+There is no data sent back with the response, since the value of the `content-length` header is *`0`*, and the same can be verified from the browser.
 
 The reason for this behavior is that the `task` variable is set to `undefined` if no matching task is found.
 The situation needs to be handled on the server in a better way.
@@ -755,7 +758,7 @@ Because the tasks in the application are only saved to memory, the list of tasks
 
 ### WebStorm REST client
 
-While Postman has become fairly popular due to all of it's options, in our case we can also use Webstorm's REST client instead of Postman.
+While Postman has become fairly popular due to all of it's options, in our case we can also use WebStorm's REST client instead of Postman.
 
 To use the rest client, right-click on the project and select ***New->HTTP Request***.
 Give it the name `all_tasks` and then you'll see a file named ***all_tasks.http***.
@@ -805,7 +808,7 @@ The json-parser:
 2. transforms it into a JavaScript object and
 3. attaches it to the `body` property of the `request` object
 
-before the route handler is called.
+It does all of this before the route handler is called.
 
 For the time being, the application does not do anything with the received data besides printing it to the console and sending it back in the response.
 
@@ -822,7 +825,7 @@ The application prints the data that we sent in the request to the console:
 Thanks to Nodemon any changes we make to the code will restart the application.
 If you pay attention to the console, you will immediately be able to pick up on errors that could occur:
 >
-> ![nodemon error as typing requre not defined](../../images/3/16.png)
+> ![nodemon error as typing require not defined](../../images/3/16.png)
 >
 > Similarly, it is useful to check the console for making sure that the backend behaves as we expect it to in different situations, like when we send data with an HTTP POST request.
 Naturally, it's OK to add lots of `console.log` commands to the code while the application is still being developed.
@@ -875,12 +878,12 @@ Postman also allows users to save requests, but the situation can get quite chao
 > that can be used for getting the value of a single header.
 > The `request` object also has the *headers* property, that contains all of the headers of a specific request.
 >
-> Problems can occur with the Webstorm REST client if you accidentally add an empty line between the top row and the row specifying the HTTP headers.
+> Problems can occur with the WebStorm REST client if you accidentally add an empty line between the top row and the row specifying the HTTP headers.
 > In this situation, the REST client interprets this to mean that all headers are left empty,
 > which leads to the backend server not knowing that the data it has received is in the JSON format.
 >
-> You will be able to spot this missing *Content-Type* header if at some point in your code
-> you print all of the request headers with the `console.log('request.headers=', request.headers)` command.
+> You will be able to spot this missing *Content-Type* header
+> if you print the request headers via `console.log('request.headers=', request.headers)`.
 
 Let's return to the application.
 Once we know that the application receives data correctly, it's time to finalize the handling of the request:
@@ -929,7 +932,7 @@ app.post('/api/tasks', (request, response) => {
 
   const task = {
     content: body.content,
-    important: body.important || false,
+    important: Boolean(body.important) || false,
     date: new Date().toISOString(),
     id: generateId(),
   }
@@ -964,11 +967,11 @@ If the `important` property is missing, we will default the value to `false`.
 The default value is currently generated in a rather odd-looking way:
 
 ```js
-important: body.important || false,
+important: Boolean(body.important) || false,
 ```
 
-If the data saved in the `body` variable has the `important` property, the expression will evaluate to its value.
-If the property does not exist, then the expression will evaluate to false which is defined on the right-hand side of the vertical lines.
+If the data saved in the `body` variable has the `important` property, the expression will evaluate to its value and convert it to a boolean value.
+If the property does not exist, then the expression will evaluate to *`false`* which is defined on the right-hand side of the vertical lines.
 
 > To be exact, when the `important` property is `false`,
 then the `body.important || false` expression will in fact return `false` from the right-hand side...
@@ -1016,12 +1019,12 @@ Please use this new repo link to build your new repository.
 
 **<http://go.djosv.com/227lab3>**
 
-> **NB:** Because this is not a frontend project and we are not working with React, the application **is not created** with create-react-app.
+> **Pertinent:** Because this is not a frontend project and we are not working with React, the application **is not created** with *`create vite@latest -- --template react`*.
 You initialize this project with the `npm init` command that was demonstrated earlier in this part of the material.
 >
 > **Strong recommendation:** When you are working on backend code, always keep an eye on what's going on in the terminal that is running your application.
 
-#### 3.1: Communities backend step1
+#### 3.1: Communities backend Step 1
 
 Implement a Node application that returns a hardcoded list of communities entries from the address <http://localhost:3001/api/groups>.
   
@@ -1063,35 +1066,40 @@ The application must be started with the command `npm start`.
 The application must also offer an `npm run dev` command that will run the application
 and restart the server whenever changes are made and saved to a file in the source code.
 
-#### 3.2: Communities backend step2
+#### 3.2: Communities backend Step 2
 
 Implement a page at the address <http://localhost:3001/info> that looks roughly like this:
 
 ![Screenshot for 3.2](../../images/3/23x.png)
 
-The page has to show the time that the request was received and how many communtiies are listed at the time of processing the request.
+The page has to show the time that the request was received and how many communities are listed at the time of processing the request.
 
-#### 3.3: Communities backend step3
+> Caution: There can only be one *`response.send()`* statement in an Express app route.
+> Once you send a response to the client using *`response.send()`*, the request-response cycle is complete and no further response can be sent.
+>
+> To include a line space in the output, use `<br/>` tag, or wrap the statements in `<p>` tags.
+
+#### 3.3: Communities backend Step 3
 
 Implement the functionality for displaying the information for a community.
 The url for getting the data for a group with the id 5 should be <http://localhost:3001/api/groups/5>
 
 If an entry for the given id is not found, the server has to respond with the appropriate status code.
 
-#### 3.4: Communities backend step4
+#### 3.4: Communities backend Step 4
 
 Implement functionality that makes it possible to delete a community by making an HTTP DELETE request to the unique URL of that community.
 
-Test that your functionality works with either Postman or the Visual Studio Code REST client.
+Test that your functionality works with either Postman or a REST client.
 
-#### 3.5: Communities backend step5
+#### 3.5: Communities backend Step 5
 
 Expand the backend so that new communities can be added by making HTTP POST requests to the address <http://localhost:3001/api/groups>.
 
 Generate a new id for the community with the [Math.random](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) function.
 Use a big enough range for your random values so that the likelihood of creating duplicate ids is small.
 
-#### 3.6: Communities backend step6
+#### 3.6: Communities backend Step 6
 
 Implement error handling for creating new entries.
 The request is not allowed to succeed, if:
@@ -1128,10 +1136,10 @@ By adhering to RESTful principles in our API, GET requests are always used in a 
 
 The HTTP standard also defines the request type [HEAD](https://www.rfc-editor.org/rfc/rfc9110.html#name-head),
 which ought to be safe.
-In practice, HEAD should work exactly like GET but it does not return anything but the status code and response headers.
+In practice, *`HEAD`* should work exactly like *`GET`* but it does not return anything but the status code and response headers.
 The response body will not be returned when you make a HEAD request.
 
-All HTTP requests except POST should be **idempotent**:
+All HTTP requests except *`POST`* should be **idempotent**:
 
 > *Methods can also have the property of "idempotence" in that (aside from error or expiration issues)
 the side-effects of N > 0 identical requests is the same as for a single request.
@@ -1165,7 +1173,7 @@ As a reminder, the json-parser we used earlier:
 In practice, you can use several middlewares at the same time.
 When you have more than one, they're executed one by one in the order that they were taken into use in express.
 
-Let's *implement our own middleware* that prints information about every request that is sent to the server.
+Let's *implement our own middleware function* that prints information about every request that is sent to the server.
 
 For a function to be **middleware** it needs to receives three parameters:
 
@@ -1218,7 +1226,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 ### Exercises 3.7-3.8
 
-#### 3.7: Communities backend step7
+#### 3.7: Communities backend Step 7
 
 Add the [**morgan**](https://github.com/expressjs/morgan) middleware to your application for logging.
 Configure it to log messages to your console based on the `tiny` configuration.
@@ -1230,7 +1238,7 @@ so it's good to learn to decipher and interpret cryptic documentation in any cas
 Morgan is installed just like all other libraries with the `npm install` command.
 Taking morgan into use happens the same way as configuring any other middleware by using the `app.use` command.
 
-#### 3.8*: Communities backend step8
+#### 3.8*: Communities backend Step 8
 
 Configure morgan so that it also shows the data sent in HTTP POST requests:
 
@@ -1245,7 +1253,7 @@ This exercise can be quite challenging, even though the solution does not requir
 This exercise can be completed in a few different ways.
 One of the possible solutions utilizes these two techniques:
 
-- [creating new tokens](https://github.com/expressjs/morgan#creating-new-tokens)
-- [JSON.stringify](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+1. [creating new tokens](https://github.com/expressjs/morgan#creating-new-tokens)
+2. [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
 
 </div>

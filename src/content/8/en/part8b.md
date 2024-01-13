@@ -14,7 +14,7 @@ In addition to language features, we will also have a strong emphasis on tooling
 
 ### Setting things up
 
-Luckily there is not much setup here as Webstorm works natively with TypeScript.
+Luckily there is not much setup here as WebStorm works natively with TypeScript.
 Just go ahead and download this new empty repo by visiting this site:
 <http://go.djosv.com/227labtsintro>
 
@@ -25,7 +25,7 @@ This means that type annotations, interfaces, type aliases, and other type syste
 
 In a production environment, the need for compilation often means that you have to set up a **build step**.
 During the build step, all TypeScript code is compiled into JavaScript in a separate folder, and the *production environment then runs the code from that folder*.
-In a development environment, it is often handier to make use of real-time compilation and auto-reloading so one can see the resulting changes more quickly.
+In a development environment, it is often easier to make use of real-time compilation and auto-reloading so one can see the resulting changes more quickly.
 
 Let's start writing our first TypeScript app.
 To keep things simple, let's consider using the npm package [***ts-node***](https://github.com/TypeStrong/ts-node).
@@ -73,14 +73,14 @@ npm run ts-node file.ts -- -s --someoption
 It is worth mentioning that TypeScript also provides an [online playground](https://www.typescriptlang.org/play/index.html),
 where you can quickly try out TypeScript code and instantly see the resulting JavaScript and possible compilation errors.
 
-> **NB:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment,
+> **Pertinent:** The playground might contain different tsconfig rules (which will be introduced later) than your local environment,
 which is why you might see different warnings there compared to your local environment.
 The playground's tsconfig is modifiable through the ***TS Config*** dropdown menu.
 
 #### Configuration and coding style
 
 Let's add a configuration file *tsconfig.json* to the project.
-In Webstorm you can generate one via ***File->New->tsconfig.json file***.
+In WebStorm you can generate one via ***File->New->tsconfig.json file***.
 Then, add the noImplicitAny field to the `compilerOptions` object
 
 ```js
@@ -112,11 +112,11 @@ but here you'll be expected to use semicolons and adjust to the coding style in 
 This section may have some other differences in coding conventions compared to the rest of the course as well,
 e.g. in the directory naming conventions.
 
-To make our lives easier, let's have Webstorm help us with the semicolons.
+To make our lives easier, let's have WebStorm help us with the semicolons.
 Open up your settings (***Ctrl-Alt-S***), and navigate to ***Editor->Code Style->Typescript***.
 From there, select the *Punctuation* tab and ensure that our use semicolon is set to always:
 
-![webstorm settings for always semicolons in typescript](../../images/teht/custom/semicolon.png)
+![WebStorm settings for always semicolons in typescript](../../images/teht/custom/semicolon.png)
 
 Then from there type save in the search box, which should leave you down to ***Tools->Actions on Save***.
 Make sure that the Reformat code option is checked.
@@ -355,7 +355,7 @@ If our code would be JavaScript, we could print the error message by just referr
 try {
   console.log(calculator(1, 5 , "divide"));
 } catch (error) {
-  console.log("Something went wrong: " + error.message);  // highlight-line
+  console.log('Something went wrong: ', error.message);  // highlight-line
 }
 ```
 
@@ -400,7 +400,7 @@ The TypeScript library itself contains only typings for the code of the TypeScri
 It is possible to write custom typings for a library, but that is rarely needed - since the TypeScript community has done it for us!
 
 As with npm, the TypeScript world also celebrates open-source code.
-The community is active and continuously reacting to updates and changes in commonly-used npm packages.
+The community is active and continuously reacting to updates and changes in commonly used npm packages.
 You can almost always find the typings for npm packages, so you don't have to create types for all of your thousands of dependencies alone.
 
 Usually, types for existing packages can be found from the *`@types`* organization within npm,
@@ -419,7 +419,7 @@ a community project to maintain types of everything in one place.
 Sometimes, an npm package can also include its types within the code and,
 in that case, installing the corresponding `@types/*` is not necessary.
 
-> **NB:** Since the typings are only used before compilation,
+> **Pertinent:** Since the typings are only used before compilation,
 > the typings are *not* needed in the production build and they should **always** be in the *`devDependencies`* of the *package.json*.
 
 Since the global variable `process` is defined by Node itself, we get its typings from the package *`@types/node`*.
@@ -590,7 +590,7 @@ let values: Array<number>;
 
 In this course, we shall mostly be following the convention enforced by the ESlint rule
 [array-simple](https://typescript-eslint.io/rules/array-type/#array-simple)
-that suggests to use [] syntax for simple arrays and <> syntax for the more complex ones.
+that suggests to use `[]` syntax for simple arrays and `<>` syntax for the more complex ones.
 See [the ESlint array-simple rule documentation](https://typescript-eslint.io/rules/array-type/#array-simple) for examples.
 
 </div>
@@ -603,7 +603,7 @@ See [the ESlint array-simple rule documentation](https://typescript-eslint.io/ru
 
 Exercises 8.1-8.7. will all be made in the same project folder.
 
-Please start by visiting <http://go.djosv.com/227lab8> and importing the project into webstorm.
+Please start by visiting <http://go.djosv.com/227lab8> and importing the project into WebStorm.
 
 Then, create the project in an empty directory with `npm init` and install the *ts-node* and *typescript* packages.
 Also, create the file *tsconfig.json* in the directory with the following content:
@@ -739,14 +739,15 @@ export const isNotNumber = (argument: any): boolean =>
 default export "this is the default..."
 ```
 
-Another note: somehow surprisingly TypeScript does not allow to define the same variable in many files at a "block-scope", that is, outside functions (or classes):
-
-![browser showing pong from localhost:3000/ping](../../images/8/60new.png)
-
-This is not *quite* true.
-This ***rule applies only to files that are treated as scripts***.
-A file is a **script** if it does not contain any `export` or `import` statements.
-If a file has those, then the file is treated as a [**module**](https://www.typescriptlang.org/docs/handbook/modules.html), ***and*** the variables do not get defined in the block-scope.
+> Pertinent: somehow surprisingly TypeScript does not allow to define the same variable in many files at a "block scope", that is, outside functions (or classes):
+>
+> ![browser showing pong from localhost:3000/ping](../../images/8/60new.png)
+>
+> This is not *quite* true.
+> This ***rule applies only to files that are treated as scripts***.
+> A file is a **script** if it does not contain any `export` or `import` statements.
+> If a file has those, then the file is treated as a [**module**](https://www.typescriptlang.org/docs/handbook/modules.html),
+> ***and*** the variables do not get defined in the block scope.
 
 </div>
 
@@ -768,7 +769,7 @@ Let's specify the following configurations in our *tsconfig.json* file:
     "target": "ES2022",
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": true, // highlight-line
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true, // highlight-line
@@ -842,7 +843,7 @@ To turn it into a warning, we can open up the settings by using the ***Show Cont
 ![WebStorm using context actions to turn on errors](../../images/8/custom/quickfixinspection.png)
 
 Once there, you are taken to WebStorm's settings, where in your case, you may see that all of the ES2015 migration aids category is mostly unselected.
-Webstorm provides an explanation for why we would want the change in the upper right area.
+WebStorm provides an explanation for why we would want the change in the upper right area.
 On noticing that most of the inspections are not being raised as warnings, let's change that.
 Click the category ***ES2015 Migration aids*** and change the severity to a weak warning, as we show in the column below.
 
@@ -1078,8 +1079,9 @@ We can also explicitly type things `any`.
 The only difference between the implicit and explicit any type is *how the code looks*; the compiler does not care about the difference.
 
 Programmers however see the code differently when `any` is explicitly enforced than when it is implicitly inferred.
-**Implicit `any` typings are usually considered problematic**, since it is quite often due to the coder forgetting to assign types (or being too lazy to do it),
-and it also means that the full power of TypeScript is not properly exploited.
+**Implicit `any` typings are usually considered problematic**.
+Coders quite often use `any` as a placeholder and later forget to assign types (or they were just too lazy to do it).
+Using `any` also means that the full power of TypeScript is not properly exploited.
 
 This is why the configuration rule [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny) exists on the compiler level,
 and it is highly recommended to keep it on at all times.
@@ -1104,7 +1106,7 @@ npm install eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser --
 ```
 
 We will configure ESlint to [disallow explicit any]( https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md).
-Write the following rules to *.eslintrc*:
+Write the following rules to *.estlintrc.cjs*:
 
 ```json
 {
@@ -1137,7 +1139,7 @@ Let us also set up a **lint** npm script to inspect the files with *.ts* extensi
 }
 ```
 
-Finally, we'll need to enable the eslint configuration in our settings. (***Ctrl-Alt-S***).
+Finally, we'll need to enable the eslint configuration in our settings (***Ctrl-Alt-S***).
 Remember that the configuration to turn on in ***Languages & Frameworks->JavaScript->Code Quality Tools->ESLint***.
 Select the option **Automatic ESLint configuration** and check ***Run eslint --fix on save***.
 Now lint will complain if we try to define a variable of type `any`:
@@ -1149,9 +1151,9 @@ but you can also use all basic ESlint rules in TypeScript projects.
 For now, we should probably go with the recommended settings,
 and we will modify the rules as we go along whenever we find something we want to change the behavior of.
 
-On top of the recommended settings, we should try to get familiar with the coding style required in this part and ***set the semicolon at the end of each line of code to required***.
+On top of the recommended settings, we should try to get familiar with the coding style required in this part and ***set the semicolon at the end of each line of code to `required`***.
 
-So we will use the following *.eslintrc*
+So we will use the following *.estlintrc.cjs*
 
 ```json
 {
@@ -1250,14 +1252,14 @@ app.post("/calculate", (req, res) => {
 ```
 
 Notice that we also added the `return` syntax in the function for information we send.
-We will revisit shortly some techniques for how the `any` typed data (eg. the input an app recieves from the user) can be ***narrowed*** to a more specific type (such as `number`).
+We will revisit shortly some techniques for how the `any` typed data (eg. the input an app receives from the user) can be ***narrowed*** to a more specific type (such as `number`).
 *When we properly narrow types, we won't need to silence the ESlint rules*.
 
 ### Type assertion
 
 Using a [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions)
 is a simple but [*unsafe way*](https://ts.dev/style/#type-and-non-nullability-assertions) to keep the TypeScript compiler and Eslint quiet.
-Let us export the type Operation in *calcultor.ts*:
+Let us export the type Operation in *calculator.ts*:
 
 ```js
 export type Operation = "multiply" | "add" | "divide";
@@ -1266,7 +1268,7 @@ export type Operation = "multiply" | "add" | "divide";
 Now we can import `Operation` and use a **type assertion** to tell the TypeScript compiler what type `op` has:
 
 ```js
-import { calculator, Operation } from "./calculator"; // highligh-line
+import { calculator, Operation } from "./calculator"; // highlight-line
 
 app.post("/calculate", (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -1307,7 +1309,7 @@ It leaves the TypeScript compiler off the hook, the compiler just trusts that we
 If the asserted type does ***not*** have the right kind of value, the result will be a runtime error,
 so one must be pretty careful when validating the data if a type assertion is used.
 
-In the next chapter we shall have a look at [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html),
+In the next chapter, we shall have a look at [type narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html),
 which will provide a safer way of specifying types for external data.
 
 </div>
@@ -1323,7 +1325,7 @@ Configure your project to use the above ESlint settings and fix all the warnings
 #### 8.7 WebExercises
 
 Add an endpoint to your app for the exercise calculator.
-It should be used by doing an HTTP POST request to endpoint ***<http://localhost:3002/exercises>*** with the input in the request body:
+It should be used by doing an HTTP POST request to the endpoint ***<http://localhost:3002/exercises>*** with the input in the request body:
 
 ```js
 {

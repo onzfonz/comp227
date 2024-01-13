@@ -10,7 +10,7 @@ lang: en
   | | |
 | --- | --- |
 | COURSE NAME| Web Development
-| SEMESTER|  Spring 2023
+| SEMESTER|  Spring 2024
 | NUMBER AND TYPE OF UNITS|  3
 | COURSE TIME AND LOCATION|  Online (Meetings will be asynchronous)
 | INSTRUCTOR NAME| Osvaldo Jiménez
@@ -27,7 +27,7 @@ Students are expected to read online resources and apply techniques to develop a
 | --- | --- |
 Email | ojimenez AT pacific.edu
 Discord |  <https://discord.gg/VRUKRxCJ95>
-Virtual Office Hours| TTh 5pm-7pm
+Virtual Office Hours| MW 3pm-5pm
 Other meetings | by email/discord appointment
 
 ### Prerequisites
@@ -49,6 +49,10 @@ You are also expected to have perseverance and a capacity for solving problems a
 
 Previous knowledge of JavaScript or other course topics is not required.
 If you do not have the strongly recommended skills, then realize that ***you will need to put extra time in at the beginning of the course***.
+
+How much programming experience is needed?
+It is hard to say, but you should be pretty fluent in *your* programming language.
+This level of fluency takes usually at least 100-200 hours of practice to develop.
 
 ### Course Objectives
 
@@ -96,10 +100,10 @@ It's crucial to seek help when you can't access Canvas or class materials.
 It's up to you to ask questions!
 
 1. We will be using [Discord](https://discord.gg/VRUKRxCJ95).
-   - if you have not used discord before it is fairly intuitive, but [here's a guide should you need it](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord)
+   - if you have not used Discord before it is fairly intuitive, but [here's a guide should you need it](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord)
 2. Canvas has live help that will assist you with any technical issues.
     To access help, click the question mark at the far left side of the screen.
-    You can also email the Pacific Helpdesk for guidance at helpdesk@pacific.edu.
+    You can also email the Pacific Helpdesk for guidance at <helpdesk@pacific.edu>.
 3. For assistance with course materials contact your instructor or ask in the #help channel of discord
 
 An overview of available Canvas help resources can be found here: <https://community.canvaslms.com/videos/1687-canvas-help-resources-all-users>
@@ -109,19 +113,19 @@ Further in-depth information can be accessed in The Canvas Student Guide which c
 
 #### Important Tips for Success as an Online Learner
 
-- Begin planning now for private, uninterrupted time in your schedule to go through course materials and complete the assignments
-    - preferably in at least two-hours blocks and at least five times a week.
+- Begin planning now for private, uninterrupted time in your schedule to go through the course materials and complete the assignments
+    - preferably in at least two-hour blocks and at least five times a week.
 It can be easy to fall behind!
 - Check your email account and the class [discord](https://discord.gg/VRUKRxCJ95) regularly for updated information.
-- Use discord for private messages to the instructor.
-The discord is a great place to ask questions in the correct categories (make sure you read the rules there).
+- Use Discord for private messages to the instructor.
+Discord is a great place to ask questions in the correct categories (make sure you read the rules there).
 - If you have questions or are confused about an assignment, act promptly! Check #announcements, #help or #sos to see if your concern has been addressed already.
 If not, post your question to this discussion.
-- We may use Canvas tools such as WebEx for Q&A sessions and please follow the instruction the instructor sends out through Canvas Announcement.
+- We may use Canvas tools such as WebEx for Q&A sessions and please follow the instructions the instructor sends out through Canvas Announcement.
 - Read directions carefully.
 
 For posts to online discussions, conventions of online etiquette ("netiquette") which include courtesy to all users, will be observed.
-Please see Guidelines for Online Discussion for detail.
+Please see Guidelines for Online Discussion for details.
 
 ### Discord & Course Netiquette
 
@@ -156,7 +160,7 @@ Avoid any language that can be construed as angry, sarcastic, or even humorous.
 #### Don’t take things personally
 
 As mentioned above, there is no way for you to know for sure what that person writing intends.
-Given that the discussions are supposed to be a community building experience, assume that the responses are meant to be helpful.
+Given that the discussions are supposed to be a community-building experience, assume that the responses are meant to be helpful.
 If you have questions about a post, contact your instructor.
 
 #### When in doubt, take a break before posting
@@ -179,14 +183,17 @@ Many of you will have more experience and your assistance will be appreciated.
 
 ### Attendance policies
 
-Even though this is an asynchronous online course, attendance will be counted by how responsive you are on discord.
-You will be expected to respond to any discussion via discord in a reasonable timeframe (24-48 hours).
+Even though this is an asynchronous online course, attendance will be counted by how responsive you are on Discord.
+You will be expected to respond to any discussion via Discord in a reasonable time frame (24-48 hours).
 After having to contact you via other methods or bringing responsiveness in discord to your attention,
 any subsequent attempts to contact you will lower part of your social learning exercises grade by two percentage points.
-In addition to me reaching out, you will be expected to be in contact with others during the course and will be placed into learning pairs or triads.
-You will be expected to communicate in those discord channels with your learning groups on a regular basis as well
-and will be expected to meet with them on a regular basis to go over the material.
-This means that you'll be expected to meet online with those groups either over Discord or via Zoom (or in person if you prefer).
+In addition to me reaching out, you will be expected to:
+
+- Be in contact with others via our official discord server channels.
+- Communicate in those discord channels with your learning groups regularly.
+- Meet with your learning groups regularly to go over the material.
+    - *This means that you'll be expected to meet online with those groups either over Discord or via Zoom (or in person if you prefer).*
+
 **Chatting privately via DMs will not count towards your expectations of regular communication.**
 Those meetings are crucial to your learning and your peers, and so you will be expected to make them up if you cannot make it, or forfeit your ability to pass the course.
 
@@ -226,6 +233,7 @@ The course is composed of a few parts
 #### Individual Exercises
 
 Part of your grade for the course will be based on the total number of submitted exercises for the required parts (including exercises marked with an asterisk).
+For all of the exercises, your work will not only come from the solution but from you showing your work as you move toward your solution.
 
 **Your grade will not completely come from these exercises**.
 
@@ -246,7 +254,10 @@ Assume that if there are 138 exercises **(there are not 138 exercises; that coun
 Why did I put it this way? Because this is a guideline, not a contract.
 I don't even know if there are 138 exercises to begin with!
 Nevertheless, I wanted to provide this approximation to you so that you have a better understanding of what the expectations look like.
-If you wish to pass the course, you will need to submit the assignments as listed in Canvas.
+Also, realize that what is more important here is a continual amount of progress each week.
+This means that if you get stuck during a week, that is OK, but you'll need to do extra to catch up.
+How much you can catch up per week will also be capped, to no more than 10% of the exercises that you have left to do.
+If you wish to pass the course, you will need to work regularly and submit the assignments as listed in Canvas.
 
 For the other modules, we will determine at a later date which ones will be completed, but these may be done in a different order sequence.
 
@@ -255,7 +266,6 @@ For the other modules, we will determine at a later date which ones will be comp
 | 6  | Redux | 24 | 1 |
 | 7  | React router, hooks & styling | 24 | 1 |
 | 8  | TypeScript | 24 | 1 |
-| 9 | React Native | 10 | 1 |
 
 With all submissions requested, please follow submission guidelines carefully.
 
@@ -267,7 +277,7 @@ Students are also responsible for being aware of any announcements the instructo
 You must also complete the course exam.
 Notice though that the exam is not listed in your grade breakdown.
 The exam does not count towards your final grade, but you must pass it to pass the course.
-More info about the exam will be discussed via canvas and discord in the middle of the semester.
+More info about the exam will be discussed via Canvas and Discord in the middle of the semester.
 
 You can only take the exam after submitting a sufficient number of exercises.
 It is not wise in practice to take the exam immediately after submitting the critical number of exercises.
@@ -280,7 +290,16 @@ If you complete the assignments and you work through the material in earnest, yo
 The only acceptable excuses for missing an assignment due date are serious illness, death in the immediate family or important professional activities.
 Illness or death in the family may require documentation.
 Excuses for professional activities must be approved by the instructor in advance.
-Late assignments that are not the individual exercises will be deducted 15% per day and will not be accepted beyond 1 week late.
+Late assignments other than the individual exercises will be deducted 15% per day and will not be accepted beyond 1 week late.
+
+Individual exercises will follow a different policy.
+Exercises are broken into Canvas assignments.
+Students must submit one part before unlocking subsequent parts.
+There is no late penalty to submit a part.
+However, there is a cap on how many individual exercises can be submitted in a given week, which is 10% more than the regular workload.
+This means that falling behind greatly will impact your chances of finishing all of the exercises for credit.
+Your focus on that point with the individual exercises should be to focus on your current understanding.
+All work will have a hard cutoff that will be outlined in Canvas.
 
 #### Individual Work and Collaboration
 
@@ -319,6 +338,12 @@ A student may receive a range of penalties, including failure of an assignment, 
 The Academic Honesty Policy is located in Tiger Lore and online at <https://www.pacific.edu/student-life/student-conduct/tiger-lore>
 
 You will be expected to conduct yourself according to professional ethics, just as if this were a real-world job.
+With this course focused on exercises,
+***you may not ask others (including computers) for solutions or to partially solve any of the individual exercises***,
+This also applies to search tools, AI services and other humans, whether hired, friends or classmates.
+You MAY ask others (both computers and humans)
+for help understanding particular errors that appear, or in explaining high-level concepts that you feel the text does not explain well.
+However, those concepts should not contain the exercise text.
 You should be able to explain any of the code you write and you also need to cite anything longer than a line of code that you get from the internet.
 Provide links to any code and tutorials that you find that help you program.  
 Make sure to cite and credit code, libraries, videos, ideas, or other resources that are not provided directly from this website.
@@ -340,7 +365,7 @@ To ensure timeliness of services, it is preferable that you obtain the accommoda
 After the instructor receives the accommodation letter, please schedule a meeting with the instructor during office hours or some other mutually convenient time to arrange the accommodation(s).
 The Office of Services for Students with Disabilities is located in the McCaffrey Center, Rm. 137.
 Phone: 209-946-3221.
-Email: ssd@pacific.edu.
+Email: <ssd@pacific.edu>.
 Online: <http://www.pacific.edu/disabilities>
 NOTE: The preceding information is the minimal information required in this section of the course syllabus,
 instructors are free to expand on the information above and/or add any additional information below.
@@ -372,22 +397,22 @@ NOTE: Items that can never be identified as public information are a student’s
 All efforts will be made in this class to protect your privacy and to ensure confidential treatment of information associated with or generated by your participation in the class.
 
 | Week | Date | Hours, Topics, and Activities |
-| - | - | - | - |
-| 1 | Jan 16 | 0 - General course info & Setup<br>1a-1c: React, Javascript, State & Handlers |
-|2  | Jan 23 | 1d - Debugging React<br>2a - Rendering collections |
-|3  | Jan 30 | 2b-2d - Forms and working with data on a server|
-|4 | Feb 6 | 2e - Adding styles to React<br>3a-3b Express and Deploying an app to the internet |
-|5  | Feb 13 | 3c-3d - Saving data to MongoDB and Validation |
-|6  |  Feb 20 | 4a-4b - Testing the backend |
-|7 | Feb 27 | 4c-4d - User administration & Token Authentication |
-|8  | Mar 6 | 5a-5b - Frontend logins and props|
-|9 | Mar 13 | 🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎 |
-|10 | Mar 20 | 5c-5d - Testing React and end-to-end|
-|11  | Mar 27 | 7a-7b - React Router & Custom Hooks |
-|12  | Apr 3 | 8a-8b - Typescript |
-|13 | Apr 10 | 8c-8d - More Typescript (Final Project) |
-|14  | Apr 17 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
-|15 |  Apr 24 | 6,7,9 - Styling, Misc, Redux or React Native (Final Project) |
-|16 | May 2 | Final Project |
+| - | - | - |
+| 1 | Jan 15 | 0 - General course info & Setup<br>1a-1c: React, Javascript, State & Handlers |
+|2  | Jan 22 | 1d - Debugging React<br>2a - Rendering collections |
+|3  | Jan 29 | 2b-2d - Forms and working with data on a server|
+|4 | Feb 5 | 2e - Adding styles to React<br>3a-3b Express and Deploying an app to the internet |
+|5  | Feb 12 | 3c-3d - Saving data to MongoDB and Validation |
+|6  |  Feb 19 | 4a-4b - Testing the backend |
+|7 | Feb 26 | 4c-4d - User administration & Token Authentication |
+|8  | Mar 5 | 5a-5b - Frontend logins and props|
+|9 | Mar 12 | 🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎 |
+|10 | Mar 19 | 5c-5d - Testing React and end-to-end|
+|11  | Mar 26 | 6, 7, 8 Redux, Custom Hooks, TypeScript |
+|12  | Apr 2 | Redux, Custom Hooks, TypeScript continued |
+|13 | Apr 9 | Final Project Activities |
+|14  | Apr 16 | Final Project Activities |
+|15 |  Apr 23 | Final Project Activities |
+|16 | May 1 | Final Project Activities |
 
 </div>

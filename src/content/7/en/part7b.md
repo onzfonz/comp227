@@ -9,40 +9,66 @@ lang: en
 
 ### Hooks
 
-React offers 15 different [**built-in hooks**](https://reactjs.org/docs/hooks-reference.html),
-of which the most popular ones are the [`useState`](https://reactjs.org/docs/hooks-reference.html#usestate)
-and [`useEffect`](https://reactjs.org/docs/hooks-reference.html#useeffect) hooks that we have already been using extensively.
+React offers 15 different [**built-in hooks**](https://react.dev/reference/react),
+of which the most popular ones are the [`useState`](https://react.dev/reference/react/useState)
+and [`useEffect`](https://react.dev/reference/react/useEffect).
+We have already used both hooks extensively.
 
 In [part 5](/part5/props_children_and_proptypes#references-to-components-with-ref) we used the
-[`useImperativeHandle`](https://reactjs.org/docs/hooks-reference.html#useimperativehandle)
-hook which allows components to provide their functions to other components.
+[`useImperativeHandle` hook](https://react.dev/reference/react/useImperativeHandle)
+which allows components to provide their functions to other components.
+In [part 6](/part6/react_query_use_reducer_and_the_contex) we used
+[`useReducer`](https://react.dev/reference/react/useReducer) and [`useContext`](https://react.dev/reference/react/useContext) to implement a Redux-like state management.
 
 Within the last couple of years, many React libraries have begun to offer hook-based APIs.
 [In part 6](/part6/flux_architecture_and_redux) we used the [`useSelector`](https://react-redux.js.org/api/hooks#useselector)
 and [`useDispatch`](https://react-redux.js.org/api/hooks#usedispatch)
 hooks from the react-redux library to share our redux-store and dispatch function to our components.
 
-The [React Router's](https://reactrouter.com/en/main/start/tutorial) API we introduced in the
-[previous part](/part7/react_router) is also partially [hook](https://reactrouter.com/en/6.4.5/start/concepts)-based.
+The [React Router's API](https://reactrouter.com/en/main/start/tutorial) that we introduced in the
+[previous part](/part7/react_router) is also partially ***hook-based***.
 Its hooks can be used to access URL parameters and the `navigation` object, which allows for manipulating the browser URL programmatically.
 
 As mentioned in [part 1](/part1/a_more_complex_state_debugging_react_apps#rules-of-hooks),
-hooks are not normal functions, and when using those we have to adhere to certain [rules or limitations](https://reactjs.org/docs/hooks-rules.html).
+hooks are not normal functions, and when using those we have to adhere to certain [rules or limitations](https://react.dev/warnings/invalid-hook-call-warning).
 Let's recap the rules of using hooks, copied verbatim from the official React documentation:
 
 > **Don’t call Hooks inside loops, conditions, or nested functions.**
-> Instead, always use Hooks at the top level of your React function.
+> Instead, always use Hooks at the top level of your React function, before any early returns.
+> You can only call Hooks while React is rendering a function component.
 >
-> **Don’t call Hooks from regular JavaScript functions.** Instead, you can call hooks from:
+> - ✅ Call them at the top level in the body of a [function component](https://react.dev/learn/your-first-component).
+> - ✅ Call them at the top level in the body of a [custom Hook](https://react.dev/learn/reusing-logic-with-custom-hooks)
+> ...
 >
-> - React function components.
-> - custom Hooks
+> It’s not supported to call Hooks (functions starting with use) in any other cases, for example:
+>
+> - 🔴 Do not call Hooks inside conditions or loops.
+> - 🔴 Do not call Hooks after a conditional return statement.
+> - 🔴 Do not call Hooks in event handlers.
+> - 🔴 Do not call Hooks in class components.
+> - 🔴 Do not call Hooks inside functions passed to useMemo, useReducer, or useEffect.
 
 There's an existing [ESlint](https://www.npmjs.com/package/eslint-plugin-react-hooks) rule that can be used to verify that the application uses hooks correctly.
 
-Create-react-app has the readily-configured rule
-[eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)
-that complains if hooks are used in an illegal manner:
+To use [this rule with vite](https://github.com/vitejs/vite/discussions/5788), make sure you install the rule and plugin in your project.
+
+```bash
+npm install eslint eslint-plugin-react-hooks --save-dev
+```
+
+You'll also want to add this rule to your *package.json*
+
+```json
+{
+  //...
+  "eslintConfig": {
+    "extends": "plugin:react-hooks/recommended"
+  }
+}
+```
+
+Once the rule is configured, the *react-hooks* rule will complain if hooks are used incorrectly.
 
 ![vscode error useState being called conditionally](../../images/7/60ea.png)
 
@@ -50,7 +76,7 @@ If you do not see such an error here, then make sure that you have turned on ***
 
 ### Custom hooks
 
-React offers the option to create [custom](https://reactjs.org/docs/hooks-custom.html) hooks.
+React offers the option to create [custom hooks](https://react.dev/learn/reusing-logic-with-custom-hooks).
 According to React:
 
 > *Building your own Hooks lets you extract component logic into reusable functions.*
@@ -260,13 +286,13 @@ const App = () => {
 We could simplify things a bit further.
 Since the `name` object has exactly all of the attributes that the `input` element expects to receive as props,
 we can pass the props to the element using the
-[**spread syntax**](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the following way:
+[**spread syntax**](https://react.dev/learn/updating-objects-in-state#copying-objects-with-the-spread-syntax) in the following way:
 
 ```js
 <input {...name} /> 
 ```
 
-As the [example](https://reactjs.org/docs/jsx-in-depth.html#spread-attributes) in the React documentation states,
+As the [example](https://react.dev/learn/updating-objects-in-state#copying-objects-with-the-spread-syntax) in the React documentation states,
 the following two ways of passing props to a component achieve the exact same result:
 
 |Explicit assignment|Using Spread syntax|
@@ -324,7 +350,7 @@ The following sources are worth checking out:
 
 We'll continue with the app from [exercises](/part7/react_router#exercises-7-1-7-3) of the chapter [react router](/part7/react_router).
 
-#### 7.4: jokes and hooks step1
+#### 7.4: jokes and hooks Step 1
 
 Simplify the joke creation form of your application with the `useField` custom hook we defined earlier.
 
@@ -367,7 +393,7 @@ const App = () => {
 }
 ```
 
-#### 7.5: jokes and hooks step2
+#### 7.5: jokes and hooks Step 2
 
 Add a button to the form that you can use to clear all the input fields:
 
@@ -381,7 +407,7 @@ Depending on your solution, you may see the following warning in your console:
 
 We will return to this warning in the next exercise.
 
-#### 7.6: jokes and hooks step3
+#### 7.6: jokes and hooks Step 3
 
 If your solution did not cause a warning to appear in the console, you have already finished this exercise.
 
@@ -441,7 +467,7 @@ Use the API endpoint [full name](https://restcountries.com/#api-endpoints-v3-ful
 to fetch a country's details in a `useEffect` hook within your custom hook.
 
 Notice that in this exercise, you must enter useEffect's
-[second parameter](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect)
+[second parameter](https://react.dev/reference/react/useEffect#parameters)
 array to control when the effect function is executed.
 Review [this section of part 2](/part2/adding_styles_to_react_app#couple-of-important-remarks) for more info on how the second parameter could be used.
 

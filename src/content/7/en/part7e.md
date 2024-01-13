@@ -43,12 +43,12 @@ class App extends React.Component {
 export default App
 ```
 
-The component now has a [constructor](https://reactjs.org/docs/react-component.html#constructor),
-in which nothing happens at the moment, and contains the method [`render`](https://reactjs.org/docs/react-component.html#render).
+The component now has a [constructor](https://react.dev/reference/react/Component#constructor),
+in which nothing happens at the moment, and contains the method [`render`](https://react.dev/reference/react/Component#render).
 As one might guess, `render` defines how and what is rendered to the screen.
 
 Let's define a state for the list of jokes and the currently-visible joke.
-In contrast to when using the [useState](https://reactjs.org/docs/hooks-state.html) hook, Class Components only contain one state.
+In contrast to when using the [`useState` hook](https://react.dev/reference/react/useState), Class Components only contain one state.
 So if the state is made up of multiple *parts*, they should be stored as properties of the state.
 The state is initialized in the constructor:
 
@@ -93,12 +93,12 @@ The state is an object having two properties:
 1. `this.state.jokes` is the list of jokes
 2. `this.state.current` is the index of the currently-shown joke.
 
-In Functional components, *the right place for fetching data from a server is inside an [**effect hook**](https://reactjs.org/docs/hooks-effect.html)*,
+In Functional components, *the right place for fetching data from a server is inside an [**effect hook**](https://react.dev/reference/react/useEffect)*,
 which is executed when a component renders or less frequently if necessary, e.g. only in combination with the first render.
 
-The [*lifecycle methods*](https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class) of Class Components offer corresponding functionality.
+The [*lifecycle methods*](https://react.dev/reference/react/Component#adding-lifecycle-methods-to-a-class-component) of Class Components offer corresponding functionality.
 The correct place to trigger the fetching of data from a server is inside the lifecycle method
-[`componentDidMount`](https://reactjs.org/docs/react-component.html#componentdidmount),
+[`componentDidMount`](https://react.dev/reference/react/Component#componentdidmount),
 which is executed once right after the first time a component renders:
 
 ```js
@@ -125,7 +125,7 @@ class App extends React.Component {
 }
 ```
 
-The callback function of the HTTP request updates the component state using the method [`setState`](https://reactjs.org/docs/react-component.html#setstate).
+The callback function of the HTTP request updates the component state using the method [`setState`](https://react.dev/reference/react/Component#setstate).
 The method only touches the keys that have been defined in the object passed to the method as an argument.
 The value for the key `current` remains unchanged.
 
@@ -219,7 +219,7 @@ In some more advanced use cases, the effect hook offers a considerably better me
 A notable benefit of using Functional components is not having to deal with the self-referencing `this` reference of the Javascript class.
 
 Class Components arguably offer little benefit over Functional components enhanced with hooks,
-except for the so-called [error boundary](https://reactjs.org/docs/error-boundaries.html) mechanism,
+except for the so-called [error boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) mechanism,
 which currently (5th February 2023) isn't yet in use by functional components.
 
 When writing fresh code, [React encourages us to switch to hooks](https://reactjs.org/docs/hooks-faq.html#should-i-use-hooks-classes-or-a-mix-of-both)
@@ -246,8 +246,6 @@ During the course, we have created the frontend and backend into separate reposi
 This is a very typical approach.
 However, we did the deployment by [copying](/part3/deploying_app_to_internet#serving-static-files-from-the-backend) the bundled frontend code into the backend repository.
 A potentially better approach would have been to deploy the frontend code separately.
-Especially with applications created using Create React App,
-it is very straightforward thanks to the included [buildpack](https://github.com/mars/create-react-app-buildpack).
 
 Sometimes, there may be a situation where the entire application is to be put into a single repository.
 In this case, a common approach is to put the *package.json* and *webpack.config.js* in the root directory,
@@ -274,7 +272,7 @@ WebSockets is an API provided by the browser, which has a fairly good adoption r
 
 ![caniuse chart showing websockets not usable by all yet](../../images/7/31ea.png)
 
-To coverall all browsers, instead of directly using the WebSocket API, one could use the [Socket.io](https://socket.io/) library,
+To cover all browsers, instead of directly using the WebSocket API, one could use the [Socket.io](https://socket.io/) library,
 which provides various **fallback** options in case the browser does not have full support for WebSockets.
 
 ### Virtual DOM
@@ -298,7 +296,7 @@ The React elements defining the appearance of the components of the application 
 [Virtual DOM](https://reactjs.org/docs/faq-internals.html#what-is-the-virtual-dom),
 which is stored in system memory during runtime.
 
-With the help of the [ReactDOM](https://reactjs.org/docs/react-dom.html) library,
+With the help of the [ReactDOM](https://react.dev/reference/react-dom) library,
 the virtual DOM defined by the components is rendered to a real DOM that can be shown by the browser via the DOM API:
 
 ```js
@@ -338,14 +336,14 @@ it's ok to use just React, since [over-engineering](https://en.wikipedia.org/wik
 
 [Part 6](/part6/react_query_use_reducer_and_the_context) covers the newer trends of state management in React.
 React's hook functions `useReducer` and `useContext` provide a kind of lightweight version of Redux.
-`React Query`, on the other hand, is a library that solves many of the problems associated with handling state on the server,
+***React Query***, on the other hand, is a library that solves many of the problems associated with handling state on the server,
 eliminating the need for a React application to store data retrieved from the server directly in the frontend state.
 
 ### React/node-application security
 
 So far during the course, we have not touched on information security much.
 Unfortunately we don't have the space to give it its proper coverage in this course.
-Nonetheless, there are other courses here at Pacific and other MOOC courses like[Securing Software](https://cybersecuritybase.mooc.fi/module-2.1) for this important topic.
+Nonetheless, there are other courses here at Pacific and other MOOC courses like [Securing Software](https://cybersecuritybase.mooc.fi/module-2.1) for this important topic.
 
 We will, however, take a look now at some security topics that relate to COMP 227.
 
@@ -434,7 +432,7 @@ A one-year-old project that is used in [part 8](/part8) of this course already h
 
 The dependencies can be brought up to date by updating the file *package.json*.
 The best way to do that is by using a tool called ***npm-check-updates***.
-It can be installed globally by running the command
+It can be installed globally by running the command:
 
 ```bash
 npm install -g npm-check-updates
@@ -545,7 +543,7 @@ However, for now, we will leave the library upgrades for later...
 
 Two of the threats mentioned in the list from OWASP are:
 
-- **Idenfitication and Authentication Failures *(Broken Authentication)***
+- **Identification and Authentication Failures *(Broken Authentication)***
 - **Broken Access Control** (related)
 
 The token-based authentication we have been using is fairly robust if the application is being used on the traffic-encrypting HTTPS protocol.
@@ -582,7 +580,7 @@ Typescript is covered in [part 8](/part8).
 #### Server-side rendering, isomorphic applications and universal code
 
 The browser is not the only domain where components defined using React can be rendered.
-The rendering can also be done on the [server](https://reactjs.org/docs/react-dom-server.html).
+The rendering can also be done on the [server](https://react.dev/reference/react-dom/server).
 This kind of approach is increasingly being used, such that,
 when accessing the application for the first time, the server serves a pre-rendered page made with React.
 From here onwards, the operation of the application continues, as usual,
@@ -619,15 +617,6 @@ The smaller screen of mobile devices must not hamper the usability of the applic
 PWAs should also work flawlessly in offline mode or with a slow internet connection.
 On mobile devices, they must be installable just like any other application.
 All the network traffic in a PWA should be encrypted.
-
-Applications created using Create React App are no longer [progressive](https://create-react-app.dev/docs/making-a-progressive-web-app/) by default since Create React App 4.
-If PWA is desired, you will have to create a new project using a PWA custom template.
-
-```js
-npx create-react-app my-app --template cra-template-pwa
-```
-  
-The offline functionality is usually implemented with the help of [service workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
 
 #### Microservice architecture
 
@@ -730,12 +719,13 @@ If you prefer the functional programming style, you might consider using [ramda]
 
 If you are handling times and dates, [date-fns](https://github.com/date-fns/date-fns) offers good tools for that.
 
+If you have complex forms in your apps, have a look at whether [React Hook Form](https://react-hook-form.com/) would be a good fit.
 If your application displays graphs, there are multiple options to choose from.
 Both [recharts](http://recharts.org/en-US/) and [highcharts](https://github.com/highcharts/highcharts-react) are well-recommended.
 
-[Formik](https://www.npmjs.com/package/formik) and [final-form](https://final-form.org/react/) can be used to handle forms more easily.
-If your application displays graphs, there are multiple options to choose from.
-Both [recharts](http://recharts.org/en-US/) and [highcharts](https://github.com/highcharts/highcharts-react) are well-recommended.
+The [Immer](https://github.com/mweststrate/immer) provides immutable implementations of some data structures.
+The library could be of use when using Redux, since as we [remember](/part6/flux_architecture_and_redux#pure-functions-immutable) in part 6,
+reducers must be pure functions, meaning they must not modify the store's state but instead have to replace it with a new one when a change occurs.
 
 The [Immer](https://github.com/mweststrate/immer) library provides immutable implementations of some data structures.
 The library could be of use when using Redux,
@@ -763,15 +753,14 @@ Best practices have changed rapidly (the years are approximations):
 - 2013-14 [Gulp](https://www.npmjs.com/package/gulp)
 - 2012-14 [Browserify](https://www.npmjs.com/package/browserify)
 - 2015- [Webpack](https://www.npmjs.com/package/webpack)
+- 2017- [esbuild](https://www.npmjs.com/package/esbuild)
 
 Hipsters seem to have lost their interest in tool development after webpack started to dominate the markets.
 A few years ago, [Parcel](https://parceljs.org) started to make the rounds marketing itself as simple (which Webpack is not) and faster than Webpack.
-However, after a promising start, Parcel has not gathered any steam, and it's beginning to look like it will not be the end of Webpack.
-Currently, [Vite](https://vitejs.dev) tools, also simpler than Webpack,
-are gaining popularity - but their success can only be measured in the future.
+However, after a promising start, Parcel has not gathered any steam.
 
-Another notable mention is the [Rome](https://rome.tools/) library, which aspires to be an all-encompassing toolchain to unify linter, compiler, bundler, and more.
-It is currently under heavy development as the project just started in early 2021, but the outlook sure seems promising.
+Recently, [esbuild](https://esbuild.github.io/) has been on a relatively high rise and is already seriously challenging Webpack.
+Nonetheless for now, Webpack remains popular.
 
 The site <https://reactpatterns.com/> provides a concise list of best practices for React, some of which are already familiar from this course.
 Another similar list is [react bits](https://vasanthk.gitbooks.io/react-bits/).

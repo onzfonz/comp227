@@ -1,28 +1,30 @@
 import './ContentTemplate.scss';
 
-import React, { Component } from 'react';
+import React, { useEffect, Component } from 'react';
 
+import { graphql } from 'gatsby';
+import Parser from 'html-react-parser';
+import domToReact from 'html-react-parser/lib/dom-to-react';
+import snakeCase from 'lodash/fp/snakeCase';
+import path from 'path';
+import colors from '../colors';
 import Arrow from '../components/Arrow/Arrow';
-import ArrowToTop from '../images/up-arrow.svg';
 import { Banner } from '../components/Banner/Banner';
 import EditLink from '../components/EditLink/EditLink';
 import Element from '../components/Element/Element';
-import Layout from '../components/layout';
-import Parser from 'html-react-parser';
 import PrevNext from '../components/PrevNext/PrevNext';
-import SEO from '../components/seo';
 import ScrollNavigation from '../components/ScrollNavigation/ScrollNavigation';
 import { SubHeader } from '../components/SubHeader/SubHeader';
-import colors from '../colors';
-import domToReact from 'html-react-parser/lib/dom-to-react';
-import { graphql } from 'gatsby';
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import navigation from '../content/partnavigation/partnavigation';
 import mainSEOdescription from '../content/seo/mainSEOdescription';
 import mainSEOtags from '../content/seo/mainSEOtags';
-import navigation from '../content/partnavigation/partnavigation';
-import { partColors } from './partColors';
-import path from 'path';
-import snakeCase from 'lodash/fp/snakeCase';
+import ArrowToTop from '../images/up-arrow.svg';
 import getPartTranslationPath from '../utils/getPartTranslationPath';
+import { createCopyButton } from './copy-code-button/create-copy-buttons';
+import { partColors } from './partColors';
+import { updateLinks } from './ContentLinksUtils';
 
 export default class ContentTemplate extends Component {
     constructor(props) {
@@ -37,38 +39,16 @@ export default class ContentTemplate extends Component {
     }
 
     componentDidMount() {
-        const links = Array.from(
-            document.querySelectorAll('a:not(.skip-to-content')
-        );
+        this.renderPartsForPage();
+    }
+
+    renderPartsForPage() {
         
         const h1 = document.querySelector('h1');
         const h3 = document.querySelectorAll('h3');
         const h3Arr = Array.from(h3).map(t => t.innerText);
-
-        const { frontmatter } = this.props.data.markdownRemark;
-
-        links.map(i => {
-            i.style = `border-color: ${colors[partColors[frontmatter.part]]}`;
-            var origColor = i.style.color;
-
-            i.style.color = (i.parentNode.tagName === "STRONG") ? colors[partColors[frontmatter.part] + (document.documentElement.dataset.theme === 'light' ? '-alt' : '')] : origColor;
-            !i.classList.contains('language-switcher__language') &&
-                (i.target = '_blank');
-
-            function over() {
-                i.style.color = origColor;
-                i.style.backgroundColor = colors[partColors[frontmatter.part]];
-            }
-            function out() {
-                i.style.backgroundColor = 'transparent';
-                i.style.color = (i.parentNode.tagName === "STRONG") ? colors[partColors[frontmatter.part] + (document.documentElement.dataset.theme === 'light' ? '-alt' : '')] : origColor;
-            }
-
-            i.onmouseover = over;
-            i.onmouseleave = out;
-
-            return null;
-        });
+        
+        updateLinks(this.props);
 
         this.setState({
             h1Title: h1.innerText,
@@ -77,6 +57,7 @@ export default class ContentTemplate extends Component {
         });
 
         window.addEventListener('scroll', this.handleScroll);
+        createCopyButton();
     }
 
     componentWillUnmount() {
@@ -101,9 +82,11 @@ export default class ContentTemplate extends Component {
         const { markdownRemark } = this.props.data;
         const { frontmatter, html } = markdownRemark;
         const { mainImage, letter, part, lang } = frontmatter;
-        const switchingColorCode = colors[partColors[part]+ (this.state.isDark ? '-dark' : '')]
-        const boldColorCode = colors[partColors[part]+ (this.state.isDark ? '' : '-dark')]
+        const switchingColorCode = colors[partColors[part] + (this.state.isDark ? '-dark' : '-light')]
+        const boldColorCode = colors[partColors[part] + (this.state.isDark ? '' : '-bold')]
         const colorCode = colors[partColors[part]];
+
+        updateLinks(this.props);
 
         const parserOptions = {
             replace: props => {

@@ -27,7 +27,7 @@ We'll task you with doing this.
 
 ![browser showing user login for tasks](../../images/5/1e.png)
 
-Below are the changes needed to add the login form in *App.js*:
+Our new code for *App* is below:
 
 ```js
 const App = () => {
@@ -106,7 +106,7 @@ The current application code can be found on
 > | repository | command | port |
 > | :-- | :-- | :-- |
 > | backend | `npm run dev` | 3001 |
-> | frontend | `npm start` | 3000 |
+> | frontend | `npm run dev` | 5173 |
 >
 > After starting both, you will see the tasks that are saved in your MongoDB database from Part 4.
 >
@@ -156,7 +156,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 // highlight-end
   
-  const handleLogin = async (event) => { // higlight-line
+  const handleLogin = async (event) => { // highlight-line
     event.preventDefault()
     
     // highlight-start
@@ -184,7 +184,7 @@ const App = () => {
 If the login is successful, the form fields are emptied ***and*** the server response
 (including a *token* and the user details) is saved to the `user` field of the application's state.
 
-If the login fails or function `loginService.login` throws an error, the user is notified.
+If the login fails or the function `loginService.login` throws an error, the user is notified.
 
 The user is not notified about a successful login in any way.
 Let's modify the application to show the login form only *if the user is not logged in* so when `user === null`.
@@ -281,7 +281,7 @@ const App = () => {
 ```
 
 A slightly odd looking, but commonly used
-[React trick](https://reactjs.org/docs/conditional-rendering.html#inline-if-with-logical--operator)
+[React trick](https://react.dev/learn/conditional-rendering#logical-and-operator-)
 is used to render the forms conditionally:
 
 ```js
@@ -301,7 +301,7 @@ return (
     <h1>Tasks</h1>
 
     <Notification message={errorMessage}/>
-    // higlight-start
+    // highlight-start
     {user === null ?
       loginForm() :
       taskForm()
@@ -387,7 +387,7 @@ let token = null // highlight-line
 
 // highlight-start
 const setToken = newToken => {
-  token = `bearer ${newToken}`
+  token = `Bearer ${newToken}`
 }
 // highlight-end
 
@@ -396,8 +396,8 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+// highlight-start
 const create = async newObject => {
-  // highlight-start
   const config = {
     headers: { Authorization: token },
   }
@@ -444,15 +444,14 @@ And now adding new tasks works again!
 
 ### Saving the token to the browser's local storage
 
-Our application has a flaw: when the page is rerendered, the user's login information disappears.
-This also slows down development.
-For example, when we test creating new tasks, we have to login again every single time.
+Our application has a flaw: if we refresh the page (***F5***), the user's login information disappears.
+This flaw also slows down development, since when we test creating new tasks, we have to keep logging in.
 
 This problem is easily solved by saving the login details to [**local storage**](https://developer.mozilla.org/en-US/docs/Web/API/Storage).
 Local Storage is a [key-value](https://en.wikipedia.org/wiki/Key-value_database) database in the browser.
 
 It is very easy to use.
-A *value* corresponding to a certain *key* is saved to the database with the method [setItem](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem).
+A *value* corresponding to a certain *key* is saved to the database with the method [`setItem`](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem).
 For example:
 
 ```js
@@ -517,7 +516,7 @@ We still have to modify our application so that when we enter the page,
 the application checks if local storage has details for a logged-in user.
 If there is, the details are saved to the state of the application and to ***taskService***.
 
-The right way to do this is with an [*effect hook*](https://reactjs.org/docs/hooks-effect.html):
+The right way to do this is with an [*effect hook*](https://react.dev/reference/react/useEffect):
 a mechanism we first encountered in [part 2](/part2/getting_data_from_server#effect-hooks),
 and used to fetch tasks from the server.
 
@@ -556,11 +555,11 @@ const App = () => {
 ```
 
 The empty array `[]` as the parameter of the effect ensures that the effect is executed only when the component is rendered
-[for the first time](https://reactjs.org/docs/hooks-reference.html#conditionally-firing-an-effect).
+[for the first time](https://react.dev/reference/react/useEffect#parameters).
 
 Now a user stays logged in to the application forever.
 We should probably add a ***logout*** functionality, which removes the login details from the local storage.
-*We will leave it as an exercise, as it builds character* 🧐.
+*We will leave it as an exercise, as it uhhhh "builds character"* 🧐.
 
 ***It's possible to log out a user using the console***, and that is enough for now.
 You can log out with the command:
@@ -589,13 +588,13 @@ You will be using a new repo for this part that you will be able to obtain by vi
 This new repo/application has a small amount of code to get you started.
 The application expects your backend to be running on port 3003.
 
-Visit <http://go.djosv.com/227lab5> to start the process of cloning the frontend repo into Webstorm.
+Visit <http://go.djosv.com/227lab5> to start the process of cloning the frontend repo into WebStorm.
 
 The application is started the usual way, but you have to install its dependencies first:
 
 ```bash
 npm install
-npm start
+npm run dev
 ```
 
 Following what we have mentioned before about committing regularly, your commits should be providing context on the small changes that you are doing as you write your code.
@@ -610,7 +609,7 @@ While doing the exercises, remember all of the debugging methods we have talked 
 **Warning:** If you notice you are mixing in the functions `async`/`await` and `then` commands, it's 99.9%  certain you are doing something wrong.
 Use either or, never both.
 
-#### 5.1: watchlist frontend, step1
+#### 5.1: watchlist frontend, Step 1
 
 Implement login functionality to the frontend.
 The token returned with a successful login is saved to the application's state `user`.
@@ -650,7 +649,7 @@ User details of the logged-in user do not have to be saved to the local storage 
 > }
 > ```
 
-#### 5.2: watchlist frontend, step2
+#### 5.2: watchlist frontend, Step 2
 
 Make the login 'permanent' by using the local storage.
 Also, implement a way to log out.
@@ -659,13 +658,13 @@ Also, implement a way to log out.
 
 Ensure the browser does not remember the details of the user after logging out.
 
-#### 5.3: watchlist frontend, step3
+#### 5.3: watchlist frontend, Step 3
 
 Expand your application to allow a logged-in user to add new shows:
 
 ![browser showing new blog form](../../images/5/7e.png)
 
-#### 5.4: watchlist frontend, step4
+#### 5.4: watchlist frontend, Step 4
 
 Implement notifications that inform the user about successful and unsuccessful operations at the top of the page.
 For example, when a new show is added, the following notification can be shown:
@@ -698,7 +697,7 @@ No matter how the validity of tokens is checked and ensured,
 saving a token in the local storage might contain a security risk if the application has a security vulnerability that allows
 [Cross-Site Scripting (XSS)](https://owasp.org/www-community/attacks/xss/) attacks.
 An XSS attack is possible if the application would allow a user to inject arbitrary JavaScript code (e.g. using a form) that the app would then execute.
-When using React sensibly it should not be possible since [React sanitizes](https://reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks)
+When using React sensibly it should not be possible since [React sanitizes](https://legacy.reactjs.org/docs/introducing-jsx.html#jsx-prevents-injection-attacks)
 all text that it renders, meaning that it is not executing the rendered content as JavaScript.
 
 If one wants to play safe, the best option is to not store a token in local storage.
@@ -709,8 +708,8 @@ so that JavaScript code could not have any access to the token.
 The drawback of this solution is that it would make implementing SPA applications a bit more complex.
 One would need at least to implement a separate page for logging in.
 
-However, it is good to notice that even the use of httpOnly cookies does not guarantee anything.
-It has even been suggested that httpOnly cookies are
+However, it is good to notice that even the use of *httpOnly cookies* does not guarantee anything.
+It has even been suggested that *httpOnly cookies* are
 [not any safer than](https://academind.com/tutorials/localstorage-vs-cookies-xss/)
 the use of local storage.
 
