@@ -24,6 +24,7 @@ import ArrowToTop from '../images/up-arrow.svg';
 import getPartTranslationPath from '../utils/getPartTranslationPath';
 import { createCopyButton } from './copy-code-button/create-copy-buttons';
 import { partColors } from './partColors';
+import { updateAllLinks } from './ContentLinksUtils';
 
 export default class ContentTemplate extends Component {
     constructor(props) {
@@ -49,7 +50,7 @@ export default class ContentTemplate extends Component {
         const h3Arr = Array.from(h3).map(t => t.innerText);
         
 
-        this.updateAllLinks(this.props);
+        updateAllLinks(this.props, this.state);
 
         this.setState({
             h1Title: h1.innerText,
@@ -62,43 +63,6 @@ export default class ContentTemplate extends Component {
 
         window.addEventListener('scroll', this.handleScroll);
         createCopyButton();
-    }
-
-    updateAllLinks(props) {
-        // const links = Array.from(
-        //     document.querySelectorAll('a:not(.skip-to-content):not(.panel a)')
-        // );
-        // updateLinks(this.props, links);
-        const { frontmatter } = props.data.markdownRemark;
-
-        this.state.links.map(i => {
-            // going to fix some of the link colors here to be bolder for the white ones in the light theming
-            var theme = document.documentElement.dataset.theme;
-            var partColorName = partColors[frontmatter.part];
-            var partColor = colors[partColorName + (this.state.isDark ? '-dark' : '')];
-            var alternativePartColor = colors[partColorName + (this.state.isDark ? '' : '-alt')];
-            var textColor = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
-            i.style = `border-color: ${alternativePartColor}`;
-            var origColor = i.style.color;
-
-            i.style.color = textColor;
-            !i.classList.contains('language-switcher__language') &&
-                (i.target = '_blank');
-
-            function over() {
-                i.style.color = (i.parentNode.tagName !== "STRONG") && theme !== 'light' ? '#ffffff' : origColor;
-                i.style.backgroundColor = partColor;
-            }
-            function out() {
-                i.style.backgroundColor = 'transparent';
-                i.style.color = textColor;
-            }
-
-            i.onmouseover = over;
-            i.onmouseleave = out;
-
-            return null;
-        });
     }
 
     componentWillUnmount() {
@@ -127,7 +91,7 @@ export default class ContentTemplate extends Component {
         const boldColorCode = colors[partColors[part] + (this.state.isDark ? '' : '-bold')]
         const colorCode = colors[partColors[part]];
 
-        this.updateAllLinks(this.props);
+        updateAllLinks(this.props, this.state);
 
         const parserOptions = {
             replace: props => {
