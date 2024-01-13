@@ -48,9 +48,9 @@ export default class ContentTemplate extends Component {
         const h1 = document.querySelector('h1');
         const h3 = document.querySelectorAll('h3');
         const h3Arr = Array.from(h3).map(t => t.innerText);
-        
+        const frontmatter = this.props.data.markdownRemark;
 
-        updateAllLinks(this.props, this.state);
+        updateAllLinks(this.props, this.state, frontmatter);
 
         this.setState({
             h1Title: h1.innerText,
@@ -91,7 +91,7 @@ export default class ContentTemplate extends Component {
         const boldColorCode = colors[partColors[part] + (this.state.isDark ? '' : '-bold')]
         const colorCode = colors[partColors[part]];
 
-        updateAllLinks(this.props, this.state);
+        updateAllLinks(this.props, this.state, frontmatter);
 
         const parserOptions = {
             replace: props => {

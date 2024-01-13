@@ -1,9 +1,7 @@
 import { partColors } from "./partColors";
 import colors from '../colors';
 
-export const updateAllLinks = (props, state) => {
-    const { frontmatter } = props.data.markdownRemark;
-
+export const updateAllLinks = (props, state, frontmatter) => {
     state.links.map(i => {
         // going to fix some of the link colors here to be bolder for the white ones in the light theming
         var theme = document.documentElement.dataset.theme;
