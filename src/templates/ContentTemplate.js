@@ -34,6 +34,7 @@ export default class ContentTemplate extends Component {
             otherTitles: '',
             showArrowUp: false,
             isDark: false,
+            links: [],
         };
     }
 
@@ -46,6 +47,7 @@ export default class ContentTemplate extends Component {
         const h1 = document.querySelector('h1');
         const h3 = document.querySelectorAll('h3');
         const h3Arr = Array.from(h3).map(t => t.innerText);
+        
 
         this.updateAllLinks(this.props);
 
@@ -53,6 +55,9 @@ export default class ContentTemplate extends Component {
             h1Title: h1.innerText,
             otherTitles: [...h3Arr],
             isDark: document.documentElement.dataset.theme === 'dark',
+            links: Array.from(
+                document.querySelectorAll('a:not(.skip-to-content):not(.panel a)')
+            )
         });
 
         window.addEventListener('scroll', this.handleScroll);
@@ -60,18 +65,18 @@ export default class ContentTemplate extends Component {
     }
 
     updateAllLinks(props) {
-        const links = Array.from(
-            document.querySelectorAll('a:not(.skip-to-content):not(.panel a)')
-        );
+        // const links = Array.from(
+        //     document.querySelectorAll('a:not(.skip-to-content):not(.panel a)')
+        // );
         // updateLinks(this.props, links);
         const { frontmatter } = props.data.markdownRemark;
 
-        links.map(i => {
+        this.state.links.map(i => {
             // going to fix some of the link colors here to be bolder for the white ones in the light theming
             var theme = document.documentElement.dataset.theme;
             var partColorName = partColors[frontmatter.part];
-            var partColor = colors[partColorName + (theme === 'light' ? '' : '-dark')];
-            var alternativePartColor = colors[partColorName + (theme === 'light' ? '-alt' : '')];
+            var partColor = colors[partColorName + (this.state.isDark ? '-dark' : '')];
+            var alternativePartColor = colors[partColorName + (this.state.isDark ? '' : '-alt')];
             var textColor = (i.parentNode.tagName === "STRONG") ? alternativePartColor : origColor;
             i.style = `border-color: ${alternativePartColor}`;
             var origColor = i.style.color;
