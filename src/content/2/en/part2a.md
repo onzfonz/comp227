@@ -7,33 +7,37 @@ lang: en
 
 <div class="content">
 
-Before starting a new part, let's recap some of the topics that proved difficult last year.
+Before starting a new part, let's add some additional tools to our IDE and quickly remind ourselves about arrays and event handlers.
+For now you can continue by opening up the previous lab that we used in part 1.
 
-### Pro-tip: WebStorm Live Templates
+### New Tool: WebStorm Live Templates
 
-With WebStorm it's easy to create and 'live templates', i.e., shortcuts/snippets
+With WebStorm it's easy to create and ***live templates***, i.e., shortcuts/snippets
 for quickly generating commonly re-used portions of code, much like how `sout` works in NetBeans and `psvm` works in IntelliJ.
 
 **Try erasing everything in *App.jsx*, then type `rsc` and then hit the *Tab* key and see the magic that appears!**
 
 Instructions for working with live templates can be found [here](https://blog.jetbrains.com/webstorm/2018/01/using-and-creating-code-snippets/#work_with_live_templates).
+The main idea is that in certain contexts, you would be able to type a shortcut, and WebStorm will provide you with some code that you would normally write.
 
 There are already lots of live templates that are available for you to review in ***Settings->Editor->Live Templates***.
+Specifically, you can find the ***rsc*** template in the React section.
+You should also peruse the React hooks section to see things like *useState*.
 
-Another live template for the `console.log()` command, which is, **log**.
+One popular live template/shortcut is **`log`**, which replaces having to type out `console.log()`.
 
-To use it, type `log` and hit Tab to autocomplete.
+To use it, type `log` and hit ***Tab*** to autocomplete.
 
-Though it doesn't stop there, as you can make *custom live templates*.
+Though it doesn't stop there, as you can make **custom live templates**.
 
 For example, I'm going to take
 [this tutorial](https://betterprogramming.pub/intellij-live-template-for-console-log-that-will-improve-your-daily-development-life-ef1320a8fe81)
-and boil it down to its essence.
+and reduce it to its essence and apply it to our new template.
 
 Let's setup a custom `clog` live template.
 
 1. Go to ***Settings->Editor->Live Templates***
-2. With Javascript Selected, click on the `+` icon.
+2. With Javascript Selected, click on the `+` icon, and select *1 Live Template*
 3. Type `clog` for the Abbreviation and `More detailed console.log` for the Description
 4. Paste this in the template text:
 
@@ -43,19 +47,24 @@ Let's setup a custom `clog` live template.
 
 5. Select ***Reformat according to style***
 6. Click the Define link below the template text and select ***Javascript & Typescript***.
-7. Finally click edit variables and make it looks like this, make sure you have the order of the variables as well.
+7. Finally, click edit variables and make it looks like this, make sure you have the order of the variables as well, where `PARAM` comes first.
+    1. Use the up and down buttons highlighted to move the sequence of the variables.
 
 ![image showing the variables and values](../../images/2/custom/live_template_variables.png)
 
-Click ***OK*** twice and then try it out by typing `clog` and then ***Tab***.
+Click ***OK*** twice and then try it out by typing `clog` inside your `App` Javascript function and then ***Tab***.
+Then type the name of the variable `props` (or whatever other variable you have) and Tab again.
+You should notice that it will display the word you typed in two places on that line.
+First, the name that shows up in log statement and then as the variable to print.
+Finally, if you have some expected value of what you think it should be at that point, you can type that in as well, and then ***Tab*** one last time.
 You'll notice that you have this template that will provide you with a function name and line number
 as well as other neat values to make it easier to debug!
 
 ### JavaScript Arrays
 
-From here on out, we will be using the functional programming methods of the JavaScript
-[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array),
-such as `find`, `filter`, and `map` - all of the time.
+From here on out, we will be using JavaScript's functional programming conventions (e.g. `find`, `filter`, and `map`) for
+[**Arrays**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array),
+all of the time.
 They operate on the same general principles as their equivalents in other languages and as streams in Java.
 
 If operating arrays with functional operators makes you feel uneasy, it is worth watching at least the first three parts of the YouTube video series
@@ -133,10 +142,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-Every task contains its textual content and a timestamp,
-as well as a `boolean` value for marking whether the task has been categorized as important or not, and also a unique `id`.
+Every task contains:
 
-The example above works because there are exactly three tasks in the array.
+- a unique `id`.
+- *`content`* describing the task
+- a *`date`*,
+- a boolean for marking whether the task is `important`
+
+The example above works only because there are exactly three tasks in the array.
 
 A single task is rendered by accessing the objects in the array by referring to a hard-coded index number:
 
@@ -208,13 +221,16 @@ const App = (props) => {
 
 ### Key-attribute
 
-Even though the application seems to be working, there is a warning in the console:
+Even though the application seems to be working, there is a warning in both WebStorm:
+
+![WebStorm key prop error](../../images/2/1a_webstorm.png)
+
+and the console:
 
 ![unique key prop console error](../../images/2/1a.png)
 
 As the linked [React page](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) in the error message suggests;
 the list items, i.e. the elements generated by the `map` method, must each have a unique key value: an attribute called **key**.
-> **FYI:** *You may have also noticed that ESLint had underlined the `li` element in WebStorm as well, mentioning the missing 'key' prop.*
 
 Let's add the keys:
 
@@ -280,9 +296,9 @@ const result = tasks.map(task => task.id)
 console.log(result)
 ```
 
-`[1, 2, 3]`  will be printed to the console.
- `map` always creates a new array, the elements of which have been created from the elements of the original array by ***mapping***:
- using the function given as a parameter to the `map` method.
+An array `[1, 2, 3]`  will be viewable in the console.
+`map` always creates a new array, the elements of which have been created from the elements of the original array by ***mapping***:
+using the function given as a parameter to the `map` method.
 
 The function in our example is:
 
@@ -307,7 +323,7 @@ Changing our `map` line to have the parameter:
 const result = tasks.map(task => task.content)
 ```
 
-results in the console printing *`['Wash the dishes', 'Take out the trash', 'Buy salty snacks']`*.
+results in the console containing the array *`['Wash the dishes', 'Take out the trash', 'Buy salty snacks']`*.
 
 This is already pretty close to the React code we used:
 
@@ -328,7 +344,8 @@ task => <li key={task.id}>{task.content}</li>
 ```
 
 is used to create view elements, the value of the variable must be rendered inside curly braces.
-Try to see what happens if the braces are removed.
+***What happens if one or more of the braces are removed?***
+Play around with removing and re-adding braces for the task in *App.jsx*.
 
 The use of curly braces will cause some pain in the beginning, but you will get used to them soon enough.
 The visual feedback from React is immediate.
@@ -356,7 +373,7 @@ As such, one way to define the row generation without getting errors is:
 </ul>
 ```
 
-This is, however, **not recommended** and can create undesired problems even if it seems to be working just fine.
+This is, however, 🐞 **not recommended** 🐞 and can create undesired problems even if it seems to be working just fine.
 
 Read more about this in [this article](https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318).
 
@@ -413,7 +430,7 @@ const App = ({ tasks }) => {
 }
 ```
 
-Notice that the `key` attribute must now be defined for the `Task` components, and not in the `li` tags like before.
+Notice that the `key` attribute *must now be defined in the `Task` component*, and not in the `li` tags like before.
 
 A whole React application can be written in a single file.
 Although that is, of course, not very practical.
@@ -437,8 +454,9 @@ Let's move our `Task` component into its own module.
 In smaller applications, components are usually placed in a directory called *components*, which is in turn placed within the *src* directory.
 The convention is to name the file after the component.
 
-Now, we'll create a directory called ***components*** for our application and place a file named ***Task.jsx*** inside.
-*Task.jsx* should have the following:
+**Create a directory in *src* called *components* for our *reading* application and place a file named *Task.jsx* inside**.
+If WebStorm asks about adding the file, make sure to check *not to ask again if you haven't done so already*.
+So *reading/src/components/Task.jsx* should have the following:
 
 ```js
 const Task = ({ task }) => {
@@ -464,15 +482,16 @@ const App = ({ tasks }) => {
 }
 ```
 
+You can try typing `import` in the file and then ***Tab*** to see how WebStorm will handle auto-completing the line for you.
 The component exported by the module is now available for use in the variable `Task`, just as it was earlier.
 
 Notice that when importing our own components, their location must be given *in relation to the importing file*:
 
 ```js
-'./components/Task'
+'./components/Task.jsx'
 ```
 
-The period - `.` - in the beginning refers to the current directory,
+The period (`.`) at the start refers to the **current directory**,
 so the module's location is a file called *Task.jsx* in the *components* sub-directory of the current directory.
 The filename extension *.jsx* can be omitted.
 
@@ -486,11 +505,11 @@ The current code is in the branch [part2-1](https://github.com/comp227/part2-tas
 
 ![GitHub branch screenshot](../../images/2/2e.png)
 
-If you clone the project, run the command `npm install` before starting the application with `npm start`.
+> **Remember:** If you clone the project, run the command `npm install` before starting the application with `npm run dev`.
 
-### When the Application Breaks
+### Using console.log
 
-Early in your programming career (and even after 25 years of coding like yours truly),
+Early in your programming career (and even after 25+ years of coding like yours truly),
 what often happens is that the application just completely breaks down.
 This is even more so the case with dynamically typed languages, such as JavaScript, where the compiler does not check the data type.
 Like with function variables or return values.
@@ -499,7 +518,7 @@ A "React explosion" can, for example, look like this:
 
 ![react sample error](../../images/2/3b.png)
 
-In these situations, your best way out is the `console.log` method.
+In these situations, your best way out is to either debug the program via the debugger or commands like `console.log`.
 
 The piece of code causing the explosion is this:
 
@@ -512,7 +531,7 @@ const Company = ({ company }) => (
 
 const App = () => {
   const company = {
-    // ...
+    name: "Sample Company",
   }
 
   return (
