@@ -747,7 +747,7 @@ git commit -m "added .env to gitignore"
 You can see how this process looks by looking at the commit history of the [*part2-8* branch](https://github.com/comp227/part2-tasks/tree/part2-8),
 which now has the *.env* file removed from the latest snapshot of the repo and git will no longer track any changes to the file.
 
-> **Pertinent:** The .env file can still be seen in older commits, so **make sure you do not add the any keys before ignoring the file first!**
+> **Pertinent:** The *.env* file can still be seen in older commits, so **make sure you do not add the any keys before ignoring the file first!**
 
 Now you can use the `.env` file rather than defining it on the command line each time by adding the following to it.
 
