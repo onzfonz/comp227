@@ -645,7 +645,7 @@ The repo is largely empty, so you'll need to make sure you are in the correct lo
 (you should be in the base directory of your lab2 repo that you created from above).
 **You also need to ensure that your file watcher is correctly watching your repo!**
 The easiest way to check this is to make sure that none of the files are red for over 2 minutes.
-If they are, especially at the beginning, then you want to re-check your [File Watcher settings](part0/configuring_your_machine_for_this_course#creating-a-file-watcher-for-our-git-configuration)
+If they are, especially at the beginning, then you want to re-check your [File Watcher settings](/part0/configuring_your_machine_for_this_course#creating-a-file-watcher-for-our-git-configuration)
 
 Your folders for this repo should be:
 
