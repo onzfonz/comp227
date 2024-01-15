@@ -595,8 +595,12 @@ const Company = ({ company }) => {
 }
 ```
 
-Quite often the root of the problem is that the props are expected to be of a different type,
-or called with a different name than they actually are, and destructuring fails as a result.
+Quite often the root of the problem is either:
+
+- the props are expected to be of a different type
+- the props are called with a different name than how they are passed in
+
+So destructuring fails as a result.
 The problem often begins to solve itself when destructuring is removed and we see what the `props` contain.
 
 ```js
@@ -654,16 +658,22 @@ Your folders for this repo should be:
 
 Let's finish the code for rendering companies' handheld arcade games and systems from exercises 1.1 - 1.5.
 If you need help getting your solution to a good state, please let me know.
-I would recommend that you use `vite` from the base directory and then just copy over the *src* folder.
+I would recommend that you use `vite` from the base directory (like we did in [part 1](/introduction_to_react#starting-development))
+and then just copy over your old *src* folder from your arcade folder from lab 1.
 
-**Notice that if you copy the entire project from one place to another, you would have to delete the *node_modules* directory
-and install the dependencies again with the command `npm install` before you can start the application.**
-Later on, we may use this method, but realize that *node_modules* is often huge and highly dependent on your system,
-so I think it's easier to let npm and vite do those portions.
-
-You only need to copy the **code**!
-
-Generally, it's not recommended that you copy a project's whole contents and/or add the *node_modules* directory to the version control system.
+> **Notice:** You should only copy the src folder and create a new vite application like we mentioned above.
+> However, if you ever copy the entire project from one place to another, you have to:
+>
+> 1. delete the *node_modules* directory
+> 2. install the dependencies again with the command `npm install`
+> 3. start the application.
+>
+> I generally avoid copying *node_modules* because it is often huge and highly dependent on your system,
+> so I think it's easier to let npm and vite determine what library versions you need.
+>
+> You only need to copy the **code**!
+>
+> Generally, it's not recommended that you copy a project's whole contents and/or add the *node_modules* directory to the version control system.
 
 Let's change the `App` component like so:
 
@@ -753,12 +763,12 @@ const total = handhelds.reduce((s, p) => {
 
 **Not working?** Use your search engine to look up how `reduce` is used in an **Object Array**.
 
-**Pro tip 2:** If you right click and show context actions (or use the keyboard shortcut, for me it ***Ctrl-1***),
-you should see the ability for the IDE to make a variety of changes.
-For example, JetBrains will automatically change the short-form arrow functions into their longer form and vice versa,
-showing you a preview of what that would look like.
-
-![WebStorm sample suggestion for arrow function](../../images/2/5b.png)
+> **Pro tip 2:** If you right click and show context actions (or use the keyboard shortcut, for me it ***Ctrl-1***),
+> you should see the ability for the IDE to make a variety of changes.
+> For example, JetBrains will automatically change the short-form arrow functions into their longer form and vice versa,
+> showing you a preview of what that would look like.
+>
+> ![WebStorm sample suggestion for arrow function](../../images/2/5b.png)
 
 #### 2.4: handheld arcade info Step 9
 
@@ -821,7 +831,7 @@ const App = () => {
 
 The application can, for example, look like this:
 
-![arbitrary number of courses feature add-on](../../images/teht/10e.png)
+![An arbitrary number of courses feature add-on](../../images/teht/10e.png)
 
 #### 2.5: separate module
 
