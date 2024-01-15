@@ -36,11 +36,12 @@ h1 {
 
 CSS rules comprise of **selectors** and **declarations**.
 The selector defines which elements the rule should be applied to.
-The selector above is `h1`, which will match all of the `h1` header tags in our application.
+The selector above is `h1`, which will match *all of the `h1` header tags in our application*.
 
-The declaration sets the `color` property to the value `chocolate` (*all this work is making me hungry!*).
+The declaration sets the `color` property to the value `chocolate`.
+> 🍫? *all this work is making me hungry!* 😋
 
-One CSS rule can contain an arbitrary number of declarations.
+***One CSS rule can contain an arbitrary number of declarations***.
 Let's modify the previous rule to make the text cursive, by defining the font style as `italic`:
 
 ```css
@@ -49,6 +50,8 @@ h1 {
   font-style: italic;  // highlight-line
 }
 ```
+
+> **FYI:** Make sure you continue trying to type out the parts (instead of copying) and use ***Tab*** to help WebStorm autocomplete the syntax for you.
 
 There are many ways of matching elements by using [different types of CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors).
 
@@ -70,7 +73,7 @@ const Task = ({ task, toggleImportance }) => {
 }
 ```
 
-Let's add the following rule to our style sheet (relying on my non-existent knowledge of color theory and design):
+Let's add the following rule at the end of our stylesheet (relying on my non-existent knowledge of color theory and design):
 
 ```css
 li {
@@ -84,7 +87,7 @@ Using element types for defining CSS rules is slightly problematic.
 If our application contained other `li` tags, the same style rule would also be applied to them.
 
 If we want to apply our style specifically to tasks,
-then it is better to use [class selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
+then it is better to use [**class selectors**](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors).
 
 In regular HTML, classes are defined as the value of the `class` attribute:
 
@@ -92,7 +95,7 @@ In regular HTML, classes are defined as the value of the `class` attribute:
 <li class="task">some text...</li>
 ```
 
-In React we have to use the [className](https://react.dev/learn#adding-styles) attribute instead of the class attribute.
+In React we have to use the [`className` attribute](https://react.dev/learn#adding-styles) instead of the *`class`* attribute.
 With this in mind, let's make the following changes to our `Task` component:
 
 ```js
@@ -110,7 +113,7 @@ const Task = ({ task, toggleImportance }) => {
 }
 ```
 
-Class selectors are defined with the `.className` syntax:
+Class selectors are then defined instead with the `.className` syntax (replacing our `li` syntax):
 
 ```css
 .task {
@@ -121,11 +124,11 @@ Class selectors are defined with the `.className` syntax:
 ```
 
 Notice this time that instead of a named color, I used a [**hex color value**](https://www.w3schools.com/colors/colors_hexadecimal.asp) to specify a color in the RGB space.
-If you now add other `li` elements to the application, they will not be affected by the style rule above.
+If you now add other non-task `li` elements to the application, they will not be affected by the style rule above.
 
 One final selector that we are going to use is called a **pseudo-class selector**,
 which is not an actual class, but something that is defined by most browsers.
-In our case, since we've been doing a lot websites with dark mode, we'll jump on the bandwagon and add this:
+In our case, since we've been doing a lot websites with dark mode, we'll jump on the bandwagon and add this to *index.css*:
 
 :root {
     color-scheme:dark;
@@ -137,7 +140,7 @@ You can apply this to any of the future assignments if you prefer all things dar
 ### Improved error message
 
 We previously implemented the error message that was displayed when the user tried to toggle the importance of a deleted task with the `alert` method.
-Let's implement the error message as its own React component.
+Let's implement the error message as its own React component, in *components/Notification.jsx*.
 
 The component is quite simple:
 
@@ -199,7 +202,8 @@ Then let's add a style rule that suits an error message:
 }
 ```
 
-Now we are ready to add the logic for displaying the error message.
+By this point you should now be able to see a styled Error Message appear on the webpage with no errors in the console.
+Once you can verify this, we can add the logic for displaying the error message.
 Let's change the `toggleImportanceOf` function in the following way:
 
 ```js
@@ -242,7 +246,7 @@ The idea behind defining inline styles is extremely simple.
 Any React component or element can be provided with a set of CSS properties as a JavaScript object through the
 [style](https://react.dev/reference/react-dom/components/common#applying-css-styles) attribute.
 
-CSS rules are defined slightly differently in JavaScript than in normal CSS files.
+***CSS rules follow a different format/case convention in JavaScript compared to normal CSS***.
 Let's say that we wanted to give some element the color green and italic font that's 16 pixels in size.
 In CSS, it would look like this:
 
@@ -266,9 +270,9 @@ But as a React inline-style object it would look like this:
 
 Every CSS property is defined as a separate property of the JavaScript object.
 Numeric values for pixels can be simply defined as integers.
-One of the major differences compared to regular CSS, is that hyphenated (kebab case) CSS properties are written in camelCase.
+One of the major differences compared to regular CSS, is that hyphenated (*kebab-case*) CSS properties are written in *camelCase*.
 
-Next, we could add a "bottom block" to our application by creating a `Footer` component and defining the following inline styles for it:
+Next, we could add a "bottom block" to *App.jsx* by creating a `Footer` component and defining the following inline styles for it:
 
 ```js
 // highlight-start
@@ -284,7 +288,7 @@ const Footer = () => {
   return (
     <div style={footerStyle}>
       <br />
-      Task app, Department of Computer Science, University of the Pacific 2023
+      Task app, Department of Computer Science, University of the Pacific
     </div>
   )
 }
@@ -311,10 +315,10 @@ Inline styles come with certain limitations.
 For instance, so-called [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes) can't be used straightforwardly.
 
 Inline styles and some of the other ways of adding styles to React components go completely against the grain of old conventions.
-Traditionally, it has been considered best practice to entirely separate CSS from the content (HTML) and functionality (JavaScript).
+Traditionally, it has been considered *best practice to entirely separate CSS from the content (HTML) and functionality (JavaScript)*.
 According to this older school of thought, the goal was to write CSS, HTML, and JavaScript into their separate files.
 
-The philosophy of React is, in fact, the polar opposite of this.
+***The philosophy of React is, in fact, the polar opposite of this***.
 Since the separation of CSS, HTML, and JavaScript into separate files did not seem to scale well in larger applications,
 React bases the division of the application along the lines of its logical functional entities.
 
@@ -454,15 +458,15 @@ tasksToShow = tasks // has the value null
 tasksToShow.map(task => ...) // uh-oh...
 ```
 
-and this blows up the app since we can not call the method `map` on the value `null`.
+and this blows up the app since *we can not call the method `map` on the value `null`*.
 
-When we set `tasks` to be initially an empty array,
-there is no error since it is allowed to call `map` to an empty array.
+When we initialize `tasks` to an empty array,
+there is no error since we can call `map` on an empty array.
 
-So, the initialization of the state "masked" the problem
+So, the initialization of the state *masked* the problem
 that is caused by the data not yet being fetched from the backend.
 
-Another way to circumvent the problem is to use *conditional rendering*
+Another way to circumvent the problem is to use **conditional rendering**
 and return `null` if the component state is not properly initialized:
 
 ```js
@@ -495,7 +499,7 @@ the effect used the function `setTasks` to set the value of the state `tasks`.
 This causes the component to be rendered again,
 and at the second render, the tasks get rendered to the screen.
 
-This conditional rendering is suitable in cases where it is impossible to define the state so that the initial rendering is possible.
+***This conditional rendering is suitable in cases where it is impossible to define the state so that the initial rendering is possible.***
 
 The other thing that we still need to have a closer look at is the second parameter of `useEffect`:
 
@@ -515,7 +519,7 @@ The principle is that the effect is always executed after the first render of th
 
 If the second parameter is an empty array `[]`, *its content never changes*
 and **the effect is only run after the first render of the component**.
-This is what we want when we initialize the app state from the server.
+*This is what we want when we initialize the app state from the server.*
 
 However, there are situations where we want to perform the effect at other times,
 e.g. when the state of the component changes in a particular way.
@@ -605,7 +609,7 @@ const App = () => {
 The useEffect hook has now `currency` as the second parameter.
 The effect function is therefore executed after the first render,
 and *always* after the table as its second parameter `currency` changes.
-That is, when the state `currency` gets a new value, the content of the table changes and the effect function is executed.
+That is, ***when the state `currency` gets a new value, the content of the table changes and the effect function is executed***.
 
 The effect has the following condition:
 
@@ -615,18 +619,18 @@ if (currency) {
 }
 ```
 
-which prevents requesting the exchange rates just after the first render when the variable `currency` still has the initial value, i.e. a null value.
+which prevents requesting the exchange rates just after the first render when the variable `currency` still has the initial value, i.e. a `null` value.
 
-So if the user types *eur* in the search field,
-the application uses Axios to perform an HTTP GET request to the address <https://open.er-api.com/v6/latest/eur>
+So if the user types *`eur`* in the search field,
+the application uses Axios to perform an **HTTP GET** request to the address <https://open.er-api.com/v6/latest/eur>
 and stores the response in the `rates` state.
 
-When the user then enters another value in the search field, e.g. *usd*,
-the effect function is executed again and the exchange rates of the new currency are requested form the API.
+When the user then enters another value in the search field, e.g. *`usd`*,
+the effect function is executed again and *the exchange rates of the new currency are requested form the API*.
 
 The way presented here for making API requests might seem a bit awkward.
 This particular application could have been made without `useEffect`,
-by making the API requests directly in the form submit handler function:
+by making the API requests directly in the form's submit handler function:
 
 ```js
   const onSearch = (event) => {
@@ -634,14 +638,14 @@ by making the API requests directly in the form submit handler function:
     axios
       .get(`https://open.er-api.com/v6/latest/${value}`)
       .then(response => {
-        setRates(response.data.rates)
+        setRates(response.data.rates) // ☣️
       })
   }
 ```
 
 However, there are situations where that technique would not work.
 For example, you *might* encounter one such a situation in the exercise 2.20 where the use of `useEffect` could provide a solution.
-Notice that this depends quite much on the approach you selected.
+Notice that this depends on the approach you selected.
 
 </div>
 
@@ -656,7 +660,7 @@ The API [https://restcountries.com](https://restcountries.com) provides data for
 Create an application, in which one can look at data from various countries.
 The application should probably get the data from the endpoint [all](https://restcountries.com/v3.1/all).
 
-**NOTICE** make sure again that you are careful to call `create-react-app` in your base directory when you make your new application, which you can call *countries*.
+**NOTICE** make sure again that you are careful to call `vite` in your base directory when you make your new application, which you can call *countries*.
 
 The user interface is very simple.
 The country to be shown is found by typing a search query into the search field.
@@ -674,7 +678,7 @@ its flag and the languages spoken are shown:
 
 ![flag and additional attributes screenshot](../../images/2/19b3.png)
 
-> **NB**: It is enough that your application works for most countries.
+> **Pertinent**: It is enough that your application works for most countries.
 Some countries, like ***Sudan***, can be hard to support since the name of the country is part of the name of another country, ***South Sudan***.
 You don't need to worry about these edge cases.
 
@@ -727,7 +731,25 @@ const api_key = import.meta.env.VITE_SOME_KEY
 // variable api_key has now the value set in startup
 ```
 
-You can also use a `.env` file rather than defining it on the command line each time by creating a file entitled '*.env*' in the root of the project and adding the following.
+The other alternative is to delete the *.env* file that we had [mentioned before](/part2/getting_data_from_server#axios-and-promises)
+and then make sure that you have **added *.env* file in your *.gitignore***.
+
+To completely remove the .env file from being re-added or tracked by github, run these commands from terminal in the directory where your .env file is.
+
+```bash
+git rm --cached .env
+git commit -m "Removed .env from the repo"
+echo ".env" >> .gitignore
+git add .gitignore
+git commit -m "added .env to gitignore"
+```
+
+You can see how this process looks by looking at the commit history of the [*part2-8* branch](https://github.com/comp227/part2-tasks/tree/part2-8),
+which now has the *.env* file removed from the latest snapshot of the repo and git will no longer track any changes to the file.
+
+> **Pertinent:** The .env file can still be seen in older commits, so **make sure you do not add the any keys before ignoring the file first!**
+
+Now you can use the `.env` file rather than defining it on the command line each time by adding the following to it.
 
 ```text
 # .env
