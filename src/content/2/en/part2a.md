@@ -663,6 +663,9 @@ If you need help getting your solution to a good state, please let me know.
 I would recommend that you use `vite` from the base directory (like we did in [part 1](/introduction_to_react#starting-development))
 and then just copy over your old *src* folder from your arcade folder from lab 1.
 
+Remember that your files should all be white in color. You should also make sure that you **push** your code anytime that you decide to stop for a while.
+*This is something that should happen at all times and you are responsible for verifying your changes show up in github.*
+
 > **Notice:** You should only copy the src folder and create a new vite application like we mentioned above.
 > However, if you ever copy the entire project from one place to another, you have to:
 >

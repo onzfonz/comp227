@@ -775,6 +775,10 @@ In this part, it is not even worth trying to use the direct rendering of the tab
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
+To submit via GitHub, you will **push** your code anytime that you decide to stop for a while.
+Also, you will ***amend your commits when you finish an exercise***.
+*This is something that should happen at all times and you are responsible for verifying your changes show up in github.*
+
 You should submit the exercises in each part with the corresponding repo that is mentioned.
 In this case, you will use the repo that was generated from <http://go.djosv.com/227lab1>.
 
@@ -796,6 +800,8 @@ so you should commit and add all of the files that you use in your directories.
 
 Please make sure that you add all files initially, as that will be the way you show your work and progress through the course.
 Please use an appropriate commit message when adding files to the repo.
+
+Remember that your files should all be white in color.
 
 Notice that in this part, there are more exercises besides those found below.
   
