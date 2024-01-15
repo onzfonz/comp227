@@ -1300,10 +1300,12 @@ Here it is:
 > *I pledge to:*
 >
 > - *Keep my browser's dev tools open all the time*
-> - *Keep WebStorm's **Problems** tab open (**`Alt-6`**) and review it as well*
-> - *Progress in tiny steps and commit each of those steps*
+> - *Keep WebStorm's **Problems** tab open (**`Alt-6`**) and review it as well.
+> - *Progress in tiny steps*
 > - *Use the debugger to help me better understand my code*
 > - *Stop adding features if my code is broken.*
+> - *Ensure that I do not have any files that are different colors in WebStorm for long*
+> - *Regularly push my code to GitHub and verify that it is uploaded*
 > - *Consider that I can rollback my changes when I go in small steps if I cannot find an issue.*
 > - *Formulate my questions on Discord [using this guide from part 0](/part0/general_info#how-to-ask-help-in-discord)*
 
