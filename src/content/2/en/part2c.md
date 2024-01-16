@@ -42,7 +42,7 @@ Create a file named *db.json* in the root directory of our *reading* project wit
 
 You can run a JSON server in two ways.
 
-One way is to [install](https://github.com/typicode/json-server#getting-started) a JSON server globally on your machine using the command `npm install -g json-server`.
+One way is to [install](https://github.com/typicode/json-server#getting-started) a JSON server globally on your machine using the command `npm i -g json-server`.
 A global installation requires administrative privileges, which means that it is not possible on school computers.
 
 After installing run the following command to run the json-server.

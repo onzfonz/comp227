@@ -29,7 +29,7 @@ Let's start by creating our first real project: *Tails' flight diaries*.
 As usual, run `npm init` and install the ***typescript*** package as a dev dependency.
 
 ```shell
- npm install typescript --save-dev
+ npm i -D typescript
 ```
 
 TypeScript's Native Compiler (*tsc*) can help us initialize our project by generating our *tsconfig.json* file.
@@ -112,8 +112,8 @@ Now that we have set our configuration, we can continue by installing *express* 
 Also, since we intend to grow this project over time, we will use ESlint from the very beginning:
 
 ```shell
-npm install express
-npm install eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev
+npm i express
+npm i -D eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
 
 Now our *package.json* should look like something like this, with differing versions depending on which node version you are using
@@ -190,7 +190,7 @@ However, as we saw earlier, *ts-node-dev* does the same thing, so we will use th
 So, let's install *ts-node-dev*:
 
 ```shell
-npm install ts-node-dev --save-dev
+npm i -D ts-node-dev
 ```
 
 We finally define a few more npm scripts, and voilà, we are ready to begin:

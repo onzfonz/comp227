@@ -44,7 +44,7 @@ We will get to know Redux by implementing a counter application yet again:
 Start with a new Vite application and then install *`redux`* with the command
 
 ```bash
-npm install redux
+npm i redux
 ```
 
 #### Redux's Store and Actions
@@ -459,7 +459,7 @@ To follow TDD, we'll need to configure the [Jest](https://jestjs.io/) testing li
 First, install the following dependencies:
 
 ```js
-npm install jest @babel/preset-env @babel/preset-react eslint-plugin-jest --save-dev 
+npm i -D jest @babel/preset-env @babel/preset-react eslint-plugin-jest 
 ```
 
 Next we'll create the file *.babelrc*, with the following content:
@@ -511,7 +511,7 @@ which can help ensure that our reducer has been correctly defined as an immutabl
 Let's install the library as a development dependency
 
 ```js
-npm install deep-freeze --save-dev
+npm i -D deep-freeze
 ```
 
 The test, which we define in file *src/reducers/taskReducer.test.js*, has the following content:
@@ -1002,7 +1002,7 @@ The newest (and possibly easiest) way of sharing the store is by using the [**ho
 First, let's install react-redux
 
 ```bash
-npm install react-redux
+npm i react-redux
 ```
 
 Next, if you haven't done so already, move the `App` component into its own file *App.jsx*.
@@ -1313,7 +1313,7 @@ The project you cloned at the beginning of [part6](/part6/flux_architecture_and_
 Remember, to install the dependencies first before trying to run the application
 
 ```bash
-npm install
+npm i
 npm run dev
 ```
 

@@ -687,7 +687,7 @@ The expected and required props of a component can be defined with the [prop-typ
 Let's install the package:
 
 ```shell
-npm install prop-types
+npm i prop-types
 ```
 
 We can define the `buttonLabel` prop as a mandatory or **required** string-type prop as shown below:
@@ -750,7 +750,7 @@ Next, we will start testing the frontend and in order to avoid undesired and irr
 we will install the [eslint-plugin-jest](https://www.npmjs.com/package/eslint-plugin-jest) package:
 
 ```bash
-npm install eslint-plugin-jest --save-dev
+npm i -D eslint-plugin-jest
 ```
 
 Let's create a *.estlintrc.cjs* file with the following contents:

@@ -203,7 +203,7 @@ and saving JavaScript objects as Mongo documents is straightforward with this li
 Let's install Mongoose on our backend:
 
 ```bash
-npm install mongoose
+npm i mongoose
 ```
 
 Let's not add any code dealing with Mongo to our backend just yet.
@@ -646,7 +646,7 @@ A more sophisticated way is to use the [dotenv](https://github.com/motdotla/dote
 You can install the library with the command:
 
 ```bash
-npm install dotenv
+npm i dotenv
 ```
 
 To use the library, we create a *.env* file at the root of the project.

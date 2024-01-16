@@ -505,7 +505,7 @@ The current code is in the branch [part2-1](https://github.com/comp227/part2-tas
 
 ![GitHub branch screenshot](../../images/2/2e.png)
 
-> **Remember:** If you clone the project, run the command `npm install` before starting the application with `npm run dev`.
+> **Remember:** If you clone the project, run the command `npm i` before starting the application with `npm run dev`.
 
 ### Using console.log
 
@@ -670,7 +670,7 @@ Remember that your files should all be white in color. You should also make sure
 > However, if you ever copy the entire project from one place to another, you have to:
 >
 > 1. delete the *node_modules* directory
-> 2. install the dependencies again with the command `npm install`
+> 2. install the dependencies again with the command `npm i`
 > 3. start the application.
 >
 > I generally avoid copying *node_modules* because it is often huge and highly dependent on your system,

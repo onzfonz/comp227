@@ -59,7 +59,7 @@ There is a slight issue in how we have setup the application mode in our scripts
 We can correct this by installing the [cross-env](https://www.npmjs.com/package/cross-env) package:
 
 ```bash
-npm install cross-env --save-dev
+npm i -D cross-env
 ```
 
 We can then achieve cross-platform compatibility by using the cross-env library in our npm scripts defined in *package.json*:
@@ -144,7 +144,7 @@ Let's use the [supertest](https://github.com/visionmedia/supertest) package to h
 We will install the package as a development dependency:
 
 ```bash
-npm install supertest --save-dev
+npm i -D supertest
 ```
 
 Let's write our first test in the *tests/task_api.test.js* file:
@@ -988,7 +988,7 @@ The [express-async-errors](https://github.com/davidbanham/express-async-errors) 
 Let's install the library
 
 ```bash
-npm install express-async-errors
+npm i express-async-errors
 ```
 
 Using the library is *very* easy.

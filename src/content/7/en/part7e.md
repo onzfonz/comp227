@@ -435,7 +435,7 @@ The best way to do that is by using a tool called ***npm-check-updates***.
 It can be installed globally by running the command:
 
 ```bash
-npm install -g npm-check-updates
+npm i -g npm-check-updates
 ```
 
 Using this tool, the up-to-dateness of dependencies is checked in the following way:

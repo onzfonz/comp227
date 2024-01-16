@@ -34,7 +34,7 @@ It compiles and executes the specified TypeScript file immediately so that there
 You *could* install both *`ts-node`* and the official *`typescript`* package globally by running:
 
 ```bash
-npm install -g ts-node typescript
+npm i -g ts-node typescript
 ```
 
 However, if you can't or don't want to install global packages, you can create an npm project which has the required dependencies and run your scripts in it.
@@ -46,7 +46,7 @@ You can do this now from inside your repository.
 Afterward, we can install the dependencies by running:
 
 ```bash
-npm install ts-node typescript --save-dev
+npm i -D ts-node typescript
 ```
 
 and setting up *scripts* within the package.json:
@@ -409,7 +409,7 @@ the name of your package with a *`@types/`* prefix.
 For example:
 
 ```bash
-npm install --save-dev @types/react @types/express @types/lodash @types/jest @types/mongoose
+npm i -D @types/react @types/express @types/lodash @types/jest @types/mongoose
 ```
 
 and so on and so on.
@@ -430,7 +430,7 @@ If the version of npm is at least 7.0, the peer dependencies of a project are au
 If you have an older npm, the peer dependency must be installed explicitly:
 
 ```shell
-npm install @types/node --save-dev
+npm i -D @types/node
 ```
 
 When the package *`@types/node`* is installed, the compiler does not complain about the variable `process`.
@@ -796,7 +796,7 @@ However, since we aim to learn full-stack web development, let's begin working w
 First, install Express:
 
 ```bash
-npm install express
+npm i express
 ```
 
 and add the ***start*** script to package.json:
@@ -875,7 +875,7 @@ You can type this line from the terminal.
 > *If you decided to run it from WebStorm, it may save it as a regular dependency instead of a dev dependency.*
 
 ```bash
-npm install @types/express --save-dev
+npm i -D @types/express
 ```
 
 And almost no more errors! Let's take a look at what changed.
@@ -943,7 +943,7 @@ It is meant to be used only with a development environment that takes care of re
 Let's install ***ts-node-dev*** to our development dependencies:
 
 ```bash
-npm install ts-node-dev --save-dev
+npm i -D ts-node-dev
 ```
 
 Add a script to *package.json*:
@@ -1102,7 +1102,7 @@ our code.
 Let's install ESlint and its TypeScript extensions:
 
 ```shell
-npm install eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser --save-dev
+npm i -D eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
 
 We will configure ESlint to [disallow explicit any]( https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md).
