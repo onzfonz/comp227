@@ -1308,7 +1308,7 @@ The code of the Redux application can be found on
 ### Exercises 6.3-6.8
 
 Let's move on to a new version of the joke voting application from [part 1](/part1/a_more_complex_state_debugging_react_apps#exercises-1-6-1-14).
-The project you cloned at the beginning of [part6](part6/flux_architecture_and_redux#exercises-6-1-6-2) has the *jokes* folder with everything you need to start.
+The project you cloned at the beginning of [part6](/part6/flux_architecture_and_redux#exercises-6-1-6-2) has the *jokes* folder with everything you need to start.
 
 Remember, to install the dependencies first before trying to run the application
 

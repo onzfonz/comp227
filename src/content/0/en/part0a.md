@@ -132,6 +132,8 @@ Please see Guidelines for Online Discussion for details.
 You can discuss the course and related topics in our [Discord](https://discord.gg/VRUKRxCJ95).
 Discord will have different channels for both your learning partners as well as course-related conversations.
 You will be expected to be active on Discord!
+If you have not used Discord before, then you can review their [official beginner's guide](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord).
+However, I think merely using the software is the best way to learn it.
 
 For those of you who are new to online learning and online discussion, there are some important differences between how you communicate online and in the classroom.
 These differences are frequently the cause of misunderstandings in courses that have an online component.

@@ -8,14 +8,24 @@ lang: en
 <div class="content">
 
 Let's continue expanding our application by allowing users to add new tasks.
-I would encourage you to follow along with using the code and typing things in as we go.
-Is it more frustrating? Absolutely.
-But merely reading (or just watching) is not enough, you have to practice and type things in and work with the examples given.
-However, if you missed a step, you can find the code for our current application [here](https://github.com/comp227/part2-tasks/tree/part2-1).
+
+> **Important:** I just want to remind you that I am expecting you all to type in code as we go.
+> Is it more frustrating? *Absolutely*.
+> But merely reading (or just watching) is not enough, **you have to practice and type things in and work with the examples given**.
+> If you do not type and spend time grappling with the material, you will not learn it.
+> While there are copy buttons in most of the code snippets, please use those only as a last resort.
+> However, if you missed a step or did not reset your code from the last example in part 2a,
+> [start with the code from here and follow along](https://github.com/comp227/part2-tasks/tree/part2-1).
+> To keep things separate, I would also encourage you to practice copying over the lab 1 and doing a new vite project called reading in your part2 repo.
+> Make sure that you type the rest in and follow along to check that things are working.
+> If they are not, use [this guide to ask for help!](/part0/general_info#how-to-ask-for-help-in-discord)
 
 To get our page to update when new tasks are added it's best to store the tasks in the `App` component's state.
 Let's import the [`useState` function](https://react.dev/reference/react/useState)
 and use it to define a piece of state that gets initialized with the initial tasks array passed in the props.
+
+> **Pertinent:** You can use the [live template](/part2/ rendering_a_collection_modules) to make useState popup, just type `useState` on line 1 of *App.jsx* and press ***Tab***,
+> then type *`tasks`*, and you can move that line down into your app!
 
 ```js
 import { useState } from 'react' // highlight-line
@@ -64,13 +74,15 @@ const App = () => {
 }  
 ```
 
-Let's stick with the initial value passed in the props for the time being.
+**Let's stick with the initial value passed in the `props` for the time being.**
+
+> This means you should undo the changes in this code block above.
 
 Next, let's add an HTML [form](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms) to the component that will be used for adding new tasks.
 
 ```js
 const App = (props) => {
-  const [tasks, setTasks] = useState(props.tasks)
+  const [tasks, setTasks] = useState(props.tasks) // highlight-line
 
 // highlight-start 
   const addTask = (event) => {
@@ -119,16 +131,18 @@ The target of the event stored in `event.target` is logged to the console:
 
 ![button clicked with form object console](../../images/2/6e.png)
 
-The target in this case is the form that we have defined in our component.
+The target in this case is the *form that we have defined in our component*.
 
-How do we access the data contained in the form's `input` element?
+*How then, do we access the **data** in the form's `input` element?*
 
 ### Controlled component
 
-There are many ways to accomplish this; the first method we will take a look at is through the use of so-called
-[controlled components](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+There are many ways to access the form input's data; one way is via
+[**controlled components**](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
 
-Let's add a new piece of state called `newTask` for storing the user-submitted input **and** let's set it as the `input` element's `value` attribute:
+Let's add a new piece of state called `newTask` for storing the user-submitted input **and** let's *set it as the `input` element's **`value` attribute***:
+
+> **Remember:** Type the *`useState`* shortcut to get that muscle memory for creating states!
 
 ```js
 const App = (props) => {
@@ -161,15 +175,19 @@ const App = (props) => {
 }
 ```
 
-The placeholder text stored as the initial value of the `newTask` state appears in the `input` element, but the input text can't be edited.
+The initial value for `newTask` (*`a new task...`*) appears in the `input` element, but the input text can't be edited.
 The console displays a warning that gives us a clue as to what might be wrong:
 
 ![provided value to prop without onchange console error](../../images/2/7e.png)
 
-Since we assigned a piece of the `App` component's state as the `value` attribute of the input element,
-the `App` component now [controls](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable) the behavior of the input element.
+> **Pertinent:** If you get another warning about *changing from an uncontrolled to a controlled component*, you can just refresh the page and you'll be able to see this error instead.
+> That error is due to us reloading and editing the page on the fly.
+> Remember that you can always refresh the browser and clear the console to get the most up-to-date error messages.
 
-To enable editing of the input element, we have to register an **event handler** that synchronizes the changes made to the input with the component's state:
+Since we assigned a piece of the `App` component's state as the `value` attribute of the input element,
+the `App` component now [*controls the behavior of the input element*](https://react.dev/reference/react-dom/components/input#controlling-an-input-with-a-state-variable).
+
+To enable editing of the input element, we have to register an **event handler** that *synchronizes the changes made to the `input` with the component's state*:
 
 ```js
 const App = (props) => {
@@ -235,7 +253,7 @@ You can follow along in the console to see how the event handler is called:
 
 ![multiple console calls with typing text](../../images/2/8e.png)
 
-You did remember to install [React devtools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi), right? Good.
+👀 You did remember to install [React devtools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi), right? 👀 Good.
 You can directly view how the state changes from the React Devtools tab:
 
 ![state changes in react devtools shows typing too](../../images/2/9ea.png)
@@ -264,7 +282,7 @@ This method works for our application since tasks are never deleted.
 With the help of the `Math.random()` function, our task has a 50% chance of being marked as important.
 
 The new task is added to the list of tasks using the
-[concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) array method,
+[`concat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) array method,
 introduced in [part 1](/part1/java_script#arrays):
 
 ```js
@@ -341,7 +359,7 @@ const tasksToShow = showAll
   : tasks.filter(task => task.important === true)
 ```
 
-The definition uses the [conditional AKA ternary AKA ?:](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) operator
+The definition uses the [conditional AKA ternary AKA `?:`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) operator
 also found in many other programming languages.
 
 The operator functions as follows.
@@ -354,14 +372,14 @@ const result = condition ? val1 : val2
 the `result` variable will be set to the value of `val1` if `condition` is `true`.
 If `condition` is `false`, the `result` variable will be set to the value of`val2`.
 
-If the value of `showAll` is false, the `tasksToShow` variable will be assigned to a list that only contains tasks that have the `important` property set to true.
-Filtering is done with the help of the array [filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) method:
+If the value of `showAll` is `false`, the `tasksToShow` variable will be assigned to a list that only contains tasks that have the `important` property set to `true`.
+Filtering is done with the help of Array's [`filter` method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter):
 
 ```js
 tasks.filter(task => task.important === true)
 ```
 
-The comparison operator is redundant, since the value of `task.important` is either `true` or `false`, which means that we can should instead write:
+The ***comparison operator `=== true` is redundant***, since the value of `task.important` is either `true` or `false`, which means that we can should instead write:
 
 ```js
 tasks.filter(task => task.important)
@@ -369,11 +387,11 @@ tasks.filter(task => task.important)
 
 We showed the comparison operator first to emphasize an important detail: in JavaScript `val1 == val2` does not always work as expected.
 When performing comparisons, it's always safer to use `val1 === val2`.
-You can read more about the topic [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness).
+You can [read more about the topic in Mozilla's documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness).
 
-You can test out the filtering functionality by changing the initial value of the `showAll` state.
+> You can test out the filtering functionality by changing the initial value of the `showAll` state.
 
-Next, let's add functionality that enables users to toggle the `showAll` state of the application from the user interface.
+Next, Let's add functionality that enables users to toggle the `showAll` state of the application from the user interface.
 
 The relevant changes are shown below:
 
@@ -417,7 +435,7 @@ The event handler switches the value of `showAll` from *`true`* to *`false`* and
 () => setShowAll(!showAll)
 ```
 
-The text of the button depends on the value of the `showAll` state:
+What text the `button` displays *depends on the `showAll` state*:
 
 ```js
 show {showAll ? 'important' : 'all'}
@@ -617,7 +635,7 @@ const App = () => {
 ```
 
 > **NB**: You might run into problems in this exercise if you define your components "in the wrong place".
-> Now would be a good time to rehearse the chapter
+> Now would be a good time to rehearse the section
 > [do not define a component in another component](/part1/a_more_complex_state_debugging_react_apps#do-not-define-components-within-components)
 > from the last part.
 
