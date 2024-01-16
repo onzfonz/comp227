@@ -408,7 +408,7 @@ To start:
 2. Click the plus (add) button ![plus icon](../../images/0/custom/plus_icon.png)
 3. Choose *`<custom>`*
 4. In the *Name* field, type *`COMP 227 Git Watcher`*
-5. In the *File Type* field, ***scroll up*** and select *`React JSX`*
+5. In the *File Type* field, ***scroll upwards*** and select *`React JSX`*
 6. In the *Program* field, provide the path to your git executable (something like `C:\Program Files\Git\bin\git.exe`)
 7. In the *Arguments* field, type *`send-all "Auto-commit JSX on save for Comp 227"`* (don't forget the quotes!)
 8. Expand the *Advanced Options* area, and select *`Trigger the watcher regardless of syntax errors`*
