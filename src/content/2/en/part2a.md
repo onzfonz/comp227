@@ -42,7 +42,7 @@ Let's set up a custom `clog` live template.
 4. Paste this in the template text:
 
     ```js
-    console.log('$PARAM_TEXT$(', typeof $PARAM$, ')=', $PARAM$, '$FILE$:$LINE$ - $EXPECTED$')$END$
+    console.log('$PARAM_TEXT$(' + typeof $PARAM$ + ') =', $PARAM$, ' | $FILE$:$LINE$ - $EXPECTED$')$END$
     ```
 
 5. Select ***Reformat according to style***
