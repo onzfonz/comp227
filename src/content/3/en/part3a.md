@@ -773,8 +773,11 @@ We could write some JavaScript for testing deletion, but writing test code is no
 Many tools exist for making the testing of backends easier.
 One of these is a command line program [`curl`](https://curl.haxx.se).
 However, instead of curl, we will take a look at using [**Postman**](https://www.postman.com) for testing the application.
+Postman is a popular tool for testing APIs, and I'm certain that some of you have heard of it already.
 
-Let's install the Postman desktop client and try it out:
+**If you'd like, you can install Postman following the directions below, but it is not required.**
+
+You can install the Postman desktop client to try it out:
 
 | Windows | Mac |
 | :--- | :--- |
@@ -800,15 +803,15 @@ Because the tasks in the application are only saved to memory, the list of tasks
 
 ### WebStorm REST client
 
-While Postman has become fairly popular due to all of it's options, in our case we can also use WebStorm's REST client instead of Postman.
+While Postman has become fairly popular due to all of its options, in our case we will just use **WebStorm's REST client instead of Postman**.
 
-To use the rest client, right-click on the project and select ***New->HTTP Request***.
+To use the rest client, right-click on the *backend-reading* folder and select ***New->HTTP Request***.
 Give it the name `all_tasks` and then you'll see a file named ***all_tasks.http***.
 We'll use that file to define a request that fetches all tasks.
 
 ![get all tasks rest file with get request on tasks](../../images/3/12ea.png)
 
-By clicking the highlighted play button, the REST client will execute the HTTP request and the response from the server is opened in the editor.
+By clicking the highlighted play button, the REST client will execute the HTTP request and the response from the server is opened in the ***Services*** pane.
 
 ![response from WebStorm from get request](../../images/3/13ea.png)
 
@@ -818,10 +821,10 @@ Next, let's make it possible to add new tasks to the server.
 Adding a task happens by making an HTTP POST request to the address <http://localhost:3001/api/tasks>,
 and by sending all the information for the new task in the request [body](https://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7) in JSON format.
 
-To access the data easily, we need the help of the express [json-parser](https://expressjs.com/en/api.html).
-We can use the parser by adding in that the command **`app.use(express.json())`**.
+To access the data easily, we need the help of *express*'s [JSON parser](https://expressjs.com/en/api.html).
+We can use the parser by adding the command **`app.use(express.json())`**.
 
-Let's activate the json-parser and implement an initial handler for dealing with the HTTP POST requests:
+Let's activate the JSON parser in *index.js* and *implement an initial handler for dealing with the HTTP POST requests*:
 
 ```js
 const express = require('express')
@@ -843,19 +846,22 @@ app.post('/api/tasks', (request, response) => {
 
 The event handler function can access the data from the `body` property of the `request` object.
 
-Without the json-parser, the `body` property would be `undefined`.
-The json-parser:
+Without the JSON parser, the `body` property would be `undefined`.
+The JSON parser:
 
 1. takes the JSON data of a request,
 2. transforms it into a JavaScript object and
 3. attaches it to the `body` property of the `request` object
 
-It does all of this before the route handler is called.
+It does all of this *before the route handler is called*.
 
-For the time being, the application does not do anything with the received data besides printing it to the console and sending it back in the response.
+> **FYI:** For the time being, the application does not do anything with the received data besides printing it to the console and sending it back in the response.
 
-Before we implement the rest of the application logic, let's verify with Postman that the data is in fact received by the server.
-In addition to defining the URL and request type in Postman, we also have to define the data sent in the `body`:
+Before we implement the rest of the application logic, let's verify that the data is in fact received by the server.
+To do this, we'll need to be able to send data to the server.
+We'll show how to POST requests in Postman and WebStorm.
+
+In Postman, the picture below shows how also have to define the data sent in the `body`:
 
 ![postman post on api/tasks with post content](../../images/3/14x.png)
 
@@ -863,14 +869,14 @@ The application prints the data that we sent in the request to the console:
 
 ![terminal printing content provided in postman](../../images/3/15e.png)
 
-> **NB** *Keep the terminal running the application visible at all times* when you are working on the backend.
+> **Remember:** *Keep the terminal window that is running nodemon visible at all times* when you are working on the backend.
 Thanks to Nodemon any changes we make to the code will restart the application.
 If you pay attention to the console, you will immediately be able to pick up on errors that could occur:
 >
 > ![nodemon error as typing require not defined](../../images/3/16.png)
 >
 > Similarly, it is useful to check the console for making sure that the backend behaves as we expect it to in different situations, like when we send data with an HTTP POST request.
-Naturally, it's OK to add lots of `console.log` commands to the code while the application is still being developed.
+Any `console.log` commands that you have put in temporarily for development will also appear here.
 >
 > A potential cause for issues is an incorrectly set `Content-Type` header in requests.
 This can happen with Postman if the type of body is not defined correctly:
@@ -889,13 +895,16 @@ This can happen with Postman if the type of body is not defined correctly:
 It won't even try to guess the format of the data since
 there's a [massive amount](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types) of potential *Content-Types*.
 
-With WebStorm, the POST request can be sent with the REST client like this:
+With WebStorm, the POST request can be sent as appended text in the REST client like this:
 
 ![sample post request in WebStorm with JSON data](../../images/3/20eb.png)
 
-One benefit that the REST client has over Postman is that the requests are handily available at the root of the project repository,
+One benefit that the WebStorm REST client has over Postman is that the ***requests are handily available at the root of the project repository***,
 and they can be distributed to everyone in the development team.
-Notice in the picture that we are also able to add the POST request in same file using `###` separators:
+
+> **FYI:** Postman does allow users to save requests, but the situation can get quite chaotic especially when you're working on multiple unrelated projects.
+
+Notice in the picture above that we are also able to add the POST request in same file using `###` separators:
 
 ```text
 GET http://localhost:3001/api/tasks/
@@ -911,23 +920,22 @@ content-type: application/json
 ```
 
 You can use the play button next to the line numbers to run the request you'd like.
-Postman also allows users to save requests, but the situation can get quite chaotic especially when you're working on multiple unrelated projects.
 
+>
 > **About debugging and using requests**
 >
 > Sometimes when you're debugging, you may want to find out what headers have been set in the HTTP request.
-> One way of accomplishing this is through the [get](http://expressjs.com/en/4x/api.html#req.get) method of the `request` object,
+> One way of accomplishing this is through the [`get` method](http://expressjs.com/en/4x/api.html#req.get) of the `request` object,
 > that can be used for getting the value of a single header.
 > The `request` object also has the *headers* property, that contains all of the headers of a specific request.
 >
-> Problems can occur with the WebStorm REST client if you accidentally add an empty line between the top row and the row specifying the HTTP headers.
+> Problems can occur with the WebStorm REST client if you *accidentally add an empty line between the top row and the row specifying the HTTP headers*.
 > In this situation, the REST client interprets this to mean that all headers are left empty,
 > which leads to the backend server not knowing that the data it has received is in the JSON format.
 >
 > You will be able to spot this missing *Content-Type* header
 > if you print the request headers via `console.log('request.headers=', request.headers)`.
 
-Let's return to the application.
 Once we know that the application receives data correctly, it's time to finalize the handling of the request:
 
 ```js
@@ -973,10 +981,10 @@ app.post('/api/tasks', (request, response) => {
   }
 
   const task = {
+    id: generateId(),
     content: body.content,
     important: Boolean(body.important) || false,
     date: new Date().toISOString(),
-    id: generateId(),
   }
 
   tasks = tasks.concat(task)
@@ -988,7 +996,7 @@ app.post('/api/tasks', (request, response) => {
 The logic for generating the new id number for tasks has been extracted into a separate `generateId` function.
 
 If the received data is missing a value for the `content` property, the server will respond to the request with the status code
-[400 bad request](https://www.rfc-editor.org/rfc/rfc9110.html#name-400-bad-request):
+[`400` bad request](https://www.rfc-editor.org/rfc/rfc9110.html#name-400-bad-request):
 
 ```js
 if (!body.content) {
@@ -998,11 +1006,11 @@ if (!body.content) {
 }
 ```
 
-Notice that calling return is crucial because otherwise the code will execute to the very end and the malformed task gets saved to the application.
+Notice that calling `return` is crucial because otherwise the code will execute to the very end and the malformed `task` gets saved to the application.
 
 If the content property has a value, the task will be based on the received data.
 As mentioned previously, it is better to generate timestamps on the server than in the browser,
-since we can't trust that the host machine running the browser has its clock set correctly.
+*since we can't trust that the host machine running the browser has its clock set correctly*.
 The generation of the `date` property is now done by the server.
 
 If the `important` property is missing, we will default the value to `false`.
@@ -1018,38 +1026,41 @@ If the property does not exist, then the expression will evaluate to *`false`* w
 > To be exact, when the `important` property is `false`,
 then the `body.important || false` expression will in fact return `false` from the right-hand side...
 
-You can find the code for our current application in its entirety in the *part3-1* branch of
-[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-1).
-
-The code for the current state of the application is specified in branch [part3-1](https://github.com/comp227/part3-tasks-backend/tree/part3-1).
+You can find the code for our current application in its entirety in the [*part3-1* branch of our backend repo](https://github.com/comp227/part3-tasks-backend/tree/part3-1).
 
 ![GitHub screenshot of branch 3-1](../../images/3/21.png)
 
 If you clone the project, run the `npm i` command before starting the application with `npm start` or `npm run dev`.
 
-One more thing before we move on to the exercises.
-The function for generating IDs looks currently like this:
-
-```js
-const generateId = () => {
-  const maxId = tasks.length > 0
-    ? Math.max(...tasks.map(t => t.id))
-    : 0
-  return maxId + 1
-}
-```
-
-The function body contains a row that looks a bit intriguing:
-
-```js
-Math.max(...tasks.map(t => t.id))
-```
-
-What exactly is happening in that line of code? `tasks.map(t => t.id)` creates a new array that contains all the ids of the tasks.
-[Math.max](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) returns the maximum value of the numbers that are passed to it.
-However, `tasks.map(t => t.id)` is an *array* so it can't directly be given as a parameter to `Math.max`.
-The array can be transformed into individual numbers by using the
-"three dot" [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax `...`.
+> **Pertinent:**
+> In the function we have for generating IDs:
+>
+> ```js
+> const generateId = () => {
+>   const maxId = tasks.length > 0
+>     ? Math.max(...tasks.map(t => t.id)) // highlight-line
+>     : 0
+>   return maxId + 1
+> }
+> ```
+>
+> This part of the highlighted line may look intriguing:
+>
+> ```js
+> Math.max(...tasks.map(t => t.id))
+> ```
+>
+> *What exactly is happening in that line of code?*
+> Let's take an example of say three tasks with ids `1`, `2`, and `3`
+>
+> - `tasks.map(t => t.id)` creates a new array that contains all the IDs of the tasks *`[1, 2, 3]`*.
+> - [`Math.max`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) returns the maximum value of the numbers that are passed to it.
+>
+> However, `tasks.map(t => t.id)` is an *array* so ***it can't directly be given as a parameter to `Math.max`***.
+> The array can be transformed into individual numbers by using the
+> "three dot `...`" [spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+>
+> - So 🚫 *`Math.max([1, 2, 3])`* 🚫 becomes *`Math.max(1, 2, 3)`* 🥳.
 
 </div>
 
@@ -1068,7 +1079,7 @@ You initialize this project with the `npm init` command that was demonstrated ea
 
 #### 3.1: Communities backend Step 1
 
-Implement a Node application that returns a hardcoded list of communities entries from the address <http://localhost:3001/api/groups>.
+Implement a Node application that returns a hardcoded list of community entries from the address <http://localhost:3001/api/groups>.
   
 Data:
   
@@ -1124,9 +1135,9 @@ The page has to show the time that the request was received and how many communi
 #### 3.3: Communities backend Step 3
 
 Implement the functionality for displaying the information for a community.
-The url for getting the data for a group with the id 5 should be <http://localhost:3001/api/groups/5>
+The URL for getting the data for a group with the ID *`5`* should be <http://localhost:3001/api/groups/5>
 
-If an entry for the given id is not found, the server has to respond with the appropriate status code.
+If an entry for the given ID is not found, the server has to respond with the appropriate status code.
 
 #### 3.4: Communities backend Step 4
 
@@ -1138,8 +1149,8 @@ Test that your functionality works with either Postman or a REST client.
 
 Expand the backend so that new communities can be added by making HTTP POST requests to the address <http://localhost:3001/api/groups>.
 
-Generate a new id for the community with the [Math.random](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) function.
-Use a big enough range for your random values so that the likelihood of creating duplicate ids is small.
+Generate a new ID for the community with the [`Math.random` function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).
+Use a big enough range for your random values so that the likelihood of creating duplicate IDs is small.
 
 #### 3.6: Communities backend Step 6
 
@@ -1149,7 +1160,10 @@ The request is not allowed to succeed, if:
 - The name or URL is missing
 - The community name already exists
 
-Respond to requests like these with the appropriate status code, and also send back information that explains the reason for the error, e.g.:
+Respond to requests like these:
+
+1. with the appropriate status code
+2. with information that explains the reason for the error, e.g.:
 
 ```js
 { error: 'name must be unique' }
@@ -1166,15 +1180,15 @@ talks about two properties related to request types, **safety** and **idempotenc
 
 The HTTP GET request should be **safe**:
 
-> *In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval.
+> *In particular, the convention has been established that the **GET** and **HEAD** methods **SHOULD NOT have the significance of taking an action other than retrieval**.
   These methods ought to be considered "safe".*
 
-Safety means that the executing request must not cause any *side effects* on the server.
-By side effects, we mean that the state of the database must not change as a result of the request,
-and the response must only return data that already exists on the server.
+Safety means that the executing request must not cause any **side effects** on the server.
+By side effects, we mean that the state of the *database must not change* as a result of the request,
+and the *response must only return data that already exists* on the server.
 
-Nothing can ever guarantee that a GET request is *safe*, this is just a recommendation that is defined in the HTTP standard.
-By adhering to RESTful principles in our API, GET requests are always used in a way that they are *safe*.
+Nothing can ever guarantee that a *`GET`* request is *safe*, this is just a recommendation that is defined in the HTTP standard.
+By adhering to RESTful principles in our API, *`GET`* requests are always used in a way that they are *safe*.
 
 The HTTP standard also defines the request type [HEAD](https://www.rfc-editor.org/rfc/rfc9110.html#name-head),
 which ought to be safe.
@@ -1189,35 +1203,35 @@ the side-effects of N > 0 identical requests is the same as for a single request
 
 This means that if a request does not generate side effects, then the result should be the same regardless of how many times the request is sent.
 
-If we make an HTTP PUT request to the URL ***/api/tasks/10*** and with the request we send the data `{ content: "no side effects!", important: true }`,
-the result is the same regardless of how many times the request is sent.
+If we make an HTTP *`PUT`* request to the URL ***/api/tasks/10*** and with the request we send the data `{ content: "no side effects!", important: true }`,
+the *result is the same regardless of how many times the request is sent*.
 
-Like *safety* for the GET request, **idempotence** is also just a recommendation in the HTTP standard
+Like safety for the *`GET`* request, **idempotence** is also just a recommendation in the HTTP standard
 and not something that can be guaranteed simply based on the request type.
-However, when our API adheres to RESTful principles, then GET, HEAD, PUT, and DELETE requests are used in such a way that they are idempotent.
+However, when our API adheres to RESTful principles, then *`GET`*, *`HEAD`*, *`PUT`*, and *`DELETE`* requests are used in such a way that they are idempotent.
 
-POST is the only HTTP request type that is neither *safe* nor *idempotent*.
-If we send 5 different HTTP POST requests to ***/api/tasks*** with a body of
-`{content: "many same", important: true}`, the resulting 5 tasks on the server will all have the same content.
+*`POST`* is the only HTTP request type that is neither *safe* nor *idempotent*.
+If we send 5 different HTTP *`POST`* requests to ***/api/tasks*** with a body of
+`{content: "many same", important: true}`, *the resulting 5 tasks on the server will all have the same content*.
 
 ### Middleware
 
-The express [json-parser](https://expressjs.com/en/api.html) we took into use earlier is a so-called [middleware](http://expressjs.com/en/guide/using-middleware.html).
+The [JSON parser](https://expressjs.com/en/api.html) in *express* we used earlier is called [*middleware*](http://expressjs.com/en/guide/using-middleware.html).
 
-Middleware are functions that can be used for handling `request` and `response` objects.
+**Middleware** are functions that can be used for handling `request` and `response` objects.
 
-As a reminder, the json-parser we used earlier:
+As a reminder, the JSON parser we used earlier:
 
 - takes the raw data from the requests that are stored in the `request` object
 - parses it into a JavaScript object
 - assigns it to the `request` object as a new property `body`.
 
 In practice, you can use several middlewares at the same time.
-When you have more than one, they're executed one by one in the order that they were taken into use in express.
+When you have more than one, they're executed one by one in the order that they were called in express.
 
 Let's *implement our own middleware function* that prints information about every request that is sent to the server.
 
-For a function to be **middleware** it needs to receives three parameters:
+For a function to be **middleware** it needs to receive three parameters:
 
 ```js
 const requestLogger = (request, response, next) => {
@@ -1239,8 +1253,8 @@ app.use(requestLogger)
 ```
 
 Middleware functions are called in the order that they're taken into use with the express server object's `use` method.
-Notice that json-parser is taken into use before the `requestLogger` middleware,
-because otherwise `request.body` will not be initialized when the logger is executed!
+Notice that the JSON parser is taken into use before the `requestLogger` middleware,
+because otherwise *`request.body` will not be initialized when the logger is executed*!
 
 Middleware functions have to be taken into use before routes *if we want them to be executed before the route event handlers* are called.
 There are also situations where we want to define middleware functions *after routes*.
@@ -1259,8 +1273,7 @@ const unknownEndpoint = (request, response, next) => {
 app.use(unknownEndpoint)
 ```
 
-You can find the code for our current application in its entirety in the *part3-2* branch of
-[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-2).
+You can find the code for our current application in its entirety in the [*part3-2* branch of our backend repo](https://github.com/comp227/part3-tasks-backend/tree/part3-2).
 
 </div>
 
@@ -1270,7 +1283,7 @@ You can find the code for our current application in its entirety in the *part3-
 
 #### 3.7: Communities backend Step 7
 
-Add the [**morgan**](https://github.com/expressjs/morgan) middleware to your application for logging.
+Add the [**morgan middleware**](https://github.com/expressjs/morgan) to your application for logging.
 Configure it to log messages to your console based on the `tiny` configuration.
 
 The documentation for Morgan is not the best, and you may have to spend some time figuring out how to configure it correctly.
@@ -1278,24 +1291,24 @@ However, most documentation in the world falls under the same category,
 so it's good to learn to decipher and interpret cryptic documentation in any case.
 
 Morgan is installed just like all other libraries with the `npm i` command.
-Taking morgan into use happens the same way as configuring any other middleware by using the `app.use` command.
+Taking *morgan* into use happens the same way as configuring any other middleware by using the `app.use` command.
 
 #### 3.8*: Communities backend Step 8
 
-Configure morgan so that it also shows the data sent in HTTP POST requests:
+Configure *morgan* so that it also shows the data sent in HTTP *`POST`* requests:
 
 ![terminal showing post data being sent](../../images/3/24.png)
 
 Notice that logging data even in the console can be dangerous since it can contain sensitive data
-and may violate local privacy law (e.g. GDPR in EU) or business standards.
-In this exercise, you don't have to worry about privacy issues, but in practice, do not to log any sensitive data.
+and may violate local privacy laws (e.g. GDPR in the EU) or business standards.
+In this exercise, you don't have to worry about privacy issues, but in practice, do not log any sensitive data.
 
-This exercise can be quite challenging, even though the solution does not require a lot of code.
-
-This exercise can be completed in a few different ways.
-One of the possible solutions utilizes these two techniques:
-
-1. [creating new tokens](https://github.com/expressjs/morgan#creating-new-tokens)
-2. [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+> **FYI**: This exercise can be quite challenging, even though the solution does not require a lot of code.
+>
+> This exercise can be completed in a few different ways.
+> One of the possible solutions utilizes these two techniques:
+>
+> 1. [creating new tokens](https://github.com/expressjs/morgan#creating-new-tokens)
+> 2. [`JSON.stringify`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
 
 </div>
