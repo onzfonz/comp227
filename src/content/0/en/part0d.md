@@ -171,7 +171,9 @@ git config --list
 You should now see your username and email displayed, as well as the alias that we made and the editor changes.
 You can press ***Space*** to continue reviewing the changes, and ***q*** to exit.
 
-### 4: Install Node
+### 4: Install NVM
+
+> ***For you to use `nvm`, you may need to uninstall any existing versions of node.js first.***
 
 Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
 If you already have Node installed,
@@ -451,6 +453,10 @@ This one is important as it tells WebStorm where our node version is, which help
 Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
 Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
 Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both Windows.
+
+> If you cannot find a *.nvm* folder in your installation directory,
+> it may be that *nvm* has automatically created a symbolic link in your Applications directory,
+> which would be *`C:\Program Files\nodejs\node.exe` for Windows and somewhere in `Applications` for Mac.
 
 Because we will be working with a lot of repositories, it makes sense that all new projects have these same settings.
 Let's ensure that all of these settings show up for new projects, by going to ***File->New Projects Setup->Settings for New Projects***.
