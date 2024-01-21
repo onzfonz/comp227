@@ -599,7 +599,6 @@ Here are some things to check:
 
 Again, make sure that you pay close attention to any messages that come up!
 
-
 </div>
 
 <div class="content">
