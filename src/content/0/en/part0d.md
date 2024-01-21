@@ -566,7 +566,8 @@ As for the code that you put in there, all you will do is write a comment that:
 
 Once you do that, should you verify that your files have all turned **white in color** in your webstorm files project.
 
-As a final verification, add a screenshot of your WebStorm IDE showing the embedded git bash terminal (or your external terminal) overlayed at the bottom and having typed `nvm` list.
+As a final verification, add a screenshot of your WebStorm IDE showing the embedded git bash terminal overlayed at the bottom and having typed `nvm list` and `git status`.
+> If you are on a mac, you can have your external editor showing at the bottom of the screen instead, ensure we can still see the rest of webstorm.
 
 Please name the screenshot file with the name *`09`*.
 Make sure the file has the correct extension.
