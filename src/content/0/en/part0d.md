@@ -575,6 +575,31 @@ Make a new change to your *Hello.jsx* file mentioning you uploaded the picture a
 
 You can verify that you did this correctly by looking at github again!
 
+#### Troubleshooting Exercise 0.9
+
+Are your files still different colors?
+You may not have setup the previous parts correctly.
+If you missed multiple parts here, then part of this should be a sign that you may need to **slow down while reading this content**.
+
+Here are some things to check:
+
+- Is your file watcher running?
+    - You should see a status message at the bottom of WebStorm to let us know the file watcher is in fact running.  You should see the message popup everytime you edit the jsx file.
+      ![message showing file watcher is running](../../images/0/custom/file_watcher_status_bar.png)
+    - If you don't see this popup, please review [the file watcher settings](#9-additional-webstorm-setup)
+- Did you create the send-all command?
+    - If your terminal pops up with this message:
+      ![terminal showing send-all not there](../../images/0/custom/file_watcher_send_all_command.png)
+    - Then you did not add the [`send-all` alias](#3-configure-git).
+- Did you use the correct alias so that the terminal shows up from within WebStorm? See the #mac discussion in discord for further details, but for now, using `/bin/bash` works.
+- Did you login to GitHub using your credentials and told it to always remember?
+    If you are getting any popups like this, do not close them, but save your credentials instead.
+    ![Windows GitHub Login](../../images/0/custom/windows_github.png)
+    ![Mac GitHub Login](../../images/0/custom/mac_github.png)
+
+Again, make sure that you pay close attention to any messages that come up!
+
+
 </div>
 
 <div class="content">
