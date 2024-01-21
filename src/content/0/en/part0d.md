@@ -47,7 +47,7 @@ If you do see the options, I'd also like you to verify that you have:
 - *git bash* - (a command-line/terminal program) that comes with the git package we'll install
 - a package manager - (something like *winget*, *choco*, *scoop* or *brew*)
 
-If you have all of that then you can [move on to step 4](#4-install-node).
+If you have all of that then you can [move on to step 4](#4-install-nvm).
 
 If this is all foreign to you, then please read on.
 
