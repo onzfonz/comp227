@@ -775,8 +775,17 @@ In this part, it is not even worth trying to use the direct rendering of the tab
 
 The exercises are submitted through GitHub and marking them as done on Canvas.
 
-To submit via GitHub, you will **push** your code anytime that you decide to stop for a while.
-Also, you will ***amend your commits when you finish an exercise***.
+To submit an exercise as completed in GitHub, you will need to manually write this command in your terminal.
+
+```bash
+git commit --allow-empty -m "Submitted Exercise X.Y"
+```
+
+Where *`X`* and *`Y`* stand for the part number ane exercise number.
+You will know that it is complete because it will parrot it back to you.
+**Consider this part of the submission system**.
+If you want to be sure that it uploads, you should also do a `git push`, though if you edit your JSX files afterwards, they should be fine.
+
 *This is something that should happen at all times and you are responsible for verifying your changes show up in github.*
 
 You should submit the exercises in each part with the corresponding repo that is mentioned.
@@ -888,6 +897,8 @@ const App = () => {
 > Also, do not try to program all the components at the same time.
 > You need to go in small steps, like first make the component *Header* and when that works, **commit** the change and then ***then*** proceed to the next component.
 
+***Make sure to type `git commit --allow-empty -m "Completed Exercise 1.1"` in the terminal before moving onto 1.2***
+
 #### 1.2: handheld arcade info, Step 2
 
 Refactor the `Content` component so that it does not render any names of handhelds or their number of games by itself.
@@ -906,6 +917,10 @@ const Content = ... {
 ```
 
 Our application passes on information in quite a primitive way at the moment, since it is based on individual variables.
+
+***Make sure to type `git commit --allow-empty -m "Completed Exercise 1.2"` in the terminal before moving on.***
+You will not get anymore regular reminders to do this.
+
 We shall fix that in [part 2](/part2).
 
 </div>
