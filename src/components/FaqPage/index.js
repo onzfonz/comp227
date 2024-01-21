@@ -23,8 +23,6 @@ const FaqPage = ({ lang, title, seoDescription }) => {
           ...mainSEOtags,
           'faq',
           'frequently asked questions',
-          'ukk',
-          'usein kysytyt kysymykset',
         ]}
       />
 

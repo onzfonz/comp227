@@ -12,25 +12,25 @@ Let's go back to working with React.
 We start with a new example:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   return (
     <div>
       <p>
-        Hello {props.name}, you are {props.age} years old
+        Hi {props.name}, you are {props.age} years old
       </p>
     </div>
   )
 }
 
 const App = () => {
-  const name = 'Peter'
+  const name = 'Buddy'
   const age = 10
 
   return (
     <div>
       <h1>Greetings</h1>
-      <Hello name="Maya" age={26 + 10} />
-      <Hello name={name} age={age} />
+      <Greet name="Bailey" age={14 + 7} />
+      <Greet name={name} age={age} />
     </div>
   )
 }
@@ -38,10 +38,10 @@ const App = () => {
 
 ### Component helper functions
 
-Let's expand our <i>Hello</i> component so that it guesses the year of birth of the person being greeted:
+Let's expand our `Greet` component so that it guesses the year of birth of the person being greeted:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   // highlight-start
   const bornYear = () => {
     const yearNow = new Date().getFullYear()
@@ -52,7 +52,7 @@ const Hello = (props) => {
   return (
     <div>
       <p>
-        Hello {props.name}, you are {props.age} years old
+        Hi {props.name}, you are {props.age} years old
       </p>
       <p>So you were probably born in {bornYear()}</p> // highlight-line
     </div>
@@ -62,48 +62,57 @@ const Hello = (props) => {
 
 The logic for guessing the year of birth is separated into a function of its own that is called when the component is rendered.
 
-The person's age does not have to be passed as a parameter to the function, since it can directly access all props that are passed to the component.
+The person's age does not have to be passed as a parameter to the function,
+since it can directly access all props that are passed to the component.
 
-If we examine our current code closely, we'll notice that the helper function is actually defined inside of another function that defines the behavior of our component. In Java programming, defining a function inside another one is complex and cumbersome, so not all that common. In JavaScript, however, defining functions within functions is a commonly-used technique.
+If we examine our current code closely, we'll notice that the helper function is defined inside of another function that defines the behavior of our component.
+In Java programming, defining a function inside another one is complex and cumbersome, so not all that common.
+In JavaScript, however, defining functions within functions is a commonly used technique.
 
 ### Destructuring
 
-Before we move forward, we will take a look at a small but useful feature of the JavaScript language that was added in the ES6 specification, that allows us to [destructure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) values from objects and arrays upon assignment.
+Before we move forward, we will take a look at a small but useful feature of the JavaScript language that was added in the ES6 specification, that allows us to
+[**destructure**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) values from objects and arrays upon assignment.
 
-In our previous code, we had to reference the data passed to our component as _props.name_ and _props.age_. Of these two expressions we had to repeat _props.age_ twice in our code.
+In our previous code, we had to reference the data passed to our component as `props.name` and `props.age`.
+Of these two expressions, we had to repeat `props.age` twice in our code.
 
-Since <i>props</i> is an object
+Since `props` is an object
 
 ```js
 props = {
-  name: 'Arto Hellas',
-  age: 35,
+  name: 'Powercat',
+  age: 23,
 }
 ```
 
-we can streamline our component by assigning the values of the properties directly into two variables _name_ and _age_ which we can then use in our code:
+we can streamline our component by assigning the values of the properties directly into two variables `name` and `age` which we can then use in our code:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   // highlight-start
   const name = props.name
   const age = props.age
   // highlight-end
 
-  const bornYear = () => new Date().getFullYear() - age
+  const bornYear = () => new Date().getFullYear() - age // highlight-line
 
   return (
     <div>
-      <p>Hello {name}, you are {age} years old</p> // highlight-line
+      <p>Hi {name}, you are {age} years old</p> // highlight-line
       <p>So you were probably born in {bornYear()}</p>
     </div>
   )
 }
 ```
 
-Note that we've also utilized the more compact syntax for arrow functions when defining the _bornYear_ function. As mentioned earlier, if an arrow function consists of a single expression, then the function body does not need to be written inside of curly braces. In this more compact form, the function simply returns the result of the single expression.
+Notice that we've also utilized the more compact syntax for arrow functions when defining the `bornYear` function.
+As mentioned earlier, if an arrow function consists of a single expression,
+then the function body does not need to be written inside of curly braces.
+In this more compact form, the function simply returns the result of the single expression.
 
 To recap, the two function definitions shown below are equivalent:
+
 ```js
 const bornYear = () => new Date().getFullYear() - age
 
@@ -112,10 +121,10 @@ const bornYear = () => {
 }
 ```
 
-Destructuring makes the assignment of variables even easier, since we can use it to extract and gather the values of an object's properties into separate variables:
+Destructuring makes the assignment of variables even easier since we can use it to extract and gather the values of an object's properties into separate variables:
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
     // highlight-start
   const { name, age } = props
     // highlight-end
@@ -123,33 +132,34 @@ const Hello = (props) => {
 
   return (
     <div>
-      <p>Hello {name}, you are {age} years old</p>
+      <p>Hi {name}, you are {age} years old</p>
       <p>So you were probably born in {bornYear()}</p>
     </div>
   )
 }
 ```
 
-<!-- Eli koska -->
 If the object we are destructuring has the values
+
 ```js
 props = {
-  name: 'Arto Hellas',
-  age: 35,
+  name: 'Powercat',
+  age: 23,
 }
 ```
 
-the expression <em>const { name, age } = props</em> assigns the values 'Arto Hellas' to _name_ and 35 to _age_.
+the expression `const { name, age } = props` assigns the values `'Powercat'` to `name` and `23` to `age`.
 
 We can take destructuring a step further:
+
 ```js
-const Hello = ({ name, age }) => { // highlight-line
+const Greet = ({ name, age }) => { // highlight-line
   const bornYear = () => new Date().getFullYear() - age
 
   return (
     <div>
       <p>
-        Hello {name}, you are {age} years old
+        Hi {name}, you are {age} years old
       </p>
       <p>So you were probably born in {bornYear()}</p>
     </div>
@@ -157,26 +167,28 @@ const Hello = ({ name, age }) => { // highlight-line
 }
 ```
 
-The props that are passed to the component are now directly destructured into the variables _name_ and _age_.
+The props that are passed to the component are now directly destructured into the variables, `name` and `age`.
 
-This means that instead of assigning the entire props object into a variable called <i>props</i> and then assigning its properties into the variables _name_ and _age_
+This means that instead of assigning the entire props object into a variable called `props` and then assigning its properties to the variables `name` and `age`
 
 ```js
-const Hello = (props) => {
+const Greet = (props) => {
   const { name, age } = props
 ```
 
-we assign the values of the properties directly to variables by destructuring the props object that is passed to the component function as a parameter:
+we assign the values of the properties directly to variables by *destructuring the `props` object* that is passed to the component function as a parameter:
 
 ```js
-const Hello = ({ name, age }) => {
+const Greet = ({ name, age }) => {
 ```
 
 ### Page re-rendering
 
-So far all of our applications have been such that their appearance remains the same after the initial rendering. What if we wanted to create a counter where the value increased as a function of time or at the click of a button?
+So far all of our applications have been such that their appearance remains the same after the initial rendering.
+What if we wanted to create a counter where the value increased as a function of time or at the click of a button?
 
-Let's start with the following. File <i>App.js</i> becomes:
+Let's start with the following.
+*App.jsx* becomes:
 
 ```js
 const App = (props) => {
@@ -189,10 +201,9 @@ const App = (props) => {
 export default App
 ```
 
-And file <i>index.js</i> becomes:
+And *main.jsx* becomes:
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
@@ -204,13 +215,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 )
 ```
 
-The App component is given the value of the counter via the _counter_ prop. This component renders the value to the screen. What happens when the value of _counter_ changes? Even if we were to add the following
+The App component is given the value of the counter via the `counter` prop.
+This component renders the value to the screen.
+What happens when the value of `counter` changes?
+Even if we were to add the following:
 
 ```js
 counter += 1
 ```
 
-the component won't re-render. We can get the component to re-render by calling the _render_ method a second time, e.g. in the following way:
+the component won't re-render.
+We can get the component to re-render by calling the `render` method a second time, e.g. in the following way:
 
 ```js
 let counter = 1
@@ -228,11 +243,13 @@ counter += 1
 refresh()
 ```
 
-The re-rendering command has been wrapped inside of the _refresh_ function to cut down on the amount of copy-pasted code.
+The re-rendering command has been wrapped inside of the `refresh` function to cut down on the amount of copy-pasted code.
 
-Now the component  <i>renders three times</i>, first with the value 1, then 2, and finally 3. However, the values 1 and 2 are displayed on the screen for such a short amount of time that they can't be noticed.
+Now the component ***renders three times***, first with the value *`1`*, then *`2`*, and finally *`3`*.
+However, values *`1`* and *`2`* are displayed on the screen for such a short amount of time that they can't be noticed.
 
-We can implement slightly more interesting functionality by re-rendering and incrementing the counter every second by using [setInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval):
+We can implement slightly more interesting functionality by re-rendering and incrementing the counter every second by using
+[`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval):
 
 ```js
 setInterval(() => {
@@ -241,18 +258,19 @@ setInterval(() => {
 }, 1000)
 ```
 
-Making repeated calls to the _render_ method is not the recommended way to re-render components. Next, we'll introduce a better way of accomplishing this effect.
+Making repeated calls to the `render` method is not the recommended way to re-render components.
+Next, we'll introduce a better way of accomplishing this effect.
 
 ### Stateful component
 
-All of our components up till now have been simple in the sense that they have not contained any state that could change during the lifecycle of the component.
+All of our components up until now have been simple in the sense that they have not contained any state that could change during the lifecycle of the component.
 
-Next, let's add state to our application's <i>App</i> component with the help of React's [state hook](https://reactjs.org/docs/hooks-state.html).
+Next, let's add state to our application's `App` component with the help of React's [**state hook**](https://react.dev/learn/state-a-components-memory).
 
-We will change the application as follows.  <i>index.js</i> goes back to
+We will change the application as follows.
+*main.jsx* goes back to
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
@@ -260,7 +278,7 @@ import App from './App'
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)
 ```
 
-and <i>App.js</i> changes to the following:
+and *App.jsx* changes to the following:
 
 ```js
 import { useState } from 'react' // highlight-line
@@ -283,8 +301,7 @@ const App = () => {
 export default App
 ```
 
-
-In the first row, the file imports the _useState_ function:
+In the first row, the file imports the `useState` function:
 
 ```js
 import { useState } from 'react'
@@ -296,11 +313,21 @@ The function body that defines the component begins with the function call:
 const [ counter, setCounter ] = useState(0)
 ```
 
-The function call adds <i>state</i> to the component and renders it initialized with the value of zero. The function returns an array that contains two items. We assign the items to the variables _counter_ and _setCounter_ by using the destructuring assignment syntax shown earlier.
+The function call adds ***state*** to the component and renders it initialized with the value of zero.
+The function returns an array that contains two items.
+We assign the items to the variables `counter` and `setCounter` by using the destructuring assignment syntax shown earlier.
 
-The _counter_ variable is assigned the initial value of <i>state</i> which is zero. The variable _setCounter_ is assigned to a function that will be used to <i>modify the state</i>.
+The `counter` variable is assigned the initial value of ***state*** which is zero.
+The variable `setCounter` is assigned to a function that will be used to *modify the state*.
 
-The application calls the [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) function and passes it two parameters: a function to increment the counter state and a timeout of one second:
+The application calls the
+[`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout)
+function and passes it two parameters:
+
+1. a function to be executed in the future
+2. how long it should wait to execute that function (expressed in *ms*):
+
+So in our example from above:
 
 ```js
 setTimeout(
@@ -309,13 +336,16 @@ setTimeout(
 )
 ```
 
-The function passed as the first parameter to the _setTimeout_ function is invoked one second after calling the _setTimeout_ function
+The function passed as the first parameter to the `setTimeout` function:
 
 ```js
 () => setCounter(counter + 1)
 ```
 
-When the state modifying function _setCounter_ is called, <i>React re-renders the component</i> which means that the function body of the component function gets re-executed:
+is invoked *`1000` ms* after `setTimeout` is called.
+
+Once the state modifying function `setCounter` is called, **React re-renders the component**
+which means that the function body of the component function gets re-executed (*shown below*):
 
 ```js
 () => {
@@ -332,16 +362,23 @@ When the state modifying function _setCounter_ is called, <i>React re-renders th
 }
 ```
 
-The second time the component function is executed it calls the _useState_ function and returns the new value of the state: 1. Executing the function body again also makes a new function call to _setTimeout_, which executes the one second timeout and increments the _counter_ state again. Because the value of the _counter_ variable is 1, incrementing the value by 1 is essentially the same as an expression setting the value of _counter_ to 2.
+The second time the component function is executed it calls the `useState` function and returns the new value of the state: 1.
+Executing the function body again also makes a new function call to `setTimeout`,
+which executes the one-second timeout and increments the `counter` state again.
+Because the value of the `counter` variable is 1, incrementing the value by 1 is essentially the same as an expression setting the value of `counter` to 2.
 
 ```js
 () => setCounter(2)
 ```
-Meanwhile, the old value of _counter_ - "1" - is rendered to the screen.
 
-Every time the _setCounter_  modifies the state it causes the component to re-render. The value of the state will be incremented again after one second, and this will continue to repeat for as long as the application is running.
+Meanwhile, the old value of `counter` - "1" - is rendered to the screen.
 
-If the component doesn't render when you think it should, or if it renders at the "wrong time", you can debug the application by logging the values of the component's variables to the console. If we make the following additions to our code:
+Every time the `setCounter` modifies the state it causes the component to re-render.
+The value of the state will be incremented again after one second, and this will continue to repeat for as long as the application is running.
+
+If the component doesn't render when you think it should, or if it renders at the "wrong time",
+you can debug the application by logging the values of the component's variables to the console.
+If we make the following additions to our code:
 
 ```js
 const App = () => {
@@ -360,19 +397,28 @@ const App = () => {
 }
 ```
 
-It's easy to follow and track the calls made to the <i>App</i> component's render function:
+It's easy to follow and track the calls made to the `App` component's `render` function:
 
-![](../../images/1/4e.png)
+![screenshot of render function with dev tools](../../images/1/4e.png)
+
+Was your browser console open?
+If it wasn't, do yourself a favor and keep it open.
+Make it a habit to type (***Ctrl-Shift-I***) while your *localhost* is loading.
+Or keep using the same browser tab.
 
 ### Event handling
 
-We have already mentioned <i>event handlers</i> that are registered to be called when specific events occur a few times in [part 0](/en/part0). E.g. a user's interaction with the different elements of a web page can cause a collection of various different kinds of events to be triggered.
+We have already mentioned **event handlers** that are registered to be called when specific events occur a few times in [part 0](/part0).
+A user's interaction with the different elements of a web page can cause a collection of various kinds of events to be triggered.
 
-Let's change the application so that increasing the counter happens when a user clicks a button, which is implemented with the [button](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) element.
+Let's change the application so that increasing the counter happens when a user clicks a button,
+which is implemented with the [`button`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button) element.
 
-Button elements support so-called [mouse events](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent), of which [click](https://developer.mozilla.org/en-US/docs/Web/Events/click) is the most common event. The click event on a button can also be triggered with the keyboard or a touch screen despite the name <i>mouse event</i>.
+Button elements support [*mouse events*](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent),
+of which [***click***](https://developer.mozilla.org/en-US/docs/Web/Events/click) is the most common event.
+The click event on a button can also be triggered with the keyboard or a touch screen despite the name *mouse event*.
 
-In React, [registering an event handler function](https://reactjs.org/docs/handling-events.html) to the <i>click</i> event happens like this:
+In React, [registering an event handler function](https://react.dev/learn/responding-to-events) to the ***click*** event happens like this:
 
 ```js
 const App = () => {
@@ -397,11 +443,12 @@ const App = () => {
 }
 ```
 
-We set the value of the button's <i>onClick</i> attribute to be a reference to the _handleClick_ function defined in the code.
+We set the value of the button's `onClick` attribute to a reference to the custom `handleClick` function above.
 
-Now every click of the <i>plus</i> button causes the _handleClick_ function to be called, meaning that every click event will log a <i>clicked</i> message to the browser console.
+Now every click of the ***plus*** button causes the `handleClick` function to be called,
+meaning that every click event will log a `clicked` message to the browser console.
 
-The event handler function can also be defined directly in the value assignment of the onClick-attribute:
+An event handler function can also be defined directly to the `onClick` attribute:
 
 ```js
 const App = () => {
@@ -418,14 +465,16 @@ const App = () => {
 }
 ```
 
-By changing the event handler to the following form
+By changing the event handler to that direct form:
+
 ```js
 <button onClick={() => setCounter(counter + 1)}>
   plus
 </button>
 ```
 
-we achieve the desired behavior, meaning that the value of _counter_ is increased by one <i>and</i> the component gets re-rendered.
+we still achieve the desired behavior.
+The value of `counter` is incremented **and** the component gets re-rendered.
 
 Let's also add a button for resetting the counter:
 
@@ -451,13 +500,9 @@ const App = () => {
 
 Our application is now ready!
 
+### An event handler is a function
 
-<!-- ### Tapahtumankäsittelijä on funktio -->
-
-### Event handler is a function
-
-<!-- Nappien tapahtumankäsittelijät on siis määritelty suoraan <i>onClick</i>-attribuuttien määrittelyn yhteydessä seuraavasti: -->
-We define the event handlers for our buttons where we declare their <i>onClick</i> attributes:
+We define the event handlers for our buttons where we declare their `onClick` attributes:
 
 ```js
 <button onClick={() => setCounter(counter + 1)}> 
@@ -465,64 +510,66 @@ We define the event handlers for our buttons where we declare their <i>onClick</
 </button>
 ```
 
-What if we tried to define the event handlers in a simpler form?
+> *What if we tried to define the event handlers in a simpler form?*
+>
+> ```js
+> <button onClick={setCounter(counter + 1)}> // highlight-line
+>   plus
+></button>
+> ```
+>
+> This would completely break our application:
+>
+> ![screenshot of re-renders error](../../images/1/5c.png)
+>
+> What's going on?
+> The problems section in WebStorm (lower right) hints at the issue, as it says: *`Type void is not assignable to MouseEventHandler<HTMLButtonElement>`*.
+> An event handler is supposed to be either a **function** or a **function reference**, and when we write:
+>
+> ```js
+> <button onClick={setCounter(counter + 1)}>
+> ```
+>
+> the event handler is actually a **function call** (hence the type *`void`*, since `setCounter` does not return anything).
+> In many situations, this is OK, but not in this particular situation.
+> In the beginning, the value of the `counter` variable is **`0`**.
+> When React renders the component for the first time,
+> it executes the function call `setCounter(0+1)` and changes the value of the component's state to **`1`**.
+> ***This will cause the component to be re-rendered, React will execute the `setCounter` function call again, and the state will change leading to another rerender...***
+>
+> In our original version:
+>
+> ```js
+> <button onClick={() => setCounter(counter + 1)}> 
+>   plus
+> </button>
+> ```
+>
+> `onClick` has the value `() => setCounter(counter + 1)`.
+> The `setCounter` function is called ***only when a user clicks the button***.
 
-```js
-<button onClick={setCounter(counter + 1)}> 
-  plus
-</button>
-```
+Defining event handlers within JSX templates (i.e. directly) is not recommended.
+Here it was OK because our event handlers were so simple.
 
-This would completely break our application:
-
-![](../../images/1/5c.png)
-
-What's going on? An event handler is supposed to be either a <i>function</i> or a <i>function reference</i>, and when we write:
-
-```js
-<button onClick={setCounter(counter + 1)}>
-```
-
-the event handler is actually a <i>function call</i>. In many situations this is ok, but not in this particular situation. In the beginning the value of the <i>counter</i> variable is 0. When React renders the component for the first time, it executes the function call <em>setCounter(0+1)</em>, and changes the value of the component's state to 1. 
-This will cause the component to be re-rendered, React will execute the setCounter function call again, and the state will change leading to another rerender...
-
-<!-- Palautetaan siis tapahtumankäsittelijä alkuperäiseen muotoonsa -->
-Let's define the event handlers like we did before:
-
-```js
-<button onClick={() => setCounter(counter + 1)}> 
-  plus
-</button>
-```
-
-<!-- Nyt napin tapahtumankäsittelijän määrittelevä attribuutti <i>onClick</i> saa arvokseen funktion _() => setCounter(counter + 1)_, ja funktiota kutsutaan siinä vaiheessa kun sovelluksen käyttäjä painaa nappia.  -->
-Now the button's attribute which defines what happens when the button is clicked - <i>onClick</i> - has the value _() => setCounter(counter + 1)_.
-The setCounter function is called only when a user clicks the button. 
-
-<!-- Tapahtumankäsittelijöiden määrittely suoraan JSX-templatejen sisällä ei useimmiten ole kovin viisasta. Tässä tapauksessa se tosin on ok, koska tapahtumankäsittelijät ovat niin yksinkertaisia.  -->
-Usually defining event handlers within JSX-templates is not a good idea. 
-Here it's ok, because our event handlers are so simple. 
-
-<!-- Eriytetään kuitenkin nappien tapahtumankäsittelijät omiksi komponentin sisäisiksi apufunktioikseen: -->
-Let's separate the event handlers into separate functions anyway: 
+Let's separate the event handlers into separate functions:
 
 ```js
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
-// highlight-start
-  const increaseByOne = () => setCounter(counter + 1)
+  // highlight-start
+  const handleIncrement = () => setCounter(counter + 1)
   
-  const setToZero = () => setCounter(0)
+  const handleReset = () => setCounter(0)
   // highlight-end
 
   return (
     <div>
       <div>{counter}</div>
-      <button onClick={increaseByOne}> // highlight-line
+      <button onClick={handleIncrement}> // highlight-line
         plus
       </button>
-      <button onClick={setToZero}> // highlight-line
+      <button onClick={handleReset}> // highlight-line
         zero
       </button>
     </div>
@@ -530,26 +577,37 @@ const App = () => {
 }
 ```
 
-<!-- Tälläkin kertaa tapahtumankäsittelijät on määritelty oikein, sillä <i>onClick</i>-attribuutit saavat arvokseen muuttujan, joka tallettaa viitteen funktioon: -->
-Here, the event handlers have been defined correctly. The value of the <i>onClick</i> attribute is a variable containing a reference to a function:
+Here, the event handlers have been defined correctly.
+The value of the `onClick` attribute is a variable containing a reference to a function:
 
 ```js
-<button onClick={increaseByOne}> 
+<button onClick={handleIncrement}> 
   plus
 </button>
 ```
 
-### Passing state to child components
+### Passing state-to-child components
 
-It's recommended to write React components that are small and reusable across the application and even across projects. Let's refactor our application so that it's composed of three smaller components, one component for displaying the counter and two components for buttons.
+It's recommended to write React components that are small and reusable across the application and even across projects.
+Let's refactor our application so that it's composed of three smaller components:
 
-Let's first implement a <i>Display</i> component that's responsible for displaying the value of the counter.
+- one component to *`Display`* the counter
+- two components: one for each *`Button`*
 
-One best practice in React is to [lift the state up](https://reactjs.org/docs/lifting-state-up.html) in the component hierarchy. The documentation says:
+Let's first implement the `Display` component:
 
-> <i>Often, several components need to reflect the same changing data. We recommend lifting the shared state up to their closest common ancestor.</i>
+A best practice in React is to [lift shared state](https://react.dev/learn/sharing-state-between-components) in the component hierarchy.
+The documentation says:
 
-So let's place the application's state in the <i>App</i> component and pass it down to the <i>Display</i> component through <i>props</i>:
+> *Often, several components need to reflect the same changing data.
+  We recommend lifting the shared state up to their closest common ancestor.*
+
+So let's:
+
+1. place the application's state in the `App` component
+2. pass it down to the `Display` component via `props`
+
+Examine the `Display` component:
 
 ```js
 const Display = (props) => {
@@ -559,22 +617,22 @@ const Display = (props) => {
 }
 ```
 
-Using the component is straightforward, as we only need to pass the state of the _counter_ to it:
+Using the component is straightforward, as we only need to pass the state of the `counter` to it:
 
 ```js
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
-  const increaseByOne = () => setCounter(counter + 1)
-  const setToZero = () => setCounter(0)
+  const handleIncrement = () => setCounter(counter + 1)
+  const handleReset = () => setCounter(0)
 
   return (
     <div>
       <Display counter={counter}/> // highlight-line
-      <button onClick={increaseByOne}>
+      <button onClick={handleIncrement}>
         plus
       </button>
-      <button onClick={setToZero}> 
+      <button onClick={handleReset}> 
         zero
       </button>
     </div>
@@ -582,9 +640,11 @@ const App = () => {
 }
 ```
 
-Everything still works. When the buttons are clicked and the <i>App</i> gets re-rendered, all of its children including the <i>Display</i> component are also re-rendered.
+Everything still works.
+When the buttons are clicked and the `App` gets re-rendered, all of its children including the `Display` component are also re-rendered.
 
-Next, let's make a <i>Button</i> component for the buttons of our application. We have to pass the event handler as well as the title of the button through the component's props:
+Next, let's make a `Button` component for the buttons of our application.
+We have to pass the event handler as well as the title of the button through the component's props:
 
 ```js
 const Button = (props) => {
@@ -596,32 +656,32 @@ const Button = (props) => {
 }
 ```
 
-Our <i>App</i> component now looks like this:
+Our `App` component now looks like this:
 
 ```js
 const App = () => {
   const [ counter, setCounter ] = useState(0)
 
-  const increaseByOne = () => setCounter(counter + 1)
+  const handleIncrement = () => setCounter(counter + 1)
   //highlight-start
-  const decreaseByOne = () => setCounter(counter - 1)
+  const handleDecrement = () => setCounter(counter - 1)
   //highlight-end
-  const setToZero = () => setCounter(0)
+  const handleReset = () => setCounter(0)
 
   return (
     <div>
       <Display counter={counter}/>
       // highlight-start
       <Button
-        onClick={increaseByOne}
+        onClick={handleIncrement}
         text='plus'
       />
       <Button
-        onClick={setToZero}
+        onClick={handleReset}
         text='zero'
       />     
       <Button
-        onClick={decreaseByOne}
+        onClick={handleDecrement}
         text='minus'
       />           
       // highlight-end
@@ -630,23 +690,75 @@ const App = () => {
 }
 ```
 
-Since we now have an easily reusable <i>Button</i> component, we've also implemented new functionality into our application by adding a button that can be used to decrement the counter.
+Since we now have an easily reusable `Button` component,
+we added a button that decrements the counter with little code.
 
-The event handler is passed to the <i>Button</i> component through the _onClick_ prop. The name of the prop itself is not that significant, but our naming choice wasn't completely random. React's own official [tutorial](https://reactjs.org/tutorial/tutorial.html) suggests this convention.
+The event handler is passed to the `Button` component through the `onClick` prop.
+The name of the prop itself is not that significant, but our naming choice wasn't completely random.
+
+React's official [tutorial](https://react.dev/learn/tutorial-tic-tac-toe) suggests this convention.
+> *"In React, it’s conventional to use `onSomething` names for props which take functions which handle events*
+> *and `handleSomething` for the actual function definitions which handle those events."*
 
 ### Changes in state cause rerendering
 
 Let's go over the main principles of how an application works once more.
 
-When the application starts, the code in _App_ is executed. This code uses a [useState](https://reactjs.org/docs/hooks-reference.html#usestate) hook to create the application state, setting an initial value of the variable _counter_.
-This component contains the _Display_ component - which displays the counter's value, 0 - and three _Button_ components. The buttons all have event handlers, which are used to change the state of the counter.
+When the application starts, the code in `App` is executed.
+This code uses a [`useState`](https://react.dev/reference/react/useState)
+hook to create the application state,
+setting an initial value of the variable `counter`.
+This component contains three `Button` components and the `Display` component, which displays the counter's value (*`0`*).
+The buttons all have event handlers, which are used to change the state of the counter.
 
-When one of the buttons is clicked, the event handler is executed. The event handler changes the state of the _App_ component with the _setCounter_ function. 
-**Calling a function which changes the state causes the component to rerender.**
+When one of the buttons is clicked, the event handler is executed.
+The event handler changes the state of the `App` component with the `setCounter` function.
+**Calling a function that changes the state causes the component to rerender.**
 
-So, if a user clicks the <i>plus</i> button, the button's event handler changes the value of _counter_ to 1, and the _App_ component is rerendered. 
-This causes its subcomponents _Display_ and _Button_ to also be re-rendered. 
-_Display_ receives the new value of the counter, 1, as props. The _Button_ components receive event handlers which can be used to change the state of the counter.
+So, if a user clicks the ***plus*** button, the button's event handler changes the value of `counter` to **`1`**.
+This triggers the `App` component, and its subcomponents `Display` and `Button`, to be re-rendered.
+`Display` receives the new value of the counter, **`1`**, as props.
+The `Button` components receive event handlers, which can be used to change the state of the counter.
+
+Let's add `console.log` statements to our application to help us understand how the program works.
+
+```js
+const App = () => {
+  const [counter, setCounter] = useState(0)
+  console.log('rendering with counter value', counter) // highlight-line
+
+  const handleIncrement = () => {
+    console.log('increasing, value before', counter) // highlight-line
+    setCounter(counter + 1)
+  }
+
+  const handleDecrement = () => { 
+    console.log('decreasing, value before', counter) // highlight-line
+    setCounter(counter - 1)
+  }
+
+  const handleReset = () => {
+    console.log('resetting to zero, value before', counter) // highlight-line
+    setCounter(0)
+  }
+
+  return (
+    <div>
+      <Display counter={counter} />
+      <Button onClick={handleIncrement} text="plus" />
+      <Button onClick={handleReset} text="zero" />
+      <Button onClick={handleDecrement} text="minus" />
+    </div>
+  )
+} 
+```
+
+Let us now see what gets rendered to the console when the buttons ***plus***, ***plus***, ***zero*** and ***minus*** are pressed:
+
+![browser showing plus, plus, zero, and minus being pressed](../../images/1/31.png)
+
+Do not try to guess what your code does.
+Use the debugger and `console.log` to observe what it does.
 
 ### Refactoring the components
 
@@ -660,8 +772,8 @@ const Display = (props) => {
 }
 ```
 
-The component only uses the _counter_ field of its <i>props</i>. 
-This means we can simplify the component by using [destructuring](/en/part1/component_state_event_handlers#destructuring), like so:
+The component only uses the `counter` field of its `props`.
+This means we can simplify the component by using [destructuring](/part1/component_state_event_handlers#destructuring), like so:
 
 ```js
 const Display = ({ counter }) => {
@@ -671,16 +783,14 @@ const Display = ({ counter }) => {
 }
 ```
 
-<!-- Koska komponentin määrittelevä metodi ei sisällä muuta kuin returnin, voimme määritellä sen hyödyntäen nuolifunktioiden tiiviimpää ilmaisumuotoa -->
-The function defining the component contains only the return statement, so
+The function defining the component contains only the `return` statement, so
 we can define the function using the more compact form of arrow functions:
 
 ```js
 const Display = ({ counter }) => <div>{counter}</div>
 ```
 
-<!-- Vastaava suoraviivaistus voidaan tehdä myös nappia edustavalle komponentille -->
-We can simplify the Button component as well.
+We can simplify the `Button` component as well.
 
 ```js
 const Button = (props) => {
@@ -692,22 +802,45 @@ const Button = (props) => {
 }
 ```
 
-We can use destructuring to get only the required fields from <i>props</i>, and use the more compact form of arrow functions:
+We can use destructuring to get only the required fields from `props`, and use the more compact form of arrow functions:
+
+> **Review**: While building your own components, you can name their event handler props anyway you like.
+For this you can refer to the React's documentation on [Naming event handler props](https://react.dev/learn/responding-to-events#naming-event-handler-props)
+It goes as following:
+>
+>> *By convention, event handler props should start with `on`, followed by a capital letter.*
+
+For example, the Button component’s `onClick` prop:
 
 ```js
-const Button = ({ onClick, text }) => (
-  <button onClick={onClick}>
+<Button onClick={handleIncrement} text="plus" />
+```
+
+could have been called `onSmash`:
+
+```js
+<Button onSmash={handleIncrement} text="plus">
+```
+
+by renaming the variable in the `Button` component itself to `onSmash`:
+
+```js
+// highlight-start
+const Button = ({ onSmash, text }) => ( 
+  <button onClick={onSmash}>
+// highlight-end
     {text}
   </button>
 )
 ```
 
-We can simplify the Button component once more by declaring the return statement in just one line:
-
-```js
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
-```
-
-However, be careful to not oversimplify your components, as this makes adding complexity a more tedious task down the road.
+> **FYI:** We could simplify the `Button` component further by declaring the return statement on just one line:
+>
+> ```js
+> const Button = ({ onSmash, text }) => <button onClick={onSmash}>{text}</button>
+> ```
+>
+> In this situation, such a refactoring is fine.
+> *Nevertheless, be careful with oversimplifying your components, as this may make it more tedious to add complexity in the future.*
 
 </div>

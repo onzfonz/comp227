@@ -7,340 +7,414 @@ lang: en
 
 <div class="content">
 
-This course is an introduction to modern web development with JavaScript. The main focus is on single page applications implemented with React and supporting them with RESTful and GraphQL web services implemented with Node.js. The course also has parts on TypeScript,  React Native, and Continuous integration.
+  | | |
+| --- | --- |
+| COURSE NAME| Web Development
+| SEMESTER|  Spring 2024
+| NUMBER AND TYPE OF UNITS|  3
+| COURSE TIME AND LOCATION|  Online (Meetings will be asynchronous)
+| INSTRUCTOR NAME| Osvaldo Jiménez
 
-Other topics include debugging applications, container technology, configuration, managing runtime environments, and databases.
+### Course Description
+
+This course is about the principles and techniques for designing and developing web applications.
+Topics include web application design, client-side web programming, and server-side web programming.
+Students are expected to read online resources and apply techniques to develop a website from scratch.
+
+### Contact Information
+
+| | |
+| --- | --- |
+Email | ojimenez AT pacific.edu
+Discord |  <https://discord.gg/VRUKRxCJ95>
+Virtual Office Hours| MW 3pm-5pm
+Other meetings | by email/discord appointment
 
 ### Prerequisites
 
-Participants are expected to have good programming skills, basic knowledge of web programming and databases, and know the basics of the Git version control system. You are also expected to have perseverance and a capacity for solving problems and seeking information independently.
+COMP 141 with a "C" or better and graduate or blended students in the School of Engineering and Computer Science or instructor approval.
+
+This is a graduate course in computer science.
+Therefore, you are expected to have:
+
+- good programming skills
+
+It is also strongly recommended that you have some basic knowledge of:
+
+- web programming
+- databases and...
+- git or a similar version control system.
+  
+You are also expected to have perseverance and a capacity for solving problems and seeking information independently.
 
 Previous knowledge of JavaScript or other course topics is not required.
+If you do not have the strongly recommended skills, then realize that ***you will need to put extra time in at the beginning of the course***.
 
-### Course material
+How much programming experience is needed?
+It is hard to say, but you should be pretty fluent in *your* programming language.
+This level of fluency takes usually at least 100-200 hours of practice to develop.
 
-The course material is meant to be read one part at a time and in order.
+### Course Objectives
 
-The material contains exercises, which are placed so that the preceding material provides enough information for solving each exercise. You can do the exercises as you encounter them in the material, but it can also be beneficial to read all of the material in the part before starting with the exercises.
+After successfully completing this course, students will be able to:
 
-In many parts of the course, the exercises build one larger application one small piece at a time. Some of the exercise applications are developed through multiple parts.
+1. Identify the basic components of a client-server system.
+2. Apply client-side programming techniques to improve the interface of web-based applications.
+3. Build dynamic websites using modern programming techniques.
+4. Build a functional web-based application across a variety of technologies.
 
-The course material is based on incrementally expanding example applications, which change from part to part. It's best to follow the code along while making small modifications independently. The code of the example applications for each step of each part can be found on GitHub.
+### Computer Science Program Learning Outcomes
 
-### Taking the course
+This course helps students meet the following Computer Science Program Learning Outcomes:
 
-The course contains fourteen parts, the first of which is numbered 0 for consistency with past iterations. One part corresponds loosely to one week (averaging 15-20 hours) of studying, but the speed of completing the course is flexible.
+1. Analyze a complex computing problem and apply principles of computing and other relevant disciplines to identify solutions.
+2. Design, implement, and evaluate a computing-based solution to meet a given set of computing requirements in the context of the program’s discipline.
+3. Communicate effectively in a variety of professional contexts.
+4. Recognize professional responsibilities and make informed judgments in computing practice based on legal and ethical principles.
+5. Function effectively as a member or leader of a team engaged in activities appropriate to the program’s discipline.
+6. Apply computer science theory and software development fundamentals to produce computing-based solutions.
 
-Proceeding from part <i>n</i> to part <i>n+1</i> is not sensible before enough know-how of the topics in part <i>n</i>  has been achieved. In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning), and you are only intended to proceed to the next part after doing enough of the exercises of the previous part.
+### Learning Resources
 
-In parts 1-4 you are expected to do <i>at least</i> all of the exercises that are not marked with an asterisk(*). Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts. Parts 5- do not have asterisk marked exercises since there is no similar dependency on previous parts.
+- [canvas.pacific.edu](https://pacific.instructure.com)
+- [Discord](https://discord.gg/VRUKRxCJ95)
+- [Class website](http://comp227.djosv.com)
 
-The speed of completing the course is flexible.
+### Other Responsibilities
 
-Exercise completion time statistics can be found via the [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
+You will find that the following attitude will significantly contribute to your success in this online class:
 
-### Course channel in Discord and Telegram
+- A positive attitude toward technology
+- An open mind toward online education
+- Willingness to share your experiences with others
+- Strong writing skills for expressing yourself in the discussion area
+- Strong analytical and critical thinking skills for when you "get stuck"
+- Resourcefulness - don't be afraid to click on links and explore and ask questions that give you just enough information to get unstuck
+- Time management
 
-You can discuss the course and related topics in our dedicated group on Discord <a target='_blank' href='https://study.cs.helsinki.fi/discord/join/fullstack'>https://study.cs.helsinki.fi/discord/join/fullstack</a> and on Telegram: <a target='_blank' href='https://t.me/fullstackcourse'>https://t.me/fullstackcourse</a>. Discord has fullstack_general and part-specific (channel names with fullstack prefix) channels for course-related discussion. Note that Discord's <i>chat channel is not suitable for the course-related discussion</i>. Please join the conversation!
+The next [reading](/part0/general_info) in the course will discuss more information about the course in general and what is necessary.
 
-### Parts and completion
+### Technical Assistance
 
-Full Stack studies consist of the core course and multiple extensions. You can complete the studies in the extent of 5 to 14 credits. 
+It's crucial to seek help when you can't access Canvas or class materials.
+It's up to you to ask questions!
 
-#### Parts 0-5 (core course) - Full Stack Web Development (5 cr, CSM141081)
+1. We will be using [Discord](https://discord.gg/VRUKRxCJ95).
+   - if you have not used Discord before it is fairly intuitive, but [here's a guide should you need it](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord)
+2. Canvas has live help that will assist you with any technical issues.
+    To access help, click the question mark at the far left side of the screen.
+    You can also email the Pacific Helpdesk for guidance at <helpdesk@pacific.edu>.
+3. For assistance with course materials contact your instructor or ask in the #help channel of discord
 
-The number of credits and the grade for the course are based on the total number of submitted exercises for parts 0-7 (including exercises marked with an asterisk).
+An overview of available Canvas help resources can be found here: <https://community.canvaslms.com/videos/1687-canvas-help-resources-all-users>
 
-Credits and grades are calculated as follows:
+Further in-depth information can be accessed in The Canvas Student Guide which can be found here:
+<https://community.canvaslms.com/docs/DOC-10701>
 
+#### Important Tips for Success as an Online Learner
 
-| exercises    | credits        | grade    |
-| ------------ | :------------: | :------: |
-| 138          |       7        | 5        |
-| 127          |       6        | 5        |
-| 116          |       5        | 5        |
-| 105          |       5        | 4        |
-| 94           |       5        | 3        |
-| 83           |       5        | 2        |
-| 72           |       5        | 1        |
+- Begin planning now for private, uninterrupted time in your schedule to go through the course materials and complete the assignments
+    - preferably in at least two-hour blocks and at least five times a week.
+It can be easy to fall behind!
+- Check your email account and the class [discord](https://discord.gg/VRUKRxCJ95) regularly for updated information.
+- Use Discord for private messages to the instructor.
+Discord is a great place to ask questions in the correct categories (make sure you read the rules there).
+- If you have questions or are confused about an assignment, act promptly! Check #announcements, #help or #sos to see if your concern has been addressed already.
+If not, post your question to this discussion.
+- We may use Canvas tools such as WebEx for Q&A sessions and please follow the instructions the instructor sends out through Canvas Announcement.
+- Read directions carefully.
 
-Once you have completed enough exercises for a passing grade, you can download the course certificate from the [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
+For posts to online discussions, conventions of online etiquette ("netiquette") which include courtesy to all users, will be observed.
+Please see Guidelines for Online Discussion for details.
 
-If you wish to receive university credits, you must complete the course exam. The exam does not count towards your final grade, but you must pass it. More info about the exam [here](/en/part0/general_info#the-course-exam).
+### Discord & Course Netiquette
 
-You can only take the exam after submitting enough exercises for five credits. It is not wise in practice to take the exam immediately after submitting the critical number of exercises. The exam is the same for 5-14 credits and does not count towards your grade.
+You can discuss the course and related topics in our [Discord](https://discord.gg/VRUKRxCJ95).
+Discord will have different channels for both your learning partners as well as course-related conversations.
+You will be expected to be active on Discord!
+If you have not used Discord before, then you can review their [official beginner's guide](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord).
+However, I think merely using the software is the best way to learn it.
 
-<i>You do not need to attend the course exam or register to the Open University course in order to obtain the course certificate.</i>
+For those of you who are new to online learning and online discussion, there are some important differences between how you communicate online and in the classroom.
+These differences are frequently the cause of misunderstandings in courses that have an online component.
+The following guidelines are intended to help you understand the differences and communicate in a way that minimizes the chances of misunderstandings.
 
-#### Part 6 - Full Stack Web Development, extension 1 (1 cr, CSM141082)
+#### Remember you cannot see each other
 
-By submitting at least 127 of the exercises for parts 0-7 while working on the core course, you can receive an additional credit through this extension. 
-- Submit at least 127 exercises for parts 0-7. 
-- [Enroll in part 6 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-c67dc747-1d6a-43cb-b40b-9eacf425dcc0). 
-- [Request credits for part 6](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+The most important difference between face-to-face communication and using an online discussion is that you cannot see each other.
+For the most part, humans rely on visual and audio cues when talking to each other.
+When we speak face to face we can interpret what the other person is saying through their posture, tone of voice, and expression.
+All of this is missing when communicating through discussion forums.
+You can’t easily tell what the intent is when reading a response to a message in a discussion board.
+There are no visual cues.
+There is no tone of voice to convey emotion.
+There is only text.
+It is easy to make assumptions about a person’s intent when you are lacking the cues that you would take for granted otherwise.
+Below are some guidelines for communication in online courses that will help you make the most out of your online interactions.
 
-#### Part 7 - Full Stack Web Development, extension 2 (1 cr, CSM141083)
+#### Keep a positive tone
 
-By submitting at least 138 of the exercises for parts 0-7 while working on the core course, you can receive an additional credit through this extension. 
-- Submit at least 138 exercises for parts 0-7. 
-- [Enroll in part 7 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-3016e9c9-0fdc-4ee3-9e9b-38176359f9f3). 
-- [Request credits for part 7](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+Everyone in your class is there to learn, just as you are.
+Discussions are a great way to understand different perspectives.
+If a conversation remains positive, then it is a lot more likely that everyone will get something useful out of it.
+Avoid any language that can be construed as angry, sarcastic, or even humorous.
 
-#### Part 8 - Full Stack Web Development: GraphQL (1 cr, CSM14113)
-By submitting at least 22/26 of the exercises for part 8 of the course, GraphQL, you can get one additional credit. Part 8 can be done any time after part 5, because its contents are independent from parts 6 and 7.
-- Submit at least 22/26 exercises for part 8.
-- [Enroll in part 8 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-067b1506-0307-4118-9e2b-292e0b81e491). 
-- [Request credits for part 8](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+#### Don’t take things personally
 
-#### Part 9 - Full Stack Web Development: TypeScript (1 cr, CSM14110)
-By submitting at least 24/27 of the exercises for part 9 of the course, TypeScript, you can get one additional credit. It is recommended that you complete parts 0-7 before taking part 9.
-- Submit at least 24/27 exercises for part 9.
-- [Enroll in part 9 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-d9125f89-a440-48e1-898a-ee4e16b06cdb). 
-- [Request credits for part 9](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+As mentioned above, there is no way for you to know for sure what that person writing intends.
+Given that the discussions are supposed to be a community-building experience, assume that the responses are meant to be helpful.
+If you have questions about a post, contact your instructor.
 
-#### Part 10 - Full Stack Web Development: React Native (2 cr, CSM14111)
-By submitting 25 exercises for part 10 of the course on React Native, you can earn two additional credits. More information about this part's prerequisites, exercise submission, and credits can be found in[part 10](/en/part10/introduction_to_react_native).
-- Submit at least 25 exercises for part 10. 
-- [Enroll in part 10 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-aa395a19-4625-44a9-8301-5fbb946c6ed6). 
-- [Request credits for part 10](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+#### When in doubt, take a break before posting
 
-#### Part 11 - Full Stack Web Development: Continuous Integration / Continuous Delivery (1 cr, CSM14112)
+If you do find yourself becoming emotionally involved in the discussion, take a break for a half hour.
+Then revisit what you were about to post with an eye to how others would interpret it.
+Once you post a message there is no deleting or taking it back.
 
-By submitting all exercises for part 11 of the course on Continuous Integration/Delivery, you can earn one additional credit. More information about this part's prerequisites and exercise submission can be found in [part 11](/en/part11).
-- Submit all exercises for part 11. 
-- [Enroll in part 11 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-4cb66c68-da12-422e-a34d-c8e8e7c8db01). 
-- [Request credits for part 11](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+#### Be patient, few are online 24/7
 
-#### Part 12 - Full Stack Web Development: Containers (1 cr, CSM141084)
+Remember that all the people in your course have lives outside of the class they are taking.
+If you ask a question or need clarification, it may be a day or two before you get a response.
+As for me, I vow that I'll respond to you as quickly as I can, but I am not always available immediately.
 
-By submitting all exercises for part 12 of the course on Container technology, you can earn one additional credit. More information about this part's prerequisites and exercise submission can be found in [part 12](/en/part12).
-- Submit all exercises for part 12. 
-- [Enroll in part 12 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-51a6f590-607c-4e34-bd6f-2d87e2203d9a). 
-- [Request credits for part 12](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+#### Help others
 
-#### Part 13 - Full Stack Web Development: relational databases (1 cr, CSM14114)
+You are all in this together.
+If someone in the course has a problem with the system or needs help in another way, feel free.
+Many of you will have more experience and your assistance will be appreciated.
 
-By submitting all exercises for part 13 of the course on Relational databases, you can earn one additional credit. More information about this part's prerequisites and exercise submission can be found in [part 13](/en/part13).
-- Submit all exercises for part 13. 
-- [Enroll in part 13 through the Open University](https://www.avoin.helsinki.fi/palvelut/esittely.aspx?s=otm-6e548d4e-75bf-483b-8426-c65d8c4e161c). 
-- [Request credits for part 13](https://fullstackopen.com/en/part0/general_info/#how-to-get-your-credits).
+### Attendance policies
 
+Even though this is an asynchronous online course, attendance will be counted by how responsive you are on Discord.
+You will be expected to respond to any discussion via Discord in a reasonable time frame (24-48 hours).
+After having to contact you via other methods or bringing responsiveness in discord to your attention,
+any subsequent attempts to contact you will lower part of your social learning exercises grade by two percentage points.
+In addition to me reaching out, you will be expected to:
 
-### Studying the course in a nutshell
+- Be in contact with others via our official discord server channels.
+- Communicate in those discord channels with your learning groups regularly.
+- Meet with your learning groups regularly to go over the material.
+    - *This means that you'll be expected to meet online with those groups either over Discord or via Zoom (or in person if you prefer).*
 
-How to study the course – instructions in a nutshell: 5 cr core course CSM141081
+**Chatting privately via DMs will not count towards your expectations of regular communication.**
+Those meetings are crucial to your learning and your peers, and so you will be expected to make them up if you cannot make it, or forfeit your ability to pass the course.
 
-- Do the exercises. The exercises are submitted through GitHub and marking them as done on the [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
-  - [The course certificate](/en/part0/general_info#course-certificate) will be available in the submission system
-- If you want to get University of Helsinki credits
-  - Enroll on the course. You will get the enrollment link through the submission system once you have completed enough exercises. Read more [here](/en/part0/general_info#the-course-exam)
-  - Save your student number. After course enrollment, save your University of Helsinki student ID number in the submission system.
-  - Do the online exam in the submission system. Read more [here](/en/part0/general_info#the-course-exam)
-  - Mark the course completed in the submission system. Read more [here](/en/part0/general_info#how-to-get-your-credits)
+### Pronouns
 
-Please note that if you do the "base course" with 6 or 7 credits, you need separate registrations for the extra credits, see [Parts and completion](/en/part0/general_info#parts-and-completion) for more.
+Knowing and applying the names and pronouns that students use is a crucial part of developing a productive learning environment
+that fosters safety, inclusion, personal dignity, and a sense of belonging across campus.
+Please let me know your preferred name and pronoun anytime throughout the semester.
 
-How to study the course – instructions in a nutshell: other course parts
+### Grading Scale
 
-- Do the exercises. The exercises are submitted through GitHub and marking them as done on the submission system. Note that each of the parts 8- have a separate instance in the submission system 
-  - [The course certificate](/en/part0/general_info#course-certificate) will be available in the submission system
-- If you want to get University of Helsinki credits
-  - Enroll on the course. You can enroll in each part through the link in the course material ([Parts and completion](/en/part0/general_info#parts-and-completion)). Enroll in each part separately. 
- - Mark the part completed in the submission system. Read more [here](/en/part0/general_info#how-to-get-your-credits)
+The following minimum percentages are required to achieve the corresponding grades:
 
-### Submitting exercises
+| A | A- | B+ | B | B- | C+ | C | C- | D |
+| - | - | - | - | - | - | - | - | - |
+| 93 | 90 | 87 | 83 | 80 | 77 | 73 | 70 | 63 |
 
-The exercises are submitted through GitHub and marking them as done on the "my submissions" tab of the [submission application](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
+The grading will come from these areas, however, the percentages are tentative and subject to change.
 
-If you are submitting exercises from different parts to the same repository, use an appropriate system for naming your directories. You can of course create a new repository for each part. If you are using a private repository, add <i>mluukkai</i> as a collaborator.
+|   |   |
+| - | - |
+| Individual Exercises |  45%  |
+| Social Learning Exercises & Attendance | 20% |
+| Final Project | 25% |
+| Other Activities | 10% |
 
-Exercises are submitted **one part at a time**. Once you have submitted exercises for a part, you can no longer submit any more exercises for that part.
+### Major Assignments and Examinations
 
-A system for detecting plagiarism is used to check exercises submitted to GitHub. If code is found from model answers or multiple students hand in the same code, the situation is handled according to the [policy on plagiarism](https://guide.student.helsinki.fi/en/article/what-cheating-and-plagiarism) of the University of Helsinki.
+The course is composed of a few parts
 
-Many of the exercises build a larger application bit by bit. In these cases, submitting only the completed application is enough. You can make a commit after each exercise, but that is not compulsory.
+- Individual Exercises
+- Social Learning Exercises
+- Final Project
+- Other Activities
+- Course Exam
 
-### The course exam
+#### Individual Exercises
 
-For the official university credits you need to pass the course exam that covers parts 1-5 of the course
-- If you fail the exam, it can be done again after one week
-- You may continue with submissions after the exam
+Part of your grade for the course will be based on the total number of submitted exercises for the required parts (including exercises marked with an asterisk).
+For all of the exercises, your work will not only come from the solution but from you showing your work as you move toward your solution.
 
-The exam is done in the exercise submission system. Follow the instructions below to complete the exam.
-- Enroll in the course through Open University.
-- You will get the enrollment link through  [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen/submissions) once you have completed enough exercises.
+**Your grade will not completely come from these exercises**.
 
-![](../../images/0/enroll1.png)
+We will be having other exercises and assignments as well that will be just as important to your grade.
 
-After the course enrollment, save your University of Helsinki student number in the [submission system](https://studies.cs.helsinki.fi/stats/myinfo):
+Assume that if there are 138 exercises **(there are not 138 exercises; that count is not final)**, a rough calculation for this portion is as follows:
 
-![](../../images/0/28b.png)
+| exercises    | approx grade for exercises    |
+| ------------ | :------: |
+| 138          | A?        |
+| 127          | B+?        |
+| 116          | B?        |
+| 105          | C?        |
+| 94           | C-?       |
+| 83           | D?        |
+| 72           | F?        |
 
-See [this](/en/part0/general_info#where-do-i-get-my-university-of-helsinki-student-number) for info how you find out your student number.
+Why did I put it this way? Because this is a guideline, not a contract.
+I don't even know if there are 138 exercises to begin with!
+Nevertheless, I wanted to provide this approximation to you so that you have a better understanding of what the expectations look like.
+Also, realize that what is more important here is a continual amount of progress each week.
+This means that if you get stuck during a week, that is OK, but you'll need to do extra to catch up.
+How much you can catch up per week will also be capped, to no more than 10% of the exercises that you have left to do.
+If you wish to pass the course, you will need to work regularly and submit the assignments as listed in Canvas.
 
-After these steps, you can do the course exam in the submission system:
+For the other modules, we will determine at a later date which ones will be completed, but these may be done in a different order sequence.
 
-![](../../images/0/enroll3.png)
+| Additional Modules | Module name | Minimum Exercises to submit | work needed |
+| --- | --- | --- | --- |
+| 6  | Redux | 24 | 1 |
+| 7  | React router, hooks & styling | 24 | 1 |
+| 8  | TypeScript | 24 | 1 |
 
-You will have 120 minutes to complete the exam. If all goes well, you should see the following confirmation:
+With all submissions requested, please follow submission guidelines carefully.
 
-![](../../images/0/enroll4.png)
+Students are responsible for reading course material and following instructions posts on Canvas.
+Students are also responsible for being aware of any announcements the instructor makes through Canvas.
 
-If you fail, you must wait for one week for trying the exam again.
+#### Course Exam
 
-If you passed the exam, and you are not going to complete more exercises, you can go back to my submission tab and ask for the credits:
+You must also complete the course exam.
+Notice though that the exam is not listed in your grade breakdown.
+The exam does not count towards your final grade, but you must pass it to pass the course.
+More info about the exam will be discussed via Canvas and Discord in the middle of the semester.
 
-![](../../images/0/enroll5a.png)
+You can only take the exam after submitting a sufficient number of exercises.
+It is not wise in practice to take the exam immediately after submitting the critical number of exercises.
+The exam is the same and does not count toward your grade (you just need to pass it).
 
-Remember to press the big blue button to ask for the credits to be registered. 
+If you complete the assignments and you work through the material in earnest, you will be fine on the exam.
 
-Note that you have to press the button twice:
+#### Late Assignments and Make-up Work
 
-![](../../images/0/button2.png)
+The only acceptable excuses for missing an assignment due date are serious illness, death in the immediate family or important professional activities.
+Illness or death in the family may require documentation.
+Excuses for professional activities must be approved by the instructor in advance.
+Late assignments other than the individual exercises will be deducted 15% per day and will not be accepted beyond 1 week late.
 
-When pressed twice you should see the following text
+Individual exercises will follow a different policy.
+Exercises are broken into Canvas assignments.
+Students must submit one part before unlocking subsequent parts.
+There is no late penalty to submit a part.
+However, there is a cap on how many individual exercises can be submitted in a given week, which is 10% more than the regular workload.
+This means that falling behind greatly will impact your chances of finishing all of the exercises for credit.
+Your focus on that point with the individual exercises should be to focus on your current understanding.
+All work will have a hard cutoff that will be outlined in Canvas.
 
-> <i>University credit registration in progress...</i>
+#### Individual Work and Collaboration
 
-Note: if you have already done the course exam in Moodle contact matti.luukkainen@helsinki.fi or @mluukkai in Discord.
+Computer professionals usually work in a cooperative environment, yet proper assessment requires that work be done by individuals.
+To alleviate confusion, the following policy will be followed:
 
-### How to get your credits
-
-If you want to receive University of Helsinki credits, save your <b>University of Helsinki</b> student number to [the exercise submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen)
-
-![](../../images/0/28b.png)
-
-If you are not a student at the University of Helsinki, you can get a student number by registering for the course through [Open University](/en/part0/general_info#the-course-exam), see [this](/en/part0/general_info#where-do-i-get-my-university-of-helsinki-student-number) for more info.
-
-You will receive your credits after you have submitted enough exercises for a passing grade, passed the exam and let us know through the exercise submission system that you have completed the course:
-
-![](../../images/0/enroll5a.png)
-
-Remember to press the big blue button to ask for the credits to be registered. 
-
-Note that you have to press the button twice:
-
-![](../../images/0/button2.png)
-
-When pressed twice you should see the following text
-
-> <i>University credit registration in progress...</i>
-
-**Please note** that in order to get university credits you need a registration for each completed part, please see [more info about registration](/en/part0/general_info#parts-and-completion).
-
-You can view your grade in University of Helsinki Sisu and [Opintopolku](https://opintopolku.fi/oma-opintopolku/) approximately four weeks after notifying us.
-
-When the registration is done, the following text appears in the submission system
-
-> <i>University credits registered, see the course page how to get a transcript if you need one</i>
-
-### Where do I get my University of Helsinki Student number 
-
-When and if you enroll in a course for the first time through the Open University, a University of Helsinki student number will be automatically generated. Please make sure you have enrolled in the course before you try to find out what your student number is. 
-
-Note also that <strong>you do not need to enroll</strong> to Open University to get the course certificate!
-
-You can find out what your student number is through one of the options below: 
-
-#### A) Sisu 
-
-If you have a university of Helsinki user account, you can find your student number from your profile in the University of Helsinki’s study information system Sisu: 
- - Log in to Sisu with your University of Helsinki username and password.   
- - Select: My profile 
- - Select: Personal information 
-
-#### B) Enrollment confirmation email 
-
-After course enrollment, you will receive a confirmation email to an email address you have entered on the enrollment form. This message either directly has your student number on it or includes a link that takes you to a page displaying your University of Helsinki student number.  
-
-#### C) Contact Student Services 
-
-If you have trouble finding out your student number through the means listed above, you can send an email to University of Helsinki Student Services 
-
-In your email, include the following information 
-
-- name of the course you have enrolled in, 
-- your name, and 
-- your date of birth. 
-
-Student Services email address: avoin-student@helsinki.fi 
-
-### Course certificate
-
-Even if you do not register to Open University for the exam and the credits, you can still download the course certificate from the "My submissions" tab in the [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen) once you have completed enough exercises for a passing grade.
-
-There is one certificate for the base parts (0-7) of the course and after that a separate cert for the each course part.
-
-### Request a transcript of studies
-
-You can request a verified transcript of studies <i>after your university credits have been registered</i>. To request for an official transcript of studies, please contact avoin-student@helsinki.fi.
-
-- When requesting an official transcript, remember to mention
-  - the name of the course,
-  - your full name,
-  - your date of birth, and
-  - the language of the transcript.
-
-The transcript will be delivered to you electronically through email. Present this document at your institution to have the credits included in your degree. The decision to include the credits will be made by your home institution.
-
-### Continuing the course at year 2023
-
-The 2022 version of the course ends 1st March 2023. After that course has a two week maintainance break. During the break material stays online, and also exercises can be submitted. During the break the course content may change a bit, nothing too dramatic has been planned at the moment.
-
-All the exercises submitted for the 2022 version can be used in the 2023 edition so basically the course can be continued without bothering too much about the different versions. Also the policy for getting certs, university credits etc. remains the same in 2023. So in practice *nothing changes*, you can do the course without worrying anything reated to the year change.
-
-### Expanding on a previously completed course
-
-If you have already taken the course either as a MOOC or as a university course, you can now expand on your course.
-
-#### Expanding on Full stack open
-
-You can just pick up where you left off! If you wish to resubmit a whole part, please contact the course personnel via [email](mailto:matti.luukkainen@helsinki.fi) or Discord <i>mluukkai</i>, with your GitHub username and which parts you would like to have deleted from your submissions.
-
-#### Expanding on the University of Helsinki instance of this course
-
-That is also possible, just contact the course personnel via [email](mailto:matti.luukkainen@helsinki.fi) or Discord <i>mluukkai</i>.
-
-### Full stack project
-
-A full stack project worth 5, 7 or 10 credits will be available through Open University.
-
-For the project, an application is implemented in React and/or Node, though implementing a mobile application in React Native is also possible.
-
-The number of credits is based on hours of work done. One credit is approximately 17.5 hours of work. The work is graded pass/fail.
-
-It is possible to complete the project as a pair or a group.
-
-See [more information on the project](https://github.com/fullstack-hy2020/misc/blob/master/project.md).
-
-### Interview promise
-
-Our collaborators, [Houston Inc.](https://houston-inc.com/), [Terveystalo](https://www.terveystalo.com/en/) and [Smartly.io](https://www.smartly.io/), have given the <i>promise of a job interview</i> for everyone who completes the course and the project work with maximum credits (14 + 10).
-
-This means that the student can, if they so choose, sign up for a job interview with a collaborator who has given the promise. The teacher of the course, Matti Luukkainen, will send instructions to the student after the courses have been completed with maximum credits.
-
-You need to be a resident of Finland in order to participate in these interviews.
-
-### Before you start
-
-Using the [Chrome browser](https://www.google.com/chrome/) is recommended for this course, because it provides the best tools for web development. Another alternative is the [Developer Edition of Firefox](https://www.mozilla.org/en-US/firefox/developer/), which provides the same range of features.
-
-The course exercises are submitted to GitHub, so Git must be installed and you should know how to use it. For instructions, see [Git and GitHub tutorial for beginners](https://product.hubspot.com/blog/git-and-github-tutorial-for-beginners).
-
-Install a sensible text editor that supports web development. [Visual Studio Code](https://code.visualstudio.com/) is highly recommended.
-
-Don't code with nano, Notepad or Gedit. NetBeans isn't very good for web development either. It is also rather heavy in comparison to Visual Studio Code.
-
-Also install [Node.js](https://nodejs.org/en/). The material has been done with version 16.13.2, so don't install any version older than that. See [Node.js installation instructions](https://nodejs.org/en/download/package-manager/).
-
-Node package manager [npm](https://www.npmjs.com/get-npm) will be automatically installed with Node.js. We will be actively using npm throughout the course. Node also comes with [npx](https://www.npmjs.com/package/npx), which we'll need a few times.
-
-### Typos in the material
-
-If you find a typo in the material, or something has been expressed unclearly, or is simply bad grammar, submit a <i>pull request</i> to the course material in the [repository](https://github.com/fullstack-hy2020/fullstack-hy2020.github.io). For example, the markdown source code of this page can be found in the repository at <https://github.com/fullstack-hy2020/fullstack-hy2020.github.io/edit/source/src/content/0/en/part0a.md>
-
-At the bottom of each part of the material is a link to <em>propose changes to material</em>. You can edit the source code of the page by clicking on the link.
-
-There are also lots of links in the material for many kinds of background material. If you notice that a link is broken (that happens too often...), propose a change or ping us in Discord if you do not find a replacement for the broken link.
+Collaborative work is encouraged.
+This includes students working together on problem sets, planning solution strategies, and helping each other to debug programs.
+Collaboration must stop short of the writing of program code or English that represents your work.
+You may not directly copy the work of another student.
+It is your responsibility to ensure that the work you submit is an honest representation of your own understanding of the material.
+
+Marginal cases will be resolved by oral examination of the students involved.
+If they understand the material in the assignment, it will be considered honest collaboration.
+If they do not, then it will be considered academic dishonesty.
+
+### Collection of Work for Assessment
+
+Student work may be retained to assess how course learning objectives are being met and for accreditation purposes.
+Copies of student work may be retained to assess how the learning objectives of the course are being met.
+
+### Honor Code
+
+The Honor Code at the University of the Pacific calls upon each student to exhibit a high degree of maturity, responsibility, and personal integrity.
+Students are expected to:
+
+- act honestly in all matters
+- actively encourage academic integrity
+- discourage any form of cheating or dishonesty by others
+- inform the instructor and appropriate university administrator
+  if they have a reasonable and good faith belief and substantial evidence that a violation of the Academic Honesty Policy has occurred.
+
+Violations will be referred to and investigated by the Office of Student Conduct and Community Standards.
+If a student is found responsible, it will be documented as part of her or his permanent academic record.
+A student may receive a range of penalties, including failure of an assignment, failure of the course, suspension, or dismissal from the University.
+The Academic Honesty Policy is located in Tiger Lore and online at <https://www.pacific.edu/student-life/student-conduct/tiger-lore>
+
+You will be expected to conduct yourself according to professional ethics, just as if this were a real-world job.
+With this course focused on exercises,
+***you may not ask others (including computers) for solutions or to partially solve any of the individual exercises***,
+This also applies to search tools, AI services and other humans, whether hired, friends or classmates.
+You MAY ask others (both computers and humans)
+for help understanding particular errors that appear, or in explaining high-level concepts that you feel the text does not explain well.
+However, those concepts should not contain the exercise text.
+You should be able to explain any of the code you write and you also need to cite anything longer than a line of code that you get from the internet.
+Provide links to any code and tutorials that you find that help you program.  
+Make sure to cite and credit code, libraries, videos, ideas, or other resources that are not provided directly from this website.
+Honor code cases will be resolved by an oral examination of the understanding of the material.
+just as a professional would need to credit the source or fully understand code when receiving help from others.
+Students are expected to participate as a team, with fair credit given according to effort and participation.
+
+### Accommodations for Students with Disabilities
+
+If you are a student with a disability who requires accommodations,
+please contact the Director of the Office of Services for Students with Disabilities (SSD) for information on how to obtain an Accommodations Request Letter.
+
+#### 3-Step Accommodation Process
+
+1. Student meets with the SSD Director and provides documentation and completes registration forms.
+2. Student requests accommodation(s) each semester by completing the Request for Accommodations Form.
+3. Student arranges to meet with his/her professors to discuss the accommodation(s) and to sign the Accommodation Request Letter
+To ensure timeliness of services, it is preferable that you obtain the accommodation letter(s) from the Office of SSD as early as possible in each term.
+After the instructor receives the accommodation letter, please schedule a meeting with the instructor during office hours or some other mutually convenient time to arrange the accommodation(s).
+The Office of Services for Students with Disabilities is located in the McCaffrey Center, Rm. 137.
+Phone: 209-946-3221.
+Email: <ssd@pacific.edu>.
+Online: <http://www.pacific.edu/disabilities>
+NOTE: The preceding information is the minimal information required in this section of the course syllabus,
+instructors are free to expand on the information above and/or add any additional information below.
+See the requirements below for Program Objectives and Course Schedule.
+
+### Academic Support Services
+
+Students at University of the Pacific have access to many free support services to help them thrive academically.
+These services can benefit all students and are designed to help reinforce, extend, enrich and support students’ learning in the classroom.
+Both students who simply want to improve their performance and those struggling with understanding the material in a course can benefit.
+Come to the academic support center on the second floor of the library for one-on-one or group tutoring appointments,
+drop-in or by-appointment writing help, math skills lab open hours, research help from academic support librarians, or to sign up for study hall, a study pal or study group.
+Click on the link to schedule an appointment: [Academic Support Services Appointments](https://pacific.mywconline.com/index.php?msgLOG=YES).
+
+Additional resources can also be searched for on the [student success resources website](https://www.pacific.edu/academics/academic-support).
+
+### Family Educational Rights and Privacy Act (FERPA)
+
+FERPA is a federal law designed to protect the privacy of educational records by limiting access to these records,
+to establish the right of students to inspect and review their educational records
+and to provide guidelines for the correction of inaccurate and misleading data through informal and formal hearings.
+The University of Pacific complies with FERPA and has placed the most updated version of FERPA in our
+Academic Catalog.
+
+If you wish to view FERPA, or locate the Non-Release of Directory Information Form,
+Please click the following link to [view the University's FERPA Policy](http://catalog.pacific.edu/stocktongeneral/generalinformation/universitypolicyondisclosureofstudentrecords/).
+NOTE: Items that can never be identified as public information are a student’s social security number, citizenship, gender, grades, GPR or class schedule.
+
+All efforts will be made in this class to protect your privacy and to ensure confidential treatment of information associated with or generated by your participation in the class.
+
+| Week | Date | Hours, Topics, and Activities |
+| - | - | - |
+| 1 | Jan 15 | 0 - General course info & Setup<br>1a-1c: React, Javascript, State & Handlers |
+|2  | Jan 22 | 1d - Debugging React<br>2a - Rendering collections |
+|3  | Jan 29 | 2b-2d - Forms and working with data on a server|
+|4 | Feb 5 | 2e - Adding styles to React<br>3a-3b Express and Deploying an app to the internet |
+|5  | Feb 12 | 3c-3d - Saving data to MongoDB and Validation |
+|6  |  Feb 19 | 4a-4b - Testing the backend |
+|7 | Feb 26 | 4c-4d - User administration & Token Authentication |
+|8  | Mar 5 | 5a-5b - Frontend logins and props|
+|9 | Mar 12 | 🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎🌞🌴😎 |
+|10 | Mar 19 | 5c-5d - Testing React and end-to-end|
+|11  | Mar 26 | 6, 7, 8 Redux, Custom Hooks, TypeScript |
+|12  | Apr 2 | Redux, Custom Hooks, TypeScript continued |
+|13 | Apr 9 | Final Project Activities |
+|14  | Apr 16 | Final Project Activities |
+|15 |  Apr 23 | Final Project Activities |
+|16 | May 1 | Final Project Activities |
 
 </div>

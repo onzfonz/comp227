@@ -7,65 +7,67 @@ lang: en
 
 <div class="content">
 
-Before starting a new part, let's recap some of the topics that proved difficult last year.
+Before starting a new part, let's add some additional tools to our IDE and quickly remind ourselves about arrays and event handlers.
+For now, you can continue by opening up the previous lab that we used in part 1.
 
-### console.log
+### New Tool: WebStorm Live Templates
 
-***What's the difference between an experienced JavaScript programmer and a rookie? The experienced one uses console.log 10-100 times more.***
+With WebStorm it's easy to create and ***live templates***, i.e., shortcuts/snippets
+for quickly generating commonly re-used portions of code, much like how `sout` works in NetBeans and `psvm` works in IntelliJ.
 
-Paradoxically, this seems to be true even though a rookie programmer would need <i>console.log</i> (or any debugging method) more than an experienced one.
+**Try erasing everything in *App.jsx*, then type `rsc` and then hit the *Tab* key and see the magic that appears!**
 
-When something does not work, don't just guess what's wrong. Instead, log or use some other way of debugging. 
+Instructions for working with live templates can be found [here](https://blog.jetbrains.com/webstorm/2018/01/using-and-creating-code-snippets/#work_with_live_templates).
+The main idea is that in certain contexts, you would be able to type a shortcut, and WebStorm will provide you with some code that you would normally write.
 
-**NB** As explained in part 1, when you use the command _console.log_ for debugging, don't concatenate things 'the Java way' with a plus. Instead of writing:
+There are already lots of live templates that are available for you to review in ***Settings->Editor->Live Templates***.
+Specifically, you can find the ***rsc*** template in the React section.
+You should also peruse the React hooks section to see things like *useState*.
 
-```js
-console.log('props value is ' + props)
-```
+One popular live template/shortcut is **`log`**, which replaces having to type out `console.log()`.
 
-separate the things to be printed with a comma:
+To use it, type `log` and hit ***Tab*** to autocomplete.
 
-```js
-console.log('props value is', props)
-```
+Though it doesn't stop there, as you can make **custom live templates**.
 
-If you concatenate an object with a string and log it to the console (like in our first example), the result will be pretty useless: 
+For example, I'm going to take
+[this tutorial](https://betterprogramming.pub/intellij-live-template-for-console-log-that-will-improve-your-daily-development-life-ef1320a8fe81)
+and reduce it to its essence and apply it to our new template.
 
-```js
-props value is [object Object]
-```
+Let's set up a custom `clog` live template.
 
-On the contrary, when you pass objects as distinct arguments separated by commas to _console.log_, like in our second example above, the content of the object is printed to the developer console as strings that are insightful.
-If necessary, read more about [debugging React-applications](/en/part1/a_more_complex_state_debugging_react_apps#debugging-react-applications).
+1. Go to ***Settings->Editor->Live Templates***
+2. With Javascript Selected, click on the `+` icon, and select *1 Live Template*
+3. Type `clog` for the Abbreviation and `More detailed console.log` for the Description
+4. Paste this in the template text:
 
-### Protip: Visual Studio Code snippets
+    ```js
+    console.log('$PARAM_TEXT$(' + typeof $PARAM$ + ') =', $PARAM$, ' | $FILE$:$LINE$ - $EXPECTED$')$END$
+    ```
 
-With Visual Studio Code it's easy to create 'snippets', i.e., shortcuts for quickly generating commonly re-used portions of code, much like how 'sout' works in Netbeans.
+5. Select ***Reformat according to style***
+6. Click the Define link below the template text and select ***Javascript & Typescript***.
+7. Finally, click ***Edit variables...*** and make it look like this, make sure you have the order of the variables as well, where `PARAM` comes first.
+    1. Use the up and down buttons highlighted to move the sequence of the variables.
 
-Instructions for creating snippets can be found [here](https://code.visualstudio.com/docs/editor/userdefinedsnippets#_creating-your-own-snippets).
+![image showing the variables and values](../../images/2/custom/live_template_variables.png)
 
-Useful, ready-made snippets can also be found as VS Code plugins, in the [marketplace](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets).
-
-The most important snippet is the one for the <em>console.log()</em> command, for example, <em>clog</em>. This can be created like so: 
-```js
-{
-  "console.log": {
-    "prefix": "clog",
-    "body": [
-      "console.log('$1')",
-    ],
-    "description": "Log output to console"
-  }
-}
-```
-
-Debugging your code using _console.log()_ is so common that Visual Studio Code has that snippet built in. To use it, type _log_ and hit tab to autocomplete. More fully featured _console.log()_ snippet extensions can be found in the [marketplace](https://marketplace.visualstudio.com/search?term=console.log&target=VSCode&category=All%20categories&sortBy=Relevance).
+Click ***OK*** twice and then try it out by typing `clog` inside your `App` Javascript function and then ***Enter***.
+Then type the name of the variable `props` (or whatever other variable you have) and Tab again.
+You should notice that it will display the word you typed in two places on that line.
+First, as the name in the string for the `log` statement and then as the variable to print.
+Finally, if you have some expected value of what you think it should be at that point, you can type that in as well, and then ***Enter*** one last time.
+You'll notice that you have this template that will provide you with a varialbe, its type, the filename and line number to make it easier to debug!
 
 ### JavaScript Arrays
 
-From here on out, we will be using the functional programming methods of the JavaScript [array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array), such as  _find_, _filter_, and _map_ - all of the time. They operate on the same general principles as streams do in Java 8, which have been used during the last few years in both the 'Ohjelmoinnin perusteet' and 'Ohjelmoinnin jatkokurssi' courses at the university's department of Computer Science, and also in the programming MOOC. 
+From here on out, we will be using JavaScript's functional programming conventions (e.g. `find`, `filter`, and `map`) for
+[**Arrays**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array),
+all of the time.
+They operate on the same general principles as their equivalents in other languages and as streams in Java.
 
-If functional programming with arrays feels foreign to you, it is worth watching at least the first three parts of the YouTube video series [Functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84):
+If operating arrays with functional operators makes you feel uneasy, it is worth watching at least the first three parts of the YouTube video series
+[Functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84):
 
 - [Higher-order functions](https://www.youtube.com/watch?v=BMUiFMZr7vk&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84)
 - [Map](https://www.youtube.com/watch?v=bCqtb-Z5YGQ&list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84&index=2)
@@ -73,29 +75,31 @@ If functional programming with arrays feels foreign to you, it is worth watching
 
 ### Event Handlers Revisited
 
-Based on last year's course, event handling has proved to be difficult. 
+Event handling is complex.
 
-It's worth reading the revision chapter at the end of the previous part [event handlers revisited](/en/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited), if it feels like your own knowledge on the topic needs some brushing up. 
+It's worth reviewing the
+[previous section on event handlers](/part1/a_more_complex_state_debugging_react_apps#event-handling-revisited).
 
-Passing event handlers to the child components of the <i>App</i> component has raised some questions. A small revision on the topic can be found [here](/en/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
+Passing event handlers to the child components of the `App` component can also be complex, so you may want to revisit
+[the material that was provided about the topic here](/part1/a_more_complex_state_debugging_react_apps#passing-event-handlers-to-child-components).
 
 ### Rendering Collections
 
-We will now do the 'frontend', or the browser-side application logic, in React for an application that's similar to the example application from [part 0](/en/part0)
+We will now do the 'frontend', or the browser-side application logic, in React for an application that's similar to the example application from [part 0](/part0)
 
-Let's start with the following (the file <i>App.js</i>):
+Let's start with the following in *App.jsx*:
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        <li>{notes[0].content}</li>
-        <li>{notes[1].content}</li>
-        <li>{notes[2].content}</li>
+        <li>{tasks[0].content}</li>
+        <li>{tasks[1].content}</li>
+        <li>{tasks[2].content}</li>
       </ul>
     </div>
   )
@@ -104,79 +108,84 @@ const App = (props) => {
 export default App
 ```
 
-The file <i>index.js</i> looks like:
+We'll also need this in *main.jsx*:
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
 
-const notes = [
+const tasks = [
   {
     id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
+    content: 'Wash the dishes',
+    date: '2023-01-10T17:30:31.098Z',
     important: true
   },
   {
     id: 2,
-    content: 'Browser can execute only JavaScript',
-    date: '2019-05-30T18:39:34.091Z',
+    content: 'Take out the trash',
+    date: '2023-01-10T18:39:34.091Z',
     important: false
   },
   {
     id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2019-05-30T19:20:14.298Z',
+    content: 'Buy salty snacks',
+    date: '2023-01-10T19:20:14.298Z',
     important: true
   }
 ]
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <App notes={notes} />
+  <App tasks={tasks} />
 )
 ```
 
-Every note contains its textual content and a timestamp, as well as a _boolean_ value for marking whether the note has been categorized as important or not, and also a unique <i>id</i>.
+Every task contains:
 
-The example above works due to the fact that there are exactly three notes in the array. 
+- a unique `id`.
+- *`content`* describing the task
+- a *`date`*,
+- a boolean for marking whether the task is `important`
 
-A single note is rendered by accessing the objects in the array by referring to a hard-coded index number:
+The example above works only because there are exactly three tasks in the array.
+
+A single task is rendered by accessing the objects in the array by referring to a hard-coded index number:
 
 ```js
-<li>{notes[1].content}</li>
+<li>{tasks[1].content}</li>
 ```
 
-This is, of course, not practical. We can improve on this by generating React elements from the array objects using the [map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) function.
+This is, of course, not elegant.
+We can improve on this by generating React elements from the array objects using the
+[`map` function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
 
 ```js
-notes.map(note => <li>{note.content}</li>)
+tasks.map(task => <li>{task.content}</li>)
 ```
 
-The result is an array of <i>li</i> elements.
+The result is an array of `li` elements.
 
 ```js
 [
-  <li>HTML is easy</li>,
-  <li>Browser can execute only JavaScript</li>,
-  <li>GET and POST are the most important methods of HTTP protocol</li>,
+  <li>Wash the dishes</li>,
+  <li>Take out the trash</li>,
+  <li>Buy salty snacks</li>,
 ]
 ```
 
-
-Which can then be placed inside <i>ul</i> tags:
+Which can then be placed inside `ul` tags:
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
 // highlight-start
       <ul>
-        {notes.map(note => <li>{note.content}</li>)}
+        {tasks.map(task => <li>{task.content}</li>)}
       </ul>
 // highlight-end      
     </div>
@@ -184,23 +193,22 @@ const App = (props) => {
 }
 ```
 
-Because the code generating the <i>li</i> tags is JavaScript, it must be wrapped in curly braces in a JSX template just like all other JavaScript code. 
+Because the code generating the `li` tags is JavaScript, it must be wrapped in curly braces in a JSX template just like all other JavaScript code.
 
-<!-- Parannetaan koodin luetteloa vielä jakamalla nuolifunktion määrittely useammalle riville: -->
 We will also make the code more readable by separating the arrow function's declaration across multiple lines:
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
+        {tasks.map(task => 
         // highlight-start
           <li>
-            {note.content}
+            {task.content}
           </li>
         // highlight-end   
         )}
@@ -212,25 +220,30 @@ const App = (props) => {
 
 ### Key-attribute
 
-Even though the application seems to be working, there is a nasty warning in the console: 
+Even though the application seems to be working, there is a warning in both WebStorm:
 
-![](../../images/2/1a.png)
+![WebStorm key prop error](../../images/2/1a_webstorm.png)
 
-As the linked [React page](https://reactjs.org/docs/lists-and-keys.html#keys) in the error message suggests; the list items, i.e. the elements generated by the _map_ method, must each have a unique key value:  an attribute called <i>key</i>.
+and the console:
+
+![unique key prop console error](../../images/2/1a.png)
+
+As the linked [React page](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) in the error message suggests;
+the list items, i.e. the elements generated by the `map` method, must each have a ***unique key value***: an attribute called **`key`**.
 
 Let's add the keys:
 
 ```js
 const App = (props) => {
-  const { notes } = props
+  const { tasks } = props
 
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <li key={note.id}> // highlight-line
-            {note.content}
+        {tasks.map(task => 
+          <li key={task.id}> // highlight-line
+            {task.content}
           </li>
         )}
       </ul>
@@ -239,136 +252,146 @@ const App = (props) => {
 }
 ```
 
-And the error message disappears. 
+And the error message disappears.
 
-React uses the key attributes of objects in an array to determine how to update the view generated by a component when the component is re-rendered. More about this in the [React documentation](https://reactjs.org/docs/reconciliation.html#recursing-on-children).
+React uses the key attributes of objects in an array to determine how to update the view generated by a component when the component is re-rendered.
+More about this is in the [React documentation](https://react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key).
 
 ### Map
 
-Understanding how the array method [`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) works is crucial for the rest of the course. 
+Understanding how the array method
+[`map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+works is crucial for the rest of the course.
 
-The application contains an array called _notes_:
+Let's revisit the `tasks` array that is currently in *main.jsx*:
 
 ```js
-const notes = [
+const tasks = [
   {
     id: 1,
-    content: 'HTML is easy',
-    date: '2019-05-30T17:30:31.098Z',
+    content: 'Wash the dishes',
+    date: '2023-01-10T17:30:31.098Z',
     important: true
   },
   {
     id: 2,
-    content: 'Browser can execute only JavaScript',
-    date: '2019-05-30T18:39:34.091Z',
+    content: 'Take out the trash',
+    date: '2023-01-10T18:39:34.091Z',
     important: false
   },
   {
     id: 3,
-    content: 'GET and POST are the most important methods of HTTP protocol',
-    date: '2019-05-30T19:20:14.298Z',
+    content: 'Buy salty snacks',
+    date: '2023-01-10T19:20:14.298Z',
     important: true
   }
 ]
 ```
 
-Let's pause for a moment and examine how _map_ works.
-
-
-If the following code is added to, let's say, the end of the file:
+If the following code is added at the end of *main.jsx*:
 
 ```js
-const result = notes.map(note => note.id)
+const result = tasks.map(task => task.id)
 console.log(result)
 ```
 
-<i>[1, 2, 3]</i>  will be printed to the console.
- _map_ always creates a new array, the elements of which have been created from the elements of the original array by <i>mapping</i>: using the function given as a parameter to the _map_ method. 
+An array `[1, 2, 3]`  will be viewable in the console.
+`map` always creates a new array, the elements of which have been created from the elements of the original array by ***mapping***:
+using the function given as a parameter to the `map` method.
 
-
-The function is
+The function in our example is:
 
 ```js
-note => note.id
+task => task.id
 ```
 
-Which is an arrow function written in compact form. The full form would be: 
+This is an arrow function written in compact form.
+The full form would be:
 
 ```js
-(note) => {
-  return note.id
+(task) => {
+  return task.id
 }
 ```
 
-The function gets a note object as a parameter, and <i>returns</i> the value of its <i>id</i> field.
+The function gets a task object as a parameter and ***returns*** the value of its `id` field.
 
-Changing the command to:
+Changing our `map` line to have the parameter:
 
 ```js
-const result = notes.map(note => note.content)
+const result = tasks.map(task => task.content)
 ```
 
-results in an array containing the contents of the notes.
+results in the console containing the array *`['Wash the dishes', 'Take out the trash', 'Buy salty snacks']`*.
 
 This is already pretty close to the React code we used:
 
 ```js
-notes.map(note =>
-  <li key={note.id}>{note.content}</li>
+tasks.map(task =>
+  <li key={task.id}>
+    {task.content}
+  </li>
 )
 ```
 
-which generates an <i>li</i> tag containing the contents of the note from each note object. 
+This code generated a `li` tag containing the contents of the task from each task object.
 
-Because the function parameter passed to the _map_ method - 
+Because the function parameter passed to this `map` method -
 
 ```js
-note => <li key={note.id}>{note.content}</li>
+task => <li key={task.id}>{task.content}</li>
 ```
 
-&nbsp;- is used to create view elements, the value of the variable must be rendered inside curly braces. Try to see what happens if the braces are removed. 
+is used to create view elements, the value of the variable must be rendered inside curly braces.
+***What happens if one or more of the braces are removed?***
+Play around with removing and re-adding braces for the task in *App.jsx*.
 
-The use of curly braces will cause some pain in the beginning, but you will get used to them soon enough. The visual feedback from React is immediate.
+The use of curly braces will cause some pain in the beginning, but you will get used to them soon enough.
+The visual feedback from React is immediate.
 
 ### Anti-pattern: Array Indexes as Keys
 
-We could have made the error message on our console disappear by using the array indexes as keys. The indexes can be retrieved by passing a second parameter to the callback function of the _map_ method: 
+We could have made the error message on our console disappear by using the array indexes as keys.
+The indexes can be retrieved by passing a second parameter to the callback function of the `map` method:
 
 ```js
-notes.map((note, i) => ...)
+tasks.map((task, i) => ...)
 ```
 
-When called like this, _i_ is assigned the value of the index of the position in the array where the note resides.
+When called like this, `i` is assigned the value of the index of the position in the array where the task resides.
 
 As such, one way to define the row generation without getting errors is:
 
 ```js
 <ul>
-  {notes.map((note, i) => 
+  {tasks.map((task, i) => 
     <li key={i}>
-      {note.content}
+      {task.content}
     </li>
   )}
 </ul>
 ```
 
-This is; however, **not recommended** and can create undesired problems even if it seems to be working just fine.
+This is, however, 🐞 **not recommended** 🐞 and can create undesired problems even if it seems to be working just fine.
 
 Read more about this in [this article](https://robinpokorny.medium.com/index-as-a-key-is-an-anti-pattern-e0349aece318).
 
 ### Refactoring Modules
 
-Let's tidy the code up a bit. We are only interested in the field _notes_ of the props, so let's retrieve that directly using [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment): 
+Let's tidy the code up a bit.
+
+We are only interested in the field `tasks` from `props`, so let's retrieve that directly using
+[**destructuring**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment):
 
 ```js
-const App = ({ notes }) => { //highlight-line
+const App = ({ tasks }) => { //highlight-line
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
-        {notes.map(note => 
-          <li key={note.id}>
-            {note.content}
+        {tasks.map(task => 
+          <li key={task.id}>
+            {task.content}
           </li>
         )}
       </ul>
@@ -377,27 +400,27 @@ const App = ({ notes }) => { //highlight-line
 }
 ```
 
-If you have forgotten what destructuring means and how it works, please review the [section on destructuring](/en/part1/component_state_event_handlers#destructuring).
+If you have forgotten what destructuring means and how it works, please review the [section on destructuring](/part1/component_state_event_handlers#destructuring).
 
-We'll separate displaying a single note into its own component <i>Note</i>: 
+We'll separate displaying a single task into its own component `Task`:
 
 ```js
 // highlight-start
-const Note = ({ note }) => {
+const Task = ({ task }) => {
   return (
-    <li>{note.content}</li>
+    <li>{task.content}</li>
   )
 }
 // highlight-end
 
-const App = ({ notes }) => {
+const App = ({ tasks }) => {
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Tasks</h1>
       <ul>
         // highlight-start
-        {notes.map(note => 
-          <Note key={note.id} note={note} />
+        {tasks.map(task => 
+          <Task key={task.id} task={task} />
         )}
          // highlight-end
       </ul>
@@ -406,111 +429,136 @@ const App = ({ notes }) => {
 }
 ```
 
-Note that the <i>key</i> attribute must now be defined for the <i>Note</i> components, and not for the <i>li</i> tags like before. 
+Notice that the `key` attribute *must now be defined in the `Task` component*, and not in the `li` tags like before.
 
-A whole React application can be written in a single file. Although that is, of course, not very practical. Common practice is to declare each component in their own file as an <i>ES6-module</i>.
+A whole React application can be written in a single file.
+Although that is, of course, not very practical.
+Common practice is to declare each component in its own file as an ES6 **module**.
 
-We have been using modules the whole time. The first few lines of the file <i>index.js</i>:
+We have been using *modules* the whole time.
+These lines from *main.jsx*:
 
 ```js
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 
 import App from './App'
 ```
 
-[import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) three modules, enabling them to be used in that file. The  module <i>React</i>  is placed into the variable _React_, the module <i>react-dom</i> into the variable _ReactDOM_, and the module that defines the main component of the app is placed into the variable _App_
+[**`import`**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) two modules, enabling them to be used in that file.
+The module ***`react-dom/client`*** is placed into the variable `ReactDOM`,
+and the module that defines the main component of the app is placed into the variable `App`
 
-Let's move our <i>Note</i> component into its own module. 
+Let's move our `Task` component into its own module.
 
-In smaller applications, components are usually placed in a directory called <i>components</i>, which is in turn placed within the <i>src</i> directory. The convention is to name the file after the component. 
+In smaller applications, components are usually placed in a directory called *components*, which is in turn placed within the *src* directory.
+The convention is to name the file after the component.
 
-Now, we'll create a directory called <i>components</i> for our application and place a file named <i>Note.js</i> inside. 
-The contents of the Note.js file are as follows: 
+**Create a directory in *src* called *components* for our *reading* application and place a file named *Task.jsx* inside**.
+If WebStorm asks about adding the file, make sure to check *not to ask again if you haven't done so already*.
+So *reading/src/components/Task.jsx* should have the following:
 
 ```js
-const Note = ({ note }) => {
+const Task = ({ task }) => {
   return (
-    <li>{note.content}</li>
+    <li>{task.content}</li>
   )
 }
 
-export default Note
+export default Task
 ```
 
-The last line of the module [exports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) the declared module, the variable <i>Note</i>.
+The last line of the module
+[***exports***](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)
+the declared module, the variable `Task`.
 
-Now the file that is using the component - <i>App.js</i> - can [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) the module: 
+Now the file that is using the component - *App.jsx* - can [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) the module:
 
 ```js
-import Note from './components/Note' // highlight-line
+import Task from './components/Task' // highlight-line
 
-const App = ({ notes }) => {
+const App = ({ tasks }) => {
   // ...
 }
 ```
 
-The component exported by the module is now available for use in the variable <i>Note</i>, just as it was earlier. 
+You can try typing `import` in the file and then ***Tab*** to see how WebStorm will handle auto-completing the line for you.
+The component exported by the module is now available for use in the variable `Task`, just as it was earlier.
 
-Note that when importing our own components, their location must be given <i>in relation to the importing file</i>:
+Notice that when importing our own components, their location must be given *in relation to the importing file*:
 
 ```js
-'./components/Note'
+'./components/Task.jsx'
 ```
 
-The period - <i>.</i> - in the beginning refers to the current directory, so the module's location is a file called <i>Note.js</i> in the <i>components</i> sub-directory of the current directory. The filename extension _.js_ can be omitted.
+The period (`.`) at the start refers to the **current directory**,
+so the module's location is a file called *Task.jsx* in the *components* sub-directory of the current directory.
+The filename extension *.jsx* can be omitted.
 
-Modules have plenty of other uses other than enabling component declarations to be separated into their own files. We will get back to them later in this course. 
+Modules have plenty of other uses other than enabling component declarations to be separated into their own files.
+We will get back to them later in this course.
 
-The current code of the application can be found on [GitHub](https://github.com/fullstack-hy2020/part2-notes/tree/part2-1).
+The current code of the application can be found on [GitHub](https://github.com/comp227/part2-tasks/tree/part2-1).
 
-Note that the <i>main</i> branch of the repository contains the code for a later version of the application. The current code is in the branch [part2-1](https://github.com/fullstack-hy2020/part2-notes/tree/part2-1):
+Notice that the *main* branch of the repository is largely empty.
+The current code is in the branch [part2-1](https://github.com/comp227/part2-tasks/tree/part2-1):
 
-![](../../images/2/2e.png)
+![GitHub branch screenshot](../../images/2/2e.png)
 
-If you clone the project, run the command _npm install_ before starting the application with _npm start_.
+> **Remember:** If you clone the project, run the command `npm i` before starting the application with `npm run dev`.
 
-### When the Application Breaks
+### Using console.log
 
-Early in your programming career (and even after 30 years of coding like yours truly), what often happens is that the application just completely breaks down. This is even more the case with dynamically typed languages, such as JavaScript, where the compiler does not check the data type. For instance, function variables or return values. 
+> **Important:** for this section you may want to skip it and read it after you have started working on the exercises.
+> You do not need to type this section into the reading folder.
+> If you do, then please revert your changes once this section is complete.
+
+Early in your programming career (and even after 25+ years of coding like yours truly),
+what can happen is that an application can just break down.
+This is even more so the case with dynamically typed languages, such as JavaScript, where the compiler does not check the data type.
+Like with function variables or return values.
 
 A "React explosion" can, for example, look like this:
 
-![](../../images/2/3b.png)
+![react sample error](../../images/2/3b.png)
 
-In these situations your best way out is the <em>console.log</em> method.
+In these situations, your best way out is to either debug the program via the debugger or commands like `console.log`.
 
-The piece of code causing the explosion is this: 
+The piece of code causing the explosion is this:
 
 ```js
-const Course = ({ course }) => (
+const Company = ({ company }) => (
   <div>
-    <Header course={course} />
+    <Header company={company} />
   </div>
 )
 
 const App = () => {
-  const course = {
-    // ...
+  const company = {
+    name: "Sample Company",
   }
 
   return (
     <div>
-      <Course course={course} />
+      <Company company={company} />
     </div>
   )
 }
 ```
 
-We'll hone in on the reason for the breakdown by adding <em>console.log</em> commands to the code. Because the first thing to be rendered is the <i>App</i> component, it's worth putting the first <em>console.log</em> there: 
+We'll hone in on the reason for the breakdown by adding `console.log` commands to the code.
+Because the first thing to be rendered is the `App` component, it's worth putting a `console.log` in there.
+Use your `clog` live template that we created above to get some easy information in, since `clog` wants variables,
+type `company` and then ***Enter*** to type what you expect it to have.
+Then, press ***Enter*** again.
+For me, I did something like this.
 
 ```js
 const App = () => {
-  const course = {
+  const company = {
     // ...
   }
 
-  console.log('App works...') // highlight-line
+  console.log('File: App.js, Function: App, Line 24 - Is company (JS Object)?: ', company); // highlight-line
 
   return (
     // ..
@@ -520,209 +568,257 @@ const App = () => {
 
 To see the printing in the console, we must scroll up over the long red wall of errors.
 
-![](../../images/2/4b.png)
+![An initial printing of the console](../../images/2/4b.png)
 
-When one thing is found to be working, it's time to log deeper. If the component has been declared as a single statement, or a function without a return, it makes printing to the console harder.
+When one thing is found to be working, it's time to dig deeper.
+If the component has been declared as a single statement or a function without a return, it makes printing to the console harder.
 
 ```js
-const Course = ({ course }) => (
+const Company = ({ company }) => (
   <div>
-    <Header course={course} />
+    <Header company={company} />
   </div>
 )
 ```
 
-The component should be changed to its longer form in order for us to add the printing: 
+The component should be changed to its longer form for us to add the printing:
 
 ```js
-const Course = ({ course }) => { 
-  console.log(course) // highlight-line
+const Company = ({ company }) => { 
+  console.log(company) // highlight-line
   return (
     <div>
-      <Header course={course} />
+      <Header company={company} />
     </div>
   )
 }
 ```
 
-Quite often the root of the problem is that the props are expected to be of a different type, or called with a different name than they actually are, and destructuring fails as a result. The problem often begins to solve itself when destructuring is removed and we see what the <em>props</em> actually contains. 
+Quite often the root of the problem is either:
+
+- the props are expected to be of a different type
+- the props are called with a different name than how they are passed in
+
+So destructuring fails as a result.
+The problem often begins to solve itself when destructuring is removed and we see what the `props` contain.
 
 ```js
-const Course = (props) => { // highlight-line
+const Company = (props) => { // highlight-line
   console.log(props)  // highlight-line
-  const { course } = props
+  const { company } = props
   return (
     <div>
-      <Header course={course} />
+      <Header company={company} />
     </div>
   )
 }
 ```
 
-If the problem has still not been resolved, there really isn't much to do apart from continuing to bug-hunt by sprinkling more _console.log_ statements around your code. 
+If the problem has still not been resolved,
+then I would consider digging deeper by leveraging WebStorm's powerful debugger that
+[we covered in part 1](/part1/a_more_complex_state_debugging_react_apps#web-storm-ide-debugger-introduction).
+You can also get help from search tools and LLMs to help you understand the errors, just not to produce solutions.
 
-I added this chapter to the material after the model answer for the next question exploded completely (due to props being of the wrong type), and I had to debug it using <em>console.log</em>.
+The original author added this chapter to the material after the model answer for the next question exploded completely
+(due to props being of the wrong type), and it had to be debugged using `console.log`.
+
+***As you continue through, please remember the
+[pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge)
+you took to help you improve as a web developer***.
 
 </div>
 
 <div class="tasks">
 
-<h3>Exercises 2.1.-2.5.</h3>
+### Exercises 2.1-2.5
 
-The exercises are submitted via GitHub, and by marking the exercises as done in the [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
+The exercises are submitted through GitHub and marking them as done on Canvas.
 
-You can submit all of the exercises into the same repository, or use multiple different repositories. If you submit exercises from different parts into the same repository, name your directories well.
+Please make sure that you commit often, as that will be the way you show your work and progress through the course.
 
-The exercises are submitted **One part at a time**. When you have submitted the exercises for a part, you can no longer submit any missed exercises for that part.
+To start, we will move you to a new repo that will house all of the exercises from part 2.
 
-Note that this part has more exercises than the ones before, so <i>do not submit</i> before you have done all exercises from this part you want to submit. 
+<http://go.djosv.com/227lab2>
 
-**WARNING** create-react-app makes the project automatically into a git-repository, if the project is not created inside of an already existing repository. You probably **do not** want the project to become a repository, so run the command  _rm -rf .git_ from its root. 
+The repo is largely empty, so you'll need to make sure you are in the correct location before calling `vite`
+(you should be in the base directory of your lab2 repo that you created from above).
+**You also need to ensure that your file watcher is correctly watching your repo!**
+The easiest way to check this is to make sure that none of the files are red for over 2 minutes.
+If they are, especially at the beginning, then you want to re-check your [File Watcher settings](/part0/configuring_your_machine_for_this_course#creating-a-file-watcher-for-our-git-configuration)
 
-<h4>2.1: Course information step6</h4>
+Your folders for this repo should be:
 
-Let's finish the code for rendering course contents from exercises 1.1 - 1.5. You can start with the code from the model answers. The model answers for part 1 can be found by going to the [submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen), click on <i>my submissions</i> at the top, and in the row corresponding to part 1 under the <i>solutions</i> column click on <i>show</i>. To see the solution to the <i>course info</i> exercise, click on _index.js_ under <i>kurssitiedot</i> ("kurssitiedot" means "course info").
+```text
+(base)
+|-arcade
+|-communities
+|-countries
+```
 
+#### 2.1: handheld arcade info Step 6
 
-**Note that if you copy a project from one place to another, you might have to delete the <i>node\_modules</i> directory and install the dependencies again with the command _npm install_ before you can start the application.**
-Generally, it's not recommended that you copy a project's whole contents and/or add the <i>node\_modules</i> directory to the version control system. 
+Let's finish the code for rendering companies' handheld arcade games and systems from exercises 1.1 - 1.5.
+If you need help getting your solution to a good state, please let me know.
+I would recommend that you use `vite` from the base directory (like we did in [part 1](/introduction_to_react#starting-development))
+and then just copy over your old *src* folder from your arcade folder from lab 1.
 
-Let's change the <i>App</i> component like so: 
+Remember that your files should all be white in color. You should also make sure that you **push** your code anytime that you decide to stop for a while.
+*This is something that should happen at all times and you are responsible for verifying your changes show up in github.*
+
+> **Notice:** You should only copy the src folder and create a new vite application like we mentioned above.
+> However, if you ever copy the entire project from one place to another, you have to:
+>
+> 1. delete the *node_modules* directory
+> 2. install the dependencies again with the command `npm i`
+> 3. start the application.
+>
+> I generally avoid copying *node_modules* because it is often huge and highly dependent on your system,
+> so I think it's easier to let npm and vite determine what library versions you need.
+>
+> You only need to copy the **code**!
+>
+> Generally, it's not recommended that you copy a project's whole contents and/or add the *node_modules* directory to the version control system.
+
+Let's change the `App` component like so:
 
 ```js
 const App = () => {
-  const course = {
+  const company = {
     id: 1,
-    name: 'Half Stack application development',
-    parts: [
+    name: 'Nintendo',
+    handhelds: [
       {
-        name: 'Fundamentals of React',
-        exercises: 10,
+        name: 'Game Boy',
+        games: 1046,
         id: 1
       },
       {
-        name: 'Using props to pass data',
-        exercises: 7,
+        name: 'Game Boy Advance',
+        games: 1538,
         id: 2
       },
       {
-        name: 'State of a component',
-        exercises: 14,
+        name: 'DS',
+        games: 1791,
         id: 3
       }
     ]
   }
 
-  return <Course course={course} />
+  return <Company company={company} />
 }
 
 export default App
 ```
 
-Define a component responsible for formatting a single course called <i>Course</i>. 
+Define a component responsible for formatting a single company called `Company`.
 
-The component structure of the application can be, for example, the following: 
+The component structure of the application can be, for example, the following:
 
-<pre>
+```shell
 App
-  Course
+  Company
     Header
     Content
-      Part
-      Part
+      Handheld
+      Handheld
       ...
-</pre>
+```
 
-Hence, the <i>Course</i> component contains the components defined in the previous part, which are responsible for rendering the course name and its parts. 
+Hence, the `Company` component contains the components defined in the previous part, which are responsible for rendering the company name and its handhelds.
 
-The rendered page can, for example, look as follows: 
+The rendered page can, for example, look as follows:
 
-![](../../images/teht/8e.png)
+![half stack application screenshot](../../images/teht/8e.png)
 
-You don't need the sum of the exercises yet. 
+You don't need the sum of the games yet.
 
-The application must work <i>regardless of the number of parts a course has</i>, so make sure the application works if you add or remove parts of a course. 
+The application must work *regardless of the number of handhelds a company has*,
+so make sure the application works if you add or remove handheld systems that a company has.
 
 Ensure that the console shows no errors!
 
-<h4>2.2: Course information step7</h4>
+#### 2.2: handheld arcade info Step 7
 
-Show also the sum of the exercises of the course. 
+Show also the sum of the games published for all handhelds of a company.
 
-![](../../images/teht/9e.png)
+![sum of exercises added feature](../../images/teht/9e.png)
 
-<h4>2.3*: Course information step8</h4>
+#### 2.3*: handheld arcade info Step 8
 
-If you haven't done so already, calculate the sum of exercises with the array method [reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
+If you haven't done so already, calculate the sum of games with the array method
+[reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
 
 **Pro tip:** when your code looks as follows:
 
 ```js
 const total = 
-  parts.reduce((s, p) => someMagicHere)
+  handhelds.reduce((s, p) => someMagicHere)
 ```
   
-and does not work, it's worth to use <i>console.log</i>, which requires the arrow function to be written in its longer form:
+and does not work, it's worth it to use `console.log`, which requires the arrow function to be written in its longer form:
 
 ```js
-const total = parts.reduce((s, p) => {
-  console.log('what is happening', s, p)
+const total = handhelds.reduce((s, p) => {
+  console.log('what is going on inside handhelds reduce? ', s, p)
   return someMagicHere 
 })
 ```
- 
-**Not working? :** Use your search engine to look up how reduce is used in an **Object Array**.
 
-**Pro tip 2:** There is a [plugin for VS Code](https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer) that automatically changes short form arrow functions into their longer form, and vice versa. 
+**Not working?** Use your search engine to look up how `reduce` is used in an **Object Array**.
 
-![](../../images/2/5b.png)
+> **Pro tip 2:** If you right click and show context actions (or use the keyboard shortcut, for me it ***Ctrl-1***),
+> you should see the ability for the IDE to make a variety of changes.
+> For example, JetBrains will automatically change the short-form arrow functions into their longer form and vice versa,
+> showing you a preview of what that would look like.
+>
+> ![WebStorm sample suggestion for arrow function](../../images/2/5b.png)
 
-<h4>2.4: Course information step9</h4>
+#### 2.4: handheld arcade info Step 9
 
-
-Let's extend our application to allow for an <i>arbitrary number</i> of courses:
+Let's extend our application to allow for an ***arbitrary number*** of companies:
 
 ```js
 const App = () => {
-  const courses = [
+  const companies = [
     {
-      name: 'Half Stack application development',
+      name: 'Nintendo',
       id: 1,
-      parts: [
+      handhelds: [
         {
-          name: 'Fundamentals of React',
-          exercises: 10,
+          name: 'Game Boy',
+          games: 1046,
           id: 1
         },
         {
-          name: 'Using props to pass data',
-          exercises: 7,
+          name: 'Game Boy Advance',
+          games: 1538,
           id: 2
         },
         {
-          name: 'State of a component',
-          exercises: 14,
+          name: 'DS',
+          games: 1791,
           id: 3
         },
         {
-          name: 'Redux',
-          exercises: 11,
+          name: '3DS',
+          games: 1402,
           id: 4
         }
       ]
     }, 
     {
-      name: 'Node.js',
+      name: 'Sony',
       id: 2,
-      parts: [
+      handhelds: [
         {
-          name: 'Routing',
-          exercises: 3,
+          name: 'PSP',
+          games: 1925,
           id: 1
         },
         {
-          name: 'Middlewares',
-          exercises: 7,
+          name: 'PS Vita',
+          games: 1500,
           id: 2
         }
       ]
@@ -737,12 +833,13 @@ const App = () => {
 }
 ```
 
-The application can, for example, look like this: 
+The application can, for example, look like this:
 
-![](../../images/teht/10e.png)
+![An arbitrary number of courses feature add-on](../../images/teht/10e.png)
 
-<h4>2.5: separate module</h4>
+#### 2.5: separate module
 
-Declare the <i>Course</i> component as a separate module, which is imported by the <i>App</i> component. You can include all subcomponents of the course into the same module. 
+Declare the `Company` component as a separate module that represents a single Company, which is imported by the `App` component.
+You can include all subcomponents of the company in the same module.
 
 </div>

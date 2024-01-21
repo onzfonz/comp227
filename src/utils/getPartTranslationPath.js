@@ -1,5 +1,9 @@
+import translationProgress from './translationProgress';
+
 const getPartTranslationPath = (language, part, path = '') => {
-  return language === 'fi' ? `/osa${part}${path}` : `/${language}/part${part}${path}`;
+  return language === 'en'
+    ? `/part${part}${path}`
+    : `/${language}/part${part}${path}`;
 };
 
 export default getPartTranslationPath;

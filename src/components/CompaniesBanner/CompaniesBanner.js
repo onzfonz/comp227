@@ -18,7 +18,7 @@ const partners = [
     url: 'https://www.helsinki.fi/',
   },
   {
-    image: { name: 'houston.svg', alt: 'Houston inc.' },
+    image: { name: 'houston2.svg', alt: 'Houston inc.' },
     url: 'https://www.houston-inc.com/careers',
   },
   {
@@ -28,10 +28,6 @@ const partners = [
   {
     image: { name: 'elisa.svg', alt: 'Elisa' },
     url: 'https://corporate.elisa.fi/rekrytointi/',
-  },
-  {
-    image: { name: 'kesko.svg', alt: 'Kesko' },
-    url: 'https://www.kesko.fi/',
   },
   {
     image: { name: 'unity.svg', alt: 'Unity' },
@@ -50,58 +46,6 @@ const partners = [
 /* All logos must be in SVG format */
 const inChallenge = [
   'Tivia',
-  'Relex',
-  'Smartly.io',
-  'Eficode',
-  'Sympa',
-  'Cinia',
-  'AppGyver',
-  'Codento',
-  'Taito united',
-  'Emblica',
-  'Kodan',
-  'UpCloud',
-  'Perfektio',
-  'Blok',
-  'G-Works',
-  'Webscale',
-  'Siili',
-  'Ilmatieteenlaitos',
-  'Futurice',
-  'Visma',
-  'Platonic Partnership',
-  'Omnia',
-  'Tietotalo',
-  'Circles',
-  'Nordcloud',
-  'Wunderdog',
-  'Gofore',
-  'Nortal Oy',
-  'NurseBuddy',
-  'Wolt',
-  'Pori',
-  'Motley',
-  'Bonsky Digital',
-  'Plan Brothers',
-  'Integrify',
-  'Rentle',
-  'Compile',
-  'Telia',
-  'Umbrella Interactive',
-  'Tabella',
-  'Nextup',
-  // 'Vertix',
-  // 'Future Captcha Consulting',
-  'Kela',
-  'Geometrix',
-  'Netyourself',
-  'Vincit',
-  'Vero',
-  'Hiq',
-  'Resilient E',
-  'Neemia',
-  'Bubblin',
-  'Zaibatsu',
 ];
 
 export const CompaniesBanner = ({ isFrontPage, lang }) => {
@@ -131,9 +75,7 @@ export const CompaniesBanner = ({ isFrontPage, lang }) => {
               applyPadding
               companyPath={company.url}
               image={{
-                src: require(`../../images/company_logos/${
-                  company.image.name
-                }`),
+                src: require(`../../images/company_logos/${company.image.name}`),
                 alt: company.image.alt,
               }}
               className={`col-3 col-5--mobile col-5--tablet`}
@@ -150,7 +92,7 @@ export const CompaniesBanner = ({ isFrontPage, lang }) => {
             />
             <Element
               flex
-              className="col-9 flex-fix-aligning space-between--mobile"
+              className="col-10 flex-fix-aligning space-between--mobile"
             >
               {inChallenge.map(company => (
                 <Image
@@ -160,7 +102,7 @@ export const CompaniesBanner = ({ isFrontPage, lang }) => {
                     company
                   )}.svg`)}
                   alt={company}
-                  className={`company__logo push-right-1 col-3--mobile col-3--tablet`}
+                  className={`company__logo col-3--mobile col-3--tablet`}
                   backdrop
                 />
               ))}

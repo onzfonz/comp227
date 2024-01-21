@@ -37,6 +37,10 @@
 
   li {
     list-style-type: none;
+    font-family: $font-heading;
+    html[data-theme='light'] & {
+        font-family: $font-heading--light;
+    }
 
     &:hover,
     &.selected {

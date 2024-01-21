@@ -1,6 +1,6 @@
 {
-  "name": "fullstackhy-2020",
-  "description": "Full stack websovelluskehitys 2020",
+  "name": "comp227",
+  "description": "COMP 227 at the University of the Pacific",
   "version": "1.0.0",
   "author": "Houston Inc. Consulting Oy",
   "dependencies": {
@@ -10,7 +10,7 @@
     "gatsby": "^2.0.53",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-canonical-urls": "^2.0.12",
-    "gatsby-plugin-google-analytics": "^2.0.16",
+    "gatsby-plugin-google-gtag": "^5.4.0",
     "gatsby-plugin-i18n": "^0.4.2",
     "gatsby-plugin-local-search": "^2.0.0",
     "gatsby-plugin-manifest": "^2.0.9",
@@ -42,25 +42,22 @@
     "use-debounce": "^3.4.3"
   },
   "keywords": [
-    "fullstack",
+    "modernweb",
     "course",
-    "helsingin yliopisto",
-    "tietojenkäsittelytieteen osasto",
-    "mooc",
-    "mooc.fi",
-    "full stack",
-    "web-sovelluskehitys"
+    "university of the pacific",
+    "modern web",
+    "comp227"
   ],
   "license": "Creative Commons BY-NC-SA 3.0",
   "scripts": {
     "build": "gatsby build",
     "gatsby": "gatsby build",
-    "develop": "gatsby develop",
+    "dev": "gatsby develop",
     "clean": "gatsby clean",
-    "start": "npm run develop",
+    "start": "npm run dev",
     "format": "prettier --write \"src/**/*.js\"",
     "deploy": "gatsby build && gh-pages -d public -b master",
-    "publish": "gh-pages -u 'Matti Luukkainen <mluukkai@iki.fi>' -d public -b master"
+    "publish": "gh-pages -u 'Osvaldo Jimenez <ojimenez@pacific.edu>' -d public -b master"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -74,6 +71,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fullstack-hy2020/fullstack-hy2020.github.io"
+    "url": "https://github.com/comp227/comp227"
   }
 }

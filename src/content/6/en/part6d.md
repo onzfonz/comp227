@@ -1,5 +1,5 @@
 ---
-mainImage: ../../../images/part-5.svg
+mainImage: ../../../images/part-6.svg
 part: 6
 letter: d
 lang: en
@@ -7,610 +7,942 @@ lang: en
 
 <div class="content">
 
-So far we have used our redux-store with the help of the [hook](https://react-redux.js.org/api/hooks)-api from react-redux.
-Practically this has meant using the [useSelector](https://react-redux.js.org/api/hooks#useselector) and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch) functions.
+We will continue to look at various ways to manage an application's state.
 
-To finish this part we will look into another older and  more complicated way to use redux, the [connect](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md)-function provided by react-redux.
+Let's continue with our task application.
+We will focus on communication with the server.
+Let's start the application from scratch.
+Here's version zero of our *App.jsx*:
 
-<i>**In new applications you should absolutely use the hook-api**</i>, but knowing how to use connect is useful when maintaining older projects using redux.
+```js
+const App = () => {
+  const addTask = async (event) => {
+    event.preventDefault()
+    const content = event.target.task.value
+    event.target.task.value = ''
+    console.log(content)
+  }
 
-### Using the connect-function to share the redux store to components
+  const toggleImportance = (task) => {
+    console.log('toggle importance of', task.id)
+  }
 
-Let's modify the <i>Notes</i> component so that instead of using the hook-api (the _useDispatch_ and  _useSelector_ functions ) it uses the _connect_-function. 
-We have to modify the following parts of the component:
+  const tasks = []
 
-````js
-import { useDispatch, useSelector } from 'react-redux' // highlight-line
-import { toggleImportanceOf } from '../reducers/noteReducer'
+  return(
+    <div>
+      <h2>Tasks app</h2>
+      <form onSubmit={addTask}>
+        <input name="task" />
+        <button type="submit">add</button>
+      </form>
+      {tasks.map(task =>
+        <li key={task.id} onClick={() => toggleImportance(task)}>
+          {task.content} 
+          <strong> {task.important ? '- important' : ''}</strong>
+        </li>
+      )}
+    </div>
+  )
+}
 
-const Notes = () => {
+export default App
+```
+
+The [initial code is on GitHub](https://github.com/comp227/query-tasks/tree/part6-0) in branch *part6-0*.
+
+### Managing data on the server with the React Query library
+
+We shall now use the [***React Query***](https://tanstack.com/query/latest) library to store and manage data retrieved from the server.
+The latest version of the library is also called *TanStack Query*, but we'll stick to calling it *React Query*.
+
+Install the library with the command
+
+```bash
+npm i @tanstack/react-query
+```
+
+A few additions to the file *main.jsx* are needed to pass the library functions to the entire application:
+
+```js
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query' // highlight-line
+
+import App from './App'
+
+const queryClient = new QueryClient() // highlight-line
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <QueryClientProvider client={queryClient}> // highlight-line
+    <App />
+  </QueryClientProvider> // highlight-line
+)
+```
+
+We can now retrieve the tasks in the `App` component.
+You should also copy over *db.json* from one of the other projects.
+The code expands as follows:
+
+```js
+import { useQuery } from '@tanstack/react-query'  // highlight-line
+import axios from 'axios'  // highlight-line
+
+const App = () => {
+  // ...
+
+   // highlight-start
+  const result = useQuery({
+    queryKey: ['tasks'],
+    queryFn: () => axios.get('http://localhost:3001/tasks').then(res => res.data)
+  })
+
+  console.log(JSON.parse(JSON.stringify(result)))
+  // highlight-end
+
   // highlight-start
-  const dispatch = useDispatch() 
-  const notes = useSelector(({filter, notes}) => {
-    if ( filter === 'ALL' ) {
-      return notes
-    }
-    return filter === 'IMPORTANT'
-      ? notes.filter(note => note.important)
-      : notes.filter(note => !note.important)
+  if ( result.isLoading ) {
+    return <div>loading data...</div>
+  }
+  // highlight-end
+
+  const tasks = result.data  // highlight-line
+
+  return (
+    // ...
+  )
+}
+```
+
+Retrieving data from the server still looks familiar as it uses Axios' `get` method.
+However, the Axios method call is now wrapped in a [query](https://tanstack.com/query/latest/docs/react/guides/queries)
+formed with the [`useQuery`](https://tanstack.com/query/latest/docs/react/reference/useQuery) function.
+`useQuery`'s first parameter is a string `tasks`, which acts as a [***key***](https://tanstack.com/query/latest/docs/react/guides/query-keys) to the query defined,
+i.e. the list of tasks.
+
+The return value of the `useQuery` function is an *object that indicates the **status of the query***.
+Observe the browser's console output, which comes from our `console.log(result)` call:
+
+![browser console output shows status object changes](../../images/6/60new.png)
+
+The first time the component is rendered, the query is still in the *`loading`* state, i.e. the associated HTTP request is pending.
+At this stage, only the following is rendered:
+
+```js
+<div>loading data...</div>
+```
+
+However, the HTTP request *is completed so quickly* that it's hard to ever see the text.
+**When the request is completed, the component is rendered again**.
+The query is in the state *`success`* on the second rendering, and the field `data` of the query object contains the data returned by the request,
+which is the task list rendered on the screen.
+
+So the code above *retrieves data from the server and renders it on the screen without using the React hooks `useState` and `useEffect`* used in chapters 2-5 at all.
+The data on the server is now entirely under the administration of the React Query library,
+and the application does not need the state defined with React's `useState` hook at all!
+
+Let's move the function making the actual HTTP request to its own file *requests.js*
+
+```js
+import axios from 'axios'
+
+export const getTasks = () =>
+  axios.get('http://localhost:3001/tasks').then(res => res.data)
+```
+
+The `App` component is now slightly simplified
+
+```js
+import { useQuery } from '@tanstack/react-query' 
+import { getTasks } from './requests' // highlight-line
+
+const App = () => {
+  // ...
+
+  const result = useQuery({
+    queryKey: ['tasks'],
+    queryFn: getTasks // highlight-line
+  })  
+
+  // ...
+}
+```
+
+The current code for the application is on [GitHub](https://github.com/comp227/query-tasks/tree/part6-1) in the branch *part6-1*.
+
+This code successfully retrieves data from the server.
+The next section will focus on sending data to the server.
+
+### Synchronizing data to the server using React Query
+
+Let's start by adding new tasks.
+In *requests.js*, make a function `createTask` for saving new tasks:
+
+```js
+import axios from 'axios'
+
+const baseUrl = 'http://localhost:3001/tasks'
+
+export const getTasks = () =>
+  axios.get(baseUrl).then(res => res.data)
+
+export const createTask = newTask => // highlight-line
+  axios.post(baseUrl, newTask).then(res => res.data) // highlight-line
+```
+
+The `App` component will change as follows
+
+```js
+import { useQuery, useMutation } from '@tanstack/react-query' // highlight-line
+import { getTasks, createTask } from './requests' // highlight-line
+
+const App = () => {
+  const newTaskMutation = useMutation({mutationFn: createTask}) // highlight-line
+
+  const addTask = async (event) => {
+    event.preventDefault()
+    const content = event.target.task.value
+    event.target.task.value = ''
+    newTaskMutation.mutate({ content, important: true }) // highlight-line
+  }
+
+  // ...
+
+}
+```
+
+Let's review what we added.
+To create a new task, a [**mutation**](https://tanstack.com/query/latest/docs/react/guides/mutations) is needed for us to modify the server's data.
+We define the mutation via
+[`useMutation`](https://tanstack.com/query/latest/docs/react/reference/useMutation):
+
+```js
+const newTaskMutation = useMutation({ mutationFn: createTask})
+```
+
+`useMutation`'s parameter is `createTask`: the function we added to *requests.js*, which merely uses Axios to send a new task to the server.
+
+The **event handler `addTask`** performs the mutation by calling the mutation object's `mutate` method and passing in the new task (*`content, important: true`*):
+
+```js
+newTaskMutation.mutate({ content, important: true })
+```
+
+Our solution looks promising, but it doesn't work.
+While the new task is saved on the server, *it is not updated on the screen*.
+
+To render a new task, we need to tell React Query to [***invalidate***](https://tanstack.com/query/latest/docs/react/guides/invalidations-from-mutations) the old `tasks` from the query.
+
+We can invalidate the tasks by adding a second parameter to `useMutation`.
+That parameter is an `onSuccess` callback function that tells the react query to invalidate the `tasks` key.
+
+```js
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query' // highlight-line
+import { getTasks, createTask } from './requests'
+
+const App = () => {
+  const queryClient = useQueryClient() // highlight-line
+
+  const newTaskMutation = useMutation(createTask, {
+    onSuccess: () => {  // highlight-line
+      queryClient.invalidateQueries({queryKey: ['tasks']})  // highlight-line
+    },
+  })
+
+  // ...
+}
+```
+
+So once the mutation has been successfully executed, the function call
+
+```js
+queryClient.invalidateQueries('tasks')
+```
+
+will cause React Query to automatically fetch the `tasks` from the server.
+As a result, the application renders the up-to-date state on the server, i.e. the added task is also rendered.
+
+Let's also implement changing the importance of tasks.
+Start by adding a function for updating tasks to *requests.js*:
+
+```js
+export const updateTask = updatedTask =>
+  axios.put(`${baseUrl}/${updatedTask.id}`, updatedTask).then(res => res.data)
+```
+
+Updating the task is also done by mutation.
+The `App` component expands as follows:
+
+```js
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query' 
+import { getTasks, createTask, updateTask } from './requests' // highlight-line
+
+const App = () => {
+  // ...
+
+  // highlight-start
+  const updateTaskMutation = useMutation({
+    mutationFn: updateTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks']})
+    },
   })
   // highlight-end
 
-  return(
-    <ul>
-      {notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => 
-            dispatch(toggleImportanceOf(note.id)) // highlight-line
-          }
-        />
-      )}
-    </ul>
-  )
-}
-
-export default Notes
-````
-
-The _connect_ function can be used for transforming "regular" React components so that the state of the Redux store can be "mapped" into the component's props.
-
-Let's first use the connect function to transform our <i>Notes</i> component into a <i>connected component</i>:
-
-```js
-import { connect } from 'react-redux' // highlight-line
-import { toggleImportanceOf } from '../reducers/noteReducer'
-
-const Notes = () => {
   // ...
-}
 
-const ConnectedNotes = connect()(Notes) // highlight-line
-export default ConnectedNotes           // highlight-line
-```
-
-The module exports the <i>connected component</i> that works exactly like the previous regular component for now.
-
-The component needs the list of notes and the value of the filter from the Redux store. The _connect_ function accepts a so-called [mapStateToProps](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md#mapstatetoprops-state-ownprops--object) function as its first parameter. The function can be used for defining the props of the <i>connected component</i> that are based on the state of the Redux store.
-
-If we define:
-
-
-```js
-const Notes = (props) => { // highlight-line
-  const dispatch = useDispatch()
-
-// highlight-start
-  const notesToShow = () => {
-    if ( props.filter === 'ALL' ) {
-      return props.notes
-    }
-    
-    return props.filter  === 'IMPORTANT'
-      ? props.notes.filter(note => note.important)
-      : props.notes.filter(note => !note.important)
-  }
-  // highlight-end
-
-  return(
-    <ul>
-      {notesToShow().map(note => // highlight-line
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => 
-            dispatch(toggleImportanceOf(note.id))
-          }
-        />
-      )}
-    </ul>
-  )
-}
-
-const mapStateToProps = (state) => {
-  return {
-    notes: state.notes,
-    filter: state.filter,
-  }
-}
-
-const ConnectedNotes = connect(mapStateToProps)(Notes) // highlight-line
-
-export default ConnectedNotes
-```
-
-The <i>Notes</i> component can access the state of the store directly, e.g. through <i>props.notes</i> that contains the list of notes.  Similarly, <i>props.filter</i> references the value of the filter.
-
-The situation that results from using <i>connect</i> with the <i>mapStateToProps</i> function we defined can be visualized like this:
-
-![](../../images/6/24c.png)
-
-
-The <i>Notes</i> component has "direct access" via <i>props.notes</i> and <i>props.filter</i> for inspecting the state of the Redux store.
-
-The _NoteList_ component actually does not need the information about which filter is selected, so we can move the filtering logic elsewhere.
-We just have to give it correctly filtered notes in the _notes_ prop:
-
-```js
-const Notes = (props) => {
-  const dispatch = useDispatch()
-
-  return(
-    <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => 
-            dispatch(toggleImportanceOf(note.id))
-          }
-        />
-      )}
-    </ul>
-  )
-}
-
-// highlight-start
-const mapStateToProps = (state) => {
-  if ( state.filter === 'ALL' ) {
-    return {
-      notes: state.notes
-    }
-  }
-
-  return {
-    notes: (state.filter  === 'IMPORTANT' 
-      ? state.notes.filter(note => note.important)
-      : state.notes.filter(note => !note.important)
-    )
-  }
-}
-// highlight-end
-
-const ConnectedNotes = connect(mapStateToProps)(Notes)
-export default ConnectedNotes  
-```
-
-### mapDispatchToProps
-
-Now we have gotten rid of _useSelector_, but <i>Notes</i> still uses the _useDispatch_ hook and the _dispatch_ function returning it:
-
-```js
-const Notes = (props) => {
-  const dispatch = useDispatch() // highlight-line
-
-  return(
-    <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => 
-            dispatch(toggleImportanceOf(note.id)) // highlight-line
-          }
-        />
-      )}
-    </ul>
-  )
-}
-```
-
-The second parameter of the _connect_ function can be used for defining [mapDispatchToProps](https://github.com/reduxjs/react-redux/blob/master/docs/api/connect.md#mapdispatchtoprops-object--dispatch-ownprops--object) which is a group of <i>action creator</i> functions passed to the connected component as props. Let's make the following changes to our existing connect operation:
-
-
-```js
-const mapStateToProps = (state) => {
-  return {
-    notes: state.notes,
-    filter: state.filter,
-  }
-}
-
-// highlight-start
-const mapDispatchToProps = {
-  toggleImportanceOf,
-}
-// highlight-end
-
-const ConnectedNotes = connect(
-  mapStateToProps,
-  mapDispatchToProps // highlight-line
-)(Notes)
-
-export default ConnectedNotes
-```
-
-Now the component can directly dispatch the action defined by the _toggleImportanceOf_ action creator by calling the function through its props:
-
-```js
-const Notes = (props) => {
-  return(
-    <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => props.toggleImportanceOf(note.id)}
-        />
-      )}
-    </ul>
-  )
-}
-```
-
-This means that instead of dispatching the action like this:
-
-```js
-dispatch(toggleImportanceOf(note.id))
-```
-
-When using _connect_ we can simply do this:
-
-```js
-props.toggleImportanceOf(note.id)
-```
-
-There is no need to call the _dispatch_ function separately since _connect_ has already modified the _toggleImportanceOf_ action creator into a form that contains the dispatch.
-
-It can take some time to wrap your head around how _mapDispatchToProps_ works, especially once we take a look at an [alternative way of using it](/en/part6/connect#alternative-way-of-using-map-dispatch-to-props).
-
-The resulting situation from using _connect_ can be visualized like this:
-
-![](../../images/6/25b.png)
-
-In addition to accessing the store's state via <i>props.notes</i> and <i>props.filter</i>, the component also references a function that can be used for dispatching <i>notes/toggleImportanceOf</i>-type actions via its <i>toggleImportanceOf</i> prop.
-
-The code for the newly refactored <i>Notes</i> component looks like this:
-
-```js
-import { connect } from 'react-redux' 
-import { toggleImportanceOf } from '../reducers/noteReducer'
-
-const Notes = (props) => {
-  return(
-    <ul>
-      {props.notes.map(note =>
-        <Note
-          key={note.id}
-          note={note}
-          handleClick={() => props.toggleImportanceOf(note.id)}
-        />
-      )}
-    </ul>
-  )
-}
-
-const mapStateToProps = (state) => {
-  if ( state.filter === 'ALL' ) {
-    return {
-      notes: state.notes
-    }
-  }
-
-  return {
-    notes: (state.filter  === 'IMPORTANT' 
-    ? state.notes.filter(note => note.important)
-    : state.notes.filter(note => !note.important)
-    )
-  }
-}
-
-const mapDispatchToProps = {
-  toggleImportanceOf
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Notes)
-```
-
-Let's also use _connect_ to create new notes:
-
-```js
-import { connect } from 'react-redux' 
-import { createNote } from '../reducers/noteReducer'
-
-const NewNote = (props) => { // highlight-line
-  
-  const addNote = (event) => {
-    event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content) // highlight-line
-  }
-
-  return (
-    <form onSubmit={addNote}>
-      <input name="note" />
-      <button type="submit">add</button>
-    </form>
-  )
-}
-
-// highlight-start
-export default connect(
-  null, 
-  { createNote }
-)(NewNote)
-// highlight-end
-```
-
-Since the component does not need to access the store's state, we can simply pass <i>null</i> as the first parameter to _connect_. 
-
-
-You can find the code for our current application in its entirety in the <i>part6-5</i> branch of [this GitHub repository](https://github.com/fullstack-hy2020/redux-notes/tree/part6-5).
-
-### Referencing action creators passed as props
-
-Let's direct our attention to one interesting detail in the <i>NewNote</i> component:
-
-```js
-import { connect } from 'react-redux' 
-import { createNote } from '../reducers/noteReducer'  // highlight-line
-
-const NewNote = (props) => {
-  
-  const addNote = (event) => {
-    event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content)  // highlight-line
-  }
-
-  return (
-    <form onSubmit={addNote}>
-      <input name="note" />
-      <button type="submit">add</button>
-    </form>
-  )
-}
-
-export default connect(
-  null, 
-  { createNote }  // highlight-line
-)(NewNote)
-```
-
-Developers who are new to connect may find it puzzling that there are two versions of the <i>createNote</i> action creator in the component.
-
-The function must be referenced as <i>props.createNote</i> through the component's props, as this is the version that <i>contains the automatic dispatch</i> added by _connect_.
-
-Due to the way that the action creator is imported:
-
-```js
-import { createNote } from './../reducers/noteReducer'
-```
-The action creator can also be referenced directly by calling _createNote_. You should not do this, since this is the unmodified version of the action creator that does not contain the added automatic dispatch.
-
-If we print the functions to the console from the code (we have not yet looked at this useful debugging trick): 
-
-```js
-const NewNote = (props) => {
-  console.log(createNote)
-  console.log(props.createNote)
-
-  const addNote = (event) => {
-    event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content)
+  const toggleImportance = (task) => {
+    updateTaskMutation.mutate({...task, important: !task.important }) // highlight-line
   }
 
   // ...
 }
 ```
 
-We can see the difference between the two functions:
+So again, a mutation was created that invalidated the query `tasks` so that the updated task is rendered correctly.
+Using mutation is easy, the method `mutate` receives a `task` as a parameter, with the `important` property toggled.
 
-![](../../images/6/10.png)
+The current code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-2) in the branch *part6-2*.
 
-The first function is a regular <i>action creator</i> whereas the second function contains the additional dispatch to the store that was added by connect.
+### Optimizing the performance
 
-Connect is an incredibly useful tool although it may seem difficult at first due to its level of abstraction.
-
-### Alternative way of using mapDispatchToProps
-
-We defined the function for dispatching actions from the connected <i>NewNote</i> component in the following way:
-
-```js
-const NewNote = () => {
-  // ...
-}
-
-export default connect(
-  null,
-  { createNote }
-)(NewNote)
-```
-
-
-The connect expression above enables the component to dispatch actions for creating new notes with the <code>props.createNote('a new note')</code> command.
-
-
-The functions passed in <i>mapDispatchToProps</i> must be <i>action creators</i>, that is, functions that return Redux actions.
-
-
-It is worth noting that the <i>mapDispatchToProps</i> parameter is a <i>JavaScript object</i>, as the definition:
+Our application works, and the code is understandable.
+It's effortless to make changes to the list of tasks too!
+For example, when we change the importance of a task, invalidating the query `tasks` is enough for the application data to be updated:
 
 ```js
-{
-  createNote
-}
-```
-
-Is just shorthand for defining the object literal:
-
-```js
-{
-  createNote: createNote
-}
-```
-
-Which is an object that has a single <i>createNote</i> property with the <i>createNote</i> function as its value.
-
-Alternatively, we could pass the following <i>function</i> definition as the second parameter to _connect_:
-
-```js
-const NewNote = (props) => {
-  // ...
-}
-
-// highlight-start
-const mapDispatchToProps = dispatch => {
-  return {
-    createNote: value => {
-      dispatch(createNote(value))
+  const updateTaskMutation = useMutation({
+    mutationFn: updateTask, 
+    onSuccess: () => {
+      queryClient.invalidateQueries('tasks') // highlight-line
     },
-  }
-}
-// highlight-end
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(NewNote)
+  })
 ```
 
+The consequence of this, of course, is that after the PUT request that causes the task to change,
+the application makes a new GET request to retrieve the query data from the server:
 
-In this alternative definition, <i>mapDispatchToProps</i> is a function that _connect_ will invoke by passing it the _dispatch_-function as its parameter. The return value of the function is an object that defines a group of functions that get passed to the connected component as props. Our example defines the function passed as the <i>createNote</i> prop:
+![devtools network tab with highlight over 3 and tasks requests](../../images/6/61new.png)
 
-```js
-value => {
-  dispatch(createNote(value))
-}
-```
+If the amount of data retrieved by the application is not large, it doesn't really matter.
+Similarly, from the client's perspective, making an extra HTTP GET request doesn't matter either,
+but in some situations it could strain the server.
 
-Which simply dispatches the action created with the <i>createNote</i> action creator.
+If necessary, we could optimize performance
+[by manually updating](https://tanstack.com/query/latest/docs/react/guides/updates-from-mutation-responses) the query state maintained by React Query.
 
-The component then references the function through its props by calling <i>props.createNote</i>:
-
-```js
-const NewNote = (props) => {
-  const addNote = (event) => {
-    event.preventDefault()
-    const content = event.target.note.value
-    event.target.note.value = ''
-    props.createNote(content)
-  }
-
-  return (
-    <form onSubmit={addNote}>
-      <input name="note" />
-      <button type="submit">add</button>
-    </form>
-  )
-}
-```
-
-The concept is quite complex and describing it through text is challenging. In most cases it is sufficient to use the simpler form of <i>mapDispatchToProps</i>. However, there are situations where the more complicated definition is necessary, like if the <i>dispatched actions</i> need to reference [the props of the component](https://github.com/gaearon/redux-devtools/issues/250#issuecomment-186429931).
-
-The creator of Redux Dan Abramov has created a wonderful tutorial called [Getting started with Redux](https://egghead.io/courses/getting-started-with-redux) that you can find on Egghead.io. I highly recommend the tutorial to everyone. The last four videos discuss the _connect_ method, particularly the more "complicated" way of using it.
-
-### Presentational/Container revisited
-
-The refactored <i>Notes</i> component is almost entirely focused on rendering notes and is quite close to being a so-called [presentational component](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0). According to the [description](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) provided by Dan Abramov, presentation components:
-
-- Are concerned with how things look.
-- May contain both presentational and container components inside, and usually have some DOM markup and styles of their own.
-- Often allow containment via props.children.
-- Have no dependencies on the rest of the app, such as Redux actions or stores.
-- Don’t specify how the data is loaded or mutated.
-- Receive data and callbacks exclusively via props.
-- Rarely have their own state (when they do, it’s UI state rather than data).
-- Are written as functional components unless they need state, lifecycle hooks, or performance optimizations.
-
-The _connected component_ that is created with the _connect_ function:
+Here's the code that manually updates the new task mutation:
 
 ```js
-const mapStateToProps = (state) => {
-  if ( state.filter === 'ALL' ) {
-    return {
-      notes: state.notes
+const App = () => {
+  const queryClient =  useQueryClient() 
+
+  const newTaskMutation = useMutation({
+    mutationFn: createTask,
+    // highlight-start
+    onSuccess: (newTask) => {
+      const tasks = queryClient.getQueryData(['tasks']) 
+      queryClient.setQueryData(['tasks'], tasks.concat(newTask))
+    // highlight-end
     }
-  }
-
-  return {
-    notes: (state.filter  === 'IMPORTANT' 
-    ? state.notes.filter(note => note.important)
-    : state.notes.filter(note => !note.important)
-    )
-  }
+  })
+  // ...
 }
-
-const mapDispatchToProps = {
-  toggleImportanceOf,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Notes)
 ```
 
-Fits the description of a <i>container</i> component. According to the [description](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) provided by Dan Abramov, container components:
+In the `onSuccess` callback, *where we now have the `newTask` as a parameter*,
+the `queryClient` object reads the existing `tasks` state and updates it by adding the new task.
+The value of the `newTask` parameter is the *value returned by the function `createTask`*, defined in the file *requests.js* as follows:
 
-- Are concerned with how things work.
-- May contain both presentational and container components inside but usually don’t have any DOM markup of their own except for some wrapping divs, and never have any styles.
-- Provide the data and behavior to presentational or other container components.
-- Call Redux actions and provide these as callbacks to the presentational components.
-- Are often stateful, as they tend to serve as data sources.
-- Are usually generated using higher order components such as connect from React Redux, rather than written by hand.
+```js
+export const createTask = newTask =>
+  axios.post(baseUrl, newTask).then(res => res.data)
+```
 
-Dividing the application into presentational and container components is one way of structuring React applications that has been deemed beneficial. The division may be a good design choice or it may not, it depends on the context.
+It would be reasonable to make a similar change to the mutation that changes a task's importance, but we leave it as an optional exercise.
 
-Abramov attributes the following [benefits](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) to the division:
+#### Noticing extra network calls
 
-- Better separation of concerns. You understand your app and your UI better by writing components this way.
-- Better reusability. You can use the same presentational component with completely different state sources, and turn those into separate container components that can be further reused.
-- Presentational components are essentially your app’s “palette”. You can put them on a single page and let the designer tweak all their variations without touching the app’s logic. You can run screenshot regression tests on that page.
+If we closely follow the browser's network tab, we notice that React Query retrieves all tasks as soon as we move the cursor to the input field:
 
-Abramov mentions the term [high order component](https://reactjs.org/docs/higher-order-components.html). The <i>Notes</i> component is an example of a regular component, whereas the <i>connect</i> method provided by React-Redux is an example of a <i>high order component</i>. Essentially, a high order component is a function that accept a "regular" component as its parameter, that then returns a new "regular" component as its return value.
+![dev tools tasks app with input text field highlighted and arrow on network over notes request as 200](../../images/6/62new.png)
 
-High order components, or HOCs, are a way of defining generic functionality that can be applied to components. This is a concept from functional programming that very slightly resembles inheritance in object oriented programming.
+What is going on?
+The [React Query documentation](https://tanstack.com/query/latest/docs/react/reference/useQuery),
+explains that queries (*whose status is **stale***)
+are updated when the **window focus** changes.
+So since the input field becomes active when clicked, that changes the window focus, and thus the queries update.
+If we want, we can turn off the functionality by adding an *options* parameter to our `getTasks` query.
 
-HOCs are in fact a generalization of the [High Order Function](https://en.wikipedia.org/wiki/Higher-order_function) (HOF) concept. HOFs are functions that either accept functions as parameters or return functions. We have actually been using HOFs throughout the course, e.g. all of the methods used for dealing with arrays like _map, filter and find_ are HOFs. 
+```js
+const App = () => {
+  // ...
+  const result = useQuery({
+    queryKey: ['tasks'],
+    queryFn: getTasks,
+    refetchOnWindowFocus: false  // highlight-line
+  })
 
-<!-- Reactin hook-apin ilmestymisen jälkeen HOC:ien suosio on kääntynyt laskuun, ja melkein kaikki kirjastot, joiden käyttö on aiemmin perustunut HOC:eihin on saanut hook-perustaisen apin. Useimmiten , kuten myös reduxin kohdalla, hook-perustaiset apit ovat HOC-apeja huomattavasti yksinkertaisempia. -->
-After the React hook-api was published, HOCs have become less and less popular. Almost all libraries which used to be based on HOCs have now been modified to use hooks. Most of the time hook based apis are a lot simpler than HOC based ones, as is the case with redux as well. 
+  // ...
+}
+```
 
-### Redux and the component state
+If you put a `console.log` statement in the code, you could see from browser console how often React Query causes the application to be re-rendered.
+The rule of thumb is that rerendering happens at least whenever there is a need for it, i.e. when the state of the query changes.
+You can read more about [render optimizations here](https://tkdodo.eu/blog/react-query-render-optimizations).
 
-We have come a long way in this course and, finally, we have come to the point at which we are using React "the right way", meaning React only focuses on generating the views, and the application state is separated completely from the React components and passed on to Redux, its actions, and its reducers.
+The code for the application is in [GitHub](https://github.com/comp227/query-tasks/tree/part6-3) in the branch *part6-3*.
 
-What about the _useState_-hook, which provides components with their own state? Does it have any role if an application is using Redux or some other external state management solution? If the application has more complicated forms, it may be beneficial to implement their local state using the state provided by the _useState_ function. One can, of course, have Redux manage the state of the forms, however, if the state of the form is only relevant when filling the form (e.g. for validation) it may be wise to leave the management of state to the component responsible for the form.
+#### React Query summary
 
-Should we always use redux? Probably not. Dan Abramov, the developer of redux, discusses this in his article [You Might Not Need Redux](https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367).
+React Query is a versatile library that, based on what we have already seen, simplifies the application.
+Does React Query make more complex state management solutions such as Redux unnecessary? No.
+React Query can partially replace the state of the application in some cases,
+but as the [documentation](https://tanstack.com/query/latest/docs/react/guides/does-this-replace-client-state) states:
 
-Nowadays it is possible to implement redux-like state management without redux by using the React [context](https://reactjs.org/docs/context.html)-api and the [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)-hook. 
-More about this [here](https://www.simplethread.com/cant-replace-redux-with-hooks/) and [here](https://hswolff.com/blog/how-to-usecontext-with-usereducer/). We will also practice this in 
-[part 9](/en/part9).
+>- *React Query is a **server-state library**, responsible for managing asynchronous operations between your server and client*
+>- *Redux, etc. are **client-state libraries** that can be used to store asynchronous data, albeit inefficiently when compared to a tool like React Query*
+
+So React Query is a **library that maintains the server state in the frontend**, i.e. acts as a cache for what is stored on the server.
+React Query simplifies the processing of data on the server, and can in some cases eliminate the need for data on the server to be saved in the frontend state.
+
+Most React applications need not only a way to temporarily store the served data,
+but also some solution for how the rest of the frontend state (e.g. the state of forms or notifications) is handled.
 
 </div>
 
 <div class="tasks">
 
-### Exercises 6.19.-6.21.
+### Exercises 6.20-6.22
 
-#### 6.19 anecdotes and connect, step1
+Now let's make a new version of the joke application that uses the React Query library.
+Use the *quipquery* folder in your *part6* repo as your starting point in your project.
+The project has a ready-installed JSON Server, the operation of which has been slightly modified.
+*Read **server.js** for more details.*
+*Also, make sure you're connecting to the correct `PORT`.*
+Start the server with `npm run server`.
 
-The <i>redux store</i> is currently being accessed by the components through the <em>useSelector</em> and <em>useDispatch</em> hooks.
+#### Exercise 6.20
 
-Modify the <i>Notification</i> component so that it uses the _connect_ function instead of the hooks. 
-#### 6.20 anecdotes and connect, step2
+Implement retrieving jokes from the server using React Query.
 
-Do the same for the <i>Filter</i> and <i>AnecdoteForm</i> components.
-#### 6.21 anecdotes, the grand finale
+The application should work in such a way that if there are problems communicating with the server, only an error page will be displayed:
 
-You (probably) have one nasty bug in your application. If the user clicks the vote button multiple times in a row, the notification is displayed funnily. For example if a user votes twice in three seconds, 
-the last notification is only displayed for two seconds (assuming the notification is normally shown for 5 seconds). This happens because removing the first notification accidentally removes the second notification. 
+![browser saying anecdote service not available due to problems in server on localhost](../../images/6/65new.png)
 
-Fix the bug so that after multiple votes in a row, the notification for the last vote is displayed for five seconds.
+Here is some [info on how to detect possible server errors](https://tanstack.com/query/latest/docs/react/guides/queries).
 
-The fix can be done by canceling the previous notification when a new notification is displayed, whenever necessary. 
-The [documentation](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) for the setTimeout function might also be useful for this.
+> *You can simulate a problem with the server by **turning off the JSON Server.***
 
-This was the last exercise for this part of the course and it's time to push your code to GitHub and mark all of your completed exercises to the [exercise submission system](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
+Please be aware that if a request fails, the query stays in the `isLoading` state for a while.
+This is because React Query tries the request a few times before it determines that the request is not successful.
+You can optionally specify that no retries are made:
+
+```js
+const result = useQuery({
+    queryKey: ['jokes'],
+    queryFn: getJokes, 
+    retry: false
+  }
+)
+```
+
+or that the request is retried a specific number of times (*like once*):
+
+```js
+const result = useQuery({
+    queryKey: ['jokes'],
+    queryFn: getJokes, 
+    retry: 1
+  }
+)
+```
+
+#### Exercise 6.21
+
+Implement adding new jokes to the server using React Query.
+The application should render a new joke by default.
+Make sure that the content of the joke must be at least five characters long, otherwise the server will reject the POST request.
+You don't have to worry about error handling now.
+
+#### Exercise 6.22
+
+Implement voting for jokes using React Query.
+The application should automatically render the increased number of votes for the voted joke
+
+</div>
+
+<div class="content">
+
+### useReducer
+
+So even if the application uses React Query, some kind of solution is usually needed to manage the rest of the frontend state (for example, the state of forms).
+Quite often, the state created with `useState` is a sufficient solution.
+Using Redux is of course possible, but there are other alternatives.
+
+Let's look at a simple counter application.
+The application displays the counter value, and offers three buttons to update the counter status:
+
+![browser showing simple counter application with + - 0 buttons and 7 above](../../images/6/63new.png)
+
+Let's implement the state management of the counter *using a Redux-like state management mechanism* provided by React's built-in
+[***useReducer***](https://react.dev/reference/react/useReducer) hook.
+Here's what the code looks like:
+
+```js
+import { useReducer } from 'react'
+
+const counterReducer = (state, action) => {
+  switch (action.type) {
+    case "INC":
+        return state + 1
+    case "DEC":
+        return state - 1
+    case "ZERO":
+        return 0
+    default:
+        return state
+  }
+}
+
+const App = () => {
+  const [counter, counterDispatch] = useReducer(counterReducer, 0)
+
+  return (
+    <div>
+      <div>{counter}</div>
+      <div>
+        <button onClick={() => counterDispatch({ type: "INC"})}>+</button>
+        <button onClick={() => counterDispatch({ type: "DEC"})}>-</button>
+        <button onClick={() => counterDispatch({ type: "ZERO"})}>0</button>
+      </div>
+    </div>
+  )
+}
+
+export default App
+```
+
+The hook [`useReducer`](https://react.dev/reference/react/useReducer) provides a mechanism to create a state for an application.
+`useReducer`'s first parameter, is the reducer function that handles state changes, while the second parameter is the initial value of the state:
+
+```js
+const [counter, counterDispatch] = useReducer(counterReducer, 0)
+```
+
+The reducer function that handles state changes is similar to Redux's reducers,
+i.e. the function takes in *parameters for the current state and the action that changes the state*.
+The function returns the new state updated based on the type and possible contents of the action:
+
+```js
+const counterReducer = (state, action) => {
+  switch (action.type) {
+    case "INC":
+        return state + 1
+    case "DEC":
+        return state - 1
+    case "ZERO":
+        return 0
+    default:
+        return state
+  }
+}
+```
+
+In our example, actions only have a type.
+*If the action's type is `INC`, it increases the value of the counter by one, etc.*
+Like Redux's reducers, ***actions can also contain arbitrary data***, which is usually put in the action's `payload` field.
+
+The function `useReducer` returns an array that contains:
+
+1. an element to access the current value of the state
+2. a `dispatch` function to change the state:
+
+```js
+const App = () => {
+  const [counter, counterDispatch] = useReducer(counterReducer, 0)  // highlight-line
+
+  return (
+    <div>
+      <div>{counter}</div> // highlight-line
+      <div>
+        <button onClick={() => counterDispatch({ type: "INC" })}>+</button> // highlight-line
+        <button onClick={() => counterDispatch({ type: "DEC" })}>-</button>
+        <button onClick={() => counterDispatch({ type: "ZERO" })}>0</button>
+      </div>
+    </div>
+  )
+}
+```
+
+One can observe that the state change is done exactly as in Redux, the dispatch function is given the appropriate state-changing action as a parameter:
+
+```js
+counterDispatch({ type: "INC" })
+```
+
+The current code for the application is in the repository
+[https://github.com/comp227/hook-counter](https://github.com/comp227/hook-counter/tree/part6-1) in the branch *part6-1*.
+
+### Using context for passing the state to components
+
+If we want to split the application into several components,
+*the value of the counter and the dispatch function used to manage it must also be passed to the other components*.
+One solution would be to ***pass these as props*** in the usual way:
+
+```js
+const Display = ({ counter }) => {
+  return <div>{counter}</div>
+}
+
+const Button = ({ dispatch, type, label }) => {
+  return (
+    <button onClick={() => dispatch({ type })}>
+      {label}
+    </button>
+  )
+}
+
+const App = () => {
+  const [counter, counterDispatch] = useReducer(counterReducer, 0)
+
+  return (
+    <div>
+      <Display counter={counter}/> // highlight-line
+      <div>
+        // highlight-start
+        <Button dispatch={counterDispatch} type='INC' label='+' />
+        <Button dispatch={counterDispatch} type='DEC' label='-' />
+        <Button dispatch={counterDispatch} type='ZERO' label='0' />
+        // highlight-end
+      </div>
+    </div>
+  )
+}
+```
+
+The solution works, but is not optimal.
+If the component structure becomes very nested, the dispatcher would need to be forwarded using props through all of those intermediary sub-components,
+even though those components in between may not need the dispatcher.
+This phenomenon is called [**prop drilling**](https://kentcdodds.com/blog/prop-drilling).
+
+React's built-in [Context API](https://react.dev/learn/passing-data-deeply-with-context) provides a solution for us.
+React's **context** is like a global state for the application, so that any component could get access to the state.
+However, as Javascript expert Kent Dodds says in the [prop drilling article linked above](https://kentcdodds.com/blog/prop-drilling), when comparing the context api to global variables:
+
+>*The difference is that because of the way the [Context] API was designed, you can still statically find the source of the context as well as any consumers with relative ease.*
+
+Let us now create a context in the application that stores the state management of the counter.
+
+The context is created with React's hook [createContext](https://react.dev/reference/react/createContext).
+Let's create a context in the file *CounterContext.jsx*:
+
+```js
+import { createContext } from 'react'
+
+const CounterContext = createContext()
+
+export default CounterContext
+```
+
+The `App` component can now ***provide a context to its child components*** as follows:
+
+```js
+import CounterContext from './CounterContext' // highlight-line
+
+const App = () => {
+  const [counter, counterDispatch] = useReducer(counterReducer, 0)
+
+  return (
+    <CounterContext.Provider value={[counter, counterDispatch]}>  // highlight-line
+      <Display />
+      <div>
+        <Button type='INC' label='+' />
+        <Button type='DEC' label='-' />
+        <Button type='ZERO' label='0' />
+      </div>
+    </CounterContext.Provider> // highlight-line
+  )
+}
+```
+
+The code above wraps child components inside the `CounterContext.Provider` component and sets a `value` in its attributes.
+
+The context providers's `value` is set to be an array containing the value of the `counter`, and the `dispatch` function (*`counterDispatch`*).
+
+Other components (including *`Display`* and *`Button`*)
+can now access the context using the [`useContext`](https://react.dev/reference/react/useContext) hook:
+
+```js
+import { useContext } from 'react' // highlight-line
+import CounterContext from '../CounterContext'
+
+const Display = () => {
+  const [counter, dispatch] = useContext(CounterContext) // highlight-line
+  return (
+    <div>
+      {counter}
+    </div>
+  )
+}
+
+// meanwhile in another component, Button.jsx
+const Button = ({ type, label }) => {
+  const [counter, dispatch] = useContext(CounterContext) // highlight-line
+  return (
+    <button onClick={() => dispatch({ type })}>
+      {label}
+    </button>
+  )
+}
+```
+
+The current code for the application is in [GitHub](https://github.com/comp227/hook-counter/tree/part6-2) in the branch *part6-2*.
+
+### Defining the counter context in a separate file
+
+In studying the application's code further,
+we want to avoid the fact that the functionality of the counter state management is partly defined in the `App` component.
+Let's **move everything related to the counter to *CounterContext.jsx***:
+
+```js
+import { createContext, useReducer } from 'react'
+
+const counterReducer = (state, action) => {
+  switch (action.type) {
+    case "INC":
+        return state + 1
+    case "DEC":
+        return state - 1
+    case "ZERO":
+        return 0
+    default:
+        return state
+  }
+}
+
+const CounterContext = createContext()
+
+export const CounterContextProvider = (props) => {
+  const [counter, counterDispatch] = useReducer(counterReducer, 0)
+
+  return (
+    <CounterContext.Provider value={[counter, counterDispatch] }>
+      {props.children}
+    </CounterContext.Provider>
+  )
+}
+
+export default CounterContext
+```
+
+The file now exports, in addition to the `CounterContext` object, the `CounterContextProvider` component,
+whose value is a counter and a dispatcher used for its state management.
+
+Let's enable the context provider by making a change in *main.jsx*:
+
+```js
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import { CounterContextProvider } from './CounterContext' // highlight-line
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <CounterContextProvider>  // highlight-line
+    <App />
+  </CounterContextProvider>  // highlight-line
+)
+```
+
+Now the context defining the value and functionality of the counter **is available to *all* components of the application**.
+
+The `App` component is simplified to the following form:
+
+```js
+import Display from './components/Display'
+import Button from './components/Button'
+
+const App = () => {
+  return (
+    <div>
+      <Display />
+      <div>
+        <Button type='INC' label='+' />
+        <Button type='DEC' label='-' />
+        <Button type='ZERO' label='0' />
+      </div>
+    </div>
+  )
+}
+
+export default App
+```
+
+The context is still used in the same way, e.g. the component `Button` is defined as follows:
+
+```js
+import { useContext } from 'react'
+import CounterContext from '../CounterContext'
+
+const Button = ({ type, label }) => {
+  const [counter, dispatch] = useContext(CounterContext)
+  return (
+    <button onClick={() => dispatch({ type })}>
+      {label}
+    </button>
+  )
+}
+
+export default Button
+```
+
+The `Button` component *only needs the `dispatch` function of the counter*, but it also gets the value of the counter from the context using the function `useContext`:
+
+```js
+  const [counter, dispatch] = useContext(CounterContext)
+```
+
+This is not a big problem, but it is possible to make the code a bit nicer by defining a couple of helper functions in the `CounterContext` file:
+
+```js
+import { createContext, useReducer, useContext } from 'react' // highlight-line
+
+const CounterContext = createContext()
+
+// ...
+
+export const useCounterValue = () => {
+  const counterAndDispatch = useContext(CounterContext)
+  return counterAndDispatch[0]
+}
+
+export const useCounterDispatch = () => {
+  const counterAndDispatch = useContext(CounterContext)
+  return counterAndDispatch[1]
+}
+
+// ...
+```
+
+With these helper functions, the components can now selectively retrieve the parts of the context they need.
+The `Display` component changes as follows:
+
+```js
+import { useCounterValue } from '../CounterContext' // highlight-line
+
+const Display = () => {
+  const counter = useCounterValue() // highlight-line
+  return <div>
+    {counter}
+  </div>
+}
+
+
+export default Display
+```
+
+Component `Button` becomes:
+
+```js
+import { useCounterDispatch } from '../CounterContext' // highlight-line
+
+const Button = ({ type, label }) => {
+  const dispatch = useCounterDispatch() // highlight-line
+  return (
+    <button onClick={() => dispatch({ type })}>
+      {label}
+    </button>
+  )
+}
+
+export default Button
+```
+
+This code is much cleaner.
+The *entire state of the application*, i.e. the value of the counter and the code for managing it, ***is now isolated in the file `CounterContext`***.
+*CounterContext.jsx* also has well-named and easy-to-use auxiliary functions for managing the state.
+
+The final code for the application is in [GitHub](https://github.com/comp227/hook-counter/tree/part6-3) in the branch *part6-3*.
+
+As a technical detail, notice that the helper functions `useCounterValue` and `useCounterDispatch` are defined as
+[custom hooks](https://react.dev/learn/reusing-logic-with-custom-hooks),
+because calling the hook function `useContext` is [possible](https://legacy.reactjs.org/docs/hooks-rules.html) only from React components or custom hooks.
+**Custom Hooks** are JavaScript functions whose name must start with the string *`use`*.
+We will return to custom hooks in a little more detail in [part 7](/part7/custom_hooks) of the course.
+
+</div>
+
+<div class="tasks">
+
+### Exercises 6.23-6.24
+
+#### Exercise 6.23
+
+The application has a `Notification` component for displaying notifications to the user.
+
+Implement the application's notification state management using the `useReducer` hook and context.
+The notification should tell the user when a new joke is created or an joke is voted on:
+
+![browser showing notification for added joke](../../images/6/66new.png)
+
+The notification is displayed for five seconds.
+
+#### Exercise 6.24
+
+As stated in exercise 6.21, the server requires that the content of the joke to be added is at least five characters long.
+***Now implement error handling for the insertion***.
+In practice, it is sufficient to display a notification to the user in case of a failed POST request:
+
+![browser showing error notification for trying to add too short of an anecdote](../../images/6/67new.png)
+
+The error condition should be handled in the callback function registered for it, here's
+[how to register a function](https://tanstack.com/query/latest/docs/react/reference/useMutation).
+
+This was the last exercise for this part of the course and it's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
+
+</div>
+
+<div class="content">
+
+### Which state management solution to choose?
+
+In chapters 1-5, all state management of the application was done using React's hook `useState`.
+Asynchronous calls to the backend required the use of the `useEffect` hook in some situations.
+In principle, *nothing else is needed*.
+
+However as we have discussed in this section, the idea of *prop drilling* or of wanting a more complex state management solution has often arisen.
+
+Over the years, several alternative solutions have been developed for state management of React applications.
+However, no solution has been "final", all have their own pros and cons, and new solutions are being developed all the time.
+
+The situation may confuse a beginner and even an experienced web developer.
+Which solution should be used?
+
+For a simple application, `useState` is certainly a good starting point.
+If the application is communicating with the server, the communication can be handled in the same way as in chapters 1-5, using the state of the application itself.
+Recently, however, it has become more common to move the communication and associated state management at least partially under the control of React Query (or some other similar library).
+There are also situations where it may make sense to handle some of the state with `useState` and some with contexts.
+
+The most comprehensive and robust state management solution is *Redux*, which is a way to implement the so-called [Flux](https://facebookarchive.github.io/flux/) architecture.
+Redux is slightly older than the solutions presented in this section.
+The rigidity of Redux has been the motivation for many new state management solutions, such as React's `useReducer`.
+Some of the criticisms of Redux's rigidity have already become obsolete thanks to the [Redux Toolkit](https://redux-toolkit.js.org/).
+
+Over the years, there have also been other state management libraries developed that are similar to Redux,
+such as the newer entrant [Recoil](https://recoiljs.org/) and the slightly older [MobX](https://mobx.js.org/).
+However, according to [Npm trends](https://npmtrends.com/mobx-vs-recoil-vs-redux),
+Redux still clearly dominates, and in fact seems to be increasing its lead:
+
+![graph showing redux growing in popularity over past 5 years](../../images/6/64new.png)
+
+Also, Redux does not have to be used in its entirety in an application.
+It may make sense, for example, *to manage the form state outside of Redux*, especially in situations where the state of a form does not affect the rest of the application.
+It is also possible to ***use Redux and React Query together in the same application***.
+
+The question of which state management solution should be used is not at all straightforward.
+**It is impossible to give a single correct answer**.
+It may also turn out that over time, the application may outgrow the selected state management solution,
+*even if the application has already been put into production use*.
+
+The best we can do is to continue to learn about what's available.
 
 </div>

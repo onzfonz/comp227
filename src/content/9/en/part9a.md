@@ -7,180 +7,327 @@ lang: en
 
 <div class="content">
 
-TypeScript is a programming language designed for large-scale JavaScript development created by Microsoft. For example, Microsoft's <i>Azure Management Portal</i> (1,2 million lines of code) and <i>Visual Studio Code</i> (300 000 lines of code) have both been written in TypeScript. To support building large-scale JavaScript applications, TypeScript offers features such as better development-time tooling, static code analysis, compile-time type checking and code level documentation.
+Traditionally, developing native iOS and Android applications has required the developer to use platform-specific programming languages and development environments.
+For iOS development, this means using Objective C or Swift and for Android development using JVM-based languages such as Java, Scala or Kotlin.
+Releasing an application for both these platforms technically requires developing two separate applications with different programming languages.
+This requires lots of development resources.
 
-### Main principle
+One of the popular approaches to unify the platform-specific development has been to utilize the browser as the rendering engine.
+[Cordova](https://cordova.apache.org/) is one of the most popular platforms for building cross-platform applications.
+It allows for developing multi-platform applications using standard web technologies - HTML5, CSS3, and JavaScript.
+However, Cordova applications are running within an embedded browser window in the user's device.
+That is why these applications can not achieve the performance nor the look-and-feel of native applications that utilize actual native user interface components.
 
-TypeScript is a typed superset of JavaScript, and eventually it's compiled into plain JavaScript code. The programmer is even able to decide the version of the generated code, as long as it's ECMAScript 3 or newer. TypeScript being a superset of JavaScript means that it includes all the features of JavaScript and 
-its own additional features as well. In other words, all existing JavaScript code is actually valid TypeScript.
+[React Native](https://reactnative.dev/) is a framework for developing native Android and iOS applications using JavaScript and React.
+It provides a set of cross-platform components that behind the scenes utilize the platform's native components.
+Using React Native allows us to bring all the familiar features of React such as
+JSX, components, props, state, and hooks into native application development.
+On top of that, we can utilize many familiar libraries in the React ecosystem such as [React Redux](https://react-redux.js.org/),
+[Apollo](https://github.com/apollographql/react-apollo),
+[React Router](https://reacttraining.com/react-router/core/guides/quick-start) and many more.
 
-TypeScript consists of three separate, but mutually fulfilling parts: 
+The speed of development and gentle learning curve for developers familiar with React is one of the most important benefits of React Native.
+Here's a motivational quote from Coinbase's article
+[Onboarding thousands of users with React Native](https://benbronsteiny.wordpress.com/2020/02/27/onboarding-thousands-of-users-with-react-native/)
+on the benefits of React Native:
 
-- The language
-- The compiler
-- The language service
+> *If we were to reduce the benefits of React Native to a single word, it would be "velocity".
+On average, our team was able to onboard engineers in less time, share more code (which we expect will lead to future productivity boosts),
+and ultimately deliver features faster than if we had taken a purely native approach.*
 
-![](../../images/9/1.png)
+### About this part
 
-The <i>language</i> consists of syntax, keywords and type annotations. The syntax is similar to but not the same as JavaScript syntax. From the three parts of TypeScript, programmers have the most direct contact with the language. 
+During this part, we will learn how to build an actual React Native application from the bottom up.
+We will learn concepts such as what are React Native's core components, how to create beautiful user interfaces,
+how to communicate with a server and how to test a React Native application.
 
-The <i>compiler</i> is responsible for type information erasure (i.e. removing the typing information) and the code transformations. The code transformations enable TypeScript code to be transpiled into executable JavaScript. Everything related to the types is removed at compile-time, so TypeScript isn't actually genuine statically-typed code. 
+We will be developing an application for rating [GitHub](https://github.com/) repositories.
+Our application will have features such as:
 
-Traditionally,  <i>compiling</i>  means that code is transformed from a human-readable format to a machine-readable format. In TypeScript, human-readable source code is transformed into another human-readable source code, so the correct term would actually be <i>transpiling</i>. However, compiling has been the most commonly-used term in this context, so we will continue to use it. 
+- sorting and filtering reviewed repositories
+- registering a user
+- logging in
+- creating a review for a repository.
 
-The compiler also performs a static code analysis. It can emit warnings or errors if it finds a reason to do so, and it can be set to perform additional tasks such as combining the generated code into a single file. 
+The backend for the application will be provided for us so that we can solely focus on the React Native development.
+The final version of our application will look something like this:
 
-The <i>language service</i> collects type information from the source code. Development tools can use the type information for providing intellisense, type hints and possible refactoring alternatives.
-### TypeScript key language features
+![Application preview](../../images/9/4.png)
 
-In this section, we will describe some of the key features of the TypeScript language. The intent is to provide you with a basic understanding of TypeScript's 
-key features to help you understand more of what is to come during this course.
+All the exercises in this part have to be submitted into *a single GitHub repository* which will eventually contain the entire source code of your application.
+There will be model solutions available for each section of this part which you can use to fill in incomplete submissions.
+This part is structured based on the idea that you develop your application as you progress in the material.
+So **do not** wait until the exercises to start the development.
+Instead, develop your application at the same pace as the material progresses.
 
-#### Type annotations
+This part will heavily rely on concepts covered in the previous parts.
+Before starting this part you will need basic knowledge of JavaScript and React.
+Deep knowledge of server-side development is not required and all the server-side code is provided for you.
+The recommended parts to complete before this part are
+[part 1](/part1), [part 2](/part2), [part 5](/part5), and [part 7](/part7).
 
-Type annotations in TypeScript are a lightweight way to record the intended <i>contract</i> of a function or a variable. 
-In the example below, we have defined a <i>birthdayGreeter</i> function which accepts two arguments: one of type string and one of type number. 
-The function will return a string.
+### Submitting exercises
 
+Exercises are submitted via GitHub just like in the previous parts.
+Notice that, exercises in this part are submitted *to a different course repo* than in parts 0-7.
+This means that you will be submitting exercises a single section at a time starting with this section, "Introduction to React Native", which is part 1 on Canvas.
 
-```js
-const birthdayGreeter = (name: string, age: number): string => {
-  return `Happy birthday ${name}, you are now ${age} years old!`;
-};
+### Initializing the application
 
-const birthdayHero = "Jane User";
-const age = 22;
+To get started with our application we need to set up our development environment.
+We have learned from previous parts that there are useful tools for setting up React applications quickly such as Create React App.
+Luckily React Native has these kinds of tools as well.
 
-console.log(birthdayGreeter(birthdayHero, age));
+For the development of our application, we will be using [Expo](https://docs.expo.io/versions/latest/).
+Expo is a platform that eases the setup, development, building, and deployment of React Native applications.
+Let's get started with Expo by initializing our project with ***create-expo-app***:
+
+```shell
+npx create-expo-app rate-repository-app --template expo-template-blank@sdk-46
+```
+  
+Notice that the `@sdk-46` sets the project's *Expo SDK version to 46*, which supports *React Native version 0.69*.
+Using other Expo SDK versions might cause you trouble while following this material.
+Also, Expo has a [few limitations](https://docs.expo.dev/faq/#limitations) when compared to plain React Native CLI.
+However, these limitations do not affect the application implemented in the material.
+
+Next, let's navigate to the created *rate-repository-app* directory with the terminal and install a few dependencies we'll be needing soon:
+
+```shell
+npx expo install react-native-web@~0.18.7 react-dom@18.2.0 @expo/webpack-config@^0.17.0
 ```
 
-#### Structural typing
+Now that our application has been initialized, open the created *rate-repository-app* directory with an editor such as [Visual Studio Code](https://code.visualstudio.com/).
+The structure should be more or less the following:
 
-TypeScript is a structurally-typed language. In structural typing, two elements are considered to be compatible with one another if, for each feature within the type of the first element, a corresponding and identical feature exists within the type of the second element. Two types are considered to be identical if they are compatible with each other.
+![Project structure](../../images/9/1.png)
 
-#### Type inference
+We might spot some familiar files and directories such as *package.json* and *node_modules*.
+On top of those, the most relevant files are the *app.json* file which contains Expo-related configuration and *App.js* which is the root component of our application.
+**Do not** rename or move the *App.js* file because by default Expo imports it to
+[register the root component](https://docs.expo.io/versions/latest/sdk/register-root-component/).
 
-The TypeScript compiler can attempt to infer the type information if no type has been specified. Variables' type can be inferred based on its assigned value and its usage. The type inference take place when initializing variables and members, setting parameter default values, and determining function return types.
+Let's look at the *`scripts`* section of the *package.json* file which has the following scripts:
 
-For example, consider the function <i>add</i>:
-
-```js
-const add = (a: number, b: number) => {
-  /* The return value is used to determine
-     the return type of the function */
-  return a + b;
+```javascript
+{
+  // ...
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  // ...
 }
 ```
 
-Type of the function's return value is inferred by retracing the code back to the return expression. The return expression performs an addition of the parameters a and b. We can see that a and b are numbers based on their types. Thus, we can infer the return value to be of type <i>number</i>.
+Let us now run the script `npm start`
 
-As a more complex example, let's consider the code below. If you have not used TypeScript before, this example might be a bit complex. But do not worry, you can safely skip it for now.
+![metro bundler console output](../../images/9/25new.png)
+
+> *If the script fails with error*
+>
+>```bash
+>error:03000086:digital envelope routines::initialization
+>```
+>
+> *the problem is most likely your Node version.
+In case of problems, switch to version **`16.19.0`**.
+See eg. [here](https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported) for more.*
+
+The script starts the [Metro bundler](https://facebook.github.io/metro/) which is a JavaScript bundler for React Native.
+It can be described as the [Webpack](https://webpack.js.org/) of the React Native ecosystem.
+In addition to the Metro bundler, the Expo command-line interface should be open in the terminal window.
+The command-line interface has a useful set of commands for viewing the application logs
+and starting the application in an emulator or in Expo's mobile application.
+We will get to emulators and Expo's mobile application soon, but first, let's open our application.
+  
+Expo command-line interface suggests a few ways to open our application.
+Let's press the "w" key in the terminal window to open the application in a browser.
+We should soon see the text defined in the *App.js* file in a browser window.
+Open the *App.js* file with an editor and make a small change to the text in the `Text` component.
+After saving the file you should be able to see that the changes you have made in the code are visible in the browser window.
+
+### Setting up the development environment
+
+We have had the first glance of our application using the Expo's browser view.
+Although the browser view is quite usable, it is still a quite poor simulation of the native environment.
+Let's have a look at the alternatives we have regarding the development environment.
+
+Android and iOS devices such as tablets and phones can be emulated in computers using specific ***emulators***.
+This is very useful for developing native applications.
+macOS users can use both Android and iOS emulators with their computers.
+Users of other operating systems such as Linux or Windows have to settle for Android emulators.
+Next, depending on your operating system follow one of these instructions on setting up an emulator:
+
+- [Set up the Android emulator with Android Studio](https://docs.expo.dev/workflow/android-studio-emulator/) (any operating system)
+- [Set up the iOS simulator with Xcode](https://docs.expo.dev/workflow/ios-simulator/) (macOS operating system)
+
+After you have set up the emulator and it is running, start the Expo development tools as we did before, by running `npm start`.
+Depending on the emulator you are running either press the corresponding key for the "open Android" or "open iOS simulator".
+After pressing the key, Expo should connect to the emulator and you should eventually see the application in your emulator.
+Be patient, this might take a while.
+
+In addition to emulators, there is one extremely useful way to develop React Native applications with Expo, the Expo mobile app.
+With the Expo mobile app, you can preview your application using your actual mobile device,
+which provides a bit more concrete development experience compared to emulators.
+To get started, install the Expo mobile app by following the instructions in
+[Expo's documentation](https://docs.expo.io/get-started/installation/#2-expo-go-app-for-ios-and).
+Notice that the Expo mobile app can only open your application
+if your mobile device is connected to *the same local network* (e.g. connected to the same Wi-Fi network)
+as the computer you are using for development.
+
+When the Expo mobile app has finished installing, open it up.
+Next, if the Expo development tools are not already running, start them by running `npm start`.
+You should be able to see a QR code at the beginning of the command output.
+Open the app by scanning the QR code, in Android with the Expo app or in iOS with the Camera app.
+The Expo mobile app should start building the JavaScript bundle and after it is finished you should be able to see your application.
+Now, every time you want to reopen your application in the Expo mobile app,
+you should be able to access the application without scanning the QR code by pressing it in the ***Recently opened*** list in the ***Projects*** view.
+
+</div>
+
+<div class="tasks">
+
+### Exercise 9.1
+
+#### Exercise 9.1: initializing the application
+
+Initialize your application with Expo command-line interface and set up the development environment either using an emulator or Expo's mobile app.
+It is recommended to try both and find out which development environment is the most suitable for you.
+The name of the application is not that relevant.
+You can, for example, go with *rate-repository-app*.
+
+To submit this exercise and all future exercises you need to make sure you have used the GitHub Classroom link, which is listed on Canvas.
+
+Finally, just commit and push your changes into the repository and you are all done.
+
+</div>
+
+<div class="content">
+
+### ESLint
+
+Now that we are somewhat familiar with the development environment let's enhance our development experience even further by configuring a linter.
+We will be using [ESLint](https://eslint.org/) which is already familiar to us from the previous parts.
+Let's get started by installing the dependencies:
+
+```shell
+npm i -D eslint @babel/eslint-parser eslint-plugin-react eslint-plugin-react-native
+```
+
+Next, let's add the ESLint configuration into a *.estlintrc.cjs* file in the *rate-repository-app* directory with the following content:
 
 ```js
-type CallsFunction = (callback: (result: string) => any) => void;
-
-const func: CallsFunction = (cb) => {
-  cb('done');
-  cb(1);
+{
+  "plugins": ["react", "react-native"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parser": "@babel/eslint-parser",
+  "env": {
+    "react-native/react-native": true
+  },
+  "rules": {
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off"
+  }
 }
-
-func((result) => {
-  return result;
-});
 ```
 
-First, we have a declaration of a [type alias](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases) called <i>CallsFunction</i>.
-CallsFunction is a function type with one parameter: <i>callback</i>. The parameter <i>callback</i> is of type function which takes a string parameter and returns [any](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#any) value.  As we will learn later in this part, <i>any</i> is a kind of "wildcard" type that can represent any type. Also, CallsFunction returns [void](https://www.typescriptlang.org/docs/handbook/2/functions.html#void) type.
-
-Next, we define the function <i>func</i> of type <i>CallsFunction</i>. From the function's type, we can infer that its parameter function cb will only accept a string argument. To demonstrate this, there is also an example where the parameter function is called with a numeric value, which will cause an error in TypeScript. 
-
-Lastly, we call <i>func</i> giving it the following function as a parameter:
+And finally, let's add a `lint` script to the *package.json* file to check the linting rules in specific files:
 
 ```js
-(result) => {
-  return result;
+{
+  // ...
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern" // highlight-line
+  },
+  // ...
 }
 ```
 
-<!-- So despite not defining types for the parameter function, it is inferred from the calling context that the argument <i>result</i> is of the type string. -->
-Despite the types of the parameter function not being defined, we can infer from the calling context that the argument <i>result</i> is of the type string.
+Now we can check that the linting rules are obeyed in JavaScript files in the *src* directory and the *App.js* file by running `npm run lint`.
+We will be adding our future code to the *src* directory but because we haven't added any files there yet, we need the `no-error-on-unmatched-pattern` flag.
+Also if possible integrate ESLint with your editor.
+If you are using Visual Studio Code you can do that by, going to the extensions section and checking that the ESLint extension is installed and enabled:
 
-#### Type erasure
+![Visual Studio Code ESLint extensions](../../images/9/3.png)
 
-TypeScript removes all type system constructs during compilation.
+The provided ESLint configuration contains only the basis for the configuration.
+Feel free to improve the configuration and add new plugins if you feel like it.
 
-Input:
+</div>
 
-```js
-let x: SomeType;
-```
+<div class="tasks">
 
-Output:
+### Exercise 9.2
 
-```js
-let x;
-```
+#### Exercise 9.2: setting up the ESLint
 
-<!-- This means that at runtime, there is no information present that says that some variable x was declared as being of type SomeInterface. -->
-This means that no type information remains at runtime - nothing says that some variable x was declared as being of type <i>SomeType</i>.
+Set up ESLint in your project so that you can perform linter checks by running `npm run lint`.
+To get most of linting it is also recommended to integrate ESLint with your editor.
 
-The lack of runtime type information can be surprising for programmers who are used to extensively using reflection or other metadata systems.
+This was the last exercise in this section.
+It's time to push your code to GitHub if you haven't already and mark the exercises that were completed on Canvas.
+</div>
 
-### Why should one use TypeScript?
+<div class="content">
 
-On different forums, you may stumble upon a lot of different arguments either for or against TypeScript. The truth is probably as vague as: it depends on your needs and use of the functions that TypeScript offers. Anyway, here are some of our reasons behind why we think that the use of TypeScript may have some advantages. 
+### Debugging
+  
+When our application doesn't work as intended, we should immediately start **debugging** it.
+In practice, this means that we'll need to reproduce the erroneous behavior
+and monitor the code execution to find out which part of the code behaves incorrectly.
+During the course, we have already done a bunch of debugging by logging messages,
+inspecting network traffic, and using specific development tools, such as ***React Development Tools***.
+In general, debugging isn't that different in React Native, we'll just need the right tools for the job.
 
+Expo development tools command line will show us our `console.log` commands.
 
-<!-- First of all, probably the most noticeable feature with TypeScript is that it offers **type checking and static code analysis**. The ability to require values to be of a certain type and to have the compiler warn about wrongful usage can help reduce runtime errors and you might even be able to reduce the amount of required unit tests in a project, at least concerning pure type tests. The static code analysis doesn't only warn about wrongful type usage, but also if you for instance misspell a variable or function name or try to use a value beyond it's scope etc. With the help of a sufficient linter settings, it's hard to even think of runtime errors that you may be able to produce. -->
-First of all, TypeScript offers <i>type checking and static code analysis</i>. We can require values to be of a certain type, and have the compiler warn about using them incorrectly. This can reduce runtime errors, and you might even be able to reduce the amount of required unit tests in a project, at least concerning pure type tests.
-The static code analysis doesn't only warn about wrongful type usage, but also other mistakes such as misspelling a variable or function name or trying to use a variable beyond its scope. 
+![console showing expo dev tools](../../images/9/27new.png)
 
+That might actually be enough in most cases, but sometimes we need more.
+[**React Native Debugger**](https://docs.expo.io/workflow/debugging/#react-native-debugger) is a tool that offers a similar set of debugging features as the browser's developer tools.
+Let's get started by installing React Native Debugger with the help of the [installation instructions](https://github.com/jhen0409/react-native-debugger#installation).
+If you are unsure which installation method to choose, downloading a pre-built binary from the
+[release page](https://github.com/jhen0409/react-native-debugger/releases) is perhaps the easiest option.
+On the release page, find the latest release which supports React Native version 0.69
+and download the binary suitable for your operating system (for example *.dmg* file for macOS and *.exe* file for Windows) under the "Assets" section.
+Once the installation is complete, start the React Native Debugger, open a new debugger window (shortcuts: ***Command+T*** on macOS,
+***Ctrl+T*** on Linux/Windows) and set the React Native packager port to `19000`.
 
-<!-- A second advantage with TypeScript is that the type annotations in the code can function as a type of **code level documentation**. It's easy to check from a function signature what kind of arguments the function can receive and what type of data it will return. This type of type annotation bound documentation will always be up to date and it makes it easier for new programmers to start working on an existing project. It is also helpful when returning to an old project. Types may also be re-used all around the code base, so a change to one type automatically reflects as a change to all the locations where the type is used. One might argue that you can achieve similar code level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html), but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily and is also more verbose. -->
-The second advantage of TypeScript is that the type annotations in the code can function as a type of <i>code-level documentation</i>. 
-It's easy to check from a function signature what kind of arguments the function can consume and what type of data it will return. This form of type annotation-bound documentation will always be up to date and it makes it easier for new programmers to start working on an existing project. It is also helpful when returning to an old project.
+> **Pertinent:** If the debugger can't connect to the application and you see the error message "Another debugger is already connected",
+make sure that *<http://localhost:19000/debugger-ui>* is not open in some browser tab.
+  
+Next, we need to start our application and connect to the debugger.
+Start the application by running `npm start`.
+Once the application is running, open it with either an emulator or the Expo mobile app.
+Inside the emulator or the Expo mobile app, open the developer menu by following the
+[instructions](https://docs.expo.io/workflow/debugging/#developer-menu) in the Expo's documentation.
+From the developer menu, select ***Debug remote JS*** to connect to the debugger.
+Now, you should be able to see the application's component tree in the debugger:
 
-Types can be reused all around the code base, and a change to a type definition will automatically be reflected everywhere the type is used. One might argue that you can achieve similar code-level documentation with e.g. [JSDoc](https://jsdoc.app/about-getting-started.html), but it is not connected to the code as tightly as TypeScript's types, and may thus get out of sync more easily, and is also more verbose.
+![React Native Debugger](../../images/9/24.png)
 
+The debugger's ***Console*** tab displays the application's logs.
+Like in the browser's development tools, error messages and messages logged with the `console.log` method are displayed there.
+Try adding a message with the `console.log` method in the *App.js* file and see that it is displayed in the debugger.
 
-<!-- A third advantage with TypeScript is the more **specific and smarter intellisense**  that the IDE's can provide when they know exactly what types of data you are processing. -->
-The third advantage of TypeScript is that IDEs can provide more <i>specific and smarter intellisense</i> when they know exactly what types of data you are processing.
+You can use the debugger to inspect the component's state and props as well as *change* them.
+Try finding the `Text` component rendered by the `App` component using the debugger.
+You can either use the search or go through the component tree.
+Once you have found the `Text` component in the tree, click it, and change the value of the `children` prop.
+The change should be automatically visible in the application's preview.
 
-
-<!-- All the features mentioned above are together extremely helpful when you need to refactor your code. The static code analysis emits warnings if you have any errors in your code, and the intellisense can give you hints about available properties and even possible refactoring options. The code level documentation helps you understand the existing code, and with the help of TypeScript it is also very easy to start using the newest JavaScript language features at an early stage just by altering the configuration. -->
-All of these features are extremely helpful when you need to refactor your code. The static code analysis warns you about any errors in your code, and the intellisense can give you hints about available properties and even possible refactoring options. The code-level documentation helps you understand the existing code.
-With the help of TypeScript, it is also very easy to start using the newest JavaScript language features at an early stage just by altering its configuration.
-
-### What does TypeScript not fix?
-
-<!-- As mentioned above, TypeScript type annotations and type checking exist only at compile time and no longer at runtime, so even if the compiler does not give any errors, runtime errors are still possible. Especially when handling external input or if you use the dynamic type `any` in your code. -->
-As mentioned above, TypeScript type annotations and type checking exist only at compile time and no longer at runtime. Even if the compiler does not throw any errors, runtime errors are still possible.
-These runtime errors are especially common when handling external input, such as data received from a network request.
-
-<!-- Lastly, here are a few examples of what many regard as downsides with TypeScript, which might be good to be aware of: -->
-Lastly, below, we list some issues many have with TypeScript, which might be good to be aware of:
-
-#### Incomplete, invalid or missing types in external libraries
-
-<!-- When using external libraries you may find that some libraries have either missing or in some way invalid type declarations. The reason behind this is most often that the library has not been made with TypeScript. Then the types need to be declared manually, or if someone has already done that they might not have done such a good job with it. These are occasions when you may need to define type declarations yourself. However, you should first check out [DefinitelyTyped](https://definitelytyped.org/) or [their GitHub pages](https://github.com/DefinitelyTyped/DefinitelyTyped), which are probably the most used sources for type declaration files and there is a good chance someone has already added typings for the package you are using. Otherwise you might want to start off by getting acquainted with TypeScript's own [documentation](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) regarding type declarations. -->
-When using external libraries, you may find that some libraries have either missing or in some way invalid type declarations. Most often, this is due to the library not being written in TypeScript, and the person adding the type declarations manually not doing such a good job with it. In these cases, you might need to define the type declarations yourself. 
-However, there is a good chance someone has already added typings for the package you are using. Always check the DefinitelyTyped [GitHub page](https://github.com/DefinitelyTyped/DefinitelyTyped) first. They are probably the most popular sources for type declaration files. 
-Otherwise, you might want to start off by getting acquainted with TypeScript's own [documentation](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html) regarding type declarations.
-
-#### Sometimes, type inference needs assistance
-
-<!-- The type inference in TypeScript is pretty good but not quite perfect. Sometimes you may feel like you have declared your types perfectly, but the compiler still tells you that the property does not exist or that this kind of usage is not allowed. These are occasions when you might need to help the compiler with doing e.g. an "extra" type check or something like that. But be careful with type casting and type guards. Using them you are basically giving your word to the compiler that the value really is of the type that you declare. You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html). -->
-The type inference in TypeScript is pretty good but not quite perfect.
-Sometimes, you may feel like you have declared your types perfectly, but the compiler still tells you that the property does not exist or that this kind of usage is not allowed. In these cases, you might need to help the compiler out by doing something like an "extra" type check, but be careful with type casting and type guards.
-Using type casting or type guards, you are basically giving your word to the compiler that the value really is of the type that you declare.
-You might want to check out TypeScript's documentation regarding [Type Assertions](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) and [Type Guards](https://www.typescriptlang.org/docs/handbook/2/narrowing.html).
-
-
-#### Mysterious type errors
-
-<!-- The errors given by the type system may sometimes be quite hard to understand, especially if you use complex types. As a general guideline it is helpful to keep in mind that TypeScript error messages usually contain the most useful content at the end of the message.  When running into long confusing messages, start reading them from the end. -->
-The errors given by the type system may sometimes be quite hard to understand, especially if you use complex types.
-As a rule of thumb, the TypeScript error messages have the most useful information at the end of the message. 
-When running into long confusing messages, start reading them from the end.
+For more useful React Native application debugging tools, head out to the Expo's [debugging documentation](https://docs.expo.io/workflow/debugging).
 
 </div>

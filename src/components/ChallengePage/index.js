@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Banner } from '../Banner/Banner';
 import { BodyText } from '../BodyText/BodyText';
-import { CompaniesBanner } from '../CompaniesBanner/CompaniesBanner';
 import Element from '../Element/Element';
-import Form from '../Form/Form';
+// import Form from '../Form/Form';
 import { Image } from '../Image/Image';
 import Layout from '../layout';
 import SEO from '../seo';
@@ -28,19 +27,7 @@ const ChallengePage = ({
         lang={lang}
         title={title}
         description={seoDescription}
-        keywords={[
-          ...mainSEOtags,
-          'fullstackhaaste',
-          'full stack haaste',
-          'elisa',
-          'terveystalo',
-          'sympa',
-          'konecranes',
-          'unity technologies',
-          'täydennyskoulutus',
-          'koodari',
-          'haaste',
-        ]}
+        keywords={[...mainSEOtags]}
       />
 
       <Banner style={{ paddingBottom: 0, overflow: 'hidden' }}>
@@ -74,15 +61,13 @@ const ChallengePage = ({
             text={joinContent}
           />
 
-          <Form lang={lang} />
+          {/* <Form lang={lang} /> */}
         </Element>
       </Element>
 
-      <CompaniesBanner lang={lang} />
-
       <SubHeader
         className="col-10 spacing--after centered"
-        text="#fullstackchallenge"
+        text="Let's foster a community of learners"
         headingLevel="h3"
       />
     </Layout>

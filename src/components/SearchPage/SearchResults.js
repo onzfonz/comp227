@@ -15,6 +15,7 @@ const SearchResults = ({ query, results = [] }) => {
   if (results.length === 0) {
     return (
       <Element>
+        
         <SubHeader text={t('searchPage:noMatches')} headingLevel="h2" />
       </Element>
     );
@@ -24,13 +25,15 @@ const SearchResults = ({ query, results = [] }) => {
     return (
       <Element>
         <SubHeader
-          text={t('searchPage:matchesTitle', { count: results.length, query })}
+          text={t('searchPage:matchesTitle', { count: results.filter(({part, letter}) => (navigation[lang][part])).length, query })}
           headingLevel="h2"
         />
 
         <ol>
           {results.map(({ part, letter }) => (
-            <li key={`${part}${letter}`}>
+              <>
+              {navigation[lang][part] && navigation[lang][part][letter]?
+                <li key={`${part}${letter}`}>
               <Link
                 to={getPartTranslationPath(
                   lang,
@@ -42,7 +45,9 @@ const SearchResults = ({ query, results = [] }) => {
                   {`part ${part}, ${letter}: ${navigation[lang][part][letter]}`}
                 </div>
               </Link>
-            </li>
+            </li>:<></>
+            }
+            </>
           ))}
         </ol>
       </Element>

@@ -3,7 +3,7 @@ import { anchorate } from 'anchorate';
 export { default as wrapPageElement } from './wrapPageElement';
 export { default as wrapRootElement } from './wrapRootElement';
 
-require('prismjs/themes/prism-dark.css');
+require('prismjs/themes/prism-tomorrow.css');
 
 export const onRouteUpdate = () => {
   anchorate({
