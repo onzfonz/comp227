@@ -37,7 +37,7 @@ Let's start by taking a look at Bootstrap with the help of the [react-bootstrap]
 Let's install the package with the command:
 
 ```bash
-npm install react-bootstrap
+npm i react-bootstrap
 ```
 
 Then let's add a `link` for [loading a Bootstrap CSS stylesheet](https://react-bootstrap.github.io/docs/getting-started/introduction#stylesheets)
@@ -274,7 +274,7 @@ I have also removed the bootstrap library, which is nice to do some overall CSS 
 Once you have reset your index.js in your repo, install the MaterialUI library with the command:
 
 ```bash
-npm install @mui/material @emotion/react @emotion/styled
+npm i @mui/material @emotion/react @emotion/styled
 ```
 
 Then add the following line to the *`head`* tag in the *public/index.html* file.
@@ -597,7 +597,7 @@ While either of these two links can combine with styled components, we will leav
 First, install the package with the command:
 
 ```bash
-npm install styled-components
+npm i styled-components
 ```
 
 Then let's define two components with styles:

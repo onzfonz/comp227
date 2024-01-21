@@ -42,7 +42,7 @@ Let's set up a custom `clog` live template.
 4. Paste this in the template text:
 
     ```js
-    console.log('File: $FILE$, Function: $FUNCTION$, Line $LINE$ - Is $PARAM_TEXT$ ($EXPECTED$)?: ', $PARAM$);$END$
+    console.log('$PARAM_TEXT$(' + typeof $PARAM$ + ') =', $PARAM$, ' | $FILE$:$LINE$ - $EXPECTED$')$END$
     ```
 
 5. Select ***Reformat according to style***
@@ -52,13 +52,12 @@ Let's set up a custom `clog` live template.
 
 ![image showing the variables and values](../../images/2/custom/live_template_variables.png)
 
-Click ***OK*** twice and then try it out by typing `clog` inside your `App` Javascript function and then ***Tab***.
+Click ***OK*** twice and then try it out by typing `clog` inside your `App` Javascript function and then ***Enter***.
 Then type the name of the variable `props` (or whatever other variable you have) and Tab again.
 You should notice that it will display the word you typed in two places on that line.
 First, as the name in the string for the `log` statement and then as the variable to print.
-Finally, if you have some expected value of what you think it should be at that point, you can type that in as well, and then ***Tab*** one last time.
-You'll notice that you have this template that will provide you with a function name and line number
-as well as other neat values to make it easier to debug!
+Finally, if you have some expected value of what you think it should be at that point, you can type that in as well, and then ***Enter*** one last time.
+You'll notice that you have this template that will provide you with a varialbe, its type, the filename and line number to make it easier to debug!
 
 ### JavaScript Arrays
 
@@ -505,7 +504,7 @@ The current code is in the branch [part2-1](https://github.com/comp227/part2-tas
 
 ![GitHub branch screenshot](../../images/2/2e.png)
 
-> **Remember:** If you clone the project, run the command `npm install` before starting the application with `npm run dev`.
+> **Remember:** If you clone the project, run the command `npm i` before starting the application with `npm run dev`.
 
 ### Using console.log
 
@@ -670,7 +669,7 @@ Remember that your files should all be white in color. You should also make sure
 > However, if you ever copy the entire project from one place to another, you have to:
 >
 > 1. delete the *node_modules* directory
-> 2. install the dependencies again with the command `npm install`
+> 2. install the dependencies again with the command `npm i`
 > 3. start the application.
 >
 > I generally avoid copying *node_modules* because it is often huge and highly dependent on your system,

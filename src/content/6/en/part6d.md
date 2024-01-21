@@ -59,7 +59,7 @@ The latest version of the library is also called *TanStack Query*, but we'll sti
 Install the library with the command
 
 ```bash
-npm install @tanstack/react-query
+npm i @tanstack/react-query
 ```
 
 A few additions to the file *main.jsx* are needed to pass the library functions to the entire application:

@@ -33,8 +33,8 @@ The initial state of the database is stored in the file *db.json*, which is plac
 Let's install both *`axios`* and *`json-server`* to the project:
 
 ```js
-npm install json-server --save-dev
-npm install axios
+npm i -D json-server
+npm i axios
 ```
 
 Then add the following line to the `scripts` part of our *package.json*

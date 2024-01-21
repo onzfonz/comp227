@@ -66,7 +66,7 @@ With your terminal now open you can type the following:
 npm create vite@latest reading -- --template react
 
 cd reading
-npm install
+npm i
 ```
 
 Say yes to any prompts that appear asking you to update or that ask you to allow access.

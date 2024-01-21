@@ -120,7 +120,7 @@ Let's change the above application to use React Router.
 First, we install React Router with the command
 
 ```bash
-npm install react-router-dom
+npm i react-router-dom
 ```
 
 The routing provided by React Router is enabled by changing the application as follows:
@@ -552,7 +552,7 @@ We will use the repo there as the starting point for the exercises.
 The application starts the usual way, but first, you need to install the dependencies of the application:
 
 ```bash
-npm install
+npm i
 npm run dev
 ```
 

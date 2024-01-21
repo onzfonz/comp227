@@ -91,7 +91,7 @@ We can allow requests from other **origins** by using Node's [cors](https://gith
 In your ***backend*** repository, install **cors** with the command
 
 ```bash
-npm install cors
+npm i cors
 ```
 
 take the middleware to use and allow for requests from all origins:
@@ -244,7 +244,7 @@ Here's the changes I made, since the Branch should be main, and environment shou
 ```js
 name: comp227-osvaldo-part3
 
-Build Command: npm install
+Build Command: npm i
 Start Command: npm start
 ```
 
@@ -588,7 +588,7 @@ it is worth it to at least in the beginning keep an eye on the logs in render.
 
 One such problem that you'll see arises is that npm will complain that it cannot find application dependency *express*:
 
-The reason would be that the *express* package has not been installed with the `npm install express` command,
+The reason would be that the *express* package has not been installed with the `npm i express` command,
 so information about the dependency was not saved to the file *package.json*.
 
 Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`.

@@ -171,7 +171,9 @@ git config --list
 You should now see your username and email displayed, as well as the alias that we made and the editor changes.
 You can press ***Space*** to continue reviewing the changes, and ***q*** to exit.
 
-### 4: Install Node
+### 4: Install NVM
+
+> ***For you to use `nvm`, you may need to uninstall any existing versions of node.js first.***
 
 Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
 If you already have Node installed,
@@ -452,6 +454,10 @@ Back in the Settings window, type ***Node interpreter*** in the search box, whic
 Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
 Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both Windows.
 
+> If you cannot find a *.nvm* folder in your installation directory,
+> it may be that *nvm* has automatically created a symbolic link in your Applications directory,
+> which would be *`C:\Program Files\nodejs\node.exe` for Windows and somewhere in `Applications` for Mac.
+
 Because we will be working with a lot of repositories, it makes sense that all new projects have these same settings.
 Let's ensure that all of these settings show up for new projects, by going to ***File->New Projects Setup->Settings for New Projects***.
 Once there, go through each of the settings we just changed and ensure that those options have been enabled.
@@ -548,11 +554,25 @@ please upload the materials from the previous section
 [Exercises 0.1-0.6](/part0/fundamentals_of_web_apps#exercises-0-1-0-6) into your GitHub repo.
 Make sure you put them in a folder and provide them with names that match the exercise that you had.
 
-#### 0.9 - Final upload screenshot
+#### 0.9 - File watcher verification with screenshot
 
-Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.
-Please name the screenshot file with the name `09`.
+Finally, create a file in your *part0* folder and call it *Hello.jsx*.
+As for the code that you put in there, all you will do is write a comment that:
+
+1. has your name
+2. has the biggest hurdle you faced in this part
+
+> *Comments in javascript are lines preceded with a `//`*
+
+Once you do that, should you verify that your files have all turned **white in color** in your webstorm files project.
+
+As a final verification, add a screenshot of your WebStorm IDE showing the embedded git bash terminal (or your external terminal) overlayed at the bottom and having typed `nvm` list.
+
+Please name the screenshot file with the name *`09`*.
 Make sure the file has the correct extension.
+Make a new change to your *Hello.jsx* file mentioning you uploaded the picture and then use `git push` in your terminal of choice.
+
+You can verify that you did this correctly by looking at github again!
 
 </div>
 

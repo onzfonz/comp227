@@ -98,7 +98,7 @@ export default App
 The current application code can be found on
 [Github](https://github.com/comp227/part2-tasks/tree/part5-1), branch *part5-1*.
 
-> **Notice** If you clone the repo, don't forget to run `npm install` before attempting to run the frontend.
+> **Notice** If you clone the repo, don't forget to run `npm i` before attempting to run the frontend.
 >
 > The frontend will not display any tasks if it's not connected to the backend.
 > You'll need to open up both repositories and start them both.
@@ -593,7 +593,7 @@ Visit <http://go.djosv.com/227lab5> to start the process of cloning the frontend
 The application is started the usual way, but you have to install its dependencies first:
 
 ```bash
-npm install
+npm i
 npm run dev
 ```
 
