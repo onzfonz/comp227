@@ -596,6 +596,9 @@ Here are some things to check:
     If you are getting any popups like this, do not close them, but save your credentials instead.
     ![Windows GitHub Login](../../images/0/custom/windows_github.png)
     ![Mac GitHub Login](../../images/0/custom/mac_github.png)
+- Is `git push` working from your terminal?
+    - If you have yet to work with the git terminal, you may need to login for the first time using the command line.
+    - You can use your previous token or generate a new one and make sure to store it.
 
 Again, make sure that you pay close attention to any messages that come up!
 
