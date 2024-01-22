@@ -134,30 +134,26 @@ Remember that as we mentioned before, the goal should not just be to read the ma
 
 Remember how we used the File Watchers previously?
 We're going to make sure that process is working,
-as any time that we add files or `create@vite-latest` app,
-we are going to get into the habit of adding the files to our git repository via the terminal
-**Not following these directions may impact your grade**.
+as any time that we add files or use `create@vite-latest` app,
+we need to make sure that the files we created continue to change back to being white in WebStorm's Project Explorer Window.
+This should happen automatically when we edit our code.
 
-With the changes above and the files deleted, you're going to open your terminal in WebStorm, type the command:
+Please open up *main.jsx*, if it's not open already, and ensure that all of the text is white and that you see a git repo in the upper left.
 
-```bash
-git add .
-```
-
-Once you do, you should see all of the files turn green in WebStorm.
-This means that we are about to add these files to our git repository.
-Depending on your configuration, you may get warnings about the line endings.
-This is safe to ignore.
+> *If you see that all of the files have green or blue text in WebStorm, for a long time,
+This means that our file watcher may be working correctly.
+> Depending on your configuration, you may get warnings about the line endings.
+This is safe to ignore.*
 
 ![WebStorm showing files added as green](../../images/1/custom/git_add_green.png)
 
-Once they are in green, let's go ahead and commit by following this command:
+If the files do not change back to white and you feel as though your file watchers are working, if you type
 
 ```bash
-git commit -m "Setting up reading for grading"
+git status
 ```
 
-Once you do that, you'll see that the files have turned white again.
+If your file watcher is working correctly, you'll see that the files have turned white again.
 
 ![WebStorm showing files added as white](../../images/1/custom/git_commit_white.png)
 
@@ -169,12 +165,26 @@ When you do this, you may notice that *App.jsx* turns blue which means that ther
 
 However, the file will not stay blue for long, and our workflow automation will be triggered, which will cause the file to be white again.
 
-The last thing I wanted to point your attention to is the fact that there is a green arrow near our main branch at the top.
+The last thing I wanted to point your attention to is to be aware of a green arrow near our main branch at the top.
+You should not have one at this moment.
+If you do, then you may not have setup file watchers correctly.
+You can create that arrow by going to terminal, and creating an empty commit message, which I'll have you do everytime you complete the exercises.
+
+We'll use the empty commits to give us a non-standard way of leaving notes in our code.
+Go to terminal and write this line.
+
+```bash
+git commit -allow-empty -m "Practicing an empty commit while reading part 1a"
+```
+
+After typing that line, do not make any changes in your JSX file, and go back to webstorm, and if you type another git status, you should now see this green arrow appear.
 
 ![WebStorm showing main needs to push changes](../../images/1/custom/git_commit_needs_push.png)
 
-This means that you have made changes locally that we want to sync with GitHub.
-To do this, we'll **push** them, which we can do via the terminal or WebStorm.
+Webstorm uses the arrows to let you know that your github repo and local computer are out of sync.
+The green arrow can also happen if you add new files to your project.
+
+To make the arrow go away, we'll **push** the empty commit, which we can do via the terminal or WebStorm.
 In Terminal, you can just type:
 
 ```bash
@@ -182,7 +192,7 @@ git push
 ```
 
 Once you complete this command, you'll notice that the *main* branch no longer has the green arrow next to it.
-You can also ensure that your changes are on GitHub.
+You can also ensure that your changes are on GitHub (including your empty commit message)
 To ensure that you are working through the material correctly, you will message me directly once you finish this to confirm that you are following the steps.
 
 > ***If you use more than one computer, you'll need to make sure that you pull at the beginning of the session and push at the end***.
