@@ -831,12 +831,15 @@ This exercise will start the ongoing development of a small application that wil
 Please make sure to commit often and that you do not have any files in your project that are any color other than white.
 
 **Use *Vite* in the base folder of *lab1* to initialize a new application called *arcadeinfo***.
+
+> **FYI:** If you don't know how to do this, then you need to go back
+
 Commit and add all of the files needed.
 **Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* folders**.
 Now, since you have your *reading* folder already,
 you'll make changes in your reading folder, and for the exercises, you'll make changes in the named exercise folder (in this case, *arcadeinfo*)
 
-Modify *arcadeinfo/src/index.jsx* to match the following.
+Modify *arcadeinfo/src/main.jsx* to match the following.
 
 ```js
 import ReactDOM from 'react-dom/client'
