@@ -801,7 +801,8 @@ If you want to be sure that it uploads, you should also do a `git push`, though 
 You should submit the exercises in each part with the corresponding repo that is mentioned.
 In this case, you will use the repo that was generated from <http://go.djosv.com/227lab1>.
 
-We will use the following file structure for our submission repository:
+We will use Vite in each of the exercises to create the following file structure for our submission repository,
+(**do not do this now; you should already have a *reading* rolder from our previous exercises**):
 
 ```text
 lab1
@@ -829,12 +830,13 @@ Notice that in this part, there are more exercises besides those found below.
 This exercise will start the ongoing development of a small application that will be further developed in a few of the following exercises.
 Please make sure to commit often and that you do not have any files in your project that are any color other than white.
 
-Use *Vite* in the base folder of *lab1* to initialize a new application called **arcadeinfo**.
+**Use *Vite* in the base folder of *lab1* to initialize a new application called *arcadeinfo***.
 Commit and add all of the files needed.
 **Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* folders**.
-Now, when you are doing the reading, you'll make changes in your reading folder, and for the exercises, you'll make changes in the named exercise folder (in this case, *arcadeinfo*)
+Now, since you have your *reading* folder already,
+you'll make changes in your reading folder, and for the exercises, you'll make changes in the named exercise folder (in this case, *arcadeinfo*)
 
-Modify *index.jsx* to match the following.
+Modify *arcadeinfo/src/index.jsx* to match the following.
 
 ```js
 import ReactDOM from 'react-dom/client'
