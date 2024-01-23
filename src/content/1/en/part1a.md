@@ -832,7 +832,8 @@ Please make sure to commit often and that you do not have any files in your proj
 
 **Use *Vite* in the base folder of *lab1* to initialize a new application called *arcadeinfo***.
 
-> **FYI:** If you don't know how to do this, then you need to go back
+> **FYI:** If you don't know how to do this, then you need to [go back and re-read the initial portion where you first setup the reading folder](#starting-development).
+> This is something that you will have to do from time to time in the course to get those necessary refreshers, and that's OK!
 
 Commit and add all of the files needed.
 **Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* folders**.
