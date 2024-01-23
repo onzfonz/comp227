@@ -831,8 +831,10 @@ Please make sure to commit often and that you do not have any files in your proj
 
 Use *Vite* in the base folder of *lab1* to initialize a new application called **arcadeinfo**.
 Commit and add all of the files needed.
-Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* folders.
-Modify *index.jsx* to match the following
+**Make sure that when you type `ls`, you see both the *reading* and *arcadeinfo* folders**.
+Now, when you are doing the reading, you'll make changes in your reading folder, and for the exercises, you'll make changes in the named exercise folder (in this case, *arcadeinfo*)
+
+Modify *index.jsx* to match the following.
 
 ```js
 import ReactDOM from 'react-dom/client'
