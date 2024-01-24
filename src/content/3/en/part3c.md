@@ -761,8 +761,7 @@ Once everything seems to be working, we would move on to the next feature.
 Once we introduce a database into the mix, it is useful to inspect the state persisted in the database, e.g. from the control panel in MongoDB Atlas.
 Quite often little Node helper programs like the *mongo.js* program we wrote earlier can be very helpful during development.
 
-You can find the code for our current application in its entirety in the *part3-4* branch of
-[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-4).
+You can find the code for our current application in its entirety in the [*part3-4* branch of our backend repo](https://github.com/comp227/part3-tasks-backend/tree/part3-4).
 
 </div>
 
@@ -1080,8 +1079,7 @@ We added the optional `{ new: true }` parameter, which will cause our event hand
 After testing the backend directly with Postman and the WebStorm REST client, we can verify that it seems to work.
 The frontend also appears to work with the backend using the database.
 
-You can find the code for our current application in its entirety in the *part3-5* branch of
-[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-5).
+You can find the code for our current application in its entirety in the [*part3-5* branch of our backend repo](https://github.com/comp227/part3-tasks-backend/tree/part3-5).
 
 ### Web developers pledge v3
 
