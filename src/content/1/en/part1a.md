@@ -887,8 +887,8 @@ and remove extra files (*App.css*, *index.css*, *logo.svg*)).
 Unfortunately, the entire application is in the same component.
 Refactor the code so that it consists of three new components: `Header`, `Content`, and `Total`.
 All data still resides in the `App` component, which passes the necessary data to each component using `props`.
-`Header` takes care of rendering the name of the course,
-`Content` renders the parts and their number of exercises and `Total` renders the total number of exercises.
+`Header` takes care of rendering the name of the company,
+`Content` renders the handhelds and their number of games and `Total` renders the total number of games.
 
 Define the new components in *App.jsx*.
 
