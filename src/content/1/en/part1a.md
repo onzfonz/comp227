@@ -791,6 +791,8 @@ To submit an exercise as completed in GitHub, you will need to manually write th
 git commit --allow-empty -m "Submitted Exercise X.Y"
 ```
 
+Because we are using file watchers, any time that the reading says to *commit your changes*, **you should use this `--allow-empty` flag to make an empty commit with the desired message**.
+
 Where *`X`* and *`Y`* stand for the part number ane exercise number.
 You will know that it is complete because it will parrot it back to you.
 **Consider this part of the submission system**.
