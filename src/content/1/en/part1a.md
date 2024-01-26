@@ -788,7 +788,7 @@ The exercises are submitted through GitHub and marking them as done on Canvas.
 To submit an exercise as completed in GitHub, you will need to manually write this command in your terminal.
 
 ```bash
-git commit --allow-empty -m "Submitted Exercise X.Y"
+git commit --allow-empty -m "Completed Exercise X.Y"
 ```
 
 Because we are using file watchers, all changes are uploaded automatically.
