@@ -523,6 +523,31 @@ Code will not miraculously start working after writing large amounts of addition
 
 Old-school, print-based debugging can at times be a good idea.
 I prefer using an IDE and its breakpoints though when possible.
+
+To use the debugger, we have to configure an additional setting that tells WebStorm what to do when you want to launch your program.
+
+First, near the play button at the top of the window, click on the ***Down arrow*** icon in between the *Current File* and the Play icon, and select ***Edit Configurations...***
+
+![status bar showing down arrow](../../images/1/custom/webstorm_edit_config.png)
+
+This brings up the following dialog box, where you'll choose the *plus icon* to ***Add new run configuration...***, and then you can select ***JavaScript Debug***.
+
+> Notice there is an option to create a *Node.js* configuration, but that won't be necessary for a few more weeks, so leave it for now.
+
+![WebStorm showing run/debug configurations menu](../../images/1/custom/webstorm_add_run_config.png)
+
+The most important part here is to specify the URL, which will be *`http://localhost:5173`*.
+You can name the Configuration so that it is easier to remember, for me, I just named it `localhost:5173`.
+The configuation should look something like this:
+
+![WebStorm's run configuration options for localhost:5173](../../images/1/custom/webstorm_run_config.png)
+
+Once everything is set, you can then click **OK**, and you'll now see that Current File has been replaced by ***localhost:5173***!
+
+With the debugger configured, let's go review some theory and how we will utilize it in WebStorm.
+
+### Debugging in WebStorm
+
 A **breakpoint** is a special IDE-based marker that tells your application to ***break*** (pause executing code) when it reaches a particular ***point*** (line of code).
 Breakpoints can be turned on or off by clicking on the line number to the left of a line:
 
