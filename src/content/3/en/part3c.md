@@ -99,7 +99,7 @@ You can access the debugger by clicking the green icon - the node logo - that ap
 
 ![dev tools with green node logo icon](../../images/3/37.png)
 
-The debugging view works the same way as it did with React applications.
+The *Debugging View* works the same way as it did with React applications.
 The ***Sources*** tab can be used for setting breakpoints where the execution of the code will be paused.
 
 ![dev tools sources tab breakpoint and watch variables](../../images/3/38eb.png)
@@ -111,21 +111,21 @@ You can also inspect the values of variables and execute your JavaScript code.
 
 #### Question everything
 
-Debugging Full Stack applications may seem tricky at first.
 Soon our application will also have a database in addition to the frontend and backend,
-and there will be many potential areas for bugs in the application.
+so there will be many potential areas for bugs in the application.
+With so many areas, debugging Full-Stack applications may seem tricky at first.
 
 When the application "does not work", we have to first figure out where the problem occurs.
 It's very common for the problem to exist in a place where you didn't expect it to,
 and it can take minutes, hours, or even days before you find the source of the problem.
 
-The key is to be systematic so that you can divide and conquer.
+The key is to ***be systematic*** so that you can divide and conquer.
 Since the problem can exist anywhere, *you must question everything*, and eliminate all possibilities one by one.
-Logging to the console, Postman, debuggers, and experience will help.
+Logging to the console, REST Client/Postman, debuggers, and experience will help.
 
 When bugs occur, ***the worst of all possible strategies*** is to continue writing code.
 It will guarantee that your code will soon have even more bugs, and debugging them will be even more difficult.
-The [stop and fix](https://leanscape.io/principles-of-lean-13-jidoka/) principle
+The [*stop and fix* principle](https://leanscape.io/principles-of-lean-13-jidoka/)
 from Toyota Production Systems is very effective in this situation as well.
 
 ### MongoDB
@@ -155,7 +155,7 @@ These are the options to choose.
 After clicking ***Finish***, you're given a choice for a deployment option.
 Choose the shared option.
 
-![MongoDB deploy a cloud database free shared](../../images/3/mongo1.png)
+![MongoDB's deploy a cloud database free shared](../../images/3/mongo1.png)
 
 Pick the cloud provider and location and create the cluster:
 
@@ -167,7 +167,7 @@ This may take some minutes, but for me, it was pretty quick.
 Now let's answer the questions from the Security Quickstart.
 Because you are handling data, you need to create a user and password that can connect and access your database.
 ***These are not the same credentials that you use for logging into MongoDB Atlas.***
-For me, I used comp227 as the user, and then clicked ***Autogenerate the password*** and clicked ***Copy***.
+For me, I used *`comp227`* as the user, and then clicked ***Autogenerate the password*** and clicked ***Copy***.
 Store that password somewhere that you can access it, as you'll need it in files we'll modify soon.
 Finally, once you've stored the password in a secure location, click ***Create User***.
 
@@ -216,7 +216,7 @@ npm i mongoose
 ```
 
 Let's not add any code dealing with Mongo to our backend just yet.
-Instead, let's make a practice application by creating a new file, *mongo.js* in the root of the tasks backend application:
+Instead, let's make a practice application by creating a new file, *mongo.js* in the root of the *`tasks` backend* application:
 
 ```js
 const mongoose = require('mongoose').set('strictQuery', true)
@@ -270,8 +270,8 @@ const password = process.argv[2]
 
 When the code is run with the command `node mongo.js YOUR_PASSWORD_HERE`, Mongo will add a new document to the database.
 
-**Remember** the password needed is the password created for the database user, not your MongoDB Atlas password.
-Also, if you created a password with special characters,
+> **Remember:** Replace `YOUR_PASSWORD_HERE` with the *password created for the database user*, not your MongoDB Atlas password.
+> Also, if you created a password with special characters,
 then you'll need to [URL encode that password](https://docs.atlas.mongodb.com/troubleshoot-connection/#special-characters-in-connection-string-password).
 
 We can view the current state of the database from the MongoDB Atlas from ***Browse collections***, in the Database tab.
@@ -298,8 +298,8 @@ Creating a database like this is not necessary, since MongoDB Atlas automaticall
 
 ### Schema
 
-After establishing the connection to the database, we define the [schema](http://mongoosejs.com/docs/guide.html)
-for a task and the matching [model](http://mongoosejs.com/docs/models.html):
+After establishing the connection to the database, we define the [**schema**](http://mongoosejs.com/docs/guide.html)
+for a task and the matching [**model**](http://mongoosejs.com/docs/models.html):
 
 ```js
 const taskSchema = new mongoose.Schema({
@@ -314,7 +314,7 @@ const Task = mongoose.model('Task', taskSchema)
 First, we define the [schema](http://mongoosejs.com/docs/guide.html) of a task that is stored in the `taskSchema` variable.
 The schema tells Mongoose how the task objects are to be stored in the database.
 
-In the `Task` model definition, the first `'Task'` parameter is the singular name of the model.
+In the `Task` model definition, the first `'Task'` parameter is the *singular name of the model*.
 The name of the collection will be the lowercase plural `tasks`, because the [Mongoose convention](http://mongoosejs.com/docs/models.html)
 is to automatically name collections as the plural (e.g. `tasks`) when the schema refers to them in the singular (e.g. `Task`).
 
@@ -336,7 +336,8 @@ const task = new Task({
 ```
 
 Models are so-called **constructor functions** that create new JavaScript objects based on the provided parameters.
-Since the objects are created with the model's constructor function,
+
+> **Pertinent:** Since the objects are created with the model's constructor function,
 they have all the properties of the model, which include methods for saving the object to the database.
 
 Saving the object to the database happens with the appropriately named `save` method, which can be provided with an event handler with the `then` method:
@@ -352,7 +353,7 @@ When the object is saved to the database, the event handler provided to `then` g
 The event handler closes the database connection with the command `mongoose.connection.close()`.
 If the connection is not closed, the program will never finish its execution.
 
-The result of the save operation is in the `result` parameter of the event handler.
+The event handler's **`result`** parameter stores the *result of the save* operation.
 The result is not that interesting when we're storing one object in the database.
 You can print the object to the console if you want to take a closer look at it while implementing your application or during debugging.
 
@@ -361,7 +362,7 @@ Let's also save a few more tasks by modifying the data in the code and by execut
 > **Pertinent:** Unfortunately the Mongoose documentation is not very consistent,
 with parts of it using callbacks in its examples and other parts, other styles,
 so it is not recommended to copy and paste code directly from there.
-Mixing promises with old-school callbacks in the same code is not recommended.
+***Mixing promises with old-school callbacks in the same code is not recommended***.
 
 ### Fetching objects from the database
 
@@ -380,13 +381,13 @@ When the code is executed, the program prints all the tasks stored in the databa
 
 ![node mongo.js outputs tasks as JSON](../../images/3/70ea.png)
 
-The objects are retrieved from the database with the [find](https://mongoosejs.com/docs/api/model.html#model_Model-find) method of the `Task` model.
-The parameter of the method is an object expressing search conditions.
+The objects are retrieved from the database with the [`find` method](https://mongoosejs.com/docs/api/model.html#model_Model-find) of the `Task` model.
+The parameter for `find` is an object expressing search conditions.
 Since the parameter is an empty object`{}`, we get all of the tasks stored in the ***tasks*** collection.
 
-The search conditions adhere to the Mongo search query [syntax](https://docs.mongodb.com/manual/reference/operator/).
+The search conditions adhere to the [Mongo search query syntax](https://docs.mongodb.com/manual/reference/operator/).
 
-We could restrict our search to only include important tasks like this:
+As an example of that syntax, we could restrict our search to only include important tasks like this:
 
 ```js
 Task.find({ important: true }).then(result => {
@@ -402,11 +403,13 @@ Task.find({ important: true }).then(result => {
 
 #### 3.12: Command-line database
 
-Create a cloud-based MongoDB database for the communities application with MongoDB Atlas.
+Create a cloud-based MongoDB database for the *communities* application with MongoDB Atlas.
 
-Create a *mongo.js* file in the project directory, that can be used for adding a community, and for listing all of the communities.
+Create a *mongo.js* file in the *communities* project directory, that can be used for adding a community, and for listing all of the communities.
 
-> ***Do not include the password in the file that you commit and push to GitHub!***
+> ***Do not include or paste in the password in any of the files in your repo!***
+> We have auto-commit turned on, so any change will get saved.
+> If this does happen, please send me a discord message.
 
 The application should work as follows.
 You use the program by passing three command-line arguments (the first is the password), e.g.:
@@ -444,7 +447,7 @@ MeditationMind https://discord.com/invite/XT9xqwv9
 PySlackers https://pythondev.slack.com
 ```
 
-You can get the command-line parameters from the [process.argv](https://nodejs.org/docs/latest-v8.x/api/process.html#process_process_argv) variable.
+You can get the command-line parameters from the [`process.argv`](https://nodejs.org/docs/latest-v8.x/api/process.html#process_process_argv) variable.
 
 > **Pertinent: do not close the connection in the wrong place**.
 > E.g. the following code will not work:
@@ -480,7 +483,7 @@ and the execution will never get to the point where `Group.find` operation finis
 
 ### Connecting the backend to a database
 
-Now we have enough knowledge to start using Mongo in our tasks application backend.
+Now we have enough knowledge to start using Mongo in our tasks application backend. 🥳
 
 Let's get a quick start by copy-pasting the Mongoose definitions to the backend's *index.js* file:
 
@@ -488,9 +491,9 @@ Let's get a quick start by copy-pasting the Mongoose definitions to the backend'
 const mongoose = require('mongoose').set('strictQuery', true)
 const password = process.argv[2]
 
-// DO NOT SAVE YOUR PASSWORD ANYWHERE THAT WOULD UPLOAD IT TO GITHUB
+// DO NOT SAVE OR EVEN PASTE YOUR PASSWORD ANYWHERE IN THE REPO
 const url = `mongodb+srv://comp227:${password}@cluster0.gb6u3el.mongodb.net/taskApp?retryWrites=true&w=majority`
-// LET ME REPEAT - DO NOT SAVE YOUR PASSWORD IN YOUR CODE!
+// LET ME REPEAT - DO NOT SAVE YOUR PASSWORD IN YOUR REPO!
 
 mongoose.connect(url)
 
@@ -658,7 +661,11 @@ You can install the library with the command:
 npm i dotenv
 ```
 
-To use the library, we create a *.env* file at the root of the project.
+To use the library, we will create a *.env* file at the root of the project.
+Please make sure that *.env* is added to your github folder.
+You should ***close WebStorm*** so that your file watchers are not active currently.
+After that, you can make a .env file and type `git status` to verify that git does not see the .env file as something that was added.
+If it was or if it says it was updated, please send me a message to help you get the commands to remove the *.env* file and to verify it's in your *.gitignore* file.
 The environment variables are defined inside of the file, and it can look like this:
 
 ```bash
@@ -668,8 +675,10 @@ PORT=3001
 
 We also added the hardcoded port of the server into the `PORT` environment variable.
 
-Our repos already ignore the *.env* file by default.
+Our repos have been setup to already ignore the *.env* file by default.
 If you ever make a new repo, **make sure that you immediately add `.env` so you do not publish any confidential information publicly online!**
+
+Once you verify that *.env* is correctly being ignored by git, ***open up WebStorm again***.
 
 The environment variables defined in the *.env* file can be taken into use with the expression `require('dotenv').config()`
 and you can reference them in your code just like you would reference normal environment variables, with the familiar `process.env.MONGODB_URI` syntax.
@@ -690,19 +699,19 @@ app.listen(PORT, () => {
 })
 ```
 
-Observe how `dotenv` must be imported before the `task` model.
+Notice how `dotenv` must be imported before the `task` model.
 This ensures that the environment variables from the *.env* file are available globally before the code from the other modules is imported.
 
-Once the file *.env* has been gitignored, Render does not get the database URL from the repository, so you have to set it yourself.
-
-That can be done by visiting the [Render dashboard](http://dashboard.render.com).
-Once you are there, click on your web service and then select ***Environment*** from the left-hand nav menu.
-Scroll down until you can click on ***Add Secret File.**
-From there, name the file .env and then click the contents section.
-There you will paste all of the contents of your .env file, making sure you put your DB password from mongo in there.
-Next click ***Done*** and then Finally ***Save Changes***.
-
-![Heroku dashboard showing config vars](../../images/3/cloudConfig.png)
+> **Pertinent:** Once the file *.env* has been gitignored, Render does not get the database URL from the repository, so ***you have to set the DB URL yourself***.
+>
+> That can be done by visiting the [Render dashboard](http://dashboard.render.com).
+> Once you are there, click on your web service and then select ***Environment*** from the left-hand nav menu.
+> Scroll down until you can click on ***Add Secret File.**
+> From there, name the file .env and then click the contents section.
+> There you will paste all of the contents of your .env file, making sure you put your DB password from mongo in there.
+> Next click ***Done*** and then Finally ***Save Changes***.
+>
+> ![Heroku dashboard showing config vars](../../images/3/cloudConfig.png)
 
 ### Using database in route handlers
 
@@ -742,7 +751,7 @@ The data sent back in the response is the formatted version created with the `to
 response.json(savedTask)
 ```
 
-Using Mongoose's [findById](https://mongoosejs.com/docs/api/model.html#model_Model-findById) method, fetching an individual task gets changed into the following:
+Using Mongoose's [`findById` method](https://mongoosejs.com/docs/api/model.html#model_Model-findById), fetching an individual task gets changed to the following:
 
 ```js
 app.get('/api/tasks/:id', (request, response) => {
@@ -759,7 +768,8 @@ Next, let's try creating a new task after taking the database into use:
 
 ![WebStorm rest client doing a post](../../images/3/46e.png)
 
-Only once everything has been verified to work in the backend, is it a good idea to test that the frontend works with the backend.
+***Verify first*** that the backend completely works.
+Then you can test that the frontend works with the backend.
 ***It is highly inefficient to test things exclusively through the frontend.***
 
 It's probably a good idea to integrate the frontend and backend one functionality at a time.
@@ -767,8 +777,8 @@ First, we could implement fetching all of the tasks from the database and test i
 After this, we could verify that the frontend works with the new backend.
 Once everything seems to be working, we would move on to the next feature.
 
-Once we introduce a database into the mix, it is useful to inspect the state persisted in the database, e.g. from the control panel in MongoDB Atlas.
-Quite often little Node helper programs like the *mongo.js* program we wrote earlier can be very helpful during development.
+Once we introduce a database into the mix, it is useful to inspect the saved state in the database, e.g. from the control panel in MongoDB Atlas.
+Quite often small Node programs (like the *mongo.js* program we wrote earlier) can be very helpful for testing during development.
 
 You can find the code for our current application in its entirety in the [*part3-4* branch of our backend repo](https://github.com/comp227/part3-tasks-backend/tree/part3-4).
 
