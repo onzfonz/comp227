@@ -18,7 +18,7 @@ While some people disagree, I believe that *if you take the time to learn to use
 
 #### WebStorm
 
-To use the WebStorm debugger, you'll need to tell WebStorm where node is.
+To use WebStorm to ***debug the backend***, you'll need to tell WebStorm where *node* is.
 You can start this by going to ***Run->Debug*** in the top menu.
 You'll then see a tiny Debug window in the middle of the screen that looks like this:
 
@@ -42,15 +42,18 @@ The output in red is similar to the `npm start` output from the terminal, with s
 
 ![WebStorm process console](../../images/3/custom/process_console.png)
 
-Remember that the application shouldn't be running in another console, otherwise the port will already be in use.
+> **Remember:** the application shouldn't be running in another console, otherwise the port will already be in use.
 
 Below you can see a screenshot where the code execution has been paused in the middle of saving a new task:
 
 ![WebStorm screenshot of execution at a breakpoint](../../images/3/36x.png)
 
 The execution stopped at the **breakpoint** in line 81.
-On the line itself and in the code, you see in light gray some of the values of different variables, like the value of the task variable.
-In the window below you can see the value of the `tasks` variable, as well as the value of all of the variables and objects that you can inspect.
+On the line itself and in the code, you can see some of the values of different variables.
+For example, at the end of line 77 in light gray, you can see the value of `body.important` is *`false`*.
+On line 81 you can also see the value of `task`.
+To see the current values of all of the pertinent variables and objects at the point of executing line 81, you want to look in the Debugger Pane at the bottom of WebStorm.
+For example, you can see what the value of `tasks` is just before it changes.
 
 In the Debugger Console, you can type in values just like you did before in the developer tools console.
 The Debugger Console is great as you can type out code to see what values would be as you are writing the code.
@@ -58,8 +61,14 @@ See here my example of checking to see if I am parsing a string correctly.
 
 ![WebStorm screenshot of debugger console](../../images/3/custom/webstorm_debugger_console.png)
 
-The arrows at the top of the debugger window can be used for controlling the flow of control.
-For example, step over, executes one line of the code, while step into if you are on say a function, will jump into that function to start executing inside.
+The arrows at the top of the debugger window control the program's flow and execute a single line of code when they get pressed.
+Their behavior differs though when the lines contain a function.
+When on a line that contains a function:
+
+- **step into** will jump into the body of the function and execute the first line.
+- **step over** will execute the entire function's body and just give the result
+- **step out** will finish executing the body of a function and return back to the function that called it.
+
 Finally, the inspector is similar to the debugger console that I showed.
 However, this particular feature is available across all JetBrains IDEs for evaluating expressions while debugging during the state of control.
 
@@ -68,9 +77,9 @@ Lastly, look at some of the icons on the right.
 - The play button resumes execution of the program
 - The red square stop sign will stop debugging
 - the red octagon stop signs allow you to see all breakpoints or to pause breakpoints from executing for a while.
-- the lightning bolt allows your program to break on an exception, which can be very handy when trying to find out why an exception is being thrown.
+- the lightning bolt allows your program to break on an exception, which can be very handy when trying to find out when an exception is being thrown.
 
-I encourage you to learn to use the debugger as it can be quite useful!
+Invest time into learning to use a debugger properly...it can save you a lot of time in the future and increase your understanding of a language as well!
 
 #### Chrome dev tools
 
