@@ -1379,7 +1379,7 @@ Any mistakes here will impact your grade.
 #### 1.6: studytracker Step 1
 
 > **Pertinent:** Notice how this is labeled *studytracker*?
-> This means it should follow the rules as outlined in (/part1/introduction_to_react#exercises-1-1-1-2)
+> This means it should follow the rules as outlined in [part 1 related to folders](/part1/introduction_to_react#exercises-1-1-1-2)
 
 Let's figure out a way to devise a web application that helps track your self-reported feelings on whether or not you had a good study day.
 There are only three options: ***yeah***, ***kinda***, and ***nah***.
