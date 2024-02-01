@@ -624,7 +624,7 @@ If the user is logged in, the name of the user and a list of blogs is shown.
 
 User details of the logged-in user do not have to be saved to the local storage yet.
 
-> **NB** You can implement the conditional rendering of the login form like this for example:
+> **Pertinent:** You can implement the conditional rendering of the login form like this for example:
 >
 > ```js
 >   if (user === null) {

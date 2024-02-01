@@ -670,7 +670,7 @@ In addition to that, by default, *ts-node* and *ts-node-dev* extend the list of 
  ["js", "json", "node", "ts", "tsx"]
 ```
 
-> **NB**: The validity of *.js*, *.json* and *.node* files as modules in TypeScript depend on environment configuration,
+> **FYI:**: The validity of *.js*, *.json* and *.node* files as modules in TypeScript depend on environment configuration,
 including ***tsconfig*** options such as `allowJs` and `resolveJsonModule`.
 
 Consider a flat folder structure containing files:

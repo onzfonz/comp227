@@ -77,7 +77,7 @@ We can then achieve cross-platform compatibility by using the cross-env library 
 }
 ```
 
-> **NB**: If you are deploying this application to a cloud service,
+> **Remember:**: If you are deploying this application to a cloud service,
 keep in mind that if cross-env is saved as a development dependency, it may cause an application error on your web server.
 To fix this, ***change cross-env to a production dependency*** by running this in the command line:
 >

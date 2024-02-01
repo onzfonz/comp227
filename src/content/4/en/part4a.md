@@ -545,7 +545,7 @@ and that the application returns the added shows at the correct endpoint.
 
 Refactor the application into separate modules as shown earlier in this part of the course material.
 
-> **NB** refactor your application in baby steps and verify that the application works after every change you make.
+> **Remember:** refactor your application in baby steps and verify that the application works after every change you make.
 If you try to take a "shortcut" by refactoring many things at once, then [Murphy's law](https://en.wikipedia.org/wiki/Murphy%27s_law)
 will kick in and it is almost certain that something will break in your application.
 The "shortcut" will end up taking more time than moving forward slowly and systematically.
@@ -907,7 +907,7 @@ The value returned by the function could be in the following format:
 }
 ```
 
-> **NB** when you are comparing objects, the [toEqual](https://jestjs.io/docs/en/expect#toequalvalue) method is probably what you want to use,
+> **Pertinent** when you are comparing objects, the [`toEqual` method](https://jestjs.io/docs/en/expect#toequalvalue) is probably what you want to use,
 since the [toBe](https://jestjs.io/docs/en/expect#tobevalue) tries to verify that the two values are the same value, and not just that they contain the same properties.
 
 Write the tests for this exercise inside of a new `describe` block.

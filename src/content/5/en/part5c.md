@@ -210,7 +210,7 @@ test('renders content', () => {
 })
 ```
 
-> **NB** A more consistent way of selecting elements is using a [data attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
+> **Pertinent:** A more consistent way of selecting elements is using a [data attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*)
 > that is specifically defined for testing purposes.
 > Using *react-testing-library*, we can leverage the [`getByTestId`](https://testing-library.com/docs/queries/bytestid/) method
 > to select elements with a specified `data-testid` attribute.

@@ -452,7 +452,7 @@ Users have a *username, password and name*.
 Do not save passwords to the database as clear text,
 but use the ***bcrypt*** library like we did in part 4 chapter [Creating new users](/part4/user_administration#creating-users).
 
-> **NB** Some Windows users have had problems with ***bcrypt***.
+> **FYI:** Some Windows users have had problems with ***bcrypt***.
 > If you run into problems, remove the library with command
 >
 > ```bash
@@ -475,7 +475,7 @@ The username must be unique.
 
 The operation must respond with a suitable status code and some kind of an error message if an invalid user is created.
 
-> **NB** Do not test password restrictions with Mongoose validations.
+> **Pertinent:** Do not test password restrictions with Mongoose validations.
 It is not a good idea because the password received by the backend and the password hash saved to the database are not the same thing.
 The password length should be validated in the controller as we did in [part 3](/part3/node_js_and_express) before using Mongoose validation.
 
