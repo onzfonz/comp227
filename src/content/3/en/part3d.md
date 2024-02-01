@@ -472,7 +472,7 @@ It turns out that the best solution is not to do any suppression but to add this
 Enabling node means that ESlint knows that we can use the `process` variable,
 and allows you to rely on a system that has helped countless developers with similar situations who have come before you.
 
-> **NB** when you make changes to the *.estlintrc.cjs* file, play close attention to errors in there as well! WebStorm will highlight issues.
+> **Remember:** when you make changes to the *.estlintrc.cjs* file, play close attention to errors in there as well! WebStorm will highlight issues.
 If there are, WebStorm will report the issues to you, and you can look at the terminal output to see more details about it.
 >
 > ![terminal output from npm run lint](../../images/3/55.png)

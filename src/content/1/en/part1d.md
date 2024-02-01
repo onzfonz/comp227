@@ -640,7 +640,7 @@ In this case, we might be able to find what the issue may be.
 
 #### A quick aside about logging
 
-> **NB** Some of you have had much more experience merely printing things to the console instead of using the debugger.
+> **Pertinent** Some of you have had much more experience merely printing things to the console instead of using the debugger.
 > While printing things to the console is still helpful, I would also prefer for you to learn to use the debugger.
 > Nonetheless, when you the ***Console*** tab (or `console.log`) for debugging, **don't combine objects** in a Java-like fashion by using the plus operator.
 > If you write:
@@ -1309,7 +1309,7 @@ You may find the following links useful:
 - Some courses on [Egghead.io](https://egghead.io) like [Start Learning React](https://egghead.io/courses/start-learning-react) are of high quality,
   and the recently updated [Beginner's Guide to React](https://egghead.io/courses/the-beginner-s-guide-to-reactjs) is also relatively good;
   both courses introduce concepts that will also be introduced later on in this course.
-    - **NB** The first one uses class components but the latter uses the new functional ones.
+    - **FYI** The first one uses class components but the latter uses the new functional ones.
 
 ### Web developers pledge
 
@@ -1576,7 +1576,7 @@ Expand your application so that you can vote for the displayed joke.
 
 ![joke app with the votes button added](../../images/1/19a.png)
 
-> **NB** store the votes of each joke into an array or object in the component's state.
+> **Pertinent:** store the votes of each joke into an array or object in the component's state.
 Remember that the correct way of updating state stored in complex data structures like objects and arrays is to make a copy of the state.
 >
 > You can create a copy of an object like this:
