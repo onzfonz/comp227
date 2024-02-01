@@ -619,12 +619,13 @@ then I would consider digging deeper by leveraging WebStorm's powerful debugger 
 [we covered in part 1](/part1/a_more_complex_state_debugging_react_apps#web-storm-ide-debugger-introduction).
 You can also get help from search tools and LLMs to help you understand the errors, just not to produce solutions.
 
-The original author added this chapter to the material after the model answer for the next question exploded completely
-(due to props being of the wrong type), and it had to be debugged using `console.log`.
-
 ***As you continue through, please remember the
 [pledge](/part1/a_more_complex_state_debugging_react_apps#web-developers-pledge)
 you took to help you improve as a web developer***.
+
+> **FYI:** If you see errors in ESLint related to props validation and you are unsure what they are, you may want to go back and look at the [explanation about those errors in part 1](/part1/introduction_to_react#possible-error-message)
+> **Also:** The original author added this chapter to the material after the model answer for the next question exploded completely
+(due to `props` being of the wrong type), and it had to be debugged using `console.log`.
 
 </div>
 
