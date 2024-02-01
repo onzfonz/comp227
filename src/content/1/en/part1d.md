@@ -1507,6 +1507,8 @@ The application's state should still be kept in the root `App` component.
 
 #### 1.11*: studytracker Step 6
 
+> *Why is there a star/asterisk on the exercise? See [here](/part0/general_info#taking-the-course) for the explanation.*
+
 Display the statistics in an HTML [table](https://developer.mozilla.org/en-US/docs/Learn/HTML/Tables/Basics),
 so that your application looks roughly like this:
 
