@@ -174,7 +174,7 @@ We'll use the empty commits to give us a non-standard way of leaving notes in ou
 Go to terminal and write this line.
 
 ```bash
-git commit -allow-empty -m "Practicing an empty commit while reading part 1a"
+git commit --allow-empty -m "Practicing an empty commit while reading part 1a"
 ```
 
 After typing that line, do not make any changes in your JSX file, and go back to webstorm, and if you type another git status, you should now see this green arrow appear.
