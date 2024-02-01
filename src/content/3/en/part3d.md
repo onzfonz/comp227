@@ -7,8 +7,8 @@ lang: en
 
 <div class="content">
 
-There are usually constraints that we want to apply to the data that is stored in our application's database.
-As an example, our application shouldn't accept tasks that have a missing or empty `content` property.
+Typically, we want to constrain the data we store in our application's database.
+For example, we shouldn't store nor even accept tasks that have a missing or empty `content` property.
 The validity of the task is checked in the route handler:
 
 ```js
@@ -27,9 +27,9 @@ app.post('/api/tasks', (request, response) => {
 If the task does not have the `content` property, we respond to the request with the status code **400 bad request**.
 
 One smarter way of validating the format of the data before it is stored in the database is to use the
-[validation](https://mongoosejs.com/docs/validation.html) functionality available in Mongoose.
+[**validation functionality**](https://mongoosejs.com/docs/validation.html) available in Mongoose.
 
-We can define specific validation rules for each field in the schema:
+We can define *specific validation rules* for each field in the schema in *mongo.js*:
 
 ```js
 const taskSchema = new mongoose.Schema({
@@ -66,7 +66,7 @@ app.post('/api/tasks', (request, response, next) => { // highlight-line
 
   const task = new Task({
     content: body.content,
-    important: body.important || false,
+    important: Boolean(body.important) || false,
     date: new Date().toISOString(),
   })
 
