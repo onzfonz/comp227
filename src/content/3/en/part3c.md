@@ -228,7 +228,7 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
-const url = `mongodb+srv://comp227:${password}@cluster0.gb6u3el.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+const url = `mongodb+srv://comp227:${password}@cluster0.gb6u3el.mongodb.net/taskApp?retryWrites=true&w=majority`
 
 const taskSchema = new mongoose.Schema({
   content: String,
@@ -366,7 +366,7 @@ so it is not recommended to copy and paste code directly from there.
 
 ### Fetching objects from the database
 
-Let's comment out the code for generating new tasks and replace it with the following:
+Let's comment out the code in *mongo.js* that creates and saves the `task` and replace it with the following:
 
 ```js
 Task.find({}).then(result => {
@@ -689,6 +689,8 @@ Let's change the *index.js* file in the following way:
 require('dotenv').config() // highlight-line
 const express = require('express')
 const app = express()
+const cors = requires('cors')
+
 const Task = require('./models/task') // highlight-line
 
 // ..
@@ -698,6 +700,8 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 ```
+
+> You can also take out the pre-filled contents inside the `tasks` variable and just leave it as an empty array *[]*.
 
 Notice how `dotenv` must be imported before the `task` model.
 This ensures that the environment variables from the *.env* file are available globally before the code from the other modules is imported.
@@ -729,7 +733,7 @@ app.post('/api/tasks', (request, response) => {
 
   const task = new Task({
     content: body.content,
-    important: body.important || false,
+    important: Boolean(body.important) || false,
     date: new Date().toISOString(),
   })
 
@@ -849,7 +853,7 @@ The console displays more detailed information about the error.
 On top of the non-existing task, there's one more error situation that needs to be handled.
 In this situation, we are trying to fetch a task with the wrong kind of `id`, meaning an `id` that doesn't match the mongo identifier format.
 
-If we make the following request, we will get the error message like the one shown below:
+If we make a request like `GET http://localhost:3001/api/tasks/someInvalidId`, we will get an error message like the one shown below:
 
 ```shell
 Method: GET
@@ -879,7 +883,7 @@ app.get('/api/tasks/:id', (request, response) => {
     })
     .catch(error => {
       console.log(error)
-      response.status(400).send({ error: 'malformatted id' }) // highlight-line
+      response.status(400).send({error: 'malformatted id'}) // highlight-line
     })
 })
 ```
@@ -892,12 +896,12 @@ because the situation fits the description perfectly:
 > *The request could not be understood by the server due to malformed syntax.
   The client SHOULD NOT repeat the request without modifications.*
 
-We have also added some data to the response to shed some light on the cause of the error.
+We have also added some information to the response to shed some light on the cause of the error.
 
 When dealing with Promises, it's almost always a good idea to add error and exception handling.
 Otherwise, you will find yourself dealing with strange bugs.
 
-It's never a bad idea to print the object that caused the exception to the console in the error handler:
+You can always print the object that caused the exception to the console in the error handler:
 
 ```js
 .catch(error => {
@@ -916,9 +920,10 @@ Any error messages will catch your attention even when the console is far back i
 
 ![sample screenshot showing tiny slice of output](../../images/3/15b.png)
 
-You can do this even if you are using the WebStorm terminal by changing the terminal to a window instead of a dock by right-clicking on the terminal's tab.
-
-![changing the terminal to be a window](../../images/3/custom/changing_terminal_to_window.png)
+> **FYI:** You can keep the terminal in the background even if you are using the WebStorm terminal.
+> All you need to do is change the terminal to the window view mode instead of as a dock by right-clicking on WebStorm's *Terminal* tab.
+>
+> ![changing the terminal to be a window](../../images/3/custom/changing_terminal_to_window.png)
 
 ### Moving error handling into middleware
 
@@ -944,7 +949,7 @@ app.get('/api/tasks/:id', (request, response, next) => { // highlight-line
 ```
 
 The error that is passed forward is given to the `next` function as a parameter.
-If `next` was called without a parameter, then the execution would simply move onto the next route or middleware.
+If `next` was called without a parameter, then the *execution would simply move onto the next route or middleware*.
 If the `next` function is called with a parameter, then the execution will continue to the **error handler middleware**.
 
 Express [error handlers](https://expressjs.com/en/guide/error-handling.html)
@@ -970,7 +975,7 @@ After printing the error message, the error handler checks if the error is a `Ca
 In this situation, the error handler will send a response to the browser with the response object passed as a parameter.
 In all other error situations, the middleware passes the error forward to the default Express error handler.
 
-Notice that the error-handling middleware has to be the last loaded middleware!
+> **Remember:** *the error-handling middleware has to be the last loaded middleware!*
 
 ### The order of middleware loading
 
@@ -982,55 +987,61 @@ The correct order is the following:
 ```js
 app.use(express.static('dist'))
 app.use(express.json())
+app.use(cors())
+
+// ...
+
 app.use(requestLogger)
 
-app.post('/api/tasks', (request, response) => {
-  const body = request.body
-  // ...
-})
+// ...
 
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
+    response.status(404).send({ error: 'unknown endpoint' })
 }
 
 // handler of requests with unknown endpoint
 app.use(unknownEndpoint)
 
 const errorHandler = (error, request, response, next) => {
-  // ...
+    // ...
 }
 
 // handler of requests with result to errors
 app.use(errorHandler)
+
+app.post('/api/tasks', (request, response) => {
+    const body = request.body
+    // ...
+})
 ```
 
 The json-parser middleware should be among the very first middleware loaded into Express.
-If the order was the following:
+If the order was the following: 🐞
 
 ```js
-app.use(requestLogger) // request.body is undefined!
+app.use(requestLogger) // request.body is undefined! 🐞
 
 app.post('/api/tasks', (request, response) => {
-  // request.body is undefined!
+  // request.body is undefined! 
   const body = request.body
   // ...
 })
 
-app.use(express.json())
+app.use(express.json()) // needs to be before! 🐞
 ```
 
 Then the JSON data sent with the HTTP requests would not be available for the logger middleware or the POST route handler, since the `request.body` would be `undefined` at that point.
 
 It's also important that the middleware for handling unsupported routes is next to the last middleware that is loaded into Express, just before the error handler.
 
-For example, the following loading order would cause an issue:
+For example, the following loading order would cause an issue: 🐞
 
 ```js
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
-// handler of requests with unknown endpoint
+// handling all requests that get to this line with 'unknown endpoint' 🐞
 app.use(unknownEndpoint)
 
 app.get('/api/tasks', (request, response) => {
@@ -1047,7 +1058,7 @@ The only exception to this is the error handler which needs to come at the very 
 
 Let's add some missing functionality to our application, including deleting and updating an individual task.
 
-The easiest way to delete a task from the database is with the [findByIdAndDelete](https://mongoosejs.com/docs/api/model.html#Model.findByIdAndDelete()) method:
+The easiest way to delete a task from the database is with the [`findByIdAndDelete` method](https://mongoosejs.com/docs/api/model.html#Model.findByIdAndDelete()):
 
 ```js
 app.delete('/api/tasks/:id', (request, response, next) => {
@@ -1084,16 +1095,17 @@ app.put('/api/tasks/:id', (request, response, next) => {
 })
 ```
 
-In the code above, we also allow the content of the task to be edited.
-However, we will not support changing the creation date for obvious reasons.
+In the code above, we also allow the content of the `task` to be edited.
+
+> *However, we will not support changing the creation date for obvious reasons.*
 
 Notice that the `findByIdAndUpdate` method receives a regular JavaScript object as its parameter,
-and not a new task object created with the `Task` constructor function.
+and not a new `task` object created with the `Task` constructor function.
 
 There is one important detail regarding the use of the `findByIdAndUpdate` method.
 By default, the `updatedTask` parameter of the event handler receives the original document
 [without the modifications](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate).
-We added the optional `{ new: true }` parameter, which will cause our event handler to be called with the new modified document instead of the original.
+We added the optional `{ new: true }` parameter, which will cause our event handler to be called ***with the new modified document instead of the original***.
 
 After testing the backend directly with Postman and the WebStorm REST client, we can verify that it seems to work.
 The frontend also appears to work with the backend using the database.
@@ -1129,7 +1141,7 @@ Move the error handling of the application to a new error handler middleware.
 #### 3.17*: Communities database, Step 5
 
 If the user tries to create a new community for one whose name is already in the communities application,
-the frontend will try to update the community's invite location by making an HTTP PUT request to the entry's unique backend URL.
+the frontend will try to update the community's invite location by making an *`HTTP PUT`* request to the entry's unique backend URL.
 
 Modify the backend to support this request.
 
@@ -1138,7 +1150,7 @@ Verify that the frontend works after making your changes.
 #### 3.18*: Communities database Step 6
 
 Also, update the handling of the ***api/groups/:id*** and ***info*** routes to use the database,
-and verify that they work directly with the browser, Postman, or VS Code REST client.
+and verify that they work directly with the browser, Postman, or WebStorm REST client.
 
 Inspecting an individual community from the browser should look like this:
 
