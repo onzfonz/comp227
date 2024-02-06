@@ -616,9 +616,9 @@ Let's define the *npm script `test`* to execute tests with Jest and to report ab
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "test": "jest --verbose", // highlight-line
     "build:ui": "rm -rf dist && cd ../reading/ && npm run build && cp -r dist ../backend-reading",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
-    "test": "jest --verbose", // highlight-line
     "lint": "eslint .",
     "fixlint": "eslint . --fix"
   },
