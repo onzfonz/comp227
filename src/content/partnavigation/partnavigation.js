@@ -40,7 +40,7 @@ module.exports = {
     // '6': {
     //   a: 'Flux-architecture and Redux',
     //   b: 'Many reducers',
-    //   c: 'Communicating with server in a redux application',
+    //   c: 'Communicating with a server in a redux application',
     //   d: 'React Query, useReducer and the context',
     // },
     // '7': {
