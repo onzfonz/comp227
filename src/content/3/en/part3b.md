@@ -599,21 +599,21 @@ It is just backend repository that is deployed throughout the whole part, nothin
 
 Test the deployed backend with a browser and Postman or REST client to ensure it works.
 
-**PRO TIP:** When you deploy your application to the cloud,
+> **TIP:** When you deploy your application to the cloud,
 it is worth it to at least in the beginning keep an eye on the logs in render.
-
-One such problem that you'll see arises is that npm will complain that it cannot find application dependency *express*:
-
-The reason would be that the *express* package has not been installed with the `npm i express` command,
+>
+> One such problem that you'll see arises is that npm will complain that it cannot find application dependency *express*:
+>
+> The reason would be that the *express* package has not been installed with the `npm i express` command,
 so information about the dependency was not saved to the file *package.json*.
-
-Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`.
-
-Create a *README.md* at the root of your repository, and add a link to your online application to it.
-
-Also, make sure that the frontend still works locally (in development mode when started with command `npm run dev`).
-
-> **Remember:** Do not forget to create the commit and push!
+>
+> Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`.
+>
+> Create a *README.md* at the root of your repository, and add a link to your online application to it.
+>
+> Also, make sure that the frontend still works locally (in development mode when started with command `npm run dev`).
+>
+>> ***Also Remember:*** Do not forget to create the commit and push!
 
 #### 3.11 Communities full stack
 
