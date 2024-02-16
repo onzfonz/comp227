@@ -613,13 +613,19 @@ so information about the dependency was not saved to the file *package.json*.
 >
 > Also, make sure that the frontend still works locally (in development mode when started with command `npm run dev`).
 >
+> The last reason that I'll mention is forgetting to set the optional *Root Directory* for your repositories.
+> I've included this mostly due to students mentioning this to me personally as causing them issues.
+> You may need to change your *Root Directory* in Render to *match your particular repository folder structure*, like this particular image shows:
+> ![render image showing to change the community backend](../../images/3/custom/render_backend_communities.png)
+>
 >> ***Also Remember:*** Do not forget to create the commit and push!
 
 #### 3.11 Communities full stack
 
 Generate a production build of your frontend, and add it to the internet application using the method introduced in this part.
 
-> **Pertinent:** Make sure the directory *dist* is not gitignored
+> **Remember:** Make sure the directory *dist* is not gitignored.
+> ***You may need to remove the comment from line 83 of your `.gitignore` file so that the `dist` folder will be added to your project.***
 
 Also, make sure that the frontend still works locally (in development mode when started with command `npm start`).
 
