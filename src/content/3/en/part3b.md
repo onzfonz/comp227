@@ -360,7 +360,7 @@ The backend directory should now look as follows:
 To make express show **static content**, the page *index.html* and the JavaScript, etc., it fetches,
 we need a built-in middleware from express called [***static***](http://expressjs.com/en/starter/static-files.html).
 
-Then we add the following amidst the declarations of middleware
+Then we add the following amidst the declarations of middleware in *index.js*:
 
 ```js
 app.use(express.static('dist'))
@@ -427,11 +427,11 @@ The file contains instructions to fetch a CSS stylesheet defining the styles of 
 and one `script` tag that instructs the browser to fetch the JavaScript code of the application - the actual React application.
 
 The React code fetches tasks from the server address <http://localhost:3001/api/tasks> and renders them to the screen.
-The communications between the server and the browser can be seen in the ***Network*** tab of the developer console:
+The communication between the server and the browser can be seen in the ***Network*** tab of the developer console:
 
 ![Network tab of tasks application on the backend](../../images/3/29ea.png)
 
-The setup that is ready for a product deployment looks as follows:
+Below is a diagram of what the deployment-ready react app looks like:
 
 ![diagram of deployment-ready react app](../../images/3/101.png)
 
@@ -443,41 +443,45 @@ Once it starts to run, it fetches the JSON data from the address [localhost:3001
 
 ### The whole app to the internet
 
-After ensuring that the production version of the application works locally,
-add and commit the production build of the frontend to the backend repository, and push the code to GitHub.
-To then deploy, go back to your personal fork of the repo, and click the ***Sync Fork*** button.
+You are ready to deploy after ensuring:
 
-Remember, if the automatic deployment does not work, you may need to select the ***Manual Deploy*** from the Render dashboard.
+- the production version of the application works locally
+- the production build of the frontend has been added to the backend repository
+- the repository has been pushed to the server
 
-[The application](https://comp227-osvaldo-lab3.onrender.com/) works perfectly,
+To deploy, *visit your personal fork's code repository page*, and click the ***Sync Fork*** button.
+
+> **Remember:** if the automatic deployment does not work, you may need to select the ***Manual Deploy*** from the Render dashboard.
+
+[The application](https://comp227-osvaldo-lab3.onrender.com/), (*aside than being slow*), works perfectly,
 except we haven't added the functionality for changing the importance of a task to the backend yet.
 
 ![screenshot of tasks application](../../images/3/30ea.png)
 
 Our application saves the tasks to a variable.
-If the application crashes or is restarted, all of the data will disappear.
+If the application crashes or is restarted, **all of the data will disappear**.
 
 The application needs a database.
 Before we introduce one, let's go through a few things.
 
-The setup now looks like this:
+Study our updated diagram of our application:
 
 ![diagram of react app on render with a database](../../images/3/102.png)
 
 The node/express-backend now resides in the Render server.
 When the root address that is of the form <https://comp227-osvaldo-lab3.onrender.com/> is accessed,
-the browser loads and executes the React app that fetches the json-data from the Render server.
+the browser loads and executes the React app that fetches the JSON data from the Render server.
 
 ### Streamlining deploying of the frontend
 
 To create a new production build of the frontend without some of the extra manual work,
-let's add some npm-scripts to the ***backend's package.json***.
+let's add some npm scripts to the ***backend's package.json***.
 
 ```json
 {
     "scripts": {
         //...
-    "build:ui": "rm -rf dist && cd ../part2-tasks/ && npm run build && cp -r dist ../tasks-backend",
+    "build:ui": "rm -rf dist && cd ../reading/ && npm run build && cp -r dist ../backend-reading",
     "deploy": "npm run build:ui && git add . && git commit -m npm_generated_rebuild_of_the_UI && git push",
   }
 }
@@ -486,7 +490,7 @@ let's add some npm-scripts to the ***backend's package.json***.
 > *Note for Windows users*
 >
 > Back in part 0, I mentioned that you should work exclusively using git bash as your terminal of choice.
-> This is because Windows most popular terminal options Command Prompt and Powershell, do not natively support Linux-like commands.
+> This is because Windows most popular terminal options *Command Prompt* and *Powershell*, do not natively support Linux-like commands.
 > This means that standard shell commands in `build:ui` would not work in Powershell.
 > To get the script to work in Powershell, it would have to be rewritten as:
 >
@@ -552,7 +556,7 @@ If the React code does an HTTP request to a server address at *<http://localhost
 (i.e. when requests are not about fetching the CSS or JavaScript of the application),
 the request will be redirected to the server at *<http://localhost:3001>*.
 
-Note that with the vite-configuration shown above, only requests that are made to paths starting with ***/api*** are redirected to the server.
+Note that with the vite configuration shown above, only requests that are made to paths starting with ***/api*** are redirected to the server.
 
 A negative aspect of our approach is how complicated it is to deploy the frontend.
 Deploying a new version requires generating a new production build of the frontend and copying it to the backend repository.
@@ -595,25 +599,33 @@ It is just backend repository that is deployed throughout the whole part, nothin
 
 Test the deployed backend with a browser and Postman or REST client to ensure it works.
 
-**PRO TIP:** When you deploy your application to the cloud,
+> **TIP:** When you deploy your application to the cloud,
 it is worth it to at least in the beginning keep an eye on the logs in render.
-
-One such problem that you'll see arises is that npm will complain that it cannot find application dependency *express*:
-
-The reason would be that the *express* package has not been installed with the `npm i express` command,
+>
+> One such problem that you'll see arises is that npm will complain that it cannot find application dependency *express*:
+>
+> The reason would be that the *express* package has not been installed with the `npm i express` command,
 so information about the dependency was not saved to the file *package.json*.
-
-Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`.
-
-Create a README.md at the root of your repository, and add a link to your online application to it.
-
-Also, make sure that the frontend still works locally (in development mode when started with command `npm run dev`).
+>
+> Another typical problem is that the application is not configured to use the port set to the environment variable `PORT`.
+>
+> Create a *README.md* at the root of your repository, and add a link to your online application to it.
+>
+> Also, make sure that the frontend still works locally (in development mode when started with command `npm run dev`).
+>
+> The last reason that I'll mention is forgetting to set the optional *Root Directory* for your repositories.
+> I've included this mostly due to students mentioning this to me personally as causing them issues.
+> You may need to change your *Root Directory* in Render to *match your particular repository folder structure*, like this particular image shows:
+> ![render image showing to change the community backend](../../images/3/custom/render_backend_communities.png)
+>
+>> ***Also Remember:*** Do not forget to create the commit and push!
 
 #### 3.11 Communities full stack
 
 Generate a production build of your frontend, and add it to the internet application using the method introduced in this part.
 
-> **NB** Make sure the directory *build* is not gitignored
+> **Remember:** Make sure the directory *dist* is not gitignored.
+> ***You may need to remove the comment from line 83 of your `.gitignore` file so that the `dist` folder will be added to your project.***
 
 Also, make sure that the frontend still works locally (in development mode when started with command `npm start`).
 

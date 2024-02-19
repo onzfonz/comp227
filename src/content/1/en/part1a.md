@@ -174,7 +174,7 @@ We'll use the empty commits to give us a non-standard way of leaving notes in ou
 Go to terminal and write this line.
 
 ```bash
-git commit -allow-empty -m "Practicing an empty commit while reading part 1a"
+git commit --allow-empty -m "Practicing an empty commit while reading part 1a"
 ```
 
 After typing that line, do not make any changes in your JSX file, and go back to webstorm, and if you type another git status, you should now see this green arrow appear.
@@ -788,8 +788,11 @@ The exercises are submitted through GitHub and marking them as done on Canvas.
 To submit an exercise as completed in GitHub, you will need to manually write this command in your terminal.
 
 ```bash
-git commit --allow-empty -m "Submitted Exercise X.Y"
+git commit --allow-empty -m "Completed Exercise X.Y"
 ```
+
+Because we are using file watchers, all changes are uploaded automatically.
+So, any time that the reading says to *commit your changes*, **you can use the `--allow-empty` flag to make an empty commit with the desired message**.
 
 Where *`X`* and *`Y`* stand for the part number ane exercise number.
 You will know that it is complete because it will parrot it back to you.

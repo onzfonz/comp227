@@ -315,7 +315,7 @@ You can write the code into the same project since you have been committing your
 Also remember to keep using the empty commits from the previous exercises to mark when you have finished an exercise:
 
 ```bash
-git commit --allow-empty -m "Submitted Exercise #.##"
+git commit --allow-empty -m "Completed Exercise #.##"
 ```
 
 #### 1.3: handheld arcade info Step 3

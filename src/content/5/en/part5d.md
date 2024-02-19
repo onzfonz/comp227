@@ -91,7 +91,7 @@ Let's add an npm script to *the backend* which starts it in test mode, or so tha
 }
 ```
 
-> **NB** To get Cypress working with WSL2 one might need to do some additional configuring first.
+> **FYI:** To get Cypress working with WSL2 one might need to do some additional configuring first.
 > These two links:
 >
 > - [Official Cypress Guide](https://docs.cypress.io/guides/getting-started/installing-cypress#Windows-Subsystem-for-Linux)
@@ -135,7 +135,7 @@ We start the test from the opened window:
 
 Running the test shows how the application behaves as the test is run:
 
-> **NB**: you may need to restart Cypress if you run into any issues.
+> **FYI:** you may need to restart Cypress if you run into any issues.
 
 Running the test shows how the application behaves as the test is run:
 

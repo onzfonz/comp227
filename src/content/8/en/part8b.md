@@ -860,7 +860,7 @@ Completing the action replaces the first line with this:
 import express from "express";
 ```
 
-> **NB**: Make sure to utilize the context actions and quick fixes that WebStorm provides.
+> **FYI:**: Make sure to utilize the context actions and quick fixes that WebStorm provides.
 Keep your eyes open for these helpers/quick fixes; listening to your editor usually makes your code better and easier to read.
 The automatic fixes for issues can be a major time saver as well.
 
