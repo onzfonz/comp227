@@ -7,32 +7,36 @@ lang: en
 
 <div class="content">
 
-We want to add user authentication and authorization to our application.
-Users should be stored in the database and every task should be linked to the user who created it.
-Deleting and editing a task should only be allowed for the user who created it.
+We now want to add user authentication and authorization to our application.
+This means we will:
 
-Let's start by adding information about users to the database.
-There is a one-to-many relationship between the user (***User***) and tasks (***Task***):
+- Store users in a database
+- Link every task to the user who created it.
+- Ensure that only the user who created a task can edit or delete it.
+
+Before we begin the implementation, let's consider conceptually how a use will relate to a task.
+You may have noticed there is a one-to-many relationship between the user (***User***) and tasks (***Task***):
 
 ![diagram linking user and tasks](../../images/4/custom/user_task_diagram.png)
 
-If we were working with a relational database the implementation would be straightforward.
-Both resources would have their separate database tables, and the id of the user who created a task would be stored in the tasks table as a foreign key.
+If we were working with a ***relational database*** the implementation between *User* and *Task* would be straightforward.
+Both resources would have their separate database tables, and the id of the *User* who created a *Task* would be stored in the tasks table as a foreign key.
 
-When working with document databases the situation is a bit different, as there are many different ways of modeling the situation.
+However, with ***document databases*** there are many different ways of modeling the situation.
 
-The existing solution saves every task in the *tasks collection* in the database.
-If we do not want to change this existing collection, then the natural choice is to save users in their own collection, ***users*** for example.
+The existing solution *saves every task in the tasks collection* in the database.
+If we do not want to change this existing collection, then the natural choice is to *save users in their own collection*, ***users*** for example.
 
-Like with all document databases, we can use object IDs in Mongo to reference documents in other collections.
+Like with all document databases, we can ***use object IDs in Mongo to reference documents in other collections***.
 This is similar to using foreign keys in relational databases.
 
 Traditionally document databases like Mongo do not support **join queries** that are available in relational databases, used for aggregating data from multiple tables.
-However, starting from version 3.2.
-Mongo has supported [lookup aggregation queries](https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/).
-We will not be taking a look at this functionality in this course.
+> **FYI:** However, starting from version 3.2.
+> Mongo has supported [lookup aggregation queries*](https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/).
+>
+>> **We will not study lookup aggretation queries in this course.*
 
-If we need functionality similar to join queries, we will implement it in our application code by making multiple queries.
+If we need functionality similar to join queries, ***we will implement it in our application code by making multiple queries***.
 In certain situations, Mongoose can take care of joining and aggregating data, which gives the appearance of a join query.
 However, even in these situations, Mongoose makes multiple queries to the database in the background.
 
@@ -219,7 +223,7 @@ The password hash is the output of a
 applied to the user's password.
 **It is never wise to store unencrypted plain text passwords in the database!**
 
-Let's install the [bcrypt](https://github.com/kelektiv/node.bcrypt.js) package for generating the password hashes:
+Let's install the [*bcrypt* package](https://github.com/kelektiv/node.bcrypt.js) for generating the password hashes:
 
 ```bash
 npm install bcrypt
@@ -269,12 +273,12 @@ module.exports = usersRouter
 The password sent in the request is ***not*** stored in the database.
 
 The fundamentals of [storing passwords](https://codahale.com/how-to-safely-store-a-password/) are outside the scope of this course material.
-We will not discuss what the magic number 10 assigned to the [saltRounds](https://github.com/kelektiv/node.bcrypt.js/#a-task-on-rounds) variable means,
+We will not discuss what assigning the magic number *`10`* to [`saltRounds`](https://github.com/kelektiv/node.bcrypt.js/#a-task-on-rounds) does,
 but you can read more about it in the linked material.
 
 Our current code does not contain any error handling or input validation for verifying that the username and password are in the desired format.
 
-The new feature can and should initially be tested manually with a tool like Postman.
+The new feature can and should initially be tested manually with a tool like *Postman*.
 However testing things manually will quickly become too cumbersome, especially once we implement functionality that enforces usernames to be unique.
 
 It takes much less effort to write automated tests, and it will make the development of our application much easier.
@@ -378,14 +382,25 @@ where tests for new functionality are written before the functionality is implem
 
 Mongoose does not have a built-in validator for checking the uniqueness of a field.
 Fortunately, there is ready-made solution for this, the
-[mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator) library.
+[*mongoose-unique-validator* library](https://www.npmjs.com/package/mongoose-unique-validator).
 Let's install the library:
 
 ```bash
 npm install mongoose-unique-validator
 ```
 
-and extend the code by following the library documentation in *models/user.js*:
+> **Pertinent:** when installing the *mongoose-unique-validator* library, you may encounter the following error message:
+>
+> ![screenshot showing mongoose compatibility error](../../images/4/uniq.png)
+>
+> The reason for this is that as of 10/11/2023 the library is not yet compatible with Mongoose version 8.
+> If you encounter this error, you can revert to an older version of Mongoose by running the command
+>
+> ```bash
+> npm install mongoose@7.6.5
+> ```
+
+Once installed, let's extend the code by following the library documentation in *models/user.js*:
 
 ```js
 const mongoose = require('mongoose')
@@ -414,22 +429,16 @@ userSchema.plugin(uniqueValidator) // highlight-line
 // ...
 ```
 
-> Pertinent: when installing the *mongoose-unique-validator* library, you may encounter the following error message:
+> **FYI:** We could also implement other validations into the user creation.
+> We could check that the:
 >
-> ![screenshot showing mongoose compatibility error](../../images/4/uniq.png)
+> - username is long enough
+> - username only consists of permitted characters
+> - password is strong enough
 >
-> The reason for this is that at the time of writing (10.11.2023) the library is not yet compatible with Mongoose version 8.
-> If you encounter this error, you can revert to an older version of Mongoose by running the command
->
-> ```bash
-> npm install mongoose@7.6.5
-> ```
+> *Implementing these functionalities is left as an optional exercise.*
 
-We could also implement other validations into the user creation.
-We could check that the username is long enough, that the username only consists of permitted characters, or that the password is strong enough.
-Implementing these functionalities is left as an optional exercise.
-
-Before we move onward, let's add an initial implementation of a route handler that returns all of the users in the database:
+Before we move onward, let's add an initial implementation of a route handler that *returns all of the users in the database*:
 
 ```js
 usersRouter.get('/', async (request, response) => {
@@ -438,6 +447,7 @@ usersRouter.get('/', async (request, response) => {
 })
 ```
 
+In addition to unit tests, we also want to verify this works with users we have made.
 For making new users in a production or development environment,
 you may send a POST request to ```/api/users/``` via Postman or REST Client in the following format:
 
@@ -459,7 +469,7 @@ I ended up adding this other user as well.
 }
 ```
 
-The list looks like this:
+After adding those users, the list looks like this:
 
 ![browser api/users shows JSON data with 1 user array](../../images/4/9.png)
 
@@ -547,16 +557,16 @@ Likewise, the ids of the users who created the tasks can be seen when we visit t
 ### Populate
 
 We would like our API to work in such a way, that when an HTTP GET request is made to the ***/api/users*** route,
-the user objects would also contain the contents of the user's tasks and not just their id.
+the user objects would also contain the contents of the user's tasks and not just their `id`.
 In a relational database, this functionality would be implemented with a **join query**.
 
 As previously mentioned, *document databases do not properly support join queries between collections*, but the Mongoose library can do some of these joins for us.
 Mongoose accomplishes the join by doing multiple queries, which is different from join queries in relational databases which are **transactional**,
 meaning that the state of the database does not change during the time that the query is made.
-With join queries in Mongoose, *nothing can guarantee that the state between the collections being joined is consistent*,
+With join queries in Mongoose, ***nothing can guarantee that the state between the collections being joined is consistent***,
 meaning that if we make a query that joins the user and tasks collections, the **state of the collections may change during the query**.
 
-The Mongoose join is done with the [`populate`](http://mongoosejs.com/docs/populate.html) method.
+The Mongoose join is done with the [`populate` method](http://mongoosejs.com/docs/populate.html).
 Let's update the route that returns all users first in *controllers/users.js*:
 
 ```js
@@ -569,9 +579,9 @@ usersRouter.get('/', async (request, response) => {
 })
 ```
 
-The [populate](http://mongoosejs.com/docs/populate.html) method is chained after the `find` method making the initial query.
-The parameter given to the populate method defines that the ***ids*** referencing `task` objects in the `tasks` field of the `user` document
-will be replaced by the referenced `task` documents.
+We chain `populate` after the `find` method making the initial query.
+The parameter given to `populate` (i.e. *`tasks`*) will take ***task ids*** from that array in `user` document
+and replace each id with the referenced `task` documents.
 
 The result is almost exactly what we wanted:
 
@@ -613,7 +623,7 @@ Now the user's information is added to the `user` field of task objects.
 
 It's important to understand that the database does not know that the ids stored in the `user` field of tasks reference documents in the user collection.
 
-The functionality of the `populate` method of Mongoose is based on the fact that we have defined "types" to the references in the Mongoose schema with the `ref` option:
+The functionality of `populate` in Mongoose is based on how we defined ***types*** to the references in the Mongoose schema with the `ref` option:
 
 ```js
 const taskSchema = new mongoose.Schema({
@@ -636,6 +646,6 @@ You can find the code for our current application in its entirety in the *part4-
 
 > Pertinent: At this stage, firstly, some tests will fail.
 > We will leave fixing the tests as an optional exercise.
-> Secondly, in the deployed tasks app, the creating a task feature will stop working as the user is not yet linked to the frontend.
+> Secondly, in the deployed tasks app, creating a task will not work at this moment as we have yet to link the user to the frontend.
 
 </div>
