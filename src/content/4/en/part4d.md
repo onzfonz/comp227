@@ -7,34 +7,35 @@ lang: en
 
 <div class="content">
 
-Users must be able to log into our application, and when a user is logged in,
+Now that we have created users on the backend, let's move on and add more functionality related to users and their tasks.
+In particular, users must be able to log into our application, and when a user is logged in,
 their user information must automatically be attached to any new tasks they create.
 
-We will now implement support for
+Let's start by implementing support for
 [**token-based authentication**](https://www.digitalocean.com/community/tutorials/the-ins-and-outs-of-token-based-authentication#how-token-based-works) to the backend.
 
 The principles of token-based authentication are depicted in the following sequence diagram:
 
 ![sequence diagram of token-based authentication](../../images/4/16e.png)
 
-- User starts by logging in using a login form implemented with React
+1. User starts by logging in using a login form implemented with React
     - We will add the login form to the frontend in [part 5](/part5)
-- This causes the React code to send the username and the password to the server address ***/api/login*** as a HTTP POST request.
-- If the username and the password are correct, the server generates a **token** that somehow identifies the logged-in user.
+2. This causes the React code to send the username and the password to the server address ***/api/login*** as a HTTP POST request.
+3. If the username and the password are correct, the server generates a **token** that somehow identifies the logged-in user.
     - The token is signed digitally, making it highly impracticable to falsify cryptographically
-- The backend responds with a status code indicating the operation was successful and returns the token with the response.
-- The browser saves the token, for example to the state of a React application.
-- When the user creates a new task (or does some other operation requiring identification), the React code sends the token to the server with the request.
-- The server uses the token to identify the user
+4. The backend responds with a status code indicating the operation was successful and returns the token with the response.
+5. The browser saves the token, for example to the state of a React application.
+6. When the user creates a new task (or does some other operation requiring identification), the React code sends the token to the server with the request.
+7. The server uses the token to identify the user
 
 Let's first implement the functionality for logging in.
-Install the [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) library, which allows us to generate [JSON web tokens](https://jwt.io/).
+Install the [*jsonwebtoken* library](https://github.com/auth0/node-jsonwebtoken), which allows us to generate [JSON web tokens](https://jwt.io/).
 
 ```bash
 npm install jsonwebtoken
 ```
 
-The code for login functionality goes to the file *controllers/login.js*.
+The code for logging in goes to the file *controllers/login.js*.
 
 ```js
 const jwt = require('jsonwebtoken')
@@ -71,13 +72,13 @@ loginRouter.post('/', async (request, response) => {
 module.exports = loginRouter
 ```
 
-The code starts by searching for the user from the database by the `username` attached to the request.
+The code starts by searching for the user from the database via the `username` attached to the request.
 
 ```js
 const user = await User.findOne({ username })
 ```
 
-Next, it checks the `password`, also attached to the request.
+Next, it checks the `password`, which is also attached to the request.
 
 ```js
 const passwordCorrect = user === null
@@ -85,15 +86,16 @@ const passwordCorrect = user === null
   : await bcrypt.compare(password, user.passwordHash)
 ```
 
-Because the passwords themselves are not saved to the database, but **hashes** calculated from the passwords,
-the `bcrypt.compare` method is used to check if the password is correct:
+Remember that passwords themselves are not saved to the database.
+Instead, we store the **hashes** calculated from the passwords.
+This means we need to use `bcrypt.compare` to check if the password is correct:
 
 ```js
 await bcrypt.compare(password, user.passwordHash)
 ```
 
 If the user is not found, or the password is incorrect,
-the request is responded with the status code [401 unauthorized](https://www.rfc-editor.org/rfc/rfc9110.html#name-401-unauthorized).
+we respond to the request with the status code [401 unauthorized](https://www.rfc-editor.org/rfc/rfc9110.html#name-401-unauthorized).
 The reason for the failure is explained in the response body.
 
 ```js
@@ -105,7 +107,7 @@ if (!(user && passwordCorrect)) {
 ```
 
 If the password is correct, a token is created with the method `jwt.sign`.
-The token contains the username and the user id in a digitally signed form.
+The token contains the `username` and the user `id` in a digitally signed form.
 
 ```js
 const userForToken = {
@@ -139,7 +141,7 @@ const loginRouter = require('./controllers/login')
 app.use('/api/login', loginRouter)
 ```
 
-Let's try logging in using the WebStorm REST-client:
+Let's try logging in using the WebStorm REST client:
 
 ![WebStorm rest post with username/password](../../images/4/17e.png)
 
@@ -148,7 +150,7 @@ The following is printed to the console:
 
 ```html
 <body>
-<pre>Error: secretOrPrivateKey must have a value<br> &nbsp; &nbsp;at module.exports [as sign] (C:\Users\Osvaldo\git\part3-tasks-backend\node_modules\jsonwebtoken\sign.js:105:20)<br> &nbsp; &nbsp;at C:\Users\Osvaldo\git\part3-tasks-backend\controllers\login.js:25:23</pre>
+<pre>Error: secretOrPrivateKey must have a value<br> &nbsp; &nbsp;at module.exports [as sign] (C:\Users\powercat\comp227\part3\tasks-backend\node_modules\jsonwebtoken\sign.js:105:20)<br> &nbsp; &nbsp;at C:\Users\powercat\comp227\part3\tasks-backend\controllers\login.js:25:23</pre>
 </body>
 
 ...
@@ -174,11 +176,11 @@ This is helpful when you start having a larger test file where you have differen
 
 ### Limiting creating new tasks to logged-in users
 
-Let's change creating new tasks so that it is only possible if the post request has a valid token attached.
-The task is then saved to the tasks list of the user identified by the token.
+Let's change creating new tasks so that it is *only possible if the POST request has a valid token attached*.
+The task is then saved to the `tasks` list of the user identified by the token.
 
 There are several ways of sending the token from the browser to the server.
-We will use the [Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) header.
+We will use the [Authorization header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 The header also tells which [authentication scheme](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Authentication_schemes) is used.
 This can be necessary if the server offers multiple ways to authenticate.
 Identifying the scheme tells the server how the attached credentials should be interpreted.
@@ -320,7 +322,7 @@ The current application code can be found on
 [GitHub](https://github.com/comp227/part3-tasks-backend/tree/part4-9), branch *part4-9*.
 
 If the application has multiple interfaces requiring identification, JWT's validation should be separated into its own middleware.
-An existing library like [express-jwt](https://www.npmjs.com/package/express-jwt) could also be used.
+An existing library like [*express-jwt*](https://www.npmjs.com/package/express-jwt) could also be used.
 
 ### Problems of Token-based authentication
 
@@ -407,7 +409,7 @@ This kind of solution is often called a **server-side session**.
 The negative aspect of server-side sessions is the increased complexity in the backend and also the effect on performance
 since the token validity needs to be checked for each API request to the database.
 Database access is considerably slower compared to checking the validity of the token itself.
-That is why it is quite common to save the session corresponding to a token to a **key-value database** such as [Redis](https://redis.io/)
+That is why it is quite common to save the session corresponding to a token to a **key-value database** such as [***Redis***](https://redis.io/)
 that is limited in functionality compared to a MongoDB or relational databases but extremely fast in some usage scenarios.
 
 When server-side sessions are used, the ***token is a random string*** (quite often).
@@ -428,7 +430,7 @@ Render routes all traffic between a browser and the Render server over HTTPS.
 
 We will implement login to the frontend in the [next part](/part5).
 
-> Pertinent: At this stage, in the deployed tasks app, it is expected that the creating a task feature will stop working as the backend login feature is not yet linked to the frontend.
+> **Pertinent:** At this stage, in the deployed tasks app, it is expected that the creating a task feature will stop working as the backend login feature is not yet linked to the frontend.
 
 </div>
 
@@ -441,15 +443,15 @@ The safest way is to follow the story from part 4 chapter [User administration](
 to the chapter [Token-based authentication](/part4/token_authentication).
 You can of course also use your creativity.
 
-**One more warning:** If you notice you are mixing `async`/`await` and `then` calls, it is 99% certain you are doing something wrong.
-Use either or, never both.
+> **Warning:** If you notice you are mixing `async`/`await` and `then` calls, it is 99% certain you are doing something wrong.
+> Use either or, never both.
 
 #### 4.15: watchlist expansion, Step 3
 
 Implement a way to create new users by doing an HTTP POST request to address ***api/users***.
 Users have a *username, password and name*.
 
-Do not save passwords to the database as clear text,
+**Do not save passwords to the database as clear text**,
 but use the ***bcrypt*** library like we did in part 4 chapter [Creating new users](/part4/user_administration#creating-users).
 
 > **NB** Some Windows users have had problems with ***bcrypt***.
@@ -469,24 +471,26 @@ The list of users can, for example, look as follows:
 
 #### 4.16*: watchlist expansion, Step 4
 
-Add a feature which adds the following restrictions to creating new users: Both username and password must be given.
-Both username and password must be at least 3 characters long.
-The username must be unique.
+Add a feature which adds the following restrictions to creating new users:
+
+- Both username and password must be given.
+- Both username and password must be at least 3 characters long.
+- The username must be unique.
 
 The operation must respond with a suitable status code and some kind of an error message if an invalid user is created.
 
-> **NB** Do not test password restrictions with Mongoose validations.
-It is not a good idea because the password received by the backend and the password hash saved to the database are not the same thing.
-The password length should be validated in the controller as we did in [part 3](/part3/node_js_and_express) before using Mongoose validation.
+> **Pertinent:** Do not test password restrictions with Mongoose validations.
+> It is not a good idea because the password received by the backend and the password hash saved to the database are not the same thing.
+> The password length should be validated in the controller as we did in [part 3](/part3/node_js_and_express) before using Mongoose validation.
 
 Also, implement tests that ensure invalid users are not created and that an invalid add user operation returns a suitable status code and error message.
 
 #### 4.17: watchlist expansion, Step 5
 
-Expand `show` so that each show contains information on the recommender of that show.
+Expand `show` so that *each show contains information on the recommender of that show*.
 
 Modify adding new shows so that when a new show is created, ***any*** user from the database is designated as its recommender (for example the one found first).
-Implement this according to part 4 chapter [populate](/part4/user_administration#populate).
+Implement this according to part 4's [populate section](/part4/user_administration#populate).
 Which user is designated as the recommender does not matter just yet.
 The functionality is finished in exercise 4.19.
 
@@ -500,7 +504,7 @@ and listing all users also displays the shows they recommended:
 
 #### 4.18: watchlist expansion, Step 6
 
-Implement token-based authentication according to part 4 chapter [Token authentication](/part4/token_authentication).
+Implement token-based authentication according to part 4's [Token authentication section](/part4/token_authentication).
 
 #### 4.19: watchlist expansion, Step 7
 
@@ -554,7 +558,7 @@ Notice that if you fetch a show from the database,
 const show = await Show.findById(...)
 ```
 
-the field `show.user` does not contain a string, but an Object.
+the field `show.user` does not contain a `string`, but an `Object`.
 So if you want to compare the id of the object fetched from the database and a string id, a normal comparison operation does not work.
 The id fetched from the database must be parsed into a string first.
 
@@ -633,7 +637,7 @@ router.post('/', middleware.userExtractor, async (request, response) => {
 #### 4.23*:  watchlist expansion, Step 11
 
 After adding token-based authentication the tests for adding a new show broke down.
-Fix the tests.
+**Fix the tests.**
 Also, write a new test to ensure adding a show fails with the proper status code **401 Unauthorized** if a token is not provided.
 
 [This](https://github.com/visionmedia/supertest/issues/398) is most likely useful when doing the fix.
