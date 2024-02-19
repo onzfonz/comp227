@@ -54,7 +54,7 @@ There's an existing [ESlint](https://www.npmjs.com/package/eslint-plugin-react-h
 To use [this rule with vite](https://github.com/vitejs/vite/discussions/5788), make sure you install the rule and plugin in your project.
 
 ```bash
-npm install eslint eslint-plugin-react-hooks --save-dev
+npm i -D eslint eslint-plugin-react-hooks
 ```
 
 You'll also want to add this rule to your *package.json*

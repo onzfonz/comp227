@@ -44,7 +44,7 @@ Let's make some end-to-end tests using Cypress for our task application.
 We begin by installing Cypress to *the frontend* as a development dependency
 
 ```js
-npm install cypress --save-dev
+npm i -D cypress
 ```
 
 and by adding an npm-script to run it:
@@ -199,7 +199,7 @@ Let's ***remove the failing code from the test***.
 > We can get rid of those errors by installing [eslint-plugin-cypress](https://github.com/cypress-io/eslint-plugin-cypress) as a development dependency
 >
 > ```js
-> npm install eslint-plugin-cypress --save-dev
+> npm i -D eslint-plugin-cypress
 > ```
 >
 > and changing the configuration in *.estlintrc.cjs* like so:

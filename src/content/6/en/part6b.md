@@ -463,7 +463,7 @@ Let's start using Redux Toolkit in our application by refactoring the existing c
 First, we will need to install the library:
 
 ```bash
-npm install @reduxjs/toolkit
+npm i @reduxjs/toolkit
 ```
 
 Next, open the *main.jsx* file which currently creates the Redux store.

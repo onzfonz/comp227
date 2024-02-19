@@ -226,7 +226,7 @@ applied to the user's password.
 Let's install the [*bcrypt* package](https://github.com/kelektiv/node.bcrypt.js) for generating the password hashes:
 
 ```bash
-npm install bcrypt
+npm i bcrypt
 ```
 
 Creating new users happens in compliance with the RESTful conventions discussed in [part 3](/part3/node_js_and_express#rest),
@@ -386,7 +386,7 @@ Fortunately, there is ready-made solution for this, the
 Let's install the library:
 
 ```bash
-npm install mongoose-unique-validator
+npm i mongoose-unique-validator
 ```
 
 > **Pertinent:** when installing the *mongoose-unique-validator* library, you may encounter the following error message:

@@ -32,7 +32,7 @@ Let's first implement the functionality for logging in.
 Install the [*jsonwebtoken* library](https://github.com/auth0/node-jsonwebtoken), which allows us to generate [JSON web tokens](https://jwt.io/).
 
 ```bash
-npm install jsonwebtoken
+npm i jsonwebtoken
 ```
 
 The code for logging in goes to the file *controllers/login.js*.

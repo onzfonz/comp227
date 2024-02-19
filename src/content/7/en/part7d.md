@@ -105,7 +105,7 @@ The contents of the *package.json* file can e.g. be the following:
 Let's install webpack with the command:
 
 ```bash
-npm install webpack webpack-cli --save-dev
+npm i -D webpack webpack-cli
 ```
 
 We define the functionality of webpack in the *webpack.config.js* file, which we initialize with the following content:
@@ -241,7 +241,7 @@ Next, let's transform our application into a minimal React application.
 Let's install the required libraries:
 
 ```bash
-npm install react react-dom
+npm i react react-dom
 ```
 
 And let's turn our application into a React application by adding the familiar definitions in the *index.js* file:
@@ -364,7 +364,7 @@ The *`options`* property is used for specifying parameters for the loader, which
 Let's install the loader and its required packages as a **development dependency**:
 
 ```bash
-npm install @babel/core babel-loader @babel/preset-react --save-dev
+npm i -D @babel/core babel-loader @babel/preset-react
 ```
 
 Bundling the application will now succeed.
@@ -394,7 +394,7 @@ With the [previous solution](https://babeljs.io/docs/en/babel-polyfill/) being d
 that is [core-js](https://www.npmjs.com/package/core-js) and [regenerator-runtime](https://www.npmjs.com/package/regenerator-runtime):
 
 ```bash
-npm install core-js regenerator-runtime
+npm i core-js regenerator-runtime
 ```
 
 You need to import those dependencies at the top of the *index.js* file:
@@ -450,7 +450,7 @@ and transpile it to code that is compatible with the ES5 standard:
 Let's install the preset with the command:
 
 ```bash
-npm install @babel/preset-env --save-dev
+npm i -D @babel/preset-env
 ```
 
 When we transpile the code, it gets transformed into old-school JavaScript.
@@ -534,7 +534,7 @@ by using the [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-c
 Once we install the loaders:
 
 ```bash
-npm install style-loader css-loader --save-dev
+npm i -D style-loader css-loader
 ```
 
 The bundling will succeed again and the application gets new styles.
@@ -548,7 +548,7 @@ The [webpack-dev-server](https://webpack.js.org/guides/development/#using-webpac
 Let's install it with the command:
 
 ```bash
-npm install webpack-dev-server --save-dev
+npm i -D webpack-dev-server
 ```
 
 Let's define an npm script for starting the dev server:

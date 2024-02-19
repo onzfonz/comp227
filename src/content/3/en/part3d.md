@@ -147,8 +147,7 @@ Most of the time,
 there are simple reasons for our programs behaving in ways that we were hoping wouldn't occur.
 Your logs are vital to helping you analyze what could potentially be awry.
 
-You can find the code for our current application in its entirety in the *part3-6* branch of
-[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-6).
+You can find the code for our current application in its entirety in the [*part3-6* branch of our backend repo](https://github.com/comp227/part3-tasks-backend/tree/part3-6).
 
 </div>
 
@@ -235,7 +234,7 @@ In the JavaScript universe, the current leading tool for static analysis
 Let's install ESlint as a development dependency to the backend project with the command:
 
 ```bash
-npm install eslint --save-dev
+npm i -D eslint
 ```
 
 After this we can initialize a default ESlint configuration with the command:
@@ -484,8 +483,7 @@ and it can be a good idea to adopt a ready-made configuration from someone else'
 Recently many projects have adopted the Airbnb [Javascript style guide](https://github.com/airbnb/javascript)
 by taking Airbnb's [ESlint](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb) configuration into use.
 
-You can find the code for our current application in its entirety in the *part3-7* branch of
-[this GitHub repository](https://github.com/comp227/part3-tasks-backend/tree/part3-7).
+You can find the code for our current application in its entirety in the [*part3-7* branch of our backend repo](https://github.com/comp227/part3-tasks-backend/tree/part3-7).
 </div>
 
 <div class="tasks">

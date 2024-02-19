@@ -667,7 +667,7 @@ provided by the [react-router-native](https://www.npmjs.com/package/react-router
 Let's get started by installing the *react-router-native* library:
 
 ```shell
-npm install react-router-native
+npm i react-router-native
 ```
 
 Next, open the *App.js* file and add the `NativeRouter` component to the `App` component:
@@ -892,7 +892,7 @@ Let's extract this repetitive code into a `FormikTextInput` component and create
 First, let's install Formik:
 
 ```shell
-npm install formik
+npm i formik
 ```
 
 Next, create a file *TextInput.jsx* in the *components* directory with the following content:
@@ -1010,7 +1010,7 @@ This validation schema can be created with a validation library called [Yup](htt
 Let's get started by installing Yup:
 
 ```shell
-npm install yup
+npm i yup
 ```
 
 Next, as an example, let's create a validation schema for the body mass index form we implemented earlier.

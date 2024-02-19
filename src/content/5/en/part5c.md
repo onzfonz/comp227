@@ -18,7 +18,7 @@ The current best option for this is [**react-testing-library**](https://github.c
 Let's install libraries with the command:
 
 ```bash
-npm install @testing-library/react @testing-library/jest-dom jest jest-environment-jsdom @babel/preset-env @babel/preset-react --save-dev
+npm i -D @testing-library/react @testing-library/jest-dom jest jest-environment-jsdom @babel/preset-env @babel/preset-react
 ```
 
 The file *package.json* should be extended as follows:
@@ -292,7 +292,7 @@ the `toggleImportance` event handler function gets called.
 Let us install a library [**user-event**](https://testing-library.com/docs/user-event/intro) that makes simulating user input a bit easier:
 
 ```bash
-npm install @testing-library/user-event --save-dev
+npm i -D @testing-library/user-event
 ```
 
 Testing this functionality can be accomplished by adding another test like this:

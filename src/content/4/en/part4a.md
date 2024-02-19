@@ -480,7 +480,7 @@ From here on, I will refer to a streaming show as a **show**.
 > **Note** You need to install Mongoose version 7.6.5 with the command
 >
 > ```bash
-> npm install mongoose@7.6.5
+> npm i mongoose@7.6.5
 > ```
 >
 > since the most recent Mongoose version does not support a library that we will be using in a later part of the course!
@@ -605,7 +605,7 @@ Jest is a natural choice for this course, as it works well for testing backends,
 Since tests are only executed during the development of our application, we will install `jest` as a development dependency with the command:
 
 ```bash
-npm install jest --save-dev
+npm i -D jest
 ```
 
 Let's define the *npm script `test`* to execute tests with Jest and to report about the test execution with the `verbose` style:
@@ -693,7 +693,7 @@ WebStorm also seems to complain with warnings for not knowing about test and exp
 To get rid of these errors, you can simply type this command so that your project is also aware of the jest's types.
 
 ```bash
-npm install @types/jest --save-dev
+npm i -D @types/jest
 ```
 
 In the first row, the test file imports the function to be tested and assigns it to a variable called `reverse`:

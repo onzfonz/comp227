@@ -47,7 +47,7 @@ If you do see the options, I'd also like you to verify that you have:
 - *git bash* - (a command-line/terminal program) that comes with the git package we'll install
 - a package manager - (something like *winget*, *choco*, *scoop* or *brew*)
 
-If you have all of that then you can [move on to step 4](#4-install-node).
+If you have all of that then you can [move on to step 4](#4-install-nvm).
 
 If this is all foreign to you, then please read on.
 
@@ -171,7 +171,9 @@ git config --list
 You should now see your username and email displayed, as well as the alias that we made and the editor changes.
 You can press ***Space*** to continue reviewing the changes, and ***q*** to exit.
 
-### 4: Install Node
+### 4: Install NVM
+
+> ***For you to use `nvm`, you may need to uninstall any existing versions of node.js first.***
 
 Now with our handy package manager, we need to install **[node.js](https://nodejs.org/en/)** AKA **node**.
 If you already have Node installed,
@@ -408,7 +410,7 @@ To start:
 2. Click the plus (add) button ![plus icon](../../images/0/custom/plus_icon.png)
 3. Choose *`<custom>`*
 4. In the *Name* field, type *`COMP 227 Git Watcher`*
-5. In the *File Type* field, select *`React JSX`*
+5. In the *File Type* field, ***scroll upwards*** and select *`JSX`*
 6. In the *Program* field, provide the path to your git executable (something like `C:\Program Files\Git\bin\git.exe`)
 7. In the *Arguments* field, type *`send-all "Auto-commit JSX on save for Comp 227"`* (don't forget the quotes!)
 8. Expand the *Advanced Options* area, and select *`Trigger the watcher regardless of syntax errors`*
@@ -451,6 +453,10 @@ This one is important as it tells WebStorm where our node version is, which help
 Back in the Settings window, type ***Node interpreter*** in the search box, which should lead you to *Languages & Frameworks->Node.js*.
 Click on the Node interpreter dropdown, and select ***Add...->Add local...***.
 Click the home button, then select ***.nvm/current/bin/node.exe*** and click ***OK*** to close both Windows.
+
+> If you cannot find a *.nvm* folder in your installation directory,
+> it may be that *nvm* has automatically created a symbolic link in your Applications directory,
+> which would be *`C:\Program Files\nodejs\node.exe` for Windows and somewhere in `Applications` for Mac.
 
 Because we will be working with a lot of repositories, it makes sense that all new projects have these same settings.
 Let's ensure that all of these settings show up for new projects, by going to ***File->New Projects Setup->Settings for New Projects***.
@@ -548,11 +554,53 @@ please upload the materials from the previous section
 [Exercises 0.1-0.6](/part0/fundamentals_of_web_apps#exercises-0-1-0-6) into your GitHub repo.
 Make sure you put them in a folder and provide them with names that match the exercise that you had.
 
-#### 0.9 - Final upload screenshot
+#### 0.9 - File watcher verification with screenshot
 
-Finally, upload a screenshot of your WebStorm IDE showing the embedded git bash terminal and having typed `nvm` list.
-Please name the screenshot file with the name `09`.
+Finally, create a file in your *part0* folder and call it *Hello.jsx*.
+As for the code that you put in there, all you will do is write a comment that:
+
+1. has your name
+2. has the biggest hurdle you faced in this part
+
+> *Comments in javascript are lines preceded with a `//`*
+
+Once you do that, should you verify that your files have all turned **white in color** in your webstorm files project.
+
+As a final verification, add a screenshot of your WebStorm IDE showing the embedded git bash terminal overlayed at the bottom and having typed `nvm list` and `git status`.
+> If you are on a mac, you can have your external editor showing at the bottom of the screen instead, ensure we can still see the rest of webstorm.
+
+Please name the screenshot file with the name *`09`*.
 Make sure the file has the correct extension.
+Make a new change to your *Hello.jsx* file mentioning you uploaded the picture and then use `git push` in your terminal of choice.
+
+You can verify that you did this correctly by looking at github again!
+
+#### Troubleshooting Exercise 0.9
+
+Are your files still different colors?
+You may not have setup the previous parts correctly.
+If you missed multiple parts here, then part of this should be a sign that you may need to **slow down while reading this content**.
+
+Here are some things to check:
+
+- Is your file watcher running?
+    - You should see a status message at the bottom of WebStorm to let us know the file watcher is in fact running.  You should see the message popup everytime you edit the jsx file.
+      ![message showing file watcher is running](../../images/0/custom/file_watcher_status_bar.png)
+    - If you don't see this popup, please review [the file watcher settings](#9-additional-webstorm-setup)
+- Did you create the send-all command?
+    - If your terminal pops up with this message:
+      ![terminal showing send-all not there](../../images/0/custom/file_watcher_send_all_command.png)
+    - Then you did not add the [`send-all` alias](#3-configure-git).
+- Did you use the correct alias so that the terminal shows up from within WebStorm? See the #mac discussion in discord for further details, but for now, using `/bin/bash` works.
+- Did you login to GitHub using your credentials and told it to always remember?
+    If you are getting any popups like this, do not close them, but save your credentials instead.
+    ![Windows GitHub Login](../../images/0/custom/windows_github.png)
+    ![Mac GitHub Login](../../images/0/custom/mac_github.png)
+- Is `git push` working from your terminal?
+    - If you have yet to work with the git terminal, you may need to login for the first time using the command line.
+    - You can use your previous token or generate a new one and make sure to store it.
+
+Again, make sure that you pay close attention to any messages that come up!
 
 </div>
 
