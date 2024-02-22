@@ -38,44 +38,44 @@ npm i jsonwebtoken
 The code for logging in goes to the file *controllers/login.js*.
 
 ```js
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const loginRouter = require('express').Router()
-const User = require('../models/user')
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const loginRouter = require("express").Router();
+const User = require("../models/user");
 
-loginRouter.post('/', async (request, response) => {
-  const { username, password } = request.body
+loginRouter.post("/", async (request, response) => {
+  const { username, password } = request.body;
 
-  const user = await User.findOne({ username })
+  const user = await User.findOne({ username });
   const passwordCorrect = user === null
     ? false
-    : await bcrypt.compare(password, user.passwordHash)
+    : await bcrypt.compare(password, user.passwordHash);
 
   if (!(user && passwordCorrect)) {
     return response.status(401).json({
-      error: 'invalid username or password'
-    })
+      error: "invalid username or password"
+    });
   }
 
   const userForToken = {
     username: user.username,
     id: user._id,
-  }
+  };
 
-  const token = jwt.sign(userForToken, process.env.SECRET)
+  const token = jwt.sign(userForToken, process.env.SECRET);
 
   response
     .status(200)
-    .send({ token, username: user.username, name: user.name })
-})
+    .send({ token, username: user.username, name: user.name });
+});
 
-module.exports = loginRouter
+module.exports = loginRouter;
 ```
 
 The code starts by searching for the user from the database via the `username` attached to the request.
 
 ```js
-const user = await User.findOne({ username })
+const user = await User.findOne({ username });
 ```
 
 Next, it checks the `password`, which is also attached to the request.
@@ -83,7 +83,7 @@ Next, it checks the `password`, which is also attached to the request.
 ```js
 const passwordCorrect = user === null
   ? false
-  : await bcrypt.compare(password, user.passwordHash)
+  : await bcrypt.compare(password, user.passwordHash);
 ```
 
 Remember that passwords themselves are not saved to the database.
@@ -91,7 +91,7 @@ Instead, we store the **hashes** calculated from the passwords.
 This means we need to use `bcrypt.compare` to check if the password is correct:
 
 ```js
-await bcrypt.compare(password, user.passwordHash)
+await bcrypt.compare(password, user.passwordHash);
 ```
 
 If the user is not found, or the password is incorrect,
@@ -101,8 +101,8 @@ The reason for the failure is explained in the response body.
 ```js
 if (!(user && passwordCorrect)) {
   return response.status(401).json({
-    error: 'invalid username or password'
-  })
+    error: "invalid username or password"
+  });
 }
 ```
 
@@ -113,9 +113,9 @@ The token contains the `username` and the user `id` in a digitally signed form.
 const userForToken = {
   username: user.username,
   id: user._id,
-}
+};
 
-const token = jwt.sign(userForToken, process.env.SECRET)
+const token = jwt.sign(userForToken, process.env.SECRET);
 ```
 
 The token has been digitally signed using a string from the environment variable `SECRET` as the *secret*.
@@ -128,17 +128,17 @@ The generated token and the username of the user are sent back in the response b
 ```js
 response
   .status(200)
-  .send({ token, username: user.username, name: user.name })
+  .send({ token, username: user.username, name: user.name });
 ```
 
 Now the code for login just has to be added to the application by adding the new router to *app.js*.
 
 ```js
-const loginRouter = require('./controllers/login')
+const loginRouter = require("./controllers/login");
 
 //...
 
-app.use('/api/login', loginRouter)
+app.use("/api/login", loginRouter);
 ```
 
 Let's try logging in using the WebStorm REST client:
@@ -194,73 +194,73 @@ the string `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`, the Authorization header will
 Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
 ```
 
-Creating new *tasks* will change like so:
+Our *controllers/tasks.js* will change like so:
 
 ```js
-const jwt = require('jsonwebtoken') //highlight-line
+const jwt = require("jsonwebtoken"); //highlight-line
 
 // ...
 //highlight-start
 const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.startsWith('Bearer ')) {
-    return authorization.replace('Bearer ', '')
+  const authorization = request.get("authorization");
+  if (authorization && authorization.startsWith("Bearer ")) {
+    return authorization.replace("Bearer ", "");
   }
-  return null
-}
-  //highlight-end
+  return null;
+};
+//highlight-end
 
-tasksRouter.post('/', async (request, response) => {
-  const body = request.body
+tasksRouter.post("/", async (request, response) => {
+  const body = request.body;
 //highlight-start
-  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+  const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET);
   if (!decodedToken.id) {
-    return response.status(401).json({ error: 'token invalid' })
+    return response.status(401).json({ error: "token invalid" });
   }
 
-  const user = await User.findById(decodedToken.id)
+  const user = await User.findById(decodedToken.id);
 //highlight-end
 
   const task = new Task({
     content: body.content,
-    important: body.important === undefined ? false : body.important,
+    important: body.important === undefined ? false : Boolean(body.important), // highlight-line
     date: new Date(),
     user: user._id
-  })
+  });
 
-  const savedTask = await task.save()
-  user.tasks = user.tasks.concat(savedTask._id)
-  await user.save()
+  const savedTask = await task.save();
+  user.tasks = user.tasks.concat(savedTask._id);
+  await user.save();
 
-  response.status(201).json(savedTask)
+  response.status(201).json(savedTask);
 })
 ```
 
 The helper function `getTokenFrom` isolates the token from the ***authorization*** header.
 The validity of the token is checked with `jwt.verify`.
-The method also decodes the token, or returns the Object which the token was based on.
+The method also decodes the token or returns the Object that the token was based on.
 
 ```js
-const decodedToken = jwt.verify(token, process.env.SECRET)
+const decodedToken = jwt.verify(token, process.env.SECRET);
 ```
 
 The object decoded from the token contains the `username` and `id` fields, which tell the server who made the request.
 
-If the object decoded from the token does not contain the user's identity (`decodedToken.id` is undefined),
+If the object decoded from the token does not contain the user's identity (`decodedToken.id` is *`undefined`*),
 error status code [401 unauthorized](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2)
 is returned and the reason for the failure is explained in the response body.
 
 ```js
 if (!decodedToken.id) {
   return response.status(401).json({
-    error: 'token invalid'
-  })
+    error: "token invalid"
+  });
 }
 ```
 
 When the identity of the maker of the request is resolved, the execution continues as before.
 
-A new task can now be created using Postman if the ***authorization*** header is given the correct value,
+A new task can now be created using a REST client if the ***authorization*** header is given the correct value,
 something like the string `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9`, where the second value is the token returned by the ***login*** operation.
 
 Using Postman this looks as follows:
@@ -274,7 +274,7 @@ and with the WebStorm REST client
 ### Error handling
 
 Token verification can also cause a `JsonWebTokenError`.
-If we for example remove a few characters from the token and try creating a new task, this happens:
+For example, if we remove a few characters from the token and try creating a new task, this happens:
 
 ```bash
 JsonWebTokenError: invalid signature
@@ -284,38 +284,40 @@ JsonWebTokenError: invalid signature
     at tasksRouter.post (/Users/powercat/comp227/part3/tasks-backend/controllers/tasks.js:40:30)
 ```
 
-Once we get an exception, if we are not running nodemon, we would may have to restart our program,
+Once we get an exception, if we are not running *nodemon* we may have to restart our program,
 as any subsequent bad requests could be met with an *Internal Server Error (500)*.
 
 There are many possible reasons for a decoding error.
 The token can be faulty (like in our example),
 falsified, or expired.
-Let's extend our errorHandler *middleware* to take into account the different decoding errors.
+Let's extend our `errorHandler` in *utils/middleware.js* to take into account the different decoding errors.
 
 ```js
 const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
+  response.status(404).send({ error: "unknown endpoint" });
 }
 
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message)
+  logger.error(error.message);
   
-  if (error.name === 'CastError') {
+  if (error.name === "CastError") {
     return response.status(400).send({
-      error: 'malformatted id'
-    })
-  } else if (error.name === 'ValidationError') {
+      error: "malformatted id"
+    });
+  } else if (error.name === "ValidationError") {
     return response.status(400).json({
       error: error.message 
-    })
-  } else if (error.name === 'JsonWebTokenError') {  // highlight-line
-    return response.status(401).json({ // highlight-line
-      error: 'invalid token' // highlight-line
-    }) // highlight-line
+    });
+    // highlight-start
+  } else if (error.name === "JsonWebTokenError") { 
+    return response.status(401).json({ 
+      error: "invalid token"
+    });
+    //highlight-end
   }
 
-  next(error)
-}
+  next(error);
+};
 ```
 
 The current application code can be found on
@@ -327,31 +329,31 @@ An existing library like [*express-jwt*](https://www.npmjs.com/package/express-j
 ### Problems of Token-based authentication
 
 Token authentication is pretty easy to implement, but it contains one problem.
-Once the API user, (e.g. a React app) gets a token, the API has a blind trust to the token holder.
+Once the API user, (e.g. a React app) gets a token, the API has a blind trust with the token holder.
 What if the access rights of the token holder should be revoked?
 
 There are two solutions to the problem.
 The easier one is to limit the validity period of a token:
 
 ```js
-loginRouter.post('/', async (request, response) => {
-  const { username, password } = request.body
+loginRouter.post("/", async (request, response) => {
+  const { username, password } = request.body;
 
   const user = await User.findOne({ username })
   const passwordCorrect = user === null
     ? false
-    : await bcrypt.compare(password, user.passwordHash)
+    : await bcrypt.compare(password, user.passwordHash);
 
   if (!(user && passwordCorrect)) {
     return response.status(401).json({
-      error: 'invalid username or password'
-    })
+      error: "invalid username or password"
+    });
   }
 
   const userForToken = {
     username: user.username,
     id: user._id,
-  }
+  };
 
   // token expires in 60*60 seconds, that is, in one hour
   // highlight-start
@@ -359,13 +361,13 @@ loginRouter.post('/', async (request, response) => {
     userForToken, 
     process.env.SECRET,
     { expiresIn: 60*60 }
-  )
+  );
   // highlight-end
 
   response
     .status(200)
-    .send({ token, username: user.username, name: user.name })
-})
+    .send({ token, username: user.username, name: user.name });
+});
 ```
 
 Once the token expires, the client app needs to get a new token.
@@ -375,29 +377,29 @@ The error handling middleware should be extended to give a proper error in the c
 
 ```js
 const errorHandler = (error, request, response, next) => {
-  logger.error(error.message)
+  logger.error(error.message);
 
-  if (error.name === 'CastError') {
-    return response.status(400).send({ error: 'malformatted id' })
-  } else if (error.name === 'ValidationError') {
-    return response.status(400).json({ error: error.message })
-  } else if (error.name === 'JsonWebTokenError') {
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
+  } else if (error.name === "JsonWebTokenError") {
     return response.status(401).json({
-      error: 'invalid token'
-    })
+      error: "invalid token"
+    });
   // highlight-start  
-  } else if (error.name === 'TokenExpiredError') {
+  } else if (error.name === "TokenExpiredError") {
     return response.status(401).json({
-      error: 'token expired'
-    })
+      error: "token expired"
+    });
   }
   // highlight-end
 
-  next(error)
+  next(error);
 }
 ```
 
-The shorter the expiration time, the more safe the solution is.
+The *shorter the expiration time, the more safe the solution is*.
 So if the token gets into the wrong hands or user access to the system needs to be revoked, the token is only usable for a limited amount of time.
 On the other hand, a short expiration time forces a potential pain to a user, one must login to the system more frequently.
 
@@ -521,17 +523,17 @@ The middleware should take the token from the ***Authorization*** header and pla
 In other words, if you register this middleware in the *app.js* file before all routes
 
 ```js
-app.use(middleware.tokenExtractor)
+app.use(middleware.tokenExtractor);
 ```
 
 Routes can access the token with `request.token`:
 
 ```js
-showsRouter.post('/', async (request, response) => {
+showsRouter.post("/", async (request, response) => {
   // ..
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET);
   // ..
-})
+});
 ```
 
 Remember that a normal [middleware function](/part3/node_js_and_express#middleware) is a function with three parameters,
@@ -541,8 +543,8 @@ that at the end calls the last parameter `next` to move the control to the next 
 const tokenExtractor = (request, response, next) => {
   // code that extracts the token
 
-  next()
-}
+  next();
+};
 ```
 
 #### 4.21*: watchlist expansion, Step 9
@@ -555,7 +557,7 @@ If deleting a show is attempted without a token or by an invalid user, the opera
 Notice that if you fetch a show from the database,
 
 ```js
-const show = await Show.findById(...)
+const show = await Show.findById(...);
 ```
 
 the field `show.user` does not contain a `string`, but an `Object`.
@@ -576,62 +578,62 @@ Now create a new middleware `userExtractor`, that finds out the user and sets it
 When you register the middleware in *app.js*
 
 ```js
-app.use(middleware.userExtractor)
+app.use(middleware.userExtractor);
 ```
 
 the user will be set in the field `request.user`:
 
 ```js
-showsRouter.post('/', async (request, response) => {
+showsRouter.post("/", async (request, response) => {
   // get user from request object
-  const user = request.user
+  const user = request.user;
   // ..
-})
+});
 
-showsRouter.delete('/:id', async (request, response) => {
+showsRouter.delete("/:id", async (request, response) => {
   // get user from request object
-  const user = request.user
+  const user = request.user;
   // ..
-})
+});
 ```
 
 Notice that it is possible to register a middleware only for a specific set of routes.
 So instead of using `userExtractor` with all the routes,
 
 ```js
-const middleware = require('../utils/middleware');
+const middleware = require("../utils/middleware");
 // ...
 
 // use the middleware in all routes
-app.use(middleware.userExtractor) // highlight-line
+app.use(middleware.userExtractor); // highlight-line
 
-app.use('/api/shows', showsRouter)  
-app.use('/api/users', usersRouter)
-app.use('/api/login', loginRouter)
+app.use("/api/shows", showsRouter);  
+app.use("/api/users", usersRouter);
+app.use("/api/login", loginRouter);
 ```
 
 we could register it to be only executed with path ***/api/shows*** routes:
 
 ```js
-const middleware = require('../utils/middleware');
+const middleware = require("../utils/middleware");
 // ...
 
 // use the middleware only in /api/shows routes
-app.use('/api/shows', middleware.userExtractor, showsRouter) // highlight-line
-app.use('/api/users', usersRouter)
-app.use('/api/login', loginRouter)
+app.use("/api/shows", middleware.userExtractor, showsRouter); // highlight-line
+app.use("/api/users", usersRouter);
+app.use("/api/login", loginRouter);
 ```
 
 As can be seen, this happens by chaining multiple middlewares as the parameter of function `use`.
 It would also be possible to register a middleware only for a specific operation:
 
 ```js
-const middleware = require('../utils/middleware');
+const middleware = require("../utils/middleware");
 // ...
 
-router.post('/', middleware.userExtractor, async (request, response) => {
+router.post("/", middleware.userExtractor, async (request, response) => {
   // ...
-}
+};
 ```
 
 #### 4.23*:  watchlist expansion, Step 11
