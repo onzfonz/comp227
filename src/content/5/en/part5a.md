@@ -22,12 +22,12 @@ Throughout this part, we will assume that new users will not be added from the f
 
 Let's add a login form to the top of the page.
 That code will be shown below.
-**Let's also move the form for adding tasks above the form.**
-We'll task you with doing this.
+**Let's also move the form for adding tasks, so that it sits just below the login form**
+We'll task you with doing this, which you can continue on from the previous *reading* frontend located in your *lab2*.
 
 ![browser showing user login for tasks](../../images/5/1e.png)
 
-Our new code for *App* is below:
+Our new code for *App.jsx* in our *reading* folder is below:
 
 ```js
 const App = () => {
@@ -87,7 +87,7 @@ const App = () => {
       <hr/>
     // highlight-end
 
-      // ...
+      <!--- add form and other tasks code here --->
     </div>
   )
 }
@@ -127,7 +127,7 @@ and they destructure the field `target` from the object and save its value to th
 The method `handleLogin`, which is responsible for handling the data in the form, is yet to be implemented.
 
 Logging in is done by sending an HTTP POST request to the server address ***api/login***.
-Let's separate the code responsible for this request into its own module, to file *services/login.js*.
+Let's separate the code responsible for this request on the frontend into its own module, to the file *services/login.js*.
 
 We'll use `async`/`await` syntax instead of promises for the HTTP request:
 
@@ -143,7 +143,7 @@ const login = async credentials => {
 export default { login }
 ```
 
-The `handleLogin` function and the other parts of *App.js* can be changed as follows:
+The `handleLogin` function and the other parts of *App.jsx* can be changed as follows:
 
 ```js
 import loginService from './services/login' // highlight-line
@@ -313,10 +313,8 @@ return (
 )
 ```
 
-If `user === null` is
-[**truthy**](https://developer.mozilla.org/en-US/docs/Glossary/Truthy),
-`loginForm()` is executed.
-If not, `taskForm()` is.
+If `user === null` evaluates to true, the code calls `loginForm()`.
+Otherwise, it calls `taskForm()`.
 
 Let's do one more modification.
 If the user is logged in, their name is shown on the screen:
@@ -584,7 +582,7 @@ The current application code can be found on
 ### Exercises 5.1-5.4
 
 We will now create a frontend for the watchlist backend we created in the previous section.
-You will be using a new repo for this part that you will be able to obtain by vising the URL below.
+You will be using a new repo for this part that you will be able to obtain by visiting the URL below.
 This new repo/application has a small amount of code to get you started.
 The application expects your backend to be running on port 3003.
 
