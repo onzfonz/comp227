@@ -595,7 +595,7 @@ const Show = ({ show }) => {
 
 > **Pertinent:** even though the functionality implemented in this part is almost identical to the functionality provided by the `Togglable` component,
 the component can not be used directly to achieve the desired behavior.
-The easiest solution will be ***to add a state to the blog post that controls the displayed form of the blog post***.
+The easiest solution will be ***to add a state to the show that controls the displayed form of the show***.
 
 #### 5.8: Watchlist frontend, Step 8
 
