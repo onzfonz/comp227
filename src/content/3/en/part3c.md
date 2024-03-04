@@ -1076,7 +1076,7 @@ The `result` callback parameter could be used for checking if a resource was del
 and we could use that information for returning different status codes for the two cases if we deemed it necessary.
 Any exception that occurs is passed onto the error handler.
 
-The toggling of the importance of a task can be easily accomplished with the [findByIdAndUpdate](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate) method.
+The toggling of the importance of a task can be easily accomplished with the [`findByIdAndUpdate` method](https://mongoosejs.com/docs/api/model.html#model_Model-findByIdAndUpdate).
 
 ```js
 app.put('/api/tasks/:id', (request, response, next) => {
