@@ -291,6 +291,7 @@ Our initial tests for a user could be put into a separate file *tests/user_api.t
 ```js
 const bcrypt = require("bcrypt");
 const User = require("../models/user");
+const helper = require("./test_helper");
 const app = require("../app");
 const supertest = require("supertest");
 const api = supertest(app);
