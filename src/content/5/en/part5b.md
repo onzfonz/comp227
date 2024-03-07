@@ -11,15 +11,15 @@ lang: en
 
 Let's modify the application so that the login form is not displayed by default:
 
-![browser showing log in button by default](../../images/5/10e.png)
+![browser showing log in button by default]
 
-The login form appears when the user presses the ***login*** button:
+Rather, the login form appears when the user presses the ***login*** button.
 
-![user at login screen about to press cancel](../../images/5/11e.png)
+![The User on the login screen is about to press cancel](../../images/5/11e.png)
 
-The user can close the login form by clicking the ***cancel*** button.
+The user can then close the login form by clicking the ***cancel*** button.
 
-Let's start by extracting the login form into its own component:
+Let's start by extracting the login form into a separate component and file:
 
 ```js
 const LoginForm = ({
@@ -32,7 +32,6 @@ const LoginForm = ({
   return (
     <div>
       <h2>Login</h2>
-
       <form onSubmit={handleSubmit}>
         <div>
           username
@@ -58,9 +57,9 @@ const LoginForm = ({
 export default LoginForm
 ```
 
-The state and all the functions related to it are defined outside of the component and are passed to the component as props.
+The state and all the functions related to it are defined outside of the component and are passed to the component as *props*.
 
-Notice that the props are assigned to variables through **destructuring**, which means that instead of writing:
+Notice that the *`props`* are assigned to variables through **destructuring**, which means that instead of writing:
 
 ```js
 const LoginForm = (props) => {
@@ -84,10 +83,10 @@ const LoginForm = (props) => {
 }
 ```
 
-where the properties are accessed through the `prop` object like `props.handleSubmit`.
-Instead, the properties are assigned directly to their own variables.
+where the properties are accessed through the `props` object like `props.handleSubmit`.
+Instead, the properties are assigned directly to variables.
 
-One fast way of implementing the functionality is to change the `loginForm` function of the `App` component like so:
+One fast way of implementing the functionality is to replace the `loginForm` function of the `App` component and introduce a new state variable:
 
 ```js
 const App = () => {
@@ -122,7 +121,7 @@ const App = () => {
 }
 ```
 
-You'll see that there will be a warning with LoginForm because we did not import it.
+***You'll see that there will be a warning with `LoginForm` because we did not import it.***
 Use WebStorm's context actions (hopefully using the keyboard shortcut) to select the option to *add the import statement*.
 The `App` components state now contains the boolean `loginVisible`, which defines if the login form should be shown to the user or not.
 
@@ -135,8 +134,8 @@ Both buttons have their event handlers defined directly in the component:
 <button onClick={() => setLoginVisible(false)}>cancel</button>
 ```
 
-The visibility of the component is defined by giving the component an [inline](/part2/adding_styles_to_react_app#inline-styles) style rule,
-where the value of the [display](https://developer.mozilla.org/en-US/docs/Web/CSS/display) property is `none` if we do not want the component to be displayed:
+The visibility of the component is defined by giving the component an [inline style rule](/part2/adding_styles_to_react_app#inline-styles),
+where the value of the [`display` property](https://developer.mozilla.org/en-US/docs/Web/CSS/display) is `none` if we do not want the component to be displayed:
 
 ```js
 const hideWhenVisible = { display: loginVisible ? 'none' : '' }
@@ -159,6 +158,13 @@ display: 'none';
 ```
 
 If `loginVisible` is `false`, then `display` will not receive any value related to the visibility of the component.
+
+> **FYI:**, Since we are moving components, I'm going to show you how to move the `Footer` component outside of *App.jsx*.
+> Select the entire function for `Footer`, and then in Webstorm, select *Refactor->Move*.
+> Then in the ***To*** field, make sure to add the *Components* Folder in between *src* and *Footer.jsx*
+> Make sure that only Footer is selected as the member to move, and click ***Refactor***.
+> Notice how Webstorm added the import and export portions and moved the `Footer` to its own file, *components/Footer.jsx*!
+> Remember ***utilize the IDE to help you refactor when possible***.
 
 ### The components children, AKA props.children
 
@@ -236,7 +242,11 @@ This time the *children are rendered from within the parent component*:
 </div>
 ```
 
-Unlike the normal props we've seen before, ***`children`*** is automatically added by React and *always exists*.
+Unlike the normal props we've seen before, ***`children`*** are:
+
+- automatically added by React
+- *always exist*.
+
 If a component is defined with an automatically closing `/>` tag, like this:
 
 ```js
@@ -271,7 +281,7 @@ const TaskForm = ({ onSubmit, handleChange, value}) => {
 }
 ```
 
-Next, let's define the form component inside of a `Togglable` component:
+Next, let's define the form component inside of a `Togglable` component in our `taskForm` function in `App.jsx`:
 
 ```js
 <Togglable buttonLabel="new task">
