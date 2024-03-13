@@ -406,8 +406,10 @@ npm i mongoose-unique-validator
 >
 > ![screenshot showing mongoose compatibility error](../../images/4/uniq.png)
 >
-> The reason was that the library was not yet compatible with Mongoose version 8.
-> If you encounter this error, you can revert to an older version of Mongoose by running the command
+> The reason was that the library was not yet compatible with early version of Mongoose version 8.
+> If you encounter this error, **first try installing the latest 8.+ version of Mongoose**.
+> If you still encouter the error,
+> you can revert to an older version of Mongoose by running the command
 >
 > ```bash
 > npm install mongoose@7.6.5
