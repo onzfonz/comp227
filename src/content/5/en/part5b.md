@@ -541,7 +541,7 @@ but will also add a few more items:
 
 <div class="tasks">
 
-### Exercises 5.5-5.10
+### Exercises 5.5-5.11
 
 #### 5.5 Watchlist frontend, Step 5
 
