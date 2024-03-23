@@ -19,7 +19,7 @@ Participants are expected to have good programming skills, basic knowledge of we
 
 Previous knowledge of JavaScript or other course topics is not required.
 
-How much programming experience is needed? It is hard to say, but you should be pretty fluent with *your* language. This level of fluency takes usually at least 100-200 hours of practice to develop.
+How much programming experience is needed? It is hard to say, but you should be pretty fluent in *your* language. This level of fluency takes usually at least 100-200 hours of practice to develop.
 
 ### Course material
 
@@ -37,7 +37,7 @@ The course contains fourteen parts, the first of which is numbered 0 for consist
 
 Proceeding from part *n* to part *n+1* is not sensible before enough know-how of the topics in part *n* has been achieved. In pedagogic terms, the course uses [Mastery Learning](https://en.wikipedia.org/wiki/Mastery_learning), and you are only intended to proceed to the next part after doing enough of the exercises of the previous part.
 
-In parts 1-4 you are expected to do at least **all** of the exercises that are **not** marked with an asterisk(*). Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts. Parts 5-13 do not have asterisk marked exercises since there is no similar dependency on previous parts.
+In parts 1-4 you are expected to do at least **all** of the exercises that are **not** marked with an asterisk(*). Exercises marked with an asterisk count towards your final grade, but skipping them does not prevent you from doing the compulsory exercises in the next parts. Parts 5-13 do not have asterisk-marked exercises since there is no similar dependency on previous parts.
 
 You will need to complete the course as specified on Canvas and based on those due dates
 
@@ -64,7 +64,7 @@ it is quite likely that nobody will respond. The bug can be *anywhere*.
 A better question could be
 
 > *In the exercise 2.15 when I try to add a new person to the app,
-> server responds to 403, despite the request looks ok to me.*
+> server responds to 403, despite the request looking ok to me.*
 >
 > The code looks like this
 >
@@ -81,7 +81,7 @@ A better question could be
 >
 > The network tab looks like the following*
 >
-> [screen shot from the network console]
+> [screenshot from the network console]
 >
 > All the code can be found here (a link to GitHub)
 

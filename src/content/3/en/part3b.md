@@ -44,7 +44,7 @@ host: example.com
 port: 80
 ```
 
-When you visit a website (e.g. <http://catwebsites.com>), the browser issues a request to the server on which the website (catwebsites.com) is hosted. The response sent by the server is an HTML file that may contain one or more references to external assets/resources hosted either on the same server that <i>catwebsites.com</i> is hosted on or a different website. When the browser sees reference(s) to a URL in the source HTML, it issues a request. If the request is issued using the URL that the source HTML was fetched from, then the browser processes the response without any issues. However, if the resource is fetched using a URL that doesn't share the same origin(scheme, host, port) as the source HTML, the browser will have to check the _Access-Control-Allow-origin_ response header. If it contains _*_ or the URL of the source HTML, the browser will process the response, otherwise the browser will refuse to process it and throws an error.
+When you visit a website (e.g. <http://catwebsites.com>), the browser issues a request to the server on which the website (catwebsites.com) is hosted. The response sent by the server is an HTML file that may contain one or more references to external assets/resources hosted either on the same server that <i>catwebsites.com</i> is hosted on or a different website. When the browser sees reference(s) to a URL in the source HTML, it issues a request. If the request is issued using the URL that the source HTML was fetched from, then the browser processes the response without any issues. However, if the resource is fetched using a URL that doesn't share the same origin(scheme, host, port) as the source HTML, the browser will have to check the _Access-Control-Allow-origin_ response header. If it contains _*_ on the URL of the source HTML, the browser will process the response, otherwise the browser will refuse to process it and throws an error.
   
 The <strong>same-origin policy</strong> is a security mechanism implemented by browsers in order to prevent session hijacking among other security vulnerabilities.
 
@@ -73,7 +73,7 @@ const cors = require('cors')
 app.use(cors())
 ```
 
-And the frontend works! However, the functionality for changing the importance of notes has not yet been implemented on the backend.
+Now most of the features in the frontend work! The functionality for changing the importance of notes has not yet been implemented on the backend so naturally that does not yet work in the frontend. We shall fix that later.
 
 You can read more about CORS from [Mozilla's page](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
@@ -85,17 +85,17 @@ The react app running in the browser now fetches the data from node/express-serv
 
 ### Application to the Internet
 
-Now that the whole stack is ready, let's move our application to the internet.
+Now that the whole stack is ready, let's move our application to Internet.
 
 There is an ever-growing number of services that can be used to host an app on the internet. The developer-friendly services like PaaS (i.e. Platform as a Service) take care of installing the execution environment (eg. Node.js) and could also provide various services such as databases.
 
 For a decade, [Heroku](http://heroku.com) was dominating the PaaS scene. Unfortunately the free tier Heroku ended at 27th November 2022. This is very unfortunate for many developers, especially students. Heroku is still very much a viable option if you are willing to spend some money. They also have [a student program](https://www.heroku.com/students) that provides some free credits.
 
-We are now introducing two services [Fly.io](https://fly.io/) and [Render](https://render.com/) that both have a (limited) free plan. Fly.io is our "official" hosting service since it can be for sure used also on the parts 11 and 13 of the course. Render will be fine at least for the other parts of this course.
+We are now introducing two services [Fly.io](https://fly.io/) and [Render](https://render.com/) that both have a (limited) free plan. Fly.io is our "official" hosting service since it can be for sure used also on parts 11 and 13 of the course. Render will be fine at least for the other parts of this course.
 
 There are also some other free options for Heroku replacements besides Fly.io, eg. [Render](https://render.com/) that works well for the purposes of this course.
 
-Some course participants have also used the following
+Some course participants have also used the following services:
 
 - [Cyclic](https://www.cyclic.sh/)
 - [Replit](https://replit.com)
@@ -142,7 +142,7 @@ Give the app a name or let Fly.io auto-generate one. Pick a region where the app
   
 The last question is "Would you like to deploy now?". We should answer "no" since we are not quite ready yet.
 
-Fly.io creates a file <i>fly.toml</i> in the root of your app where the app is configured. To get the app up and running we <i>might</i> need to do a small addition to the configuration:
+Fly.io creates a file <i>fly.toml</i> in the root of your app where we can configure it. To get the app up and running we <i>might</i> need to do a small addition to the configuration:
 
 ```bash
 [build]
@@ -159,7 +159,7 @@ Fly.io creates a file <i>fly.toml</i> in the root of your app where the app is c
   processes = ["app"]
 ```
 
-We have now defined in the part [env] that environment variable PORT will get the correct port (defined in part [http_service]) where the app should create the server. Note that the definition might be already there, but some times it has been missing.
+We have now defined in the part [env] that environment variable PORT will get the correct port (defined in part [http_service]) where the app should create the server. 
 
 We are now ready to deploy the app to the Fly.io servers. That is done with the following command:
 
@@ -170,12 +170,12 @@ fly deploy
 If all goes well, the app should now be up and running. You can open it in the browser with the command
 
 ```bash
-fly open
+fly apps open
 ```
 
 A particularly important command is _fly logs_. This command can be used to view server logs. It is best to keep logs always visible!
 
-**Note:** If you are using Fly.io, Fly may create 2 machines for your app, if it does then the state of the data in your app will be inconsistent between requests, i.e. you would have two machines each with its own notes variable, you could POST to one machine then your next GET could go to another machine. You can check the number of machines by using the command "$ fly scale show", if the COUNT is greater than 1 then you can enforce it to be 1 with the command "$ fly scale count 1". The machine count can also be checked on the dashboard.
+**Note:** Fly may create 2 machines for your app, if it does then the state of the data in your app will be inconsistent between requests, i.e. you would have two machines each with its own notes variable, you could POST to one machine then your next GET could go to another machine. You can check the number of machines by using the command "$ fly scale show", if the COUNT is greater than 1 then you can enforce it to be 1 with the command "$ fly scale count 1". The machine count can also be checked on the dashboard.
 
 **Note:** In some cases (the cause is so far unknown) running Fly.io commands especially on Windows WSL (Windows Subsystem for Linux) has caused problems. If the following command just hangs
 
@@ -202,7 +202,6 @@ Whenever you make changes to the application, you can take the new version to pr
 ```bash
 fly deploy
 ```
-
 
 #### Render
 
@@ -249,9 +248,9 @@ app.listen(PORT, () => {
 
 So far we have been running React code in <i>development mode</i>. In development mode the application is configured to give clear error messages, immediately render code changes to the browser, and so on.
 
-When the application is deployed, we must create a [production build](https://vitejs.dev/guide/build.html) or a version of the application which is optimized for production.
+When the application is deployed, we must create a [production build](https://vitejs.dev/guide/build.html) or a version of the application that is optimized for production.
 
-A production build of applications created with Vite can be created with the command [npm run build](https://vitejs.dev/guide/build.html).
+A production build for applications created with Vite can be created with the command [npm run build](https://vitejs.dev/guide/build.html).
 
 Let's run this command from the <i>root of the notes frontend project</i> that we developed in [Part 2](/en/part2).
 
@@ -277,7 +276,7 @@ If you are using a Windows computer, you may use either [copy](https://www.windo
 
 The backend directory should now look as follows:
 
-![bash screenshot of ls showing build directory](../../images/3/27v.png)
+![bash screenshot of ls showing dist directory](../../images/3/27v.png)
 
 To make express show <i>static content</i>, the page <i>index.html</i> and the JavaScript, etc., it fetches, we need a built-in middleware from Express called [static](http://expressjs.com/en/starter/static-files.html).
 
@@ -309,7 +308,7 @@ After the change, we have to create a new production build of the frontend and c
 
 The application can now be used from the <i>backend</i> address <http://localhost:3001>:
 
-![Notes application screenshot](../../images/3/28new.png)
+![Notes application in localhost:3001](../../images/3/28new.png)
 
 Our application now works exactly like the [single-page app](/en/part0/fundamentals_of_web_apps#single-page-app) example application we studied in part 0.
 
@@ -350,6 +349,8 @@ Unlike when running the app in a development environment, everything is now in t
 
 After ensuring that the production version of the application works locally, commit the production build of the frontend to the backend repository, and push the code to GitHub again.
 
+**NB** If you use Render, make sure the directory <i>dist</i> is not ignored by git on the backend.
+
 If you are using Render a push to GitHub <i>might</i> be enough. If the automatic deployment does not work, select the "manual deploy" from the Render dashboard.
 
 In the case of Fly.io the new deployment is done with the command
@@ -360,11 +361,11 @@ fly deploy
 
 The application works perfectly, except we haven't added the functionality for changing the importance of a note to the backend yet.
 
-<i>**NOTE:** If you are using Fly.io, there could be a .dockerignore file that specifies the exclusion of the "./build" directory during deployment. To ensure it gets deployed, consider renaming the ./build directory to ./static_build or an equivalent name.</i>
+<strong>NOTE:</strong> When using Fly.io, be aware that the _.dockerignore_ file in your project directory lists files not uploaded during deployment. The dist directory is included by default. To deploy this directory, remove its reference from the .dockerignore file, ensuring your app is get properly deployed.
 
 ![screenshot of notes application](../../images/3/30new.png)
 
-<i>**NOTE:** changing of the importance DOES NOT work yet since the backend has no implementation for it yet.</i>
+<i>**NOTE:** changing the importance DOES NOT work yet since the backend has no implementation for it yet.</i>
 
 Our application saves the notes to a variable. If the application crashes or is restarted, all of the data will disappear.
 
@@ -372,7 +373,7 @@ The application needs a database. Before we introduce one, let's go through a fe
 
 The setup now looks like as follows:
 
-![diagram of react app on heroku with a database](../../images/3/102.png)
+![diagram of react app on fly.io](../../images/3/102.png)
 
 The node/express-backend now resides in the Fly.io/Render server. When the root address is accessed, the browser loads and executes the React app that fetches the json-data from the Fly.io/Render server.
 
@@ -382,7 +383,7 @@ To create a new production build of the frontend without extra manual work, let'
 
 #### Fly.io script
 
-The script looks like this:
+The scripts look like this:
 
 ```json
 {
@@ -397,13 +398,14 @@ The script looks like this:
 ```
   
 ##### Note for Windows users
+
 Note that the standard shell commands in `build:ui` do not natively work in Windows. Powershell in Windows works differently, in which case the script could be written as
+
 ```json
-"build:ui": "@powershell Remove-Item -Recurse -Force build && cd ../frontend && npm run build && @powershell Copy-Item build -Recurse ../backend",
+"build:ui": "@powershell Remove-Item -Recurse -Force dist && cd ../frontend && npm run build && @powershell Copy-Item dist -Recurse ../backend",
 ```
   
 If the script does not work on Windows, confirm that you are using Powershell and not Command Prompt. If you have installed Git Bash or another Linux-like terminal, you may be able to run Linux-like commands on Windows as well.
-
 
 The script _npm run build:ui_ builds the frontend and copies the production version under the backend repository. The script _npm run deploy_ releases the current backend to Fly.io.
 
@@ -484,7 +486,7 @@ Note that with the vite-configuration shown above, only requests that are made t
 
 A negative aspect of our approach is how complicated it is to deploy the frontend. Deploying a new version requires generating new production build of the frontend and copying it to the backend repository. This makes creating an automated [deployment pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) more difficult. Deployment pipeline means an automated and controlled way to move the code from the computer of the developer through different tests and quality checks to the production environment. Building a deployment pipeline is the topic of the optional [part 11](https://comp227.djosv.com/part11) of this course.
 
-A negative aspect of our approach is how complicated it is to deploy the frontend. Deploying a new version requires generating a new production build of the frontend and copying it to the backend repository. This makes creating an automated [deployment pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) more difficult. Deployment pipeline means an automated and controlled way to move the code from the computer of the developer through different tests and quality checks to the production environment. Building a deployment pipeline is the topic of [part 11](https://fullstackopen.com/en/part11) of this course. There are multiple ways to achieve this, for example, placing both backend and frontend code in the same repository but we will not go into those now.
+A negative aspect of our approach is how complicated it is to deploy the frontend. Deploying a new version requires generating a new production build of the frontend and copying it to the backend repository. This makes creating an automated [deployment pipeline](https://martinfowler.com/bliki/DeploymentPipeline.html) more difficult. Deployment pipeline means an automated and controlled way to move the code from the computer of the developer through different tests and quality checks to the production environment. Building a deployment pipeline is the topic of [part 11](/en/part11) of this course. There are multiple ways to achieve this, for example, placing both backend and frontend code in the same repository but we will not go into those now.
 
 In some situations, it may be sensible to deploy the frontend code as its own application.
 
@@ -498,13 +500,13 @@ The current backend code can be found on [Github](https://github.com/fullstack-h
 
 The following exercises don't require many lines of code. They can however be challenging, because you must understand exactly what is happening and where, and the configurations must be just right.
 
-#### 3.9 phonebook backend step9
+#### 3.9 Phonebook backend step 9
 
 Make the backend work with the phonebook frontend from the exercises of the previous part. Do not implement the functionality for making changes to the phone numbers yet, that will be implemented in exercise 3.17.
 
 You will probably have to do some small changes to the frontend, at least to the URLs for the backend. Remember to keep the developer console open in your browser. If some HTTP requests fail, you should check from the <i>Network</i>-tab what is going on. Keep an eye on the backend's console as well. If you did not do the previous exercise, it is worth it to print the request data or <i>request.body</i> to the console in the event handler responsible for POST requests.
 
-#### 3.10 phonebook backend step10
+#### 3.10 Phonebook backend step 10
 
 Deploy the backend to the internet, for example to Fly.io or Render.
 
@@ -518,11 +520,11 @@ Create a README.md at the root of your repository, and add a link to your online
 
 You shall NOT be deploying the frontend directly at any stage of this part. It is just backend repository that is deployed throughout the whole part, nothing else.
 
-#### 3.11 phonebook full stack
+#### 3.11 Full Stack Phonebook
 
-Generate a production build of your frontend, and add it to the internet application using the method introduced in this part.
+Generate a production build of your frontend, and add it to the Internet application using the method introduced in this part.
 
-**NB** If you use Render, make sure the directory <i>dist</i> is not gitignored
+**NB** If you use Render, make sure the directory <i>dist</i> is not ignored by git on the backend.
 
 Also, make sure that the frontend still works locally (in development mode when started with command _npm run dev_).
 

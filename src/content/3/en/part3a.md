@@ -11,7 +11,7 @@ In this part, our focus shifts towards the backend: that is, towards implementin
 
 We will be building our backend on top of [NodeJS](https://nodejs.org/en/), which is a JavaScript runtime based on Google's [Chrome V8](https://developers.google.com/v8/) JavaScript engine.
 
-This course material was written with version <i>v18.13.0</i> of Node.js. Please make sure that your version of Node is at least as new as the version used in the material (you can check the version by running _node -v_ in the command line).
+This course material was written with version <i>v20.11.0</i> of Node.js. Please make sure that your version of Node is at least as new as the version used in the material (you can check the version by running _node -v_ in the command line).
 
 As mentioned in [part 1](/en/part1/java_script), browsers don't yet support the newest features of JavaScript, and that is why the code running in the browser must be <i>transpiled</i> with e.g. [babel](https://babeljs.io/). The situation with JavaScript running in the backend is different. The newest version of Node supports a large majority of the latest features of JavaScript, so we can use the latest features without having to transpile our code.
 
@@ -39,7 +39,7 @@ Let's navigate to an appropriate directory, and create a new template for our ap
 
 The file defines, for instance, that the entry point of the application is the <i>index.js</i> file.
 
-Let's make a small change to the <i>scripts</i> object:
+Let's make a small change to the <i>scripts</i> object by adding a new script command.
 
 ```bash
 {
@@ -93,7 +93,7 @@ echo "Error: no test specified" && exit 1
 
 ### Simple web server
 
-Let's change the application into a web server by editing the _index.js_ file as follow:
+Let's change the application into a web server by editing the _index.js_ file as follows:
 
 ```js
 const http = require('http')
@@ -120,7 +120,7 @@ We can open our humble application in the browser by visiting the address <http:
 
 The server works the same way regardless of the latter part of the URL. Also the address <http://localhost:3001/foo/bar> will display the same content.
 
-**NB** if port 3001 is already in use by some other application, then starting the server will result in the following error message:
+**NB** If port 3001 is already in use by some other application, then starting the server will result in the following error message:
 
 ```bash
 ➜  hello npm start
@@ -138,7 +138,7 @@ Error: listen EADDRINUSE :::3001
     at listenInCluster (net.js:1378:12)
 ```
 
-You have two options. Either shut down the application using port 3001 (the json-server in the last part of the material was using port 3001), or use a different port for this application.
+You have two options. Either shut down the application using port 3001 (the JSON Server in the last part of the material was using port 3001), or use a different port for this application.
 
 Let's take a closer look at the first line of the code:
 
@@ -146,15 +146,15 @@ Let's take a closer look at the first line of the code:
 const http = require('http')
 ```
 
-In the first row, the application imports Node's built-in [web server](https://nodejs.org/docs/latest-v8.x/api/http.html) module. This is practically what we have already been doing in our browser-side code, but with a slightly different syntax:
+In the first row, the application imports Node's built-in [web server](https://nodejs.org/docs/latest-v18.x/api/http.html) module. This is practically what we have already been doing in our browser-side code, but with a slightly different syntax:
 
 ```js
 import http from 'http'
 ```
 
-These days, code that runs in the browser uses ES6 modules. Modules are defined with an [export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) and taken into use with an [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
+These days, code that runs in the browser uses ES6 modules. Modules are defined with an [export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) and included in the current file with an [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import).
 
-However, Node.js uses so-called [CommonJS](https://en.wikipedia.org/wiki/CommonJS) modules. The reason for this is that the Node ecosystem had a need for modules long before JavaScript supported them in the language specification. Node supports now also the use of ES6 modules, but since the support is [not quite perfect](https://nodejs.org/api/esm.html#modules-ecmascript-modules) yet, we'll stick to CommonJS modules.
+Node.js uses [CommonJS](https://en.wikipedia.org/wiki/CommonJS) modules. The reason for this is that the Node ecosystem needed modules long before JavaScript supported them in the language specification. Currently, Node also supports the use of ES6 modules, but since the support is not quite perfect yet, we'll stick to CommonJS modules.
 
 CommonJS modules function almost exactly like ES6 modules, at least as far as our needs in this course are concerned.
 
@@ -167,7 +167,7 @@ const app = http.createServer((request, response) => {
 })
 ```
 
-The code uses the _createServer_ method of the [http](https://nodejs.org/docs/latest-v8.x/api/http.html) module to create a new web server. An <i>event handler</i> is registered to the server that is called <i>every time</i> an HTTP request is made to the server's address <http://localhost:3001>.
+The code uses the _createServer_ method of the [http](https://nodejs.org/docs/latest-v18.x/api/http.html) module to create a new web server. An <i>event handler</i> is registered to the server that is called <i>every time</i> an HTTP request is made to the server's address <http://localhost:3001>.
 
 The request is responded to with the status code 200, with the <i>Content-Type</i> header set to <i>text/plain</i>, and the content of the site to be returned set to <i>Hello World</i>.
 
@@ -216,7 +216,7 @@ console.log(`Server running on port ${PORT}`)
 
 Let's restart the server (you can shut the server down by pressing _Ctrl+C_ in the console) and let's refresh the browser.
 
-The <i>application/json</i> value in the <i>Content-Type</i> header informs the receiver that the data is in the JSON format. The _notes_ array gets transformed into JSON with the <em>JSON.stringify(notes)</em> method.
+The <i>application/json</i> value in the <i>Content-Type</i> header informs the receiver that the data is in the JSON format. The _notes_ array gets transformed into JSON formatted string with the <em>JSON.stringify(notes)</em> method. This is necessary because the response.end() method expects a string or a buffer to send as the response body.
 
 When we open the browser, the displayed format is exactly the same as in [part 2](/en/part2/getting_data_from_server/) where we used [json-server](https://github.com/typicode/json-server) to serve the list of notes:
 
@@ -224,7 +224,7 @@ When we open the browser, the displayed format is exactly the same as in [part 2
 
 ### Express
 
-Implementing our server code directly with Node's built-in [http](https://nodejs.org/docs/latest-v8.x/api/http.html) web server is possible. However, it is cumbersome, especially once the application grows in size.
+Implementing our server code directly with Node's built-in [http](https://nodejs.org/docs/latest-v18.x/api/http.html) web server is possible. However, it is cumbersome, especially once the application grows in size.
 
 Many libraries have been developed to ease server-side development with Node, by offering a more pleasing interface to work with the built-in http module. These libraries aim to provide a better abstraction for general use cases we usually require to build a backend server. By far the most popular library intended for this purpose is [express](http://expressjs.com).
 
@@ -247,17 +247,17 @@ The dependency is also added to our <i>package.json</i> file:
 
 The source code for the dependency is installed in the <i>node\_modules</i> directory located at the root of the project. In addition to express, you can find a great number of other dependencies in the directory:
 
-![ls listing of dependencies in directory](../../images/3/4.png)
+![ls command listing of dependencies in directory](../../images/3/4.png)
 
 These are the dependencies of the express library and the dependencies of all of its dependencies, and so forth. These are called the [transitive dependencies](https://lexi-lambda.github.io/blog/2016/08/24/understanding-the-npm-dependency-model/) of our project.
 
-The version 4.18.2 of express was installed in our project. What does the caret in front of the version number in <i>package.json</i> mean?
+Version 4.18.2 of Express was installed in our project. What does the caret in front of the version number in <i>package.json</i> mean?
 
 ```json
 "express": "^4.18.2"
 ```
 
-The versioning model used in npm is called [semantic versioning](https://docs.npmjs.com/getting-started/semantic-versioning).
+The versioning model used in npm is called [semantic versioning](https://docs.npmjs.com/about-semantic-versioning).
 
 The caret in the front of <i>^4.18.2</i> means that if and when the dependencies of a project are updated, the version of express that is installed will be at least <i>4.18.2</i>. However, the installed version of express can also have a larger <i>patch</i> number (the last number), or a larger <i>minor</i> number (the middle number). The major version of the library indicated by the first <i>major</i> number must be the same.
 
@@ -273,7 +273,7 @@ Likewise, if we start working on the project on another computer, we can install
 npm install
 ```
 
-If the <i>major</i> number of a dependency does not change, then the newer versions should be [backwards compatible](https://en.wikipedia.org/wiki/Backward_compatibility). This means that if our application happened to use version 4.99.175 of express in the future, then all the code implemented in this part would still have to work without making changes to the code. In contrast, the future 5.0.0 version of express [may contain](https://expressjs.com/en/guide/migrating-5.html) changes that would cause our application to no longer work.
+If the <i>major</i> number of a dependency does not change, then the newer versions should be [backwards compatible](https://en.wikipedia.org/wiki/Backward_compatibility). This means that if our application happened to use version 4.99.175 of Express in the future, then all the code implemented in this part would still have to work without making changes to the code. In contrast, the future 5.0.0 version of Express [may contain](https://expressjs.com/en/guide/migrating-5.html) changes that would cause our application to no longer work.
 
 ### Web and express
 
@@ -301,7 +301,7 @@ app.listen(PORT, () => {
 })
 ```
 
-To get the new version of our application into use, we have to restart the application.
+To get the new version of our application into use, first we have to restart it.
 
 The application did not change a whole lot. Right at the beginning of our code, we're importing _express_, which this time is a <i>function</i> that is used to create an express application stored in the _app_ variable:
 
@@ -340,7 +340,7 @@ The request is responded to with the [json](http://expressjs.com/en/4x/api.html#
 
 Next, let's take a quick look at the data sent in JSON format.
 
-In the earlier version where we were only using Node, we had to transform the data into the JSON format with the _JSON.stringify_ method:
+In the earlier version where we were only using Node, we had to transform the data into the JSON formatted string with the _JSON.stringify_ method:
 
 ```js
 response.end(JSON.stringify(notes))
@@ -354,7 +354,7 @@ The experiment shown below illustrates this point:
 
 ![node terminal demonstrating json is of type string](../../assets/3/5.png)
 
-The experiment above was done in the interactive [node-repl](https://nodejs.org/docs/latest-v8.x/api/repl.html). You can start the interactive node-repl by typing in _node_ in the command line. The repl is particularly useful for testing how commands work while you're writing application code. I highly recommend this!
+The experiment above was done in the interactive [node-repl](https://nodejs.org/docs/latest-v18.x/api/repl.html). You can start the interactive node-repl by typing in _node_ in the command line. The repl is particularly useful for testing how commands work while you're writing application code. I highly recommend this!
 
 ### nodemon
 
@@ -379,7 +379,7 @@ The contents of <i>package.json</i> have also changed:
     "express": "^4.18.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^3.0.3"
   }
 }
 ```
@@ -603,8 +603,8 @@ Many tools exist for making the testing of backends easier. One of these is a co
 Let's install the Postman desktop client [from here](https://www.postman.com/downloads/)  and try it out:
 
 ![postman screenshot on api/notes/2](../../images/3/11x.png)
-NB: Postman is also available on VS Code which can be dowloaded from the Extension tab on the left -> search for Postman -> First result (Verified Publisher) -> Install
-You will then see an extra icon added on the activity bar below the extensions tab. Once you login, you can follow from the steps below 
+NB: Postman is also available on VS Code which can be downloaded from the Extension tab on the left -> search for Postman -> First result (Verified Publisher) -> Install
+You will then see an extra icon added on the activity bar below the extensions tab. Once you log in, you can follow the steps below 
 
 Using Postman is quite easy in this situation. It's enough to define the URL and then select the correct request type (DELETE).
 
@@ -632,7 +632,7 @@ If you use *IntelliJ WebStorm* instead, you can use a similar procedure with its
 
 ### Receiving data
 
-Next, let's make it possible to add new notes to the server. Adding a note happens by making an HTTP POST request to the address <http://localhost:3001/api/notes>, and by sending all the information for the new note in the request [body](https://www.w3.org/Protocols/rfc2616/rfc2616-sec7.html#sec7) in JSON format.
+Next, let's make it possible to add new notes to the server. Adding a note happens by making an HTTP POST request to the address <http://localhost:3001/api/notes>, and by sending all the information for the new note in the request [body](https://www.rfc-editor.org/rfc/rfc9112#name-message-body) in JSON format.
 
 To access the data easily, we need the help of the express [json-parser](https://expressjs.com/en/api.html) that we can use with the command _app.use(express.json())_.
 
@@ -672,9 +672,9 @@ The application prints the data that we sent in the request to the console:
 
 **NB** <i>Keep the terminal running the application visible at all times</i> when you are working on the backend. Thanks to Nodemon any changes we make to the code will restart the application. If you pay attention to the console, you will immediately be able to pick up on errors that occur in the application:
 
-![nodemon error as typing requre not defined](../../images/3/16.png)
+![nodemon error as typing requre not defined](../../images/3/16e.png)
 
-Similarly, it is useful to check the console for making sure that the backend behaves as we expect it to in different situations, like when we send data with an HTTP POST request. Naturally, it's a good idea to add lots of <em>console.log</em> commands to the code while the application is still being developed.
+Similarly, it is useful to check the console to make sure that the backend behaves as we expect it to in different situations, like when we send data with an HTTP POST request. Naturally, it's a good idea to add lots of <em>console.log</em> commands to the code while the application is still being developed.
 
 A potential cause for issues is an incorrectly set <i>Content-Type</i> header in requests. This can happen with Postman if the type of body is not defined correctly:
 
@@ -799,8 +799,6 @@ If the data saved in the _body_ variable has the <i>important</i> property, the 
 
 You can find the code for our current application in its entirety in the <i>part3-1</i> branch of [this GitHub repository](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-1).
 
-The code for the current state of the application is specified in branch [part3-1](https://github.com/fullstack-hy2020/part3-notes-backend/tree/part3-1).
-
 ![GitHub screenshot of branch 3-1](../../images/3/21.png)
 
 If you clone the project, run the _npm install_ command before starting the application with _npm start_ or _npm run dev_.
@@ -828,7 +826,6 @@ What exactly is happening in that line of code? <em>notes.map(n => n.id)</em> cr
 
 <div class="tasks">
 
-
 ### Exercises 3.1.-3.6.
 
 **NB:** It's recommended to do all of the exercises from this part into a new dedicated git repository, and place your source code right at the root of the repository. Otherwise, you will run into problems in exercise 3.10.
@@ -837,7 +834,7 @@ What exactly is happening in that line of code? <em>notes.map(n => n.id)</em> cr
 
 **Strong recommendation:** When you are working on backend code, always keep an eye on what's going on in the terminal that is running your application.
 
-#### 3.1: Phonebook backend step1
+#### 3.1: Phonebook backend step 1
 
 Implement a Node application that returns a hardcoded list of phonebook entries from the address <http://localhost:3001/api/persons>.
   
@@ -878,7 +875,7 @@ The application must be started with the command _npm start_.
 
 The application must also offer an _npm run dev_ command that will run the application and restart the server whenever changes are made and saved to a file in the source code.
 
-#### 3.2: Phonebook backend step2
+#### 3.2: Phonebook backend step 2
 
 Implement a page at the address <http://localhost:3001/info> that looks roughly like this:
 
@@ -890,25 +887,25 @@ There can only be one response.send() statement in an Express app route. Once yo
   
 To include a line space in the output, use `<br/>` tag, or wrap the statements in `<p>` tags.
 
-#### 3.3: Phonebook backend step3
+#### 3.3: Phonebook backend step 3
 
 Implement the functionality for displaying the information for a single phonebook entry. The url for getting the data for a person with the id 5 should be <http://localhost:3001/api/persons/5>
 
 If an entry for the given id is not found, the server has to respond with the appropriate status code.
 
-#### 3.4: Phonebook backend step4
+#### 3.4: Phonebook backend step 4
 
 Implement functionality that makes it possible to delete a single phonebook entry by making an HTTP DELETE request to the unique URL of that phonebook entry.
 
 Test that your functionality works with either Postman or the Visual Studio Code REST client.
 
-#### 3.5: Phonebook backend step5
+#### 3.5: Phonebook backend step 5
 
 Expand the backend so that new phonebook entries can be added by making HTTP POST requests to the address <http://localhost:3001/api/persons>.
 
 Generate a new id for the phonebook entry with the [Math.random](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) function. Use a big enough range for your random values so that the likelihood of creating duplicate ids is small.
 
-#### 3.6: Phonebook backend step6
+#### 3.6: Phonebook backend step 6
 
 Implement error handling for creating new entries. The request is not allowed to succeed, if:
 
@@ -953,13 +950,13 @@ POST is the only HTTP request type that is neither <i>safe</i> nor <i>idempotent
 
 ### Middleware
 
-The express [json-parser](https://expressjs.com/en/api.html) we took into use earlier is a so-called [middleware](http://expressjs.com/en/guide/using-middleware.html).
+The express [json-parser](https://expressjs.com/en/api.html) used earlier is a [middleware](http://expressjs.com/en/guide/using-middleware.html).
 
 Middleware are functions that can be used for handling _request_ and _response_ objects.
 
 The json-parser we used earlier takes the raw data from the requests that are stored in the _request_ object, parses it into a JavaScript object and assigns it to the _request_ object as a new property <i>body</i>.
 
-In practice, you can use several middlewares at the same time. When you have more than one, they're executed one by one in the order that they were taken into use in express.
+In practice, you can use several middlewares at the same time. When you have more than one, they're executed one by one in the order that they were listed in the application code.
 
 Let's implement our own middleware that prints information about every request that is sent to the server.
 
@@ -977,15 +974,15 @@ const requestLogger = (request, response, next) => {
 
 At the end of the function body, the _next_ function that was passed as a parameter is called. The _next_ function yields control to the next middleware.
 
-Middleware is taken into use like this:
+Middleware is used like this:
 
 ```js
 app.use(requestLogger)
 ```
 
-Middleware functions are called in the order that they're taken into use with the express server object's _use_ method. Notice that json-parser is taken into use before the _requestLogger_ middleware, because otherwise <i>request.body</i> will not be initialized when the logger is executed!
+Remember, middleware functions are called in the order that they're encountered by the JavaScript engine. Notice that _json-parser_ is listed before _requestLogger_ , because otherwise <i>request.body</i> will not be initialized when the logger is executed!
 
-Middleware functions have to be taken into use before routes if we want them to be executed before the route event handlers are called. There are also situations where we want to define middleware functions after routes. In practice, this means that we are defining middleware functions that are only called if no route handles the HTTP request.
+Middleware functions have to be used before routes when we want them to be executed by the route event handlers. Sometimes, we want to use middleware functions after routes. We do this this when the middleware functions are only called if no route handles process the HTTP request.
 
 Let's add the following middleware after our routes. This middleware will be used for catching requests made to non-existent routes. For these requests, the middleware will return an error message in the JSON format.
 
@@ -1005,7 +1002,7 @@ You can find the code for our current application in its entirety in the <i>part
 
 ### Exercises 3.7.-3.8.
 
-#### 3.7: Phonebook backend step7
+#### 3.7: Phonebook backend step 7
 
 Add the [morgan](https://github.com/expressjs/morgan) middleware to your application for logging. Configure it to log messages to your console based on the <i>tiny</i> configuration.
 
@@ -1013,7 +1010,7 @@ The documentation for Morgan is not the best, and you may have to spend some tim
 
 Morgan is installed just like all other libraries with the _npm install_ command. Taking morgan into use happens the same way as configuring any other middleware by using the _app.use_ command.
 
-#### 3.8*: Phonebook backend step8
+#### 3.8*: Phonebook backend step 8
 
 Configure morgan so that it also shows the data sent in HTTP POST requests:
 

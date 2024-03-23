@@ -16,7 +16,7 @@ const createSearchConfig = (indexName, language) => {
                 letter
                 part
               }
-              id      
+              id
               rawMarkdownBody
             }
           }

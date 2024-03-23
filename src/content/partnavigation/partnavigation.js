@@ -28,17 +28,19 @@ module.exports = {
       b: 'Testing the backend',
       c: 'User administration',
       d: 'Token authentication',
+      e: 'Legacy: Testing with Jest',
     },
     '5': {
       a: 'Login in frontend',
       b: 'props.children and proptypes',
       c: 'Testing React apps',
-      d: 'End to end testing',
+      d: 'End to end testing: Playwright',
+      e: 'End to end testing: Cypress',
     },
     '6': {
       a: 'Flux-architecture and Redux',
       b: 'Many reducers',
-      c: 'Communicating with server in a redux application',
+      c: 'Communicating with server in a Redux application',
       d: 'React Query, useReducer and the context',
     },
     '7': {

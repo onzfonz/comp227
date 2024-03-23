@@ -44,12 +44,13 @@ const InfoBanner = ({ visible, onHide }) => {
 
   return (
     <div style={style}>
-      <div stule={textStyle}>
-        {/* TODO: Have this part have a different byline */}
-        {/* Doing the course exam soon? Test the new exam system, read more{' '}
-        <a href="/en/part0/general_info#doing-the-exam-without-university-of-helsinki-user-account">
-          <span style={linkStyle}>here</span>!
-        </a> */}
+      <div style={textStyle}>
+        <p style={{ marginBottom: 20}}>
+          The testing libraries used in part 5 were changed on March 23rd, 2024. For the frontend Vite replaced Jest. For End to end-tests Playwright is the new preferred library.
+        </p>  
+        <p>
+          If you have started with Jest or Cypress, you may continue. The relevant material is still available, for Jest, the link is at the top of part 5c and for the Cypress, the link is at the menu at the left.
+        </p>
       </div>
       <div style={buttonDiv}>
         <button style={buttonStyle} onClick={onHide}>

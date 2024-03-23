@@ -285,10 +285,10 @@ describe('when there is initially one user in db', () => {
       .expect('Content-Type', /application\/json/)
 
     const usersAtEnd = await helper.usersInDb()
-    expect(usersAtEnd).toHaveLength(usersAtStart.length + 1)
+    assert.strictEqual(usersAtEnd.length, usersAtStart.length + 1)
 
     const usernames = usersAtEnd.map(u => u.username)
-    expect(usernames).toContain(newUser.username)
+    assert(usernames.includes(newUser.username))
   })
 })
 ```
@@ -334,34 +334,27 @@ describe('when there is initially one user in db', () => {
       .expect(400)
       .expect('Content-Type', /application\/json/)
 
-    expect(result.body.error).toContain('expected `username` to be unique')
-
     const usersAtEnd = await helper.usersInDb()
-    expect(usersAtEnd).toEqual(usersAtStart)
+    assert(result.body.error.includes('expected `username` to be unique'))
+
+    assert.strictEqual(usersAtEnd.length, usersAtStart.length)
   })
 })
 ```
 
 The test case obviously will not pass at this point. We are essentially practicing [test-driven development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development), where tests for new functionality are written before the functionality is implemented.
 
-Mongoose does not have a built-in validator for checking the uniqueness of a field. Fortunately there is a ready-made solution for this, the [mongoose-unique-validator](https://www.npmjs.com/package/mongoose-unique-validator) library. Let us install the library:
-
-```bash
-npm install mongoose-unique-validator
-```
-
-and extend the code by following the library documentation in <i>models/user.js</i>:
+Mongoose validations do not provide a direct way to check the uniqueness of a field value. However, it is possible to achieve uniqueness by defining [uniqueness index](https://mongoosejs.com/docs/schematypes.html) for a field. The definition is done as follows:
 
 ```js
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator') // highlight-line
 
 const userSchema = mongoose.Schema({
   // highlight-start
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true // this ensures the uniqueness of username
   },
   // highlight-end
   name: String,
@@ -374,20 +367,30 @@ const userSchema = mongoose.Schema({
   ],
 })
 
-userSchema.plugin(uniqueValidator) // highlight-line
-
 // ...
 ```
 
-Note: when installing the _mongoose-unique-validator_ library, you may encounter the following error message:
+However, we want to be careful when using the uniqueness index. If there are already documents in the database that violate the uniqueness condition, [no index will be created](https://dev.to/akshatsinghania/mongoose-unique-not-working-16bf). So when adding a uniqueness index, make sure that the database is in a healthy state! The test above added the user with username _root_ to the database twice, and these must be removed for the index to be formed and the code to work.
 
-![](../../images/4/uniq.png)
+Mongoose validations do not detect the index violation, and instead of _ValidationError_ they return an error of type _MongoServerError_. We therefore need to extend the error handler for that case:
 
-The reason for this is that at the time of writing (10.11.2023) the library is not yet compatible with Mongoose version 8. If you encounter this error, you can revert to an older version of Mongoose by running the command
+```js
+const errorHandler = (error, request, response, next) => {
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+// highlight-start
+  } else if (error.name === 'MongoServerError' && error.message.includes('E11000 duplicate key error')) {
+    return response.status(400).json({ error: 'expected `username` to be unique' })
+  }
+  // highlight-end
 
+  next(error)
+}
 ```
-npm install mongoose@7.6.5
-```
+
+After these changes, the tests will pass.
 
 We could also implement other validations into the user creation. We could check that the username is long enough, that the username only consists of permitted characters, or that the password is strong enough. Implementing these functionalities is left as an optional exercise.
 
@@ -408,7 +411,6 @@ For making new users in a production or development environment, you may send a 
     "name": "Superuser",
     "password": "salainen"
 }
-
 ```
 
 The list looks like this:
@@ -446,24 +448,6 @@ notesRouter.post('/', async (request, response) => {
   response.status(201).json(savedNote)
 })
 ```
-The note scheme will also need to change as follows in our models/note.js file:
-
-```js
-const noteSchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: true,
-    minlength: 5
-  },
-  important: Boolean,
-  // highlight-start
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }
-  //highlight-end
-})
-```
 
 It's worth noting that the <i>user</i> object also changes. The <i>id</i> of the note is stored in the <i>notes</i> field of the <i>user</i> object:
 
@@ -488,7 +472,7 @@ We can see that the user has two notes.
 
 Likewise, the ids of the users who created the notes can be seen when we visit the route for fetching all notes:
 
-![api/notes shows ids of numbers in JSON](../../images/4/12e.png)
+![api/notes shows ids of users in JSON](../../images/4/12e.png)
 
 ### Populate
 
@@ -515,7 +499,7 @@ The result is almost exactly what we wanted:
 
 We can use the populate parameter for choosing the fields we want to include from the documents. In addition to the field <i>id</i> we are now only interested in <i>content</i> and <i>important</i>.
 
-The selection of fields is done with the Mongo [syntax](https://docs.mongodb.com/manual/tutorial/project-fields-from-query-results/#return-the-specified-fields-and-the-id-field-only):
+The selection of fields is done with the Mongo [syntax](https://www.mongodb.com/docs/manual/tutorial/project-fields-from-query-results/#return-the-specified-fields-and-the-_id-field-only):
 
 ```js
 usersRouter.get('/', async (request, response) => {

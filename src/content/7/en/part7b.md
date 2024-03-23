@@ -11,7 +11,7 @@ lang: en
 
 React offers 15 different [built-in hooks](https://react.dev/reference/react), of which the most popular ones are the [useState](https://react.dev/reference/react/useState) and [useEffect](https://react.dev/reference/react/useEffect) hooks that we have already been using extensively.
 
-In [part 5](/en/part5/props_children_and_proptypes#references-to-components-with-ref) we used the [useImperativeHandle](https://react.dev/reference/react/useImperativeHandle) hook which allows components to provide their functions to other components. In [part 6](/en/part6/react_query_use_reducer_and_the_contex) we used [useReducer](https://react.dev/reference/react/useReducer) and [useContext](https://react.dev/reference/react/useContext) to implement a Redux like state management.
+In [part 5](/en/part5/props_children_and_proptypes#references-to-components-with-ref) we used the [useImperativeHandle](https://react.dev/reference/react/useImperativeHandle) hook which allows components to provide their functions to other components. In [part 6](/en/part6/react_query_use_reducer_and_the_context) we used [useReducer](https://react.dev/reference/react/useReducer) and [useContext](https://react.dev/reference/react/useContext) to implement a Redux like state management.
 
 Within the last couple of years, many React libraries have begun to offer hook-based APIs. [In part 6](/en/part6/flux_architecture_and_redux) we used the [useSelector](https://react-redux.js.org/api/hooks#useselector) and [useDispatch](https://react-redux.js.org/api/hooks#usedispatch) hooks from the react-redux library to share our redux-store and dispatch function to our components.
 
@@ -26,9 +26,7 @@ As mentioned in [part 1](/en/part1/a_more_complex_state_debugging_react_apps#rul
 - Call Hooks from React function components.
 - Call Hooks from custom Hooks
 
-There's an existing [ESlint](https://www.npmjs.com/package/eslint-plugin-react-hooks) rule that can be used to verify that the application uses hooks correctly.
-
-Create-react-app has the readily-configured rule [eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks) that complains if hooks are used in an illegal manner:
+There's an existing [ESlint plugin](https://www.npmjs.com/package/eslint-plugin-react-hooks) that can be used to verify that the application uses hooks correctly:
 
 ![vscode error useState being called conditionally](../../images/7/60ea.png)
 
