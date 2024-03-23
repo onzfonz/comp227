@@ -609,16 +609,6 @@ The easiest solution will be ***to add a state to the show that controls the dis
 
 #### 5.8: Watchlist frontend, Step 8
 
-We notice that something is wrong.
-When a new show is recommended in the app, the name of the user that recommended that show is not shown in the details of the show:
-
-<!-- ![browser showing missing name underneath like button]() -->
-
-It's only when we reload the browser, that the information of the person is displayed.
-This is not acceptable, find out where the problem is and make the necessary correction.
-
-#### 5.9: Watchlist frontend, Step 9
-
 Implement the functionality for the like button.
 Likes are increased by making an HTTP ***PUT*** request to the unique address of the show in the backend.
 
@@ -627,9 +617,9 @@ If you wanted to add a like to the following show:
 
 ```js
 {
-  _id: "5a43fde2cbd20b12a2c34e91",
+    _id: "5a43fde2cbd20b12a2c34e91",
   user: {
-    _id: "5a43e6b6c37f3d065eaaa581",
+      _id: "5a43e6b6c37f3d065eaaa581",
     username: "powercat",
     name: "Tommy Tiger Jr"
   },
@@ -644,7 +634,7 @@ You would have to make an HTTP PUT request to the address ***/api/shows/5a43fde2
 
 ```js
 {
-  user: "5a43e6b6c37f3d065eaaa581",
+    user: "5a43e6b6c37f3d065eaaa581",
   likes: 1,
   genre: "Comedy",
   title: "Silicon Valley",
@@ -657,6 +647,16 @@ The backend also has to be updated to handle the user reference.
 **One last warning:** if you notice that you are using `async`/`await` and the `then` method in the same code,
 it is almost certain that you are doing something wrong.
 Stick to using one or the other, and never use both at the same time "just in case".
+
+#### 5.9: Watchlist frontend, Step 9
+
+We notice that something is wrong.
+When a new show is recommended in the app, the name of the user that recommended that show is not shown in the details of the show:
+
+<!-- ![browser showing missing name underneath like button]() -->
+
+It's only when we reload the browser, that the information of the person is displayed.
+This is not acceptable, find out where the problem is and make the necessary correction.
 
 #### 5.10: Watchlist frontend, Step 10
 
