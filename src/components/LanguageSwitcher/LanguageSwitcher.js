@@ -18,19 +18,13 @@ const Language = ({ language, active }) => {
 const LanguageSwitcher = ({ lang }) => {
   return (
     <div className="language-switcher">
-      <Language language="fi" active={lang} />
-
       <Language language="en" active={lang} />
-
-      <Language language="zh" active={lang} />
-
-      <Language language="ptbr" active={lang} />
     </div>
   );
 };
 
 LanguageSwitcher.defaultProps = {
-  lang: 'fi',
+  lang: 'en',
 };
 
 LanguageSwitcher.propTypes = {

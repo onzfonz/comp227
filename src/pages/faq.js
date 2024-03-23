@@ -4,9 +4,9 @@ import FaqPage from '../components/FaqPage';
 
 const FAQ = () => (
   <FaqPage
-    lang="fi"
-    title="FAQ | Full Stack open"
-    seoDescription="Usein kysytyt kysymykset"
+    lang="en"
+    title="FAQ | COMP 227"
+    seoDescription="Frequently asked questions"
   />
 );
 

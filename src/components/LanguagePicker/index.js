@@ -7,7 +7,7 @@ import { TRANSLATION_LANGUAGE_OPTIONS } from '../../config';
 import styles from './LanguagePicker.module.scss';
 
 const LanguagePicker = ({
-  value = 'fi',
+  value = 'en',
   onChange,
   className: classNameProp,
 }) => {
@@ -22,10 +22,6 @@ const LanguagePicker = ({
   const fontSizeStyle = {
     fontSize: '1em',
   };
-
-  if (value === 'ptbr') {
-    fontSizeStyle.fontSize = '0.65em';
-  }
 
   return (
     /*eslint jsx-a11y/no-onchange: "off" */

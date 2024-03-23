@@ -605,7 +605,7 @@ In this part, it is not even worth trying to use the direct rendering of the tab
 <div class="tasks">
   <h3>Exercises 1.1.-1.2.</h3>
 
-The exercises are submitted via GitHub, and by marking the exercises as done in the "my submissions" tab of the [submission application](https://studies.cs.helsinki.fi/stats/courses/fullstackopen).
+The exercises are submitted through GitHub and marking them as done on Canvas.
 
 The exercises are submitted **one part at a time**. When you have submitted the exercises for a part of the course you can no longer submit undone exercises for the same part.
 

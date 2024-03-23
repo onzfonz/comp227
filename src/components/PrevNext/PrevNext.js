@@ -23,9 +23,9 @@ const hasNext = (letter, part, lang) => {
   );
 };
 
-const labelOsaPart = lang => (lang === 'fi' ? 'Osa' : 'Part');
+const labelOsaPart = lang => 'Part';
 
-const langUrl = lang => (lang === 'fi' ? '/osa' : `/${lang}/part`);
+const langUrl = lang => (lang === 'en' ? '/part' : `/${lang}/part`);
 
 const PrevNext = ({ part, letter, lang }) => {
   const { t } = useTranslation();
@@ -107,9 +107,7 @@ const PrevNext = ({ part, letter, lang }) => {
 
   const getNext = () => {
     if (!letter && hasPart(part + 1, lang)) {
-      if (translationProgress[lang] <= part) {
-        lang = 'en';
-      }
+      console.log('a', hasPart(part + 1, lang));
       return (
         <Link
           to={`${langUrl(lang)}${part + 1}`}

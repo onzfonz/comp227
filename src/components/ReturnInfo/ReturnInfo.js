@@ -8,7 +8,7 @@ const ReturnInfo = () => (
   <Element flex dirColumn centered className="container spacing">
     <BodyText bold text="Tehtävien palautus" />
     <a
-      href="https://studies.cs.helsinki.fi/fullstackopen/"
+      href="https://comp227.djosv.com"
       style={{ padding: '1rem 0' }}
       className="col-2 centered spacing--small"
     >

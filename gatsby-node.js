@@ -38,8 +38,8 @@ exports.createPages = ({ actions, graphql }) => {
       if (!frontmatter.letter) {
         createPage({
           path:
-            lang === 'fi'
-              ? `/osa${part.toString()}`
+            lang === 'en'
+              ? `/part${part.toString()}`
               : `/${lang}/part${part.toString()}`,
           component: partIntroTemplate,
           context: {
@@ -50,8 +50,8 @@ exports.createPages = ({ actions, graphql }) => {
       } else if (navigation[lang] && !isEmpty(navigation[lang][part]) && frontmatter.letter) {
         createPage({
           path:
-            lang === 'fi'
-              ? `/osa${part}/${snakeCase(
+            lang === 'en'
+              ? `/part${part}/${snakeCase(
                   navigation[lang][part][frontmatter.letter]
                 )}`
               : `/${lang}/part${part}/${snakeCase(

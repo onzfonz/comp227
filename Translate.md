@@ -55,15 +55,13 @@ Merge made by the 'recursive' strategy.
  src/content/7/en/part7a.md   |  51 ++---
  src/content/7/en/part7b.md   |  26 +--
  src/content/7/en/part7e.md   |   7 +-
- src/content/8/en/part8b.md   |   1 -
- src/content/8/en/part8d.md   |   4 +-
- src/content/9/en/part9b.md   |   2 +-
- src/content/9/en/part9c.md   |  26 +--
- src/content/9/en/part9d.md   | 503 +++++++++++++++++++++++++++++++------------
+ src/content/8/en/part8b.md   |   2 +-
+ src/content/8/en/part8c.md   |  26 +--
+ src/content/8/en/part8d.md   | 503 +++++++++++++++++++++++++++++++------------
  src/content/images/0/28a.png | Bin 0 -> 120137 bytes
  src/content/images/0/28b.png | Bin 0 -> 63821 bytes
- src/content/images/9/28e.png | Bin 0 -> 52882 bytes
- src/content/images/9/29e.png | Bin 0 -> 50472 bytes
+ src/content/images/8/28e.png | Bin 0 -> 52882 bytes
+ src/content/images/8/29e.png | Bin 0 -> 50472 bytes
  src/content/pages/about.json |   4 +-
  src/content/pages/faq.json   |  30 ++-
  src/content/pages/main.json  |   3 +-
@@ -71,8 +69,8 @@ Merge made by the 'recursive' strategy.
  32 files changed, 530 insertions(+), 303 deletions(-)
  create mode 100644 src/content/images/0/28a.png
  create mode 100644 src/content/images/0/28b.png
- create mode 100644 src/content/images/9/28e.png
- create mode 100644 src/content/images/9/29e.png
+ create mode 100644 src/content/images/8/28e.png
+ create mode 100644 src/content/images/8/29e.png
  ```
  英文开头的行：
 ^[A-Z,a-z].*

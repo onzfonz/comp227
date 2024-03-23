@@ -24,11 +24,7 @@ const AboutPage = ({ title, lang }) => {
         lang={lang}
         title={title}
         description={seoDescription}
-        keywords={[
-          ...mainSEOtags,
-          'Avoin yliopisto',
-          'Full stack harjoitustyö',
-        ]}
+        keywords={[...mainSEOtags, 'comp227']}
       />
 
       <Banner style={{ paddingBottom: 0, overflow: 'hidden' }}>

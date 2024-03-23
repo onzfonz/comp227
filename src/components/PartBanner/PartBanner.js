@@ -6,22 +6,6 @@ import navigation from '../../content/partnavigation/partnavigation';
 import getPartTranslationPath from '../../utils/getPartTranslationPath';
 
 const partNameTranslations = {
-  fi: [
-    'Web-sovellusten toiminnan perusteet',
-    'Reactin perusteet',
-    'Palvelimen kanssa tapahtuva kommunikointi',
-    'Palvelimen ohjelmointi NodeJS:n Express-kirjastolla',
-    'Express-sovellusten testaaminen, käyttäjänhallinta',
-    'React-sovelluksen testaaminen',
-    'Edistynyt tilan hallinta',
-    'React router, custom-hookit, tyylikirjastot ja webpack',
-    'GraphQL',
-    'TypeScript',
-    'React Native',
-    'CI/CD',
-    'Konttiteknologia',
-    'Relaatiotietokannan käyttö',
-  ],
   en: [
     'Fundamentals of Web apps',
     'Introduction to React',
@@ -31,86 +15,13 @@ const partNameTranslations = {
     'Testing React apps',
     'Advanced state management',
     'React router, custom hooks, styling app with CSS and webpack',
-    'GraphQL',
     'TypeScript',
     'React Native',
-    'CI/CD',
-    'Containers',
-    'Using relational databases',
-  ],
-  es: [
-    'Fundamentos de las aplicaciones web',
-    'Introducción a React',
-    'Comunicándose con el servidor',
-    'Programando un servidor con NodeJS y Express',
-    'Probando servidores Express, administración de usuarios',
-    'Probando aplicaciones React',
-    'Gestión avanzada del estado',
-    'React router, custom hooks, estilando la aplicación con CSS y webpack',
-    'GraphQL',
-    'TypeScript',
-    'React Native',
-    'CI/CD',
-    'Contenedores',
-    'Utilizando bases de datos relacionales',
-  ],
-  zh: [
-    'Web 应用的基础设施',
-    'React 入门',
-    '与服务端通信',
-    '用NodeJS和Express写服务端程序',
-    '测试 Express 服务端程序, 以及用户管理',
-    '测试 React 应用',
-    '利用Redux进行状态管理',
-    'React router、自定义 hook，利用CSS和webpack给app添加样式',
-    'GraphQL',
-    'TypeScript',
-    'React Native',
-    'CI/CD',
-    '容器',
-    '使用关系型数据库',
-  ],
-  fr: [
-    'Introduction aux applications Web',
-    'Premiers pas avec React',
-    'Communiquer avec le serveur',
-    'Programmation côté serveur avec NodeJS et Express',
-    'Test des serveurs Express, gestion des utilisateurs',
-    'Tester des applications React',
-    "Gestion d'état avec Redux",
-    'React router, hooks personnalisés, application de style avec CSS et webpack',
-    'GraphQL',
-    'TypeScript',
-    'React Native',
-    'CI/CD',
-    'Conteneurs',
-    'Utilisation de bases de donées relationnelles',
-  ],
-  ptbr: [
-    'Fundamentos de aplicações web',
-    'Introdução ao React',
-    'Comunicação com o servidor',
-    'Programando um servidor com NodeJS e Express',
-    'Teste de servidores Express e Administração de Usuários',
-    'Teste de aplicações React',
-    'Gerenciamento de Estado com Redux',
-    'React router, hooks personalizados, estilização de aplicações com CSS e Webpack',
-    'GraphQL',
-    'TypeScript',
-    'React Native',
-    'CI/CD',
-    'Containers',
-    'Utilizando bancos de dados relacionais',
-  ],
+  ]
 };
 
 const partName = {
   en: 'Part',
-  es: 'Parte',
-  fi: 'Osa',
-  fr: 'Partie',
-  ptbr: 'Parte',
-  zh: '部分',
 };
 
 export const PartBanner = ({ lang }) => {
@@ -140,8 +51,8 @@ export const PartBanner = ({ lang }) => {
                 alt: partNames[part],
               }}
               hoverImageSrc={require(`../../images/thumbnails/part-${part}_ovr.svg`)}
-              name={`${partName[lang]} ${part}`}
-              summary={summary}
+              name={`${'Part'} ${part}`}
+              summary={partNames[part]}
               path={getPartTranslationPath(lang, part)}
             />
           );

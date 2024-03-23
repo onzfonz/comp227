@@ -5,16 +5,16 @@ import SearchPage from '../components/SearchPage';
 
 const Search = ({ data }) => (
   <SearchPage
-    localSearch={data.localSearchFinnish}
-    title="Etsi hakusanalla materiaalista"
-    inputPlaceholder="Syötä hakusana"
-    lang="fi"
+    localSearch={data.localSearchEnglish}
+    title="Search the material"
+    inputPlaceholder="Enter a search term"
+    lang="en"
   />
 );
 
 export const pageQuery = graphql`
   query {
-    localSearchFinnish {
+    localSearchEnglish {
       store
       index
     }

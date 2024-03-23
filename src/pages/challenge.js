@@ -5,19 +5,18 @@ import ChallengePage from '../components/ChallengePage';
 const Challenge = () => {
   return (
     <ChallengePage
-      lang="fi"
-      title="Full stack -haaste | Full Stack open"
-      seoDescription="Helsingin yliopisto, Houston Inc ja kumppaniyrityksemme haastavat niin koodarit kuin yritykset kasvattamaan osaamistaan tätä kurssia suorittamalla. Haaste on tarkoitettu jokaiselle sovelluskehitysalan osaajalle ja sellaiseksi haluavalle."
+      lang="en"
+      title="COMP227 -challenge | COMP 227"
+      seoDescription="COMP 227 will have many challenges that students will face.  Be a team player"
       aboutContent={[
-        'Suomi tarvitsee lisää ohjelmistokehittäjiä. Haluamme kasvattaa seuraavan sukupolven koodareita - yksi valitsemistamme tavoista on osallistuminen Full Stack MOOC -kurssille.',
-        'Helsingin yliopisto ja Houston Inc. haastavat niin tekijöitä kuin yrityksiä oppimaan uutta ja laajentamaan osaamistaan Full Stack -hengessä. Yhteistyökumppaneina ja haasteen käynnistäjinä ovat myös Elisa Oyj, K-ryhmä, Konecranes Oyj, Terveystalo Oyj ja Unity Technologies Finland Ltd.',
-        'Haasteen päämäärä on kannustaa oppimaan. Tarjoamme valmiiksi kootun ja ajatuksella rajatun Full Stack -kurssin, joka helpottaa ja vauhdittaa nykyaikaisiin, tuotannossa käytettyihin teknologioihin tutustumista. Kurssi on maksuton, eikä sen suorittaminen ole aikaan tai paikkaan sidottu.',
-        'Kurssi on rakennettu koodarilta koodarille ja tarjoaa uutta kokeneemmallekin konkarille. Pohjatiedoiksi vaaditaan hyvä perustason ohjelmointirutiini.',
+        'COMP 227 is largely offered as a new asynchronously online course here at the University. Asynchronous courses are notorious for not providing as many opportunities for feedback or to get help when you are in dire need of it. The course is even more challenging when you think you have to go it alone.',
+        'Be active in the class discord so that you all can support each other and at the same time you can help yourself have a stronger understanding of the material. Make a habit of helping someone out via the discord and to look for problems as they do.',
+        'On the other hand, you must have a solid grasp of basic programming fundamentals. If you get stuck, do not immediately ask for help, but ensure you have some understanding of what is happening. The course was built by coders for coders, and offers something for both newcomers and seasoned industry veterans alike.',
       ]}
       joinContent={[
-        'Tarttumalla haasteeseen kannustatte työyhteisönne osaajia uuden oppimisen äärelle. Full Stack -verkkokurssi on oiva lisä yrityksen täydennyskoulutusvalikoimaan ja toimii hyvin itseopiskelumateriaalina yrityksen muiden koulutusmahdollisuuksien joukossa',
-        'Osallistumalla haasteeseen voitte viestiä omaa teknologista osaamistanne yrityksen ulkopuolelle – tämä auttaa niin työnantajakuvan muodostamisessa kuin näkyvyydessä sovelluskehitysalan ammattilaisille.',
-        'Haasteeseen osallistuminen on maksutonta. Haasteen vastaanottaneiden yritysten logot nostetaan Full Stack -kurssin sivulle.',
+        'By accepting the challenge you are encouraging and empowering the members of your working community to acquire new skills.',
+        'Taking this course will make a great addition to your programming toolkit and will serve well as self-study material amongst your other classes.',
+        'By partaking in the challenge, you will send a strong message to the outside world about your expertise — this will help build Pacific’s image and increase your visibility to software industry professionals.',
       ]}
     />
   );

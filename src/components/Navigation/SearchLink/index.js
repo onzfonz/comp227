@@ -7,7 +7,7 @@ import SrOnly from '../../SrOnly';
 import styles from './SearchLink.module.scss';
 
 const getLinkTo = lang => {
-  return lang === 'fi' ? '/search' : `/${lang}/search`;
+  return lang === 'en' ? '/search' : `/${lang}/search`;
 };
 
 const SearchLink = ({ lang }) => {
