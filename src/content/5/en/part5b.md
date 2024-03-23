@@ -543,6 +543,8 @@ but will also add a few more items:
 
 ### Exercises 5.5-5.11
 
+> ***Hint:***: If you're stuck on one of these exercises, why not revisit `populate`?
+
 #### 5.5 Watchlist frontend, Step 5
 
 Change the form for creating shows so that it is only displayed when appropriate.
