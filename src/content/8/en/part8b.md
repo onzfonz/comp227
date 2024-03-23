@@ -1106,7 +1106,7 @@ npm i -D eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
 
 We will configure ESlint to [disallow explicit any]( https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-explicit-any.md).
-Write the following rules to *.estlintrc.cjs*:
+Write the following rules to *.eslintrc.cjs*:
 
 ```json
 {
@@ -1153,7 +1153,7 @@ and we will modify the rules as we go along whenever we find something we want t
 
 On top of the recommended settings, we should try to get familiar with the coding style required in this part and ***set the semicolon at the end of each line of code to `required`***.
 
-So we will use the following *.estlintrc.cjs*
+So we will use the following *.eslintrc.cjs*
 
 ```json
 {
