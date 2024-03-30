@@ -39,7 +39,19 @@ Cypress is exceptionally easy to use, and when compared to Selenium, for example
 Its operating principle is radically different than most E2E testing libraries because Cypress tests are run completely within the browser.
 Other libraries run the tests in a Node process, which is connected to the browser through an API.
 
-Let's make some end-to-end tests using Cypress for our task application.
+> **Pertinent:** While Cypress works well, we will have to make some changes to our ports in order to use Cypress.
+> Cypress uses port `3001` in its backend to run some of the tests.
+> If you recall, this is currently the port that we are using for our backend.
+> Instead of modifying Cypress's settings, let's just adjust our PORT for our backend.
+> We can do this by following these three steps.
+>
+> 1. Open up the *.env* file **in your backend** and change the PORT from `3001` to `3002`.
+> 2. Open up *vite.config.js* **in your frontend**
+>    and change the port listed in your *localhost*'s `target` property from *`3001`* to *`3002`*
+> 3. Ensure that your frontend and backend have restarted, otherwise stop and start them again.
+> 4. Now your backend will be on *3002* for the remainder of these exercises.
+>
+> Now with the port changed, let's make some end-to-end tests using Cypress for our task application.
 
 We begin by installing Cypress to *the frontend* as a development dependency
 
@@ -127,7 +139,7 @@ describe("Task app", function() {
   it("front page can be opened", function() {
     cy.visit("http://localhost:5173");
     cy.contains("Tasks");
-    cy.contains("Task app, Department of Computer Science, University of the Pacific 2023");
+    cy.contains("Task app, Department of Computer Science, University of the Pacific");
   });
 });
 ```
@@ -164,7 +176,7 @@ describe("Task app", () => { // highlight-line
   it("front page can be opened", () => { // highlight-line
     cy.visit("http://localhost:5173");
     cy.contains("Tasks");
-    cy.contains("Task app, Department of Computer Science, University of the Pacific 2023");
+    cy.contains("Task app, Department of Computer Science, University of the Pacific");
   });
 });
 ```
@@ -180,7 +192,7 @@ describe("Task app", function() {
   it("front page can be opened",  function() {
     cy.visit("http://localhost:5173");
     cy.contains("Tasks");
-    cy.contains("Task app, Department of Computer Science, University of the Pacific 2023");
+    cy.contains("Task app, Department of Computer Science, University of the Pacific");
   });
 
 // highlight-start
@@ -269,7 +281,7 @@ describe("Task app", function() {
 
   it("front page can be opened", function() {
     cy.contains("Tasks");
-    cy.contains("Task app, Department of Computer Science, University of the Pacific 2023");
+    cy.contains("Task app, Department of Computer Science, University of the Pacific");
   });
 
   it("login form can be opened", function() {
