@@ -8,6 +8,7 @@ lang: en
 <div class="content">
 
 Let's continue our work on the backend of the tasks application we started in [part 3](/part3).
+*This means that you can continue editing the repo that you have from **lab3** for continuing to edit the reading.*
 
 ### Project structure
 
@@ -474,6 +475,7 @@ and then search based on a variety of criteria.
 
 In the exercises for this part, we will be ***building the backend*** for a **Streaming Watchlist application**,
 which allows users to save information about interesting shows they have stumbled across on the internet.
+Please create this new folder in your *lab3* repo.
 For each listed show we will save the title, genre, Streaming Service URL, and amount of upvotes from users of the application.
 From here on, I will refer to a streaming show as a **show**.
 
